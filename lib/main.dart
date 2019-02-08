@@ -3,45 +3,42 @@ import 'addCategory.dart';
 void main() => runApp(MyBudget());
 
 abstract class Category {
+  String name;
+  double budgeted = 0.00;
+  double available = 0.00;
+
+  Category(this.name);
 }
 
-class SubCategory implements Category {
-  String name;
-  double budgetedAmount;
-  double availableAmount;
+class SubCategory extends Category {
 
-  SubCategory({this.name = "NoName", this.budgetedAmount = 0.00, this.availableAmount = 0.00});
+  SubCategory(String name): super(name);
+
 
   //TODO: Edit and delete subcategory
 }
 
-class MainCategory implements Category {
-  String name;
-  double budgetedAmount = 0.00;
-  double availableAmount = 0.00;
+class MainCategory extends Category {
 
   List<SubCategory> subcategories = [];
 
-  MainCategory(name){
-    this.name = name;
-    this.budgetedAmount = 0.00;
-    this.availableAmount = 0.00;
-  }
+  MainCategory(String name): super(name);
+
 
   void updateFields(){
     double budgeted = 0;
     double available = 0;
-    subcategories.forEach((SubCategory cat){budgeted += cat.budgetedAmount;});
-    subcategories.forEach((SubCategory cat){available += cat.availableAmount;});
+    subcategories.forEach((SubCategory cat){budgeted += cat.budgeted;});
+    subcategories.forEach((SubCategory cat){available += cat.available;});
 
-    this.budgetedAmount = budgeted;
-    this.availableAmount = available;
+    this.budgeted = budgeted;
+    this.available = available;
   }
 
-  void addSubcategory(SubCategory newSub){// String subCategoryName, double budgetedAmount, double availableAmount){
+  void addSubcategory(SubCategory newSub){// String subCategoryName, double budgeted, double available){
   //   SubCategory newSub = SubCategory(name: subCategoryName, 
-  //                                   budgetedAmount : budgetedAmount,
-  //                                   availableAmount : availableAmount);
+  //                                   budgeted : budgeted,
+  //                                   available : available);
     print("Adding ${newSub.name} to ${this.name}");
     this.subcategories.add(newSub);
     updateFields();
@@ -84,14 +81,22 @@ class _BudgetPageState extends State<BudgetPage> {
     super.initState();
 
     MainCategory savings = MainCategory("Savings");
-    SubCategory newSub1 =  SubCategory(name: "Car", budgetedAmount : 1000.00, availableAmount : 754.00);
-    SubCategory newSub2 =  SubCategory(name: "Laptop", budgetedAmount : 1400.00, availableAmount : 888.00);
+    SubCategory newSub1 =  SubCategory("Car");
+    SubCategory newSub2 =  SubCategory("Laptop");
+    newSub1.budgeted = 1000.00;
+    newSub1.available = 754.00;
+    newSub2.budgeted = 1400.00;
+    newSub2.available = 888.00;
     savings.addSubcategory(newSub1);
     savings.addSubcategory(newSub2);
 
     MainCategory funMoney = MainCategory("FunMoney");
-    SubCategory newSub3 =  SubCategory(name: "Going out", budgetedAmount : 50.00, availableAmount : 36.00);
-    SubCategory newSub4 =  SubCategory(name: "Eating out", budgetedAmount : 25.00, availableAmount : 25.00);
+    SubCategory newSub3 =  SubCategory("Going out");
+    SubCategory newSub4 =  SubCategory("Eating out");
+    newSub3.budgeted = 50.00;
+    newSub3.available = 36.00;
+    newSub4.budgeted = 25.00;
+    newSub4.available = 25.00;
     funMoney.addSubcategory(newSub3);
     funMoney.addSubcategory(newSub4);
 
@@ -106,12 +111,22 @@ class _BudgetPageState extends State<BudgetPage> {
     categories.add(funMoney);
     funMoney.subcategories.forEach((subcat) => categories.add(subcat));
     
-    print(categories);
+    for(var cat in categories){ print(cat.name);}
 
   }
 
   @override
   Widget build(BuildContext context) {
+
+    print("When building the state:");
+    for(var cat in categories){
+      if(cat is MainCategory){
+        print("Subcategories in ${cat.name} :");
+        for(var subcat in cat.subcategories){
+          print(subcat.name);
+        } 
+      }
+    } 
 
     return Scaffold(
       appBar: AppBar(
@@ -156,7 +171,7 @@ class _BudgetPageState extends State<BudgetPage> {
                   itemCount: categories.length,
                   itemBuilder: (context, index) {
                     final item = categories[index];
-
+                    print(categories);
                     if (item is MainCategory) {
                       return mainCategoryRow(item);
                     } else if (item is SubCategory) {
@@ -176,16 +191,46 @@ class _BudgetPageState extends State<BudgetPage> {
             MaterialPageRoute(builder: (context) => AddCategoryRoute()),
           );
     print("Adding $newCategoryName");
-    categories.add(MainCategory(newCategoryName));
-    print(categories);
+    setState(() {
+       categories.add(MainCategory(newCategoryName));
+       _updateCategoriesList();
+    });
   }
+
+
   _navigateAndAddSubcategory(BuildContext context) async {
-    final newCategoryName = await Navigator.push(
+    final returnElements = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
           );
-    // categories.add(MainCategory(newCategoryName));
-    print(categories);
+
+    SubCategory newSub4 =  SubCategory(returnElements[1]);
+    setState(() {
+      returnElements[0].addSubcategory(newSub4);
+      _updateCategoriesList();
+    });
+    print("After adding a subcategory, we have the following categories:");
+    for(var cat in categories){ print(cat.name);}
+    print("And following are categories with subcategories: ");
+    for(var cat in categories){
+      if(cat is MainCategory){
+        print("Subcategories in ${cat.name} :");
+        for(var subcat in cat.subcategories){
+          print(subcat.name);
+        } 
+      }
+    } 
+  }
+
+  _updateCategoriesList() {
+    List<Category> updatedList = [];
+    for(var cat in categories){
+      if(cat is MainCategory){
+        updatedList.add(cat);
+        cat.subcategories.forEach((subcat) => updatedList.add(subcat));
+      }
+    }
+    categories = updatedList;
   }
 
 
@@ -200,13 +245,13 @@ class _BudgetPageState extends State<BudgetPage> {
         Expanded(
           child: Column(children: <Widget>[
             Text('Budjeted', textAlign: TextAlign.center),
-            Text('${cat.budgetedAmount}', textAlign: TextAlign.center)
+            Text('${cat.budgeted}', textAlign: TextAlign.center)
             ],) ,
         ),
         Expanded(
           child: Column(children: <Widget>[
             Text('Available', textAlign: TextAlign.center),
-            Text('${cat.availableAmount}', textAlign: TextAlign.center)
+            Text('${cat.available}', textAlign: TextAlign.center)
             ],) ,
         ),
       ],
@@ -214,18 +259,16 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 
   Widget subCategoryRow(SubCategory subcat) {
-
-    print("Building subcatrow ${subcat.name}");
     return Row(
       children: <Widget>[
         Expanded(
           child: Text(subcat.name, textAlign: TextAlign.center),
         ),
         Expanded(
-          child: Text('${subcat.budgetedAmount}', textAlign: TextAlign.center),
+          child: Text('${subcat.budgeted}', textAlign: TextAlign.center),
         ),
         Expanded(
-          child: Text('${subcat.availableAmount}', textAlign: TextAlign.center),
+          child: Text('${subcat.available}', textAlign: TextAlign.center),
         ),
       ],
     );

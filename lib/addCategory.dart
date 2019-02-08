@@ -53,7 +53,7 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
                   onPressed: () {
-                     Navigator.pop(context, '${myCatController.text}');
+                    Navigator.pop(context, '${myCatController.text}');
                   },
                   child: Text('Add category ${myCatController.text}'),
                 ),
@@ -152,7 +152,8 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
                     onPressed: () {
-                      Navigator.pop(context, mySubcatController.text);
+                      var returnElement = [selectedCategory , mySubcatController.text];
+                      Navigator.pop(context, returnElement);
 
                     },
                     child: Text("Add subcategory ${mySubcatController.text} to ${selectedCategory.name}"),
