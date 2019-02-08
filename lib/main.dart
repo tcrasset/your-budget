@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'addCategory.dart';
 void main() => runApp(MyBudget());
 
 abstract class Category {
@@ -20,7 +20,7 @@ class MainCategory implements Category {
   double budgetedAmount = 0.00;
   double availableAmount = 0.00;
 
-  var subcategories = <SubCategory>[];
+  List<SubCategory> subcategories = [];
 
   MainCategory(name){
     this.name = name;
@@ -65,18 +65,9 @@ class MyBudget extends StatelessWidget {
 }
 
 class BudgetPage extends StatefulWidget {
+  //First page you see when opening the app
 
   BudgetPage({Key key, this.title}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -88,8 +79,10 @@ class _BudgetPageState extends State<BudgetPage> {
   List<Category> categories = [];
 
   @override
-  Widget build(BuildContext context) {
-    categories = [];
+  void initState() {
+    //Initialize the state to get the categories from the Widget
+    super.initState();
+
     MainCategory savings = MainCategory("Savings");
     SubCategory newSub1 =  SubCategory(name: "Car", budgetedAmount : 1000.00, availableAmount : 754.00);
     SubCategory newSub2 =  SubCategory(name: "Laptop", budgetedAmount : 1400.00, availableAmount : 888.00);
@@ -114,6 +107,12 @@ class _BudgetPageState extends State<BudgetPage> {
     funMoney.subcategories.forEach((subcat) => categories.add(subcat));
     
     print(categories);
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -142,6 +141,14 @@ class _BudgetPageState extends State<BudgetPage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  // _navigateAndAddCategory(BuildContext context) async {
+  //   final newCategoryName = await Navigator.push(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => AddCategoryRoute(categories: categories)),
+  //         );
+  //         categories.add(MainCategory(newCategoryName));
+  // }
      
 
   Widget mainCategoryRow(MainCategory cat){
@@ -187,131 +194,3 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 }
 
-
-class AddCategoryRoute extends StatefulWidget {
-
-  final List<Category> categories;
-
-  //Pass the categories from the other Route in the constructor
-  AddCategoryRoute({Key key, @required this.categories}) : super(key: key);
-
-  @override
-  AddCategoryRouteState createState() => new AddCategoryRouteState();
-}
-
-class AddCategoryRouteState extends State<AddCategoryRoute> {
-
-  
-
-  final _catFormKey = GlobalKey<FormState>();
-  final _subcatFormKey = GlobalKey<FormState>();
-  final myCatController = TextEditingController();
-  final mySubcatController = TextEditingController();
-  
-  var selectedCategory;
-  List<Category> categories;
-
-  @override
-  void initState() {
-    //Initialize the state to get the categories from the Widget
-    super.initState();
-    categories = widget.categories;
-    selectedCategory = categories.first;
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the Widget is disposed
-    myCatController.dispose();
-    mySubcatController.dispose();
-    super.dispose();
-  }
-
-
-  @override
-  Widget build(BuildContext context) {
-
-    List<DropdownMenuItem <Category>> dropdownMenuOptions = categories.map((Category category) {
-                                            if (category is MainCategory){
-                                              return DropdownMenuItem<Category>(
-                                                value: category,
-                                                child: new Text('${category.name}'),
-                                              );
-                                            }
-                                          }).toList();
-
-    dropdownMenuOptions.removeWhere((category) => category == null);
-
-    print(dropdownMenuOptions);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Add a new category"),
-      ),
-      body: Column(
-        children: <Widget>[
-          Form(
-            key: _catFormKey,
-            child: Column(
-              children: <Widget>[
-                Text("Add category"),
-                TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                  },
-                  controller:myCatController,
-                ),
-                
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: () {
-
-                  },
-                  child: Text('Add category'),
-                ),
-              ),],
-            ) 
-          ),
-          Form(
-            key: _subcatFormKey,
-            child: Column(
-              children: <Widget>[
-                Text("Add subcategory"),
-                TextFormField(
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                  },
-                  controller:mySubcatController,
-                ),
-                Text("to the following category"),
-                DropdownButton<Category>(
-                  // value: selectedCategory,
-                  onChanged: (cat) {
-                    setState(() {
-                      selectedCategory = cat;
-                    });
-                  },
-                  items: dropdownMenuOptions,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: RaisedButton(
-                    onPressed: () {
-
-                    },
-                    child: Text("Add subcategory ${mySubcatController.text} to ${selectedCategory.name}"),
-                  ),
-                )
-              ,],
-            ) 
-          )
-        ,] 
-      ,)
-    );
-  }
-}

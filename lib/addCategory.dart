@@ -1,0 +1,131 @@
+
+import 'package:flutter/material.dart';
+import 'main.dart';
+
+
+class AddCategoryRoute extends StatefulWidget {
+
+  final List<Category> categories;
+
+  //Pass the categories from the other Route in the constructor
+  AddCategoryRoute({Key key, @required this.categories}) : super(key: key);
+
+  @override
+  AddCategoryRouteState createState() => new AddCategoryRouteState();
+}
+
+class AddCategoryRouteState extends State<AddCategoryRoute> {
+
+
+  final _catFormKey = GlobalKey<FormState>();
+  final _subcatFormKey = GlobalKey<FormState>();
+  final myCatController = TextEditingController();
+  final mySubcatController = TextEditingController();
+  
+  var selectedCategory;
+  List<Category> categories;
+
+  @override
+  void initState() {
+    //Initialize the state to get the categories from the Widget
+    super.initState();
+    categories = widget.categories;
+    selectedCategory = categories.first;
+  }
+
+  @override
+  void dispose() {
+    // Clean up the controller when the Widget is disposed
+    myCatController.dispose();
+    mySubcatController.dispose();
+    super.dispose();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    //Only take categories to display in the dropdown menu
+    List<DropdownMenuItem <Category>> dropdownMenuOptions = categories.map((Category category) {
+                                            if (category is MainCategory){
+                                              return DropdownMenuItem<Category>(
+                                                value: category,
+                                                child: new Text('${category.name}'),
+                                              );
+                                            }
+                                          }).toList();
+
+    dropdownMenuOptions.removeWhere((category) => category == null);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Add a new category"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Form(
+            key: _catFormKey,
+            child: Column(
+              children: <Widget>[
+                Text("Add category"),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  controller:myCatController,
+                ),
+                
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: RaisedButton(
+                  onPressed: () {
+                    //  Navigator.pop(context, '${myCatController.text}');
+                  },
+                  child: Text('Add category ${myCatController.text}'),
+                ),
+              ),],
+            ) 
+          ),
+          Form(
+            key: _subcatFormKey,
+            child: Column(
+              children: <Widget>[
+                Text("Add subcategory"),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  controller:mySubcatController,
+                ),
+                Text("to the following category"),
+                DropdownButton<Category>(
+                  value: selectedCategory,
+                  onChanged: (cat) {
+                    setState(() {
+                      selectedCategory = cat;
+                    });
+                  },
+                  items: dropdownMenuOptions,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    onPressed: () {
+                      // Navigator.pop(context, mySubcatController.text);
+
+                    },
+                    child: Text("Add subcategory ${mySubcatController.text} to ${selectedCategory.name}"),
+                  ),
+                )
+              ,],
+            ) 
+          )
+        ,] 
+      ,)
+    );
+  }
+}
