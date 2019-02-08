@@ -117,39 +117,77 @@ class _BudgetPageState extends State<BudgetPage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView.builder(
-        itemCount: categories.length,
-        itemBuilder: (context, index) {
-          final item = categories[index];
+      body: 
+        Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal:8),
+                  child: RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: new Text("Add category"),
+                    onPressed: () {
+                      print("Add category button pressed");
+                      _navigateAndAddCategory(context);
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
+                  child: RaisedButton(
+                    padding: const EdgeInsets.all(8.0),
+                    textColor: Colors.white,
+                    color: Colors.blue,
+                    child: new Text("Add subcategory"),
+                    onPressed: () {
+                      print("Add subcategory button pressed");
+                      _navigateAndAddSubcategory(context);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: 
+                ListView.builder(
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    final item = categories[index];
 
-          if (item is MainCategory) {
-            return mainCategoryRow(item);
-          } else if (item is SubCategory) {
-            return subCategoryRow(item);
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AddCategoryRoute(categories: categories)),
-          );
-        },
-        tooltip: 'Add new category',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+                    if (item is MainCategory) {
+                      return mainCategoryRow(item);
+                    } else if (item is SubCategory) {
+                      return subCategoryRow(item);
+                    }
+                  },
+                ),
+            )
+          ],
+        )
     );
   }
 
-  // _navigateAndAddCategory(BuildContext context) async {
-  //   final newCategoryName = await Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => AddCategoryRoute(categories: categories)),
-  //         );
-  //         categories.add(MainCategory(newCategoryName));
-  // }
-     
+  _navigateAndAddCategory(BuildContext context) async {
+    final newCategoryName = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddCategoryRoute()),
+          );
+    print("Adding $newCategoryName");
+    categories.add(MainCategory(newCategoryName));
+    print(categories);
+  }
+  _navigateAndAddSubcategory(BuildContext context) async {
+    final newCategoryName = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
+          );
+    // categories.add(MainCategory(newCategoryName));
+    print(categories);
+  }
+
 
   Widget mainCategoryRow(MainCategory cat){
     return Row(
