@@ -32,62 +32,58 @@ class TransactionPageState extends State<TransactionPage>{
           _createContainer('Repeat', 'Never'),
           _createContainer('Memo', 'Optional'),
           _createContainer('Color', 'Default'),
-          // _createContainer
     ];
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Input"),
         ),
-        body: new Container(
-            child: new Column(
-              children: <Widget>[
-                Expanded(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: containerList.length,
-                    separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: new Color(0xFFE8E8E8)),
-                    itemBuilder: (context, index) {
-                      return containerList[index]   ;                   
-                    }
-                  )
-                ),
-              Divider(height: 20),
+        body:Column(
+              children: [
+                  Expanded(
+                    child: ListView.separated(
+                      shrinkWrap: true,
+                      itemCount: containerList.length,
+                      separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: new Color(0xFFE8E8E8)),
+                      itemBuilder: (context, index) {
+                        return containerList[index]   ;                   
+                      }
+                    )
+                  ),
+                Container (
+                  width:325, 
+                  child: Column(children: [
+                      Row(children: [
+                        buildButton("7"),
+                        buildButton("8"),
+                        buildButton("9"),
+                      ]),
+
+                      Row(children: [
+                        buildButton("4"),
+                        buildButton("5"),
+                        buildButton("6"),
+                      ]),
+
+                      Row(children: [
+                        buildButton("1"),
+                        buildButton("2"),
+                        buildButton("3"),
+                      ]),
+
+                      Row(children: [
+                        buildButton("."),
+                        buildButton("0"),
+                        buildButton("DEL"),
+                      ]),
+
+                      Row(children: [
+                        buildButton("CLEAR"),
+                        buildButton("ACCEPT"),
+                      ])
+                    ]),
+                )
               ]
             ),
-          )
-                
-
-            //     new Column(children: [
-            //       new Row(children: [
-            //         buildButton("7"),
-            //         buildButton("8"),
-            //         buildButton("9"),
-            //       ]),
-
-            //       new Row(children: [
-            //         buildButton("4"),
-            //         buildButton("5"),
-            //         buildButton("6"),
-            //       ]),
-
-            //       new Row(children: [
-            //         buildButton("1"),
-            //         buildButton("2"),
-            //         buildButton("3"),
-            //       ]),
-
-            //       new Row(children: [
-            //         buildButton("."),
-            //         buildButton("0"),
-            //         buildButton("DEL"),
-            //       ]),
-
-            //       new Row(children: [
-            //         buildButton("CLEAR"),
-            //         buildButton("ACCEPT"),
-            //       ])
-                // ])
-
     );}
 
   bool _isNumeric(String str) {
@@ -119,7 +115,7 @@ class TransactionPageState extends State<TransactionPage>{
   Widget buildButton(String buttonText) {
     return new Expanded(
       child: new OutlineButton(
-        padding: new EdgeInsets.all(24.0),
+        padding: new EdgeInsets.all(15.0),
         child: new Text(buttonText,
           style: TextStyle(
             fontSize: 20.0,
