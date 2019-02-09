@@ -7,67 +7,88 @@ class TransactionPage extends StatefulWidget{
 class TransactionPageState extends State<TransactionPage>{ 
 
   String number = "0.00";
-  String suffix = "€";
+  String currency = "€";
   String input = "";
 
+
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
+    List<Container> containerList= [
+          Container(
+            alignment: Alignment.centerRight,
+            padding: new EdgeInsets.symmetric(
+              vertical: 10.0,
+              horizontal: 10.0
+            ),
+            child: new Text(number + currency, 
+                            style: new TextStyle(fontSize: 40.0)
+            )
+          ),
+          
+          _createContainer('Payee', 'Select payee'),
+          _createContainer('Category', 'Select category'),
+          _createContainer('Account', 'Select account'),
+          _createContainer('Date', 'Select date'),
+          _createContainer('Repeat', 'Never'),
+          _createContainer('Memo', 'Optional'),
+          _createContainer('Color', 'Default'),
+          // _createContainer
+    ];
     return new Scaffold(
         appBar: new AppBar(
           title: new Text("Input"),
         ),
         body: new Container(
             child: new Column(
-          children: <Widget>[
-            new Container(
-              alignment: Alignment.centerRight,
-              padding: new EdgeInsets.symmetric(
-                vertical: 24.0,
-                horizontal: 12.0
-              ),
-              child: new Text(number + suffix, style: new TextStyle(
-                fontSize: 48.0,
-                fontWeight: FontWeight.bold,
-                
-              ))),
-            new Expanded(
-              child: new Divider(),
+              children: <Widget>[
+                Expanded(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: containerList.length,
+                    separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: new Color(0xFFE8E8E8)),
+                    itemBuilder: (context, index) {
+                      return containerList[index]   ;                   
+                    }
+                  )
+                ),
+              Divider(height: 20),
+              ]
             ),
-            
+          )
+                
 
-            new Column(children: [
-              new Row(children: [
-                buildButton("7"),
-                buildButton("8"),
-                buildButton("9"),
-              ]),
+            //     new Column(children: [
+            //       new Row(children: [
+            //         buildButton("7"),
+            //         buildButton("8"),
+            //         buildButton("9"),
+            //       ]),
 
-              new Row(children: [
-                buildButton("4"),
-                buildButton("5"),
-                buildButton("6"),
-              ]),
+            //       new Row(children: [
+            //         buildButton("4"),
+            //         buildButton("5"),
+            //         buildButton("6"),
+            //       ]),
 
-              new Row(children: [
-                buildButton("1"),
-                buildButton("2"),
-                buildButton("3"),
-              ]),
+            //       new Row(children: [
+            //         buildButton("1"),
+            //         buildButton("2"),
+            //         buildButton("3"),
+            //       ]),
 
-              new Row(children: [
-                buildButton("."),
-                buildButton("0"),
-                buildButton("DEL"),
-              ]),
+            //       new Row(children: [
+            //         buildButton("."),
+            //         buildButton("0"),
+            //         buildButton("DEL"),
+            //       ]),
 
-              new Row(children: [
-                buildButton("CLEAR"),
-                buildButton("ACCEPT"),
-              ])
-            ])
-          ],
-        )));
-  }
+            //       new Row(children: [
+            //         buildButton("CLEAR"),
+            //         buildButton("ACCEPT"),
+            //       ])
+                // ])
+
+    );}
 
   bool _isNumeric(String str) {
     if(str == null) {
@@ -110,5 +131,36 @@ class TransactionPageState extends State<TransactionPage>{
     );
   }
 
+
+  Widget _createContainer(String firstFieldName, String secondFieldName){
+    TextStyle fadedTextStyle =  TextStyle(
+                color: Colors.grey,
+                fontSize: 16.0);
+    TextStyle titleTextStyle =  TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0);
+
+
+
+    return new Container(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            margin: EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Text('$firstFieldName',                        
+                  textAlign: TextAlign.left,
+                  style: titleTextStyle),
+                ), 
+                Expanded(
+                  child: Text('$secondFieldName',                        
+                  textAlign: TextAlign.right,
+                  style: fadedTextStyle),
+                ),             ],
+            ),
+          );
+  }
 }
 
