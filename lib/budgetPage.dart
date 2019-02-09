@@ -145,8 +145,9 @@ class _BudgetPageState extends State<BudgetPage> {
             ),
             Expanded(
               child: 
-                ListView.builder(
+                ListView.separated(
                   itemCount: categories.length,
+                  separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: new Color(0xFFE8E8E8)),
                   itemBuilder: (context, index) {
                     final item = categories[index];
                     if (item is MainCategory) {
@@ -200,42 +201,101 @@ class _BudgetPageState extends State<BudgetPage> {
 
 
   Widget mainCategoryRow(MainCategory cat){
-    return Row(
+    TextStyle categoryTextStyle =  TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0);
+    SizedBox myBox = new SizedBox(
+                    height: 8.0,
+                    child: new Center(
+                      child: new Container(
+                        height: 8.0,
+                        color: new Color(0xFFE8E8E8),
+                      ),
+                    ),
+                  );
+    return Column(
       children: <Widget>[
-        Expanded(
-          child: Column(children: <Widget>[
-            Text(cat.name, textAlign: TextAlign.center),
-            ],) 
-        ),
-        Expanded(
-          child: Column(children: <Widget>[
-            Text('Budjeted', textAlign: TextAlign.center),
-            Text('${cat.budgeted}', textAlign: TextAlign.center)
-            ],) ,
-        ),
-        Expanded(
-          child: Column(children: <Widget>[
-            Text('Available', textAlign: TextAlign.center),
-            Text('${cat.available}', textAlign: TextAlign.center)
-            ],) ,
+        myBox,
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: <Widget>[                  
+                      Text(cat.name, 
+                        textAlign: TextAlign.left,
+                        style: categoryTextStyle
+                    ) 
+                  ],),
+                ) ,
+                Expanded(
+                  child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[                  
+                      Text('Budgeted', 
+                          textAlign: TextAlign.right,
+                          style: categoryTextStyle
+                    ),
+                    Text('${cat.budgeted}', 
+                          textAlign: TextAlign.right,
+                          style: categoryTextStyle
+                    )
+                  ],),
+                ),
+              
+                Expanded(
+                  child: Column(  
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                    
+                    Text('Available',
+                          textAlign: TextAlign.right,
+                          style: categoryTextStyle),
+                    Text('${cat.available}',
+                          textAlign: TextAlign.right,
+                          style: categoryTextStyle)
+                  ],),
+                ) ,
+              ],
+            ),
         ),
       ],
     );
   }
 
   Widget subCategoryRow(SubCategory subcat) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Text(subcat.name, textAlign: TextAlign.center),
-        ),
-        Expanded(
-          child: Text('${subcat.budgeted}', textAlign: TextAlign.center),
-        ),
-        Expanded(
-          child: Text('${subcat.available}', textAlign: TextAlign.center),
-        ),
-      ],
+    var subcategoryTextStyle = new TextStyle(
+                color: Colors.black,
+                fontSize: 16.0);
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15),
+      margin: EdgeInsets.symmetric(horizontal:10),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(subcat.name,
+                        textAlign: TextAlign.left,
+                        style: subcategoryTextStyle),
+          ),
+          Expanded(
+            child: Text('${subcat.budgeted}',
+                        textAlign: TextAlign.right,
+                        style: subcategoryTextStyle)
+          ),
+          Expanded(
+            child: Text('${subcat.available}',                         
+                        textAlign: TextAlign.right,
+                        style: subcategoryTextStyle)),
+        ],
+      ),
     );
   }
 }
