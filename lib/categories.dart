@@ -28,6 +28,16 @@ class SubCategory extends Category {
       json[DatabaseCreator.SUBCAT_NAME],
       json[DatabaseCreator.SUBCAT_BUDGETED],
       json[DatabaseCreator.SUBCAT_AVAILABLE]);
+
+  /// Convert a SubCategory into a Map. 
+  Map<String, dynamic> toMap() {
+    return {
+      DatabaseCreator.SUBCAT_ID: id,
+      DatabaseCreator.SUBCAT_NAME: name,
+      DatabaseCreator.SUBCAT_BUDGETED: budgeted,
+      DatabaseCreator.SUBCAT_AVAILABLE: available,
+    };
+  }
     
   
   
@@ -41,13 +51,21 @@ class MainCategory extends Category {
   MainCategory(int id, String name) : 
     super(id, name, 0.00, 0.00);
 
-  // Categories are imported from the database as json file
+  /// Categories are imported from the database as json file
   MainCategory.fromJson(Map<String, dynamic> json) :
     super(
       json[DatabaseCreator.CATEGORY_ID],
       json[DatabaseCreator.CATEGORY_NAME],
       0.00,
       0.00);
+
+  /// Convert a MainCategory into a Map. 
+  Map<String, dynamic> toMap() {
+    return {
+      DatabaseCreator.CATEGORY_ID: id,
+      DatabaseCreator.CATEGORY_NAME: name,
+    };
+  }
   
   
   void updateFields(){
