@@ -349,13 +349,40 @@ class SQLQueries {
     DatabaseCreator.databaseLog('Delete subcategory', sql, null, result, params);
   }
 
-  //TODO: Implements remaining delete methods
+  /// Deletes the [account] of id [account.id] from the database.
+  static Future<void> deleteAccount(Account account) async {
+    final sql = '''DELETE FROM ${DatabaseCreator.accountTable} 
+      WHERE ${DatabaseCreator.ACCOUNT_ID} == ?;''';
+    
+    List<dynamic> params = [account.id];
+    final result = await db.rawDelete(sql, params);
+    DatabaseCreator.databaseLog('Delete account', sql, null, result, params);
+  }
+
+  /// Deletes the [payee] of id [payee.id] from the database.
+  static Future<void> deletePayee(Payee payee) async {
+    final sql = '''DELETE FROM ${DatabaseCreator.payeeTable} 
+      WHERE ${DatabaseCreator.PAYEE_ID} == ?;''';
+    
+    List<dynamic> params = [payee.id];
+    final result = await db.rawDelete(sql, params);
+    DatabaseCreator.databaseLog('Delete payee', sql, null, result, params);
+  }
+
+  /// Deletes the [moneytransaction] of id [moneytransaction.id] from the database.
+  static Future<void> deleteTransaction(MoneyTransaction moneytransaction) async {
+    final sql = '''DELETE FROM ${DatabaseCreator.moneyTransactionTable} 
+      WHERE ${DatabaseCreator.MONEYTRANSACTION_ID} == ?;''';
+    
+    List<dynamic> params = [moneytransaction.id];
+    final result = await db.rawDelete(sql, params);
+    DatabaseCreator.databaseLog('Delete moneyTransaction', sql, null, result, params);
+  }
 
   //TODO: Implements other SQL queries
 
-  /// Update [category.name] of category with id [category.id] in the database.
-  /// 
-  static Future<void> updateCategory(MainCategory category) async {
+  /// Rename [category.name] of category with id [category.id] in the database.
+  static Future<void> renameCategory(MainCategory category) async {
     final sql = '''UPDATE ${DatabaseCreator.categoryTable} 
                 SET ${DatabaseCreator.CATEGORY_NAME} = ?
                 WHERE ${DatabaseCreator.CATEGORY_ID} == ?
@@ -363,8 +390,47 @@ class SQLQueries {
     
     List<dynamic> params = [category.name, category.id];
     final result = await db.rawUpdate(sql, params);
-    DatabaseCreator.databaseLog('Update category', sql, null, result, params);
+    DatabaseCreator.databaseLog('Rename category', sql, null, result, params);
   }
+
+  /// Rename [subcategory.name] of subcategory with id [subcategory.id] in the database.
+  static Future<void> renameSubcategory(SubCategory subcategory) async {
+    final sql = '''UPDATE ${DatabaseCreator.subcategoryTable} 
+                SET ${DatabaseCreator.SUBCAT_NAME} = ?
+                WHERE ${DatabaseCreator.SUBCAT_ID} == ?
+                ;''';
+    
+    List<dynamic> params = [subcategory.name, subcategory.id];
+    final result = await db.rawUpdate(sql, params);
+    DatabaseCreator.databaseLog('Rename subcategory', sql, null, result, params);
+  }
+
+  /// Rename [account.name] of account with id [account.id] in the database.
+  static Future<void> renameAccount(Account account) async {
+    final sql = '''UPDATE ${DatabaseCreator.accountTable} 
+                SET ${DatabaseCreator.ACCOUNT_NAME} = ?
+                WHERE ${DatabaseCreator.ACCOUNT_ID} == ?
+                ;''';
+    
+    List<dynamic> params = [account.name, account.id];
+    final result = await db.rawUpdate(sql, params);
+    DatabaseCreator.databaseLog('Rename account', sql, null, result, params);
+  }
+
+  /// Rename [payee.name] of payee with id [payee.id] in the database.
+  static Future<void> renamePayee(Payee payee) async {
+    final sql = '''UPDATE ${DatabaseCreator.payeeTable} 
+                SET ${DatabaseCreator.PAYEE_NAME} = ?
+                WHERE ${DatabaseCreator.PAYEE_ID} == ?
+                ;''';
+    
+    List<dynamic> params = [payee.name, payee.id];
+    final result = await db.rawUpdate(sql, params);
+    DatabaseCreator.databaseLog('Rename payee', sql, null, result, params);
+  }
+
+  //TODO: Update other parameters than name (e.g. balance)
+  //TODO: Transaction update
 
   /// Returns the number of categories in the database.
   /// 
@@ -393,7 +459,7 @@ class SQLQueries {
     return count;
   }
 
-  /// Returns the number of accounts in the database.
+  /// Returns the number of payees in the database.
   /// 
   /// Used as [Payee.id] to create a new [Payee].
   static Future<int> payeeCount() async {
