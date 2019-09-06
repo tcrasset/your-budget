@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mybudget/categories.dart';
 
 //Custom imports
-import 'addCategory.dart';
+import 'addCategoryPage.dart';
 
 class MyBudget extends StatelessWidget {
   // This widget is the root of your application.
@@ -30,7 +30,7 @@ class BudgetPage extends StatefulWidget {
 
 class _BudgetPageState extends State<BudgetPage> {
 
-  List<Category> categories = [];
+  List<Category> categories = []; //List containing MainCategories and SubCategories
 
   @override
   void initState() {
@@ -75,6 +75,7 @@ class _BudgetPageState extends State<BudgetPage> {
           children: <Widget>[
             Row(
               children: <Widget>[
+                // Button for adding new Category (goes to new Page)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal:8),
                   child: RaisedButton(
@@ -88,6 +89,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     },
                   ),
                 ),
+                // Button for adding new SubCategory (goes to new Page)
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
                   child: RaisedButton(
@@ -103,6 +105,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 ),
               ],
             ),
+            /// ListView with MainCategory and/or SubCategory rows (with custom Divider)
             Expanded(
               child: 
                 ListView.separated(
@@ -123,6 +126,9 @@ class _BudgetPageState extends State<BudgetPage> {
     );
   }
 
+  /// Navigates to a new page to add a Category
+  /// That page returns a new name , and setState updates the current
+  /// name shown on the ListView
   _navigateAndAddCategory(BuildContext context) async {
     final newCategoryName = await Navigator.push(
             context,
@@ -134,7 +140,9 @@ class _BudgetPageState extends State<BudgetPage> {
     });
   }
 
-
+  /// Navigates to a new page to add a SubCategory
+  /// That page returns a new name , and setState updates the current
+  /// name shown on the ListView
   _navigateAndAddSubcategory(BuildContext context) async {
     final returnElements = await Navigator.push(
             context,
@@ -148,6 +156,7 @@ class _BudgetPageState extends State<BudgetPage> {
     }); 
   }
 
+  /// Updates the list of categories/subcategories in the ListView after a change
   _updateCategoriesList() {
     List<Category> updatedList = [];
     for(var cat in categories){
@@ -159,7 +168,7 @@ class _BudgetPageState extends State<BudgetPage> {
     categories = updatedList;
   }
 
-
+  /// Widget cointaining and displaying the information of the ategory [cat]
   Widget mainCategoryRow(MainCategory cat){
     TextStyle categoryTextStyle =  TextStyle(
                     color: Colors.black,
@@ -231,6 +240,7 @@ class _BudgetPageState extends State<BudgetPage> {
     );
   }
 
+  /// Widget cointaining and displaying the information of the SubCategory [subcat]
   Widget subCategoryRow(SubCategory subcat) {
     var subcategoryTextStyle = new TextStyle(
                 color: Colors.black,
@@ -260,25 +270,6 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 }
 
-
-// class Helper {
-//   final String path;
-//   Helper(this.path);
-//   Database _db;
-//   final _lock = new Lock();
-
-//   Future<Database> getDb() async {
-//     if (_db == null) {
-//       await _lock.synchronized(() async {
-//         // Check again once entering the synchronized block
-//         if (_db == null) {
-//           _db = await openDatabase(path);
-//         }
-//       });
-//     }
-//     return _db;
-//   }
-// }
 
 
 
