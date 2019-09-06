@@ -30,6 +30,8 @@ class BudgetPage extends StatefulWidget {
 
 class _BudgetPageState extends State<BudgetPage> {
 
+  //TODO: Edit and delete subcategory
+
   List<Category> categories = []; //List containing MainCategories and SubCategories
 
   @override
@@ -117,7 +119,9 @@ class _BudgetPageState extends State<BudgetPage> {
                       return mainCategoryRow(item);
                     } else if (item is SubCategory) {
                       return subCategoryRow(item);
-                    } 
+                    } else {
+                      return null;
+                    }
                   },
                 ),
             )
@@ -134,10 +138,13 @@ class _BudgetPageState extends State<BudgetPage> {
             context,
             MaterialPageRoute(builder: (context) => AddCategoryRoute()),
           );
-    setState(() {
-       categories.add(MainCategory(1,newCategoryName));
-       _updateCategoriesList();
-    });
+    
+    if(newCategoryName != null) {
+      setState(() {
+        categories.add(MainCategory(1, newCategoryName));
+        _updateCategoriesList();
+      });
+    }
   }
 
   /// Navigates to a new page to add a SubCategory
@@ -149,11 +156,13 @@ class _BudgetPageState extends State<BudgetPage> {
             MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
           );
 
-    SubCategory newSub4 =  SubCategory(1,1,returnElements[1],0,0);
-    setState(() {
-      returnElements[0].addSubcategory(newSub4);
-      _updateCategoriesList();
-    }); 
+    if(returnElements != null) {
+      SubCategory newSub4 =  SubCategory(1,1,returnElements[1],0,0);
+      setState(() {
+        returnElements[0].addSubcategory(newSub4);
+        _updateCategoriesList();
+      }); 
+    }
   }
 
   /// Updates the list of categories/subcategories in the ListView after a change

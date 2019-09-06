@@ -43,9 +43,8 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
                 Text("Add category"),
                 TextFormField(
                   validator: (value) {
-                    if (value.isEmpty) {
-                      return 'Please enter some text';
-                    }
+                    if (value.isEmpty) {return 'Please enter some text';}
+                    return null;
                   },
                   controller:myCatController,
                 ),
@@ -54,7 +53,10 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
                   onPressed: () {
-                    Navigator.pop(context, '${myCatController.text}');
+                    // Check that the form is valid
+                    if (_catFormKey.currentState.validate()) {
+                      Navigator.pop(context, '${myCatController.text}');
+                    }
                   },
                   child: Text('Add category ${myCatController.text}'),
                 ),
@@ -116,6 +118,7 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                                                 child: new Text('${category.name}'),
                                               );
                                             }
+                                            return null;
                                           }).toList();
 
     dropdownMenuOptions.removeWhere((category) => category == null);
@@ -136,6 +139,7 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                     if (value.isEmpty) {
                       return 'Please enter some text';
                     }
+                    return null;
                   },
                   controller:mySubcatController,
                 ),
@@ -153,9 +157,11 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
                     onPressed: () {
-                      var returnElement = [selectedCategory , mySubcatController.text];
-                      Navigator.pop(context, returnElement);
-
+                    // Check that the form is valid
+                      if (_subcatFormKey.currentState.validate()) {
+                        var returnElement = [selectedCategory , mySubcatController.text];
+                        Navigator.pop(context, returnElement);
+                      }
                     },
                     child: Text("Add subcategory ${mySubcatController.text} to ${selectedCategory.name}"),
                   ),
