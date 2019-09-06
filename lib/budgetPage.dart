@@ -1,62 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:mybudget/categories.dart';
+
+//Custom imports
 import 'addCategory.dart';
 
-abstract class Category {
-  String name;
-  double budgeted = 0.00;
-  double available = 0.00;
-
-  Category(this.name);
-}
-
-class SubCategory extends Category {
-
-  SubCategory(String name): super(name);
-  //TODO: Edit and delete subcategory
-}
-
-class MainCategory extends Category {
-
-  List<SubCategory> subcategories = [];
-
-  MainCategory(String name): super(name);
-
-
-  void updateFields(){
-    double budgeted = 0;
-    double available = 0;
-    subcategories.forEach((SubCategory cat){budgeted += cat.budgeted;});
-    subcategories.forEach((SubCategory cat){available += cat.available;});
-
-    this.budgeted = budgeted;
-    this.available = available;
+class MyBudget extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My Very Own Budget App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: BudgetPage(title: 'Bugdet Page'),
+    );
   }
-
-  void addSubcategory(SubCategory newSub){// String subCategoryName, double budgeted, double available){
-  //   SubCategory newSub = SubCategory(name: subCategoryName, 
-  //                                   budgeted : budgeted,
-  //                                   available : available);
-    print("Adding ${newSub.name} to ${this.name}");
-    this.subcategories.add(newSub);
-    updateFields();
-  }
-
-  //TODO: Edit and delete category
 }
-
-// class MyBudget extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'My Very Own Budget App',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: BudgetPage(title: 'Bugdet Page'),
-//     );
-//   }
-// }
 
 class BudgetPage extends StatefulWidget {
   //First page you see when opening the app
@@ -77,9 +37,9 @@ class _BudgetPageState extends State<BudgetPage> {
     //Initialize the state to get the categories from the Widget
     super.initState();
 
-    MainCategory savings = MainCategory("Savings");
-    SubCategory newSub1 =  SubCategory("Car");
-    SubCategory newSub2 =  SubCategory("Laptop");
+    MainCategory savings = MainCategory(1,"Savings");
+    SubCategory newSub1 =  SubCategory(1,1, "Car",0,0);
+    SubCategory newSub2 =  SubCategory(2,1, "Laptop",0,0);
     newSub1.budgeted = 1000.00;
     newSub1.available = 754.00;
     newSub2.budgeted = 1400.00;
@@ -87,9 +47,9 @@ class _BudgetPageState extends State<BudgetPage> {
     savings.addSubcategory(newSub1);
     savings.addSubcategory(newSub2);
 
-    MainCategory funMoney = MainCategory("FunMoney");
-    SubCategory newSub3 =  SubCategory("Going out");
-    SubCategory newSub4 =  SubCategory("Eating out");
+    MainCategory funMoney = MainCategory(1,"FunMoney");
+    SubCategory newSub3 =  SubCategory(1,1,"Going out",0,0);
+    SubCategory newSub4 =  SubCategory(1,1,"Eating out",0,0);
     newSub3.budgeted = 50.00;
     newSub3.available = 36.00;
     newSub4.budgeted = 25.00;
@@ -154,7 +114,7 @@ class _BudgetPageState extends State<BudgetPage> {
                       return mainCategoryRow(item);
                     } else if (item is SubCategory) {
                       return subCategoryRow(item);
-                    }
+                    } 
                   },
                 ),
             )
@@ -169,7 +129,7 @@ class _BudgetPageState extends State<BudgetPage> {
             MaterialPageRoute(builder: (context) => AddCategoryRoute()),
           );
     setState(() {
-       categories.add(MainCategory(newCategoryName));
+       categories.add(MainCategory(1,newCategoryName));
        _updateCategoriesList();
     });
   }
@@ -181,7 +141,7 @@ class _BudgetPageState extends State<BudgetPage> {
             MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
           );
 
-    SubCategory newSub4 =  SubCategory(returnElements[1]);
+    SubCategory newSub4 =  SubCategory(1,1,returnElements[1],0,0);
     setState(() {
       returnElements[0].addSubcategory(newSub4);
       _updateCategoriesList();
@@ -243,10 +203,10 @@ class _BudgetPageState extends State<BudgetPage> {
                           textAlign: TextAlign.right,
                           style: categoryTextStyle
                     ),
-                    Text('${cat.budgeted}', 
-                          textAlign: TextAlign.right,
-                          style: categoryTextStyle
-                    )
+                      Text('${cat.budgeted}', 
+                            textAlign: TextAlign.right,
+                            style: categoryTextStyle
+                      )
                   ],),
                 ),
               
@@ -299,4 +259,30 @@ class _BudgetPageState extends State<BudgetPage> {
     );
   }
 }
+
+
+// class Helper {
+//   final String path;
+//   Helper(this.path);
+//   Database _db;
+//   final _lock = new Lock();
+
+//   Future<Database> getDb() async {
+//     if (_db == null) {
+//       await _lock.synchronized(() async {
+//         // Check again once entering the synchronized block
+//         if (_db == null) {
+//           _db = await openDatabase(path);
+//         }
+//       });
+//     }
+//     return _db;
+//   }
+// }
+
+
+
+
+
+
 

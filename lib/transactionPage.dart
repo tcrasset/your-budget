@@ -13,7 +13,8 @@ class TransactionPageState extends State<TransactionPage>{
 
   @override
   Widget build(BuildContext context) {
-    List<Container> containerList= [
+
+    List<Widget> containerList= [
           Container(
             alignment: Alignment.centerRight,
             padding: new EdgeInsets.symmetric(
@@ -25,13 +26,13 @@ class TransactionPageState extends State<TransactionPage>{
             )
           ),
           
-          _createContainer('Payee', 'Select payee'),
-          _createContainer('Category', 'Select category'),
-          _createContainer('Account', 'Select account'),
-          _createContainer('Date', 'Select date'),
-          _createContainer('Repeat', 'Never'),
-          _createContainer('Memo', 'Optional'),
-          _createContainer('Color', 'Default'),
+          _createContainer('Payee', 'Select payee',(){}),
+          _createContainer('Category', 'Select category',(){}),
+          _createContainer('Account', 'Select account',(){}),
+          _createContainer('Date', 'Select date',(){}),
+          _createContainer('Repeat', 'Never',(){}),
+          _createContainer('Memo', 'Optional',(){}),
+          _createContainer('Color', 'Default',(){}),
     ];
     return new Scaffold(
         appBar: new AppBar(
@@ -128,7 +129,7 @@ class TransactionPageState extends State<TransactionPage>{
   }
 
 
-  Widget _createContainer(String firstFieldName, String secondFieldName){
+  Widget _createContainer(String firstFieldName, String secondFieldName, Function _tapFunction){
     TextStyle fadedTextStyle =  TextStyle(
                 color: Colors.grey,
                 fontSize: 16.0);
@@ -137,26 +138,41 @@ class TransactionPageState extends State<TransactionPage>{
                 fontWeight: FontWeight.bold,
                 fontSize: 16.0);
 
-
-
-    return new Container(
-            padding: EdgeInsets.symmetric(vertical: 15),
-            margin: EdgeInsets.symmetric(horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Expanded(
-                  child: Text('$firstFieldName',                        
-                  textAlign: TextAlign.left,
-                  style: titleTextStyle),
-                ), 
-                Expanded(
-                  child: Text('$secondFieldName',                        
-                  textAlign: TextAlign.right,
-                  style: fadedTextStyle),
-                ),             ],
+    return InkWell(
+          onTap: _tapFunction,
+          child: new Container(
+              padding: EdgeInsets.symmetric(vertical: 15),
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: Text('$firstFieldName',                        
+                    textAlign: TextAlign.left,
+                    style: titleTextStyle),
+                  ), 
+                  Expanded(
+                    child: Text('$secondFieldName',                        
+                    textAlign: TextAlign.right,
+                    style: fadedTextStyle),
+                  ),             ],
+              ),
             ),
-          );
+    );
   }
+
+
+  //   _navigateAndChooseSubcategory(BuildContext context) async {
+  //   final chosenSubcategory = await Navigator.push(
+  //           context,
+  //           MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
+  //         );
+
+  //   SubCategory newSub4 =  SubCategory(returnElements[1]);
+  //   setState(() {
+  //     returnElements[0].addSubcategory(newSub4);
+  //     _updateCategoriesList();
+  //   }); 
+  // }
 }
 
