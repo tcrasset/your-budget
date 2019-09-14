@@ -149,7 +149,7 @@ class DatabaseCreator {
 class SQLQueries {
 
   /// Returns the list of all [MainCategory] in the database.
-  static Future<List<Category>> getCategories() async {
+  static Future<List<MainCategory>> getCategories() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.categoryTable}''';
     final data = await db.rawQuery(sql);
     List<MainCategory> categories = List();
@@ -163,7 +163,7 @@ class SQLQueries {
   }
 
   /// Returns the list of all [SubCategory] in the database.
-  static Future<List<Category>> getSubCategories() async {
+  static Future<List<SubCategory>> getSubCategories() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.subcategoryTable};''';
     final data = await db.rawQuery(sql);
     List<SubCategory> subcategories = List();

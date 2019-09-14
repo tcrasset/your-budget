@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/categories.dart';
 import 'package:mybudget/database_creator.dart';
 import 'package:mybudget/budgetPage.dart';
 import 'package:mybudget/transactionPage.dart';

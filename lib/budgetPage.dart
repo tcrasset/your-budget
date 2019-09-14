@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/categories.dart';
+import 'package:mybudget/database_creator.dart';
 
 //Custom imports
 import 'addCategoryPage.dart';
@@ -32,13 +33,13 @@ class _BudgetPageState extends State<BudgetPage> {
 
   //TODO: Edit and delete subcategory
 
-  List<Category> categories = []; //List containing MainCategories and SubCategories
+  List<Category> categories; //List containing MainCategories and SubCategories
 
   @override
   void initState() {
     //Initialize the state to get the categories from the Widget
     super.initState();
-
+    /*
     MainCategory savings = MainCategory(1,"Savings");
     SubCategory newSub1 =  SubCategory(1,1, "Car",0,0);
     SubCategory newSub2 =  SubCategory(2,1, "Laptop",0,0);
@@ -63,11 +64,31 @@ class _BudgetPageState extends State<BudgetPage> {
     savings.subcategories.forEach((subcat) => categories.add(subcat));
     categories.add(funMoney);
     funMoney.subcategories.forEach((subcat) => categories.add(subcat));
-    
+    */
+
+    //Waiting for the database to get back to us
+    SQLQueries.getCategories().then((dbCategories) {
+      print("Categories in database:");
+      dbCategories.forEach((cat) => print(cat.name));
+      //categories..addAll(dbCategories);
+      
+      //When it does, we update the state of the widget
+      setState(() {
+        categories = dbCategories;
+      });
+      
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+
+    //While waiting for the database, return empty container
+    if(categories == null) {
+      return new Container();
+    }
+
+    // When the database is loaded, show the complete page
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),

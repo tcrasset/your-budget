@@ -38,10 +38,6 @@ class SubCategory extends Category {
       DatabaseCreator.SUBCAT_AVAILABLE: available,
     };
   }
-    
-  
-  
-  //TODO: Edit and delete subcategory
 }
 
 class MainCategory extends Category {
@@ -86,6 +82,4 @@ class MainCategory extends Category {
     this.subcategories.add(newSub);
     updateFields();
   }
-
-  //TODO: Edit and delete category
 }

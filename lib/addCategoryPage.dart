@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mybudget/categories.dart';
+import 'package:mybudget/database_creator.dart';
 //import 'budgetPage.dart';
 
 
@@ -16,7 +17,7 @@ class AddCategoryRoute extends StatefulWidget {
 class AddCategoryRouteState extends State<AddCategoryRoute> {
 
 
-  final _catFormKey = GlobalKey<FormState>();
+  final _catFormKey = GlobalKey<FormState>(); //FormCheck
   final myCatController = TextEditingController();
   
   @override
@@ -52,9 +53,12 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: RaisedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     // Check that the form is valid
                     if (_catFormKey.currentState.validate()) {
+                      int catCount = await SQLQueries.categoryCount();
+                      MainCategory category = MainCategory(catCount, myCatController.text);
+                      SQLQueries.addCategory(category);
                       Navigator.pop(context, '${myCatController.text}');
                     }
                   },
@@ -85,8 +89,8 @@ class AddSubcategoryRoute extends StatefulWidget {
 class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
 
 
-  final _subcatFormKey = GlobalKey<FormState>();
-  final mySubcatController = TextEditingController();
+  final _subcatFormKey = GlobalKey<FormState>(); //FormCheck
+  final mySubcatController = TextEditingController(); 
   
   var selectedCategory;
   List<Category> categories;
@@ -159,6 +163,7 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                     onPressed: () {
                     // Check that the form is valid
                       if (_subcatFormKey.currentState.validate()) {
+                      //TODO: Add subcategory to database
                         var returnElement = [selectedCategory , mySubcatController.text];
                         Navigator.pop(context, returnElement);
                       }
