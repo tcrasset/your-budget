@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/categories.dart';
-import 'package:mybudget/database_creator.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+
 
 //Custom imports
 import 'addCategoryPage.dart';
+import 'package:mybudget/categories.dart';
+import 'package:mybudget/database_creator.dart';
 
 class MyBudget extends StatelessWidget {
   // This widget is the root of your application.
@@ -46,16 +49,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
       List<MainCategory> dbMaincategories = responses[0]; 
       List<SubCategory> dbSubcategories = responses[1];
-
-/*      if(dbMaincategories.isNotEmpty){
-        print("Categories in database:");
-        dbMaincategories.forEach((cat) => print(cat.name));
-      }
-      if(dbSubcategories.isNotEmpty){
-        print("Subcategories in database:");
-        dbSubcategories.forEach((subcat) => print(subcat.name));
-      }
-*/      
+   
       //To each category, add the correspondent subcategories
       dbMaincategories.forEach((cat) {
         List <SubCategory> toAdd= dbSubcategories.where((subcat) => subcat.parentId == cat.id).toList();
@@ -131,7 +125,7 @@ class _BudgetPageState extends State<BudgetPage> {
                     if (item is MainCategory) {
                       return mainCategoryRow(item);
                     } else if (item is SubCategory) {
-                      return subCategoryRow(item);
+                      return new subcategoryROW(subcat: item);
                     } else {
                       return null;
                     }
@@ -243,8 +237,8 @@ class _BudgetPageState extends State<BudgetPage> {
               
                 Expanded(
                   child: Column(  
-                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                     
                     Text('Available',
@@ -285,13 +279,181 @@ class _BudgetPageState extends State<BudgetPage> {
           Expanded(
             child: Text('${subcat.available}',                         
                         textAlign: TextAlign.right,
-                        style: subcategoryTextStyle)),
+                        style: subcategoryTextStyle)
+          ),
+
+          Expanded(
+            child: TextFormField(
+                decoration: new InputDecoration.collapsed(hintText: ""),
+                //keyboardType: TextInputType.numberWithOptions(),
+                controller: new MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€'),
+                // inputFormatters: [WhitelistingTextInputFormatter(RegExp(r"^\d+(\.\d+)*$"))],
+                textAlign: TextAlign.right,
+                style: subcategoryTextStyle,
+                onSaved: (String value) {
+                  // This optional block of code can be used to run
+                  // code when the user saves the form.
+                  //TODO: Save to database
+                },
+              ),
+          )
+        ],
+      ),
+    );
+  }
+
+}
+
+class maincategoryROW extends StatefulWidget {
+
+  MainCategory cat;
+  maincategoryROW({Key key, @required this.cat}): super(key: key);
+
+  @override
+  _maincategoryROWState createState() => _maincategoryROWState();
+  
+}
+
+class _maincategoryROWState extends State<maincategoryROW> {
+
+  TextStyle _categoryTextStyle =  TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0);
+  SizedBox myBox = new SizedBox(
+                  height: 8.0,
+                  child: new Center(
+                    child: new Container(
+                      height: 8.0,
+                      color: new Color(0xFFE8E8E8),
+                    ),
+                  ),
+                );
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        myBox,
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: <Widget>[                  
+                      Text(widget.cat.name, 
+                        textAlign: TextAlign.left,
+                        style: _categoryTextStyle
+                    ) 
+                  ],),
+                ) ,
+                Expanded(
+                  child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[                  
+                      Text('Budgeted', 
+                          textAlign: TextAlign.right,
+                          style: _categoryTextStyle
+                    ),
+                      Text('${widget.cat.budgeted}', 
+                            textAlign: TextAlign.right,
+                            style: _categoryTextStyle
+                      )
+                  ],),
+                ),
+              
+                Expanded(
+                  child: Column(  
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Available',
+                            textAlign: TextAlign.right,
+                            style: _categoryTextStyle),
+                      Text('${widget.cat.available}',
+                            textAlign: TextAlign.right,
+                            style: _categoryTextStyle)
+                    ],),
+                ) ,
+              ],
+            ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+class subcategoryROW extends StatefulWidget {
+
+  SubCategory subcat;
+  subcategoryROW({Key key, @required this.subcat}): super(key: key);
+
+  @override
+  _subcategoryROWState createState() =>_subcategoryROWState();
+
+}
+
+class _subcategoryROWState extends State<subcategoryROW> {
+
+  var _budgetedController = new MoneyMaskedTextController(decimalSeparator: '.',
+                                                          thousandSeparator: ' ',
+                                                          rightSymbol: ' \€');
+    
+  var _availableController = new MoneyMaskedTextController(decimalSeparator: '.',
+                                                            thousandSeparator: ' ',
+                                                            rightSymbol: ' \€');
+
+  var _subcategoryTextStyle = new TextStyle(
+              color: Colors.black,
+              fontSize: 16.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15),
+      margin: EdgeInsets.symmetric(horizontal:10),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Text(widget.subcat.name,
+                        textAlign: TextAlign.left,
+                        style: _subcategoryTextStyle),
+          ),
+          Expanded(
+            child: TextFormField(
+                decoration: new InputDecoration.collapsed(hintText: "${widget.subcat.available}",),
+                keyboardType: TextInputType.numberWithOptions(),
+                controller: _availableController,
+                inputFormatters:[LengthLimitingTextInputFormatter(12)], //To remove length counter
+                textAlign: TextAlign.right,
+                style: _subcategoryTextStyle,
+                onSaved: (String value) {},
+            ),
+          ),
+          Expanded(
+            child: TextFormField(
+                decoration: new InputDecoration.collapsed(hintText: "${widget.subcat.budgeted}"),
+                keyboardType: TextInputType.numberWithOptions(),
+                controller: _availableController,
+                inputFormatters:[LengthLimitingTextInputFormatter(12)], //To remove length counter
+                textAlign: TextAlign.right,
+                style: _subcategoryTextStyle,
+                onSaved: (String value) {},
+            ),
+          )
         ],
       ),
     );
   }
 }
-
 
 
 
