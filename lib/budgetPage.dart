@@ -33,58 +33,50 @@ class _BudgetPageState extends State<BudgetPage> {
 
   //TODO: Edit and delete subcategory
 
-  List<Category> categories; //List containing MainCategories and SubCategories
+  List<Category> allCategoryList; //List containing MainCategories and SubCategories
 
   @override
   void initState() {
     //Initialize the state to get the categories from the Widget
     super.initState();
-    /*
-    MainCategory savings = MainCategory(1,"Savings");
-    SubCategory newSub1 =  SubCategory(1,1, "Car",0,0);
-    SubCategory newSub2 =  SubCategory(2,1, "Laptop",0,0);
-    newSub1.budgeted = 1000.00;
-    newSub1.available = 754.00;
-    newSub2.budgeted = 1400.00;
-    newSub2.available = 888.00;
-    savings.addSubcategory(newSub1);
-    savings.addSubcategory(newSub2);
-
-    MainCategory funMoney = MainCategory(1,"FunMoney");
-    SubCategory newSub3 =  SubCategory(1,1,"Going out",0,0);
-    SubCategory newSub4 =  SubCategory(1,1,"Eating out",0,0);
-    newSub3.budgeted = 50.00;
-    newSub3.available = 36.00;
-    newSub4.budgeted = 25.00;
-    newSub4.available = 25.00;
-    funMoney.addSubcategory(newSub3);
-    funMoney.addSubcategory(newSub4);
-
-    categories.add(savings);
-    savings.subcategories.forEach((subcat) => categories.add(subcat));
-    categories.add(funMoney);
-    funMoney.subcategories.forEach((subcat) => categories.add(subcat));
-    */
-
+    
     //Waiting for the database to get back to us
-    SQLQueries.getCategories().then((dbCategories) {
-      print("Categories in database:");
-      dbCategories.forEach((cat) => print(cat.name));
-      //categories..addAll(dbCategories);
+    Future.wait([SQLQueries.getCategories(), SQLQueries.getSubCategories()])
+    .then((List responses) {
+
+      List<MainCategory> dbMaincategories = responses[0]; 
+      List<SubCategory> dbSubcategories = responses[1];
+
+/*      if(dbMaincategories.isNotEmpty){
+        print("Categories in database:");
+        dbMaincategories.forEach((cat) => print(cat.name));
+      }
+      if(dbSubcategories.isNotEmpty){
+        print("Subcategories in database:");
+        dbSubcategories.forEach((subcat) => print(subcat.name));
+      }
+*/      
+      //To each category, add the correspondent subcategories
+      dbMaincategories.forEach((cat) {
+        List <SubCategory> toAdd= dbSubcategories.where((subcat) => subcat.parentId == cat.id).toList();
+        cat.addMultipleSubcategories(toAdd);
+      });
       
       //When it does, we update the state of the widget
       setState(() {
-        categories = dbCategories;
+        allCategoryList = dbMaincategories;
+        _updateAllCategoryList();
       });
       
-    });
+    }).catchError((e) =>  print('Caught error: $e'));
   }
+  
 
   @override
   Widget build(BuildContext context) {
 
     //While waiting for the database, return empty container
-    if(categories == null) {
+    if(allCategoryList == null) {
       return new Container();
     }
 
@@ -132,10 +124,10 @@ class _BudgetPageState extends State<BudgetPage> {
             Expanded(
               child: 
                 ListView.separated(
-                  itemCount: categories.length,
+                  itemCount: allCategoryList.length,
                   separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: new Color(0xFFE8E8E8)),
                   itemBuilder: (context, index) {
-                    final item = categories[index];
+                    final item = allCategoryList[index];
                     if (item is MainCategory) {
                       return mainCategoryRow(item);
                     } else if (item is SubCategory) {
@@ -162,8 +154,8 @@ class _BudgetPageState extends State<BudgetPage> {
     
     if(newCategoryName != null) {
       setState(() {
-        categories.add(MainCategory(1, newCategoryName));
-        _updateCategoriesList();
+        allCategoryList.add(MainCategory(1, newCategoryName));
+        _updateAllCategoryList();
       });
     }
   }
@@ -174,31 +166,31 @@ class _BudgetPageState extends State<BudgetPage> {
   _navigateAndAddSubcategory(BuildContext context) async {
     final returnElements = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
+            MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: allCategoryList)),
           );
 
     if(returnElements != null) {
       SubCategory newSub4 =  SubCategory(1,1,returnElements[1],0,0);
       setState(() {
         returnElements[0].addSubcategory(newSub4);
-        _updateCategoriesList();
+        _updateAllCategoryList();
       }); 
     }
   }
 
   /// Updates the list of categories/subcategories in the ListView after a change
-  _updateCategoriesList() {
+  _updateAllCategoryList() {
     List<Category> updatedList = [];
-    for(var cat in categories){
+    for(var cat in allCategoryList){
       if(cat is MainCategory){
         updatedList.add(cat);
         cat.subcategories.forEach((subcat) => updatedList.add(subcat));
       }
     }
-    categories = updatedList;
+    allCategoryList = updatedList;
   }
 
-  /// Widget cointaining and displaying the information of the ategory [cat]
+  /// Widget cointaining and displaying the information of the category [cat]
   Widget mainCategoryRow(MainCategory cat){
     TextStyle categoryTextStyle =  TextStyle(
                     color: Colors.black,

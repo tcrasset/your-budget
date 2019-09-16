@@ -9,7 +9,6 @@ class Category {
 
   Category(this.id, this.name, this.budgeted, this.available);
 
-  //TODO: Combine database creation with frontend creation
 }
 
 class SubCategory extends Category {
@@ -42,7 +41,7 @@ class SubCategory extends Category {
 
 class MainCategory extends Category {
 
-  List<SubCategory> subcategories = [];
+  List<SubCategory> _subcategories = [];
 
   MainCategory(int id, String name) : 
     super(id, name, 0.00, 0.00);
@@ -62,24 +61,32 @@ class MainCategory extends Category {
       DatabaseCreator.CATEGORY_NAME: name,
     };
   }
-  
-  
+
+  List<SubCategory> get subcategories {
+    return _subcategories;
+  }
+    
   void updateFields(){
     double budgeted = 0;
     double available = 0;
-    subcategories.forEach((SubCategory cat){budgeted += cat.budgeted;});
-    subcategories.forEach((SubCategory cat){available += cat.available;});
+    this._subcategories.forEach((SubCategory cat){budgeted += cat.budgeted;});
+    this._subcategories.forEach((SubCategory cat){available += cat.available;});
 
     this.budgeted = budgeted;
     this.available = available;
   }
 
-  void addSubcategory(SubCategory newSub){// String subCategoryName, double budgeted, double available){
-  //   SubCategory newSub = SubCategory(name: subCategoryName, 
-  //                                   budgeted : budgeted,
-  //                                   available : available);
+  void addSubcategory(SubCategory newSub){
     print("Adding ${newSub.name} to ${this.name}");
-    this.subcategories.add(newSub);
+    this._subcategories.add(newSub);
+    updateFields();
+  }
+
+  void addMultipleSubcategories(List<SubCategory> subcategories){
+    subcategories.forEach((sub) {
+      this._subcategories.add(sub);
+      print("Adding ${sub.name} to ${this.name}");
+    });
     updateFields();
   }
 }

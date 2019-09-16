@@ -115,9 +115,9 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
   Widget build(BuildContext context) {
 
     //Only take categories to display in the dropdown menu
-    List<DropdownMenuItem <Category>> dropdownMenuOptions = categories.map((Category category) {
+    List<DropdownMenuItem <MainCategory>> dropdownMenuOptions = categories.map((Category category) {
                                             if (category is MainCategory){
-                                              return DropdownMenuItem<Category>(
+                                              return DropdownMenuItem<MainCategory>(
                                                 value: category,
                                                 child: new Text('${category.name}'),
                                               );
@@ -160,11 +160,19 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
-                    onPressed: () {
-                    // Check that the form is valid
+                    onPressed: () async {
+                      // Check that the form is valid
                       if (_subcatFormKey.currentState.validate()) {
-                      //TODO: Add subcategory to database
-                        var returnElement = [selectedCategory , mySubcatController.text];
+                        //Add subcategory to database
+                        int subcatCount = await SQLQueries.subcategoryCount();
+                        SubCategory subcategory = SubCategory(subcatCount, 
+                                                              selectedCategory.id, 
+                                                              mySubcatController.text,
+                                                              0.00,
+                                                              0.00);
+                        SQLQueries.addSubcategory(subcategory);
+                        var returnElement = [selectedCategory ,
+                                              mySubcatController.text];
                         Navigator.pop(context, returnElement);
                       }
                     },
