@@ -6,7 +6,7 @@ import 'package:path/path.dart';
 import 'dart:async';
 import 'dart:io';
 
-
+//Global variable so as not to handle concurrency issues
 Database db;
 
 class DatabaseCreator {
@@ -381,8 +381,10 @@ class SQLQueries {
 
   //TODO: Implements other SQL queries
 
-  /// Rename [category.name] of category with id [category.id] in the database.
-  static Future<void> renameCategory(MainCategory category) async {
+  /// Update category with id [category.id] in the database.
+  /// 
+  /// Fields that can be changed [DatabaseCreator.CATEGORY_NAME]
+  static Future<void> updateCategory(MainCategory category) async {
     final sql = '''UPDATE ${DatabaseCreator.categoryTable} 
                 SET ${DatabaseCreator.CATEGORY_NAME} = ?
                 WHERE ${DatabaseCreator.CATEGORY_ID} == ?
@@ -390,34 +392,49 @@ class SQLQueries {
     
     List<dynamic> params = [category.name, category.id];
     final result = await db.rawUpdate(sql, params);
-    DatabaseCreator.databaseLog('Rename category', sql, null, result, params);
+    DatabaseCreator.databaseLog('Update category', sql, null, result, params);
   }
 
-  /// Rename [subcategory.name] of subcategory with id [subcategory.id] in the database.
-  static Future<void> renameSubcategory(SubCategory subcategory) async {
+  /// Update subcategory with id [subcategory.id] in the database.
+  /// 
+  /// Fields that can be changed are [subcategory.name], 
+  /// [subcategory.budgeted] and [subcategory.available].
+  static Future<void> updateSubcategory(SubCategory subcategory) async {    
     final sql = '''UPDATE ${DatabaseCreator.subcategoryTable} 
-                SET ${DatabaseCreator.SUBCAT_NAME} = ?
-                WHERE ${DatabaseCreator.SUBCAT_ID} == ?
-                ;''';
-    
-    List<dynamic> params = [subcategory.name, subcategory.id];
+                    SET ${DatabaseCreator.SUBCAT_NAME} = ?,
+                    ${DatabaseCreator.SUBCAT_BUDGETED} = ?,
+                    ${DatabaseCreator.SUBCAT_AVAILABLE} = ?
+                    WHERE ${DatabaseCreator.SUBCAT_ID} == ?
+                    ;''';
+
+    List<dynamic> params = [
+      subcategory.name,
+      subcategory.budgeted,
+      subcategory.available,
+      subcategory.id];
+      
     final result = await db.rawUpdate(sql, params);
-    DatabaseCreator.databaseLog('Rename subcategory', sql, null, result, params);
+    DatabaseCreator.databaseLog('Update subcategory', sql, null, result, params);
   }
 
-  /// Rename [account.name] of account with id [account.id] in the database.
-  static Future<void> renameAccount(Account account) async {
+  /// Update account with id [account.id] in the database.
+  /// 
+  /// Fields that can be changed are [account.name] and [account.id].
+  static Future<void> updateAccount(Account account) async {
     final sql = '''UPDATE ${DatabaseCreator.accountTable} 
-                SET ${DatabaseCreator.ACCOUNT_NAME} = ?
+                SET ${DatabaseCreator.ACCOUNT_NAME} = ?,
+                ${DatabaseCreator.ACCOUNT_BALANCE} = ?
                 WHERE ${DatabaseCreator.ACCOUNT_ID} == ?
                 ;''';
     
-    List<dynamic> params = [account.name, account.id];
+    List<dynamic> params = [account.name, account.balance, account.id];
     final result = await db.rawUpdate(sql, params);
-    DatabaseCreator.databaseLog('Rename account', sql, null, result, params);
+    DatabaseCreator.databaseLog('Update account', sql, null, result, params);
   }
 
-  /// Rename [payee.name] of payee with id [payee.id] in the database.
+  /// Update payee with id [payee.id] in the database.
+  /// 
+  /// Fields that can be updated are [payee.name].
   static Future<void> renamePayee(Payee payee) async {
     final sql = '''UPDATE ${DatabaseCreator.payeeTable} 
                 SET ${DatabaseCreator.PAYEE_NAME} = ?
@@ -426,10 +443,8 @@ class SQLQueries {
     
     List<dynamic> params = [payee.name, payee.id];
     final result = await db.rawUpdate(sql, params);
-    DatabaseCreator.databaseLog('Rename payee', sql, null, result, params);
+    DatabaseCreator.databaseLog('Update payee', sql, null, result, params);
   }
-
-  //TODO: Update other parameters than name (e.g. balance)
   //TODO: Transaction update
 
   /// Returns the number of categories in the database.
