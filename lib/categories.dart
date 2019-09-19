@@ -37,6 +37,11 @@ class SubCategory extends Category {
       DatabaseCreator.SUBCAT_AVAILABLE: available,
     };
   }
+
+  @override
+  String toString() {
+    return super.toString() + """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}""";
+  }
 }
 
 class MainCategory extends Category {
@@ -77,7 +82,6 @@ class MainCategory extends Category {
   }
 
   void addSubcategory(SubCategory newSub){
-    print("Adding ${newSub.name} to ${this.name}");
     this._subcategories.add(newSub);
     updateFields();
   }
@@ -85,8 +89,15 @@ class MainCategory extends Category {
   void addMultipleSubcategories(List<SubCategory> subcategories){
     subcategories.forEach((sub) {
       this._subcategories.add(sub);
-      print("Adding ${sub.name} to ${this.name}");
     });
     updateFields();
   }
+
+  @override
+  String toString() {
+    return super.toString() + """ {id: $id, name: $name, available: $available, budgeted: $budgeted}""";
+  }
+
+
+
 }
