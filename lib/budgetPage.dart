@@ -7,20 +7,6 @@ import 'addCategoryPage.dart';
 import 'package:mybudget/categories.dart';
 import 'package:mybudget/database_creator.dart';
 
-class MyBudget extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'My Very Own Budget App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: BudgetPage(title: 'Bugdet Page'),
-    );
-  }
-}
-
 class BudgetPage extends StatefulWidget {
   //First page you see when opening the app
 
@@ -123,9 +109,9 @@ class _BudgetPageState extends State<BudgetPage> {
                 itemBuilder: (context, index) {
                   final item = allCategoryList[index];
                   if (item is MainCategory) {
-                    return mainCategoryRow(cat: item);
+                    return MainCategoryRow(cat: item);
                   } else if (item is SubCategory) {
-                    return new subcategoryRow(subcat: item);
+                    return new SubcategoryRow(subcat: item);
                   } else {
                     return null;
                   }
@@ -196,18 +182,22 @@ class _BudgetPageState extends State<BudgetPage> {
 }
 
 /// Widget containing and displaying the information of a category
-class mainCategoryRow extends StatefulWidget {
+class MainCategoryRow extends StatefulWidget {
   MainCategory cat;
-  mainCategoryRow({Key key, @required this.cat}) : super(key: key);
+  MainCategoryRow({Key key, @required this.cat}) : super(key: key);
 
   @override
-  _mainCategoryRowState createState() => _mainCategoryRowState();
+  _MainCategoryRowState createState() => _MainCategoryRowState();
 }
 
-class _mainCategoryRowState extends State<mainCategoryRow> {
+class _MainCategoryRowState extends State<MainCategoryRow> {
+
+  TextEditingController _nameController;
   final _categoryTextStyle = TextStyle(
       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0);
-  final myBox = new SizedBox(
+
+
+  final mainCategoryBox = new SizedBox(
     height: 8.0,
     child: new Center(
       child: new Container(
@@ -218,25 +208,45 @@ class _mainCategoryRowState extends State<mainCategoryRow> {
   );
 
   @override
+  void initState(){
+    super.initState();
+    _nameController = new TextEditingController(text:'${widget.cat.name}');
+  }
+
+  @override
+  void dispose(){
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(widget.cat);
     return Column(
       children: <Widget>[
-        myBox,
+        mainCategoryBox,
         Container(
           padding: EdgeInsets.symmetric(vertical: 10),
           margin: EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: <Widget>[
               Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(widget.cat.name,
-                        textAlign: TextAlign.left, style: _categoryTextStyle)
-                  ],
-                ),
+                child: TextFormField(
+                decoration: new InputDecoration.collapsed(hintText: "",),
+                controller: _nameController,
+                textAlign: TextAlign.left,
+                inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
+                textInputAction: TextInputAction.done,
+                style: _categoryTextStyle,
+                onFieldSubmitted: (String value) {
+                  print("Changed available value in subcategory");
+                  if (_nameController.text != widget.cat.name) {
+                    setState(() {
+                          widget.cat.name = _nameController.text;
+                          SQLQueries.updateCategory(widget.cat);
+                    });
+                  }
+                },
+            ) 
               ),
               Expanded(
                 child: Column(
@@ -271,28 +281,38 @@ class _mainCategoryRowState extends State<mainCategoryRow> {
 }
 
 /// Widget containing and displaying the information a subcategory
-class subcategoryRow extends StatefulWidget {
+class SubcategoryRow extends StatefulWidget {
   SubCategory subcat;
-  subcategoryRow({Key key, @required this.subcat}) : super(key: key);
+  SubcategoryRow({Key key, @required this.subcat}) : super(key: key);
 
   @override
-  _subcategoryRowState createState() => _subcategoryRowState();
+  _SubcategoryRowState createState() => _SubcategoryRowState();
 }
 
-class _subcategoryRowState extends State<subcategoryRow> {
-  var _budgetedController = new MoneyMaskedTextController(
-      decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
+class _SubcategoryRowState extends State<SubcategoryRow> {
+  MoneyMaskedTextController _budgetedController;
+  MoneyMaskedTextController _availableController;
+  TextEditingController _nameController;
+  
+  final TextStyle _subcategoryTextStyle = new TextStyle(color: Colors.black, fontSize: 16.0);
 
-  var _availableController = new MoneyMaskedTextController(
+  @override
+  void initState() {
+    super.initState();
+    _nameController = new TextEditingController(text: '${widget.subcat.name}');
+    
+    _availableController = new MoneyMaskedTextController(
       decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
-
-  var _subcategoryTextStyle =
-      new TextStyle(color: Colors.black, fontSize: 16.0);
+    
+    _budgetedController = new MoneyMaskedTextController(
+      decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');      
+  }
 
   @override
   void dispose() {
     _availableController.dispose();
     _budgetedController.dispose();
+    _nameController.dispose();
     super.dispose();
   }
 
@@ -308,8 +328,23 @@ class _subcategoryRowState extends State<subcategoryRow> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Text(widget.subcat.name,
-                textAlign: TextAlign.left, style: _subcategoryTextStyle),
+            child: TextFormField(
+                decoration: new InputDecoration.collapsed(hintText: "",),
+                controller: _nameController,
+                textAlign: TextAlign.left,
+                inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
+                textInputAction: TextInputAction.done,
+                style: _subcategoryTextStyle,
+                onFieldSubmitted: (String value) {
+                print("Changed available value in subcategory");
+                  if (_nameController.text != widget.subcat.name) {
+                    setState(() {
+                      widget.subcat.name = _nameController.text;
+                      SQLQueries.updateSubcategory(widget.subcat);
+                   });
+                  };
+                },
+            ) 
           ),
           Expanded(
             child: TextFormField(
@@ -327,13 +362,12 @@ class _subcategoryRowState extends State<subcategoryRow> {
               // When the user presses the 'Enter' key, update the respective entry in the database
               onFieldSubmitted: (String value) {
                 print("Changed budgeted value in subcategory");
-                setState(() {
-                  if (_budgetedController.numberValue !=
-                      widget.subcat.budgeted) {
+                if (_budgetedController.numberValue != widget.subcat.budgeted) {
+                  setState(() {
                     widget.subcat.budgeted = _budgetedController.numberValue;
                     SQLQueries.updateSubcategory(widget.subcat);
-                  }
-                });
+                  });
+                }
               },
             ),
           ),
@@ -352,10 +386,12 @@ class _subcategoryRowState extends State<subcategoryRow> {
               // When the user presses the 'Enter' key, update the respective entry in the database
               onFieldSubmitted: (String value) {
                 print("Changed available value in subcategory");
-                setState(() {
-                  widget.subcat.available = _availableController.numberValue;
-                });
-                SQLQueries.updateSubcategory(widget.subcat);
+                if (_budgetedController.numberValue != widget.subcat.available) {
+                  setState(() {
+                    widget.subcat.available = _availableController.numberValue;
+                    SQLQueries.updateSubcategory(widget.subcat);
+                  });
+                }
               },
             ),
           )

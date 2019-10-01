@@ -5,7 +5,7 @@ import 'package:mybudget/transactionPage.dart';
 
 
 void main() async {
-  print('Running main()');
+  WidgetsFlutterBinding.ensureInitialized();
   await DatabaseCreator().initDatabase();
   runApp(MyBudget());
 }

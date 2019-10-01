@@ -70,7 +70,7 @@ class DatabaseCreator {
 
   /// Returns the path of the database [dbName]
   Future<String> getDatabasePath(String dbName) async {
-    final databasePath = await getDatabasesPath();
+    final databasePath = await  getDatabasesPath();
     final path = join(databasePath, dbName);
 
     //Make sure the folder exists
