@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:mybudget/database_creator.dart'; 
 
 class TransactionPage extends StatefulWidget{ 
   @override
@@ -6,173 +9,185 @@ class TransactionPage extends StatefulWidget{
 }
 class TransactionPageState extends State<TransactionPage>{ 
 
-  String number = "0.00";
-  String currency = "€";
-  String input = "";
+  MoneyMaskedTextController _amountController;
+  final TextStyle _amountTextStyle = new TextStyle(color: Colors.black, fontSize: 32.0);
 
+  @override
+  void initState() {
+    super.initState(); 
+    _amountController = new MoneyMaskedTextController(
+      decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
+      }
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
 
     List<Widget> containerList= [
-          Container(
-            alignment: Alignment.centerRight,
-            padding: new EdgeInsets.symmetric(
-              vertical: 10.0,
-              horizontal: 10.0
-            ),
-            child: new Text(number + currency, 
-                            style: new TextStyle(fontSize: 40.0)
-            )
-          ),
-          
-          _createContainer('Payee', 'Select payee',(){}),
-          _createContainer('Category', 'Select category',(){}),
-          _createContainer('Account', 'Select account',(){}),
-          _createContainer('Date', 'Select date',(){}),
-          _createContainer('Repeat', 'Never',(){}),
-          _createContainer('Memo', 'Optional',(){}),
-          _createContainer('Color', 'Default',(){}),
+      Container(
+        height: 50,
+        alignment: Alignment.centerRight,
+        padding: new EdgeInsets.symmetric(vertical: 10.0,horizontal: 10.0),
+        child: TextFormField(
+          decoration: new InputDecoration.collapsed(hintText: "",),
+          keyboardType: TextInputType.number,
+          controller: _amountController,
+          inputFormatters: [LengthLimitingTextInputFormatter(12)],
+          textInputAction: TextInputAction.done,
+          textAlign: TextAlign.right,
+          style: _amountTextStyle,
+        )
+      ),
+
+      TransactionContainer(name:'Payee',defaultValue: 'Select hhh'),
+      TransactionContainer(name:'Account',defaultValue: 'Select account',listIndex:1),
+      TransactionContainer(name:'Category',defaultValue: 'Select category',listIndex:2),
+      TransactionContainer(name:'Date', defaultValue: 'Select date'),
+      TransactionContainer(name:'Repeat', defaultValue: 'Never'),
+      TransactionContainer(name:'Memo', defaultValue: 'Optional'),
+      TransactionContainer(name:'Color', defaultValue: 'Default'),
     ];
+
     return new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Input"),
-        ),
-        body:Column(
-              children: [
-                  Expanded(
-                    child: ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: containerList.length,
-                      separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: new Color(0xFFE8E8E8)),
-                      itemBuilder: (context, index) {
-                        return containerList[index]   ;                   
-                      }
-                    )
-                  ),
-                Container (
-                  width:325, 
-                  child: Column(children: [
-                      Row(children: [
-                        buildButton("7"),
-                        buildButton("8"),
-                        buildButton("9"),
-                      ]),
-
-                      Row(children: [
-                        buildButton("4"),
-                        buildButton("5"),
-                        buildButton("6"),
-                      ]),
-
-                      Row(children: [
-                        buildButton("1"),
-                        buildButton("2"),
-                        buildButton("3"),
-                      ]),
-
-                      Row(children: [
-                        buildButton("."),
-                        buildButton("0"),
-                        buildButton("DEL"),
-                      ]),
-
-                      Row(children: [
-                        buildButton("CLEAR"),
-                        buildButton("ACCEPT"),
-                      ])
-                    ]),
-                )
-              ]
-            ),
-    );}
-
-  bool _isNumeric(String str) {
-    if(str == null) {
-      return false;
-    }
-    return double.tryParse(str) != null;
-  }
-
-  buttonPressed(String buttonText){
-
-    if(buttonText == "CLEAR"){
-      input = '';
-    }
-    else if(buttonText == "DEL"){
-      if(number != ''){
-        input = number.substring(0,number.length-1);
-      }
-    }
-    else if(_isNumeric(buttonText) || buttonText =='.'){
-      input = '$input' '$buttonText';
-    }
-
-    setState(() {
-      number = input;
-    });
-  }
-
-  Widget buildButton(String buttonText) {
-    return new Expanded(
-      child: new OutlineButton(
-        padding: new EdgeInsets.all(15.0),
-        child: new Text(buttonText,
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold
-          ),
-          ),
-        onPressed: () => buttonPressed(buttonText),
+      appBar: new AppBar(
+        title: new Text("New transaction"),
+      ),
+      // Contains a list of fields such as Payee, Category, etc...
+      body: Container(
+        height: 350,
+          child: ListView.separated(
+            shrinkWrap: true,
+            itemCount: containerList.length,
+            separatorBuilder: (BuildContext context, int index) => Divider(height:1, color: Colors.black12),
+            itemBuilder: (context, index) {
+              return containerList[index]   ;                   
+            }
+          )
       ),
     );
   }
+}
+
+class TransactionContainer extends StatefulWidget {
+
+    final String name;
+    final defaultValue;
+    final int listIndex;
+    TransactionContainer({Key key, @required this.name, @required this.defaultValue,
+                              this.listIndex}) : super(key: key);
+
+  @override
+  _TransactionContainerState createState() => _TransactionContainerState();
+}
 
 
-  Widget _createContainer(String firstFieldName, String secondFieldName, Function _tapFunction){
-    TextStyle fadedTextStyle =  TextStyle(
-                color: Colors.grey,
-                fontSize: 16.0);
-    TextStyle titleTextStyle =  TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16.0);
+class _TransactionContainerState extends State<TransactionContainer> {
 
-    return InkWell(
-          onTap: _tapFunction,
-          child: new Container(
-              padding: EdgeInsets.symmetric(vertical: 15),
-              margin: EdgeInsets.symmetric(horizontal: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Text('$firstFieldName',                        
-                    textAlign: TextAlign.left,
-                    style: titleTextStyle),
-                  ), 
-                  Expanded(
-                    child: Text('$secondFieldName',                        
-                    textAlign: TextAlign.right,
-                    style: fadedTextStyle),
-                  ),             ],
-              ),
-            ),
+  TextEditingController _dropdownEntriesController;
+  TextEditingController _valueController;
+  String filter;
+
+  final TextStyle fadedTextStyle =  TextStyle(
+              color: Colors.grey,
+              fontSize: 16.0);
+  final TextStyle titleTextStyle =  TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0);
+
+  @override
+  void initState(){
+
+    super.initState();
+    _valueController = new TextEditingController(text:'${widget.defaultValue}');
+    _dropdownEntriesController = new TextEditingController();
+      
+    //fill dropDownEntries with objects
+    _dropdownEntriesController.addListener(() {
+      setState(() {
+        filter = _dropdownEntriesController.text;
+      });
+    });
+  }
+
+  @override
+  void dispose(){
+    _valueController.dispose();
+    _dropdownEntriesController.dispose();
+    super.dispose();
+  }
+
+  // Dropdown ListView for the value of the TransactionContainer
+  Widget _buildListView() {
+    return FutureBuilder(
+      future: Future.wait([
+        SQLQueries.getPayees(),
+        SQLQueries.getAccounts(),
+        SQLQueries.getSubCategories(),
+      ]),
+      builder: (context, dropDownEntries) {
+        // If future not completed, return container
+        if (dropDownEntries.connectionState == ConnectionState.none &&
+            dropDownEntries.hasData == null) {
+          return Container();
+        }
+        // Else return listview object
+        return ListView.builder(
+          itemCount: dropDownEntries.data.length,
+          itemBuilder: (BuildContext context, int i) {
+            var entry = dropDownEntries.data[widget.listIndex][0];
+            if (filter == null || filter == "") {
+              return new ListTile(title: Text(entry.name));
+            } else {
+              if (entry.name .toLowerCase().contains(filter.toLowerCase())) { 
+              return new ListTile(title: Text(entry.name));
+              } else {
+                return new Container();
+              }
+            }
+          }
+        );
+      }
     );
   }
 
-
-  //   _navigateAndChooseSubcategory(BuildContext context) async {
-  //   final chosenSubcategory = await Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: categories)),
-  //         );
-
-  //   SubCategory newSub4 =  SubCategory(returnElements[1]);
-  //   setState(() {
-  //     returnElements[0].addSubcategory(newSub4);
-  //     _updateCategoriesList();
-  //   }); 
-  // }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 15),
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Expanded(
+            child: Text(widget.name,
+            textAlign: TextAlign.left,
+            style: titleTextStyle),
+          ), 
+          Expanded(
+            child:
+              TextFormField(
+                decoration: new InputDecoration.collapsed(hintText: "\n",),
+                controller: _valueController,
+                textAlign: TextAlign.left,
+                inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
+                textInputAction: TextInputAction.done,
+                style: fadedTextStyle,
+              )
+          ),
+              // Expanded(
+              //   child: new Padding(
+              //       padding: new EdgeInsets.only(top: 1.0),
+              //       child: _buildListView()),
+              // )
+        ],
+      )
+    );
+  }
 }
 
