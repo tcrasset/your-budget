@@ -44,13 +44,13 @@ class TransactionPageState extends State<TransactionPage>{
         )
       ),
 
-      TransactionContainer(name:'Payee',defaultValue: 'Select hhh'),
-      TransactionContainer(name:'Account',defaultValue: 'Select account',listIndex:1),
-      TransactionContainer(name:'Category',defaultValue: 'Select category',listIndex:2),
-      TransactionContainer(name:'Date', defaultValue: 'Select date'),
-      TransactionContainer(name:'Repeat', defaultValue: 'Never'),
-      TransactionContainer(name:'Memo', defaultValue: 'Optional'),
-      TransactionContainer(name:'Color', defaultValue: 'Default'),
+      TransactionContainer(name:'Payee',defaultValue: 'Select hhh', listIndex: 2,),
+      // TransactionContainer(name:'Account',defaultValue: 'Select account',listIndex:1),
+      // TransactionContainer(name:'Category',defaultValue: 'Select category',listIndex:2),
+      // TransactionContainer(name:'Date', defaultValue: 'Select date'),
+      // TransactionContainer(name:'Repeat', defaultValue: 'Never'),
+      // TransactionContainer(name:'Memo', defaultValue: 'Optional'),
+      // TransactionContainer(name:'Color', defaultValue: 'Default'),
     ];
 
     return new Scaffold(
@@ -79,7 +79,7 @@ class TransactionContainer extends StatefulWidget {
     final defaultValue;
     final int listIndex;
     TransactionContainer({Key key, @required this.name, @required this.defaultValue,
-                              this.listIndex}) : super(key: key);
+                              @required this.listIndex}) : super(key: key);
 
   @override
   _TransactionContainerState createState() => _TransactionContainerState();
@@ -123,35 +123,46 @@ class _TransactionContainerState extends State<TransactionContainer> {
   }
 
   // Dropdown ListView for the value of the TransactionContainer
-  Widget _buildListView() {
+  Widget _buildListView(String filter){
     return FutureBuilder(
       future: Future.wait([
         SQLQueries.getPayees(),
         SQLQueries.getAccounts(),
         SQLQueries.getSubCategories(),
       ]),
-      builder: (context, dropDownEntries) {
-        // If future not completed, return container
-        if (dropDownEntries.connectionState == ConnectionState.none &&
-            dropDownEntries.hasData == null) {
-          return Container();
-        }
-        // Else return listview object
-        return ListView.builder(
-          itemCount: dropDownEntries.data.length,
-          itemBuilder: (BuildContext context, int i) {
-            var entry = dropDownEntries.data[widget.listIndex][0];
-            if (filter == null || filter == "") {
-              return new ListTile(title: Text(entry.name));
+      
+      builder: (context, asyncDropDownEntriesSnapshot) {
+        switch(asyncDropDownEntriesSnapshot.connectionState){
+          case ConnectionState.none:
+            return new Text('Input a URL to start');
+          case ConnectionState.waiting:
+            return new Center(child: new CircularProgressIndicator());
+          case ConnectionState.active:
+            return new Text('');
+          case ConnectionState.done:
+            if (asyncDropDownEntriesSnapshot.hasError) {
+              return new Text('${asyncDropDownEntriesSnapshot.error}',
+                              style: TextStyle(color: Colors.red));
             } else {
-              if (entry.name .toLowerCase().contains(filter.toLowerCase())) { 
-              return new ListTile(title: Text(entry.name));
-              } else {
-                return new Container();
-              }
+               // Else return listview object
+              return ListView.builder(
+                //Depending on the field, the length of the list might be different
+                itemCount: asyncDropDownEntriesSnapshot.data[widget.listIndex].length,
+                itemBuilder: (BuildContext context, int i) {
+                  var entry = asyncDropDownEntriesSnapshot.data[widget.listIndex][i];
+                  if (filter == null || filter == "") {
+                    return new ListTile(title: Text(entry.name));
+                  } else {
+                    if (entry.name .toLowerCase().contains(filter.toLowerCase())) { 
+                      return new ListTile(title: Text(entry.name));
+                    } else {
+                      return new Container();
+                    }
+                  }
+                }
+              );
             }
-          }
-        );
+        }
       }
     );
   }
@@ -169,22 +180,22 @@ class _TransactionContainerState extends State<TransactionContainer> {
             textAlign: TextAlign.left,
             style: titleTextStyle),
           ), 
-          Expanded(
-            child:
-              TextFormField(
-                decoration: new InputDecoration.collapsed(hintText: "\n",),
-                controller: _valueController,
-                textAlign: TextAlign.left,
-                inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
-                textInputAction: TextInputAction.done,
-                style: fadedTextStyle,
-              )
-          ),
-              // Expanded(
-              //   child: new Padding(
-              //       padding: new EdgeInsets.only(top: 1.0),
-              //       child: _buildListView()),
-              // )
+          // Expanded(
+          //   child:
+          //     TextFormField(
+          //       decoration: new InputDecoration.collapsed(hintText: "\n",),
+          //       controller: _valueController,
+          //       textAlign: TextAlign.left,
+          //       inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
+          //       textInputAction: TextInputAction.done,
+          //       style: fadedTextStyle,
+          //     )
+          // ),
+          Container(
+            height: 100,
+            width: 200,
+            child: _buildListView(""),
+          )
         ],
       )
     );
