@@ -4,8 +4,7 @@ class SearchPage extends StatefulWidget {
   List listEntries;
   String title;
 
-  SearchPage({Key key, @required this.title, @required this.listEntries})
-      : super(key: key);
+  SearchPage({@required this.title, @required this.listEntries});
 
   @override
   State createState() => new SearchPageState();

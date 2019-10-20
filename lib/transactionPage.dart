@@ -85,91 +85,6 @@ class TransactionPageState extends State<TransactionPage> {
 
   @override
   Widget build(BuildContext context) {
-    Container amountInputContainer = Container(
-        height: 50,
-        alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
-        child: TextFormField(
-          decoration: new InputDecoration.collapsed(
-            hintText: "",
-          ),
-          keyboardType: TextInputType.number,
-          controller: _amountController,
-          inputFormatters: [LengthLimitingTextInputFormatter(12)],
-          textInputAction: TextInputAction.done,
-          textAlign: TextAlign.right,
-          style: _amountTextStyle,
-          validator: (value) {
-            if (_amountController.numberValue <= 0) {
-              return "Value must be different than 0";
-            }
-            return null;
-          }, // Always validate because no access to controller value
-          onSaved: (value) => this._amount = _amountController.numberValue,
-        ));
-
-    List<Widget> containerList = [
-      amountInputContainer,
-
-      //Custom form field for filling out other information related to
-      // the transaction
-      // TransactionFormField(containerName:'Payee',
-      //                       initialValue: 'Select Payee',
-      //                       autovalidate: false,
-      //                       validator: (value) {
-      //                         if(!payee_names.contains(value)){
-      //                           // print("ERROR");
-      //                           // setState(() {
-      //                           //   //TODO: Because of setState, the FutureBuilder is called everytime
-      //                           //   print("Hello");
-      //                           //   _errorMessage = "Input must be a known payee";
-      //                           // });
-      //                           // return "Input must be a known payee";
-      //                           return null;
-      //                         }
-      //                         return null;
-      //                       },
-      //                       onSaved: (value) => this._payeeName = value.toLowerCase()),
-
-      TransactionFormField(
-        containerName: 'Account',
-        initialValue: 'Select account',
-        autovalidate: false,
-        validator: (value) {
-          if (!account_names.contains(value)) {
-            // return "Input must be a known account";
-          }
-          return null;
-        },
-        onSaved: (value) => this._accountName = value.toLowerCase(),
-        context: context,
-        title: "Test",
-        entries: ["Gotcha"],
-      ),
-
-      TransactionFormField(
-          containerName: 'Category',
-          initialValue: 'Select category',
-          autovalidate: true,
-          validator: (value) {
-            if (!subcategory_names.contains(value)) {
-              // print("Error subat");
-              return "Input must be a known subcategory";
-            }
-            return null;
-          },
-          onSaved: (value) => this._subcategoryName = value.toLowerCase(),
-          context: context,
-          title: "Test",
-          entries: subcategories,
-      ),
-
-      // TransactionContainer(containerName:'Date', defaultValue: 'Select date'),
-      // TransactionContainer(containerName:'Repeat', defaultValue: 'Never'),
-      // TransactionContainer(containerName:'Memo', defaultValue: 'Optional'),
-      // TransactionContainer(containerName:'Color', defaultValue: 'Default'),
-    ];
-
     return new Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: new AppBar(
@@ -198,26 +113,68 @@ class TransactionPageState extends State<TransactionPage> {
                             style: TextStyle(color: Colors.red));
                       } else {
                         // Assign the async data to the respective variables
+
                         payees = snapshot.data[0];
                         accounts = snapshot.data[1];
                         subcategories = snapshot.data[2];
-                        payee_names = payees
-                            .map((payee) => payee.name.toLowerCase())
-                            .toList();
-                        account_names = accounts
-                            .map((acount) => acount.name.toLowerCase())
-                            .toList();
-                        subcategory_names = subcategories
-                            .map(
-                                (subcategory) => subcategory.name.toLowerCase())
-                            .toList();
+
+                        Container amountInputContainer = Container(
+                            height: 50,
+                            alignment: Alignment.centerRight,
+                            padding: new EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 10.0),
+                            child: TextFormField(
+                              decoration: new InputDecoration.collapsed(
+                                hintText: "",
+                              ),
+                              keyboardType: TextInputType.number,
+                              controller: _amountController,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(12)
+                              ],
+                              textInputAction: TextInputAction.done,
+                              textAlign: TextAlign.right,
+                              style: _amountTextStyle,
+                              validator: (value) {
+                                if (_amountController.numberValue <= 0) {
+                                  return "Value must be different than 0";
+                                }
+                                return null;
+                              }, // Always validate because no access to controller value
+                              onSaved: (value) =>
+                                  this._amount = _amountController.numberValue,
+                            ));
+
+                        List<Widget> containerList = [
+                          amountInputContainer,
+                          CustomTile(
+                              initialValue: "Select payee",
+                              containerName: "Payee",
+                              entries: payees,
+                              searchPageTitle: "Payees"),
+                          CustomTile(
+                              initialValue: "Select account",
+                              containerName: "Account",
+                              entries: accounts,
+                              searchPageTitle: "Accounts"),
+                          CustomTile(
+                              initialValue: "Select category",
+                              containerName: "Category",
+                              entries: subcategories,
+                              searchPageTitle: "Categories")
+                          // TransactionContainer(containerName:'Date', defaultValue: 'Select date'),
+                          // TransactionContainer(containerName:'Repeat', defaultValue: 'Never'),
+                          // TransactionContainer(containerName:'Memo', defaultValue: 'Optional'),
+                          // TransactionContainer(containerName:'Color', defaultValue: 'Default'),
+                        ];
 
                         // Build the layout (ListView, error container, Button)
                         return Column(children: [
                           Container(
                               height: 350,
                               child: ListView.separated(
-                                  shrinkWrap: true,
+                                  shrinkWrap: false,
+                                  addAutomaticKeepAlives: true,
                                   itemCount: containerList.length,
                                   separatorBuilder: (BuildContext context,
                                           int index) =>
@@ -240,72 +197,74 @@ class TransactionPageState extends State<TransactionPage> {
   }
 }
 
+class CustomTile extends StatefulWidget {
+  String initialValue;
+  String containerName;
+  List entries;
+  String searchPageTitle;
 
-class TransactionFormField extends FormField<String> {
-  TransactionFormField({
-    String containerName,
-    String initialValue,
-    bool autovalidate = false,
-    FormFieldSetter<String> onSaved,
-    FormFieldValidator<String> validator,
-    BuildContext context,
-    String title,
-    List entries,
-  }) : super(
-            onSaved: onSaved,
-            validator: validator,
-            initialValue: initialValue,
-            autovalidate: autovalidate,
-            builder: (FormFieldState<String> state) {
-              return GestureDetector(
-                onTap: () async {
-                  final returnElements = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            SearchPage(title: title, listEntries: entries)),
-                  );
-                  print(returnElements);
-                },
-                child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 5),
-                    margin: EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Expanded(
-                            child: Text(containerName,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16.0)),
-                          ),
-                          Expanded(
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                  hintText: state.value.toString()),
-                            ),
-                          ),
-                        ],
-                      ),
-                      /*TODO: Display error message, multiple possibilityes
-              1) Fix field above button with place for one error message.
-                Update it using setState, but then i'd have to remove the
-                FutureBUilder because everytime one calls setState, the whole 
-                scaffold gets rebuild and thus the circularicon. Maybe one can just
-                remove the circular icon...
-              2) DO it with additional field below each entry, however they don't seem to register
-                when the name is correct.
-            */
-                      state.hasError
-                          ? Text(
-                              state.errorText,
-                              style: TextStyle(color: Colors.red),
-                            )
-                          : Container()
-                    ])),
-              );
+  CustomTile({
+    this.containerName,
+    this.initialValue,
+    this.searchPageTitle,
+    this.entries,
+  });
+
+
+
+  @override
+  State<StatefulWidget> createState() => new CustomTileSTate();
+}
+
+class CustomTileSTate extends State<CustomTile> {
+
+  @override
+  void didUpdateWidget(CustomTile oldTile){
+    super.didUpdateWidget(oldTile);
+    print("THE WIDGET CHANGED: " + widget.containerName);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    String _tileText = widget.initialValue;
+
+    return GestureDetector(
+      onTap: () async {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SearchPage(
+                  title: widget.searchPageTitle, listEntries: widget.entries)),
+        ).then((returnValue) {
+          print("MOUNTED YES OR NO :3" + this.mounted.toString());
+          if (this.mounted) {
+            setState(() {
+              _tileText = returnValue.name;
             });
+          }
+        });
+      },
+      child: Container(
+          padding: EdgeInsets.symmetric(vertical: 5),
+          margin: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Expanded(
+                  child: Text(widget.containerName,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0)),
+                ),
+                Expanded(
+                  child: Text(_tileText),
+                ),
+              ],
+            ),
+          ])),
+    );
+  }
 }
