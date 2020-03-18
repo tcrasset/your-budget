@@ -72,9 +72,6 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
   }
 }
 
-
-
-
 class AddSubcategoryRoute extends StatefulWidget {
 
   final List<Category> categories;

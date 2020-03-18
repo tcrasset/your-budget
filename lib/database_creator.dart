@@ -128,17 +128,15 @@ class DatabaseCreator {
             );''');
                           
     await db.execute('''
-            CREATE TABLE IF NOT EXISTS $moneyTransactionTable (
+            CREATE TABLE $moneyTransactionTable (
               $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
               $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-              $CAT_ID_OUTSIDE INTEGER NOT NULL,
               $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
               $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
               $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
               $MONEYTRANSACTION_MEMO TEXT,
               $MONEYTRANSACTION_DATE TEXT,
               FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
-              FOREIGN KEY ($CAT_ID_OUTSIDE) REFERENCES category($CATEGORY_ID),
               FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
               FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
           );''');
@@ -292,7 +290,6 @@ class SQLQueries {
   /// 
   /// The [MoneyTransaction] is specified using 
   /// [moneyTransaction.id],
-  /// [moneyTransaction.categoryID],
   /// [moneyTransaction.subcatID],
   /// [moneyTransaction.payeeID],
   /// [moneyTransaction.accountID],
@@ -305,7 +302,6 @@ class SQLQueries {
     final sql = '''INSERT INTO ${DatabaseCreator.moneyTransactionTable} 
       (${DatabaseCreator.MONEYTRANSACTION_ID},
         ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
-        ${DatabaseCreator.CAT_ID_OUTSIDE},
         ${DatabaseCreator.PAYEE_ID_OUTSIDE},
         ${DatabaseCreator.ACCOUNT_ID_OUTSIDE},
         ${DatabaseCreator.MONEYTRANSACTION_AMOUNT},
@@ -316,7 +312,6 @@ class SQLQueries {
     List<dynamic> params = [
       moneyTransaction.id, 
       moneyTransaction.subcatID,
-      moneyTransaction.categoryID,
       moneyTransaction.payeeID,
       moneyTransaction.accountID,
       moneyTransaction.amount,
@@ -435,7 +430,7 @@ class SQLQueries {
   /// Update payee with id [payee.id] in the database.
   /// 
   /// Fields that can be updated are [payee.name].
-  static Future<void> renamePayee(Payee payee) async {
+  static Future<void> updatePayee(Payee payee) async {
     final sql = '''UPDATE ${DatabaseCreator.payeeTable} 
                 SET ${DatabaseCreator.PAYEE_NAME} = ?
                 WHERE ${DatabaseCreator.PAYEE_ID} == ?

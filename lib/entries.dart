@@ -21,26 +21,30 @@ class Payee {
     };
   }
 
+  @override
+  String toString() {
+    return super.toString() + """ {id: $id, name: $name}""";
+  }
+
+
 }
 
 class MoneyTransaction {
   int id;
-  int categoryID;
   int subcatID;
   int payeeID;
   int accountID;
-  int amount;
+  double amount;
   String memo;
   DateTime date;
 
-  MoneyTransaction(this.id, this.categoryID, this.subcatID,  
+  MoneyTransaction(this.id, this.subcatID,  
               this.payeeID, this.accountID, this.amount, 
               this.memo, this.date);
   
   /// Create a MoneyTransaction from a json file
   MoneyTransaction.fromJson(Map<String, dynamic> json) {
     this.id = json[DatabaseCreator.MONEYTRANSACTION_ID];
-    this.categoryID = json[DatabaseCreator.CATEGORY_ID];
     this.subcatID = json[DatabaseCreator.SUBCAT_ID];
     this.payeeID = json[DatabaseCreator.PAYEE_ID];
     this.accountID = json[DatabaseCreator.ACCOUNT_ID];
@@ -54,7 +58,6 @@ class MoneyTransaction {
   Map<String, dynamic> toMap() {
     return {
       DatabaseCreator.MONEYTRANSACTION_ID:id,
-      DatabaseCreator.CATEGORY_ID:categoryID,
       DatabaseCreator.SUBCAT_ID:subcatID,
       DatabaseCreator.PAYEE_ID:payeeID,
       DatabaseCreator.ACCOUNT_ID:accountID,
@@ -86,6 +89,11 @@ class Account {
       DatabaseCreator.ACCOUNT_NAME: name,
       DatabaseCreator.ACCOUNT_BALANCE: balance,
     };
+  }
+
+  @override
+  String toString() {
+    return super.toString() + """ {id: $id, name: $name, balance: $balance}""";
   }
 
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:mybudget/entries.dart';
 
 //Custom imports
 import 'addCategoryPage.dart';
@@ -33,7 +34,6 @@ class _BudgetPageState extends State<BudgetPage> {
     Future.wait([SQLQueries.getCategories(), SQLQueries.getSubCategories()])
         .then((List responses) {
       //When it does, we update the state of the widget
-      setState(() {
         List<MainCategory> dbMaincategories = responses[0];
         List<SubCategory> dbSubcategories = responses[1];
 
@@ -44,9 +44,11 @@ class _BudgetPageState extends State<BudgetPage> {
               .toList();
           // toAdd.forEach((subcat) => print(subcat.available));
           cat.addMultipleSubcategories(toAdd);
-        });
+
         allCategoryList = dbMaincategories;
+      setState(() {
         _updateAllCategoryList();
+        });
       });
     }).catchError((e) => print('Caught error: $e'));
   }
@@ -76,7 +78,13 @@ class _BudgetPageState extends State<BudgetPage> {
                     textColor: Colors.white,
                     color: Colors.blue,
                     child: new Text("Add category"),
-                    onPressed: () {
+                    onPressed: () async {
+
+                        int accountCount = await SQLQueries.accountCount();
+                        Account account = Account(accountCount, "Savings account", 999.66);
+                        SQLQueries.addAccount(account);
+                        print("Added account $account");
+
                       print("Add category button pressed");
                       _navigateAndAddCategory(context);
                     },
@@ -105,7 +113,7 @@ class _BudgetPageState extends State<BudgetPage> {
               child: ListView.separated(
                 itemCount: allCategoryList.length,
                 separatorBuilder: (BuildContext context, int index) =>
-                    Divider(height: 1, color: new Color(0xFFE8E8E8)),
+                    Divider(height: 1, color: Colors.black12),
                 itemBuilder: (context, index) {
                   final item = allCategoryList[index];
                   if (item is MainCategory) {
@@ -155,11 +163,11 @@ class _BudgetPageState extends State<BudgetPage> {
     if (returnElements != null) {
       var parentId = returnElements[0].id;
 
+      SQLQueries.subcategoryCount().then((nextSubcategoryId) {
+        SubCategory newSubcategory =
+            SubCategory(nextSubcategoryId, parentId, returnElements[1], 0, 0);
+        returnElements[0].addSubcategory(newSubcategory);
       setState(() {
-        SQLQueries.subcategoryCount().then((nextSubcategoryId) {
-          SubCategory newSubcategory =
-              SubCategory(nextSubcategoryId, parentId, returnElements[1], 0, 0);
-          returnElements[0].addSubcategory(newSubcategory);
           _updateAllCategoryList();
         });
       });
@@ -231,22 +239,22 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
             children: <Widget>[
               Expanded(
                 child: TextFormField(
-                decoration: new InputDecoration.collapsed(hintText: "",),
-                controller: _nameController,
-                textAlign: TextAlign.left,
-                inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
-                textInputAction: TextInputAction.done,
-                style: _categoryTextStyle,
-                onFieldSubmitted: (String value) {
-                  print("Changed available value in subcategory");
-                  if (_nameController.text != widget.cat.name) {
-                    setState(() {
-                          widget.cat.name = _nameController.text;
-                          SQLQueries.updateCategory(widget.cat);
-                    });
-                  }
-                },
-            ) 
+                  decoration: new InputDecoration.collapsed(hintText: "",),
+                  controller: _nameController,
+                  textAlign: TextAlign.left,
+                  inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
+                  textInputAction: TextInputAction.done,
+                  style: _categoryTextStyle,
+                  onFieldSubmitted: (String value) {
+                    print("Changed available value in subcategory");
+                    if (_nameController.text != widget.cat.name) {
+                      setState(() {
+                            widget.cat.name = _nameController.text;
+                      });
+                      SQLQueries.updateCategory(widget.cat);
+                    }
+                  },
+                ) 
               ),
               Expanded(
                 child: Column(
@@ -365,8 +373,8 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                 if (_budgetedController.numberValue != widget.subcat.budgeted) {
                   setState(() {
                     widget.subcat.budgeted = _budgetedController.numberValue;
-                    SQLQueries.updateSubcategory(widget.subcat);
                   });
+                  SQLQueries.updateSubcategory(widget.subcat);
                 }
               },
             ),
@@ -381,6 +389,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                 LengthLimitingTextInputFormatter(12)
               ], //To remove length counter
               textInputAction: TextInputAction.done,
+    
               textAlign: TextAlign.right,
               style: _subcategoryTextStyle,
               // When the user presses the 'Enter' key, update the respective entry in the database
@@ -389,8 +398,8 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                 if (_budgetedController.numberValue != widget.subcat.available) {
                   setState(() {
                     widget.subcat.available = _availableController.numberValue;
-                    SQLQueries.updateSubcategory(widget.subcat);
                   });
+                  SQLQueries.updateSubcategory(widget.subcat);
                 }
               },
             ),

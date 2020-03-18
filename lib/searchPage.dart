@@ -11,19 +11,13 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  List items;
   TextEditingController controller = new TextEditingController();
   String filter;
 
   @override
   initState() {
     super.initState();
-    items = [];
-    items.add("Apple");
-    items.add("Bananas");
-    items.add("Milk");
-
-    items.add("Water");
+    print("In init state of searchPage");
     controller.addListener(() {
       setState(() {
         filter = controller.text;
@@ -56,32 +50,31 @@ class SearchPageState extends State<SearchPage> {
           ),
           new Expanded(
               child: new ListView.separated(
-            shrinkWrap: true,
-            itemCount: widget.listEntries.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                Divider(height: 1, color: Colors.black12),
-            itemBuilder: (BuildContext context, int index) {
-              var item = widget.listEntries[index];
-
-              if (filter == null || filter == "") {
-                return new ListTile(
-                    title: Text(item.name),
-                    onTap: () {
-                      Navigator.pop(context, item);
-                    });
-              } else {
-                if (item.name.toLowerCase().contains(filter.toLowerCase())) {
-                  return new ListTile(
-                      title: Text(item.name),
-                      onTap: () {
-                        Navigator.pop(context, item);
-                      });
-                } else {
-                  return new Container();
-                }
-              }
-            },
-          ))
+                shrinkWrap: true,
+                itemCount: widget.listEntries.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(height: 1, color: Colors.black12),
+                itemBuilder: (BuildContext context, int index) {
+                  var item = widget.listEntries[index];
+                  if (filter == null || filter == "") {
+                    return new ListTile(
+                        title: Text(item.name),
+                        onTap: () {
+                          Navigator.pop(context, item);
+                        });
+                  } else {
+                    if (item.name.toLowerCase().contains(filter.toLowerCase())) {
+                      return new ListTile(
+                          title: Text(item.name),
+                          onTap: () {
+                            Navigator.pop(context, item);
+                          });
+                    } else {
+                      return new Container();
+                    }
+                  }
+                },
+              ))
         ],
       ),
     );

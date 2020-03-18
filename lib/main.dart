@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mybudget/database_creator.dart';
 import 'package:mybudget/budgetPage.dart';
 import 'package:mybudget/transactionPage.dart';
-
+import 'package:mybudget/searchPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,6 +17,7 @@ class MyBudget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
+        // length: 3,
         length: 2,
         child: Scaffold(
           appBar: AppBar(
@@ -24,6 +25,7 @@ class MyBudget extends StatelessWidget {
               tabs: [
                 Tab(text: "Budget"),
                 Tab(text: "Transactions"),
+                // Tab(text: "Search")
               ],
             ),
           ),
@@ -31,6 +33,7 @@ class MyBudget extends StatelessWidget {
             children: [
               BudgetPage(title: 'Bugdet Page'),
               TransactionPage(),
+              // SearchPage(title:"Title",listEntries:['Entries'])
             ],
           ),
         ),
