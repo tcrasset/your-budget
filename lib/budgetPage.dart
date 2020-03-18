@@ -80,10 +80,10 @@ class _BudgetPageState extends State<BudgetPage> {
                     child: new Text("Add category"),
                     onPressed: () async {
 
-                        int accountCount = await SQLQueries.accountCount();
-                        Account account = Account(accountCount, "Savings account", 999.66);
-                        SQLQueries.addAccount(account);
-                        print("Added account $account");
+                        // int accountCount = await SQLQueries.accountCount();
+                        // Account account = Account(accountCount, "Savings account", 999.66);
+                        // SQLQueries.addAccount(account);
+                        // print("Added account $account");
 
                       print("Add category button pressed");
                       _navigateAndAddCategory(context);
