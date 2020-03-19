@@ -90,6 +90,23 @@ class DatabaseCreator {
     final path = await getDatabasePath('budgetDB');
 
     db = await openDatabase(path, version: 1, onCreate: onCreate);
+
+
+    await db.execute("DROP TABLE IF EXISTS $moneyTransactionTable");
+
+    await db.execute('''
+        CREATE TABLE $moneyTransactionTable (
+          $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
+          $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
+          $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
+          $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
+          $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
+          $MONEYTRANSACTION_MEMO TEXT,
+          $MONEYTRANSACTION_DATE INTEGER NOT NULL,
+          FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
+          FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
+          FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
+      );''');
     print(db);
   }
 
@@ -135,7 +152,7 @@ class DatabaseCreator {
               $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
               $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
               $MONEYTRANSACTION_MEMO TEXT,
-              $MONEYTRANSACTION_DATE TEXT,
+              $MONEYTRANSACTION_DATE INTEGER NOT NULL,
               FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
               FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
               FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
@@ -144,7 +161,7 @@ class DatabaseCreator {
 }
 
 
-class SQLQueries {
+class SQLQueryClass {
 
   /// Returns the list of all [MainCategory] in the database.
   static Future<List<MainCategory>> getCategories() async {
@@ -307,7 +324,7 @@ class SQLQueries {
         ${DatabaseCreator.MONEYTRANSACTION_AMOUNT},
         ${DatabaseCreator.MONEYTRANSACTION_MEMO},
         ${DatabaseCreator.MONEYTRANSACTION_DATE})
-      VALUES(?, ?, ?, ?, ?, ?, ?, ?);''';
+      VALUES(?, ?, ?, ?, ?, ?, ?);''';
 
     List<dynamic> params = [
       moneyTransaction.id, 
@@ -316,7 +333,7 @@ class SQLQueries {
       moneyTransaction.accountID,
       moneyTransaction.amount,
       moneyTransaction.memo,
-      moneyTransaction.date];
+      moneyTransaction.date.millisecondsSinceEpoch];
       
     final result = await db.rawInsert(sql, params);
     DatabaseCreator.databaseLog('Add moneyTransaction', sql, null, result, params);

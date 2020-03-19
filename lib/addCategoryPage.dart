@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/categories.dart';
 import 'package:mybudget/database_creator.dart';
-//import 'budgetPage.dart';
 
 
 class AddCategoryRoute extends StatefulWidget {
@@ -56,9 +55,9 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
                   onPressed: () async {
                     // Check that the form is valid
                     if (_catFormKey.currentState.validate()) {
-                      int catCount = await SQLQueries.categoryCount();
+                      int catCount = await SQLQueryClass.categoryCount();
                       MainCategory category = MainCategory(catCount, myCatController.text);
-                      SQLQueries.addCategory(category);
+                      SQLQueryClass.addCategory(category);
                       Navigator.pop(context, '${myCatController.text}');
                     }
                   },
@@ -161,13 +160,13 @@ class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
                       // Check that the form is valid
                       if (_subcatFormKey.currentState.validate()) {
                         //Add subcategory to database
-                        int subcatCount = await SQLQueries.subcategoryCount();
+                        int subcatCount = await SQLQueryClass.subcategoryCount();
                         SubCategory subcategory = SubCategory(subcatCount, 
                                                               selectedCategory.id, 
                                                               mySubcatController.text,
                                                               0.00,
                                                               0.00);
-                        SQLQueries.addSubcategory(subcategory);
+                        SQLQueryClass.addSubcategory(subcategory);
                         var returnElement = [selectedCategory ,
                                               mySubcatController.text];
                         Navigator.pop(context, returnElement);

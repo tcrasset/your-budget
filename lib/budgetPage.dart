@@ -31,7 +31,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
     //Waiting for the database to get back to us
     print("Connecting to database");
-    Future.wait([SQLQueries.getCategories(), SQLQueries.getSubCategories()])
+    Future.wait([SQLQueryClass.getCategories(), SQLQueryClass.getSubCategories()])
         .then((List responses) {
       //When it does, we update the state of the widget
         List<MainCategory> dbMaincategories = responses[0];
@@ -141,7 +141,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
     if (newCategoryName != null) {
       setState(() {
-        SQLQueries.categoryCount().then((nextCategoryId) {
+        SQLQueryClass.categoryCount().then((nextCategoryId) {
           allCategoryList.add(MainCategory(nextCategoryId, newCategoryName));
           _updateAllCategoryList();
         });
@@ -163,7 +163,7 @@ class _BudgetPageState extends State<BudgetPage> {
     if (returnElements != null) {
       var parentId = returnElements[0].id;
 
-      SQLQueries.subcategoryCount().then((nextSubcategoryId) {
+      SQLQueryClass.subcategoryCount().then((nextSubcategoryId) {
         SubCategory newSubcategory =
             SubCategory(nextSubcategoryId, parentId, returnElements[1], 0, 0);
         returnElements[0].addSubcategory(newSubcategory);
@@ -251,7 +251,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                       setState(() {
                             widget.cat.name = _nameController.text;
                       });
-                      SQLQueries.updateCategory(widget.cat);
+                      SQLQueryClass.updateCategory(widget.cat);
                     }
                   },
                 ) 
@@ -348,7 +348,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                   if (_nameController.text != widget.subcat.name) {
                     setState(() {
                       widget.subcat.name = _nameController.text;
-                      SQLQueries.updateSubcategory(widget.subcat);
+                      SQLQueryClass.updateSubcategory(widget.subcat);
                    });
                   };
                 },
@@ -374,7 +374,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                   setState(() {
                     widget.subcat.budgeted = _budgetedController.numberValue;
                   });
-                  SQLQueries.updateSubcategory(widget.subcat);
+                  SQLQueryClass.updateSubcategory(widget.subcat);
                 }
               },
             ),
@@ -399,7 +399,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                   setState(() {
                     widget.subcat.available = _availableController.numberValue;
                   });
-                  SQLQueries.updateSubcategory(widget.subcat);
+                  SQLQueryClass.updateSubcategory(widget.subcat);
                 }
               },
             ),

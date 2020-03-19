@@ -50,8 +50,7 @@ class MoneyTransaction {
     this.accountID = json[DatabaseCreator.ACCOUNT_ID];
     this.amount = json[DatabaseCreator.MONEYTRANSACTION_AMOUNT];
     this.memo = json[DatabaseCreator.MONEYTRANSACTION_MEMO];
-    //TODO: Transform to datetime object
-    this.date = json[DatabaseCreator.MONEYTRANSACTION_DATE];
+    this.date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseCreator.MONEYTRANSACTION_DATE]) ;
   }
 
   ///Convert a MoneyTransaction into a Map. 

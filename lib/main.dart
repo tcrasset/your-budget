@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mybudget/database_creator.dart';
 import 'package:mybudget/budgetPage.dart';
 import 'package:mybudget/transactionPage.dart';
-import 'package:mybudget/searchPage.dart';
+// import 'package:mybudget/searchPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

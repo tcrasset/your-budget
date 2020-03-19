@@ -58,18 +58,19 @@ class TransactionPageState extends State<TransactionPage> {
       print("Payee : ${this._payeeName}");
       print("Account : ${this._accountName}");
       print("Subcategory : ${this._subcategoryName}");
-      int moneyTransactionCount = 0; //await SQLQueries.moneyTransactionCount();
-      //TODO : Investigate why singleWhere fails.
+
+      int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
+      
       int payeeID = payees
-          .singleWhere((payee) => payee.name.toLowerCase() == this._payeeName)
+          .singleWhere((payee) => payee.name == this._payeeName)
           .id;
       int accountID = accounts
           .singleWhere(
-              (account) => account.name.toLowerCase() == this._accountName)
+              (account) => account.name == this._accountName)
           .id;
       int subcategoryID = subcategories
           .singleWhere(
-              (subcat) => subcat.name.toLowerCase() == this._subcategoryName)
+              (subcat) => subcat.name == this._subcategoryName)
           .id;
 
       print("Form submitted");
@@ -82,7 +83,8 @@ class TransactionPageState extends State<TransactionPage> {
           "",
           DateTime.now());
 
-      // SQLQueries.addMoneyTransaction(moneyTransaction);
+      SQLQueryClass.addMoneyTransaction(moneyTransaction);
+
     }
   }
 
@@ -284,9 +286,9 @@ class TransactionPageState extends State<TransactionPage> {
             child: FutureBuilder(
                 // Perform async operations before displaying the interface
                 future: Future.wait([
-                  SQLQueries.getPayees(),
-                  SQLQueries.getAccounts(),
-                  SQLQueries.getSubCategories(),
+                  SQLQueryClass.getPayees(),
+                  SQLQueryClass.getAccounts(),
+                  SQLQueryClass.getSubCategories(),
                 ]),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
