@@ -91,22 +91,6 @@ class DatabaseCreator {
 
     db = await openDatabase(path, version: 1, onCreate: onCreate);
 
-
-    await db.execute("DROP TABLE IF EXISTS $moneyTransactionTable");
-
-    await db.execute('''
-        CREATE TABLE $moneyTransactionTable (
-          $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
-          $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-          $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
-          $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
-          $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
-          $MONEYTRANSACTION_MEMO TEXT,
-          $MONEYTRANSACTION_DATE INTEGER NOT NULL,
-          FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
-          FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
-          FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
-      );''');
     print(db);
   }
 
@@ -145,7 +129,7 @@ class DatabaseCreator {
             );''');
                           
     await db.execute('''
-            CREATE TABLE $moneyTransactionTable (
+            CREATE TABLE IF NOT EXISTS $moneyTransactionTable (
               $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
               $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
               $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
@@ -225,12 +209,10 @@ class SQLQueryClass {
     final sql = '''SELECT * FROM ${DatabaseCreator.moneyTransactionTable};''';
     final data = await db.rawQuery(sql);
     List<MoneyTransaction> transactions = List();
-
     for(final node in data) {
       final transaction = MoneyTransaction.fromJson(node);
       transactions.add(transaction);
     }
-
     return transactions;
   }
 

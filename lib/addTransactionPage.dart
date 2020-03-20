@@ -1,17 +1,20 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:mybudget/budgetPage.dart';
 import 'package:mybudget/categories.dart';
 import 'package:mybudget/database_creator.dart';
 import 'package:mybudget/entries.dart';
-import 'package:mybudget/searchPage.dart';
+import 'package:mybudget/AddTransactionSearchPage.dart';
 
-class TransactionPage extends StatefulWidget {
+class AddTransactionPage extends StatefulWidget {
   @override
-  State createState() => new TransactionPageState();
+  State createState() => new AddTransactionPageState();
 }
 
-class TransactionPageState extends State<TransactionPage> {
+class AddTransactionPageState extends State<AddTransactionPage> {
   MoneyMaskedTextController _amountController;
 
   final TextStyle _amountTextStyle =
@@ -20,9 +23,13 @@ class TransactionPageState extends State<TransactionPage> {
   final _formKey = GlobalKey<FormState>();
 
   double _amount;
-  String _payeeName;
-  String _accountName;
-  String _subcategoryName;
+  String _payeeFieldName;
+  String _accountFieldName;
+  String _subcategoryFieldName;
+
+  Payee _payee;
+  Account _account;
+  SubCategory _subcategory;
 
   DateTime _date;
 
@@ -30,18 +37,33 @@ class TransactionPageState extends State<TransactionPage> {
   List<Payee> payees;
   List<Account> accounts;
   List<SubCategory> subcategories;
-  List<String> payee_names;
-  List<String> account_names;
-  List<String> subcategory_names;
+
+  bool _visibleAlertDialog = true;
+
 
   @override
   void initState() {
     super.initState();
-    _payeeName = "Select payee";
-    _accountName = "Select acount";
-    _subcategoryName = "Select subcategory";
+    _payee = null;
+    _account = null;
+    _subcategory = null;
+    _payeeFieldName = "Select payee";
+    _accountFieldName = "Select acount";
+    _subcategoryFieldName = "Select subcategory";
     _amountController = new MoneyMaskedTextController(
         decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
+  }
+
+  void resetToDefaultTransaction(){
+      setState(() {
+        _payee = null;
+        _account = null;
+        _subcategory = null;
+        _payeeFieldName = "Select payee";
+        _accountFieldName = "Select acount";
+        _subcategoryFieldName = "Select subcategory";
+        _amountController.updateValue(0);
+      });
   }
 
   @override
@@ -53,83 +75,64 @@ class TransactionPageState extends State<TransactionPage> {
   void _addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      print("Form validated");
-      print("Amount : ${this._amount}");
-      print("Payee : ${this._payeeName}");
-      print("Account : ${this._accountName}");
-      print("Subcategory : ${this._subcategoryName}");
 
-      int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
-      
-      int payeeID = payees
-          .singleWhere((payee) => payee.name == this._payeeName)
-          .id;
-      int accountID = accounts
-          .singleWhere(
-              (account) => account.name == this._accountName)
-          .id;
-      int subcategoryID = subcategories
-          .singleWhere(
-              (subcat) => subcat.name == this._subcategoryName)
-          .id;
+      if(_payee != null && _account != null && _subcategory != null){
 
-      print("Form submitted");
-      MoneyTransaction moneyTransaction = new MoneyTransaction(
-          moneyTransactionCount + 1,
-          subcategoryID,
-          payeeID,
-          accountID,
-          this._amount,
-          "",
-          DateTime.now());
+        print("Form validated");
+        print("Amount : ${this._amount}");
+        print("Payee : ${this._payeeFieldName}");
+        print("Account : ${this._accountFieldName}");
+        print("Subcategory : ${this._subcategoryFieldName}");
 
-      SQLQueryClass.addMoneyTransaction(moneyTransaction);
+        int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
+
+        MoneyTransaction moneyTransaction = new MoneyTransaction(
+            moneyTransactionCount + 1,
+            _subcategory.id,
+            _payee.id,
+            _account.id,
+            this._amount,
+            "",
+            DateTime.now());
+
+        SQLQueryClass.addMoneyTransaction(moneyTransaction);
+        resetToDefaultTransaction();
+
+        
+        showDialog(
+          context: context,
+          barrierDismissible: true,
+          builder: (context) {
+            //TODO : Create own dialog by modyfing version of Dialog
+              return AlertDialog(
+                title: Text('Transaction added'),
+              );
+          });
+
+      }else{
+        print("One of the fields does not contain a valid type");
+      }
+
 
     }
   }
 
-  void _handleTapPayees(bool newValue) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              SearchPage(title: "Payees", listEntries: payees)),
-    ).then((returnElement) {
-      print(returnElement);
-      setState(() {
-        _payeeName = returnElement.name;
-      });
-    });
-  }
+  // void _handleTapSubcategories(bool newValue) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //         builder: (context) => AddTransactionSearchPage(
+  //             title: "Subcategories", listEntries: ["Hello", "Gotcha"])),
+  //   ).then((returnElement) {
+  //     print(returnElement);
+  //     setState(() {
+  //       _subcategoryName = returnElement;
+  //       print("VALUE IS :" + _subcategoryName);
+  //     });
+  //   });
+  // }
 
-  void _handleTapSubcategories(bool newValue) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => SearchPage(
-              title: "Subcategories", listEntries: ["Hello", "Gotcha"])),
-    ).then((returnElement) {
-      print(returnElement);
-      setState(() {
-        _subcategoryName = returnElement;
-        print("VALUE IS :" + _subcategoryName);
-      });
-    });
-  }
 
-  void _handleTapAccounts(bool newValue) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) =>
-              SearchPage(title: "Accounts", listEntries: accounts)),
-    ).then((returnElement) {
-      print(returnElement);
-      setState(() {
-        _accountName = returnElement.name;
-      });
-    });
-  }
 
   Container RowContainer(String name, String value) {
     return Container(
@@ -204,46 +207,45 @@ class TransactionPageState extends State<TransactionPage> {
       //   containerName: "Category",
       //   onChanged: _handleTapSubcategories,
       // ),
-      GestureDetector(
+      GestureDetector( // Payees gesture detectory leading to 'Payees' AddTransactionSearchPage
           onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchPage(
+                    builder: (context) => AddTransactionSearchPage(
                         title: "Payees", listEntries: payees)),
               ).then((returnElement) {
-                print("The return element is $returnElement");
                 setState(() {
-                  this._payeeName = returnElement.name;
+                  this._payee = returnElement;
+                  this._payeeFieldName = returnElement.name;
                 });
               }),
-          child: RowContainer("Payee",_payeeName)),
-      GestureDetector(
+          child: RowContainer("Payee",_payeeFieldName)),
+      GestureDetector( // Accounts gesture detectory leading to 'Accounts' AddTransactionSearchPage
           onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchPage(
+                    builder: (context) => AddTransactionSearchPage(
                         title: "Accounts", listEntries: accounts)),
               ).then((returnElement) {
-                print("The return element is $returnElement");
                 setState(() {
-                  this._accountName = returnElement.name;
+                  this._account = returnElement;
+                  this._accountFieldName = returnElement.name;
                 });
               }),
-          child: RowContainer("Account",_accountName)),
-      GestureDetector(
+          child: RowContainer("Account",_accountFieldName)),
+      GestureDetector( // Subcategory gesture detectory leading to 'Categories' AddTransactionSearchPage
           onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SearchPage(
+                    builder: (context) => AddTransactionSearchPage(
                         title: "Categories", listEntries: subcategories)),
               ).then((returnElement) {
-                print("The return element is $returnElement whose name is ${returnElement.name}");
                 setState(() {
-                  print("Updating this._subcategoryName with previous value ${this._subcategoryName} to ${returnElement.name}");
-                  this._subcategoryName = returnElement.name;
+                  this._subcategory = returnElement;
+                  this._subcategoryFieldName = returnElement.name;
                 });
               }),
-          child: RowContainer("Category",_subcategoryName)),
+          child: RowContainer("Category",_subcategoryFieldName)),
       // TransactionContainer(containerName:'Date', defaultValue: 'Select date'),
       // TransactionContainer(containerName:'Repeat', defaultValue: 'Never'),
       // TransactionContainer(containerName:'Memo', defaultValue: 'Optional'),
@@ -255,14 +257,14 @@ class TransactionPageState extends State<TransactionPage> {
       Container(
           height: 350,
           child: ListView.separated(
-              shrinkWrap: false,
-              addAutomaticKeepAlives: true,
-              itemCount: containerList.length,
-              separatorBuilder: (BuildContext context, int index) =>
-                  Divider(height: 1, color: Colors.black12),
-              itemBuilder: (context, index) {
-                return containerList[index];
-              })),
+            shrinkWrap: false,
+            addAutomaticKeepAlives: true,
+            itemCount: containerList.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                Divider(height: 1, color: Colors.black12),
+            itemBuilder: (context, index) {
+              return containerList[index];
+            })),
       // Container(
       //   padding: EdgeInsets.all(5),
       //   child: Text(_errorMessage, style: TextStyle(color:Colors.red)),

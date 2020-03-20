@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 
-class SearchPage extends StatefulWidget {
+class AddTransactionSearchPage extends StatefulWidget {
   List listEntries;
   String title;
 
-  SearchPage({@required this.title, @required this.listEntries});
+  AddTransactionSearchPage({@required this.title, @required this.listEntries});
 
   @override
-  State createState() => new SearchPageState();
+  State createState() => new AddTransactionSearchPageState();
 }
 
-class SearchPageState extends State<SearchPage> {
+class AddTransactionSearchPageState extends State<AddTransactionSearchPage> {
   TextEditingController controller = new TextEditingController();
   String filter;
 
   @override
   initState() {
     super.initState();
-    print("In init state of searchPage");
     controller.addListener(() {
       setState(() {
         filter = controller.text;

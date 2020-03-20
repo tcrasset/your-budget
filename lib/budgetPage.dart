@@ -21,8 +21,7 @@ class BudgetPage extends StatefulWidget {
 class _BudgetPageState extends State<BudgetPage> {
   //TODO: Edit and delete subcategory
 
-  List<Category>
-      allCategoryList; //List containing MainCategories and SubCategories
+  List<Category> allCategoryList; //List containing MainCategories and SubCategories
 
   @override
   void initState() {
