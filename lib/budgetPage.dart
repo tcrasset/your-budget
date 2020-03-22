@@ -302,6 +302,8 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
   TextEditingController _nameController;
   
   final TextStyle _subcategoryTextStyle = new TextStyle(color: Colors.black, fontSize: 16.0);
+  final TextStyle _greenNumberTextStyle = new TextStyle(color: Colors.green, fontSize: 16.0);
+  final TextStyle _redNumberTextStyle = new TextStyle(color: Colors.red, fontSize: 16.0);
 
   @override
   void initState() {
@@ -323,6 +325,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
     super.dispose();
   }
 
+  //TODO : Update MainCategory budget when subcategory budget is changed
   @override
   Widget build(BuildContext context) {
     print(widget.subcat);
@@ -339,7 +342,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                 decoration: new InputDecoration.collapsed(hintText: "",),
                 controller: _nameController,
                 textAlign: TextAlign.left,
-                inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
+                inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
                 textInputAction: TextInputAction.done,
                 style: _subcategoryTextStyle,
                 onFieldSubmitted: (String value) {
@@ -390,7 +393,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
               textInputAction: TextInputAction.done,
     
               textAlign: TextAlign.right,
-              style: _subcategoryTextStyle,
+              style: widget.subcat.available > 0 ? _greenNumberTextStyle : _redNumberTextStyle,
               // When the user presses the 'Enter' key, update the respective entry in the database
               onFieldSubmitted: (String value) {
                 print("Changed available value in subcategory");
