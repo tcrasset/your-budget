@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:mybudget/budgetPage.dart';
 import 'package:mybudget/categories.dart';
 import 'package:mybudget/database_creator.dart';
 import 'package:mybudget/entries.dart';
-import 'package:mybudget/AddTransactionSearchPage.dart';
+import 'package:mybudget/addTransactionSearchPage.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -22,15 +21,18 @@ class AddTransactionPageState extends State<AddTransactionPage> {
 
   final _formKey = GlobalKey<FormState>();
 
+  TextEditingController memo_controller = new TextEditingController();
+
+
   double _amount;
   String _payeeFieldName;
   String _accountFieldName;
   String _subcategoryFieldName;
+  String _dateFieldName;
 
   Payee _payee;
   Account _account;
   SubCategory _subcategory;
-
   DateTime _date;
 
   // Will hold async data when FutureBuilder returns
@@ -39,7 +41,6 @@ class AddTransactionPageState extends State<AddTransactionPage> {
   List<SubCategory> subcategories;
 
   bool _visibleAlertDialog = true;
-
 
   @override
   void initState() {
@@ -59,10 +60,13 @@ class AddTransactionPageState extends State<AddTransactionPage> {
         _payee = null;
         _account = null;
         _subcategory = null;
+        _date = DateTime.now();
         _payeeFieldName = "Select payee";
         _accountFieldName = "Select acount";
         _subcategoryFieldName = "Select subcategory";
         _amountController.updateValue(0);
+        _dateFieldName = DateTime.now().toString();
+        memo_controller.clear();
       });
   }
 
@@ -83,6 +87,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
         print("Payee : ${this._payeeFieldName}");
         print("Account : ${this._accountFieldName}");
         print("Subcategory : ${this._subcategoryFieldName}");
+        print("Memo : ${memo_controller.text}");
 
         int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
@@ -92,13 +97,12 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             _payee.id,
             _account.id,
             this._amount,
-            "",
+            memo_controller.text,
             DateTime.now());
 
-        SQLQueryClass.addMoneyTransaction(moneyTransaction);
+        // SQLQueryClass.addMoneyTransaction(moneyTransaction);
         resetToDefaultTransaction();
 
-        
         showDialog(
           context: context,
           barrierDismissible: true,
@@ -134,29 +138,31 @@ class AddTransactionPageState extends State<AddTransactionPage> {
 
 
 
-  Container RowContainer(String name, String value) {
+  Container RowContainer(String name, Widget childWidget) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Text(name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.0)),
-              ),
-              Expanded(
-                child: Text(value),
-              ),
-            ],
-          ),
-        ]));
+      padding: EdgeInsets.symmetric(vertical: 20),
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: Column(children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            Expanded(
+              child: Text(name,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0)),
+            ),
+            Expanded(
+              child: childWidget,
+            ),
+          ],
+        ),
+      ]));
   }
+
+  // Container MemoRowContainer()
 
   Widget _myBuildMethod(AsyncSnapshot snapshot) {
     // Assign the async data to the respective variables
@@ -219,7 +225,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
                   this._payeeFieldName = returnElement.name;
                 });
               }),
-          child: RowContainer("Payee",_payeeFieldName)),
+          child: RowContainer("Payee", Text(_payeeFieldName))),
       GestureDetector( // Accounts gesture detectory leading to 'Accounts' AddTransactionSearchPage
           onTap: () => Navigator.push(
                 context,
@@ -232,23 +238,36 @@ class AddTransactionPageState extends State<AddTransactionPage> {
                   this._accountFieldName = returnElement.name;
                 });
               }),
-          child: RowContainer("Account",_accountFieldName)),
+          child: RowContainer("Account", Text(_accountFieldName))),
       GestureDetector( // Subcategory gesture detectory leading to 'Categories' AddTransactionSearchPage
-          onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AddTransactionSearchPage(
-                        title: "Categories", listEntries: subcategories)),
-              ).then((returnElement) {
-                setState(() {
-                  this._subcategory = returnElement;
-                  this._subcategoryFieldName = returnElement.name;
-                });
-              }),
-          child: RowContainer("Category",_subcategoryFieldName)),
-      // TransactionContainer(containerName:'Date', defaultValue: 'Select date'),
+        onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => AddTransactionSearchPage(
+                      title: "Categories", listEntries: subcategories)),
+            ).then((returnElement) {
+              setState(() {
+                this._subcategory = returnElement;
+                this._subcategoryFieldName = returnElement.name;
+              });
+            }),
+        child: RowContainer("Category",Text(_subcategoryFieldName))),
+      GestureDetector( // Date gesture detector
+        onTap: () => {
+          setState(() {
+            this._date = DateTime.now();
+            this._dateFieldName = DateTime.now().toString();
+          })
+        },
+        child: RowContainer("Date", Text(DateTime.now().toString()))),
+      RowContainer("Memo", TextField(
+            decoration: new InputDecoration(
+                hintText: "Add a memo"),
+            controller: memo_controller,
+      )),
+      //TODO : Add Repeat Option
+      //TODO : Add color option
       // TransactionContainer(containerName:'Repeat', defaultValue: 'Never'),
-      // TransactionContainer(containerName:'Memo', defaultValue: 'Optional'),
       // TransactionContainer(containerName:'Color', defaultValue: 'Default'),
     ];
 
@@ -265,6 +284,8 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             itemBuilder: (context, index) {
               return containerList[index];
             })),
+      //TODO : Error message
+
       // Container(
       //   padding: EdgeInsets.all(5),
       //   child: Text(_errorMessage, style: TextStyle(color:Colors.red)),
@@ -296,10 +317,13 @@ class AddTransactionPageState extends State<AddTransactionPage> {
                   switch (snapshot.connectionState) {
                     case ConnectionState.none:
                       return new Container();
+                    break;
                     case ConnectionState.waiting:
                       return new Center(child: new CircularProgressIndicator());
+                    break;
                     case ConnectionState.active:
                       return new Container();
+                    break;
                     case ConnectionState.done:
                       if (snapshot.hasError) {
                         return new Text('${snapshot.error}',
@@ -307,6 +331,11 @@ class AddTransactionPageState extends State<AddTransactionPage> {
                       } else {
                         return _myBuildMethod(snapshot);
                       }
+                    break;
+                    default : 
+                      return new Container();
+                    break;
+
                   }
                 })));
   }

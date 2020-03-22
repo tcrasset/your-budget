@@ -30,6 +30,7 @@ class AddTransactionSearchPageState extends State<AddTransactionSearchPage> {
     super.dispose();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
