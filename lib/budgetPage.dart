@@ -33,20 +33,19 @@ class _BudgetPageState extends State<BudgetPage> {
     Future.wait([SQLQueryClass.getCategories(), SQLQueryClass.getSubCategories()])
         .then((List responses) {
       //When it does, we update the state of the widget
-        List<MainCategory> dbMaincategories = responses[0];
-        List<SubCategory> dbSubcategories = responses[1];
+      List<MainCategory> dbMaincategories = responses[0];
+      List<SubCategory> dbSubcategories = responses[1];
 
-        //To each category, add the correspondent subcategories
-        dbMaincategories.forEach((cat) {
-          List<SubCategory> toAdd = dbSubcategories
-              .where((subcat) => subcat.parentId == cat.id)
-              .toList();
-          // toAdd.forEach((subcat) => print(subcat.available));
-          cat.addMultipleSubcategories(toAdd);
+      //To each category, add the correspondent subcategories
+      dbMaincategories.forEach((cat) {
+        List<SubCategory> toAdd =
+            dbSubcategories.where((subcat) => subcat.parentId == cat.id).toList();
+        // toAdd.forEach((subcat) => print(subcat.available));
+        cat.addMultipleSubcategories(toAdd);
 
         allCategoryList = dbMaincategories;
-      setState(() {
-        _updateAllCategoryList();
+        setState(() {
+          _updateAllCategoryList();
         });
       });
     }).catchError((e) => print('Caught error: $e'));
@@ -70,19 +69,17 @@ class _BudgetPageState extends State<BudgetPage> {
               children: <Widget>[
                 // Button for adding new Category (goes to new Page)
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
                   child: RaisedButton(
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
                     color: Colors.blue,
                     child: new Text("Add category"),
                     onPressed: () async {
-
-                        // int accountCount = await SQLQueries.accountCount();
-                        // Account account = Account(accountCount, "Savings account", 999.66);
-                        // SQLQueries.addAccount(account);
-                        // print("Added account $account");
+                      // int accountCount = await SQLQueries.accountCount();
+                      // Account account = Account(accountCount, "Savings account", 999.66);
+                      // SQLQueries.addAccount(account);
+                      // print("Added account $account");
 
                       print("Add category button pressed");
                       _navigateAndAddCategory(context);
@@ -91,8 +88,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 ),
                 // Button for adding new SubCategory (goes to new Page)
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
                   child: RaisedButton(
                     padding: const EdgeInsets.all(8.0),
                     textColor: Colors.white,
@@ -154,9 +150,7 @@ class _BudgetPageState extends State<BudgetPage> {
   _navigateAndAddSubcategory(BuildContext context) async {
     final returnElements = await Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) =>
-              AddSubcategoryRoute(categories: allCategoryList)),
+      MaterialPageRoute(builder: (context) => AddSubcategoryRoute(categories: allCategoryList)),
     );
 
     if (returnElements != null) {
@@ -166,7 +160,7 @@ class _BudgetPageState extends State<BudgetPage> {
         SubCategory newSubcategory =
             SubCategory(nextSubcategoryId, parentId, returnElements[1], 0, 0);
         returnElements[0].addSubcategory(newSubcategory);
-      setState(() {
+        setState(() {
           _updateAllCategoryList();
         });
       });
@@ -198,11 +192,9 @@ class MainCategoryRow extends StatefulWidget {
 }
 
 class _MainCategoryRowState extends State<MainCategoryRow> {
-
   TextEditingController _nameController;
-  final _categoryTextStyle = TextStyle(
-      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0);
-
+  final _categoryTextStyle =
+      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0);
 
   final mainCategoryBox = new SizedBox(
     height: 8.0,
@@ -215,13 +207,13 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
   );
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-    _nameController = new TextEditingController(text:'${widget.cat.name}');
+    _nameController = new TextEditingController(text: '${widget.cat.name}');
   }
 
   @override
-  void dispose(){
+  void dispose() {
     _nameController.dispose();
     super.dispose();
   }
@@ -237,31 +229,31 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: TextFormField(
-                  decoration: new InputDecoration.collapsed(hintText: "",),
-                  controller: _nameController,
-                  textAlign: TextAlign.left,
-                  inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
-                  textInputAction: TextInputAction.done,
-                  style: _categoryTextStyle,
-                  onFieldSubmitted: (String value) {
-                    print("Changed available value in subcategory");
-                    if (_nameController.text != widget.cat.name) {
-                      setState(() {
-                            widget.cat.name = _nameController.text;
-                      });
-                      SQLQueryClass.updateCategory(widget.cat);
-                    }
-                  },
-                ) 
-              ),
+                  child: TextFormField(
+                decoration: new InputDecoration.collapsed(
+                  hintText: "",
+                ),
+                controller: _nameController,
+                textAlign: TextAlign.left,
+                inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
+                textInputAction: TextInputAction.done,
+                style: _categoryTextStyle,
+                onFieldSubmitted: (String value) {
+                  print("Changed available value in subcategory");
+                  if (_nameController.text != widget.cat.name) {
+                    setState(() {
+                      widget.cat.name = _nameController.text;
+                    });
+                    SQLQueryClass.updateCategory(widget.cat);
+                  }
+                },
+              )),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Budgeted',
-                        textAlign: TextAlign.right, style: _categoryTextStyle),
+                    Text('Budgeted', textAlign: TextAlign.right, style: _categoryTextStyle),
                     Text('${widget.cat.budgeted}',
                         textAlign: TextAlign.right, style: _categoryTextStyle)
                   ],
@@ -272,8 +264,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Available',
-                        textAlign: TextAlign.right, style: _categoryTextStyle),
+                    Text('Available', textAlign: TextAlign.right, style: _categoryTextStyle),
                     Text('${widget.cat.available}',
                         textAlign: TextAlign.right, style: _categoryTextStyle)
                   ],
@@ -300,7 +291,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
   MoneyMaskedTextController _budgetedController;
   MoneyMaskedTextController _availableController;
   TextEditingController _nameController;
-  
+
   final TextStyle _subcategoryTextStyle = new TextStyle(color: Colors.black, fontSize: 16.0);
   final TextStyle _greenNumberTextStyle = new TextStyle(color: Colors.green, fontSize: 16.0);
   final TextStyle _redNumberTextStyle = new TextStyle(color: Colors.red, fontSize: 16.0);
@@ -309,12 +300,12 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
   void initState() {
     super.initState();
     _nameController = new TextEditingController(text: '${widget.subcat.name}');
-    
+
     _availableController = new MoneyMaskedTextController(
-      decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
-    
+        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
+
     _budgetedController = new MoneyMaskedTextController(
-      decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');      
+        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
   }
 
   @override
@@ -338,24 +329,26 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
       child: Row(
         children: <Widget>[
           Expanded(
-            child: TextFormField(
-                decoration: new InputDecoration.collapsed(hintText: "",),
-                controller: _nameController,
-                textAlign: TextAlign.left,
-                inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
-                textInputAction: TextInputAction.done,
-                style: _subcategoryTextStyle,
-                onFieldSubmitted: (String value) {
-                print("Changed available value in subcategory");
-                  if (_nameController.text != widget.subcat.name) {
-                    setState(() {
-                      widget.subcat.name = _nameController.text;
-                      SQLQueryClass.updateSubcategory(widget.subcat);
-                   });
-                  };
-                },
-            ) 
-          ),
+              child: TextFormField(
+            decoration: new InputDecoration.collapsed(
+              hintText: "",
+            ),
+            controller: _nameController,
+            textAlign: TextAlign.left,
+            inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
+            textInputAction: TextInputAction.done,
+            style: _subcategoryTextStyle,
+            onFieldSubmitted: (String value) {
+              print("Changed available value in subcategory");
+              if (_nameController.text != widget.subcat.name) {
+                setState(() {
+                  widget.subcat.name = _nameController.text;
+                  SQLQueryClass.updateSubcategory(widget.subcat);
+                });
+              }
+              ;
+            },
+          )),
           Expanded(
             child: TextFormField(
               decoration: new InputDecoration.collapsed(
@@ -363,9 +356,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
               ),
               keyboardType: TextInputType.numberWithOptions(),
               controller: _budgetedController,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(12)
-              ], //To remove length counter
+              inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
               textInputAction: TextInputAction.done,
               textAlign: TextAlign.right,
               style: _subcategoryTextStyle,
@@ -383,15 +374,12 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
           ),
           Expanded(
             child: TextFormField(
-              decoration: new InputDecoration.collapsed(
-                  hintText: "${widget.subcat.available}"),
+              decoration: new InputDecoration.collapsed(hintText: "${widget.subcat.available}"),
               keyboardType: TextInputType.numberWithOptions(),
               controller: _availableController,
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(12)
-              ], //To remove length counter
+              inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
               textInputAction: TextInputAction.done,
-    
+
               textAlign: TextAlign.right,
               style: widget.subcat.available > 0 ? _greenNumberTextStyle : _redNumberTextStyle,
               // When the user presses the 'Enter' key, update the respective entry in the database

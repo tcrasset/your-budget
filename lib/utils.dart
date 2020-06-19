@@ -1,6 +1,3 @@
-
-
-
-String getDateString(DateTime datetime){
+String getDateString(DateTime datetime) {
   return "${datetime.day}/${datetime.month}/${datetime.year}";
 }

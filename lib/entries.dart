@@ -1,4 +1,3 @@
-
 import 'package:mybudget/database_creator.dart';
 
 class Payee {
@@ -13,7 +12,7 @@ class Payee {
     this.name = json[DatabaseCreator.PAYEE_NAME];
   }
 
-  /// Convert a Payee into a Map. 
+  /// Convert a Payee into a Map.
   Map<String, dynamic> toMap() {
     return {
       DatabaseCreator.PAYEE_ID: id,
@@ -25,8 +24,6 @@ class Payee {
   String toString() {
     return super.toString() + """ {id: $id, name: $name}""";
   }
-
-
 }
 
 class MoneyTransaction {
@@ -38,10 +35,9 @@ class MoneyTransaction {
   String memo;
   DateTime date;
 
-  MoneyTransaction(this.id, this.subcatID,  
-              this.payeeID, this.accountID, this.amount, 
-              this.memo, this.date);
-  
+  MoneyTransaction(
+      this.id, this.subcatID, this.payeeID, this.accountID, this.amount, this.memo, this.date);
+
   /// Create a MoneyTransaction from a json file
   MoneyTransaction.fromJson(Map<String, dynamic> json) {
     this.id = json[DatabaseCreator.MONEYTRANSACTION_ID];
@@ -50,25 +46,24 @@ class MoneyTransaction {
     this.accountID = json[DatabaseCreator.ACCOUNT_ID];
     this.amount = json[DatabaseCreator.MONEYTRANSACTION_AMOUNT];
     this.memo = json[DatabaseCreator.MONEYTRANSACTION_MEMO];
-    this.date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseCreator.MONEYTRANSACTION_DATE]) ;
+    this.date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseCreator.MONEYTRANSACTION_DATE]);
   }
 
-  ///Convert a MoneyTransaction into a Map. 
+  ///Convert a MoneyTransaction into a Map.
   Map<String, dynamic> toMap() {
     return {
-      DatabaseCreator.MONEYTRANSACTION_ID:id,
-      DatabaseCreator.SUBCAT_ID:subcatID,
-      DatabaseCreator.PAYEE_ID:payeeID,
-      DatabaseCreator.ACCOUNT_ID:accountID,
-      DatabaseCreator.MONEYTRANSACTION_AMOUNT:amount,
-      DatabaseCreator.MONEYTRANSACTION_MEMO:memo,
-      DatabaseCreator.MONEYTRANSACTION_DATE:date,
+      DatabaseCreator.MONEYTRANSACTION_ID: id,
+      DatabaseCreator.SUBCAT_ID: subcatID,
+      DatabaseCreator.PAYEE_ID: payeeID,
+      DatabaseCreator.ACCOUNT_ID: accountID,
+      DatabaseCreator.MONEYTRANSACTION_AMOUNT: amount,
+      DatabaseCreator.MONEYTRANSACTION_MEMO: memo,
+      DatabaseCreator.MONEYTRANSACTION_DATE: date,
     };
   }
 }
 
 class Account {
-  
   int id;
   String name;
   double balance;
@@ -81,7 +76,7 @@ class Account {
     this.balance = json[DatabaseCreator.ACCOUNT_BALANCE];
   }
 
-  /// Convert an Account into a Map. 
+  /// Convert an Account into a Map.
   Map<String, dynamic> toMap() {
     return {
       DatabaseCreator.ACCOUNT_ID: id,
@@ -94,5 +89,4 @@ class Account {
   String toString() {
     return super.toString() + """ {id: $id, name: $name, balance: $balance}""";
   }
-
 }

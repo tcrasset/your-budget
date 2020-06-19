@@ -14,9 +14,6 @@ void main() async {
 // Contains the AppBar that lets the user choose between
 // different pages
 class MyBudget extends StatelessWidget {
-
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +34,7 @@ class MyBudget extends StatelessWidget {
             children: [
               BudgetPage(title: 'Bugdet Page'),
               AddTransactionPage(),
-              ShowTransactionPage(title:"Transactions")
+              ShowTransactionPage(title: "Transactions")
             ],
           ),
         ),

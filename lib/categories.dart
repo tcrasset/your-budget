@@ -1,4 +1,3 @@
-
 import 'package:mybudget/database_creator.dart';
 
 class Category {
@@ -8,27 +7,22 @@ class Category {
   double available;
 
   Category(this.id, this.name, this.budgeted, this.available);
-
 }
 
 class SubCategory extends Category {
-
   final parentId;
 
-  SubCategory(int id, int parentId, String name, double budgeted, double available) : 
-    parentId = parentId,
-    super(id, name, budgeted, available);
+  SubCategory(int id, int parentId, String name, double budgeted, double available)
+      : parentId = parentId,
+        super(id, name, budgeted, available);
 
   // Subcategories are imported from the database as json file
-  SubCategory.fromJson(Map<String, dynamic> json) :
-    parentId = json[DatabaseCreator.CAT_ID_OUTSIDE],
-    super(
-      json[DatabaseCreator.SUBCAT_ID],
-      json[DatabaseCreator.SUBCAT_NAME],
-      json[DatabaseCreator.SUBCAT_BUDGETED],
-      json[DatabaseCreator.SUBCAT_AVAILABLE]);
+  SubCategory.fromJson(Map<String, dynamic> json)
+      : parentId = json[DatabaseCreator.CAT_ID_OUTSIDE],
+        super(json[DatabaseCreator.SUBCAT_ID], json[DatabaseCreator.SUBCAT_NAME],
+            json[DatabaseCreator.SUBCAT_BUDGETED], json[DatabaseCreator.SUBCAT_AVAILABLE]);
 
-  /// Convert a SubCategory into a Map. 
+  /// Convert a SubCategory into a Map.
   Map<String, dynamic> toMap() {
     return {
       DatabaseCreator.SUBCAT_ID: id,
@@ -40,26 +34,21 @@ class SubCategory extends Category {
 
   @override
   String toString() {
-    return super.toString() + """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}""";
+    return super.toString() +
+        """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}""";
   }
 }
 
 class MainCategory extends Category {
-
   List<SubCategory> _subcategories = [];
 
-  MainCategory(int id, String name) : 
-    super(id, name, 0.00, 0.00);
+  MainCategory(int id, String name) : super(id, name, 0.00, 0.00);
 
   /// Categories are imported from the database as json file
-  MainCategory.fromJson(Map<String, dynamic> json) :
-    super(
-      json[DatabaseCreator.CATEGORY_ID],
-      json[DatabaseCreator.CATEGORY_NAME],
-      0.00,
-      0.00);
+  MainCategory.fromJson(Map<String, dynamic> json)
+      : super(json[DatabaseCreator.CATEGORY_ID], json[DatabaseCreator.CATEGORY_NAME], 0.00, 0.00);
 
-  /// Convert a MainCategory into a Map. 
+  /// Convert a MainCategory into a Map.
   Map<String, dynamic> toMap() {
     return {
       DatabaseCreator.CATEGORY_ID: id,
@@ -70,23 +59,27 @@ class MainCategory extends Category {
   List<SubCategory> get subcategories {
     return _subcategories;
   }
-    
-  void updateFields(){
+
+  void updateFields() {
     double budgeted = 0;
     double available = 0;
-    this._subcategories.forEach((SubCategory cat){budgeted += cat.budgeted;});
-    this._subcategories.forEach((SubCategory cat){available += cat.available;});
+    this._subcategories.forEach((SubCategory cat) {
+      budgeted += cat.budgeted;
+    });
+    this._subcategories.forEach((SubCategory cat) {
+      available += cat.available;
+    });
 
     this.budgeted = budgeted;
     this.available = available;
   }
 
-  void addSubcategory(SubCategory newSub){
+  void addSubcategory(SubCategory newSub) {
     this._subcategories.add(newSub);
     updateFields();
   }
 
-  void addMultipleSubcategories(List<SubCategory> subcategories){
+  void addMultipleSubcategories(List<SubCategory> subcategories) {
     subcategories.forEach((sub) {
       this._subcategories.add(sub);
     });
@@ -95,9 +88,7 @@ class MainCategory extends Category {
 
   @override
   String toString() {
-    return super.toString() + """ {id: $id, name: $name, available: $available, budgeted: $budgeted}""";
+    return super.toString() +
+        """ {id: $id, name: $name, available: $available, budgeted: $budgeted}""";
   }
-
-
-
 }
