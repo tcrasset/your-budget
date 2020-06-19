@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/categories.dart';
-import 'package:mybudget/entries.dart';
-import 'package:mybudget/database_creator.dart';
-import 'package:mybudget/utils.dart';
+
+import 'package:mybudget/models/SQLQueries.dart';
+import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/models/utils.dart';
 
 class ShowTransactionPage extends StatefulWidget {
   final String title;
@@ -62,8 +63,7 @@ class ShowTransactionPageState extends State<ShowTransactionPage> {
                 textAlign: TextAlign.left,
               ),
               Expanded(
-                  child: Text(getDateString(moneyTransaction.date),
-                      textAlign: TextAlign.right)),
+                  child: Text(getDateString(moneyTransaction.date), textAlign: TextAlign.right)),
             ],
           ),
         ]));
@@ -93,8 +93,7 @@ class ShowTransactionPageState extends State<ShowTransactionPage> {
                         return new Container();
                         break;
                       case ConnectionState.waiting:
-                        return new Center(
-                            child: new CircularProgressIndicator());
+                        return new Center(child: new CircularProgressIndicator());
                         break;
                       case ConnectionState.active:
                         return new Container();
@@ -110,12 +109,10 @@ class ShowTransactionPageState extends State<ShowTransactionPage> {
                                 child: new ListView.separated(
                               shrinkWrap: true,
                               itemCount: moneyTransactionList.length,
-                              separatorBuilder:
-                                  (BuildContext context, int index) =>
-                                      Divider(height: 1, color: Colors.black12),
+                              separatorBuilder: (BuildContext context, int index) =>
+                                  Divider(height: 1, color: Colors.black12),
                               itemBuilder: (BuildContext context, int index) {
-                                return _buildTransactionContainer(
-                                    snapshot, index);
+                                return _buildTransactionContainer(snapshot, index);
                               },
                             ));
                           }

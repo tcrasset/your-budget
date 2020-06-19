@@ -1,4 +1,4 @@
-import 'package:mybudget/database_creator.dart';
+import 'package:mybudget/models/database_creator.dart';
 
 class Payee {
   int id;

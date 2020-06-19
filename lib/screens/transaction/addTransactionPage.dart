@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:mybudget/categories.dart';
-import 'package:mybudget/database_creator.dart';
-import 'package:mybudget/entries.dart';
-import 'package:mybudget/addTransactionSearchPage.dart';
+import 'package:mybudget/models/SQLQueries.dart';
+import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/screens/transaction/addTransactionSearchPage.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override

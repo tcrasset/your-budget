@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:mybudget/entries.dart';
+import 'package:mybudget/models/SQLQueries.dart';
+import 'package:mybudget/models/categories.dart';
 
-//Custom imports
 import 'addCategoryPage.dart';
-import 'package:mybudget/categories.dart';
-import 'package:mybudget/database_creator.dart';
 
 class BudgetPage extends StatefulWidget {
   //First page you see when opening the app

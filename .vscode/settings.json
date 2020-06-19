@@ -12,4 +12,9 @@
         "editor.wordBasedSuggestions": false,
         "files.insertFinalNewline": true
     },
+    "dart.lineLength": 100,
+    "dart.previewUpdateImportsOnRename": true,
+    "dart.triggerSignatureHelpAutomatically": true,
+    "dart.previewFlutterUiGuides": true,
+    "dart.previewFlutterUiGuidesCustomTracking": true,
 }

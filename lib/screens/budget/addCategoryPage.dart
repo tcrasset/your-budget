@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/categories.dart';
-import 'package:mybudget/database_creator.dart';
+import 'package:mybudget/models/SQLQueries.dart';
+import 'package:mybudget/models/categories.dart';
 
 class AddCategoryRoute extends StatefulWidget {
   //Pass the categories from the other Route in the constructor
