@@ -98,7 +98,7 @@ class DatabaseCreator {
   Future<void> onCreate(Database db, int version) async {
     await db.execute('''
             CREATE TABLE IF NOT EXISTS $categoryTable (
-              $CATEGORY_ID INTEGER PRIMARY KEY , 
+              $CATEGORY_ID INTEGER PRIMARY KEY ,
               $CATEGORY_NAME TEXT NOT NULL UNIQUE
             );''');
 
@@ -115,13 +115,13 @@ class DatabaseCreator {
 
     await db.execute('''
             CREATE TABLE IF NOT EXISTS $payeeTable (
-              $PAYEE_ID INTEGER PRIMARY KEY , 
+              $PAYEE_ID INTEGER PRIMARY KEY ,
               $PAYEE_NAME TEXT NOT NULL UNIQUE
             );''');
 
     await db.execute('''
             CREATE TABLE IF NOT EXISTS $accountTable (
-              $ACCOUNT_ID INTEGER PRIMARY KEY , 
+              $ACCOUNT_ID INTEGER PRIMARY KEY ,
               $ACCOUNT_NAME TEXT NOT NULL UNIQUE,
               $ACCOUNT_BALANCE FLOAT NOT NULL
             );''');
@@ -215,7 +215,7 @@ class SQLQueryClass {
   ///
   /// The [MainCategory] is specified using [category.id] and [category.name]
   static Future<void> addCategory(MainCategory category) async {
-    final sql = '''INSERT INTO ${DatabaseCreator.categoryTable} 
+    final sql = '''INSERT INTO ${DatabaseCreator.categoryTable}
       (${DatabaseCreator.CATEGORY_ID},${DatabaseCreator.CATEGORY_NAME})
       VALUES(?, ?);''';
 
@@ -230,7 +230,7 @@ class SQLQueryClass {
   /// [subcategory.parent_id], [subcategory.name], [subcategory.budgeted]
   /// and [subcategory.available].
   static Future<void> addSubcategory(SubCategory subcategory) async {
-    final sql = '''INSERT INTO ${DatabaseCreator.subcategoryTable} 
+    final sql = '''INSERT INTO ${DatabaseCreator.subcategoryTable}
       (${DatabaseCreator.SUBCAT_ID},
       ${DatabaseCreator.CAT_ID_OUTSIDE},
       ${DatabaseCreator.SUBCAT_NAME},
@@ -254,7 +254,7 @@ class SQLQueryClass {
   ///
   /// The [Payee] is specified using [payee.id] and [payee.name]
   static Future<void> addPayee(Payee payee) async {
-    final sql = '''INSERT INTO ${DatabaseCreator.payeeTable} 
+    final sql = '''INSERT INTO ${DatabaseCreator.payeeTable}
       (${DatabaseCreator.PAYEE_ID},${DatabaseCreator.PAYEE_NAME})
       VALUES(?, ?);''';
 
@@ -267,7 +267,7 @@ class SQLQueryClass {
   ///
   /// The [Account] is specified using [account.id] and [account.name]
   static Future<void> addAccount(Account account) async {
-    final sql = '''INSERT INTO ${DatabaseCreator.accountTable} 
+    final sql = '''INSERT INTO ${DatabaseCreator.accountTable}
       (${DatabaseCreator.ACCOUNT_ID},
       ${DatabaseCreator.ACCOUNT_NAME},
       ${DatabaseCreator.ACCOUNT_BALANCE}
@@ -292,7 +292,7 @@ class SQLQueryClass {
   ///
 
   static Future<void> addMoneyTransaction(MoneyTransaction moneyTransaction) async {
-    final sql = '''INSERT INTO ${DatabaseCreator.moneyTransactionTable} 
+    final sql = '''INSERT INTO ${DatabaseCreator.moneyTransactionTable}
       (${DatabaseCreator.MONEYTRANSACTION_ID},
         ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
         ${DatabaseCreator.PAYEE_ID_OUTSIDE},
@@ -318,7 +318,7 @@ class SQLQueryClass {
 
   /// Deletes the [category] of id [category.id] from the database.
   static Future<void> deleteCategory(MainCategory category) async {
-    final sql = '''DELETE FROM ${DatabaseCreator.categoryTable} 
+    final sql = '''DELETE FROM ${DatabaseCreator.categoryTable}
       WHERE ${DatabaseCreator.CATEGORY_ID} == ?;''';
 
     List<dynamic> params = [category.id];
@@ -328,7 +328,7 @@ class SQLQueryClass {
 
   /// Deletes the [subcategory] of id [subcategory.id] from the database.
   static Future<void> deleteSubcategory(SubCategory subcategory) async {
-    final sql = '''DELETE FROM ${DatabaseCreator.subcategoryTable} 
+    final sql = '''DELETE FROM ${DatabaseCreator.subcategoryTable}
       WHERE ${DatabaseCreator.SUBCAT_ID} == ?;''';
 
     List<dynamic> params = [subcategory.id];
@@ -338,7 +338,7 @@ class SQLQueryClass {
 
   /// Deletes the [account] of id [account.id] from the database.
   static Future<void> deleteAccount(Account account) async {
-    final sql = '''DELETE FROM ${DatabaseCreator.accountTable} 
+    final sql = '''DELETE FROM ${DatabaseCreator.accountTable}
       WHERE ${DatabaseCreator.ACCOUNT_ID} == ?;''';
 
     List<dynamic> params = [account.id];
@@ -348,7 +348,7 @@ class SQLQueryClass {
 
   /// Deletes the [payee] of id [payee.id] from the database.
   static Future<void> deletePayee(Payee payee) async {
-    final sql = '''DELETE FROM ${DatabaseCreator.payeeTable} 
+    final sql = '''DELETE FROM ${DatabaseCreator.payeeTable}
       WHERE ${DatabaseCreator.PAYEE_ID} == ?;''';
 
     List<dynamic> params = [payee.id];
@@ -358,7 +358,7 @@ class SQLQueryClass {
 
   /// Deletes the [moneytransaction] of id [moneytransaction.id] from the database.
   static Future<void> deleteTransaction(MoneyTransaction moneytransaction) async {
-    final sql = '''DELETE FROM ${DatabaseCreator.moneyTransactionTable} 
+    final sql = '''DELETE FROM ${DatabaseCreator.moneyTransactionTable}
       WHERE ${DatabaseCreator.MONEYTRANSACTION_ID} == ?;''';
 
     List<dynamic> params = [moneytransaction.id];
@@ -372,7 +372,7 @@ class SQLQueryClass {
   ///
   /// Fields that can be changed [DatabaseCreator.CATEGORY_NAME]
   static Future<void> updateCategory(MainCategory category) async {
-    final sql = '''UPDATE ${DatabaseCreator.categoryTable} 
+    final sql = '''UPDATE ${DatabaseCreator.categoryTable}
                 SET ${DatabaseCreator.CATEGORY_NAME} = ?
                 WHERE ${DatabaseCreator.CATEGORY_ID} == ?
                 ;''';
@@ -387,7 +387,7 @@ class SQLQueryClass {
   /// Fields that can be changed are [subcategory.name],
   /// [subcategory.budgeted] and [subcategory.available].
   static Future<void> updateSubcategory(SubCategory subcategory) async {
-    final sql = '''UPDATE ${DatabaseCreator.subcategoryTable} 
+    final sql = '''UPDATE ${DatabaseCreator.subcategoryTable}
                     SET ${DatabaseCreator.SUBCAT_NAME} = ?,
                     ${DatabaseCreator.SUBCAT_BUDGETED} = ?,
                     ${DatabaseCreator.SUBCAT_AVAILABLE} = ?
@@ -409,7 +409,7 @@ class SQLQueryClass {
   ///
   /// Fields that can be changed are [account.name] and [account.id].
   static Future<void> updateAccount(Account account) async {
-    final sql = '''UPDATE ${DatabaseCreator.accountTable} 
+    final sql = '''UPDATE ${DatabaseCreator.accountTable}
                 SET ${DatabaseCreator.ACCOUNT_NAME} = ?,
                 ${DatabaseCreator.ACCOUNT_BALANCE} = ?
                 WHERE ${DatabaseCreator.ACCOUNT_ID} == ?
@@ -424,7 +424,7 @@ class SQLQueryClass {
   ///
   /// Fields that can be updated are [payee.name].
   static Future<void> updatePayee(Payee payee) async {
-    final sql = '''UPDATE ${DatabaseCreator.payeeTable} 
+    final sql = '''UPDATE ${DatabaseCreator.payeeTable}
                 SET ${DatabaseCreator.PAYEE_NAME} = ?
                 WHERE ${DatabaseCreator.PAYEE_ID} == ?
                 ;''';
