@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/components/widgetViewClasses.dart';
 
 class AddCategoryRoute extends StatefulWidget {
-  //Pass the categories from the other Route in the constructor
-  AddCategoryRoute({Key key}) : super(key: key);
-
   @override
-  AddCategoryRouteState createState() => new AddCategoryRouteState();
+  _AddCategoryRouteController createState() => _AddCategoryRouteController();
 }
 
-class AddCategoryRouteState extends State<AddCategoryRoute> {
+class _AddCategoryRouteController extends State<AddCategoryRoute> {
   final _catFormKey = GlobalKey<FormState>(); //FormCheck
   final myCatController = TextEditingController();
 
@@ -22,6 +20,13 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
   }
 
   @override
+  Widget build(BuildContext context) => _AddCategoryRouteView(this);
+}
+
+class _AddCategoryRouteView extends WidgetView<AddCategoryRoute, _AddCategoryRouteController> {
+  _AddCategoryRouteView(_AddCategoryRouteController state) : super(state);
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -30,7 +35,7 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
         body: Column(
           children: <Widget>[
             Form(
-                key: _catFormKey,
+                key: state._catFormKey,
                 child: Column(
                   children: <Widget>[
                     Text("Add category"),
@@ -41,124 +46,22 @@ class AddCategoryRouteState extends State<AddCategoryRoute> {
                         }
                         return null;
                       },
-                      controller: myCatController,
+                      controller: state.myCatController,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: RaisedButton(
                         onPressed: () async {
                           // Check that the form is valid
-                          if (_catFormKey.currentState.validate()) {
+                          if (state._catFormKey.currentState.validate()) {
                             int catCount = await SQLQueryClass.categoryCount();
-                            MainCategory category = MainCategory(catCount, myCatController.text);
+                            MainCategory category =
+                                MainCategory(catCount, state.myCatController.text);
                             SQLQueryClass.addCategory(category);
-                            Navigator.pop(context, '${myCatController.text}');
+                            Navigator.pop(context, '${state.myCatController.text}');
                           }
                         },
-                        child: Text('Add category ${myCatController.text}'),
-                      ),
-                    ),
-                  ],
-                )),
-          ],
-        ));
-  }
-}
-
-class AddSubcategoryRoute extends StatefulWidget {
-  final List<Category> categories;
-
-  //Pass the categories from the other Route in the constructor
-  AddSubcategoryRoute({Key key, @required this.categories}) : super(key: key);
-
-  @override
-  AddSubcategoryRouteState createState() => new AddSubcategoryRouteState();
-}
-
-class AddSubcategoryRouteState extends State<AddSubcategoryRoute> {
-  final _subcatFormKey = GlobalKey<FormState>(); //FormCheck
-  final mySubcatController = TextEditingController();
-
-  var selectedCategory;
-  List<Category> categories;
-
-  @override
-  void initState() {
-    //Initialize the state to get the categories from the Widget
-    super.initState();
-    categories = widget.categories;
-    selectedCategory = categories.first;
-  }
-
-  @override
-  void dispose() {
-    // Clean up the controller when the Widget is disposed
-    mySubcatController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    //Only take categories to display in the dropdown menu
-    List<DropdownMenuItem<MainCategory>> dropdownMenuOptions = categories.map((Category category) {
-      if (category is MainCategory) {
-        return DropdownMenuItem<MainCategory>(
-          value: category,
-          child: new Text('${category.name}'),
-        );
-      }
-      return null;
-    }).toList();
-
-    dropdownMenuOptions.removeWhere((category) => category == null);
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text("Add a new category"),
-        ),
-        body: Column(
-          children: <Widget>[
-            Form(
-                key: _subcatFormKey,
-                child: Column(
-                  children: <Widget>[
-                    Text("Add subcategory"),
-                    TextFormField(
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        }
-                        return null;
-                      },
-                      controller: mySubcatController,
-                    ),
-                    Text("to the following category"),
-                    DropdownButton<Category>(
-                      value: selectedCategory,
-                      onChanged: (cat) {
-                        setState(() {
-                          selectedCategory = cat;
-                        });
-                      },
-                      items: dropdownMenuOptions,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: RaisedButton(
-                        onPressed: () async {
-                          // Check that the form is valid
-                          if (_subcatFormKey.currentState.validate()) {
-                            //Add subcategory to database
-                            int subcatCount = await SQLQueryClass.subcategoryCount();
-                            SubCategory subcategory = SubCategory(subcatCount, selectedCategory.id,
-                                mySubcatController.text, 0.00, 0.00);
-                            SQLQueryClass.addSubcategory(subcategory);
-                            var returnElement = [selectedCategory, mySubcatController.text];
-                            Navigator.pop(context, returnElement);
-                          }
-                        },
-                        child: Text(
-                            "Add subcategory ${mySubcatController.text} to ${selectedCategory.name}"),
+                        child: Text('Add category ${state.myCatController.text}'),
                       ),
                     ),
                   ],
