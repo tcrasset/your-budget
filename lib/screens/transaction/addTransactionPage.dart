@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
@@ -96,7 +97,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             memo_controller.text,
             DateTime.now());
 
-        // SQLQueryClass.addMoneyTransaction(moneyTransaction);
+        SQLQueryClass.addMoneyTransaction(moneyTransaction);
         resetToDefaultTransaction();
 
         showDialog(
