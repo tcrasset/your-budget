@@ -76,11 +76,10 @@ class _BudgetPageController extends State<BudgetPage> {
     );
 
     if (returnElements != null) {
-      var parentId = returnElements[0].id;
-
+      final int parentId = returnElements[0].id;
+      final String name = returnElements[1];
       SQLQueryClass.subcategoryCount().then((nextSubcategoryId) {
-        SubCategory newSubcategory =
-            SubCategory(nextSubcategoryId, parentId, returnElements[1], 0, 0);
+        SubCategory newSubcategory = SubCategory(nextSubcategoryId, parentId, name, 0, 0);
         returnElements[0].addSubcategory(newSubcategory);
         setState(() {
           _updateAllCategoryList();
@@ -110,11 +109,51 @@ class _BudgetPageController extends State<BudgetPage> {
 class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
   _BudgetPageView(_BudgetPageController state) : super(state);
 
+  Widget _addButtons(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        // Button for adding new Category (goes to new Page)
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
+          child: RaisedButton(
+            padding: const EdgeInsets.all(8.0),
+            textColor: Colors.white,
+            color: Colors.blue,
+            child: new Text("Add category"),
+            onPressed: () async {
+              // int accountCount = await SQLQueries.accountCount();
+              // Account account = Account(accountCount, "Savings account", 999.66);
+              // SQLQueries.addAccount(account);
+              // print("Added account $account");
+
+              print("Add category button pressed");
+              state._navigateAndAddCategory(context);
+            },
+          ),
+        ),
+        // Button for adding new SubCategory (goes to new Page)
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
+          child: RaisedButton(
+            padding: const EdgeInsets.all(8.0),
+            textColor: Colors.white,
+            color: Colors.blue,
+            child: new Text("Add subcategory"),
+            onPressed: () {
+              print("Add subcategory button pressed");
+              state._navigateAndAddSubcategory(context);
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     //While waiting for the database, return empty container
     if (state.allCategoryList == null) {
-      return new Container();
+      return _addButtons(context);
     }
 
     // When the database is loaded, show the complete page
@@ -124,43 +163,7 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
         ),
         body: Column(
           children: <Widget>[
-            Row(
-              children: <Widget>[
-                // Button for adding new Category (goes to new Page)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
-                  child: RaisedButton(
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    child: new Text("Add category"),
-                    onPressed: () async {
-                      // int accountCount = await SQLQueries.accountCount();
-                      // Account account = Account(accountCount, "Savings account", 999.66);
-                      // SQLQueries.addAccount(account);
-                      // print("Added account $account");
-
-                      print("Add category button pressed");
-                      state._navigateAndAddCategory(context);
-                    },
-                  ),
-                ),
-                // Button for adding new SubCategory (goes to new Page)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
-                  child: RaisedButton(
-                    padding: const EdgeInsets.all(8.0),
-                    textColor: Colors.white,
-                    color: Colors.blue,
-                    child: new Text("Add subcategory"),
-                    onPressed: () {
-                      print("Add subcategory button pressed");
-                      state._navigateAndAddSubcategory(context);
-                    },
-                  ),
-                ),
-              ],
-            ),
+            _addButtons(context),
 
             /// ListView with MainCategory and/or SubCategory rows (with custom Divider)
             Expanded(
