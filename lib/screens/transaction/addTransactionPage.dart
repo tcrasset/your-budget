@@ -8,13 +8,14 @@ import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/screens/transaction/addTransactionSearchPage.dart';
+import 'package:mybudget/components/widgetViewClasses.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
-  State createState() => new AddTransactionPageState();
+  _AddTransactionPageController createState() => _AddTransactionPageController();
 }
 
-class AddTransactionPageState extends State<AddTransactionPage> {
+class _AddTransactionPageController extends State<AddTransactionPage> {
   MoneyMaskedTextController _amountController;
 
   final TextStyle _amountTextStyle = new TextStyle(color: Colors.black, fontSize: 32.0);
@@ -75,6 +76,53 @@ class AddTransactionPageState extends State<AddTransactionPage> {
     super.dispose();
   }
 
+  handleOnTapPayee() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AddTransactionSearchPage(title: "Payees", listEntries: payees)),
+    ).then((returnElement) {
+      setState(() {
+        _payee = returnElement;
+        _payeeFieldName = returnElement.name;
+      });
+    });
+  }
+
+  handleOnTapAccount() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => AddTransactionSearchPage(title: "Accounts", listEntries: accounts)),
+    ).then((returnElement) {
+      setState(() {
+        _account = returnElement;
+        _accountFieldName = returnElement.name;
+      });
+    });
+  }
+
+  handleOnTapCategory() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              AddTransactionSearchPage(title: "Categories", listEntries: subcategories)),
+    ).then((returnElement) {
+      setState(() {
+        _subcategory = returnElement;
+        _subcategoryFieldName = returnElement.name;
+      });
+    });
+  }
+
+  handleOnTapDate() {
+    setState(() {
+      _date = DateTime.now();
+      _dateFieldName = DateTime.now().toString();
+    });
+  }
+
   void _addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
@@ -115,20 +163,13 @@ class AddTransactionPageState extends State<AddTransactionPage> {
     }
   }
 
-  // void _handleTapSubcategories(bool newValue) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //         builder: (context) => AddTransactionSearchPage(
-  //             title: "Subcategories", listEntries: ["Hello", "Gotcha"])),
-  //   ).then((returnElement) {
-  //     print(returnElement);
-  //     setState(() {
-  //       _subcategoryName = returnElement;
-  //       print("VALUE IS :" + _subcategoryName);
-  //     });
-  //   });
-  // }
+  @override
+  Widget build(BuildContext context) => _AddTransactionPageView(this);
+}
+
+class _AddTransactionPageView
+    extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
+  _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
   Container RowContainer(String name, Widget childWidget) {
     return Container(
@@ -156,9 +197,9 @@ class AddTransactionPageState extends State<AddTransactionPage> {
 
   Widget _myBuildMethod(AsyncSnapshot snapshot) {
     // Assign the async data to the respective variables
-    payees = snapshot.data[0];
-    accounts = snapshot.data[1];
-    subcategories = snapshot.data[2];
+    state.payees = snapshot.data[0];
+    state.accounts = snapshot.data[1];
+    state.subcategories = snapshot.data[2];
 
     // Create number controller
     Container amountInputContainer = Container(
@@ -170,95 +211,45 @@ class AddTransactionPageState extends State<AddTransactionPage> {
             hintText: "",
           ),
           keyboardType: TextInputType.number,
-          controller: _amountController,
+          controller: state._amountController,
           inputFormatters: [LengthLimitingTextInputFormatter(12)],
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
-          style: _amountTextStyle,
+          style: state._amountTextStyle,
           validator: (value) {
-            if (_amountController.numberValue <= 0) {
+            if (state._amountController.numberValue <= 0) {
               return "Value must be different than 0";
             }
             return null;
           }, // Always validate because no access to controller value
-          onSaved: (value) => this._amount = _amountController.numberValue,
+          onSaved: (value) => state._amount = state._amountController.numberValue,
         ));
 
     //Populate the list of container with the number controllers and
     //the custom listTiles
     List<Widget> containerList = [
-      amountInputContainer, //CustomTile does not want to build my widgets??
-      // CustomTile(
-      //   objectValue: _payeeName,
-      //   containerName: "Payee",
-      //   onChanged: _handleTapPayees,
-      // ),
-      // CustomTile(
-      //   objectValue: "Select account",
-      //   containerName: "Account",
-      //   onChanged: _handleTapAccounts,
-      // ),
-      // CustomTile(
-      //   objectValue: "Select category",
-      //   containerName: "Category",
-      //   onChanged: _handleTapSubcategories,
-      // ),
+      amountInputContainer,
       GestureDetector(
           // Payees gesture detectory leading to 'Payees' AddTransactionSearchPage
-          onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AddTransactionSearchPage(title: "Payees", listEntries: payees)),
-              ).then((returnElement) {
-                setState(() {
-                  this._payee = returnElement;
-                  this._payeeFieldName = returnElement.name;
-                });
-              }),
-          child: RowContainer("Payee", Text(_payeeFieldName))),
+          onTap: () => state.handleOnTapPayee(),
+          child: RowContainer("Payee", Text(state._payeeFieldName))),
       GestureDetector(
           // Accounts gesture detectory leading to 'Accounts' AddTransactionSearchPage
-          onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AddTransactionSearchPage(title: "Accounts", listEntries: accounts)),
-              ).then((returnElement) {
-                setState(() {
-                  this._account = returnElement;
-                  this._accountFieldName = returnElement.name;
-                });
-              }),
-          child: RowContainer("Account", Text(_accountFieldName))),
+          onTap: () => state.handleOnTapAccount(),
+          child: RowContainer("Account", Text(state._accountFieldName))),
       GestureDetector(
           // Subcategory gesture detectory leading to 'Categories' AddTransactionSearchPage
-          onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        AddTransactionSearchPage(title: "Categories", listEntries: subcategories)),
-              ).then((returnElement) {
-                setState(() {
-                  this._subcategory = returnElement;
-                  this._subcategoryFieldName = returnElement.name;
-                });
-              }),
-          child: RowContainer("Category", Text(_subcategoryFieldName))),
+          onTap: () => state.handleOnTapCategory(),
+          child: RowContainer("Category", Text(state._subcategoryFieldName))),
       GestureDetector(
           // Date gesture detector
-          onTap: () => {
-                setState(() {
-                  this._date = DateTime.now();
-                  this._dateFieldName = DateTime.now().toString();
-                })
-              },
+          onTap: () => state.handleOnTapDate(),
           child: RowContainer("Date", Text(DateTime.now().toString()))),
       RowContainer(
           "Memo",
           TextField(
             decoration: new InputDecoration(hintText: "Add a memo"),
-            controller: memo_controller,
+            controller: state.memo_controller,
           )),
       //TODO : Add Repeat Option
       //TODO : Add color option
@@ -287,7 +278,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
       // ),
       FloatingActionButton(
         child: Text("Enter"),
-        onPressed: _addMoneyTransaction,
+        onPressed: () => state._addMoneyTransaction(),
       )
     ]);
   }
@@ -300,7 +291,7 @@ class AddTransactionPageState extends State<AddTransactionPage> {
           title: new Text("New transaction"),
         ),
         body: Form(
-            key: _formKey,
+            key: state._formKey,
             child: FutureBuilder(
                 // Perform async operations before displaying the interface
                 future: Future.wait([
