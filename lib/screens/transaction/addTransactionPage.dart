@@ -9,6 +9,7 @@ import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/screens/transaction/addTransactionSearchPage.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:mybudget/screens/transaction/components/rowContainer.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -171,28 +172,6 @@ class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
   _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
-  Container RowContainer(String name, Widget childWidget) {
-    return Container(
-        padding: EdgeInsets.symmetric(vertical: 20),
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: Text(name,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
-              ),
-              Expanded(
-                child: childWidget,
-              ),
-            ],
-          ),
-        ]));
-  }
-
   // Container MemoRowContainer()
 
   Widget _myBuildMethod(AsyncSnapshot snapshot) {
@@ -232,20 +211,20 @@ class _AddTransactionPageView
       GestureDetector(
           // Payees gesture detectory leading to 'Payees' AddTransactionSearchPage
           onTap: () => state.handleOnTapPayee(),
-          child: RowContainer("Payee", Text(state._payeeFieldName))),
+          child: rowContainer("Payee", Text(state._payeeFieldName))),
       GestureDetector(
           // Accounts gesture detectory leading to 'Accounts' AddTransactionSearchPage
           onTap: () => state.handleOnTapAccount(),
-          child: RowContainer("Account", Text(state._accountFieldName))),
+          child: rowContainer("Account", Text(state._accountFieldName))),
       GestureDetector(
           // Subcategory gesture detectory leading to 'Categories' AddTransactionSearchPage
           onTap: () => state.handleOnTapCategory(),
-          child: RowContainer("Category", Text(state._subcategoryFieldName))),
+          child: rowContainer("Category", Text(state._subcategoryFieldName))),
       GestureDetector(
           // Date gesture detector
           onTap: () => state.handleOnTapDate(),
-          child: RowContainer("Date", Text(DateTime.now().toString()))),
-      RowContainer(
+          child: rowContainer("Date", Text(DateTime.now().toString()))),
+      rowContainer(
           "Memo",
           TextField(
             decoration: new InputDecoration(hintText: "Add a memo"),
