@@ -283,9 +283,10 @@ class _AddTransactionPageView
       Container(
           height: 400,
           child: Scrollbar(
-            // isAlwaysShown: True,
+            isAlwaysShown: true,
             controller: state._scrollController,
             child: ListView.separated(
+                controller: state._scrollController,
                 shrinkWrap: false,
                 addAutomaticKeepAlives: true,
                 itemCount: containerList.length,
