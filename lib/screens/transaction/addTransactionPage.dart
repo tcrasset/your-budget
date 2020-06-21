@@ -117,7 +117,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       context,
       MaterialPageRoute(
           builder: (context) =>
-              AddTransactionSearchPage(title: "Categories", listEntries: subcategories)),
+              AddTransactionSearchPage(title: "Subcategories", listEntries: subcategories)),
     ).then((returnElement) {
       setState(() {
         _subcategory = returnElement;
@@ -194,10 +194,10 @@ class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
   _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
-  TextStyle defaultChildTextStyle =
+  final TextStyle defaultChildTextStyle =
       TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
 
-  TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
+  final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
   Widget _myBuildMethod(AsyncSnapshot snapshot) {
     // Assign the async data to the respective variables

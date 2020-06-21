@@ -189,12 +189,12 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
 
 Future<void> addDummyVariables() async {
   int accountCount = await SQLQueryClass.accountCount();
-  Account account = Account(accountCount, "Savings account", 999.66);
+  Account account = Account(accountCount + 1, "Savings account", 999.66);
   SQLQueryClass.addAccount(account);
   print("Added account $account");
 
   int payeeCount = await SQLQueryClass.payeeCount();
-  Payee payee = Payee(payeeCount, "Frank");
+  Payee payee = Payee(payeeCount + 1, "Frank");
   SQLQueryClass.addPayee(payee);
   print("Added payee $payee");
 }
