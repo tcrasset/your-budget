@@ -40,12 +40,12 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
     super.dispose();
   }
 
-  handleOnFieldSubmitted() {
+  handleMainCategoryNameChange(String value) {
     //TODO : Fix category name change
-    if (_nameController.text != widget.cat.name) {
-      print("Changed name of category from ${widget.cat.name} to ${_nameController.text}");
+    if (value != widget.cat.name) {
+      print("Changed name of category from ${widget.cat.name} to $value");
       setState(() {
-        widget.cat.name = _nameController.text;
+        widget.cat.name = value;
       });
       SQLQueryClass.updateCategory(widget.cat);
     }
@@ -74,7 +74,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                       ], //To remove length counter
                       textInputAction: TextInputAction.done,
                       style: _categoryTextStyle,
-                      onFieldSubmitted: handleOnFieldSubmitted())),
+                      onFieldSubmitted: (String value) => handleMainCategoryNameChange(value))),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
