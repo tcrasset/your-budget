@@ -3,7 +3,8 @@ import 'package:mybudget/models/categories.dart';
 import 'package:flutter/services.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 
-/// Widget containing and displaying the information of a category
+// Widget containing and displaying the information of a category
+
 class MainCategoryRow extends StatefulWidget {
   final MainCategory cat;
   MainCategoryRow({Key key, @required this.cat}) : super(key: key);
@@ -39,10 +40,22 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
     super.dispose();
   }
 
+  handleOnFieldSubmitted() {
+    //TODO : Fix category name change
+    if (_nameController.text != widget.cat.name) {
+      print("Changed name of category from ${widget.cat.name} to ${_nameController.text}");
+      setState(() {
+        widget.cat.name = _nameController.text;
+      });
+      SQLQueryClass.updateCategory(widget.cat);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        // Divider separating MainCategories
         mainCategoryBox,
         Container(
           padding: EdgeInsets.symmetric(vertical: 10),
@@ -51,24 +64,17 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
             children: <Widget>[
               Expanded(
                   child: TextFormField(
-                decoration: new InputDecoration.collapsed(
-                  hintText: "",
-                ),
-                controller: _nameController,
-                textAlign: TextAlign.left,
-                inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
-                textInputAction: TextInputAction.done,
-                style: _categoryTextStyle,
-                onFieldSubmitted: (String value) {
-                  print("Changed available value in subcategory");
-                  if (_nameController.text != widget.cat.name) {
-                    setState(() {
-                      widget.cat.name = _nameController.text;
-                    });
-                    SQLQueryClass.updateCategory(widget.cat);
-                  }
-                },
-              )),
+                      decoration: new InputDecoration.collapsed(
+                        hintText: "",
+                      ),
+                      controller: _nameController,
+                      textAlign: TextAlign.left,
+                      inputFormatters: [
+                        LengthLimitingTextInputFormatter(25)
+                      ], //To remove length counter
+                      textInputAction: TextInputAction.done,
+                      style: _categoryTextStyle,
+                      onFieldSubmitted: handleOnFieldSubmitted())),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
