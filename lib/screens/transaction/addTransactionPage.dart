@@ -279,40 +279,42 @@ class _AddTransactionPageView
     ];
 
     // Build the layout (ListView, error container, Button)
-    return Column(children: [
-      Container(
-          height: 400,
-          child: Scrollbar(
-            isAlwaysShown: true,
-            controller: state._scrollController,
-            child: ListView.separated(
-                controller: state._scrollController,
-                shrinkWrap: false,
-                addAutomaticKeepAlives: true,
-                itemCount: containerList.length,
-                separatorBuilder: (BuildContext context, int index) =>
-                    Divider(height: 1, color: Colors.black12),
-                itemBuilder: (context, index) {
-                  return containerList[index];
-                }),
-          )),
-      //TODO : Error message
+    return SingleChildScrollView(
+      child: Column(children: [
+        Container(
+            height: 400,
+            child: Scrollbar(
+              isAlwaysShown: true,
+              controller: state._scrollController,
+              child: ListView.separated(
+                  controller: state._scrollController,
+                  shrinkWrap: false,
+                  addAutomaticKeepAlives: true,
+                  itemCount: containerList.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Divider(height: 1, color: Colors.black12),
+                  itemBuilder: (context, index) {
+                    return containerList[index];
+                  }),
+            )),
+        //TODO : Error message
 
-      Container(
-        padding: EdgeInsets.all(5),
-        child: Text("ERROR!", style: TextStyle(color: Colors.red)),
-      ),
-      FloatingActionButton(
-        child: Text("Enter"),
-        onPressed: () => state._addMoneyTransaction(),
-      )
-    ]);
+        Container(
+          padding: EdgeInsets.all(5),
+          child: Text("ERROR!", style: TextStyle(color: Colors.red)),
+        ),
+        FloatingActionButton(
+          child: Text("Enter"),
+          onPressed: () => state._addMoneyTransaction(),
+        )
+      ]),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        resizeToAvoidBottomInset: false,
+        // resizeToAvoidBottomInset: false,
         appBar: new AppBar(
           title: new Text("New transaction"),
         ),
