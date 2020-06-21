@@ -6,12 +6,12 @@ import 'package:mybudget/models/utils.dart';
 Widget transaction(AsyncSnapshot snapshot, int index) {
   MoneyTransaction moneyTransaction = snapshot.data[0][index];
   List<SubCategory> subcategories = snapshot.data[3];
+  String subcategoryName;
 
   SubCategory subcategory = subcategories.singleWhere(
       (subcategory) => subcategory.id == moneyTransaction.subcatID,
       orElse: () => null);
 
-  String subcategoryName;
   if (subcategory == null) {
     subcategoryName = "No subcategory";
   } else {
@@ -26,7 +26,7 @@ Widget transaction(AsyncSnapshot snapshot, int index) {
           children: <Widget>[
             Expanded(
               child: Text(
-                "MyMemo",
+                moneyTransaction.memo,
                 textAlign: TextAlign.left,
               ),
             ),

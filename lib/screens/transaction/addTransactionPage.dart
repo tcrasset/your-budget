@@ -7,6 +7,7 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/models/utils.dart';
 import 'package:mybudget/screens/transaction/addTransactionSearchPage.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/transaction/components/rowContainer.dart';
@@ -23,13 +24,18 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  TextEditingController memo_controller = new TextEditingController();
+  final TextEditingController _memoController = new TextEditingController();
+  final ScrollController _scrollController = new ScrollController();
 
   double _amount;
   String _payeeFieldName;
   String _accountFieldName;
   String _subcategoryFieldName;
   String _dateFieldName;
+
+  String _defaultPayeeFieldName;
+  String _defaultAccountFieldName;
+  String _defaultSubcategoryFieldName;
 
   Payee _payee;
   Account _account;
@@ -41,17 +47,20 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   List<Account> accounts;
   List<SubCategory> subcategories;
 
-  bool _visibleAlertDialog = true;
-
   @override
   void initState() {
     super.initState();
+    _defaultPayeeFieldName = "Select payee";
+    _defaultAccountFieldName = "Select account";
+    _defaultSubcategoryFieldName = "Select subcategory";
     _payee = null;
     _account = null;
     _subcategory = null;
-    _payeeFieldName = "Select payee";
-    _accountFieldName = "Select acount";
-    _subcategoryFieldName = "Select subcategory";
+    _date = DateTime.now();
+    _payeeFieldName = _defaultPayeeFieldName;
+    _accountFieldName = _defaultAccountFieldName;
+    _subcategoryFieldName = _defaultSubcategoryFieldName;
+    _dateFieldName = getDateString(_date);
     _amountController = new MoneyMaskedTextController(
         decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
   }
@@ -62,12 +71,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _account = null;
       _subcategory = null;
       _date = DateTime.now();
-      _payeeFieldName = "Select payee";
-      _accountFieldName = "Select acount";
-      _subcategoryFieldName = "Select subcategory";
+      _payeeFieldName = _defaultPayeeFieldName;
+      _accountFieldName = _defaultAccountFieldName;
+      _subcategoryFieldName = _defaultSubcategoryFieldName;
+      _dateFieldName = getDateString(_date);
       _amountController.updateValue(0);
-      _dateFieldName = DateTime.now().toString();
-      memo_controller.clear();
+      _memoController.clear();
     });
   }
 
@@ -117,11 +126,17 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     });
   }
 
-  handleOnTapDate() {
-    setState(() {
-      _date = DateTime.now();
-      _dateFieldName = DateTime.now().toString();
-    });
+  Future<Null> handleOnTapDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: getDateYMD(_date),
+        firstDate: DateTime(2010, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != _date)
+      setState(() {
+        _date = picked;
+        _dateFieldName = getDateString(picked);
+      });
   }
 
   void _addMoneyTransaction() async {
@@ -129,22 +144,17 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (_formKey.currentState.validate()) {
       if (_payee != null && _account != null && _subcategory != null) {
         print("Form validated");
-        print("Amount : ${this._amount}");
-        print("Payee : ${this._payeeFieldName}");
-        print("Account : ${this._accountFieldName}");
-        print("Subcategory : ${this._subcategoryFieldName}");
-        print("Memo : ${memo_controller.text}");
+        print("Amount : $_amount");
+        print("Payee : $_payeeFieldName");
+        print("Account : $_accountFieldName");
+        print("Subcategory : $_subcategoryFieldName");
+        print("Date: $_dateFieldName");
+        print("Memo : ${_memoController.text}");
 
         int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
-        MoneyTransaction moneyTransaction = new MoneyTransaction(
-            moneyTransactionCount + 1,
-            _subcategory.id,
-            _payee.id,
-            _account.id,
-            this._amount,
-            memo_controller.text,
-            DateTime.now());
+        MoneyTransaction moneyTransaction = new MoneyTransaction(moneyTransactionCount + 1,
+            _subcategory.id, _payee.id, _account.id, _amount, _memoController.text, _date);
 
         SQLQueryClass.addMoneyTransaction(moneyTransaction);
         resetToDefaultTransaction();
@@ -164,6 +174,18 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     }
   }
 
+  handleAmountOnSave() {
+    print("Handling amount on save");
+    _amount = _amountController.numberValue;
+  }
+
+  handleAmountValidate(String value) {
+    if (_amountController.numberValue <= 0) {
+      return "Value must be different than 0";
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) => _AddTransactionPageView(this);
 }
@@ -172,7 +194,10 @@ class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
   _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
-  // Container MemoRowContainer()
+  TextStyle defaultChildTextStyle =
+      TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+
+  TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
   Widget _myBuildMethod(AsyncSnapshot snapshot) {
     // Assign the async data to the respective variables
@@ -195,13 +220,8 @@ class _AddTransactionPageView
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
           style: state._amountTextStyle,
-          validator: (value) {
-            if (state._amountController.numberValue <= 0) {
-              return "Value must be different than 0";
-            }
-            return null;
-          }, // Always validate because no access to controller value
-          onSaved: (value) => state._amount = state._amountController.numberValue,
+          validator: (value) => state.handleAmountValidate(value),
+          onSaved: state.handleAmountOnSave(),
         ));
 
     //Populate the list of container with the number controllers and
@@ -211,50 +231,76 @@ class _AddTransactionPageView
       GestureDetector(
           // Payees gesture detectory leading to 'Payees' AddTransactionSearchPage
           onTap: () => state.handleOnTapPayee(),
-          child: rowContainer("Payee", Text(state._payeeFieldName))),
+          child: rowContainer(
+              "Payee",
+              Text(state._payeeFieldName,
+                  style: (state._payeeFieldName == state._defaultPayeeFieldName)
+                      ? defaultChildTextStyle
+                      : selectedChildTextStyle))),
       GestureDetector(
           // Accounts gesture detectory leading to 'Accounts' AddTransactionSearchPage
           onTap: () => state.handleOnTapAccount(),
-          child: rowContainer("Account", Text(state._accountFieldName))),
+          child: rowContainer(
+              "Account",
+              Text(state._accountFieldName,
+                  style: (state._accountFieldName == state._defaultAccountFieldName)
+                      ? defaultChildTextStyle
+                      : selectedChildTextStyle))),
       GestureDetector(
           // Subcategory gesture detectory leading to 'Categories' AddTransactionSearchPage
           onTap: () => state.handleOnTapCategory(),
-          child: rowContainer("Category", Text(state._subcategoryFieldName))),
+          child: rowContainer(
+              "Category",
+              Text(state._subcategoryFieldName,
+                  style: (state._subcategoryFieldName == state._defaultSubcategoryFieldName)
+                      ? defaultChildTextStyle
+                      : selectedChildTextStyle))),
       GestureDetector(
           // Date gesture detector
-          onTap: () => state.handleOnTapDate(),
-          child: rowContainer("Date", Text(DateTime.now().toString()))),
+          onTap: () => state.handleOnTapDate(state.context),
+          child: rowContainer("Date", Text(state._dateFieldName, style: selectedChildTextStyle))),
       rowContainer(
-          "Memo",
-          TextField(
-            decoration: new InputDecoration(hintText: "Add a memo"),
-            controller: state.memo_controller,
-          )),
+        "Memo",
+        TextField(
+          decoration: new InputDecoration(hintText: "Add a memo"),
+          controller: state._memoController,
+        ),
+      ),
       //TODO : Add Repeat Option
       //TODO : Add color option
-      // TransactionContainer(containerName:'Repeat', defaultValue: 'Never'),
-      // TransactionContainer(containerName:'Color', defaultValue: 'Default'),
+      GestureDetector(
+          // Date gesture detector
+          onTap: () => {},
+          child: rowContainer("Repeat", Text("Never", style: selectedChildTextStyle))),
+      GestureDetector(
+          // Date gesture detector
+          onTap: () => {},
+          child: rowContainer("Color", Text("None", style: selectedChildTextStyle))),
     ];
 
     // Build the layout (ListView, error container, Button)
     return Column(children: [
       Container(
-          height: 350,
-          child: ListView.separated(
-              shrinkWrap: false,
-              addAutomaticKeepAlives: true,
-              itemCount: containerList.length,
-              separatorBuilder: (BuildContext context, int index) =>
-                  Divider(height: 1, color: Colors.black12),
-              itemBuilder: (context, index) {
-                return containerList[index];
-              })),
+          height: 400,
+          child: Scrollbar(
+            // isAlwaysShown: True,
+            controller: state._scrollController,
+            child: ListView.separated(
+                shrinkWrap: false,
+                addAutomaticKeepAlives: true,
+                itemCount: containerList.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    Divider(height: 1, color: Colors.black12),
+                itemBuilder: (context, index) {
+                  return containerList[index];
+                }),
+          )),
       //TODO : Error message
 
-      // Container(
-      //   padding: EdgeInsets.all(5),
-      //   child: Text(_errorMessage, style: TextStyle(color:Colors.red)),
-      // ),
+      Container(
+        padding: EdgeInsets.all(5),
+        child: Text("ERROR!", style: TextStyle(color: Colors.red)),
+      ),
       FloatingActionButton(
         child: Text("Enter"),
         onPressed: () => state._addMoneyTransaction(),

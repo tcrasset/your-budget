@@ -6,7 +6,6 @@ Container rowContainer(String name, Widget childWidget) {
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: Column(children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             Expanded(
               child: Text(name,
@@ -15,9 +14,27 @@ Container rowContainer(String name, Widget childWidget) {
                       TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
             ),
             Expanded(
-              child: childWidget,
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: childWidget),
+                  name == "Date"
+                      ? Icon(IconData(59701, fontFamily: 'MaterialIcons'))
+                      : Icon(IconData(58823, fontFamily: 'MaterialIcons')),
+                ],
+              ),
             ),
           ],
         ),
       ]));
 }
+
+// Icon(IconData(58823, fontFamily: 'MaterialIcons'))
+
+// child: Row(
+//   children: <Widget>[
+//     Expanded(child: childWidget),
+//     name == "Date"
+//         ? Icon(IconData(59701, fontFamily: 'MaterialIcons'))
+//         : Icon(IconData(58823, fontFamily: 'MaterialIcons')),
+//   ],
+// ),
