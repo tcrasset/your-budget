@@ -139,6 +139,31 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       });
   }
 
+  showOverlayNotification(BuildContext context) async {
+    OverlayState overlayState = Overlay.of(context);
+    OverlayEntry overlayEntry = OverlayEntry(
+        builder: (context) => Positioned(
+            left: 150,
+            top: 500,
+            child: Container(
+              width: 150.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                color: Colors.grey[700].withOpacity(0.5),
+              ),
+              child: Center(
+                  child: Text("Transaction added",
+                      style: TextStyle(fontSize: 12.0, color: Colors.white))),
+            )));
+
+    overlayState.insert(overlayEntry);
+
+    await Future.delayed(Duration(seconds: 2));
+
+    overlayEntry.remove();
+  }
+
   void _addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
@@ -150,7 +175,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Subcategory : $_subcategoryFieldName");
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
-
+        //TODO: Fix amount value not being saved (only 0.0 is saved)
         int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
         MoneyTransaction moneyTransaction = new MoneyTransaction(moneyTransactionCount + 1,
@@ -159,15 +184,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         SQLQueryClass.addMoneyTransaction(moneyTransaction);
         resetToDefaultTransaction();
 
-        showDialog(
-            context: context,
-            barrierDismissible: true,
-            builder: (context) {
-              //TODO : Create own dialog by modyfing version of Dialog
-              return AlertDialog(
-                title: Text('Transaction added'),
-              );
-            });
+        showOverlayNotification(context);
       } else {
         print("One of the fields does not contain a valid type");
       }
@@ -175,7 +192,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   handleAmountOnSave() {
-    print("Handling amount on save");
     _amount = _amountController.numberValue;
   }
 
