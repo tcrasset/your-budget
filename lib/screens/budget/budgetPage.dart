@@ -43,12 +43,20 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: Column(
-          children: <Widget>[
-            _AddButtons(),
-            if (categories.length != 0) Expanded(child: _CategoriesList())
-          ],
-        ));
+        body: Consumer<AppState>(builder: (context, appState, child) {
+          if (appState.categories.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Column(
+              children: <Widget>[
+                _AddButtons(),
+                if (categories.length != 0) Expanded(child: _CategoriesList())
+              ],
+            );
+          }
+        }));
   }
 }
 
