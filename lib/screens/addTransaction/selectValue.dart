@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/entries.dart';
 
-class AddTransactionSearchPage extends StatefulWidget {
+class SelectValuePage extends StatefulWidget {
   final List listEntries;
   final String title;
-  AddTransactionSearchPage({@required this.title, @required this.listEntries});
+  SelectValuePage({@required this.title, @required this.listEntries});
 
   @override
-  State createState() => new AddTransactionSearchPageState();
+  State createState() => new SelectValuePageState();
 }
 
-class AddTransactionSearchPageState extends State<AddTransactionSearchPage> {
+class SelectValuePageState extends State<SelectValuePage> {
   TextEditingController searchController = new TextEditingController();
   String filter;
   bool isPayee;

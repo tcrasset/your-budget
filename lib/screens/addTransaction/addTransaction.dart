@@ -9,9 +9,9 @@ import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/transaction/addTransactionSearchPage.dart';
+import 'package:mybudget/screens/addTransaction/selectValue.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
-import 'package:mybudget/screens/transaction/components/rowContainer.dart';
+import 'package:mybudget/screens/addTransaction/components/rowContainer.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -91,7 +91,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => AddTransactionSearchPage(title: "Payees", listEntries: payees)),
+          builder: (context) => SelectValuePage(title: "Payees", listEntries: payees)),
     ).then((returnElement) {
       setState(() {
         _payee = returnElement;
@@ -104,7 +104,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => AddTransactionSearchPage(title: "Accounts", listEntries: accounts)),
+          builder: (context) => SelectValuePage(title: "Accounts", listEntries: accounts)),
     ).then((returnElement) {
       setState(() {
         _account = returnElement;
@@ -118,7 +118,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       context,
       MaterialPageRoute(
           builder: (context) =>
-              AddTransactionSearchPage(title: "Subcategories", listEntries: subcategories)),
+              SelectValuePage(title: "Subcategories", listEntries: subcategories)),
     ).then((returnElement) {
       setState(() {
         _subcategory = returnElement;
@@ -221,7 +221,7 @@ class _AddTransactionPageView
     List<Widget> containerList = [
       amountInputContainer,
       GestureDetector(
-          // Payees gesture detectory leading to 'Payees' AddTransactionSearchPage
+          // Payees gesture detectory leading to 'Payees' SelectValuePage
           onTap: () => state.handleOnTapPayee(),
           child: rowContainer(
               "Payee",
@@ -230,7 +230,7 @@ class _AddTransactionPageView
                       ? defaultChildTextStyle
                       : selectedChildTextStyle))),
       GestureDetector(
-          // Accounts gesture detectory leading to 'Accounts' AddTransactionSearchPage
+          // Accounts gesture detectory leading to 'Accounts' SelectValuePage
           onTap: () => state.handleOnTapAccount(),
           child: rowContainer(
               "Account",
@@ -239,7 +239,7 @@ class _AddTransactionPageView
                       ? defaultChildTextStyle
                       : selectedChildTextStyle))),
       GestureDetector(
-          // Subcategory gesture detectory leading to 'Categories' AddTransactionSearchPage
+          // Subcategory gesture detectory leading to 'Categories' SelectValuePage
           onTap: () => state.handleOnTapCategory(),
           child: rowContainer(
               "Category",
