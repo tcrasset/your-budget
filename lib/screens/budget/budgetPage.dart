@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mybudget/components/widgetViewClasses.dart';
-import 'package:mybudget/main.dart';
+import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
