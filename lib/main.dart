@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/screens/addTransaction/addTransaction.dart';
 
 import 'package:mybudget/screens/budget/budgetPage.dart';
@@ -14,11 +15,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseCreator().initDatabase();
-  List<MainCategory> mainCategories = await SQLQueryClass.getCategories();
-  List<SubCategory> subcategories = await SQLQueryClass.getSubCategories();
-
-  runApp(ChangeNotifierProvider(
-      create: (context) => CategoryModel(mainCategories, subcategories), child: MyBudget()));
+  runApp(ChangeNotifierProvider(create: (context) => AppState(), child: MyBudget()));
 }
 
 // Contains the AppBar that lets the user choose between
@@ -53,60 +50,75 @@ class MyBudget extends StatelessWidget {
   }
 }
 
-class CategoryModel extends ChangeNotifier {
+class AppState extends ChangeNotifier {
   final List<Category> _categories = [];
-  List<MainCategory> maincategories;
-  List<SubCategory> subcategories;
+  final List<Payee> _payees = [];
+  final List<Account> _accounts = [];
+  final List<MoneyTransaction> _transactions = [];
 
-  CategoryModel(List<MainCategory> maincategories, List<SubCategory> subcategories) {
-    this.maincategories = maincategories;
-    this.subcategories = subcategories;
-    loadCategories();
-  }
+  List<MainCategory> dbMaincategories;
+  List<SubCategory> dbSubcategories;
 
   /// An unmodifiable view of the categories in the data base.
   UnmodifiableListView<Category> get categories => UnmodifiableListView(_categories);
+  UnmodifiableListView<Payee> get payees => UnmodifiableListView(_payees);
+  UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
+  UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
 
-  /// The current total price of all items (assuming all items cost $42).
-  int get categoryCount => _categories.length;
-
-  Future<int> loadCategories() async {
-    //To each category, add the correspondent subcategories
-    this.maincategories.forEach((cat) {
-      List<SubCategory> toAdd =
-          this.subcategories.where((subcat) => subcat.parentId == cat.id).toList();
-
-      cat.addMultipleSubcategories(toAdd);
-    });
-
-    // Extract subcategories of each MainCategory and place them after each main category
-    _extractSubcategoriesInOrder();
-
-    return Future.value(1);
+  AppState() {
+    _loadCategories();
+    _loadOthers();
   }
 
-  /// Updates the list of categories/subcategories in the ListView after a change
-  void _extractSubcategoriesInOrder() {
-    for (var cat in this.maincategories) {
-      if (cat is MainCategory) {
-        _categories.add(cat);
-        cat.subcategories.forEach((subcat) => _categories.add(subcat));
-      }
-    } // allCategoryList.forEach((cat) => print(cat));
-  }
-
-  /// Adds [item] to cart. This and [removeAll] are the only ways to modify the
-  /// cart from the outside.
+  /// Adds [category] to the current [_categories].
   void add(Category category) {
     _categories.add(category);
-    // This call tells the widgets that are listening to this model to rebuild.
     notifyListeners();
   }
 
-  /// Removes all items from the cart.
-  void removeAll() {
-    _categories.clear();
-    // This call tells the widgets that are listening to this model to rebuild.
+  Future<void> _loadCategories() async {
+    dbMaincategories = await SQLQueryClass.getCategories();
+    dbSubcategories = await SQLQueryClass.getSubCategories();
+
+    //To each category, add the correspondent subcategories
+    this._extractSubcategoriesFromMainCategories();
+
+    // Extract subcategories of each MainCategory and place them after each main category
+    this._placeSubcategoriesInOrder();
+  }
+
+  Future<void> _loadOthers() async {
+    _payees.addAll(await SQLQueryClass.getPayees());
+    _accounts.addAll(await SQLQueryClass.getAccounts());
+    _transactions.addAll(await SQLQueryClass.getMoneyTransactions());
+  }
+
+  void _extractSubcategoriesFromMainCategories() {
+    dbMaincategories.forEach((cat) {
+      List<SubCategory> toAdd =
+          dbSubcategories.where((subcat) => subcat.parentId == cat.id).toList();
+
+      cat.addMultipleSubcategories(toAdd);
+    });
+  }
+
+  /// Updates the list of categories/subcategories in the ListView after a change
+  void _placeSubcategoriesInOrder() {
+    List<Category> allCategories = [];
+    for (var cat in dbMaincategories) {
+      if (cat is MainCategory) {
+        allCategories.add(cat);
+        cat.subcategories.forEach((subcat) => allCategories.add(subcat));
+      }
+    }
+
+    this._addAll(allCategories);
+  }
+
+  void _addAll(List<Category> categoriesList) {
+    categoriesList.forEach((cat) {
+      _categories.add(cat);
+    });
     notifyListeners();
   }
 }

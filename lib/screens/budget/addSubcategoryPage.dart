@@ -16,7 +16,7 @@ class AddSubcategoryRoute extends StatefulWidget {
 class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
   final _subcatFormKey = GlobalKey<FormState>();
   final mySubcatController = TextEditingController();
-  CategoryModel categoryModel;
+  AppState appState;
   MainCategory selectedCategory;
 
   @override
@@ -24,7 +24,7 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
     //Initialize the state to get the categories from the Widget
     super.initState();
     print("Init state");
-    categoryModel = Provider.of<CategoryModel>(context, listen: false);
+    appState = Provider.of<AppState>(context, listen: false);
     selectedCategory = getFirstCategory();
   }
 
@@ -52,7 +52,7 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
       SubCategory subcategory =
           SubCategory(subcatCount + 1, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
       SQLQueryClass.addSubcategory(subcategory);
-      categoryModel.add(subcategory);
+      appState.add(subcategory);
       Navigator.pop(context);
     }
 
@@ -62,7 +62,7 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
   List<dynamic> getDropdownMenuOptions() {
     //Only take categories to display in the dropdown menu
     List<DropdownMenuItem<MainCategory>> dropdownMenuOptions =
-        this.categoryModel.categories.map((Category category) {
+        this.appState.categories.map((Category category) {
       if (category is MainCategory) {
         return DropdownMenuItem<MainCategory>(
           value: category,
@@ -79,7 +79,7 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
 
   MainCategory getFirstCategory() {
     print("Getting first category");
-    this.categoryModel.categories.forEach((cat) {
+    this.appState.categories.forEach((cat) {
       print(cat);
       if (cat is MainCategory) {
         return cat;

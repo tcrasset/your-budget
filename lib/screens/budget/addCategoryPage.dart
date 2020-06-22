@@ -23,13 +23,13 @@ class _AddCategoryRouteController extends State<AddCategoryRoute> {
 
   void handleAddCategoryAndPopContext(BuildContext context) async {
     if (_catFormKey.currentState.validate()) {
-      var categoryModel = Provider.of<CategoryModel>(context, listen: false);
+      var appState = Provider.of<AppState>(context, listen: false);
 
       // If form is valid, add subcategory to the database and add it to the state
       int catCount = await SQLQueryClass.categoryCount();
       MainCategory category = MainCategory(catCount + 1, myCatController.text);
       SQLQueryClass.addCategory(category);
-      categoryModel.add(category);
+      appState.add(category);
       Navigator.pop(context);
     }
   }

@@ -36,8 +36,8 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
 
   @override
   Widget build(BuildContext context) {
-    var categoryModel = Provider.of<CategoryModel>(context);
-    List<Category> categories = categoryModel.categories;
+    var appState = Provider.of<AppState>(context);
+    List<Category> categories = appState.categories;
 
     return Scaffold(
         appBar: AppBar(
@@ -55,9 +55,9 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
 class _CategoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var categoryModel = Provider.of<CategoryModel>(context);
+    var appState = Provider.of<AppState>(context);
 
-    List<Category> categories = categoryModel.categories;
+    List<Category> categories = appState.categories;
 
     return ListView.separated(
       itemCount: categories.length,
