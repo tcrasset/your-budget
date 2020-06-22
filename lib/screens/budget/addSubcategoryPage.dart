@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:mybudget/components/overlayNotifications.dart';
+import 'package:mybudget/main.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:provider/provider.dart';
 
 class AddSubcategoryRoute extends StatefulWidget {
-  final List<Category> categories;
-  AddSubcategoryRoute({Key key, @required this.categories}) : super(key: key);
+  AddSubcategoryRoute({Key key}) : super(key: key);
 
   @override
   _AddSubcategoryRouteController createState() => _AddSubcategoryRouteController();
 }
 
 class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
-  final _subcatFormKey = GlobalKey<FormState>(); //FormCheck
+  final _subcatFormKey = GlobalKey<FormState>();
   final mySubcatController = TextEditingController();
-
-  var selectedCategory;
-  List<Category> categories;
+  CategoryModel categoryModel;
+  MainCategory selectedCategory;
 
   @override
   void initState() {
     //Initialize the state to get the categories from the Widget
     super.initState();
-    categories = widget.categories;
-    selectedCategory = categories.first;
+    print("Init state");
+    categoryModel = Provider.of<CategoryModel>(context, listen: false);
+    selectedCategory = getFirstCategory();
   }
 
   @override
@@ -39,22 +41,28 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
     });
   }
 
-  Future<dynamic> handleOnButtonPressed() async {
+  void handleAddSubcategoryAndPopContext() async {
     // Check that the form is valid
-    if (_subcatFormKey.currentState.validate()) {
+    if (selectedCategory == null) {
+      showOverlayNotification(context, "You must select a category!");
+    } else if (_subcatFormKey.currentState.validate()) {
       //Add subcategory to database
+
       int subcatCount = await SQLQueryClass.subcategoryCount();
       SubCategory subcategory =
-          SubCategory(subcatCount, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
+          SubCategory(subcatCount + 1, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
       SQLQueryClass.addSubcategory(subcategory);
-      var returnElement = [selectedCategory, mySubcatController.text];
-      Navigator.pop(context, returnElement);
+      categoryModel.add(subcategory);
+      Navigator.pop(context);
     }
+
+    return;
   }
 
   List<dynamic> getDropdownMenuOptions() {
     //Only take categories to display in the dropdown menu
-    List<DropdownMenuItem<MainCategory>> dropdownMenuOptions = categories.map((Category category) {
+    List<DropdownMenuItem<MainCategory>> dropdownMenuOptions =
+        this.categoryModel.categories.map((Category category) {
       if (category is MainCategory) {
         return DropdownMenuItem<MainCategory>(
           value: category,
@@ -67,6 +75,17 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
     dropdownMenuOptions.removeWhere((category) => category == null);
 
     return dropdownMenuOptions;
+  }
+
+  MainCategory getFirstCategory() {
+    print("Getting first category");
+    this.categoryModel.categories.forEach((cat) {
+      print(cat);
+      if (cat is MainCategory) {
+        return cat;
+      }
+    });
+    return null;
   }
 
   @override
@@ -108,9 +127,9 @@ class _AddSubcategoryRouteView
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: RaisedButton(
-                        onPressed: () => state.handleOnButtonPressed(),
-                        child: Text("Add subcategory ${state.mySubcatController.text}"
-                            "to ${state.selectedCategory.name}"),
+                        onPressed: () => state.handleAddSubcategoryAndPopContext(),
+                        child: Text("Add subcategory ${state.mySubcatController.text}"),
+                        //"to ${state.selectedCategory.name}"),
                       ),
                     ),
                   ],

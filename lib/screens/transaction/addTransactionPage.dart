@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:mybudget/components/overlayNotifications.dart';
 
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
@@ -139,31 +140,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       });
   }
 
-  showOverlayNotification(BuildContext context) async {
-    OverlayState overlayState = Overlay.of(context);
-    OverlayEntry overlayEntry = OverlayEntry(
-        builder: (context) => Positioned(
-            left: 150,
-            top: 500,
-            child: Container(
-              width: 150.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                color: Colors.grey[700].withOpacity(0.5),
-              ),
-              child: Center(
-                  child: Text("Transaction added",
-                      style: TextStyle(fontSize: 12.0, color: Colors.white))),
-            )));
-
-    overlayState.insert(overlayEntry);
-
-    await Future.delayed(Duration(seconds: 2));
-
-    overlayEntry.remove();
-  }
-
   void _addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
@@ -184,7 +160,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         SQLQueryClass.addMoneyTransaction(moneyTransaction);
         resetToDefaultTransaction();
 
-        showOverlayNotification(context);
+        showOverlayNotification(context, "Transaction added");
       } else {
         print("One of the fields does not contain a valid type");
       }

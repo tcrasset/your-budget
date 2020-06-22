@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mybudget/main.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:provider/provider.dart';
 
 class AddCategoryRoute extends StatefulWidget {
   @override
@@ -17,6 +19,19 @@ class _AddCategoryRouteController extends State<AddCategoryRoute> {
     // Clean up the controller when the Widget is disposed
     myCatController.dispose();
     super.dispose();
+  }
+
+  void handleAddCategoryAndPopContext(BuildContext context) async {
+    if (_catFormKey.currentState.validate()) {
+      var categoryModel = Provider.of<CategoryModel>(context, listen: false);
+
+      // If form is valid, add subcategory to the database and add it to the state
+      int catCount = await SQLQueryClass.categoryCount();
+      MainCategory category = MainCategory(catCount + 1, myCatController.text);
+      SQLQueryClass.addCategory(category);
+      categoryModel.add(category);
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -51,16 +66,7 @@ class _AddCategoryRouteView extends WidgetView<AddCategoryRoute, _AddCategoryRou
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: RaisedButton(
-                        onPressed: () async {
-                          // Check that the form is valid
-                          if (state._catFormKey.currentState.validate()) {
-                            int catCount = await SQLQueryClass.categoryCount();
-                            MainCategory category =
-                                MainCategory(catCount, state.myCatController.text);
-                            SQLQueryClass.addCategory(category);
-                            Navigator.pop(context, '${state.myCatController.text}');
-                          }
-                        },
+                        onPressed: () => state.handleAddCategoryAndPopContext(context),
                         child: Text('Add category ${state.myCatController.text}'),
                       ),
                     ),

@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/models/SQLQueries.dart';
-import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 
 class AddTransactionSearchPage extends StatefulWidget {
-  List listEntries;
-  String title;
+  final List listEntries;
+  final String title;
   AddTransactionSearchPage({@required this.title, @required this.listEntries});
 
   @override
