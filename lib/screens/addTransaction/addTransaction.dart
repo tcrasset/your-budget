@@ -31,6 +31,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   final ScrollController _scrollController = new ScrollController();
 
   double _amount;
+  bool isPositive;
+
+  /// String values of the variables which are displayed.
   String _payeeFieldName;
   String _accountFieldName;
   String _subcategoryFieldName;
@@ -179,6 +182,13 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _amount = _amountController.numberValue;
   }
 
+  void handleSwitchOnChanged() {
+    setState(() {
+      isPositive = !isPositive;
+    });
+  }
+
+  /// Checks that the amount of the transaction is not 0.00€.
   handleAmountValidate(String value) {
     if (_amountController.numberValue <= 0) {
       return "Value must be different than 0";
@@ -201,6 +211,7 @@ class _AddTransactionPageView
 
   Widget _myBuildMethod() {
     // Create number controller
+
     Container amountInputContainer = Container(
         height: 50,
         alignment: Alignment.centerRight,
@@ -219,10 +230,24 @@ class _AddTransactionPageView
           onSaved: state.handleAmountOnSave(),
         ));
 
+    Row containerAndButton = Row(
+      children: [
+        Expanded(child: amountInputContainer),
+        Container(
+            child: Switch(
+          value: state.isPositive,
+          onChanged: (value) => state.handleSwitchOnChanged(),
+          activeTrackColor: Colors.greenAccent,
+          activeColor: Colors.grey[300],
+          inactiveTrackColor: Colors.redAccent,
+          inactiveThumbColor: Colors.grey[300],
+        )),
+      ],
+    );
     //Populate the list of container with the number controllers and
     //the custom listTiles
     List<Widget> containerList = [
-      amountInputContainer,
+      containerAndButton,
       GestureDetector(
           // Payees gesture detectory leading to 'Payees' SelectValuePage
           onTap: () => state.handleOnTapPayee(),
