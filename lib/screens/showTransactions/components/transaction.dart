@@ -3,19 +3,17 @@ import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 
-Widget transaction(AsyncSnapshot snapshot, int index) {
-  MoneyTransaction moneyTransaction = snapshot.data[0][index];
-  List<SubCategory> subcategories = snapshot.data[3];
-  String subcategoryName;
+Widget transaction(MoneyTransaction moneyTransaction, List<Category> categories) {
+  String subcategoryName = "No subcategory"; //Default value
+  SubCategory correspondingSubcategory;
 
-  SubCategory subcategory = subcategories.singleWhere(
-      (subcategory) => subcategory.id == moneyTransaction.subcatID,
-      orElse: () => null);
-
-  if (subcategory == null) {
-    subcategoryName = "No subcategory";
-  } else {
-    subcategoryName = subcategory.name;
+  /// Extract name of subcategory associated to transaction [moneyTransaction]
+  for (final cat in categories) {
+    if (cat is SubCategory && cat.id == moneyTransaction.subcatID) {
+      correspondingSubcategory = cat;
+      subcategoryName = correspondingSubcategory.name;
+      break;
+    }
   }
 
   return Container(
@@ -26,7 +24,7 @@ Widget transaction(AsyncSnapshot snapshot, int index) {
           children: <Widget>[
             Expanded(
               child: Text(
-                moneyTransaction.memo,
+                moneyTransaction.memo == "" ? "No memo" : moneyTransaction.memo,
                 textAlign: TextAlign.left,
               ),
             ),
