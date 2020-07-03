@@ -30,6 +30,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   final TextEditingController _memoController = new TextEditingController();
   final ScrollController _scrollController = new ScrollController();
 
+  /// Default names will have a different style than selected ones
+  final String _defaultPayeeFieldName = "Select payee";
+  final String _defaultAccountFieldName = "Select account";
+  final String _defaultSubcategoryFieldName = "Select subcategory";
+
   double _amount;
   bool isPositive;
 
@@ -39,15 +44,14 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   String _subcategoryFieldName;
   String _dateFieldName;
 
-  String _defaultPayeeFieldName;
-  String _defaultAccountFieldName;
-  String _defaultSubcategoryFieldName;
-
+  /// Values used for the transaction
   Payee _payee;
   Account _account;
   SubCategory _subcategory;
   DateTime _date;
 
+  /// List of values to choose each value from, e.g. [_payee]
+  /// will be chosen from one of the [payees]
   List<Payee> payees;
   List<Account> accounts;
   List<SubCategory> subcategories;
@@ -58,26 +62,30 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void initState() {
     super.initState();
 
+    isPositive = true;
+    // Load list of objects from the state/database
     appState = Provider.of<AppState>(context, listen: false);
     payees = appState.payees;
     accounts = appState.accounts;
     subcategories = appState.subcategories;
 
-    _defaultPayeeFieldName = "Select payee";
-    _defaultAccountFieldName = "Select account";
-    _defaultSubcategoryFieldName = "Select subcategory";
+    // Set initial values of the transaction
     _payee = null;
     _account = null;
     _subcategory = null;
     _date = DateTime.now();
+
+    // Set the default values for the UI
     _payeeFieldName = _defaultPayeeFieldName;
     _accountFieldName = _defaultAccountFieldName;
     _subcategoryFieldName = _defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
+
     _amountController = new MoneyMaskedTextController(
         decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
   }
 
+  /// Resets all the field to their default value
   void resetToDefaultTransaction() {
     setState(() {
       _payee = null;
@@ -99,6 +107,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     super.dispose();
   }
 
+  /// When tapping on the [SelectValuePage] widget pertaining
+  /// to the [Payee] object, it pushes to the route selecting
+  /// a [Payee], whose value is stored in [_payee] and whose
+  /// name is stored in [_payeeFieldName].
   handleOnTapPayee() {
     Navigator.push(
       context,
@@ -112,6 +124,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     });
   }
 
+  /// When tapping on the [SelectValuePage] widget pertaining
+  /// to the [Account] object, it pushes to the route selecting
+  /// a  [Account], whose value is stored in [_account] and whose
+  /// name is stored in [_accountFieldName].
   handleOnTapAccount() {
     Navigator.push(
       context,
@@ -125,6 +141,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     });
   }
 
+  /// When tapping on the [SelectValuePage] widget pertaining
+  /// to the [SubCategory] object, it pushes to the route selecting
+  /// a [SubCategory], whose value is stored in [_subcategory] and whose
+  /// name is stored in [_subcategoryFieldName].
   handleOnTapCategory() {
     Navigator.push(
       context,
@@ -139,6 +159,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     });
   }
 
+  /// When tapping on the Date row, it opens the DataPicker
+  /// which allows one to choose the date as a [DateTime].
+  /// Defaults to the current day-year-month.
+  /// The [DateTime] gets stored in [_date], and the string
+  /// value of that date is saved in [_dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
         context: context,
@@ -152,6 +177,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       });
   }
 
+  /// Check that all the necessary fields in the form
+  /// specified by [_formKey] have been filled.
+  /// If that is the case, create a new [MoneyTransaction]
+  /// with the information entered, add the transaction and
+  /// reset the whole [AddTransactionPage] to the default values
+  /// and display a notification.
   void _addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
@@ -168,9 +199,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
             _subcategory.id, _payee.id, _account.id, _amount, _memoController.text, _date);
 
         appState.addTransaction(moneyTransaction);
-
         resetToDefaultTransaction();
-
         showOverlayNotification(context, "Transaction added");
       } else {
         print("One of the fields does not contain a valid type");
@@ -206,7 +235,6 @@ class _AddTransactionPageView
 
   final TextStyle defaultChildTextStyle =
       TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
   Widget _myBuildMethod() {
@@ -312,7 +340,7 @@ class _AddTransactionPageView
                   addAutomaticKeepAlives: true,
                   itemCount: containerList.length,
                   separatorBuilder: (BuildContext context, int index) =>
-                      Divider(height: 1, color: Colors.black12),
+                      Divider(height: 1, color: Colors.black26),
                   itemBuilder: (context, index) {
                     return containerList[index];
                   }),
