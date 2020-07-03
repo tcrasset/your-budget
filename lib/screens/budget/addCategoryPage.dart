@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/SQLQueries.dart';
-import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:provider/provider.dart';
 
@@ -11,25 +9,26 @@ class AddCategoryRoute extends StatefulWidget {
 }
 
 class _AddCategoryRouteController extends State<AddCategoryRoute> {
+  AppState appState;
   final _catFormKey = GlobalKey<FormState>(); //FormCheck
   final myCatController = TextEditingController();
 
   @override
+  void initState() {
+    appState = Provider.of<AppState>(context, listen: false);
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    // Clean up the controller when the Widget is disposed
     myCatController.dispose();
     super.dispose();
   }
 
   void handleAddCategoryAndPopContext(BuildContext context) async {
     if (_catFormKey.currentState.validate()) {
-      var appState = Provider.of<AppState>(context, listen: false);
-
       // If form is valid, add subcategory to the database and add it to the state
-      int catCount = await SQLQueryClass.categoryCount();
-      MainCategory category = MainCategory(catCount + 1, myCatController.text);
-      SQLQueryClass.addCategory(category);
-      appState.add(category);
+      appState.addCategory(myCatController.text);
       Navigator.pop(context);
     }
   }

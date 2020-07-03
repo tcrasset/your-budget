@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:mybudget/appState.dart';
 
 import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:provider/provider.dart';
 
 // Widget containing and displaying the information a subcategory
 
@@ -17,6 +18,7 @@ class SubcategoryRow extends StatefulWidget {
 }
 
 class _SubcategoryRowController extends State<SubcategoryRow> {
+  AppState appState;
   MoneyMaskedTextController _budgetedController;
   MoneyMaskedTextController _availableController;
   TextEditingController _nameController;
@@ -24,6 +26,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
   @override
   void initState() {
     super.initState();
+    appState = Provider.of(context, listen: false);
     _nameController = new TextEditingController(text: '${widget.subcat.name}');
 
     _availableController = new MoneyMaskedTextController(
@@ -49,7 +52,8 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
       setState(() {
         widget.subcat.name = _nameController.text;
       });
-      SQLQueryClass.updateSubcategory(widget.subcat);
+
+      appState.updateSubcategory(widget.subcat);
     }
   }
 
@@ -59,7 +63,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
       setState(() {
         widget.subcat.budgeted = _budgetedController.numberValue;
       });
-      SQLQueryClass.updateSubcategory(widget.subcat);
+      appState.updateSubcategory(widget.subcat);
     }
   }
 
@@ -69,7 +73,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
       setState(() {
         widget.subcat.available = _availableController.numberValue;
       });
-      SQLQueryClass.updateSubcategory(widget.subcat);
+      appState.updateSubcategory(widget.subcat);
     }
   }
 
@@ -86,7 +90,6 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
 
   @override
   Widget build(BuildContext context) {
-    print(widget.subcat);
     state._budgetedController.updateValue(widget.subcat.budgeted);
     state._availableController.updateValue(widget.subcat.available);
 

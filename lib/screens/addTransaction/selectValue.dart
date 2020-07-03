@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/models/SQLQueries.dart';
+import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/entries.dart';
+import 'package:provider/provider.dart';
 
 class SelectValuePage extends StatefulWidget {
   final List listEntries;
@@ -16,9 +17,11 @@ class SelectValuePageState extends State<SelectValuePage> {
   String filter;
   bool isPayee;
 
+  AppState appState;
   @override
   initState() {
     super.initState();
+    appState = Provider.of(context, listen: false);
     isPayee = widget.title == "Payees";
     searchController.addListener(() {
       setState(() {
@@ -44,10 +47,9 @@ class SelectValuePageState extends State<SelectValuePage> {
       return;
     }
     // Create new payee and return it
-    int payeeCount = await SQLQueryClass.payeeCount();
-    Payee payee = Payee(payeeCount + 1, name);
+    Payee payee = Payee(appState.payeeCount + 1, name);
     print("Created payee $payee");
-    SQLQueryClass.addPayee(payee);
+    appState.addPayee(payee);
     handlePopContext(payee);
   }
 

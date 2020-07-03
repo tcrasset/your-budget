@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,7 +7,6 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/overlayNotifications.dart';
 
-import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
@@ -45,7 +45,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   SubCategory _subcategory;
   DateTime _date;
 
-  // Will hold async data when FutureBuilder returns
   List<Payee> payees;
   List<Account> accounts;
   List<SubCategory> subcategories;
@@ -59,7 +58,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     appState = Provider.of<AppState>(context, listen: false);
     payees = appState.payees;
     accounts = appState.accounts;
-    subcategories = appState.dbSubcategories; //TODO: Create List of subcategories in appState
+    subcategories = appState.subcategories;
 
     _defaultPayeeFieldName = "Select payee";
     _defaultAccountFieldName = "Select account";
@@ -161,13 +160,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Subcategory : $_subcategoryFieldName");
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
-        //TODO: Fix amount value not being saved (only 0.0 is saved)
-        int moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
-        MoneyTransaction moneyTransaction = new MoneyTransaction(moneyTransactionCount + 1,
+        MoneyTransaction moneyTransaction = new MoneyTransaction(appState.moneyTransactionCount + 1,
             _subcategory.id, _payee.id, _account.id, _amount, _memoController.text, _date);
 
-        SQLQueryClass.addMoneyTransaction(moneyTransaction);
         appState.addTransaction(moneyTransaction);
 
         resetToDefaultTransaction();

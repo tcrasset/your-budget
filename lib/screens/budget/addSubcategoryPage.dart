@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/components/overlayNotifications.dart';
 import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +22,6 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
   void initState() {
     //Initialize the state to get the categories from the Widget
     super.initState();
-    print("Init state");
     appState = Provider.of<AppState>(context, listen: false);
     selectedCategory = getFirstCategory();
   }
@@ -48,11 +46,10 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
     } else if (_subcatFormKey.currentState.validate()) {
       //Add subcategory to database
 
-      int subcatCount = await SQLQueryClass.subcategoryCount();
-      SubCategory subcategory =
-          SubCategory(subcatCount + 1, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
-      SQLQueryClass.addSubcategory(subcategory);
-      appState.add(subcategory);
+      SubCategory subcategory = SubCategory(
+          appState.subcategoryCount + 1, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
+      appState.addSubcategory(subcategory);
+
       Navigator.pop(context);
     }
 
@@ -62,7 +59,7 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
   List<dynamic> getDropdownMenuOptions() {
     //Only take categories to display in the dropdown menu
     List<DropdownMenuItem<MainCategory>> dropdownMenuOptions =
-        this.appState.categories.map((Category category) {
+        this.appState.allCategories.map((Category category) {
       if (category is MainCategory) {
         return DropdownMenuItem<MainCategory>(
           value: category,
@@ -78,9 +75,7 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
   }
 
   MainCategory getFirstCategory() {
-    print("Getting first category");
-    this.appState.categories.forEach((cat) {
-      print(cat);
+    this.appState.allCategories.forEach((cat) {
       if (cat is MainCategory) {
         return cat;
       }

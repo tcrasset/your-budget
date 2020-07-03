@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:flutter/services.dart';
-import 'package:mybudget/models/SQLQueries.dart';
+import 'package:provider/provider.dart';
 
 // Widget containing and displaying the information of a category
 
@@ -14,6 +15,8 @@ class MainCategoryRow extends StatefulWidget {
 }
 
 class _MainCategoryRowState extends State<MainCategoryRow> {
+  AppState appState;
+
   TextEditingController _nameController;
   final _categoryTextStyle =
       TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0);
@@ -31,6 +34,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
   @override
   void initState() {
     super.initState();
+    appState = Provider.of(context, listen: false);
     _nameController = new TextEditingController(text: '${widget.cat.name}');
   }
 
@@ -47,7 +51,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
       setState(() {
         widget.cat.name = _nameController.text;
       });
-      SQLQueryClass.updateCategory(widget.cat);
+      appState.updateCategoryName(widget.cat);
     }
   }
 
