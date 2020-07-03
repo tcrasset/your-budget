@@ -1,18 +1,17 @@
 import 'dart:async';
-import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
+
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/overlayNotifications.dart';
-
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 import 'package:mybudget/screens/addTransaction/selectValue.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/addTransaction/components/rowContainer.dart';
+
 import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -21,9 +20,12 @@ class AddTransactionPage extends StatefulWidget {
 }
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
-  MoneyMaskedTextController _amountController;
+  // MoneyMaskedTextController _amountController;
+  TextEditingController _amountController;
+  // MaskTextInputFormatter _amountFormatter;
 
-  final TextStyle _amountTextStyle = new TextStyle(color: Colors.black, fontSize: 32.0);
+  final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
+  final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -63,6 +65,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     super.initState();
 
     isPositive = true;
+    _amount = 0;
     // Load list of objects from the state/database
     appState = Provider.of<AppState>(context, listen: false);
     payees = appState.payees;
@@ -81,8 +84,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _subcategoryFieldName = _defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
 
-    _amountController = new MoneyMaskedTextController(
-        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
+    _amountController = TextEditingController(text: "0.00");
   }
 
   /// Resets all the field to their default value
@@ -96,7 +98,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _accountFieldName = _defaultAccountFieldName;
       _subcategoryFieldName = _defaultSubcategoryFieldName;
       _dateFieldName = getDateString(_date);
-      _amountController.updateValue(0);
+      _amountController = TextEditingController(text: "0.00");
       _memoController.clear();
     });
   }
@@ -208,18 +210,29 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   handleAmountOnSave() {
-    _amount = _amountController.numberValue;
+    print(_amountController.text);
+    _amount = double.parse(_amountController.text);
   }
 
+  // When the switch is set to negative, the text style changes
+  // and a minus sign is added in front of the number
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
+
+      if (isPositive)
+        _amountController.text = _amountController.text.substring(1);
+      else
+        _amountController.text = "-" + _amountController.text;
+
+      // amountLength = isPositive ? 13 : 14;
+      //Change the money mask to include a minus
     });
   }
 
   /// Checks that the amount of the transaction is not 0.00€.
   handleAmountValidate(String value) {
-    if (_amountController.numberValue <= 0) {
+    if (_amountController.text != "0.00") {
       return "Value must be different than 0";
     }
     return null;
@@ -250,12 +263,15 @@ class _AddTransactionPageView
           ),
           keyboardType: TextInputType.number,
           controller: state._amountController,
-          inputFormatters: [LengthLimitingTextInputFormatter(12)],
+          inputFormatters: [
+            LengthLimitingTextInputFormatter(13),
+          ],
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
-          style: state._amountTextStyle,
+          style: state.isPositive ? state._positiveAmountTextStyle : state._negativeAmountTextStyle,
           validator: (value) => state.handleAmountValidate(value),
           onSaved: state.handleAmountOnSave(),
+          onTap: () => state._amountController.clear(),
         ));
 
     Row containerAndButton = Row(
