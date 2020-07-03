@@ -50,11 +50,13 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   List<Account> accounts;
   List<SubCategory> subcategories;
 
+  AppState appState;
+
   @override
   void initState() {
     super.initState();
 
-    var appState = Provider.of<AppState>(context, listen: false);
+    appState = Provider.of<AppState>(context, listen: false);
     payees = appState.payees;
     accounts = appState.accounts;
     subcategories = appState.dbSubcategories; //TODO: Create List of subcategories in appState
@@ -166,6 +168,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
             _subcategory.id, _payee.id, _account.id, _amount, _memoController.text, _date);
 
         SQLQueryClass.addMoneyTransaction(moneyTransaction);
+        appState.addTransaction(moneyTransaction);
+
         resetToDefaultTransaction();
 
         showOverlayNotification(context, "Transaction added");

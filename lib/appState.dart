@@ -27,9 +27,13 @@ class AppState extends ChangeNotifier {
   }
 
   /// Adds [category] to the current [_categories].
-  void add(Category category) {
+  void addCategory(Category category) {
     _categories.add(category);
     notifyListeners();
+  }
+
+  void addTransaction(MoneyTransaction transaction) {
+    _transactions.add(transaction);
   }
 
   Future<void> _loadOthers() async {
@@ -68,10 +72,10 @@ class AppState extends ChangeNotifier {
       }
     }
 
-    this._addAll(allCategories);
+    this._addAllCategories(allCategories);
   }
 
-  void _addAll(List<Category> categoriesList) {
+  void _addAllCategories(List<Category> categoriesList) {
     categoriesList.forEach((cat) {
       _categories.add(cat);
     });
