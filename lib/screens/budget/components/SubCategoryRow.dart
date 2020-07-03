@@ -57,21 +57,15 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
     }
   }
 
+  /// When the budget value gets changed, change the shown budget value,
+  /// but also the available value.
   handleSubcategoryBudgetedChange() {
     print("Changed budgeted value in subcategory");
     if (_budgetedController.numberValue != widget.subcat.budgeted) {
       setState(() {
+        double beforeAfterDifference = (_budgetedController.numberValue - widget.subcat.budgeted);
         widget.subcat.budgeted = _budgetedController.numberValue;
-      });
-      appState.updateSubcategory(widget.subcat);
-    }
-  }
-
-  handleSubcategoryAvailableChange() {
-    print("Changed available value in subcategory");
-    if (_budgetedController.numberValue != widget.subcat.available) {
-      setState(() {
-        widget.subcat.available = _availableController.numberValue;
+        widget.subcat.available += beforeAfterDifference;
       });
       appState.updateSubcategory(widget.subcat);
     }
@@ -125,17 +119,12 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                 onFieldSubmitted: (String value) => state.handleSubcategoryBudgetedChange()),
           ),
           Expanded(
-            child: TextFormField(
+            child: TextField(
+              readOnly: true,
               decoration: new InputDecoration.collapsed(hintText: "${widget.subcat.available}"),
-              keyboardType: TextInputType.numberWithOptions(),
               controller: state._availableController,
-              inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
-              textInputAction: TextInputAction.done,
-
               textAlign: TextAlign.right,
               style: widget.subcat.available > 0 ? _greenNumberTextStyle : _redNumberTextStyle,
-              // When the user presses the 'Enter' key, update the respective entry in the database
-              onFieldSubmitted: (String value) => state.handleSubcategoryAvailableChange(),
             ),
           )
         ],
