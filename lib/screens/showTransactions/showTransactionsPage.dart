@@ -37,15 +37,19 @@ class _ShowTransactionPageView
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppState>(builder: (context, appState, child) {
-      if (appState.categories.isEmpty) {
-        return Center(
-          child: CircularProgressIndicator(),
-        );
-      } else {
-        return _TransactionList();
-      }
-    });
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Consumer<AppState>(builder: (context, appState, child) {
+          if (appState.transactions.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return _TransactionList();
+          }
+        }));
   }
 }
 
