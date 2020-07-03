@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/screens/budget/addCategoryPage.dart';
 import 'package:mybudget/screens/budget/addSubcategoryPage.dart';
 import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
@@ -44,7 +42,7 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
           title: Text(widget.title),
         ),
         body: Consumer<AppState>(builder: (context, appState, child) {
-          if (appState.categories.isEmpty) {
+          if (appState.transactions.isEmpty) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -138,16 +136,4 @@ class _AddButtons extends StatelessWidget {
       ],
     );
   }
-}
-
-Future<void> addDummyVariables() async {
-  int accountCount = await SQLQueryClass.accountCount();
-  Account account = Account(accountCount + 1, "Savings account", 999.66);
-  SQLQueryClass.addAccount(account);
-  print("Added account $account");
-
-  int payeeCount = await SQLQueryClass.payeeCount();
-  Payee payee = Payee(payeeCount + 1, "Frank");
-  SQLQueryClass.addPayee(payee);
-  print("Added payee $payee");
 }

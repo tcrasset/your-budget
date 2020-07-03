@@ -32,6 +32,12 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> _loadOthers() async {
+    _payees.addAll(await SQLQueryClass.getPayees());
+    _accounts.addAll(await SQLQueryClass.getAccounts());
+    _transactions.addAll(await SQLQueryClass.getMoneyTransactions());
+  }
+
   Future<void> _loadCategories() async {
     dbMaincategories = await SQLQueryClass.getCategories();
     dbSubcategories = await SQLQueryClass.getSubCategories();
@@ -41,12 +47,6 @@ class AppState extends ChangeNotifier {
 
     // Extract subcategories of each MainCategory and place them after each main category
     this._placeSubcategoriesInOrder();
-  }
-
-  Future<void> _loadOthers() async {
-    _payees.addAll(await SQLQueryClass.getPayees());
-    _accounts.addAll(await SQLQueryClass.getAccounts());
-    _transactions.addAll(await SQLQueryClass.getMoneyTransactions());
   }
 
   void _extractSubcategoriesFromMainCategories() {
