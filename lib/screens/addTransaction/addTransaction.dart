@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/overlayNotifications.dart';
 
 import 'package:mybudget/models/SQLQueries.dart';
@@ -12,6 +13,7 @@ import 'package:mybudget/models/utils.dart';
 import 'package:mybudget/screens/addTransaction/selectValue.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/addTransaction/components/rowContainer.dart';
+import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
@@ -51,6 +53,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   @override
   void initState() {
     super.initState();
+
+    var appState = Provider.of<AppState>(context, listen: false);
+    payees = appState.payees;
+    accounts = appState.accounts;
+    subcategories = appState.dbSubcategories; //TODO: Create List of subcategories in appState
+
     _defaultPayeeFieldName = "Select payee";
     _defaultAccountFieldName = "Select account";
     _defaultSubcategoryFieldName = "Select subcategory";
@@ -191,12 +199,7 @@ class _AddTransactionPageView
 
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
-  Widget _myBuildMethod(AsyncSnapshot snapshot) {
-    // Assign the async data to the respective variables
-    state.payees = snapshot.data[0];
-    state.accounts = snapshot.data[1];
-    state.subcategories = snapshot.data[2];
-
+  Widget _myBuildMethod() {
     // Create number controller
     Container amountInputContainer = Container(
         height: 50,
@@ -305,42 +308,21 @@ class _AddTransactionPageView
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-        // resizeToAvoidBottomInset: false,
-        appBar: new AppBar(
-          title: new Text("New transaction"),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text("New transaction"),
         ),
-        body: Form(
-            key: state._formKey,
-            child: FutureBuilder(
-                // Perform async operations before displaying the interface
-                future: Future.wait([
-                  SQLQueryClass.getPayees(),
-                  SQLQueryClass.getAccounts(),
-                  SQLQueryClass.getSubCategories(),
-                ]),
-                builder: (context, snapshot) {
-                  switch (snapshot.connectionState) {
-                    case ConnectionState.none:
-                      return new Container();
-                      break;
-                    case ConnectionState.waiting:
-                      return new Center(child: new CircularProgressIndicator());
-                      break;
-                    case ConnectionState.active:
-                      return new Container();
-                      break;
-                    case ConnectionState.done:
-                      if (snapshot.hasError) {
-                        return new Text('${snapshot.error}', style: TextStyle(color: Colors.red));
-                      } else {
-                        return _myBuildMethod(snapshot);
-                      }
-                      break;
-                    default:
-                      return new Container();
-                      break;
-                  }
-                })));
+        body: Consumer<AppState>(builder: (context, appState, child) {
+          if (appState.transactions.isEmpty) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return Form(
+              key: state._formKey,
+              child: _myBuildMethod(),
+            );
+          }
+        }));
   }
 }
