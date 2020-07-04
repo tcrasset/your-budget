@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/overlayNotifications.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
+import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:mybudget/screens/addTransaction/selectValue.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/addTransaction/components/rowContainer.dart';
@@ -20,9 +22,9 @@ class AddTransactionPage extends StatefulWidget {
 }
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
-  // MoneyMaskedTextController _amountController;
   TextEditingController _amountController;
-  // MaskTextInputFormatter _amountFormatter;
+  final NumberFormat currencyFormatter =
+      NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: '€');
 
   final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
   final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
@@ -84,7 +86,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _subcategoryFieldName = _defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
 
-    _amountController = TextEditingController(text: "0.00");
+    _amountController = TextEditingController(text: currencyFormatter.format(0).trim());
   }
 
   /// Resets all the field to their default value
@@ -98,7 +100,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _accountFieldName = _defaultAccountFieldName;
       _subcategoryFieldName = _defaultSubcategoryFieldName;
       _dateFieldName = getDateString(_date);
-      _amountController = TextEditingController(text: "0.00");
+      _amountController = TextEditingController(text: currencyFormatter.format(0).trim());
       _memoController.clear();
     });
   }
@@ -210,12 +212,14 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   handleAmountOnSave() {
-    print(_amountController.text);
-    _amount = double.parse(_amountController.text);
+    if (isPositive)
+      _amount = formatCurrencyToDouble(_amountController.text);
+    else
+      _amount = -formatCurrencyToDouble(_amountController.text);
   }
 
   // When the switch is set to negative, the text style changes
-  // and a minus sign is added in front of the number
+  // and a minus sign is added in front of the text
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
@@ -230,12 +234,20 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     });
   }
 
-  /// Checks that the amount of the transaction is not 0.00€.
+  /// Checks that the amount of the transaction is not 0.
   handleAmountValidate(String value) {
-    if (_amountController.text != "0.00") {
+    if (formatCurrencyToDouble(_amountController.text) == 0) {
       return "Value must be different than 0";
     }
     return null;
+  }
+
+  /// Reset the amout to "0.00 €" and force the cursor to be
+  ///                         ^here
+  handleAmountOnTap() {
+    _amountController
+      ..text = currencyFormatter.format(0).trim()
+      ..selection = TextSelection.collapsed(offset: _amountController.text.length - 2);
   }
 
   @override
@@ -252,7 +264,6 @@ class _AddTransactionPageView
 
   Widget _myBuildMethod() {
     // Create number controller
-
     Container amountInputContainer = Container(
         height: 50,
         alignment: Alignment.centerRight,
@@ -265,13 +276,14 @@ class _AddTransactionPageView
           controller: state._amountController,
           inputFormatters: [
             LengthLimitingTextInputFormatter(13),
+            CurrencyInputFormatter(state.currencyFormatter),
           ],
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
           style: state.isPositive ? state._positiveAmountTextStyle : state._negativeAmountTextStyle,
           validator: (value) => state.handleAmountValidate(value),
           onSaved: state.handleAmountOnSave(),
-          onTap: () => state._amountController.clear(),
+          onTap: () => state.handleAmountOnTap(),
         ));
 
     Row containerAndButton = Row(
