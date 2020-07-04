@@ -1,7 +1,10 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
-double formatCurrencyToDouble(String currencyText) {
+/// Given the [currencyText] String returned from [NumberFormat.format()],
+/// this method returns the double value of [currencyText], making sure
+/// it is positive when [isPositive] is true, and negative when not.
+double formatCurrencyToDouble(String currencyText, bool isPositive) {
   String integers, decimals;
   String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
   int textLength = onlyNumbers.length;
@@ -16,39 +19,36 @@ double formatCurrencyToDouble(String currencyText) {
     integers = "0";
     decimals = "0" + onlyNumbers;
   }
-  return double.parse(integers + "." + decimals);
+
+  double number = double.parse(integers + "." + decimals);
+  return isPositive ? number : -number;
 }
 
 class CurrencyInputFormatter extends TextInputFormatter {
   final NumberFormat currencyFormatter;
+  final bool isPositive;
 
-  CurrencyInputFormatter(this.currencyFormatter);
+  CurrencyInputFormatter(this.currencyFormatter, this.isPositive);
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    print("\n############################ \n");
-    print("oldValue : ${oldValue.text}");
     print("newValue : ${newValue.text}");
 
     /// [newValue] is empty, return an empty String
     if (newValue.text.isEmpty) {
-      print("Value is empty");
       return newValue.copyWith(text: '');
-
+    } else if (newValue.text.compareTo(oldValue.text) != 0) {
       /// [newValue] is different from [oldValue].
       /// Extract only the numbers of the text field, separate decimals and integers
-      /// and format the resulting number using the NumberFormat.currency() formatter
-    } else if (newValue.text.compareTo(oldValue.text) != 0) {
-      final int selectionIndexFromTheRight = newValue.text.length - newValue.selection.end;
-      double number = formatCurrencyToDouble(newValue.text);
+      /// and format the resulting number using the [NumberFormat.currency()] formatter
+      final double number = formatCurrencyToDouble(newValue.text, isPositive);
       final String newString = currencyFormatter.format(number).trim();
 
       return TextEditingValue(
         text: newString,
-        selection: TextSelection.collapsed(offset: newString.length - selectionIndexFromTheRight),
+        selection: TextSelection.collapsed(offset: newString.length - 2),
       );
     } else {
-      print("Value hasn't changed");
       return newValue;
     }
   }

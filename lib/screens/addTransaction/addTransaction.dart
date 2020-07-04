@@ -23,7 +23,7 @@ class AddTransactionPage extends StatefulWidget {
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
   TextEditingController _amountController;
-  final NumberFormat currencyFormatter =
+  final NumberFormat currencyNumberFormat =
       NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: '€');
 
   final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
@@ -41,6 +41,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   double _amount;
   bool isPositive;
+  int amountLength; //Number of max. characters for the amount
 
   /// String values of the variables which are displayed.
   String _payeeFieldName;
@@ -68,6 +69,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
     isPositive = true;
     _amount = 0;
+    amountLength = 16;
     // Load list of objects from the state/database
     appState = Provider.of<AppState>(context, listen: false);
     payees = appState.payees;
@@ -86,12 +88,16 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _subcategoryFieldName = _defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
 
-    _amountController = TextEditingController(text: currencyFormatter.format(0).trim());
+    _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
 
   /// Resets all the field to their default value
   void resetToDefaultTransaction() {
     setState(() {
+      isPositive = true;
+      _amount = 0;
+      amountLength = 16;
+
       _payee = null;
       _account = null;
       _subcategory = null;
@@ -100,7 +106,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _accountFieldName = _defaultAccountFieldName;
       _subcategoryFieldName = _defaultSubcategoryFieldName;
       _dateFieldName = getDateString(_date);
-      _amountController = TextEditingController(text: currencyFormatter.format(0).trim());
+      _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       _memoController.clear();
     });
   }
@@ -187,7 +193,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// with the information entered, add the transaction and
   /// reset the whole [AddTransactionPage] to the default values
   /// and display a notification.
-  void _addMoneyTransaction() async {
+  void addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
       if (_payee != null && _account != null && _subcategory != null) {
@@ -212,42 +218,47 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   handleAmountOnSave() {
-    if (isPositive)
-      _amount = formatCurrencyToDouble(_amountController.text);
-    else
-      _amount = -formatCurrencyToDouble(_amountController.text);
+    _amount = formatCurrencyToDouble(_amountController.text, isPositive);
+    print("Double amount is $_amount");
   }
 
-  // When the switch is set to negative, the text style changes
-  // and a minus sign is added in front of the text
+  // When the switch is set to the 'off' position, the text style changes
+  // and a minus sign is added in front of the text.
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
-
-      if (isPositive)
+      if (isPositive && _amountController.text[0] == '-')
         _amountController.text = _amountController.text.substring(1);
-      else
-        _amountController.text = "-" + _amountController.text;
+      else if (!isPositive) _amountController.text = "-" + _amountController.text;
 
-      // amountLength = isPositive ? 13 : 14;
-      //Change the money mask to include a minus
+      // Change the maximal possible length of the amount to account for
+      // the minus sign.
+      amountLength = isPositive ? 16 : 17;
+      // Lastly, set the offset to the correct position.
+      _setOffsetToLastDigit();
     });
   }
 
   /// Checks that the amount of the transaction is not 0.
   handleAmountValidate(String value) {
-    if (formatCurrencyToDouble(_amountController.text) == 0) {
+    if (formatCurrencyToDouble(_amountController.text, isPositive) == 0) {
       return "Value must be different than 0";
     }
     return null;
   }
 
-  /// Reset the amout to "0.00 €" and force the cursor to be
-  ///                         ^here
+  /// Reset [_amountController.text] to "0.00 €" or "-0.00€", depending on
+  /// the value of [isPositive]
   handleAmountOnTap() {
-    _amountController
-      ..text = currencyFormatter.format(0).trim()
-      ..selection = TextSelection.collapsed(offset: _amountController.text.length - 2);
+    String zero = currencyNumberFormat.format(0).trim();
+    _amountController.text = isPositive ? zero : "-" + zero;
+    _setOffsetToLastDigit();
+  }
+
+  /// Set the cursor offset to the last digit of the text.
+  _setOffsetToLastDigit() {
+    _amountController.selection =
+        TextSelection.collapsed(offset: _amountController.text.length - 2);
   }
 
   @override
@@ -264,6 +275,14 @@ class _AddTransactionPageView
 
   Widget _myBuildMethod() {
     // Create number controller
+    /// This [TextFormField] handles the amount selected while providing
+    /// an intuitive experience to the user, who does not need to manually
+    /// separators and currencies.
+    /// The length is limited by a [LengthLimitingTextInputFormatter] to
+    /// [state.amountLength] which is equivalent to a maximal value of
+    /// 999.999.999,99 €.
+    /// The currency format is handled by [CurrencyInputFormatter].
+    /// [onTap()] resets the value to a chosen default value.
     Container amountInputContainer = Container(
         height: 50,
         alignment: Alignment.centerRight,
@@ -275,8 +294,8 @@ class _AddTransactionPageView
           keyboardType: TextInputType.number,
           controller: state._amountController,
           inputFormatters: [
-            LengthLimitingTextInputFormatter(13),
-            CurrencyInputFormatter(state.currencyFormatter),
+            LengthLimitingTextInputFormatter(state.amountLength),
+            CurrencyInputFormatter(state.currencyNumberFormat, state.isPositive),
           ],
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
@@ -381,7 +400,7 @@ class _AddTransactionPageView
         ),
         FloatingActionButton(
           child: Text("Enter"),
-          onPressed: () => state._addMoneyTransaction(),
+          onPressed: () => state.addMoneyTransaction(),
         )
       ]),
     );
