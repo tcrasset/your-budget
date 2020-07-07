@@ -19,6 +19,7 @@ class AppState extends ChangeNotifier {
   int moneyTransactionCount;
   int accountCount;
   int payeeCount;
+  double toBeBudgeted;
 
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<Category> get allCategories => UnmodifiableListView(_allCategories);
@@ -31,6 +32,7 @@ class AppState extends ChangeNotifier {
   AppState() {
     _loadCategories();
     _loadOthers();
+    toBeBudgeted = 100.0;
     notifyListeners();
   }
 

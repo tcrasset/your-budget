@@ -34,9 +34,6 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
 
   @override
   Widget build(BuildContext context) {
-    var appState = Provider.of<AppState>(context);
-    List<Category> categories = appState.allCategories;
-
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
@@ -50,7 +47,8 @@ class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
             return Column(
               children: <Widget>[
                 _AddButtons(),
-                if (categories.length != 0) Expanded(child: _CategoriesList())
+                _ToBeBudgeted(),
+                if (appState.allCategories.length != 0) Expanded(child: _CategoriesList())
               ],
             );
           }
@@ -77,6 +75,44 @@ class _CategoriesList extends StatelessWidget {
           return new SubcategoryRow(subcat: item);
         } else {
           return null;
+        }
+      },
+    );
+  }
+}
+
+class _ToBeBudgeted extends StatelessWidget {
+  final TextStyle _textStyle =
+      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25.0);
+
+  final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
+  final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppState>(
+      builder: (BuildContext context, appState, Widget child) {
+        if (appState.toBeBudgeted == null) {
+          return Container(height: 50);
+        } else {
+          return Container(
+            height: 50,
+            child: Row(
+              children: [
+                Expanded(
+                    child: Text(
+                  "To be budgeted",
+                  style: _textStyle,
+                )),
+                Text(
+                  appState.toBeBudgeted.toString() + " €",
+                  style: appState.toBeBudgeted >= 0
+                      ? _positiveAmountTextStyle
+                      : _negativeAmountTextStyle,
+                )
+              ],
+            ),
+          );
         }
       },
     );
