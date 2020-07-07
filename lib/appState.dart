@@ -30,10 +30,15 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
 
   AppState() {
-    _loadCategories();
-    _loadOthers();
-    toBeBudgeted = 100.0;
+    // addDummyVariables();
+    _loadStateFromDatabase();
     notifyListeners();
+  }
+
+  void _loadStateFromDatabase() async {
+    await _loadCategories();
+    await _loadOthers();
+    _computeToBeBudgeted();
   }
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
@@ -182,29 +187,32 @@ class AppState extends ChangeNotifier {
   /// Update the name of the [MainCategory] pointed to
   /// by [modifiedCategory.id] to [modifiedCategory.name]
   void updateCategoryName(MainCategory modifiedCategory) {
-    SQLQueryClass.updateCategory(modifiedCategory);
-
     for (MainCategory cat in _maincategories) {
       if (cat.id == modifiedCategory.id) {
         cat.name = modifiedCategory.name;
       }
     }
+    // Persist it in memory
+    SQLQueryClass.updateCategory(modifiedCategory);
   }
 
   void updateToBeBudgeted(beforeAfterDifference) {
     toBeBudgeted -= beforeAfterDifference;
     notifyListeners();
   }
+
+  void _computeToBeBudgeted() {
+    toBeBudgeted = 0;
+    for (Account account in _accounts) {
+      print(account.balance);
+      toBeBudgeted += account.balance;
+    }
+  }
 }
 
 Future<void> addDummyVariables() async {
   int accountCount = await SQLQueryClass.accountCount();
-  Account account = Account(accountCount + 1, "Savings account", 999.66);
+  Account account = Account(accountCount + 1, "Savings account", 10000.00);
   SQLQueryClass.addAccount(account);
   print("Added account $account");
-
-  int payeeCount = await SQLQueryClass.payeeCount();
-  Payee payee = Payee(payeeCount + 1, "Frank");
-  SQLQueryClass.addPayee(payee);
-  print("Added payee $payee");
 }
