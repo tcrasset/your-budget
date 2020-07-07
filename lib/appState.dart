@@ -36,6 +36,7 @@ class AppState extends ChangeNotifier {
   }
 
   void _loadStateFromDatabase() async {
+    // await addDummyVariables();
     await _loadCategories();
     await _loadOthers();
     _computeToBeBudgeted();
@@ -45,16 +46,19 @@ class AppState extends ChangeNotifier {
   /// and to the data base.
   void addCategory(String categoryName) {
     mainCategoryCount++;
-    MainCategory category = MainCategory(mainCategoryCount, categoryName);
-    SQLQueryClass.addCategory(category);
+    // + 1 because we do not want to have an ID of 0
+    MainCategory category = MainCategory(mainCategoryCount + 1, categoryName);
     _maincategories.add(category);
     _allCategories.add(category);
+    SQLQueryClass.addCategory(category);
     notifyListeners();
   }
 
   void addPayee(Payee payee) {
-    SQLQueryClass.addPayee(payee);
+    payeeCount++;
     _payees.add(payee);
+    SQLQueryClass.addPayee(payee);
+    notifyListeners();
   }
 
   /// Adds [subcategory] to the list [_subcategories],
@@ -84,28 +88,33 @@ class AppState extends ChangeNotifier {
     SQLQueryClass.addMoneyTransaction(transaction);
     moneyTransactionCount++;
 
-    // Get the corresponding subcategory
-    SubCategory oldSubcat;
-    for (final cat in _allCategories) {
-      if (cat is SubCategory && cat.id == transaction.subcatID) {
-        oldSubcat = cat;
-        break;
+    /// If we do a MoneyTransaction between accounts (subcat.ID == -1)
+    /// subcategories are not affected.
+    if (transaction.subcatID != -1) {
+      // Get the corresponding subcategory
+
+      SubCategory oldSubcat;
+      for (final cat in _allCategories) {
+        if (cat is SubCategory && cat.id == transaction.subcatID) {
+          oldSubcat = cat;
+          break;
+        }
       }
-    }
 
-    /// Modify amount in the state variables ([_categories] and [_subcategories])
-    /// and in the data base
-    double newAvailableAmount = oldSubcat.available + transaction.amount;
-    oldSubcat.available = newAvailableAmount;
+      /// Modify amount in the state variables ([_categories] and [_subcategories])
+      /// and in the data base
+      double newAvailableAmount = oldSubcat.available + transaction.amount;
+      oldSubcat.available = newAvailableAmount;
 
-    for (final MainCategory cat in _maincategories) {
-      if (cat.id == oldSubcat.parentId) {
-        cat.updateFields();
+      for (final MainCategory cat in _maincategories) {
+        if (cat.id == oldSubcat.parentId) {
+          cat.updateFields();
+        }
       }
-    }
 
-    SQLQueryClass.updateSubcategory(SubCategory(
-        oldSubcat.id, oldSubcat.parentId, oldSubcat.name, oldSubcat.budgeted, newAvailableAmount));
+      SQLQueryClass.updateSubcategory(SubCategory(oldSubcat.id, oldSubcat.parentId, oldSubcat.name,
+          oldSubcat.budgeted, newAvailableAmount));
+    }
 
     notifyListeners();
   }
@@ -212,7 +221,7 @@ class AppState extends ChangeNotifier {
 
 Future<void> addDummyVariables() async {
   int accountCount = await SQLQueryClass.accountCount();
-  Account account = Account(accountCount + 1, "Savings account", 10000.00);
+  Account account = Account(accountCount + 2, "Checking account", 5000.00);
   SQLQueryClass.addAccount(account);
   print("Added account $account");
 }

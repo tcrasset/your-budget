@@ -47,7 +47,8 @@ class SelectValuePageState extends State<SelectValuePage> {
       return;
     }
     // Create new payee and return it
-    Payee payee = Payee(appState.payeeCount + 1, name);
+    // + 2 because we do not want to have an ID of 0
+    Payee payee = Payee(appState.payeeCount + 2, name);
     print("Created payee $payee");
     appState.addPayee(payee);
     handlePopContext(payee);

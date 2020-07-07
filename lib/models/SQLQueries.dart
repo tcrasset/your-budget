@@ -148,7 +148,19 @@ class SQLQueryClass {
   /// [moneyTransaction.accountID],
   /// [moneyTransaction.amount],
   /// [moneyTransaction.memo] and
-  ///[moneyTransaction.date]
+  ///[moneyTransaction.date].
+  ///
+  ///When the money transaction is made between accounts, no subcategory is selected, so
+  ///that it doesn't affect the budget. Therefore, subcat.ID is set to '-1' and payee.id
+  ///is set to the opposite of account.id.
+  ///An example of this is the following :
+  ///
+  ///Instance of 'MoneyTransaction' {id: 10, subcatID: -1, payeeID: -3, accountID: 2, amount: 100.0, date: 2020-07-07 17:44:14.263746}
+  ///
+  ///where the transfer of money of 100.0€ was made from account 2 to account with id 3 (- payeeID).
+  ///TODO : Clarify (in the UI and code) which account is receiving and which account is getting when making a transfer between accounts
+  ///
+  ///
   ///
 
   static Future<void> addMoneyTransaction(MoneyTransaction moneyTransaction) async {

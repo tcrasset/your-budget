@@ -65,7 +65,7 @@ class _TransactionList extends StatelessWidget {
       separatorBuilder: (BuildContext context, int index) =>
           Divider(height: 1, color: Colors.black12),
       itemBuilder: (BuildContext context, int index) {
-        return transaction(appState.transactions[index], appState.allCategories);
+        return TransactionRow(appState.transactions[index], appState.allCategories);
       },
     ));
   }

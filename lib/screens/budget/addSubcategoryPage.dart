@@ -45,9 +45,9 @@ class _AddSubcategoryRouteController extends State<AddSubcategoryRoute> {
       showOverlayNotification(context, "You must select a category!");
     } else if (_subcatFormKey.currentState.validate()) {
       //Add subcategory to database
-
+      // + 2 because we do not want to have an ID of 0
       SubCategory subcategory = SubCategory(
-          appState.subcategoryCount + 1, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
+          appState.subcategoryCount + 2, selectedCategory.id, mySubcatController.text, 0.00, 0.00);
       appState.addSubcategory(subcategory);
 
       Navigator.pop(context);

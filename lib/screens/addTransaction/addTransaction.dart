@@ -50,7 +50,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   String _dateFieldName;
 
   /// Values used for the transaction
-  Payee _payee;
+  dynamic _payee;
   Account _account;
   SubCategory _subcategory;
   DateTime _date;
@@ -58,9 +58,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// List of values to choose each value from, e.g. [_payee]
   /// will be chosen from one of the [payees]
   List<Payee> payees;
-  List<Account> accounts;
   List<SubCategory> subcategories;
-
+  List<Account> accounts;
+  List payeesAndAccounts = [];
   AppState appState;
 
   @override
@@ -75,6 +75,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     payees = appState.payees;
     accounts = appState.accounts;
     subcategories = appState.subcategories;
+
+    payeesAndAccounts.addAll(payees);
+    payeesAndAccounts.addAll(accounts);
 
     // Set initial values of the transaction
     _payee = null;
@@ -125,7 +128,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Payees", listEntries: payees)),
+          builder: (context) => SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     ).then((returnElement) {
       setState(() {
         _payee = returnElement;
@@ -196,6 +199,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
+      if (_payee is Account) {
+        _subcategory = SubCategory(-1, -1, "No subcategory", -1, -1);
+      }
       if (_payee != null && _account != null && _subcategory != null) {
         print("Form validated");
         print("Amount : $_amount");
@@ -205,8 +211,14 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
 
+        // Input as payee ID the opposite of the account ID when we select
+        // and account instead of a payee in the 'Payee' field
+        print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
+        //TODO : This does not work when account.id is 0
+        int payeeId = _payee is Payee ? _payee.id : -_account.id;
         MoneyTransaction moneyTransaction = new MoneyTransaction(appState.moneyTransactionCount + 1,
-            _subcategory.id, _payee.id, _account.id, _amount, _memoController.text, _date);
+            _subcategory.id, payeeId, _account.id, _amount, _memoController.text, _date);
+        print(moneyTransaction);
 
         appState.addTransaction(moneyTransaction);
         resetToDefaultTransaction();
@@ -343,11 +355,19 @@ class _AddTransactionPageView
                       : selectedChildTextStyle))),
       GestureDetector(
           // Subcategory gesture detectory leading to 'Categories' SelectValuePage
-          onTap: () => state.handleOnTapCategory(),
+
+          /// [state._payee] accepts both an object of type [Payee] or [Account].
+          /// If it is of type Account, make the GestureDetector untappable,
+          /// set the default text style and change the text.
+          onTap: () => state._payee is Account ? null : state.handleOnTapCategory(),
           child: rowContainer(
               "Category",
-              Text(state._subcategoryFieldName,
-                  style: (state._subcategoryFieldName == state._defaultSubcategoryFieldName)
+              Text(
+                  state._payee is Account
+                      ? "No need to select category when using an account as payee"
+                      : state._subcategoryFieldName,
+                  style: (state._subcategoryFieldName == state._defaultSubcategoryFieldName ||
+                          state._payee is Account)
                       ? defaultChildTextStyle
                       : selectedChildTextStyle))),
       GestureDetector(

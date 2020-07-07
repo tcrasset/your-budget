@@ -61,6 +61,12 @@ class MoneyTransaction {
       DatabaseCreator.MONEYTRANSACTION_DATE: date,
     };
   }
+
+  @override
+  String toString() {
+    return super.toString() +
+        """ {id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}""";
+  }
 }
 
 class Account {
