@@ -190,6 +190,11 @@ class AppState extends ChangeNotifier {
       }
     }
   }
+
+  void updateToBeBudgeted(beforeAfterDifference) {
+    toBeBudgeted -= beforeAfterDifference;
+    notifyListeners();
+  }
 }
 
 Future<void> addDummyVariables() async {
