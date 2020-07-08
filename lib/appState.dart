@@ -19,7 +19,7 @@ class AppState extends ChangeNotifier {
   int moneyTransactionCount;
   int accountCount;
   int payeeCount;
-  double toBeBudgeted;
+  double toBeBudgeted = 0;
 
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<Category> get allCategories => UnmodifiableListView(_allCategories);
@@ -32,14 +32,15 @@ class AppState extends ChangeNotifier {
   AppState() {
     // addDummyVariables();
     _loadStateFromDatabase();
-    notifyListeners();
   }
 
   void _loadStateFromDatabase() async {
     // await addDummyVariables();
     await _loadCategories();
     await _loadOthers();
+    // notifyListeners();
     _computeToBeBudgeted();
+    notifyListeners();
   }
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],

@@ -15,15 +15,12 @@ void main() async {
   runApp(ChangeNotifierProvider(create: (context) => AppState(), child: MyBudget()));
 }
 
-// Contains the AppBar that lets the user choose between
-// different pages
 class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
         length: 3,
-        // length: 2,
         child: Scaffold(
           appBar: AppBar(
             bottom: TabBar(

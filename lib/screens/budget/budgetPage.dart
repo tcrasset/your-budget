@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/screens/budget/addCategoryPage.dart';
@@ -9,73 +7,46 @@ import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
 import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 import 'package:provider/provider.dart';
 
-class BudgetPage extends StatefulWidget {
+class BudgetPage extends StatelessWidget {
   final String title;
 
   const BudgetPage({Key key, this.title}) : super(key: key);
 
   @override
-  _BudgetPageController createState() => _BudgetPageController();
-}
-
-class _BudgetPageController extends State<BudgetPage> {
-  @override
-  void initState() {
-    //Initialize the state to get the categories from the Widget
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) => _BudgetPageView(this);
-}
-
-class _BudgetPageView extends WidgetView<BudgetPage, _BudgetPageController> {
-  _BudgetPageView(_BudgetPageController state) : super(state);
-
-  @override
   Widget build(BuildContext context) {
+    print("Budget page build");
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(title),
         ),
-        body: Consumer<AppState>(builder: (context, appState, child) {
-          if (appState.transactions.isEmpty) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Column(
-              children: <Widget>[
-                _AddButtons(),
-                _ToBeBudgeted(),
-                if (appState.allCategories.length != 0) Expanded(child: _CategoriesList())
-              ],
-            );
-          }
-        }));
+        body: Column(
+          children: <Widget>[
+            _AddButtons(), //
+            _ToBeBudgeted(),
+            Expanded(child: _CategoriesList())
+          ],
+        ));
   }
 }
 
 class _CategoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var appState = Provider.of<AppState>(context);
+    final AppState appState = Provider.of<AppState>(context);
+    final List<Category> categories = appState.allCategories;
 
-    List<Category> categories = appState.allCategories;
-
+    if (categories.isEmpty) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
     return ListView.separated(
       itemCount: categories.length,
       separatorBuilder: (BuildContext context, int index) =>
           Divider(height: 1, color: Colors.black12),
       itemBuilder: (context, index) {
         final item = categories[index];
-        if (item is MainCategory) {
-          return MainCategoryRow(cat: item);
-        } else if (item is SubCategory) {
-          return new SubcategoryRow(subcat: item);
-        } else {
-          return null;
-        }
+        return (item is MainCategory) ? MainCategoryRow(cat: item) : SubcategoryRow(subcat: item);
       },
     );
   }
@@ -90,32 +61,27 @@ class _ToBeBudgeted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppState>(
-      builder: (BuildContext context, appState, Widget child) {
-        if (appState.toBeBudgeted == null) {
-          return Container(height: 50);
-        } else {
-          return Container(
-            height: 50,
-            child: Row(
-              children: [
-                Expanded(
-                    child: Text(
-                  "To be budgeted",
-                  style: _textStyle,
-                )),
-                Text(
-                  appState.toBeBudgeted.toStringAsFixed(2) + " €",
+    return Container(
+        height: 50,
+        child: Row(
+          children: [
+            Expanded(
+                child: Text(
+              "To be budgeted",
+              style: _textStyle,
+            )),
+            Consumer<AppState>(
+              builder: (context, appState, child) {
+                return Text(
+                  appState.toBeBudgeted?.toStringAsFixed(2) ?? "0.00" + " €",
                   style: appState.toBeBudgeted >= 0
                       ? _positiveAmountTextStyle
                       : _negativeAmountTextStyle,
-                )
-              ],
-            ),
-          );
-        }
-      },
-    );
+                );
+              },
+            )
+          ],
+        ));
   }
 }
 
