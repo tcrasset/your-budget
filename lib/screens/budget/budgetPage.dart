@@ -135,6 +135,16 @@ class _AddButtons extends StatelessWidget {
             onPressed: () => _navigateAndAddSubcategory(context),
           ),
         ),
+
+        Consumer<AppState>(builder: (_, appState, __) {
+          return Row(
+            children: [
+              Text("${appState.budgetMonth}"),
+              IconButton(icon: Icon(Icons.plus_one), onPressed: appState.incrementMonth),
+              IconButton(icon: Icon(Icons.exposure_neg_1), onPressed: appState.decrementMonth)
+            ],
+          );
+        }),
       ],
     );
   }

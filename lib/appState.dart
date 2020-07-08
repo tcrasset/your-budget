@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/models/utils.dart';
 
 class AppState extends ChangeNotifier {
   final List<Category> _allCategories = [];
@@ -14,12 +15,16 @@ class AppState extends ChangeNotifier {
   final List<Account> _accounts = [];
   final List<MoneyTransaction> _transactions = [];
 
+  DateTime startingBudgetDate = DateTime(2020, 7);
+  DateTime currentBudgetDate = DateTime(2020, 10);
   int subcategoryCount;
   int mainCategoryCount;
   int moneyTransactionCount;
   int accountCount;
   int payeeCount;
   double toBeBudgeted = 0;
+  String budgetMonth;
+  int _budgetMonthInt;
 
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<Category> get allCategories => UnmodifiableListView(_allCategories);
@@ -40,6 +45,12 @@ class AppState extends ChangeNotifier {
     await _loadOthers();
     // notifyListeners();
     _computeToBeBudgeted();
+    _budgetMonthInt = currentBudgetDate.month;
+    budgetMonth = monthStringFromInt(_budgetMonthInt);
+    Duration difference = currentBudgetDate.difference(startingBudgetDate);
+    print("difference in days : ${difference.inDays}");
+    print("difference in months : ${difference.inDays / 31}");
+    print("startingBudgetDate : $startingBudgetDate");
     notifyListeners();
   }
 
@@ -217,6 +228,26 @@ class AppState extends ChangeNotifier {
       print(account.balance);
       toBeBudgeted += account.balance;
     }
+  }
+
+  void incrementMonth() {
+    _budgetMonthInt = (_budgetMonthInt + 1) % 13;
+    if (_budgetMonthInt == 0) {
+      _budgetMonthInt = 1;
+    }
+    budgetMonth = monthStringFromInt(_budgetMonthInt);
+    print(budgetMonth);
+    notifyListeners();
+  }
+
+  void decrementMonth() {
+    _budgetMonthInt = (_budgetMonthInt - 1) % 13;
+    if (_budgetMonthInt == 0) {
+      _budgetMonthInt = 1;
+    }
+    budgetMonth = monthStringFromInt(_budgetMonthInt);
+    print(budgetMonth);
+    notifyListeners();
   }
 }
 
