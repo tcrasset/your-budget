@@ -7,8 +7,8 @@ class SQLQueryClass {
   static Future<List<MainCategory>> getCategories() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.categoryTable}''';
     final data = await db.rawQuery(sql);
-    List<MainCategory> categories = List();
 
+    List<MainCategory> categories = List();
     for (final node in data) {
       final category = MainCategory.fromJson(node);
       categories.add(category);
@@ -21,8 +21,8 @@ class SQLQueryClass {
   static Future<List<SubCategory>> getSubCategories() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.subcategoryTable};''';
     final data = await db.rawQuery(sql);
-    List<SubCategory> subcategories = List();
 
+    List<SubCategory> subcategories = List();
     for (final node in data) {
       final subcategory = SubCategory.fromJson(node);
       subcategories.add(subcategory);
@@ -35,8 +35,8 @@ class SQLQueryClass {
   static Future<List<Account>> getAccounts() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.accountTable};''';
     final data = await db.rawQuery(sql);
-    List<Account> accounts = List();
 
+    List<Account> accounts = List();
     for (final node in data) {
       final account = Account.fromJson(node);
       accounts.add(account);
@@ -49,8 +49,8 @@ class SQLQueryClass {
   static Future<List<Payee>> getPayees() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.payeeTable};''';
     final data = await db.rawQuery(sql);
-    List<Payee> payees = List();
 
+    List<Payee> payees = List();
     for (final node in data) {
       final payee = Payee.fromJson(node);
       payees.add(payee);
@@ -63,12 +63,27 @@ class SQLQueryClass {
   static Future<List<MoneyTransaction>> getMoneyTransactions() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.moneyTransactionTable};''';
     final data = await db.rawQuery(sql);
+
     List<MoneyTransaction> transactions = List();
     for (final node in data) {
       final transaction = MoneyTransaction.fromJson(node);
       transactions.add(transaction);
     }
     return transactions;
+  }
+
+  /// Returns the list of all [BudgetValue] in the database.
+  static Future<List<BudgetValue>> getBudgetValues() async {
+    final sql = '''SELECT * FROM ${DatabaseCreator.budgetValueTable};''';
+    final data = await db.rawQuery(sql);
+
+    List<BudgetValue> budgetvalues = List();
+    for (final node in data) {
+      final budgetvalue = BudgetValue.fromJson(node);
+      budgetvalues.add(budgetvalue);
+    }
+
+    return budgetvalues;
   }
 
   /// Adds the [category] of type [MainCategory] to the database.
@@ -188,6 +203,28 @@ class SQLQueryClass {
     DatabaseCreator.databaseLog('Add moneyTransaction', sql, null, result, params);
   }
 
+  /// Adds the [budgetvalue] of type [BudgetValue] to the database.
+  static Future<void> addBudgetValue(BudgetValue budgetvalue) async {
+    final sql = '''INSERT INTO ${DatabaseCreator.budgetValueTable}
+      (${DatabaseCreator.BUDGET_VALUE_ID},
+      ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
+      ${DatabaseCreator.BUDGET_VALUE_BUDGETED},
+      ${DatabaseCreator.BUDGET_VALUE_AVAILABLE},
+      ${DatabaseCreator.BUDGET_VALUE_DATE})
+      VALUES(?, ?, ?, ?, ?);''';
+
+    List<dynamic> params = [
+      budgetvalue.id,
+      budgetvalue.subcategoryId,
+      budgetvalue.budgeted,
+      budgetvalue.available,
+      budgetvalue.date.millisecondsSinceEpoch,
+    ];
+
+    final result = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add budgetvalue', sql, null, result, params);
+  }
+
   /// Deletes the [category] of id [category.id] from the database.
   static Future<void> deleteCategory(MainCategory category) async {
     final sql = '''DELETE FROM ${DatabaseCreator.categoryTable}
@@ -236,6 +273,16 @@ class SQLQueryClass {
     List<dynamic> params = [moneytransaction.id];
     final result = await db.rawDelete(sql, params);
     DatabaseCreator.databaseLog('Delete moneyTransaction', sql, null, result, params);
+  }
+
+  /// Deletes the [budgetValue] of id [budgetValue.id] from the database.
+  static Future<void> deleteBudgetValue(BudgetValue budgetValue) async {
+    final sql = '''DELETE FROM ${DatabaseCreator.budgetValueTable}
+      WHERE ${DatabaseCreator.BUDGET_VALUE_ID} == ?;''';
+
+    List<dynamic> params = [budgetValue.id];
+    final result = await db.rawDelete(sql, params);
+    DatabaseCreator.databaseLog('Delete budgetvalue', sql, null, result, params);
   }
 
   //TODO: Implements other SQL queries
@@ -306,6 +353,22 @@ class SQLQueryClass {
     DatabaseCreator.databaseLog('Update payee', sql, null, result, params);
   }
   //TODO: Transaction update
+
+  /// Update budgetValue with id [budgetValue.id] in the database.
+  ///
+  /// Fields that can be updated are [budgetValue.budgeted]
+  /// and [budgetValue.available]
+  static Future<void> updateBudgetValue(BudgetValue budgetValue) async {
+    final sql = '''UPDATE ${DatabaseCreator.budgetValueTable}
+                SET ${DatabaseCreator.BUDGET_VALUE_BUDGETED} = ?,
+                ${DatabaseCreator.BUDGET_VALUE_AVAILABLE} = ?
+                WHERE ${DatabaseCreator.BUDGET_VALUE_ID} == ?
+                ;''';
+
+    List<dynamic> params = [budgetValue.budgeted, budgetValue.available, budgetValue.id];
+    final result = await db.rawUpdate(sql, params);
+    DatabaseCreator.databaseLog('Update budgetValue', sql, null, result, params);
+  }
 
   /// Returns the number of categories in the database.
   ///

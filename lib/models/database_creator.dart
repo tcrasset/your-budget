@@ -13,6 +13,7 @@ class DatabaseCreator {
   static const String payeeTable = 'payee';
   static const String accountTable = 'account';
   static const String moneyTransactionTable = 'moneyTransaction';
+  static const String budgetValueTable = 'budgetValues';
 
   static const String CATEGORY_ID = 'id';
   static const String CATEGORY_NAME = 'name';
@@ -34,10 +35,16 @@ class DatabaseCreator {
   static const String MONEYTRANSACTION_MEMO = 'memo';
   static const String MONEYTRANSACTION_DATE = 'date';
 
+  static const BUDGET_VALUE_ID = 'id';
+  static const BUDGET_VALUE_BUDGETED = 'budgeted';
+  static const BUDGET_VALUE_AVAILABLE = 'available';
+  static const BUDGET_VALUE_DATE = 'date';
+
   static const String CAT_ID_OUTSIDE = 'cat_id';
   static const String SUBCAT_ID_OUTSIDE = 'subcat_id';
   static const String PAYEE_ID_OUTSIDE = 'payee_id';
   static const String ACCOUNT_ID_OUTSIDE = 'account_id';
+  static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
 
   /// Every action taken on the database gets logged to console
   ///
@@ -69,12 +76,12 @@ class DatabaseCreator {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, dbName);
 
-    //Make sure the folder exists
-    if (await Directory(dirname(path)).exists()) {
-      //await deleteDatabase(path)
-    } else {
-      await Directory(dirname(path)).create(recursive: true);
-    }
+    // //Make sure the folder exists
+    // if (await Directory(dirname(path)).exists()) {
+    //   //await deleteDatabase(path)
+    // } else {
+    //   await Directory(dirname(path)).create(recursive: true);
+    // }
 
     return path;
   }
@@ -84,16 +91,17 @@ class DatabaseCreator {
   /// and the version number.
   Future<void> initDatabase() async {
     final path = await getDatabasePath('budgetDB');
-
-    db = await openDatabase(path, version: 1, onCreate: onCreate);
-
-    print(db);
+    db = await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
   }
 
   /// Creates the database by creating the different tables
   /// that will populate it, namely [categoryTable], [subcategoryTable],
-  /// [payeeTable], [accountTable], [moneyTransactionTable].
-  Future<void> onCreate(Database db, int version) async {
+  /// [payeeTable], [accountTable], [moneyTransactionTable], [budgetValueTable]
+  Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
             CREATE TABLE IF NOT EXISTS $categoryTable (
               $CATEGORY_ID INTEGER PRIMARY KEY ,
@@ -136,6 +144,16 @@ class DatabaseCreator {
               FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
               FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
               FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
+          );''');
+
+    await db.execute('''
+            CREATE TABLE IF NOT EXISTS $budgetValueTable (
+              $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
+              $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
+              $SUBCAT_BUDGETED FLOAT DEFAULT 0.00,
+              $SUBCAT_AVAILABLE FLOAT DEFAULT 0.00,
+              $BUDGET_VALUE_DATE TEXT NOT NULL,
+              FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
           );''');
   }
 }

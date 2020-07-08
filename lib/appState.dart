@@ -48,6 +48,7 @@ class AppState extends ChangeNotifier {
     // notifyListeners();
     _computeToBeBudgeted();
     budgetMonth = monthStringFromDate(currentBudgetDate);
+
     notifyListeners();
   }
 

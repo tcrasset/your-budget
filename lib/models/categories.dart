@@ -19,8 +19,11 @@ class SubCategory extends Category {
   // Subcategories are imported from the database as json file
   SubCategory.fromJson(Map<String, dynamic> json)
       : parentId = json[DatabaseCreator.CAT_ID_OUTSIDE],
-        super(json[DatabaseCreator.SUBCAT_ID], json[DatabaseCreator.SUBCAT_NAME],
-            json[DatabaseCreator.SUBCAT_BUDGETED], json[DatabaseCreator.SUBCAT_AVAILABLE]);
+        super(
+            json[DatabaseCreator.SUBCAT_ID], //
+            json[DatabaseCreator.SUBCAT_NAME],
+            json[DatabaseCreator.SUBCAT_BUDGETED],
+            json[DatabaseCreator.SUBCAT_AVAILABLE]);
 
   /// Convert a SubCategory into a Map.
   Map<String, dynamic> toMap() {
@@ -46,7 +49,11 @@ class MainCategory extends Category {
 
   /// Categories are imported from the database as json file
   MainCategory.fromJson(Map<String, dynamic> json)
-      : super(json[DatabaseCreator.CATEGORY_ID], json[DatabaseCreator.CATEGORY_NAME], 0.00, 0.00);
+      : super(
+            json[DatabaseCreator.CATEGORY_ID], //
+            json[DatabaseCreator.CATEGORY_NAME],
+            0.00,
+            0.00);
 
   /// Convert a MainCategory into a Map.
   Map<String, dynamic> toMap() {
@@ -90,5 +97,34 @@ class MainCategory extends Category {
   String toString() {
     return super.toString() +
         """ {id: $id, name: $name, available: $available, budgeted: $budgeted}""";
+  }
+}
+
+class BudgetValue {
+  double budgeted;
+  double available;
+  int id;
+  int subcategoryId;
+  DateTime date;
+
+  BudgetValue(this.id, this.subcategoryId, this.budgeted, this.available, this.date);
+
+  /// [BudgetValue] are imported from the database as json file
+  BudgetValue.fromJson(Map<String, dynamic> json)
+      : id = json[DatabaseCreator.BUDGET_VALUE_ID], //
+        subcategoryId = json[DatabaseCreator.SUBCAT_ID],
+        budgeted = json[DatabaseCreator.SUBCAT_BUDGETED],
+        available = json[DatabaseCreator.SUBCAT_AVAILABLE],
+        date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseCreator.BUDGET_VALUE_DATE]);
+
+  /// Convert a SubCategory into a Map.
+  Map<String, dynamic> toMap() {
+    return {
+      DatabaseCreator.BUDGET_VALUE_ID: id,
+      DatabaseCreator.SUBCAT_ID_OUTSIDE: subcategoryId,
+      DatabaseCreator.BUDGET_VALUE_BUDGETED: budgeted,
+      DatabaseCreator.BUDGET_VALUE_AVAILABLE: available,
+      DatabaseCreator.BUDGET_VALUE_DATE: date,
+    };
   }
 }

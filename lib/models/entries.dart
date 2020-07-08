@@ -41,9 +41,9 @@ class MoneyTransaction {
   /// Create a MoneyTransaction from a json file
   MoneyTransaction.fromJson(Map<String, dynamic> json) {
     this.id = json[DatabaseCreator.MONEYTRANSACTION_ID];
-    this.subcatID = json[DatabaseCreator.SUBCAT_ID];
-    this.payeeID = json[DatabaseCreator.PAYEE_ID];
-    this.accountID = json[DatabaseCreator.ACCOUNT_ID];
+    this.subcatID = json[DatabaseCreator.SUBCAT_ID_OUTSIDE];
+    this.payeeID = json[DatabaseCreator.PAYEE_ID_OUTSIDE];
+    this.accountID = json[DatabaseCreator.ACCOUNT_ID_OUTSIDE];
     this.amount = json[DatabaseCreator.MONEYTRANSACTION_AMOUNT];
     this.memo = json[DatabaseCreator.MONEYTRANSACTION_MEMO];
     this.date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseCreator.MONEYTRANSACTION_DATE]);
@@ -53,9 +53,9 @@ class MoneyTransaction {
   Map<String, dynamic> toMap() {
     return {
       DatabaseCreator.MONEYTRANSACTION_ID: id,
-      DatabaseCreator.SUBCAT_ID: subcatID,
-      DatabaseCreator.PAYEE_ID: payeeID,
-      DatabaseCreator.ACCOUNT_ID: accountID,
+      DatabaseCreator.SUBCAT_ID_OUTSIDE: subcatID,
+      DatabaseCreator.PAYEE_ID_OUTSIDE: payeeID,
+      DatabaseCreator.ACCOUNT_ID_OUTSIDE: accountID,
       DatabaseCreator.MONEYTRANSACTION_AMOUNT: amount,
       DatabaseCreator.MONEYTRANSACTION_MEMO: memo,
       DatabaseCreator.MONEYTRANSACTION_DATE: date,

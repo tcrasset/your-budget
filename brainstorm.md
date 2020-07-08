@@ -1,6 +1,6 @@
 # Brainstorm
 
-## Budgets accors many months
+## Budgets across many months
 
 One solution to having a budget for each month is to save the generic
 category names and subcategory names in a data base, and have another
