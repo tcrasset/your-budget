@@ -1,6 +1,7 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:jiffy/jiffy.dart';
 
 import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
@@ -24,8 +25,8 @@ class AppState extends ChangeNotifier {
 
   DateTime startingBudgetDate = DateTime(2020, 7);
   DateTime currentBudgetDate = DateTime(2020, 10);
+  int differenceInMonths = 0;
   String budgetMonth;
-  int _budgetMonthInt;
 
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<Category> get allCategories => UnmodifiableListView(_allCategories);
@@ -46,12 +47,7 @@ class AppState extends ChangeNotifier {
     await _loadOthers();
     // notifyListeners();
     _computeToBeBudgeted();
-    _budgetMonthInt = currentBudgetDate.month;
-    budgetMonth = monthStringFromInt(_budgetMonthInt);
-    Duration difference = currentBudgetDate.difference(startingBudgetDate);
-    print("difference in days : ${difference.inDays}");
-    print("difference in months : ${difference.inDays / 31}");
-    print("startingBudgetDate : $startingBudgetDate");
+    budgetMonth = monthStringFromDate(currentBudgetDate);
     notifyListeners();
   }
 
@@ -232,36 +228,26 @@ class AppState extends ChangeNotifier {
   }
 
   void incrementMonth() {
-    _budgetMonthInt = currentBudgetDate.month;
-    _budgetMonthInt = (_budgetMonthInt + 1) % 13;
+    currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
+    budgetMonth = monthStringFromDate(currentBudgetDate);
 
-    bool increaseYear = false;
-    if (_budgetMonthInt == 0) {
-      _budgetMonthInt = 1;
-      increaseYear = true;
-    }
+    print("Current date : ${Jiffy(currentBudgetDate).format("MMMM")} ${currentBudgetDate.year}");
+    print("Starting date : ${monthStringFromDate(startingBudgetDate)} ${startingBudgetDate.year}");
+    differenceInMonths = getMonthDifference(currentBudgetDate, startingBudgetDate);
+    print("differenceInMonths $differenceInMonths");
 
-    int year = increaseYear ? currentBudgetDate.year + 1 : currentBudgetDate.year;
-    currentBudgetDate = DateTime(year, _budgetMonthInt);
-    budgetMonth = monthStringFromInt(_budgetMonthInt);
-    print("$budgetMonth ${currentBudgetDate.year}");
     notifyListeners();
   }
 
   void decrementMonth() {
-    _budgetMonthInt = currentBudgetDate.month;
-    bool decreaseYear = false;
-    int tempMmonth = (_budgetMonthInt - 1);
-    if (tempMmonth % 13 <= 0) {
-      _budgetMonthInt = 12;
-      decreaseYear = true;
-    } else {
-      _budgetMonthInt = tempMmonth;
-    }
-    int year = decreaseYear ? currentBudgetDate.year - 1 : currentBudgetDate.year;
-    currentBudgetDate = DateTime(year, _budgetMonthInt);
-    budgetMonth = monthStringFromInt(_budgetMonthInt);
-    print("$budgetMonth ${currentBudgetDate.year}");
+    currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
+    budgetMonth = monthStringFromDate(currentBudgetDate);
+
+    print("Current date : $budgetMonth ${currentBudgetDate.year}");
+    print("Starting date : ${monthStringFromDate(startingBudgetDate)} ${startingBudgetDate.year}");
+
+    differenceInMonths = getMonthDifference(currentBudgetDate, startingBudgetDate);
+    print("differenceInMonths $differenceInMonths");
     notifyListeners();
   }
 }

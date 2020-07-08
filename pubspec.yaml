@@ -24,7 +24,7 @@ dependencies:
   flutter_masked_text: ^0.8.0
   intl: ^0.16.1
   provider: any
-
+  jiffy: ^3.0.1 # For Date manipulation
 
 dev_dependencies:
   flutter_test:
