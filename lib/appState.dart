@@ -15,14 +15,15 @@ class AppState extends ChangeNotifier {
   final List<Account> _accounts = [];
   final List<MoneyTransaction> _transactions = [];
 
-  DateTime startingBudgetDate = DateTime(2020, 7);
-  DateTime currentBudgetDate = DateTime(2020, 10);
   int subcategoryCount;
   int mainCategoryCount;
   int moneyTransactionCount;
   int accountCount;
   int payeeCount;
   double toBeBudgeted = 0;
+
+  DateTime startingBudgetDate = DateTime(2020, 7);
+  DateTime currentBudgetDate = DateTime(2020, 10);
   String budgetMonth;
   int _budgetMonthInt;
 
@@ -231,22 +232,36 @@ class AppState extends ChangeNotifier {
   }
 
   void incrementMonth() {
+    _budgetMonthInt = currentBudgetDate.month;
     _budgetMonthInt = (_budgetMonthInt + 1) % 13;
+
+    bool increaseYear = false;
     if (_budgetMonthInt == 0) {
       _budgetMonthInt = 1;
+      increaseYear = true;
     }
+
+    int year = increaseYear ? currentBudgetDate.year + 1 : currentBudgetDate.year;
+    currentBudgetDate = DateTime(year, _budgetMonthInt);
     budgetMonth = monthStringFromInt(_budgetMonthInt);
-    print(budgetMonth);
+    print("$budgetMonth ${currentBudgetDate.year}");
     notifyListeners();
   }
 
   void decrementMonth() {
-    _budgetMonthInt = (_budgetMonthInt - 1) % 13;
-    if (_budgetMonthInt == 0) {
-      _budgetMonthInt = 1;
+    _budgetMonthInt = currentBudgetDate.month;
+    bool decreaseYear = false;
+    int tempMmonth = (_budgetMonthInt - 1);
+    if (tempMmonth % 13 <= 0) {
+      _budgetMonthInt = 12;
+      decreaseYear = true;
+    } else {
+      _budgetMonthInt = tempMmonth;
     }
+    int year = decreaseYear ? currentBudgetDate.year - 1 : currentBudgetDate.year;
+    currentBudgetDate = DateTime(year, _budgetMonthInt);
     budgetMonth = monthStringFromInt(_budgetMonthInt);
-    print(budgetMonth);
+    print("$budgetMonth ${currentBudgetDate.year}");
     notifyListeners();
   }
 }
