@@ -9,14 +9,14 @@ import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 
 class AppState extends ChangeNotifier {
-  final List<Category> _allCategories = [];
-  final List<SubCategory> _subcategories = [];
-  final List<MainCategory> _maincategories = [];
-  final List<Payee> _payees = [];
-  final List<Account> _accounts = [];
-  final List<MoneyTransaction> _transactions = [];
-  final List<BudgetValue> _budgetValues = [];
-  final List<Budget> _budgets = [];
+  List<Category> _allCategories;
+  List<SubCategory> _subcategories;
+  List<MainCategory> _maincategories;
+  List<Payee> _payees;
+  List<Account> _accounts;
+  List<MoneyTransaction> _transactions;
+  List<BudgetValue> _budgetValues;
+  List<Budget> _budgets;
 
   int subcategoryCount;
   int mainCategoryCount;
@@ -26,9 +26,11 @@ class AppState extends ChangeNotifier {
   double toBeBudgeted = 0;
 
   DateTime startingBudgetDate = DateTime(2020, 7);
-  DateTime currentBudgetDate = DateTime(2020, 10);
+  DateTime currentBudgetDate;
   int differenceInMonths = 0;
   String budgetMonth;
+
+  Budget currentBudget;
 
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<Category> get allCategories => UnmodifiableListView(_allCategories);
@@ -49,9 +51,12 @@ class AppState extends ChangeNotifier {
     await _loadCategories();
     await _loadOthers();
     // notifyListeners();
-    _computeToBeBudgeted();
+    DateTime nowDate = DateTime.now();
+    currentBudgetDate = DateTime(nowDate.year, nowDate.month, 1, 0, 0, 0, 0, 0);
     budgetMonth = monthStringFromDate(currentBudgetDate);
-
+    currentBudget = _getBudgetByDate(currentBudgetDate.month, currentBudgetDate.year);
+    _allCategories = getAllCategoriesFromBudget(currentBudgetDate.month, currentBudgetDate.year);
+    _computeToBeBudgeted();
     notifyListeners();
   }
 
@@ -87,7 +92,7 @@ class AppState extends ChangeNotifier {
     // Extract subcategories of each MainCategory and place them after each main category
     List<Category> allCategories = this._placeSubcategoriesInOrder();
     _allCategories.clear();
-    _allCategories.addAll(allCategories);
+    _allCategories = allCategories;
     notifyListeners();
   }
 
@@ -157,9 +162,9 @@ class AppState extends ChangeNotifier {
   /// Load payees, accounts, transactions and their counts
   /// from the database
   Future<void> _loadOthers() async {
-    _payees.addAll(await SQLQueryClass.getPayees());
-    _accounts.addAll(await SQLQueryClass.getAccounts());
-    _transactions.addAll(await SQLQueryClass.getMoneyTransactions());
+    _payees = await SQLQueryClass.getPayees();
+    _accounts = await SQLQueryClass.getAccounts();
+    _transactions = await SQLQueryClass.getMoneyTransactions();
 
     subcategoryCount = await SQLQueryClass.subcategoryCount();
     mainCategoryCount = await SQLQueryClass.categoryCount();
@@ -171,10 +176,10 @@ class AppState extends ChangeNotifier {
   /// Load subcategories and maincategories from the data base
   /// and create a list to display them correctly
   Future<void> _loadCategories() async {
-    _subcategories.addAll(await SQLQueryClass.getSubCategoriesJoined(
-        DateTime(2020, 7, 1, 0, 0, 0), DateTime(2020, 8, 1, 0, 0, 0)));
-    _budgets.addAll(
-        await _createBudgetsByMonth(DateTime(2020, 7, 1, 0, 0, 0), DateTime(2021, 7, 1, 0, 0, 0)));
+    _subcategories = await SQLQueryClass.getSubCategoriesJoined(
+        DateTime(2020, 7, 1, 0, 0, 0), DateTime(2020, 8, 1, 0, 0, 0));
+    _budgets =
+        await _createBudgetsByMonth(DateTime(2020, 7, 1, 0, 0, 0), DateTime(2021, 7, 1, 0, 0, 0));
 
     // print(_budgets);
   }
@@ -220,47 +225,53 @@ class AppState extends ChangeNotifier {
   }
 
   void _computeToBeBudgeted() {
+    //TODO: Change month by month TBB
     toBeBudgeted = 0;
-    for (Account account in _accounts) {
+    for (final Account account in _accounts) {
       print(account.balance);
       toBeBudgeted += account.balance;
+    }
+
+    for (final MainCategory cat in currentBudget.maincategories) {
+      toBeBudgeted += cat.budgeted;
     }
   }
 
   void incrementMonth() {
     currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
     budgetMonth = monthStringFromDate(currentBudgetDate);
+    differenceInMonths = getMonthDifference(currentBudgetDate, startingBudgetDate);
+    currentBudget = _getBudgetByDate(currentBudgetDate.month, currentBudgetDate.year);
+    _allCategories = getAllCategoriesFromBudget(currentBudgetDate.month, currentBudgetDate.year);
+    _printMonthInfo();
+    notifyListeners();
+  }
 
+  void _printMonthInfo() {
     print("Current date : ${Jiffy(currentBudgetDate).format("MMMM")} ${currentBudgetDate.year}");
     print("Starting date : ${monthStringFromDate(startingBudgetDate)} ${startingBudgetDate.year}");
-    differenceInMonths = getMonthDifference(currentBudgetDate, startingBudgetDate);
     print("differenceInMonths $differenceInMonths");
-
-    notifyListeners();
   }
 
   void decrementMonth() {
     currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
     budgetMonth = monthStringFromDate(currentBudgetDate);
-
-    print("Current date : $budgetMonth ${currentBudgetDate.year}");
-    print("Starting date : ${monthStringFromDate(startingBudgetDate)} ${startingBudgetDate.year}");
-
     differenceInMonths = getMonthDifference(currentBudgetDate, startingBudgetDate);
-    print("differenceInMonths $differenceInMonths");
+    currentBudget = _getBudgetByDate(currentBudgetDate.month, currentBudgetDate.year);
+    _allCategories = getAllCategoriesFromBudget(currentBudgetDate.month, currentBudgetDate.year);
+    _printMonthInfo();
     notifyListeners();
   }
 
   Future<List<Budget>> _createBudgetsByMonth(DateTime startDate, DateTime endDate) async {
     assert(startDate.isBefore(endDate));
-    _maincategories.addAll(await SQLQueryClass.getCategories());
+    _maincategories = await SQLQueryClass.getCategories();
 
     /// To each [MainCategory] object, add the correspondent [Subcategory]'s
     this._extractSubcategoriesFromMainCategories();
 
     // Extract subcategories of each MainCategory and place them after each main category
-    List<Category> allCategories = this._placeSubcategoriesInOrder();
-    _allCategories.addAll(allCategories);
+    _allCategories = this._placeSubcategoriesInOrder();
 
     Budget budget;
     List<Budget> budgets = [];
@@ -300,29 +311,30 @@ class AppState extends ChangeNotifier {
   }
 
   List<Category> getAllCategoriesFromBudget(int month, int year) {
-    Budget budget = getBudgetByDate(month, year);
+    currentBudget = _getBudgetByDate(month, year);
     List<Category> allcategories = [];
 
-    budget.maincategories.forEach((cat) {
+    // Extract subcategories from main categories and update the
+    // the budgeted and available amounts
+    currentBudget.maincategories.forEach((cat) {
       List<SubCategory> toAdd =
-          budget.subcategories.where((subcat) => subcat.parentId == cat.id).toList();
+          currentBudget.subcategories.where((subcat) => subcat.parentId == cat.id).toList();
       cat.subcategories = toAdd;
+      cat.updateFields();
     });
 
-    List<Category> allCategories = [];
-    for (var cat in budget.maincategories) {
+    _computeToBeBudgeted();
+
+    // Create a list of all MainCategories and Subcategories in order.
+    for (var cat in currentBudget.maincategories) {
       allcategories.add(cat);
-      cat.subcategories.forEach((subcat) {
-        print(subcat);
-        allcategories.add(subcat);
-      });
+      cat.subcategories.forEach((subcat) => allcategories.add(subcat));
     }
-    print(allcategories);
 
     return allcategories;
   }
 
-  getBudgetByDate(int month, int year) {
+  Budget _getBudgetByDate(int month, int year) {
     return _budgets.singleWhere((budget) => budget.year == year && budget.month == month);
   }
 

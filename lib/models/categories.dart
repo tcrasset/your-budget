@@ -147,6 +147,7 @@ class BudgetValue {
 class Budget {
   List<MainCategory> maincategories;
   List<SubCategory> subcategories;
+  List<Category> allcategories;
   int month;
   int year;
 
