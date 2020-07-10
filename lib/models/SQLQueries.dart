@@ -86,6 +86,35 @@ class SQLQueryClass {
     return budgetvalues;
   }
 
+  static Future<List<SubCategory>> getSubCategoriesJoined(
+      DateTime startDate, DateTime endDate) async {
+    assert(startDate.difference(endDate).isNegative);
+    final sql = '''SELECT ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID} as id,
+        ${DatabaseCreator.CAT_ID_OUTSIDE},
+        ${DatabaseCreator.SUBCAT_NAME},
+        ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.BUDGET_VALUE_BUDGETED},
+        ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.BUDGET_VALUE_AVAILABLE}
+
+        FROM
+          ${DatabaseCreator.subcategoryTable}
+          LEFT JOIN ${DatabaseCreator.budgetValueTable}
+          ON
+          ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.BUDGET_VALUE_ID} = ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID}
+        WHERE
+          ${DatabaseCreator.BUDGET_VALUE_DATE} >= ${startDate.millisecondsSinceEpoch}
+          and ${DatabaseCreator.BUDGET_VALUE_DATE} < ${endDate.millisecondsSinceEpoch}''';
+
+    final data = await db.rawQuery(sql);
+
+    List<SubCategory> subcategories = [];
+    for (final node in data) {
+      final subcategory = SubCategory.fromJson(node);
+      subcategories.add(subcategory);
+    }
+
+    return subcategories;
+  }
+
   /// Adds the [category] of type [MainCategory] to the database.
   ///
   /// The [MainCategory] is specified using [category.id] and [category.name]

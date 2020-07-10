@@ -40,6 +40,10 @@ class SubCategory extends Category {
     return super.toString() +
         """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}""";
   }
+
+  SubCategory blank() {
+    return SubCategory(id, parentId, name, 0.0, available);
+  }
 }
 
 class MainCategory extends Category {
@@ -115,7 +119,8 @@ class BudgetValue {
         subcategoryId = json[DatabaseCreator.SUBCAT_ID],
         budgeted = json[DatabaseCreator.SUBCAT_BUDGETED],
         available = json[DatabaseCreator.SUBCAT_AVAILABLE],
-        date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseCreator.BUDGET_VALUE_DATE]);
+        date =
+            DateTime.fromMillisecondsSinceEpoch(int.parse(json[DatabaseCreator.BUDGET_VALUE_DATE]));
 
   /// Convert a SubCategory into a Map.
   Map<String, dynamic> toMap() {
@@ -126,5 +131,25 @@ class BudgetValue {
       DatabaseCreator.BUDGET_VALUE_AVAILABLE: available,
       DatabaseCreator.BUDGET_VALUE_DATE: date,
     };
+  }
+
+  @override
+  String toString() {
+    return super.toString() +
+        """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, date: ${date.millisecondsSinceEpoch}}""";
+  }
+}
+
+class Budget {
+  List<MainCategory> maincategories;
+  List<SubCategory> subcategories;
+  int month;
+  int year;
+
+  Budget(this.maincategories, this.subcategories, this.month, this.year);
+
+  @override
+  String toString() {
+    return super.toString() + """ {month: $month, year: $year, subcategories: $subcategories}\n""";
   }
 }

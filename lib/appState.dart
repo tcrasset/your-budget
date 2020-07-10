@@ -15,6 +15,8 @@ class AppState extends ChangeNotifier {
   final List<Payee> _payees = [];
   final List<Account> _accounts = [];
   final List<MoneyTransaction> _transactions = [];
+  final List<BudgetValue> _budgetValues = [];
+  final List<Budget> _budgets = [];
 
   int subcategoryCount;
   int mainCategoryCount;
@@ -35,6 +37,7 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<Payee> get payees => UnmodifiableListView(_payees);
   UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
   UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
+  UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
 
   AppState() {
     // addDummyVariables();
@@ -158,26 +161,22 @@ class AppState extends ChangeNotifier {
     _accounts.addAll(await SQLQueryClass.getAccounts());
     _transactions.addAll(await SQLQueryClass.getMoneyTransactions());
 
-    moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
+    subcategoryCount = await SQLQueryClass.subcategoryCount();
+    mainCategoryCount = await SQLQueryClass.categoryCount();
     accountCount = await SQLQueryClass.accountCount();
     payeeCount = await SQLQueryClass.payeeCount();
+    moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
   }
 
   /// Load subcategories and maincategories from the data base
   /// and create a list to display them correctly
   Future<void> _loadCategories() async {
-    _maincategories.addAll(await SQLQueryClass.getCategories());
-    _subcategories.addAll(await SQLQueryClass.getSubCategories());
+    _subcategories.addAll(await SQLQueryClass.getSubCategoriesJoined(
+        DateTime(2020, 7, 1, 0, 0, 0), DateTime(2020, 8, 1, 0, 0, 0)));
+    _budgets.addAll(
+        await _createBudgetsByMonth(DateTime(2020, 7, 1, 0, 0, 0), DateTime(2021, 7, 1, 0, 0, 0)));
 
-    subcategoryCount = await SQLQueryClass.subcategoryCount();
-    mainCategoryCount = await SQLQueryClass.categoryCount();
-
-    //To each category, add the correspondent subcategories
-    this._extractSubcategoriesFromMainCategories();
-
-    // Extract subcategories of each MainCategory and place them after each main category
-    List<Category> allCategories = this._placeSubcategoriesInOrder();
-    _allCategories.addAll(allCategories);
+    // print(_budgets);
   }
 
   /// To each [MainCategory] object, add the correspondent [Subcategory]'s
@@ -251,6 +250,68 @@ class AppState extends ChangeNotifier {
     print("differenceInMonths $differenceInMonths");
     notifyListeners();
   }
+
+  Future<List<Budget>> _createBudgetsByMonth(DateTime startDate, DateTime endDate) async {
+    assert(startDate.isBefore(endDate));
+    _maincategories.addAll(await SQLQueryClass.getCategories());
+
+    /// To each [MainCategory] object, add the correspondent [Subcategory]'s
+    this._extractSubcategoriesFromMainCategories();
+
+    // Extract subcategories of each MainCategory and place them after each main category
+    List<Category> allCategories = this._placeSubcategoriesInOrder();
+    _allCategories.addAll(allCategories);
+
+    Budget budget;
+    List<Budget> budgets = [];
+    DateTime prevDate = startDate;
+    DateTime nextDate = Jiffy(startDate).add(months: 1);
+
+    List<SubCategory> prevSubcategories =
+        await SQLQueryClass.getSubCategoriesJoined(prevDate, nextDate);
+    List<SubCategory> nextSubcategories =
+        await SQLQueryClass.getSubCategoriesJoined(prevDate, nextDate);
+
+    // Start with 1 month's difference and keep incrementing
+    // until we overshoot the endDate
+    while (prevDate.isBefore(endDate)) {
+      /// If the query returns empty, we take the subcategories of the previous
+      /// month and copy them, but without the budget information.
+      if (nextSubcategories.isEmpty) {
+        List<SubCategory> modifiedSubcategories = [];
+        for (final SubCategory subcat in prevSubcategories) {
+          modifiedSubcategories.add(subcat.blank());
+        }
+        budget = Budget(_maincategories, modifiedSubcategories, prevDate.month, prevDate.year);
+      } else {
+        budget = Budget(_maincategories, nextSubcategories, prevDate.month, prevDate.year);
+        prevSubcategories = nextSubcategories;
+      }
+
+      budgets.add(budget);
+
+      //Go to next month
+      prevDate = nextDate;
+      nextDate = Jiffy(nextDate).add(months: 1);
+      nextSubcategories = await SQLQueryClass.getSubCategoriesJoined(prevDate, nextDate);
+    }
+
+    return budgets;
+  }
+
+  getBudgetByDate(int month, int year) {
+    return _budgets.singleWhere((budget) => budget.year == year && budget.month == month);
+  }
+
+  // void addSubcategoriesToBudgetValues() async {
+  //   int id = 1;
+  //   for (final SubCategory subcat in _subcategories) {
+  //     BudgetValue budgetvalue =
+  //         BudgetValue(id, subcat.id, subcat.budgeted, subcat.available, DateTime.now());
+  //     id++;
+  //     await SQLQueryClass.addBudgetValue(budgetvalue);
+  //   }
+  // }
 }
 
 Future<void> addDummyVariables() async {

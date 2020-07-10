@@ -13,7 +13,7 @@ class DatabaseCreator {
   static const String payeeTable = 'payee';
   static const String accountTable = 'account';
   static const String moneyTransactionTable = 'moneyTransaction';
-  static const String budgetValueTable = 'budgetValues';
+  static const String budgetValueTable = 'budgetValue';
 
   static const String CATEGORY_ID = 'id';
   static const String CATEGORY_NAME = 'name';
@@ -93,8 +93,20 @@ class DatabaseCreator {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
-      version: 1,
+      version: 3,
       onCreate: _onCreate,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        print("Adding new table $budgetValueTable");
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS $budgetValueTable (
+              $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
+              $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
+              $SUBCAT_BUDGETED FLOAT DEFAULT 0.00,
+              $SUBCAT_AVAILABLE FLOAT DEFAULT 0.00,
+              $BUDGET_VALUE_DATE TEXT NOT NULL,
+              FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
+          );''');
+      },
     );
   }
 
