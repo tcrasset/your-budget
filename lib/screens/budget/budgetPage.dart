@@ -33,7 +33,9 @@ class _CategoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
-    final List<Category> categories = appState.allCategories;
+    // final List<Category> categories = appState.allCategories;
+    final List<Category> categories = appState.getAllCategoriesFromBudget(
+        appState.currentBudgetDate.month, appState.currentBudgetDate.year);
 
     if (categories.isEmpty) {
       return Center(

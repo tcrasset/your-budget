@@ -71,6 +71,10 @@ class MainCategory extends Category {
     return _subcategories;
   }
 
+  set subcategories(List<SubCategory> subcategories) {
+    _subcategories = subcategories;
+  }
+
   void updateFields() {
     double budgeted = 0;
     double available = 0;

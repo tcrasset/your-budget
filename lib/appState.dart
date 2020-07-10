@@ -299,6 +299,29 @@ class AppState extends ChangeNotifier {
     return budgets;
   }
 
+  List<Category> getAllCategoriesFromBudget(int month, int year) {
+    Budget budget = getBudgetByDate(month, year);
+    List<Category> allcategories = [];
+
+    budget.maincategories.forEach((cat) {
+      List<SubCategory> toAdd =
+          budget.subcategories.where((subcat) => subcat.parentId == cat.id).toList();
+      cat.subcategories = toAdd;
+    });
+
+    List<Category> allCategories = [];
+    for (var cat in budget.maincategories) {
+      allcategories.add(cat);
+      cat.subcategories.forEach((subcat) {
+        print(subcat);
+        allcategories.add(subcat);
+      });
+    }
+    print(allcategories);
+
+    return allcategories;
+  }
+
   getBudgetByDate(int month, int year) {
     return _budgets.singleWhere((budget) => budget.year == year && budget.month == month);
   }
