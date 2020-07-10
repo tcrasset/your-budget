@@ -110,6 +110,8 @@ class DatabaseCreator {
     );
   }
 
+  //TODO : Modify BudgetValue to hold month and year instead of date
+
   /// Creates the database by creating the different tables
   /// that will populate it, namely [categoryTable], [subcategoryTable],
   /// [payeeTable], [accountTable], [moneyTransactionTable], [budgetValueTable]

@@ -85,7 +85,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text('Budgeted', textAlign: TextAlign.right, style: _categoryTextStyle),
-                    Text('${widget.cat.budgeted}',
+                    Text('${widget.cat.budgeted.toStringAsFixed(2)}',
                         textAlign: TextAlign.right, style: _categoryTextStyle)
                   ],
                 ),
@@ -96,7 +96,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text('Available', textAlign: TextAlign.right, style: _categoryTextStyle),
-                    Text('${widget.cat.available}',
+                    Text('${widget.cat.available.toStringAsFixed(2)}',
                         textAlign: TextAlign.right, style: _categoryTextStyle)
                   ],
                 ),

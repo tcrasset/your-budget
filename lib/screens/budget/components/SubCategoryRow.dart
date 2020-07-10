@@ -49,11 +49,8 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
     print("Changed name of subcategory from ${widget.subcat.name} to ${_nameController.text} ");
     if (_nameController.text != widget.subcat.name) {
-      setState(() {
-        widget.subcat.name = _nameController.text;
-      });
-
-      appState.updateSubcategory(widget.subcat);
+      appState.updateSubcategory(SubCategory(widget.subcat.id, widget.subcat.parentId,
+          _nameController.text, widget.subcat.budgeted, widget.subcat.available));
     }
   }
 
@@ -63,11 +60,16 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
     print("Changed budgeted value in subcategory");
     if (_budgetedController.numberValue != widget.subcat.budgeted) {
       double beforeAfterDifference = (_budgetedController.numberValue - widget.subcat.budgeted);
-      setState(() {
-        widget.subcat.budgeted = _budgetedController.numberValue;
-        widget.subcat.available += beforeAfterDifference;
-      });
-      appState.updateSubcategory(widget.subcat);
+      // setState(() {
+      //   widget.subcat.budgeted = _budgetedController.numberValue;
+      //   widget.subcat.available += beforeAfterDifference;
+      // });
+      appState.updateSubcategory(SubCategory(
+          widget.subcat.id,
+          widget.subcat.parentId,
+          widget.subcat.name,
+          _budgetedController.numberValue,
+          widget.subcat.available + beforeAfterDifference));
       appState.updateToBeBudgeted(beforeAfterDifference);
     }
   }
@@ -122,7 +124,8 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
           Expanded(
             child: TextField(
               readOnly: true,
-              decoration: new InputDecoration.collapsed(hintText: "${widget.subcat.available}"),
+              decoration: new InputDecoration.collapsed(
+                  hintText: "${widget.subcat.available.toStringAsFixed(2)}"),
               controller: state._availableController,
               textAlign: TextAlign.right,
               style: widget.subcat.available > 0 ? _greenNumberTextStyle : _redNumberTextStyle,

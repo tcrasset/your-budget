@@ -44,6 +44,10 @@ class SubCategory extends Category {
   SubCategory blank() {
     return SubCategory(id, parentId, name, 0.0, available);
   }
+
+  SubCategory copy() {
+    return SubCategory(id, parentId, name, budgeted, available);
+  }
 }
 
 class MainCategory extends Category {
@@ -114,7 +118,7 @@ class BudgetValue {
   int id;
   int subcategoryId;
   DateTime date;
-
+  //TODO: Convert date field to month/year field
   BudgetValue(this.id, this.subcategoryId, this.budgeted, this.available, this.date);
 
   /// [BudgetValue] are imported from the database as json file
@@ -147,7 +151,6 @@ class BudgetValue {
 class Budget {
   List<MainCategory> maincategories;
   List<SubCategory> subcategories;
-  List<Category> allcategories;
   int month;
   int year;
 
