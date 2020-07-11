@@ -210,7 +210,6 @@ class Budget {
     for (final MainCategory cat in maincategories) {
       allcategories.add(cat);
       cat.subcategories.forEach((subcat) => allcategories.add(subcat));
-      print(allcategories);
     }
   }
 
