@@ -60,17 +60,13 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
     print("Changed budgeted value in subcategory");
     if (_budgetedController.numberValue != widget.subcat.budgeted) {
       double beforeAfterDifference = (_budgetedController.numberValue - widget.subcat.budgeted);
-      // setState(() {
-      //   widget.subcat.budgeted = _budgetedController.numberValue;
-      //   widget.subcat.available += beforeAfterDifference;
-      // });
+
       appState.updateSubcategory(SubCategory(
           widget.subcat.id,
           widget.subcat.parentId,
           widget.subcat.name,
           _budgetedController.numberValue,
           widget.subcat.available + beforeAfterDifference));
-      appState.updateToBeBudgeted(beforeAfterDifference);
     }
   }
 

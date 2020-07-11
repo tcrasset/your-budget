@@ -197,19 +197,24 @@ class AppState extends ChangeNotifier {
   /// Update the name of the [MainCategory] pointed to
   /// by [modifiedCategory.id] to [modifiedCategory.name]
   void updateCategoryName(MainCategory modifiedCategory) {
-    for (MainCategory cat in _maincategories) {
-      if (cat.id == modifiedCategory.id) {
-        cat.name = modifiedCategory.name;
-      }
+    MainCategory cat =
+        currentBudget.maincategories.singleWhere((cat) => cat.id == modifiedCategory.id);
+    cat.name = modifiedCategory.name;
+    notifyListeners();
+
+    //Change all other budgets
+    for (Budget budget in _budgets) {
+      MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == modifiedCategory.id);
+      cat.name = modifiedCategory.name;
     }
     // Persist it in memory
     SQLQueryClass.updateCategory(modifiedCategory);
   }
 
-  void updateToBeBudgeted(beforeAfterDifference) {
-    toBeBudgeted -= beforeAfterDifference;
-    notifyListeners();
-  }
+  // void updateToBeBudgeted(beforeAfterDifference) {
+  //   toBeBudgeted -= beforeAfterDifference;
+  //   notifyListeners();
+  // }
 
   void computeToBeBudgeted() {
     //TODO: Change month by month TBB
