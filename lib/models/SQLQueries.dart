@@ -96,10 +96,10 @@ class SQLQueryClass {
         ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.BUDGET_VALUE_AVAILABLE}
 
         FROM
-          ${DatabaseCreator.subcategoryTable}
-          LEFT JOIN ${DatabaseCreator.budgetValueTable}
+          ${DatabaseCreator.budgetValueTable}
+          LEFT JOIN ${DatabaseCreator.subcategoryTable}
           ON
-          ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.BUDGET_VALUE_ID} = ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID}
+          ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.SUBCAT_ID_OUTSIDE} = ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID}
         WHERE
           ${DatabaseCreator.BUDGET_VALUE_DATE} >= ${startDate.millisecondsSinceEpoch}
           and ${DatabaseCreator.BUDGET_VALUE_DATE} < ${endDate.millisecondsSinceEpoch}''';
@@ -400,8 +400,6 @@ class SQLQueryClass {
   }
 
   /// Returns the number of categories in the database.
-  ///
-  /// Used as [MainCategory.id] to create a new [MainCategory].
   static Future<int> categoryCount() async {
     final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.categoryTable};''');
     int count = data[0].values.elementAt(0);
@@ -409,8 +407,6 @@ class SQLQueryClass {
   }
 
   /// Returns the number of subcategories in the database.
-  ///
-  /// Used as [SubCategory.id] to create a new [SubCategory].
   static Future<int> subcategoryCount() async {
     final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.subcategoryTable};''');
     int count = data[0].values.elementAt(0);
@@ -418,8 +414,6 @@ class SQLQueryClass {
   }
 
   /// Returns the number of accounts in the database.
-  ///
-  /// Used as [Account.id] to create a new [Account].
   static Future<int> accountCount() async {
     final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.accountTable};''');
     int count = data[0].values.elementAt(0);
@@ -427,8 +421,6 @@ class SQLQueryClass {
   }
 
   /// Returns the number of payees in the database.
-  ///
-  /// Used as [Payee.id] to create a new [Payee].
   static Future<int> payeeCount() async {
     final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.payeeTable};''');
     int count = data[0].values.elementAt(0);
@@ -436,11 +428,16 @@ class SQLQueryClass {
   }
 
   /// Returns the number of transactions in the database.
-  ///
-  /// Used as [MoneyTransaction.id] to create a new [MoneyTransaction].
   static Future<int> moneyTransactionCount() async {
     final data =
         await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.moneyTransactionTable};''');
+    int count = data[0].values.elementAt(0);
+    return count;
+  }
+
+  /// Returns the number of budgetVvalues in the database.
+  static Future<int> budgetValuesCount() async {
+    final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.budgetValueTable};''');
     int count = data[0].values.elementAt(0);
     return count;
   }

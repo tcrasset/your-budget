@@ -38,7 +38,7 @@ class SubCategory extends Category {
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}""";
+        """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}\n""";
   }
 
   SubCategory blank() {
@@ -108,7 +108,7 @@ class MainCategory extends Category {
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, name: $name, available: $available, budgeted: $budgeted}""";
+        """ {id: $id, name: $name, available: $available, budgeted: $budgeted}\n""";
   }
 }
 
@@ -124,7 +124,7 @@ class BudgetValue {
   /// [BudgetValue] are imported from the database as json file
   BudgetValue.fromJson(Map<String, dynamic> json)
       : id = json[DatabaseCreator.BUDGET_VALUE_ID], //
-        subcategoryId = json[DatabaseCreator.SUBCAT_ID],
+        subcategoryId = json[DatabaseCreator.SUBCAT_ID_OUTSIDE],
         budgeted = json[DatabaseCreator.SUBCAT_BUDGETED],
         available = json[DatabaseCreator.SUBCAT_AVAILABLE],
         date =
@@ -144,7 +144,7 @@ class BudgetValue {
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, date: ${date.millisecondsSinceEpoch}}""";
+        """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, date: ${date.millisecondsSinceEpoch}}\n""";
   }
 }
 

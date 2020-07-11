@@ -156,6 +156,7 @@ class AppState extends ChangeNotifier {
   /// Then, modify the total budgeted and available
   /// amounts of the corresponding [MainCategory]
   void updateSubcategory(SubCategory modifiedSubcategory) {
+    print(currentBudget.month);
     SubCategory previousSubcategory =
         currentBudget.subcategories.singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
 
@@ -167,10 +168,17 @@ class AppState extends ChangeNotifier {
     if (previousSubcategory.name != modifiedSubcategory.name) {
       SQLQueryClass.updateSubcategory(modifiedSubcategory);
     } else {
+      print("Value change");
+      for (final BudgetValue bv in _budgetValues) {
+        if (bv.subcategoryId == modifiedSubcategory.id) {
+          print(bv);
+        }
+      }
       BudgetValue correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
           (budgetValue.subcategoryId == modifiedSubcategory.id) &&
           (budgetValue.date.year == currentBudget.year) &&
           (budgetValue.date.month == currentBudget.month));
+      print(correspondingBudgetValue);
       correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
       correspondingBudgetValue.available = modifiedSubcategory.available;
       SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
@@ -292,6 +300,8 @@ class AppState extends ChangeNotifier {
     // Start with 1 month's difference and keep incrementing
     // until we overshoot the endDate
     while (prevDate.isBefore(endDate)) {
+      print("[${prevDate.month}/${prevDate.year}] empty = ${nextSubcategories.isEmpty}");
+
       /// If the query returns empty, we take the subcategories of the previous
       /// month and copy them, but without the budget information.
       if (nextSubcategories.isEmpty) {
@@ -310,6 +320,7 @@ class AppState extends ChangeNotifier {
       //Go to next month
       prevDate = nextDate;
       nextDate = Jiffy(nextDate).add(months: 1);
+      print(nextSubcategories);
       nextSubcategories = await SQLQueryClass.getSubCategoriesJoined(prevDate, nextDate);
     }
 
@@ -345,12 +356,14 @@ class AppState extends ChangeNotifier {
   }
 
   // void addSubcategoriesToBudgetValues() async {
-  //   int id = 1;
-  //   for (final SubCategory subcat in _subcategories) {
-  //     BudgetValue budgetvalue =
-  //         BudgetValue(id, subcat.id, subcat.budgeted, subcat.available, DateTime.now());
-  //     id++;
-  //     await SQLQueryClass.addBudgetValue(budgetvalue);
+  //   int id = await SQLQueryClass.budgetValuesCount() + 1;
+  //   for (final int month in [8, 9, 10, 11, 12]) {
+  //     for (final SubCategory subcat in _subcategories) {
+  //       BudgetValue budgetvalue = BudgetValue(id, subcat.id, subcat.budgeted, subcat.available,
+  //           DateTime(2020, month, 1, 0, 0, 0, 0, 0));
+  //       id++;
+  //       await SQLQueryClass.addBudgetValue(budgetvalue);
+  //     }
   //   }
   // }
 }
