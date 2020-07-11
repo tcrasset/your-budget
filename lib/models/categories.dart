@@ -158,6 +158,7 @@ class Budget {
   List<Category> allcategories;
   int month;
   int year;
+  double totalBudgeted = 0;
 
   Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
     /// Add a copy of each maincategory to the budget, add the corresponding subcategories
@@ -170,12 +171,21 @@ class Budget {
     this.maincategories.forEach((cat) {
       cat.subcategories = subcategories.where((subcat) => subcat.parentId == cat.id).toList();
       cat.updateFields();
+      totalBudgeted += cat.budgeted;
     });
 
     _updateAllcategories();
   }
 
-  void updateSubCategory(SubCategory modifiedSubcategory) {
+  void makeCategoryChange(SubCategory modifiedSubcategory) {
+    _updateSubCategory(modifiedSubcategory);
+    _updateMainCategory(modifiedSubcategory);
+  }
+
+  ///Must be called before [_updateMainCategory()] because the former
+  ///modifies the subcategories in each [MainCategory], and the latter
+  ///updates the maincategories based on the subcategories' values.
+  void _updateSubCategory(SubCategory modifiedSubcategory) {
     for (final SubCategory subcat in subcategories) {
       if (subcat.id == modifiedSubcategory.id) {
         subcat.name = modifiedSubcategory.name;
@@ -185,12 +195,13 @@ class Budget {
     }
   }
 
-  void updateMainCategory(SubCategory modifiedSubcategory) {
+  void _updateMainCategory(SubCategory modifiedSubcategory) {
     for (final MainCategory cat in maincategories) {
       if (cat.id == modifiedSubcategory.parentId) {
         cat.updateFields();
       }
     }
+    _updateTotalBudgeted();
   }
 
   void _updateAllcategories() {
@@ -200,6 +211,13 @@ class Budget {
       allcategories.add(cat);
       cat.subcategories.forEach((subcat) => allcategories.add(subcat));
       print(allcategories);
+    }
+  }
+
+  void _updateTotalBudgeted() {
+    totalBudgeted = 0;
+    for (final MainCategory cat in maincategories) {
+      totalBudgeted += cat.budgeted;
     }
   }
 

@@ -169,12 +169,6 @@ class AppState extends ChangeNotifier {
     if (previousSubcategory.name != modifiedSubcategory.name) {
       SQLQueryClass.updateSubcategory(modifiedSubcategory);
     } else {
-      // print("Value change");
-      // for (final BudgetValue bv in _budgetValues) {
-      //   if (bv.subcategoryId == modifiedSubcategory.id) {
-      //     print(bv);
-      //   }
-      // }
       BudgetValue correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
           (budgetValue.subcategoryId == modifiedSubcategory.id) &&
           (budgetValue.date.year == currentBudget.year) &&
@@ -186,9 +180,7 @@ class AppState extends ChangeNotifier {
     }
 
     // Change state objects
-    currentBudget.updateSubCategory(modifiedSubcategory);
-    currentBudget.updateMainCategory(modifiedSubcategory);
-    print(currentBudget.allcategories);
+    currentBudget.makeCategoryChange(modifiedSubcategory);
     _allCategories = currentBudget.allcategories;
     computeToBeBudgeted();
     notifyListeners();
@@ -224,20 +216,10 @@ class AppState extends ChangeNotifier {
     }
     DateTime prevDate = startingBudgetDate;
     DateTime nextDate = startingBudgetDate;
-
-    debugPrint("To Be Budgeted for the month of ${currentBudgetDate.month}");
     do {
       prevDate = nextDate;
-
       Budget monthlyBudget = _getBudgetByDate(prevDate);
-
-      int id = 1;
-      for (final MainCategory cat in monthlyBudget.maincategories) {
-        print("[${prevDate.month}/${prevDate.year}] -- ${id++} = ${cat.budgeted}");
-
-        toBeBudgeted -= cat.budgeted;
-      }
-      print("\n");
+      toBeBudgeted -= monthlyBudget.totalBudgeted;
       //Go to next month
       nextDate = Jiffy(nextDate).add(months: 1);
     } while (currentBudgetDate.isAfter(prevDate));
