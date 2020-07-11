@@ -78,6 +78,16 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> addAccount(String accountName, double startingBalance) async {
+    int accountCount = await SQLQueryClass.accountCount();
+    Account account = Account(accountCount + 2, accountName, startingBalance);
+    SQLQueryClass.addAccount(account);
+    _accounts.add(account);
+    computeToBeBudgeted();
+    notifyListeners();
+    print("Added account $account");
+  }
+
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
   void addCategory(String categoryName) {
@@ -140,7 +150,6 @@ class AppState extends ChangeNotifier {
     /// If we do a MoneyTransaction between accounts (subcat.ID == -1)
     /// subcategories are not affected.
     if (transaction.subcatID != -1) {
-      // Get the corresponding subcategory
       Budget budget = _getBudgetByDate(DateTime(transaction.date.year, transaction.date.month));
       SubCategory oldSubcat =
           budget.subcategories.singleWhere((subcat) => subcat.id == transaction.subcatID);
@@ -151,7 +160,7 @@ class AppState extends ChangeNotifier {
 
       updateSubcategory(newSubcat);
     }
-    notifyListeners();
+    //notifyListeners is called in updateSubcategory
   }
 
   /// Update all the fields of [modifiedSubcategory]
@@ -289,11 +298,4 @@ class AppState extends ChangeNotifier {
   //     }
   //   }
   // }
-}
-
-Future<void> addDummyVariables() async {
-  int accountCount = await SQLQueryClass.accountCount();
-  Account account = Account(accountCount + 2, "Checking account", 5000.00);
-  SQLQueryClass.addAccount(account);
-  print("Added account $account");
 }

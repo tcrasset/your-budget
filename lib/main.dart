@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/appState.dart';
+import 'package:mybudget/screens/addAccount/addAccount.dart';
 
 import 'package:mybudget/screens/addTransaction/addTransaction.dart';
 
@@ -31,11 +32,12 @@ class HomeScreen extends StatelessWidget {
     if (appState.allCategories.isNotEmpty) {
       return MaterialApp(
         home: DefaultTabController(
-          length: 3,
+          length: 4,
           child: Scaffold(
             appBar: AppBar(
               bottom: TabBar(
                 tabs: [
+                  Tab(text: "Add account"),
                   Tab(text: "Budget"),
                   Tab(text: "Add new Transaction"),
                   Tab(text: "Transactions")
@@ -44,6 +46,7 @@ class HomeScreen extends StatelessWidget {
             ),
             body: TabBarView(
               children: [
+                AddAccount(),
                 BudgetPage(title: 'Bugdet Page'),
                 AddTransactionPage(),
                 ShowTransactionPage(title: "Transactions")
