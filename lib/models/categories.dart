@@ -182,6 +182,12 @@ class Budget {
     _updateAllcategories();
   }
 
+  void addSubcategory(SubCategory newSubcat) {
+    this.subcategories.add(newSubcat);
+    MainCategory cat = maincategories.singleWhere((cat) => cat.id == newSubcat.parentId);
+    cat.addSubcategory(newSubcat);
+  }
+
   void makeCategoryChange(SubCategory modifiedSubcategory) {
     _updateSubCategory(modifiedSubcategory);
     _updateMainCategory(modifiedSubcategory);

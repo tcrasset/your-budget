@@ -23,6 +23,8 @@ class AppState extends ChangeNotifier {
   int moneyTransactionCount;
   int accountCount;
   int payeeCount;
+  int budgetValueCount;
+
   double toBeBudgeted = 0;
 
   DateTime startingBudgetDate = DateTime(2020, 7);
@@ -59,6 +61,7 @@ class AppState extends ChangeNotifier {
     mainCategoryCount = await SQLQueryClass.categoryCount();
     accountCount = await SQLQueryClass.accountCount();
     payeeCount = await SQLQueryClass.payeeCount();
+    budgetValueCount = await SQLQueryClass.budgetValuesCount();
     moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
     // notifyListeners();
@@ -105,15 +108,22 @@ class AppState extends ChangeNotifier {
   void addSubcategory(SubCategory subcategory) {
     //TODO: AddSubcategory
     subcategoryCount++;
+    budgetValueCount++;
     _subcategories.add(subcategory);
-    SQLQueryClass.addSubcategory(subcategory);
-    // this._extractSubcategoriesFromMainCategories();
-
-    // Extract subcategories of each MainCategory and place them after each main category
-    // List<Category> allCategories = this._placeSubcategoriesInOrder();
-    _allCategories.clear();
-    _allCategories = allCategories;
+    for (final Budget budget in _budgets) {
+      budget.addSubcategory(subcategory);
+    }
+    _allCategories = currentBudget.allcategories;
     notifyListeners();
+
+    SQLQueryClass.addSubcategory(subcategory);
+    DateTime currentDate = DateTime.now();
+    SQLQueryClass.addBudgetValue(BudgetValue(
+        budgetValueCount + 2,
+        subcategory.id,
+        subcategory.budgeted,
+        subcategory.available,
+        DateTime(currentDate.year, currentDate.month)));
   }
 
   /// Add the [transaction] to the [_transactions] list, persist it to
