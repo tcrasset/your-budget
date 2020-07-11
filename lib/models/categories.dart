@@ -156,8 +156,27 @@ class Budget {
 
   Budget(this.maincategories, this.subcategories, this.month, this.year);
 
+  List<Category> computeAllCategories() {
+    List<Category> allcategories = [];
+    // Extract subcategories from main categories and update the
+    // the budgeted and available amounts
+    maincategories.forEach((cat) {
+      cat.subcategories = subcategories.where((subcat) => subcat.parentId == cat.id).toList();
+      cat.updateFields();
+    });
+
+    // Create a list of all MainCategories and Subcategories in order.
+    for (var cat in maincategories) {
+      allcategories.add(cat);
+      cat.subcategories.forEach((subcat) => allcategories.add(subcat));
+    }
+
+    return allcategories;
+  }
+
   @override
   String toString() {
-    return super.toString() + """ {month: $month, year: $year, subcategories: $subcategories}\n""";
+    return super.toString() +
+        """ {month: $month, year: $year, maincategories: $maincategories, subcategories: $subcategories}\n""";
   }
 }
