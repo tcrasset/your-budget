@@ -155,10 +155,15 @@ class BudgetValue {
 class Budget {
   List<MainCategory> maincategories = [];
   List<SubCategory> subcategories = [];
-  List<Category> allcategories;
+  List<Category> _allcategories;
   int month;
   int year;
   double totalBudgeted = 0;
+
+  List<Category> get allcategories {
+    _updateAllcategories();
+    return _allcategories;
+  }
 
   Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
     /// Add a copy of each maincategory to the budget, add the corresponding subcategories
@@ -205,11 +210,11 @@ class Budget {
   }
 
   void _updateAllcategories() {
-    allcategories = [];
+    _allcategories = [];
     // Create a list of all MainCategories and Subcategories in order.
     for (final MainCategory cat in maincategories) {
-      allcategories.add(cat);
-      cat.subcategories.forEach((subcat) => allcategories.add(subcat));
+      _allcategories.add(cat);
+      cat.subcategories.forEach((subcat) => _allcategories.add(subcat));
     }
   }
 

@@ -10,8 +10,8 @@ import 'package:mybudget/models/utils.dart';
 
 class AppState extends ChangeNotifier {
   List<Category> _allCategories = [];
-  List<SubCategory> _subcategories;
-  List<MainCategory> _maincategories;
+  List<SubCategory> _subcategories = [];
+  List<MainCategory> _maincategories = [];
   List<Payee> _payees;
   List<Account> _accounts;
   List<MoneyTransaction> _transactions;
@@ -77,15 +77,18 @@ class AppState extends ChangeNotifier {
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
   void addCategory(String categoryName) {
-    //TODO: addCategory
-
     mainCategoryCount++;
     // + 1 because we do not want to have an ID of 0
     MainCategory category = MainCategory(mainCategoryCount + 1, categoryName);
+
+    for (final Budget budget in _budgets) {
+      budget.maincategories.add(category);
+    }
+
     _maincategories.add(category);
-    _allCategories.add(category);
-    SQLQueryClass.addCategory(category);
+    _allCategories = currentBudget.allcategories;
     notifyListeners();
+    SQLQueryClass.addCategory(category);
   }
 
   void addPayee(Payee payee) {
@@ -216,7 +219,6 @@ class AppState extends ChangeNotifier {
   // }
 
   void computeToBeBudgeted() {
-    //TODO: Change month by month TBB
     toBeBudgeted = 0;
     for (final Account account in _accounts) {
       toBeBudgeted += account.balance;
