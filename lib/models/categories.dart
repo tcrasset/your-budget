@@ -93,6 +93,10 @@ class MainCategory extends Category {
     this.available = available;
   }
 
+  MainCategory copy() {
+    return MainCategory(id, name);
+  }
+
   void addSubcategory(SubCategory newSub) {
     this._subcategories.add(newSub);
     updateFields();
@@ -149,29 +153,54 @@ class BudgetValue {
 }
 
 class Budget {
-  List<MainCategory> maincategories;
-  List<SubCategory> subcategories;
+  List<MainCategory> maincategories = [];
+  List<SubCategory> subcategories = [];
+  List<Category> allcategories;
   int month;
   int year;
 
-  Budget(this.maincategories, this.subcategories, this.month, this.year);
-
-  List<Category> computeAllCategories() {
-    List<Category> allcategories = [];
-    // Extract subcategories from main categories and update the
-    // the budgeted and available amounts
-    maincategories.forEach((cat) {
+  Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
+    /// Add a copy of each maincategory to the budget, add the corresponding subcategories
+    /// to each maincategory and update the fields to reflect the total budget amount of
+    /// the subcategories under a given maincategory.
+    maincategories.forEach((cat) => this.maincategories.add(cat.copy()));
+    this.subcategories = subcategories;
+    this.month = month;
+    this.year = year;
+    this.maincategories.forEach((cat) {
       cat.subcategories = subcategories.where((subcat) => subcat.parentId == cat.id).toList();
       cat.updateFields();
     });
 
+    _updateAllcategories();
+  }
+
+  void updateSubCategory(SubCategory modifiedSubcategory) {
+    for (final SubCategory subcat in subcategories) {
+      if (subcat.id == modifiedSubcategory.id) {
+        subcat.name = modifiedSubcategory.name;
+        subcat.budgeted = modifiedSubcategory.budgeted;
+        subcat.available = modifiedSubcategory.available;
+      }
+    }
+  }
+
+  void updateMainCategory(SubCategory modifiedSubcategory) {
+    for (final MainCategory cat in maincategories) {
+      if (cat.id == modifiedSubcategory.parentId) {
+        cat.updateFields();
+      }
+    }
+  }
+
+  void _updateAllcategories() {
+    allcategories = [];
     // Create a list of all MainCategories and Subcategories in order.
-    for (var cat in maincategories) {
+    for (final MainCategory cat in maincategories) {
       allcategories.add(cat);
       cat.subcategories.forEach((subcat) => allcategories.add(subcat));
+      print(allcategories);
     }
-
-    return allcategories;
   }
 
   @override
