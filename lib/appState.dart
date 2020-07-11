@@ -12,7 +12,6 @@ import 'package:mybudget/models/utils.dart';
 class AppState extends ChangeNotifier {
   List<Category> _allCategories = [];
   List<SubCategory> _subcategories = [];
-  List<MainCategory> _maincategories = [];
   List<Payee> _payees;
   List<Account> _accounts;
   List<MoneyTransaction> _transactions;
@@ -36,7 +35,8 @@ class AppState extends ChangeNotifier {
 
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<Category> get allCategories => UnmodifiableListView(_allCategories);
-  UnmodifiableListView<SubCategory> get subcategories => UnmodifiableListView(_subcategories);
+  UnmodifiableListView<SubCategory> get subcategories =>
+      UnmodifiableListView(currentBudget.subcategories);
   UnmodifiableListView<Payee> get payees => UnmodifiableListView(_payees);
   UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
   UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
@@ -55,6 +55,7 @@ class AppState extends ChangeNotifier {
 
     _payees = await SQLQueryClass.getPayees();
     _accounts = await SQLQueryClass.getAccounts();
+    _subcategories = await SQLQueryClass.getSubCategories();
     _transactions = await SQLQueryClass.getMoneyTransactions();
     _budgetValues = await SQLQueryClass.getBudgetValues();
 
@@ -71,7 +72,6 @@ class AppState extends ChangeNotifier {
     budgetMonth = monthStringFromDate(currentBudgetDate);
     currentBudget = _getBudgetByDate(currentBudgetDate);
     _allCategories = currentBudget.allcategories;
-    _subcategories = currentBudget.subcategories;
 
     computeToBeBudgeted();
 
@@ -89,7 +89,6 @@ class AppState extends ChangeNotifier {
       budget.maincategories.add(category);
     }
 
-    _maincategories.add(category);
     _allCategories = currentBudget.allcategories;
     notifyListeners();
     SQLQueryClass.addCategory(category);
@@ -114,6 +113,7 @@ class AppState extends ChangeNotifier {
     for (final Budget budget in _budgets) {
       budget.addSubcategory(subcategory);
     }
+    _subcategories.add(subcategory);
     _allCategories = currentBudget.allcategories;
     notifyListeners();
 
@@ -141,30 +141,16 @@ class AppState extends ChangeNotifier {
     /// subcategories are not affected.
     if (transaction.subcatID != -1) {
       // Get the corresponding subcategory
+      Budget budget = _getBudgetByDate(DateTime(transaction.date.year, transaction.date.month));
+      SubCategory oldSubcat =
+          budget.subcategories.singleWhere((subcat) => subcat.id == transaction.subcatID);
 
-      SubCategory oldSubcat;
-      for (final cat in _allCategories) {
-        if (cat is SubCategory && cat.id == transaction.subcatID) {
-          oldSubcat = cat;
-          break;
-        }
-      }
-
-      /// Modify amount in the state variables ([_categories] and [_subcategories])
-      /// and in the data base
       double newAvailableAmount = oldSubcat.available + transaction.amount;
-      oldSubcat.available = newAvailableAmount;
+      SubCategory newSubcat = SubCategory(
+          oldSubcat.id, oldSubcat.parentId, oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
 
-      for (final MainCategory cat in _maincategories) {
-        if (cat.id == oldSubcat.parentId) {
-          cat.updateFields();
-        }
-      }
-
-      SQLQueryClass.updateSubcategory(SubCategory(oldSubcat.id, oldSubcat.parentId, oldSubcat.name,
-          oldSubcat.budgeted, newAvailableAmount));
+      updateSubcategory(newSubcat);
     }
-
     notifyListeners();
   }
 
