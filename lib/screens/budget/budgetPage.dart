@@ -3,28 +3,52 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
+import 'package:mybudget/screens/budget/ModifyCategories.dart';
 import 'package:mybudget/screens/budget/addCategoryPage.dart';
 import 'package:mybudget/screens/budget/addSubcategoryPage.dart';
 import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
 import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 import 'package:provider/provider.dart';
 
-class BudgetPage extends StatelessWidget {
+class BudgetPage extends StatefulWidget {
   final String title;
 
   const BudgetPage({Key key, this.title}) : super(key: key);
+
+  @override
+  _BudgetPageState createState() => _BudgetPageState();
+}
+
+class _BudgetPageState extends State<BudgetPage> {
+  void handleSettings() {}
+
+  void handleModifyCategories() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyCategories()));
+  }
 
   @override
   Widget build(BuildContext context) {
     print("Budget page build");
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(widget.title),
           leading: Icon(BUDGET_ICON),
           actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Icon(FontAwesomeIcons.bars),
+            Container(
+              width: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(FontAwesomeIcons.checkSquare),
+                    onPressed: handleModifyCategories,
+                  ),
+                  IconButton(
+                    icon: Icon(FontAwesomeIcons.bars),
+                    onPressed: handleSettings,
+                  ),
+                ],
+              ),
             )
           ],
         ),

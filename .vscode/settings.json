@@ -17,4 +17,5 @@
     "dart.triggerSignatureHelpAutomatically": true,
     "dart.previewFlutterUiGuides": true,
     "dart.previewFlutterUiGuidesCustomTracking": true,
+    "terminal.integrated.shell.linux": "/bin/bash",
 }

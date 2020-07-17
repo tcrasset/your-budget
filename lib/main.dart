@@ -36,8 +36,7 @@ class HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   List<Widget> _tabs = [
-    //AddAccount(),
-
+    // AddAccount(),
     BudgetPage(title: 'Bugdet Page'),
     AddTransactionPage(),
     ShowTransactionPage(title: "Transactions")

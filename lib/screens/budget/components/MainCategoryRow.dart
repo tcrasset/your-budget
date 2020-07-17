@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:flutter/services.dart';
+import 'package:mybudget/models/constants.dart';
 import 'package:provider/provider.dart';
 
 // Widget containing and displaying the information of a category
@@ -18,8 +19,6 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
   AppState appState;
 
   TextEditingController _nameController;
-  final _categoryTextStyle =
-      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0);
 
   final mainCategoryBox = new SizedBox(
     height: 8.0,
@@ -77,16 +76,16 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                         LengthLimitingTextInputFormatter(25)
                       ], //To remove length counter
                       textInputAction: TextInputAction.done,
-                      style: _categoryTextStyle,
+                      style: CATEGORY_TEXT_STYLE,
                       onFieldSubmitted: (value) => handleMainCategoryNameChange())),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Budgeted', textAlign: TextAlign.right, style: _categoryTextStyle),
+                    Text('Budgeted', textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE),
                     Text('${widget.cat.budgeted.toStringAsFixed(2)}',
-                        textAlign: TextAlign.right, style: _categoryTextStyle)
+                        textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE)
                   ],
                 ),
               ),
@@ -95,9 +94,9 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Available', textAlign: TextAlign.right, style: _categoryTextStyle),
+                    Text('Available', textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE),
                     Text('${widget.cat.available.toStringAsFixed(2)}',
-                        textAlign: TextAlign.right, style: _categoryTextStyle)
+                        textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE)
                   ],
                 ),
               ),
