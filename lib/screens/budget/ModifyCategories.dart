@@ -47,7 +47,7 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
             itemBuilder: (context, index) {
               final item = categories[index];
               return (item is MainCategory)
-                  ? _ModifyCategoryRow(cat: item)
+                  ? _ModifyMainCategoryRow(cat: item)
                   : _ModifySubcategoryRow(subcat: item);
             },
           ));
@@ -56,10 +56,10 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
   }
 }
 
-class _ModifyCategoryRow extends StatelessWidget {
+class _ModifyMainCategoryRow extends StatelessWidget {
   final MainCategory cat;
 
-  _ModifyCategoryRow({Key key, this.cat}) : super(key: key);
+  _ModifyMainCategoryRow({Key key, this.cat}) : super(key: key);
 
   void handleAddSubcategory(BuildContext context) async {
     String subcategoryName = await createAddCategoryDialog(context, "Add new subcategory", "");
@@ -87,9 +87,12 @@ class _ModifyCategoryRow extends StatelessWidget {
             Expanded(
               child: GestureDetector(
                 onTap: () => handleMainCategoryNameChange(context),
-                child: Text(
-                  cat.name,
-                  style: CATEGORY_TEXT_STYLE,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    cat.name,
+                    style: CATEGORY_TEXT_STYLE,
+                  ),
                 ),
               ),
             ),
@@ -127,7 +130,14 @@ class _ModifySubcategoryRow extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         GestureDetector(
-            onTap: () => handleSubCategoryNameChange(context), child: Text(subcat.name)),
+            onTap: () => handleSubCategoryNameChange(context),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(
+                subcat.name,
+                style: SUBCATEGORY_TEXT_STYLE,
+              ),
+            )),
         Row(
           children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
         )

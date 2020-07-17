@@ -5,6 +5,7 @@ import 'package:mybudget/appState.dart';
 
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:mybudget/models/constants.dart';
 import 'package:provider/provider.dart';
 
 // Widget containing and displaying the information a subcategory
@@ -21,13 +22,11 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
   AppState appState;
   MoneyMaskedTextController _budgetedController;
   MoneyMaskedTextController _availableController;
-  TextEditingController _nameController;
 
   @override
   void initState() {
     super.initState();
     appState = Provider.of(context, listen: false);
-    _nameController = new TextEditingController(text: '${widget.subcat.name}');
 
     _availableController = new MoneyMaskedTextController(
         decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
@@ -40,18 +39,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
   void dispose() {
     _availableController.dispose();
     _budgetedController.dispose();
-    _nameController.dispose();
     super.dispose();
-  }
-
-  handleSubcategoryNameChange() {
-    //TODO : On focus lost, put back old value
-
-    print("Changed name of subcategory from ${widget.subcat.name} to ${_nameController.text} ");
-    if (_nameController.text != widget.subcat.name) {
-      appState.updateSubcategory(SubCategory(widget.subcat.id, widget.subcat.parentId,
-          _nameController.text, widget.subcat.budgeted, widget.subcat.available));
-    }
   }
 
   /// When the budget value gets changed, change the shown budget value,
@@ -77,7 +65,6 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
   _SubcategoryRowView(_SubcategoryRowController state) : super(state);
 
-  final TextStyle _subcategoryTextStyle = new TextStyle(color: Colors.black, fontSize: 16.0);
   final TextStyle _greenNumberTextStyle = new TextStyle(color: Colors.green, fontSize: 16.0);
   final TextStyle _redNumberTextStyle = new TextStyle(color: Colors.red, fontSize: 16.0);
 
@@ -92,16 +79,9 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
       child: Row(
         children: <Widget>[
           Expanded(
-              child: TextFormField(
-            decoration: new InputDecoration.collapsed(
-              hintText: "",
-            ),
-            controller: state._nameController,
-            textAlign: TextAlign.left,
-            inputFormatters: [LengthLimitingTextInputFormatter(25)], //To remove length counter
-            textInputAction: TextInputAction.done,
-            style: _subcategoryTextStyle,
-            onFieldSubmitted: (value) => state.handleSubcategoryNameChange(),
+              child: Text(
+            widget.subcat.name,
+            style: SUBCATEGORY_TEXT_STYLE,
           )),
           Expanded(
             child: TextFormField(
@@ -113,7 +93,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                 inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
                 textInputAction: TextInputAction.done,
                 textAlign: TextAlign.right,
-                style: _subcategoryTextStyle,
+                style: SUBCATEGORY_TEXT_STYLE,
                 // When the user presses the 'Enter' key, update the respective entry in the database
                 onFieldSubmitted: (String value) => state.handleSubcategoryBudgetedChange()),
           ),
