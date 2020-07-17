@@ -4,8 +4,6 @@ import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/screens/budget/ModifyCategories.dart';
-import 'package:mybudget/screens/budget/addCategoryPage.dart';
-import 'package:mybudget/screens/budget/addSubcategoryPage.dart';
 import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
 import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 import 'package:provider/provider.dart';
@@ -119,66 +117,17 @@ class _ToBeBudgeted extends StatelessWidget {
 }
 
 class _AddButtons extends StatelessWidget {
-  /// Navigates to a new page to add a Category
-  /// That page returns a new name , and setState updates the current
-  /// name shown on the ListView
-  void _navigateToAddCategory(BuildContext context) {
-    // addDummyVariables();
-    print("Add category button pressed");
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddCategoryRoute()),
-    );
-  }
-
-  /// Navigates to a new page to add a SubCategory
-  void _navigateAndAddSubcategory(BuildContext context) {
-    print("Add subcategory button pressed");
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddSubcategoryRoute()),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        // Button for adding new Category (goes to new Page)
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
-          child: RaisedButton(
-            padding: const EdgeInsets.all(8.0),
-            textColor: Colors.white,
-            color: Colors.blue,
-            child: new Text("Add category"),
-            onPressed: () => _navigateToAddCategory(context),
-          ),
-        ),
-        // Button for adding new SubCategory (goes to new Page)
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8),
-          child: RaisedButton(
-            padding: const EdgeInsets.all(8.0),
-            textColor: Colors.white,
-            color: Colors.blue,
-            child: new Text("Add subcategory"),
-            onPressed: () => _navigateAndAddSubcategory(context),
-          ),
-        ),
-
-        Consumer<AppState>(builder: (_, appState, __) {
-          return Row(
-            children: [
-              Text("${appState.budgetMonth}"),
-              IconButton(icon: Icon(Icons.plus_one), onPressed: appState.incrementMonth),
-              IconButton(icon: Icon(Icons.exposure_neg_1), onPressed: appState.decrementMonth)
-            ],
-          );
-        }),
-      ],
-    );
+    return Consumer<AppState>(builder: (_, appState, __) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(icon: Icon(Icons.arrow_back), onPressed: appState.decrementMonth),
+          Text("${appState.budgetMonth} ${appState.currentBudget.year}"),
+          IconButton(icon: Icon(Icons.arrow_forward), onPressed: appState.incrementMonth)
+        ],
+      );
+    });
   }
 }
