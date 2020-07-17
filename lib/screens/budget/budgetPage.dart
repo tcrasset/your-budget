@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/screens/budget/addCategoryPage.dart';
 import 'package:mybudget/screens/budget/addSubcategoryPage.dart';
 import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
@@ -18,6 +20,13 @@ class BudgetPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
+          leading: Icon(BUDGET_ICON),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Icon(FontAwesomeIcons.bars),
+            )
+          ],
         ),
         body: Column(
           children: <Widget>[

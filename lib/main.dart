@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
+import 'package:mybudget/models/constants.dart';
 // import 'package:mybudget/screens/addAccount/addAccount.dart';
 
 import 'package:mybudget/screens/addTransaction/addTransaction.dart';
@@ -59,12 +61,13 @@ class HomeScreenState extends State<HomeScreen> {
             onTap: _onItemTapped,
             items: [
               BottomNavigationBarItem(
-                icon: Icon(Icons.access_alarm),
+                icon: FaIcon(BUDGET_ICON),
                 title: Text("Budget"),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.access_alarm), title: Text("Add transaction")),
-              BottomNavigationBarItem(icon: Icon(Icons.access_alarm), title: Text("Transactions")),
+                  icon: FaIcon(ADD_TRANSACTION_ICON), title: Text("Add transaction")),
+              BottomNavigationBarItem(
+                  icon: FaIcon(ALLTRANSACTION_ICON), title: Text("Transactions")),
             ],
           ),
         ),
