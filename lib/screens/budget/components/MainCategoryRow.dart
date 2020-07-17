@@ -20,13 +20,10 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
 
   TextEditingController _nameController;
 
-  final mainCategoryBox = new SizedBox(
+  final mainCategoryDivider = SizedBox(
     height: 8.0,
-    child: new Center(
-      child: new Container(
-        height: 8.0,
-        color: new Color(0xFFE8E8E8),
-      ),
+    child: new Container(
+      color: new Color(0xFFE8E8E8),
     ),
   );
 
@@ -59,7 +56,7 @@ class _MainCategoryRowState extends State<MainCategoryRow> {
     return Column(
       children: <Widget>[
         // Divider separating MainCategories
-        mainCategoryBox,
+        mainCategoryDivider,
         Container(
           padding: EdgeInsets.symmetric(vertical: 10),
           margin: EdgeInsets.symmetric(horizontal: 10),

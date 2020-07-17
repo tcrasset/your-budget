@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
@@ -15,7 +16,7 @@ class ModifyCategories extends StatefulWidget {
 class _ModifyCategoriesController extends State<ModifyCategories> {
   void handleAddCategory(BuildContext context) async {
     AppState appState = Provider.of<AppState>(context, listen: false);
-    String categoryName = await createAddCategoryDialog(context, "Add new category");
+    String categoryName = await createAddCategoryDialog(context, "Add new category", "");
     if (categoryName != null) appState.addCategory(categoryName);
   }
 
@@ -57,12 +58,23 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
 
 class _ModifyCategoryRow extends StatelessWidget {
   final MainCategory cat;
-  const _ModifyCategoryRow({Key key, this.cat}) : super(key: key);
+
+  _ModifyCategoryRow({Key key, this.cat}) : super(key: key);
 
   void handleAddSubcategory(BuildContext context) async {
-    AppState appState = Provider.of<AppState>(context, listen: false);
-    String subcategoryName = await createAddCategoryDialog(context, "Add new subcategory");
-    if (subcategoryName != null) appState.addSubcategoryByName(subcategoryName, cat.id);
+    String subcategoryName = await createAddCategoryDialog(context, "Add new subcategory", "");
+    if (subcategoryName != null) {
+      AppState appState = Provider.of<AppState>(context, listen: false);
+      appState.addSubcategoryByName(subcategoryName, cat.id);
+    }
+  }
+
+  void handleMainCategoryNameChange(BuildContext context) async {
+    String categoryName = await createAddCategoryDialog(context, "Modify category name", cat.name);
+    if (categoryName != null) {
+      AppState appState = Provider.of<AppState>(context, listen: false);
+      appState.updateCategoryName(MainCategory(cat.id, categoryName));
+    }
   }
 
   @override
@@ -72,9 +84,14 @@ class _ModifyCategoryRow extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Text(
-              cat.name,
-              style: CATEGORY_TEXT_STYLE,
+            Expanded(
+              child: GestureDetector(
+                onTap: () => handleMainCategoryNameChange(context),
+                child: Text(
+                  cat.name,
+                  style: CATEGORY_TEXT_STYLE,
+                ),
+              ),
             ),
             Row(
               children: <Widget>[
@@ -93,13 +110,24 @@ class _ModifySubcategoryRow extends StatelessWidget {
   final SubCategory subcat;
   const _ModifySubcategoryRow({Key key, this.subcat}) : super(key: key);
 
+  handleSubCategoryNameChange(BuildContext context) async {
+    String subcategoryName =
+        await createAddCategoryDialog(context, "Modify subcategory name", subcat.name);
+    if (subcategoryName != null) {
+      AppState appState = Provider.of<AppState>(context, listen: false);
+      appState.updateSubcategory(SubCategory(
+          subcat.id, subcat.parentId, subcategoryName, subcat.budgeted, subcat.available));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text(subcat.name),
+        GestureDetector(
+            onTap: () => handleSubCategoryNameChange(context), child: Text(subcat.name)),
         Row(
           children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
         )
@@ -108,7 +136,7 @@ class _ModifySubcategoryRow extends StatelessWidget {
   }
 }
 
-Future<String> createAddCategoryDialog(BuildContext context, String title) {
+Future<String> createAddCategoryDialog(BuildContext context, String title, String hintText) {
   TextEditingController textController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -120,6 +148,8 @@ Future<String> createAddCategoryDialog(BuildContext context, String title) {
           content: Form(
             key: _formKey,
             child: TextFormField(
+              decoration: new InputDecoration(
+                  hintText: hintText, filled: true, fillColor: Colors.grey[200]),
               controller: textController,
               validator: (_) => validateCategoryName(textController.text),
             ),
