@@ -3,8 +3,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
-import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/widgetViewClasses.dart';
@@ -17,42 +15,8 @@ class ModifyCategories extends StatefulWidget {
 class _ModifyCategoriesController extends State<ModifyCategories> {
   void handleAddCategory(BuildContext context) async {
     AppState appState = Provider.of<AppState>(context, listen: false);
-    String categoryName = await _createAddCategoryDialog(context);
-    appState.addCategory(categoryName);
-  }
-
-  String _validateCategoryName(String name) {
-    if (name == null || name.isEmpty) return "Category name must not be empty.";
-    return null;
-  }
-
-  Future<String> _createAddCategoryDialog(BuildContext context) {
-    TextEditingController textController = TextEditingController();
-
-    final _formKey = GlobalKey<FormState>();
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Add new category"),
-            content: Form(
-              key: _formKey,
-              child: TextFormField(
-                controller: textController,
-                validator: (_) => _validateCategoryName(textController.text),
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    if (_formKey.currentState.validate()) {
-                      Navigator.of(context).pop(textController.text);
-                    }
-                  },
-                  child: Text("Submit"))
-            ],
-          );
-        });
+    String categoryName = await createAddCategoryDialog(context, "Add new category");
+    if (categoryName != null) appState.addCategory(categoryName);
   }
 
   @override
@@ -95,7 +59,11 @@ class _ModifyCategoryRow extends StatelessWidget {
   final MainCategory cat;
   const _ModifyCategoryRow({Key key, this.cat}) : super(key: key);
 
-  void handleAddSubcategory() {}
+  void handleAddSubcategory(BuildContext context) async {
+    AppState appState = Provider.of<AppState>(context, listen: false);
+    String subcategoryName = await createAddCategoryDialog(context, "Add new subcategory");
+    if (subcategoryName != null) appState.addSubcategoryByName(subcategoryName, cat.id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +79,8 @@ class _ModifyCategoryRow extends StatelessWidget {
             Row(
               children: <Widget>[
                 IconButton(
-                    icon: Icon(FontAwesomeIcons.plusCircle), onPressed: handleAddSubcategory),
+                    icon: Icon(FontAwesomeIcons.plusCircle),
+                    onPressed: () => handleAddSubcategory(context)),
                 IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)
               ],
             )
@@ -137,4 +106,38 @@ class _ModifySubcategoryRow extends StatelessWidget {
       ],
     ));
   }
+}
+
+Future<String> createAddCategoryDialog(BuildContext context, String title) {
+  TextEditingController textController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              controller: textController,
+              validator: (_) => validateCategoryName(textController.text),
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+                onPressed: () {
+                  if (_formKey.currentState.validate()) {
+                    Navigator.of(context).pop(textController.text);
+                  }
+                },
+                child: Text("Submit"))
+          ],
+        );
+      });
+}
+
+String validateCategoryName(String name) {
+  if (name == null || name.isEmpty) return "(Sub)Category name must not be empty.";
+  return null;
 }

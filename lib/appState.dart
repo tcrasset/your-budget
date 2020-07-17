@@ -8,6 +8,7 @@ import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
+import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 
 import 'models/SQLQueries.dart';
 import 'models/categories.dart';
@@ -141,6 +142,15 @@ class AppState extends ChangeNotifier {
         subcategory.budgeted,
         subcategory.available,
         DateTime(currentDate.year, currentDate.month)));
+  }
+
+  void addSubcategoryByName(String subcategoryName, int maincategoryId) {
+    addSubcategory(SubCategory(
+        subcategoryCount + 2, //
+        maincategoryId,
+        subcategoryName,
+        0.00,
+        0.00));
   }
 
   /// Add the [transaction] to the [_transactions] list, persist it to
