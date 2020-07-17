@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/appState.dart';
-import 'package:mybudget/screens/addAccount/addAccount.dart';
+// import 'package:mybudget/screens/addAccount/addAccount.dart';
 
 import 'package:mybudget/screens/addTransaction/addTransaction.dart';
 
 import 'package:mybudget/screens/budget/budgetPage.dart';
 import 'package:mybudget/models/database_creator.dart';
-import 'package:mybudget/screens/waitingscreen.dart';
+import 'package:mybudget/waitingscreen.dart';
 import 'package:mybudget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
 // import 'package:mybudget/searchPage.dart';
@@ -25,33 +25,47 @@ class MyBudget extends StatelessWidget {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  int _currentTab = 0;
+
+  List<Widget> _tabs = [
+    //AddAccount(),
+
+    BudgetPage(title: 'Bugdet Page'),
+    AddTransactionPage(),
+    ShowTransactionPage(title: "Transactions")
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentTab = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     AppState appState = Provider.of<AppState>(context);
     if (appState.allCategories.isNotEmpty) {
       return MaterialApp(
-        home: DefaultTabController(
-          length: 4,
-          child: Scaffold(
-            appBar: AppBar(
-              bottom: TabBar(
-                tabs: [
-                  Tab(text: "Add account"),
-                  Tab(text: "Budget"),
-                  Tab(text: "Add new Transaction"),
-                  Tab(text: "Transactions")
-                ],
+        home: Scaffold(
+          body: _tabs[_currentTab],
+          bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentTab,
+            onTap: _onItemTapped,
+            items: [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.access_alarm),
+                title: Text("Budget"),
               ),
-            ),
-            body: TabBarView(
-              children: [
-                AddAccount(),
-                BudgetPage(title: 'Bugdet Page'),
-                AddTransactionPage(),
-                ShowTransactionPage(title: "Transactions")
-              ],
-            ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.access_alarm), title: Text("Add transaction")),
+              BottomNavigationBarItem(icon: Icon(Icons.access_alarm), title: Text("Transactions")),
+            ],
           ),
         ),
       );

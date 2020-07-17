@@ -9,6 +9,11 @@ import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 
+import 'models/SQLQueries.dart';
+import 'models/categories.dart';
+import 'models/categories.dart';
+import 'models/categories.dart';
+
 class AppState extends ChangeNotifier {
   List<Category> _allCategories = [];
   List<SubCategory> _subcategories = [];
@@ -44,12 +49,13 @@ class AppState extends ChangeNotifier {
 
   AppState() {
     // addDummyVariables();
+
     _loadStateFromDatabase();
   }
 
   void _loadStateFromDatabase() async {
     // await addDummyVariables();
-
+    // await addDummyCategories();
     _budgets = await _createAllMonthlyBudgets(
         DateTime(2020, 7, 1, 0, 0, 0), DateTime(2021, 7, 1, 0, 0, 0));
 
@@ -298,4 +304,11 @@ class AppState extends ChangeNotifier {
   //     }
   //   }
   // }
+}
+
+Future<void> addDummyCategories() async {
+  MainCategory cat = MainCategory(1, "Savings");
+  SubCategory subcat = SubCategory(1, 1, "Savings", 200, 300);
+  await SQLQueryClass.addCategory(cat);
+  return await SQLQueryClass.addSubcategory(subcat);
 }
