@@ -233,7 +233,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   handleAmountOnSave() {
     _amount = formatCurrencyToDouble(_amountController.text, isPositive);
-    print("Double amount is $_amount");
   }
 
   // When the switch is set to the 'off' position, the text style changes
@@ -300,7 +299,7 @@ class _AddTransactionPageView
     Container amountInputContainer = Container(
         height: 50,
         alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        padding: new EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
         child: TextFormField(
           decoration: new InputDecoration.collapsed(
             hintText: "",
