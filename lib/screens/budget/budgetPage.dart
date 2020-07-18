@@ -52,7 +52,7 @@ class _BudgetPageState extends State<BudgetPage> {
         ),
         body: Column(
           children: <Widget>[
-            _AddButtons(), //
+            _DateButtons(), //
             _ToBeBudgeted(),
             Expanded(child: _CategoriesList())
           ],
@@ -116,15 +116,17 @@ class _ToBeBudgeted extends StatelessWidget {
   }
 }
 
-class _AddButtons extends StatelessWidget {
+class _DateButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppState>(builder: (_, appState, __) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(icon: Icon(Icons.arrow_back), onPressed: appState.decrementMonth),
-          Text("${appState.budgetMonth} ${appState.currentBudget.year}"),
+          Text("${appState.budgetMonth} ${appState.currentBudget.year}",
+              style: TextStyle(fontSize: 20)),
           IconButton(icon: Icon(Icons.arrow_forward), onPressed: appState.incrementMonth)
         ],
       );

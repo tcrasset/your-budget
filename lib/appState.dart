@@ -303,6 +303,15 @@ class AppState extends ChangeNotifier {
     return _budgets.singleWhere((budget) => budget.year == date.year && budget.month == date.month);
   }
 
+  void AddAccount(String accountName, double accountBalance) async {
+    int accountCount = await SQLQueryClass.accountCount();
+    Account newAccount = Account(accountCount + 1, accountName, accountBalance);
+    accountCount++;
+    await SQLQueryClass.addAccount(newAccount);
+    computeToBeBudgeted();
+    notifyListeners();
+  }
+
   // void addSubcategoriesToBudgetValues() async {
   //   int id = await SQLQueryClass.budgetValuesCount() + 1;
   //   for (final int month in [8, 9, 10, 11, 12]) {

@@ -81,29 +81,38 @@ class _ModifyMainCategoryRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         height: 80,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
           children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                onTap: () => handleMainCategoryNameChange(context),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    cat.name,
-                    style: CATEGORY_TEXT_STYLE,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () => handleMainCategoryNameChange(context),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Text(
+                        cat.name,
+                        style: CATEGORY_TEXT_STYLE,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Row(
-              children: <Widget>[
-                IconButton(
-                    icon: Icon(FontAwesomeIcons.plusCircle),
-                    onPressed: () => handleAddSubcategory(context)),
-                IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                        icon: Icon(FontAwesomeIcons.plusCircle),
+                        onPressed: () => handleAddSubcategory(context)),
+                    // IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)
+                  ],
+                )
               ],
-            )
+            ),
+            SizedBox(
+                height: 2.0,
+                child: Container(
+                  color: Colors.black,
+                )),
           ],
         ));
   }
@@ -126,23 +135,24 @@ class _ModifySubcategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        height: 40.0,
         child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        GestureDetector(
-            onTap: () => handleSubCategoryNameChange(context),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                subcat.name,
-                style: SUBCATEGORY_TEXT_STYLE,
-              ),
-            )),
-        Row(
-          children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
-        )
-      ],
-    ));
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            GestureDetector(
+                onTap: () => handleSubCategoryNameChange(context),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    subcat.name,
+                    style: SUBCATEGORY_TEXT_STYLE,
+                  ),
+                )),
+            // Row(
+            //   children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
+            // )
+          ],
+        ));
   }
 }
 

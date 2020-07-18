@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/constants.dart';
+import 'package:mybudget/screens/addAccount/addAccount.dart';
 // import 'package:mybudget/screens/addAccount/addAccount.dart';
 
 import 'package:mybudget/screens/addTransaction/addTransaction.dart';
@@ -36,8 +37,8 @@ class HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   List<Widget> _tabs = [
-    // AddAccount(),
     BudgetPage(title: 'Bugdet Page'),
+    AddAccountRoute(title: 'Accounts'),
     AddTransactionPage(),
     ShowTransactionPage(title: "Transactions")
   ];
@@ -62,6 +63,10 @@ class HomeScreenState extends State<HomeScreen> {
               BottomNavigationBarItem(
                 icon: FaIcon(BUDGET_ICON),
                 title: Text("Budget"),
+              ),
+              BottomNavigationBarItem(
+                icon: FaIcon(ACCOUNT_ICON),
+                title: Text("Accounts"),
               ),
               BottomNavigationBarItem(
                   icon: FaIcon(ADD_TRANSACTION_ICON), title: Text("Add transaction")),
