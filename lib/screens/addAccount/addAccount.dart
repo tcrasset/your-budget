@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/models/utils.dart';
 import 'package:provider/provider.dart';
 
 class AddAccountRoute extends StatefulWidget {
@@ -28,6 +29,8 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
   String handleAccountBalanceValidate(String amount) {
     if (amount.isEmpty) {
       return 'Please enter an account balance';
+    } else if (!isNumeric(amount)) {
+      return 'Insert a valid number';
     }
     return null;
   }
@@ -48,6 +51,19 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
 }
 
 class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
+  final TextStyle _textBoxStyle = TextStyle(fontSize: 25);
+  final TextStyle _accountNameStyle = TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
+  final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
+  final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
+
+  InputDecoration _textBoxDecoration = InputDecoration(
+    fillColor: Colors.white,
+    border: new OutlineInputBorder(
+      borderRadius: new BorderRadius.circular(20.0),
+      borderSide: new BorderSide(),
+    ),
+  );
+
   _AddAccountRouteView(_AddAccountRouteController state) : super(state);
 
   @override
@@ -56,39 +72,77 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
         appBar: AppBar(
           title: Text("Add a new account"),
         ),
-        body: Column(
-          children: <Widget>[
-            Form(
-                key: state._catFormKey,
-                child: Column(
-                  children: <Widget>[
-                    Text("Add an account"),
-                    TextFormField(
-                      validator: state.handleAccountNameValidate,
-                      onSaved: (name) => state.accountName = name,
-                      textInputAction: TextInputAction.next,
-                    ),
-                    Text("with starting balance of"),
-                    TextFormField(
-                      validator: state.handleAccountBalanceValidate,
-                      onSaved: (balance) => state.accountBalance = double.parse(balance),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
-                      textInputAction: TextInputAction.done,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      child: RaisedButton(
-                        onPressed: () => state.handleAddAccount(context),
-                        child: Text('Add account'),
-                      ),
-                    ),
-                  ],
-                )),
-            Consumer<AppState>(builder: (_, appState, __) {
-              return Column(children: _buildAccountRows(appState));
-            })
-          ],
+        body: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Form(
+                    key: state._catFormKey,
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            "Add an account",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        // SizedBox(
+                        //   height: 8,
+                        // ),
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          // height: 70,
+                          // color: Colors.blue,
+                          child: Center(
+                            child: TextFormField(
+                              decoration: _textBoxDecoration,
+                              style: _textBoxStyle,
+                              textAlign: TextAlign.center,
+                              validator: state.handleAccountNameValidate,
+                              onSaved: (name) => state.accountName = name,
+                              textInputAction: TextInputAction.next,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: Text(
+                            "with a starting balance of",
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: TextFormField(
+                                decoration: _textBoxDecoration,
+                                style: _textBoxStyle,
+                                textAlign: TextAlign.center,
+                                validator: state.handleAccountBalanceValidate,
+                                onSaved: (balance) => state.accountBalance = double.parse(balance),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9-]"))],
+                                textInputAction: TextInputAction.done,
+                              ),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16.0),
+                          child: RaisedButton(
+                            onPressed: () => state.handleAddAccount(context),
+                            child: Text(
+                              'Add account',
+                            ),
+                          ),
+                        ),
+                      ],
+                    )),
+                Consumer<AppState>(builder: (_, appState, __) {
+                  return Column(children: _buildAccountRows(appState));
+                })
+              ],
+            ),
+          ),
         ));
   }
 
@@ -96,10 +150,16 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
     List<Widget> rows = [];
     for (final Account account in appState.accounts) {
       var row = Container(
-        height: 30,
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[Text(account.name), Text(account.balance.toString())]),
+        child: Container(
+          padding: EdgeInsets.only(bottom: 10),
+          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
+            Text(account.name, style: _accountNameStyle),
+            Text("${account.balance.toString()} €",
+                style: account.balance.isNegative
+                    ? _negativeAmountTextStyle
+                    : _positiveAmountTextStyle)
+          ]),
+        ),
       );
       rows.add(row);
     }

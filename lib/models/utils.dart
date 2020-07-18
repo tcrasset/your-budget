@@ -19,3 +19,10 @@ int getMonthDifference(DateTime date1, DateTime date2) {
 String monthStringFromDate(DateTime date) {
   return Jiffy(date).format("MMMM");
 }
+
+bool isNumeric(String s) {
+  if (s == null) {
+    return false;
+  }
+  return double.tryParse(s) != null;
+}
