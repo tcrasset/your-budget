@@ -45,13 +45,20 @@ class Budget {
   ///modifies the subcategories in each [MainCategory], and the latter
   ///updates the maincategories based on the subcategories' values.
   void _updateSubCategory(SubCategory modifiedSubcategory) {
-    print(modifiedSubcategory);
-    print(subcategories);
+    // Modify subcategory in this.subcategories
     SubCategory oldSubcat =
         subcategories.singleWhere((subcat) => modifiedSubcategory.id == subcat.id);
     oldSubcat.name = modifiedSubcategory.name;
     oldSubcat.budgeted = modifiedSubcategory.budgeted;
     oldSubcat.available = modifiedSubcategory.available;
+
+    //Modify subcategory that is inside the corresponding maincategory
+    MainCategory cat = maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
+    SubCategory subcat =
+        cat.subcategories.singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
+    subcat.name = modifiedSubcategory.name;
+    subcat.budgeted = modifiedSubcategory.budgeted;
+    subcat.available = modifiedSubcategory.available;
   }
 
   void _updateMainCategory(SubCategory modifiedSubcategory) {

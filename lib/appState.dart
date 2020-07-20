@@ -9,11 +9,8 @@ import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 
 import 'models/SQLQueries.dart';
-import 'models/categories.dart';
-import 'models/categories.dart';
 import 'models/categories.dart';
 
 class AppState extends ChangeNotifier {
@@ -95,7 +92,7 @@ class AppState extends ChangeNotifier {
 
   Future<void> addAccount(String accountName, double startingBalance) async {
     int accountCount = await SQLQueryClass.accountCount();
-    Account account = Account(accountCount + 2, accountName, startingBalance);
+    Account account = Account(accountCount + 1, accountName, startingBalance);
     accountCount++;
     SQLQueryClass.addAccount(account);
     _accounts.add(account);
@@ -106,9 +103,8 @@ class AppState extends ChangeNotifier {
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
   void addCategory(String categoryName) {
-    mainCategoryCount++;
-    // + 1 because we do not want to have an ID of 0
     MainCategory category = MainCategory(mainCategoryCount + 1, categoryName);
+    mainCategoryCount++;
 
     for (final Budget budget in _budgets) {
       budget.maincategories.add(category);
@@ -119,10 +115,10 @@ class AppState extends ChangeNotifier {
   }
 
   void addPayee(Payee payee) {
-    payeeCount++;
     _payees.add(payee);
-    SQLQueryClass.addPayee(payee);
     notifyListeners();
+    SQLQueryClass.addPayee(payee);
+    payeeCount++;
   }
 
   /// Adds [subcategory] to the list [_subcategories],
@@ -136,26 +132,28 @@ class AppState extends ChangeNotifier {
       budget.addSubcategory(subcategory);
     }
     // _subcategories.add(subcategory);
-    notifyListeners();
 
     SQLQueryClass.addSubcategory(subcategory);
 
     /// Insert a budget value for every month from [startingBudgetDate] until [MAX_NB_MONTHS_AHEAD]
     /// after [DateTime.now()],
-    /// Insert a budget value for every month   until now
+    /// Insert a budget value for every month until now
     for (int i = 0;
         i < MAX_NB_MONTHS_AHEAD + getMonthDifference(startingBudgetDate, DateTime.now());
         i++) {
       DateTime newDate = Jiffy(startingBudgetDate).add(months: i);
+      BudgetValue budgetvalue =
+          BudgetValue(budgetValueCount + 1, subcategory.id, 0, 0, newDate.year, newDate.month);
       budgetValueCount++;
-      SQLQueryClass.addBudgetValue(
-          BudgetValue(budgetValueCount + 1, subcategory.id, 0, 0, newDate.year, newDate.month));
+      SQLQueryClass.addBudgetValue(budgetvalue);
+      _budgetValues.add(budgetvalue);
     }
+    notifyListeners();
   }
 
   void addSubcategoryByName(String subcategoryName, int maincategoryId) {
     addSubcategory(SubCategory(
-        subcategoryCount + 2, //
+        subcategoryCount + 1, //
         maincategoryId,
         subcategoryName,
         0.00,
@@ -190,9 +188,7 @@ class AppState extends ChangeNotifier {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  /// Then, modify the total budgeted and available
-  /// amounts of the corresponding [MainCategory]
-  void updateSubcategory(SubCategory modifiedSubcategory) {
+  void updateSubcategory(SubCategory modifiedSubcategory) async {
     SubCategory previousSubcategory =
         currentBudget.subcategories.singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
 
@@ -207,12 +203,10 @@ class AppState extends ChangeNotifier {
       for (Budget budget in _budgets) {
         budget.makeCategoryChange(modifiedSubcategory);
       }
-      notifyListeners();
     } else {
       /// Change state objects
       currentBudget.makeCategoryChange(modifiedSubcategory);
       computeToBeBudgeted();
-      notifyListeners();
 
       /// Persist the change in the DataBase
       BudgetValue correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
@@ -222,11 +216,13 @@ class AppState extends ChangeNotifier {
       // print(correspondingBudgetValue);
       correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
       correspondingBudgetValue.available = modifiedSubcategory.available;
-      SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
+      await SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
     }
 
-    // notifyListeners();
+    notifyListeners();
   }
+
+  ///TODO: Available amount is reflected on each month
 
   /// Update the name of the [MainCategory] pointed to
   /// by [modifiedCategory.id] to [modifiedCategory.name]
