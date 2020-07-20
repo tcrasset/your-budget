@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:jiffy/jiffy.dart';
+import 'package:mybudget/models/constants.dart';
+import 'package:mybudget/models/utils.dart';
+import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -36,7 +40,8 @@ class DatabaseCreator {
   static const BUDGET_VALUE_ID = 'id';
   static const BUDGET_VALUE_BUDGETED = 'budgeted';
   static const BUDGET_VALUE_AVAILABLE = 'available';
-  static const BUDGET_VALUE_DATE = 'date';
+  static const BUDGET_VALUE_YEAR = 'year';
+  static const BUDGET_VALUE_MONTH = 'month';
 
   static const String CAT_ID_OUTSIDE = 'cat_id';
   static const String SUBCAT_ID_OUTSIDE = 'subcat_id';
@@ -74,12 +79,10 @@ class DatabaseCreator {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, dbName);
 
-    // //Make sure the folder exists
-    // if (await Directory(dirname(path)).exists()) {
-    //   //await deleteDatabase(path)
-    // } else {
-    //   await Directory(dirname(path)).create(recursive: true);
-    // }
+    //Make sure the folder exists
+    if (!await Directory(dirname(path)).exists()) {
+      await Directory(dirname(path)).create(recursive: true);
+    }
 
     return path;
   }
@@ -91,7 +94,7 @@ class DatabaseCreator {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
-      version: 3,
+      version: 1,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -103,11 +106,11 @@ class DatabaseCreator {
   /// that will populate it, namely [categoryTable], [subcategoryTable],
   /// [payeeTable], [accountTable], [moneyTransactionTable], [budgetValueTable]
   Future<void> _onCreate(Database db, int version) async {
-    await _createTables();
-    await _createBasicCategories();
+    await _createTables(db);
+    await _createBasicCategories(db);
   }
 
-  Future<void> _createTables() async {
+  Future<void> _createTables(Database db) async {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $categoryTable (
                         $CATEGORY_ID INTEGER PRIMARY KEY ,
@@ -118,7 +121,7 @@ class DatabaseCreator {
                       CREATE TABLE IF NOT EXISTS $subcategoryTable (
                         $SUBCAT_ID INTEGER PRIMARY KEY,
                         $CAT_ID_OUTSIDE INTEGER NOT NULL,
-                        $SUBCAT_NAME TEXT NOT NULL,
+                        $SUBCAT_NAME TEXT NOT NULL
                     );''');
 
     await db.execute('''
@@ -154,12 +157,56 @@ class DatabaseCreator {
                         $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
                         $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
                         $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
-                        $BUDGET_VALUE_DATE TEXT NOT NULL,
+                        $BUDGET_VALUE_YEAR INTEGER NOT NULL,
+                        $BUDGET_VALUE_MONTH INTEGER NOT NULL,
                         FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
                     );''');
   }
 
-  _createBasicCategories() {}
+  _createBasicCategories(Database db) async {
+    const String CREATE_CATEGORY = '''INSERT INTO ${DatabaseCreator.categoryTable}
+      (${DatabaseCreator.CATEGORY_ID},${DatabaseCreator.CATEGORY_NAME})
+      VALUES(?, ?);''';
+
+    const String CREATE_SUBCATEGORY = '''INSERT INTO ${DatabaseCreator.subcategoryTable}
+      (${DatabaseCreator.SUBCAT_ID},
+      ${DatabaseCreator.CAT_ID_OUTSIDE},
+      ${DatabaseCreator.SUBCAT_NAME})
+      VALUES(?, ?, ?);''';
+
+    const String CREATE_BUDGETVALUE = '''INSERT INTO ${DatabaseCreator.budgetValueTable}
+      (${DatabaseCreator.BUDGET_VALUE_ID},
+      ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
+      ${DatabaseCreator.BUDGET_VALUE_BUDGETED},
+      ${DatabaseCreator.BUDGET_VALUE_AVAILABLE},
+      ${DatabaseCreator.BUDGET_VALUE_YEAR},
+      ${DatabaseCreator.BUDGET_VALUE_MONTH})
+      VALUES(?, ?, ?, ?, ?, ?);''';
+
+    await db.rawInsert(CREATE_CATEGORY, [1, "Essentials"]);
+
+    List<String> subcategoryNames = ["Rent", "Eletricity", "Water", "Food", "Internet", "Phone"];
+    for (int i = 1; i <= subcategoryNames.length; i++) {
+      await db.rawInsert(CREATE_SUBCATEGORY, [i, 1, subcategoryNames[i - 1]]);
+    }
+
+    /// Insert [BudgetValues] corresponding to the subcategories into the data base
+    final DateTime startingDate = getDateFromMonthStart(DateTime.now());
+    int budgetValueId = 1;
+    for (int monthDifference = 0; monthDifference < MAX_NB_MONTHS_AHEAD; monthDifference++) {
+      for (int subcatId = 1; subcatId <= subcategoryNames.length; subcatId++) {
+        DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
+        await db.rawInsert(CREATE_BUDGETVALUE, [
+          budgetValueId++, //
+          subcatId,
+          0.00,
+          0.00,
+          newDate.year,
+          newDate.month
+        ]);
+      }
+    }
+  }
 
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     print("Adding new table $budgetValueTable");
@@ -169,7 +216,8 @@ class DatabaseCreator {
               $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
               $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
               $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
-              $BUDGET_VALUE_DATE TEXT NOT NULL,
+              $BUDGET_VALUE_YEAR INTEGER NOT NULL,
+              $BUDGET_VALUE_MONTH INTEGER NOT NULL,
               FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
           );''');
   }

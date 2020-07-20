@@ -111,9 +111,10 @@ class BudgetValue {
   double available;
   int id;
   int subcategoryId;
-  DateTime date;
+  int month;
+  int year;
   //TODO: Convert date field to month/year field
-  BudgetValue(this.id, this.subcategoryId, this.budgeted, this.available, this.date);
+  BudgetValue(this.id, this.subcategoryId, this.budgeted, this.available, this.year, this.month);
 
   /// [BudgetValue] are imported from the database as json file
   BudgetValue.fromJson(Map<String, dynamic> json)
@@ -121,12 +122,12 @@ class BudgetValue {
         subcategoryId = json[DatabaseCreator.SUBCAT_ID_OUTSIDE],
         budgeted = json[DatabaseCreator.BUDGET_VALUE_BUDGETED],
         available = json[DatabaseCreator.BUDGET_VALUE_AVAILABLE],
-        date =
-            DateTime.fromMillisecondsSinceEpoch(int.parse(json[DatabaseCreator.BUDGET_VALUE_DATE]));
+        year = json[DatabaseCreator.BUDGET_VALUE_YEAR],
+        month = json[DatabaseCreator.BUDGET_VALUE_MONTH];
 
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, date: ${date.millisecondsSinceEpoch}}\n""";
+        """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, year: $year, month:$month}\n""";
   }
 }

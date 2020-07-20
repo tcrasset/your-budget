@@ -86,9 +86,7 @@ class SQLQueryClass {
     return budgetvalues;
   }
 
-  static Future<List<SubCategory>> getSubCategoriesJoined(
-      DateTime startDate, DateTime endDate) async {
-    assert(startDate.difference(endDate).isNegative);
+  static Future<List<SubCategory>> getSubCategoriesJoined(int year, int month) async {
     final sql = '''SELECT ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID} as id,
         ${DatabaseCreator.CAT_ID_OUTSIDE},
         ${DatabaseCreator.SUBCAT_NAME},
@@ -101,8 +99,8 @@ class SQLQueryClass {
           ON
           ${DatabaseCreator.budgetValueTable}.${DatabaseCreator.SUBCAT_ID_OUTSIDE} = ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID}
         WHERE
-          ${DatabaseCreator.BUDGET_VALUE_DATE} >= ${startDate.millisecondsSinceEpoch}
-          and ${DatabaseCreator.BUDGET_VALUE_DATE} < ${endDate.millisecondsSinceEpoch}''';
+          ${DatabaseCreator.BUDGET_VALUE_YEAR} == $year
+          and ${DatabaseCreator.BUDGET_VALUE_MONTH} == $month''';
 
     final data = await db.rawQuery(sql);
 
@@ -234,15 +232,17 @@ class SQLQueryClass {
       ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
       ${DatabaseCreator.BUDGET_VALUE_BUDGETED},
       ${DatabaseCreator.BUDGET_VALUE_AVAILABLE},
-      ${DatabaseCreator.BUDGET_VALUE_DATE})
-      VALUES(?, ?, ?, ?, ?);''';
+      ${DatabaseCreator.BUDGET_VALUE_YEAR},
+      ${DatabaseCreator.BUDGET_VALUE_MONTH})
+      VALUES(?, ?, ?, ?, ?, ?);''';
 
     List<dynamic> params = [
       budgetvalue.id,
       budgetvalue.subcategoryId,
       budgetvalue.budgeted,
       budgetvalue.available,
-      budgetvalue.date.millisecondsSinceEpoch,
+      budgetvalue.year,
+      budgetvalue.month
     ];
 
     final result = await db.rawInsert(sql, params);

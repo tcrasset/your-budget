@@ -17,8 +17,7 @@ import 'models/categories.dart';
 import 'models/categories.dart';
 
 class AppState extends ChangeNotifier {
-  List<Category> _allCategories = [];
-  List<SubCategory> _subcategories = [];
+  // List<SubCategory> _subcategories = [];
   List<Payee> _payees;
   List<Account> _accounts;
   List<MoneyTransaction> _transactions;
@@ -73,7 +72,7 @@ class AppState extends ChangeNotifier {
 
     _payees = await SQLQueryClass.getPayees();
     _accounts = await SQLQueryClass.getAccounts();
-    _subcategories = await SQLQueryClass.getSubCategories();
+    // _subcategories = await SQLQueryClass.getSubCategories();
     _transactions = await SQLQueryClass.getMoneyTransactions();
     _budgetValues = await SQLQueryClass.getBudgetValues();
 
@@ -132,11 +131,11 @@ class AppState extends ChangeNotifier {
   /// scratch
   void addSubcategory(SubCategory subcategory) async {
     subcategoryCount++;
-    _subcategories.add(subcategory);
+    // _subcategories.add(subcategory);
     for (final Budget budget in _budgets) {
       budget.addSubcategory(subcategory);
     }
-    _subcategories.add(subcategory);
+    // _subcategories.add(subcategory);
     notifyListeners();
 
     SQLQueryClass.addSubcategory(subcategory);
@@ -150,7 +149,7 @@ class AppState extends ChangeNotifier {
       DateTime newDate = Jiffy(startingBudgetDate).add(months: i);
       budgetValueCount++;
       SQLQueryClass.addBudgetValue(
-          BudgetValue(budgetValueCount + 1, subcategory.id, 0, 0, newDate));
+          BudgetValue(budgetValueCount + 1, subcategory.id, 0, 0, newDate.year, newDate.month));
     }
   }
 
@@ -208,23 +207,25 @@ class AppState extends ChangeNotifier {
       for (Budget budget in _budgets) {
         budget.makeCategoryChange(modifiedSubcategory);
       }
+      notifyListeners();
     } else {
       /// Change state objects
       currentBudget.makeCategoryChange(modifiedSubcategory);
       computeToBeBudgeted();
+      notifyListeners();
 
       /// Persist the change in the DataBase
       BudgetValue correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
           (budgetValue.subcategoryId == modifiedSubcategory.id) &&
-          (budgetValue.date.year == currentBudget.year) &&
-          (budgetValue.date.month == currentBudget.month));
+          (budgetValue.year == currentBudget.year) &&
+          (budgetValue.month == currentBudget.month));
       // print(correspondingBudgetValue);
       correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
       correspondingBudgetValue.available = modifiedSubcategory.available;
       SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
     }
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   /// Update the name of the [MainCategory] pointed to
@@ -297,13 +298,12 @@ class AppState extends ChangeNotifier {
     // until we overshoot the endDate
     do {
       List<SubCategory> subcategories =
-          await SQLQueryClass.getSubCategoriesJoined(prevDate, Jiffy(prevDate).add(months: 1));
+          await SQLQueryClass.getSubCategoriesJoined(prevDate.year, prevDate.month);
       budgets.add(Budget(maincategories, subcategories, prevDate.month, prevDate.year));
 
       //Go to next month
       prevDate = Jiffy(prevDate).add(months: 1);
     } while (prevDate.isBefore(endDate));
-
     return budgets;
   }
 
