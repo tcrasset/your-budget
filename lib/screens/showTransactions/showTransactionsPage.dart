@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
+import 'package:mybudget/models/constants.dart';
 
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
@@ -40,9 +42,16 @@ class _ShowTransactionPageView
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          leading: Icon(ALLTRANSACTION_ICON),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Icon(FontAwesomeIcons.bars),
+            )
+          ],
         ),
         body: Consumer<AppState>(builder: (context, appState, child) {
-          if (appState.transactions.isEmpty) {
+          if (appState.allCategories.isEmpty) {
             return Center(
               child: CircularProgressIndicator(),
             );
@@ -65,7 +74,7 @@ class _TransactionList extends StatelessWidget {
       separatorBuilder: (BuildContext context, int index) =>
           Divider(height: 1, color: Colors.black12),
       itemBuilder: (BuildContext context, int index) {
-        return TransactionRow(appState.transactions[index], appState.allCategories);
+        return Card(child: TransactionRow(appState.transactions[index], appState.allCategories));
       },
     ));
   }

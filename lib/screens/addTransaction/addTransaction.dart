@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/overlayNotifications.dart';
 import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatter.dart';
@@ -231,7 +233,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   handleAmountOnSave() {
     _amount = formatCurrencyToDouble(_amountController.text, isPositive);
-    print("Double amount is $_amount");
   }
 
   // When the switch is set to the 'off' position, the text style changes
@@ -298,7 +299,7 @@ class _AddTransactionPageView
     Container amountInputContainer = Container(
         height: 50,
         alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+        padding: new EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
         child: TextFormField(
           decoration: new InputDecoration.collapsed(
             hintText: "",
@@ -431,9 +432,16 @@ class _AddTransactionPageView
     return Scaffold(
         appBar: AppBar(
           title: Text("New transaction"),
+          leading: Icon(ADD_TRANSACTION_ICON),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Icon(FontAwesomeIcons.bars),
+            ),
+          ],
         ),
         body: Consumer<AppState>(builder: (context, appState, child) {
-          if (appState.transactions.isEmpty) {
+          if (appState.allCategories.isEmpty) {
             return Center(
               child: CircularProgressIndicator(),
             );

@@ -8,6 +8,12 @@ import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
+import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
+
+import 'models/SQLQueries.dart';
+import 'models/categories.dart';
+import 'models/categories.dart';
+import 'models/categories.dart';
 
 class AppState extends ChangeNotifier {
   List<Category> _allCategories = [];
@@ -44,12 +50,13 @@ class AppState extends ChangeNotifier {
 
   AppState() {
     // addDummyVariables();
+
     _loadStateFromDatabase();
   }
 
   void _loadStateFromDatabase() async {
     // await addDummyVariables();
-
+    // await addDummyCategories();
     _budgets = await _createAllMonthlyBudgets(
         DateTime(2020, 7, 1, 0, 0, 0), DateTime(2021, 7, 1, 0, 0, 0));
 
@@ -135,6 +142,15 @@ class AppState extends ChangeNotifier {
         subcategory.budgeted,
         subcategory.available,
         DateTime(currentDate.year, currentDate.month)));
+  }
+
+  void addSubcategoryByName(String subcategoryName, int maincategoryId) {
+    addSubcategory(SubCategory(
+        subcategoryCount + 2, //
+        maincategoryId,
+        subcategoryName,
+        0.00,
+        0.00));
   }
 
   /// Add the [transaction] to the [_transactions] list, persist it to
@@ -287,6 +303,15 @@ class AppState extends ChangeNotifier {
     return _budgets.singleWhere((budget) => budget.year == date.year && budget.month == date.month);
   }
 
+  void AddAccount(String accountName, double accountBalance) async {
+    int accountCount = await SQLQueryClass.accountCount();
+    Account newAccount = Account(accountCount + 1, accountName, accountBalance);
+    accountCount++;
+    await SQLQueryClass.addAccount(newAccount);
+    computeToBeBudgeted();
+    notifyListeners();
+  }
+
   // void addSubcategoriesToBudgetValues() async {
   //   int id = await SQLQueryClass.budgetValuesCount() + 1;
   //   for (final int month in [8, 9, 10, 11, 12]) {
@@ -298,4 +323,11 @@ class AppState extends ChangeNotifier {
   //     }
   //   }
   // }
+}
+
+Future<void> addDummyCategories() async {
+  MainCategory cat = MainCategory(1, "Savings");
+  SubCategory subcat = SubCategory(1, 1, "Savings", 200, 300);
+  await SQLQueryClass.addCategory(cat);
+  return await SQLQueryClass.addSubcategory(subcat);
 }
