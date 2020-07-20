@@ -42,7 +42,7 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
       // If form is valid, add subcategory to the database and add it to the state
       print(accountName);
       print(accountBalance);
-      appState.AddAccount(accountName, accountBalance);
+      appState.addAccount(accountName, accountBalance);
     }
   }
 

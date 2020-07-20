@@ -22,18 +22,8 @@ class SubCategory extends Category {
         super(
             json[DatabaseCreator.SUBCAT_ID], //
             json[DatabaseCreator.SUBCAT_NAME],
-            json[DatabaseCreator.SUBCAT_BUDGETED],
-            json[DatabaseCreator.SUBCAT_AVAILABLE]);
-
-  /// Convert a SubCategory into a Map.
-  Map<String, dynamic> toMap() {
-    return {
-      DatabaseCreator.SUBCAT_ID: id,
-      DatabaseCreator.SUBCAT_NAME: name,
-      DatabaseCreator.SUBCAT_BUDGETED: budgeted,
-      DatabaseCreator.SUBCAT_AVAILABLE: available,
-    };
-  }
+            json[DatabaseCreator.BUDGET_VALUE_BUDGETED],
+            json[DatabaseCreator.BUDGET_VALUE_AVAILABLE]);
 
   @override
   String toString() {
@@ -129,21 +119,10 @@ class BudgetValue {
   BudgetValue.fromJson(Map<String, dynamic> json)
       : id = json[DatabaseCreator.BUDGET_VALUE_ID], //
         subcategoryId = json[DatabaseCreator.SUBCAT_ID_OUTSIDE],
-        budgeted = json[DatabaseCreator.SUBCAT_BUDGETED],
-        available = json[DatabaseCreator.SUBCAT_AVAILABLE],
+        budgeted = json[DatabaseCreator.BUDGET_VALUE_BUDGETED],
+        available = json[DatabaseCreator.BUDGET_VALUE_AVAILABLE],
         date =
             DateTime.fromMillisecondsSinceEpoch(int.parse(json[DatabaseCreator.BUDGET_VALUE_DATE]));
-
-  /// Convert a SubCategory into a Map.
-  Map<String, dynamic> toMap() {
-    return {
-      DatabaseCreator.BUDGET_VALUE_ID: id,
-      DatabaseCreator.SUBCAT_ID_OUTSIDE: subcategoryId,
-      DatabaseCreator.BUDGET_VALUE_BUDGETED: budgeted,
-      DatabaseCreator.BUDGET_VALUE_AVAILABLE: available,
-      DatabaseCreator.BUDGET_VALUE_DATE: date,
-    };
-  }
 
   @override
   String toString() {

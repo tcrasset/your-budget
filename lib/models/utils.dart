@@ -12,6 +12,10 @@ DateTime getDateYMD(DateTime datetime) {
   return DateTime(datetime.year, datetime.month, datetime.day);
 }
 
+DateTime getDateFromMonthStart(DateTime datetime) {
+  return DateTime(datetime.year, datetime.month, 1);
+}
+
 int getMonthDifference(DateTime date1, DateTime date2) {
   return Jiffy(date1).diff(Jiffy(date2), Units.MONTH);
 }

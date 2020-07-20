@@ -57,6 +57,7 @@ class HomeScreenState extends State<HomeScreen> {
         home: Scaffold(
           body: _tabs[_currentTab],
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             currentIndex: _currentTab,
             onTap: _onItemTapped,
             items: [

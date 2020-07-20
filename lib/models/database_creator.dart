@@ -20,8 +20,6 @@ class DatabaseCreator {
 
   static const String SUBCAT_ID = 'id';
   static const String SUBCAT_NAME = 'name';
-  static const String SUBCAT_BUDGETED = 'budgeted';
-  static const String SUBCAT_AVAILABLE = 'available';
 
   static const String PAYEE_ID = 'id';
   static const String PAYEE_NAME = 'name';
@@ -95,18 +93,7 @@ class DatabaseCreator {
       path,
       version: 3,
       onCreate: _onCreate,
-      onUpgrade: (db, oldVersion, newVersion) async {
-        print("Adding new table $budgetValueTable");
-        await db.execute('''
-            CREATE TABLE IF NOT EXISTS $budgetValueTable (
-              $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
-              $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-              $SUBCAT_BUDGETED FLOAT DEFAULT 0.00,
-              $SUBCAT_AVAILABLE FLOAT DEFAULT 0.00,
-              $BUDGET_VALUE_DATE TEXT NOT NULL,
-              FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
-          );''');
-      },
+      onUpgrade: _onUpgrade,
     );
   }
 
@@ -116,56 +103,72 @@ class DatabaseCreator {
   /// that will populate it, namely [categoryTable], [subcategoryTable],
   /// [payeeTable], [accountTable], [moneyTransactionTable], [budgetValueTable]
   Future<void> _onCreate(Database db, int version) async {
+    await _createTables();
+    await _createBasicCategories();
+  }
+
+  Future<void> _createTables() async {
     await db.execute('''
-            CREATE TABLE IF NOT EXISTS $categoryTable (
-              $CATEGORY_ID INTEGER PRIMARY KEY ,
-              $CATEGORY_NAME TEXT NOT NULL UNIQUE
-            );''');
+                      CREATE TABLE IF NOT EXISTS $categoryTable (
+                        $CATEGORY_ID INTEGER PRIMARY KEY ,
+                        $CATEGORY_NAME TEXT NOT NULL UNIQUE
+                      );''');
 
     await db.execute('''
-            CREATE TABLE IF NOT EXISTS $subcategoryTable (
-              $SUBCAT_ID INTEGER,
-              $CAT_ID_OUTSIDE INTEGER,
-              $SUBCAT_NAME TEXT NOT NULL,
-              $SUBCAT_BUDGETED FLOAT DEFAULT 0.00,
-              $SUBCAT_AVAILABLE FLOAT DEFAULT 0.00,
-              PRIMARY KEY ($SUBCAT_ID, $CAT_ID_OUTSIDE),
-              FOREIGN KEY ($CAT_ID_OUTSIDE) REFERENCES category($CATEGORY_ID)
-          );''');
+                      CREATE TABLE IF NOT EXISTS $subcategoryTable (
+                        $SUBCAT_ID INTEGER PRIMARY KEY,
+                        $CAT_ID_OUTSIDE INTEGER NOT NULL,
+                        $SUBCAT_NAME TEXT NOT NULL,
+                    );''');
 
     await db.execute('''
-            CREATE TABLE IF NOT EXISTS $payeeTable (
-              $PAYEE_ID INTEGER PRIMARY KEY ,
-              $PAYEE_NAME TEXT NOT NULL UNIQUE
-            );''');
+                      CREATE TABLE IF NOT EXISTS $payeeTable (
+                        $PAYEE_ID INTEGER PRIMARY KEY ,
+                        $PAYEE_NAME TEXT NOT NULL UNIQUE
+                      );''');
 
     await db.execute('''
-            CREATE TABLE IF NOT EXISTS $accountTable (
-              $ACCOUNT_ID INTEGER PRIMARY KEY ,
-              $ACCOUNT_NAME TEXT NOT NULL UNIQUE,
-              $ACCOUNT_BALANCE FLOAT NOT NULL
-            );''');
+                      CREATE TABLE IF NOT EXISTS $accountTable (
+                        $ACCOUNT_ID INTEGER PRIMARY KEY ,
+                        $ACCOUNT_NAME TEXT NOT NULL UNIQUE,
+                        $ACCOUNT_BALANCE FLOAT NOT NULL
+                      );''');
 
     await db.execute('''
-            CREATE TABLE IF NOT EXISTS $moneyTransactionTable (
-              $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
-              $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-              $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
-              $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
-              $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
-              $MONEYTRANSACTION_MEMO TEXT,
-              $MONEYTRANSACTION_DATE INTEGER NOT NULL,
-              FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
-              FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
-              FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
-          );''');
+                      CREATE TABLE IF NOT EXISTS $moneyTransactionTable (
+                        $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
+                        $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
+                        $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
+                        $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
+                        $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
+                        $MONEYTRANSACTION_MEMO TEXT,
+                        $MONEYTRANSACTION_DATE INTEGER NOT NULL,
+                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
+                        FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
+                        FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
+                    );''');
 
+    await db.execute('''
+                      CREATE TABLE IF NOT EXISTS $budgetValueTable (
+                        $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
+                        $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
+                        $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
+                        $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
+                        $BUDGET_VALUE_DATE TEXT NOT NULL,
+                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
+                    );''');
+  }
+
+  _createBasicCategories() {}
+
+  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    print("Adding new table $budgetValueTable");
     await db.execute('''
             CREATE TABLE IF NOT EXISTS $budgetValueTable (
               $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
               $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-              $SUBCAT_BUDGETED FLOAT DEFAULT 0.00,
-              $SUBCAT_AVAILABLE FLOAT DEFAULT 0.00,
+              $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
+              $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
               $BUDGET_VALUE_DATE TEXT NOT NULL,
               FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
           );''');

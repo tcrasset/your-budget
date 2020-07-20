@@ -10,3 +10,5 @@ const TextStyle CATEGORY_TEXT_STYLE =
     TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0);
 
 const TextStyle SUBCATEGORY_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 18.0);
+
+const int MAX_NB_MONTHS_AHEAD = 24;

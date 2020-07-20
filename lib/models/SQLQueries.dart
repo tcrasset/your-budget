@@ -131,23 +131,18 @@ class SQLQueryClass {
   /// Adds the [subcategory] of type [SubCategory] to the database.
   ///
   /// The [SubCategory] is specified using [subcategory.id],
-  /// [subcategory.parent_id], [subcategory.name], [subcategory.budgeted]
-  /// and [subcategory.available].
+  /// [subcategory.parent_id], and [subcategory.name]
   static Future<void> addSubcategory(SubCategory subcategory) async {
     final sql = '''INSERT INTO ${DatabaseCreator.subcategoryTable}
       (${DatabaseCreator.SUBCAT_ID},
       ${DatabaseCreator.CAT_ID_OUTSIDE},
-      ${DatabaseCreator.SUBCAT_NAME},
-      ${DatabaseCreator.SUBCAT_BUDGETED},
-      ${DatabaseCreator.SUBCAT_AVAILABLE})
-      VALUES(?, ?, ?, ?, ?);''';
+      ${DatabaseCreator.SUBCAT_NAME})
+      VALUES(?, ?, ?);''';
 
     List<dynamic> params = [
       subcategory.id,
       subcategory.parentId,
       subcategory.name,
-      subcategory.budgeted,
-      subcategory.available
     ];
 
     final result = await db.rawInsert(sql, params);
@@ -336,18 +331,11 @@ class SQLQueryClass {
   /// [subcategory.budgeted] and [subcategory.available].
   static Future<void> updateSubcategory(SubCategory subcategory) async {
     final sql = '''UPDATE ${DatabaseCreator.subcategoryTable}
-                    SET ${DatabaseCreator.SUBCAT_NAME} = ?,
-                    ${DatabaseCreator.SUBCAT_BUDGETED} = ?,
-                    ${DatabaseCreator.SUBCAT_AVAILABLE} = ?
+                    SET ${DatabaseCreator.SUBCAT_NAME} = ?
                     WHERE ${DatabaseCreator.SUBCAT_ID} == ?
                     ;''';
 
-    List<dynamic> params = [
-      subcategory.name,
-      subcategory.budgeted,
-      subcategory.available,
-      subcategory.id
-    ];
+    List<dynamic> params = [subcategory.name, subcategory.id];
 
     final result = await db.rawUpdate(sql, params);
     DatabaseCreator.databaseLog('Update subcategory', sql, null, result, params);
@@ -394,7 +382,12 @@ class SQLQueryClass {
                 WHERE ${DatabaseCreator.BUDGET_VALUE_ID} == ?
                 ;''';
 
-    List<dynamic> params = [budgetValue.budgeted, budgetValue.available, budgetValue.id];
+    List<dynamic> params = [
+      budgetValue.budgeted, //
+      budgetValue.available,
+      budgetValue.id
+    ];
+
     final result = await db.rawUpdate(sql, params);
     DatabaseCreator.databaseLog('Update budgetValue', sql, null, result, params);
   }

@@ -30,7 +30,7 @@ class Budget {
   }
 
   void addSubcategory(SubCategory newSubcat) {
-    this.subcategories.add(newSubcat);
+    this.subcategories.add(newSubcat.copy());
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == newSubcat.parentId);
     cat.addSubcategory(newSubcat);
     _updateTotalBudgeted();
@@ -45,6 +45,8 @@ class Budget {
   ///modifies the subcategories in each [MainCategory], and the latter
   ///updates the maincategories based on the subcategories' values.
   void _updateSubCategory(SubCategory modifiedSubcategory) {
+    print(modifiedSubcategory);
+    print(subcategories);
     SubCategory oldSubcat =
         subcategories.singleWhere((subcat) => modifiedSubcategory.id == subcat.id);
     oldSubcat.name = modifiedSubcategory.name;
