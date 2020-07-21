@@ -73,6 +73,28 @@ class Budget {
     _updateTotalBudgeted();
   }
 
+  void makeSubcategoryChangeBySubcatId(int subcatId, int categoryId, String field, String value) {
+    SubCategory oldSubcat = subcategories.singleWhere((subcat) => subcat.id == subcatId);
+
+    switch (field) {
+      case "budgeted":
+        oldSubcat.budgeted = double.parse(value);
+        break;
+      case "available":
+        oldSubcat.available = double.parse(value);
+        break;
+      case "name":
+        oldSubcat.name = value;
+        break;
+      default:
+        print("Pass in an actual field");
+    }
+    MainCategory cat = maincategories.singleWhere((cat) => cat.id == categoryId);
+    cat.updateFields();
+
+    _updateTotalBudgeted();
+  }
+
   void _updateAllcategories() {
     _allcategories = [];
     // Create a list of all MainCategories and Subcategories in order.

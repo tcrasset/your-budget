@@ -193,7 +193,7 @@ class AppState extends ChangeNotifier {
 
     /// Differentiate between name change, where we only modify
     /// [SubCategory] and the budgeted/available change,
-    /// where we modify the [BudgetValue].
+    /// where we modify the [BudgetValue] and the [SubCategory].
     if (previousSubcategory.name != modifiedSubcategory.name) {
       /// Persist the change in the DataBase
       SQLQueryClass.updateSubcategory(modifiedSubcategory);
@@ -205,17 +205,53 @@ class AppState extends ChangeNotifier {
     } else {
       /// Change state objects
       currentBudget.makeCategoryChange(modifiedSubcategory);
-      computeToBeBudgeted();
 
-      /// Persist the change in the DataBase
       BudgetValue correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
           (budgetValue.subcategoryId == modifiedSubcategory.id) &&
           (budgetValue.year == currentBudget.year) &&
           (budgetValue.month == currentBudget.month));
-      debugPrint("$correspondingBudgetValue");
       correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
       correspondingBudgetValue.available = modifiedSubcategory.available;
+
+      /// Persist the change in the DataBase
       SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
+
+      /// Change the available field in every Budget after the one that was
+      /// modified.
+      int monthDifference = (getMonthDifference(currentBudgetDate, maxBudgetDate)).abs();
+      debugPrint("Month difference: $monthDifference");
+      double totalAvailable = modifiedSubcategory.available;
+      double lastMonthAvailable = modifiedSubcategory.available;
+
+      for (int i = 1; i < monthDifference; i++) {
+        debugPrint("Month difference: $i");
+
+        /// Modify the BudgetValue in the state
+        DateTime newDate = Jiffy(currentBudgetDate).add(months: i);
+        correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
+            (budgetValue.subcategoryId == modifiedSubcategory.id) &&
+            (budgetValue.year == newDate.year) &&
+            (budgetValue.month == newDate.month));
+        debugPrint("BudgetValue: $correspondingBudgetValue");
+        // Combine the total available money from month to month
+        correspondingBudgetValue.available = lastMonthAvailable + correspondingBudgetValue.budgeted;
+
+        /// Persist the change in the DataBase
+        SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
+
+        // Modify the subcategory in each budget
+        Budget budget = budgets.singleWhere(
+            (budget) => (budget.year == newDate.year) && (budget.month == newDate.month));
+        budget.makeSubcategoryChangeBySubcatId(
+            modifiedSubcategory.id, //
+            modifiedSubcategory.parentId,
+            "available",
+            correspondingBudgetValue.available.toString());
+
+        lastMonthAvailable = correspondingBudgetValue.available;
+      }
+
+      computeToBeBudgeted();
     }
 
     notifyListeners();
