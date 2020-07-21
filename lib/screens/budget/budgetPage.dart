@@ -125,7 +125,7 @@ class _DateButtons extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(icon: Icon(Icons.arrow_back), onPressed: appState.decrementMonth),
-          Text("${appState.budgetMonth} ${appState.currentBudget.year}",
+          Text("${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
               style: TextStyle(fontSize: 20)),
           IconButton(icon: Icon(Icons.arrow_forward), onPressed: appState.incrementMonth)
         ],

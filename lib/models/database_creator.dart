@@ -153,7 +153,7 @@ class DatabaseCreator {
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $budgetValueTable (
-                        $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
+                        $BUDGET_VALUE_ID INTEGER PRIMARY KEY,
                         $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
                         $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
                         $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
@@ -164,23 +164,23 @@ class DatabaseCreator {
   }
 
   _createBasicCategories(Database db) async {
-    const String CREATE_CATEGORY = '''INSERT INTO ${DatabaseCreator.categoryTable}
-      (${DatabaseCreator.CATEGORY_ID},${DatabaseCreator.CATEGORY_NAME})
+    const String CREATE_CATEGORY = '''INSERT INTO $categoryTable
+      ($CATEGORY_ID,$CATEGORY_NAME)
       VALUES(?, ?);''';
 
-    const String CREATE_SUBCATEGORY = '''INSERT INTO ${DatabaseCreator.subcategoryTable}
-      (${DatabaseCreator.SUBCAT_ID},
-      ${DatabaseCreator.CAT_ID_OUTSIDE},
-      ${DatabaseCreator.SUBCAT_NAME})
+    const String CREATE_SUBCATEGORY = '''INSERT INTO $subcategoryTable
+      ($SUBCAT_ID,
+      $CAT_ID_OUTSIDE,
+      $SUBCAT_NAME)
       VALUES(?, ?, ?);''';
 
-    const String CREATE_BUDGETVALUE = '''INSERT INTO ${DatabaseCreator.budgetValueTable}
-      (${DatabaseCreator.BUDGET_VALUE_ID},
-      ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
-      ${DatabaseCreator.BUDGET_VALUE_BUDGETED},
-      ${DatabaseCreator.BUDGET_VALUE_AVAILABLE},
-      ${DatabaseCreator.BUDGET_VALUE_YEAR},
-      ${DatabaseCreator.BUDGET_VALUE_MONTH})
+    const String CREATE_BUDGETVALUE = '''INSERT INTO $budgetValueTable
+      ($BUDGET_VALUE_ID,
+      $SUBCAT_ID_OUTSIDE,
+      $BUDGET_VALUE_BUDGETED,
+      $BUDGET_VALUE_AVAILABLE,
+      $BUDGET_VALUE_YEAR,
+      $BUDGET_VALUE_MONTH)
       VALUES(?, ?, ?, ?, ?, ?);''';
 
     await db.rawInsert(CREATE_CATEGORY, [1, "Essentials"]);

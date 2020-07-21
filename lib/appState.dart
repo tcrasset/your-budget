@@ -36,7 +36,6 @@ class AppState extends ChangeNotifier {
       Jiffy(getDateFromMonthStart(DateTime.now())).add(months: MAX_NB_MONTHS_AHEAD);
 
   DateTime currentBudgetDate;
-  String budgetMonth;
 
   Budget currentBudget;
 
@@ -64,6 +63,7 @@ class AppState extends ChangeNotifier {
   void _loadStateFromDatabase() async {
     // await addDummyVariables();
     // await addDummyCategories();
+
     _budgets = await _createAllMonthlyBudgets(
         startingBudgetDate, Jiffy(startingBudgetDate).add(months: MAX_NB_MONTHS_AHEAD));
 
@@ -80,9 +80,7 @@ class AppState extends ChangeNotifier {
     budgetValueCount = await SQLQueryClass.budgetValuesCount();
     moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
-    // notifyListeners();
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
-    budgetMonth = monthStringFromDate(currentBudgetDate);
     currentBudget = _getBudgetByDate(currentBudgetDate);
 
     computeToBeBudgeted();
@@ -141,6 +139,7 @@ class AppState extends ChangeNotifier {
     for (int i = 0;
         i < MAX_NB_MONTHS_AHEAD + getMonthDifference(startingBudgetDate, DateTime.now());
         i++) {
+      /// Update BudgetValues
       DateTime newDate = Jiffy(startingBudgetDate).add(months: i);
       BudgetValue budgetvalue =
           BudgetValue(budgetValueCount + 1, subcategory.id, 0, 0, newDate.year, newDate.month);
@@ -213,10 +212,10 @@ class AppState extends ChangeNotifier {
           (budgetValue.subcategoryId == modifiedSubcategory.id) &&
           (budgetValue.year == currentBudget.year) &&
           (budgetValue.month == currentBudget.month));
-      // print(correspondingBudgetValue);
+      debugPrint("$correspondingBudgetValue");
       correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
       correspondingBudgetValue.available = modifiedSubcategory.available;
-      await SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
+      SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
     }
 
     notifyListeners();
@@ -262,7 +261,6 @@ class AppState extends ChangeNotifier {
   void incrementMonth() {
     if (currentBudgetDate.isBefore(Jiffy(maxBudgetDate).subtract(months: 1))) {
       currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
-      budgetMonth = monthStringFromDate(currentBudgetDate);
       currentBudget = _getBudgetByDate(currentBudgetDate);
       computeToBeBudgeted();
       notifyListeners();
@@ -276,7 +274,6 @@ class AppState extends ChangeNotifier {
   void decrementMonth() {
     if (currentBudgetDate.isAfter(startingBudgetDate)) {
       currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
-      budgetMonth = monthStringFromDate(currentBudgetDate);
       currentBudget = _getBudgetByDate(currentBudgetDate);
       computeToBeBudgeted();
       notifyListeners();

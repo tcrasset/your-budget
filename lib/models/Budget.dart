@@ -1,3 +1,4 @@
+import 'package:jiffy/jiffy.dart';
 import 'package:mybudget/models/categories.dart';
 
 class Budget {
@@ -11,6 +12,10 @@ class Budget {
   List<Category> get allcategories {
     _updateAllcategories();
     return _allcategories;
+  }
+
+  String get monthAsString {
+    return Jiffy(DateTime(year, month)).format("MMMM");
   }
 
   Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
@@ -30,9 +35,10 @@ class Budget {
   }
 
   void addSubcategory(SubCategory newSubcat) {
-    this.subcategories.add(newSubcat.copy());
+    SubCategory subcat = newSubcat.copy();
+    this.subcategories.add(subcat);
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == newSubcat.parentId);
-    cat.addSubcategory(newSubcat);
+    cat.addSubcategory(subcat);
     _updateTotalBudgeted();
   }
 
