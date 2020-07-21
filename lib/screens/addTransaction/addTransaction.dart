@@ -435,7 +435,7 @@ class _AddTransactionPageView
     return Scaffold(
         appBar: AppBar(
           title: Text("New transaction"),
-          leading: Icon(ADD_TRANSACTION_ICON),
+          leading: Icon(Constants.ADD_TRANSACTION_ICON),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 10.0),

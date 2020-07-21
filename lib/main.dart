@@ -62,17 +62,17 @@ class HomeScreenState extends State<HomeScreen> {
             onTap: _onItemTapped,
             items: [
               BottomNavigationBarItem(
-                icon: FaIcon(BUDGET_ICON),
+                icon: FaIcon(Constants.BUDGET_ICON),
                 title: Text("Budget"),
               ),
               BottomNavigationBarItem(
-                icon: FaIcon(ACCOUNT_ICON),
+                icon: FaIcon(Constants.ACCOUNT_ICON),
                 title: Text("Accounts"),
               ),
               BottomNavigationBarItem(
-                  icon: FaIcon(ADD_TRANSACTION_ICON), title: Text("Add transaction")),
+                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON), title: Text("Add transaction")),
               BottomNavigationBarItem(
-                  icon: FaIcon(ALLTRANSACTION_ICON), title: Text("Transactions")),
+                  icon: FaIcon(Constants.ALLTRANSACTION_ICON), title: Text("Transactions")),
             ],
           ),
         ),

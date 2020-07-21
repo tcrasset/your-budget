@@ -28,16 +28,17 @@ class MainCategoryRow extends StatelessWidget {
               Expanded(
                   child: Text(
                 cat.name,
-                style: CATEGORY_TEXT_STYLE,
+                style: Constants.CATEGORY_TEXT_STYLE,
               )),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Budgeted', textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE),
+                    Text('Budgeted',
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
                     Text('${cat.budgeted.toStringAsFixed(2)}',
-                        textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE)
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
                   ],
                 ),
               ),
@@ -46,9 +47,10 @@ class MainCategoryRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Available', textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE),
+                    Text('Available',
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
                     Text('${cat.available.toStringAsFixed(2)}',
-                        textAlign: TextAlign.right, style: CATEGORY_TEXT_STYLE)
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
                   ],
                 ),
               ),

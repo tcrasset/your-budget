@@ -33,7 +33,7 @@ class AppState extends ChangeNotifier {
   ///TODO: Put this into database
   DateTime startingBudgetDate = DateTime(2020, 7, 1);
   DateTime maxBudgetDate =
-      Jiffy(getDateFromMonthStart(DateTime.now())).add(months: MAX_NB_MONTHS_AHEAD);
+      Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
 
   DateTime currentBudgetDate;
 
@@ -65,7 +65,7 @@ class AppState extends ChangeNotifier {
     // await addDummyCategories();
 
     _budgets = await _createAllMonthlyBudgets(
-        startingBudgetDate, Jiffy(startingBudgetDate).add(months: MAX_NB_MONTHS_AHEAD));
+        startingBudgetDate, Jiffy(startingBudgetDate).add(months: Constants.MAX_NB_MONTHS_AHEAD));
 
     _payees = await SQLQueryClass.getPayees();
     _accounts = await SQLQueryClass.getAccounts();
@@ -137,7 +137,7 @@ class AppState extends ChangeNotifier {
     /// after [DateTime.now()],
     /// Insert a budget value for every month until now
     for (int i = 0;
-        i < MAX_NB_MONTHS_AHEAD + getMonthDifference(startingBudgetDate, DateTime.now());
+        i < Constants.MAX_NB_MONTHS_AHEAD + getMonthDifference(startingBudgetDate, DateTime.now());
         i++) {
       /// Update BudgetValues
       DateTime newDate = Jiffy(startingBudgetDate).add(months: i);

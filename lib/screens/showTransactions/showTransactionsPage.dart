@@ -42,7 +42,7 @@ class _ShowTransactionPageView
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          leading: Icon(ALLTRANSACTION_ICON),
+          leading: Icon(Constants.ALLTRANSACTION_ICON),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 10.0),

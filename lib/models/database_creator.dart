@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:jiffy/jiffy.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -18,6 +17,7 @@ class DatabaseCreator {
   static const String accountTable = 'account';
   static const String moneyTransactionTable = 'moneyTransaction';
   static const String budgetValueTable = 'budgetValue';
+  static const String constantsTable = 'constants';
 
   static const String CATEGORY_ID = 'id';
   static const String CATEGORY_NAME = 'name';
@@ -48,6 +48,10 @@ class DatabaseCreator {
   static const String PAYEE_ID_OUTSIDE = 'payee_id';
   static const String ACCOUNT_ID_OUTSIDE = 'account_id';
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
+
+  static const String CONSTANT_ID = 'id';
+  static const String CONSTANT_NAME = 'name';
+  static const String CONSTANT_VALUE = 'value';
 
   /// Every action taken on the database gets logged to console
   ///
@@ -161,6 +165,12 @@ class DatabaseCreator {
                         $BUDGET_VALUE_MONTH INTEGER NOT NULL,
                         FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
                     );''');
+    await db.execute('''
+                      CREATE TABLE IF NOT EXISTS $constantsTable (
+                        $CONSTANT_ID INTEGER PRIMARY KEY,
+                        $CONSTANT_NAME TEXT,
+                        $CONSTANT_VALUE TEXT
+                    );''');
   }
 
   _createBasicCategories(Database db) async {
@@ -193,7 +203,9 @@ class DatabaseCreator {
     /// Insert [BudgetValues] corresponding to the subcategories into the data base
     final DateTime startingDate = getDateFromMonthStart(DateTime.now());
     int budgetValueId = 1;
-    for (int monthDifference = 0; monthDifference < MAX_NB_MONTHS_AHEAD; monthDifference++) {
+    for (int monthDifference = 0;
+        monthDifference < Constants.MAX_NB_MONTHS_AHEAD;
+        monthDifference++) {
       for (int subcatId = 1; subcatId <= subcategoryNames.length; subcatId++) {
         DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
         await db.rawInsert(CREATE_BUDGETVALUE, [

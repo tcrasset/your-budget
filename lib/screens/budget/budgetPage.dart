@@ -30,7 +30,7 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          leading: Icon(BUDGET_ICON),
+          leading: Icon(Constants.BUDGET_ICON),
           actions: <Widget>[
             Container(
               width: 100,

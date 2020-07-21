@@ -81,7 +81,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
           Expanded(
               child: Text(
             widget.subcat.name,
-            style: SUBCATEGORY_TEXT_STYLE,
+            style: Constants.SUBCATEGORY_TEXT_STYLE,
           )),
           Expanded(
             child: TextFormField(
@@ -93,7 +93,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                 inputFormatters: [LengthLimitingTextInputFormatter(12)], //To remove length counter
                 textInputAction: TextInputAction.done,
                 textAlign: TextAlign.right,
-                style: SUBCATEGORY_TEXT_STYLE,
+                style: Constants.SUBCATEGORY_TEXT_STYLE,
                 // When the user presses the 'Enter' key, update the respective entry in the database
                 onFieldSubmitted: (String value) => state.handleSubcategoryBudgetedChange()),
           ),

@@ -93,7 +93,7 @@ class _ModifyMainCategoryRow extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         cat.name,
-                        style: CATEGORY_TEXT_STYLE,
+                        style: Constants.CATEGORY_TEXT_STYLE,
                       ),
                     ),
                   ),
@@ -145,7 +145,7 @@ class _ModifySubcategoryRow extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     subcat.name,
-                    style: SUBCATEGORY_TEXT_STYLE,
+                    style: Constants.SUBCATEGORY_TEXT_STYLE,
                   ),
                 )),
             // Row(
