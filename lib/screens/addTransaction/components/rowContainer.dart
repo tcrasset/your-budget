@@ -19,7 +19,7 @@ Container rowContainer(String name, Widget childWidget) {
                   Expanded(child: childWidget),
                   name == "Date"
                       ? Icon(IconData(59701, fontFamily: 'MaterialIcons'))
-                      : Icon(IconData(58823, fontFamily: 'MaterialIcons')),
+                      : Icon(Icons.edit),
                 ],
               ),
             ),

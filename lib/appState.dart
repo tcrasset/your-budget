@@ -172,6 +172,11 @@ class AppState extends ChangeNotifier {
     /// If we do a MoneyTransaction between accounts (subcat.ID == -1)
     /// subcategories are not affected.
     if (transaction.subcatID != -1) {
+      // Update balance of the account
+      final Account account =
+          accounts.singleWhere((account) => account.id == transaction.accountID);
+      account.balance += transaction.amount;
+
       Budget budget = _getBudgetByDate(DateTime(transaction.date.year, transaction.date.month));
       SubCategory oldSubcat =
           budget.subcategories.singleWhere((subcat) => subcat.id == transaction.subcatID);
@@ -181,6 +186,17 @@ class AppState extends ChangeNotifier {
           oldSubcat.id, oldSubcat.parentId, oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
 
       updateSubcategory(newSubcat);
+    } else {
+      // If the transaction amount is positive, the transaction will remove money from
+      // outAccount and input it into inAccount.
+      // Otherwise, it is reversed.
+      final Account outAccount =
+          accounts.singleWhere((account) => account.id == transaction.accountID);
+      outAccount.balance -= transaction.amount;
+
+      final Account inAccount =
+          accounts.singleWhere((account) => account.id == -transaction.payeeID);
+      inAccount.balance += transaction.amount;
     }
     //notifyListeners is called in updateSubcategory
   }
@@ -220,7 +236,6 @@ class AppState extends ChangeNotifier {
       /// modified.
       int monthDifference = (getMonthDifference(currentBudgetDate, maxBudgetDate)).abs();
       debugPrint("Month difference: $monthDifference");
-      double totalAvailable = modifiedSubcategory.available;
       double lastMonthAvailable = modifiedSubcategory.available;
 
       for (int i = 1; i < monthDifference; i++) {
@@ -273,11 +288,6 @@ class AppState extends ChangeNotifier {
     SQLQueryClass.updateCategory(modifiedCategory);
   }
 
-  // void updateToBeBudgeted(beforeAfterDifference) {
-  //   toBeBudgeted -= beforeAfterDifference;
-  //   notifyListeners();
-  // }
-
   void computeToBeBudgeted() {
     toBeBudgeted = 0;
     for (final Account account in _accounts) {
@@ -287,8 +297,8 @@ class AppState extends ChangeNotifier {
     DateTime nextDate = startingBudgetDate;
     do {
       prevDate = nextDate;
-      Budget monthlyBudget = _getBudgetByDate(prevDate);
-      toBeBudgeted -= monthlyBudget.totalBudgeted;
+      Budget budget = _getBudgetByDate(prevDate);
+      toBeBudgeted -= budget.totalBudgeted;
       //Go to next month
       nextDate = Jiffy(nextDate).add(months: 1);
     } while (currentBudgetDate.isAfter(prevDate));

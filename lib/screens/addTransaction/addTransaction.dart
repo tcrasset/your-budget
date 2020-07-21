@@ -205,6 +205,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         _subcategory = SubCategory(-1, -1, "No subcategory", -1, -1);
       }
       if (_payee != null && _account != null && _subcategory != null) {
+        _amount = formatCurrencyToDouble(_amountController.text, isPositive);
+
         print("Form validated");
         print("Amount : $_amount");
         print("Payee : $_payeeFieldName");
@@ -214,9 +216,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Memo : ${_memoController.text}");
 
         // Input as payee ID the opposite of the account ID when we select
-        // and account instead of a payee in the 'Payee' field
+        // an account instead of a payee in the 'Payee' field
         print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
-        //TODO : This does not work when account.id is 0
+
         int payeeId = _payee is Payee ? _payee.id : -_account.id;
         MoneyTransaction moneyTransaction = new MoneyTransaction(appState.moneyTransactionCount + 1,
             _subcategory.id, payeeId, _account.id, _amount, _memoController.text, _date);
@@ -298,8 +300,9 @@ class _AddTransactionPageView
     /// [onTap()] resets the value to a chosen default value.
     Container amountInputContainer = Container(
         height: 50,
+        color: Colors.blue,
         alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
+        padding: new EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
           decoration: new InputDecoration.collapsed(
             hintText: "",
@@ -314,7 +317,7 @@ class _AddTransactionPageView
           textAlign: TextAlign.right,
           style: state.isPositive ? state._positiveAmountTextStyle : state._negativeAmountTextStyle,
           validator: (value) => state.handleAmountValidate(value),
-          onSaved: state.handleAmountOnSave(),
+          // onSaved: state.handleAmountOnSave(),
           onTap: () => state.handleAmountOnTap(),
         ));
 
