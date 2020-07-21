@@ -39,8 +39,10 @@ class _TransactionRowState extends State<TransactionRow> {
   Widget build(BuildContext context) {
     String subcategoryName = "No subcategory"; //Default value
     SubCategory correspondingSubcategory;
-
     AppState appState = Provider.of<AppState>(context, listen: false);
+
+    String payeeName =
+        appState.payees.singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID).name;
 
     /// Extract name of subcategory associated to transaction [moneyTransaction]
     if (widget.moneyTransaction.subcatID == -1) {
@@ -63,7 +65,7 @@ class _TransactionRowState extends State<TransactionRow> {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         margin: EdgeInsets.symmetric(horizontal: 10),
-        height: 90,
+        height: 70,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,6 +91,7 @@ class _TransactionRowState extends State<TransactionRow> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               Text("${widget.moneyTransaction.amount} €", style: amountStyle),
+              Text("$payeeName")
             ],
           ),
         ]));

@@ -20,8 +20,21 @@ class ShowTransactionPage extends StatefulWidget {
 class _ShowTransactionPageController extends State<ShowTransactionPage> {
   TextEditingController controller = new TextEditingController();
   String filter;
-
+  Account account;
   List<MoneyTransaction> moneyTransactionList;
+
+  @override
+  void initState() {
+    AppState appState = Provider.of<AppState>(context, listen: false);
+    account = appState.accounts[0];
+    super.initState();
+  }
+
+  void handleOnAccountChanged(Account newAccount) {
+    setState(() {
+      account = newAccount;
+    });
+  }
 
   @override
   void dispose() {
@@ -45,8 +58,29 @@ class _ShowTransactionPageView
           leading: Icon(Constants.ALLTRANSACTION_ICON),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Icon(FontAwesomeIcons.bars),
+              padding: const EdgeInsets.only(right: 10.0, top: 18),
+              child: Consumer<AppState>(
+                  builder: (_, appState, __) => DropdownButton<Account>(
+                        value: state.account,
+                        selectedItemBuilder: (BuildContext context) {
+                          return appState.accounts.map((Account account) {
+                            return Text(
+                              "Account: ${account.name}",
+                              style: TextStyle(color: Colors.white, fontSize: 18),
+                            );
+                          }).toList();
+                        },
+                        onChanged: state.handleOnAccountChanged,
+                        items: appState.accounts.map<DropdownMenuItem<Account>>((Account account) {
+                          return DropdownMenuItem<Account>(
+                            value: account,
+                            child: Text(
+                              account.name,
+                              style: TextStyle(color: Colors.black, fontSize: 18),
+                            ),
+                          );
+                        }).toList(),
+                      )),
             )
           ],
         ),
@@ -56,25 +90,31 @@ class _ShowTransactionPageView
               child: CircularProgressIndicator(),
             );
           } else {
-            return _TransactionList();
+            return _TransactionList(state.account);
           }
         }));
   }
 }
 
 class _TransactionList extends StatelessWidget {
+  final Account account;
+  _TransactionList(this.account);
+
   @override
   Widget build(BuildContext context) {
     var appState = Provider.of<AppState>(context);
 
+    List<MoneyTransaction> transactionsOfAccount = appState.transactions
+        .where((transaction) => transaction.accountID == this.account.id)
+        .toList();
     return new Container(
         child: new ListView.separated(
       shrinkWrap: true,
-      itemCount: appState.transactions.length,
+      itemCount: transactionsOfAccount.length,
       separatorBuilder: (BuildContext context, int index) =>
           Divider(height: 1, color: Colors.black12),
       itemBuilder: (BuildContext context, int index) {
-        return Card(child: TransactionRow(appState.transactions[index], appState.allCategories));
+        return Card(child: TransactionRow(transactionsOfAccount[index], appState.allCategories));
       },
     ));
   }
