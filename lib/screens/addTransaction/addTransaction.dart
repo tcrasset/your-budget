@@ -132,10 +132,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       MaterialPageRoute(
           builder: (context) => SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     ).then((returnElement) {
-      setState(() {
-        _payee = returnElement;
-        _payeeFieldName = returnElement.name;
-      });
+      if (returnElement != null) {
+        setState(() {
+          _payee = returnElement;
+          _payeeFieldName = returnElement.name;
+        });
+      }
     });
   }
 
@@ -149,10 +151,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       MaterialPageRoute(
           builder: (context) => SelectValuePage(title: "Accounts", listEntries: accounts)),
     ).then((returnElement) {
-      setState(() {
-        _account = returnElement;
-        _accountFieldName = returnElement.name;
-      });
+      if (returnElement != null) {
+        setState(() {
+          _account = returnElement;
+          _accountFieldName = returnElement.name;
+        });
+      }
     });
   }
 
@@ -167,10 +171,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
           builder: (context) =>
               SelectValuePage(title: "Subcategories", listEntries: subcategories)),
     ).then((returnElement) {
-      setState(() {
-        _subcategory = returnElement;
-        _subcategoryFieldName = returnElement.name;
-      });
+      if (returnElement != null) {
+        setState(() {
+          _subcategory = returnElement;
+          _subcategoryFieldName = returnElement.name;
+        });
+      }
     });
   }
 
@@ -366,10 +372,7 @@ class _AddTransactionPageView
           onTap: () => state._payee is Account ? null : state.handleOnTapCategory(),
           child: rowContainer(
               "Category",
-              Text(
-                  state._payee is Account
-                      ? "No need to select category when using an account as payee"
-                      : state._subcategoryFieldName,
+              Text(state._payee is Account ? "No subcategory needed" : state._subcategoryFieldName,
                   style: (state._subcategoryFieldName == state._defaultSubcategoryFieldName ||
                           state._payee is Account)
                       ? defaultChildTextStyle

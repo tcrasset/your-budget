@@ -27,14 +27,3 @@ Container rowContainer(String name, Widget childWidget) {
         ),
       ]));
 }
-
-// Icon(IconData(58823, fontFamily: 'MaterialIcons'))
-
-// child: Row(
-//   children: <Widget>[
-//     Expanded(child: childWidget),
-//     name == "Date"
-//         ? Icon(IconData(59701, fontFamily: 'MaterialIcons'))
-//         : Icon(IconData(58823, fontFamily: 'MaterialIcons')),
-//   ],
-// ),
