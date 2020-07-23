@@ -335,6 +335,8 @@ class _AddTransactionPageView
           onChanged: (value) => state.handleSwitchOnChanged(),
           activeTrackColor: Colors.greenAccent,
           activeColor: Colors.grey[300],
+          activeThumbImage: new AssetImage("assets/plus.png"),
+          inactiveThumbImage: new AssetImage("assets/minus.png"),
           inactiveTrackColor: Colors.redAccent,
           inactiveThumbColor: Colors.grey[300],
         )),

@@ -61,7 +61,8 @@ class SQLQueryClass {
 
   /// Returns the list of all [MoneyTransaction] in the database.
   static Future<List<MoneyTransaction>> getMoneyTransactions() async {
-    final sql = '''SELECT * FROM ${DatabaseCreator.moneyTransactionTable};''';
+    final sql = '''SELECT * FROM ${DatabaseCreator.moneyTransactionTable}
+    ORDER BY ${DatabaseCreator.MONEYTRANSACTION_DATE} DESC;''';
     final data = await db.rawQuery(sql);
 
     List<MoneyTransaction> transactions = List();
@@ -217,6 +218,7 @@ class SQLQueryClass {
         ${DatabaseCreator.MONEYTRANSACTION_AMOUNT},
         ${DatabaseCreator.MONEYTRANSACTION_MEMO},
         ${DatabaseCreator.MONEYTRANSACTION_DATE})
+
       VALUES(?, ?, ?, ?, ?, ?, ?);''';
 
     List<dynamic> params = [
