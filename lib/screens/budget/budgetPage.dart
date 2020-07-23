@@ -60,7 +60,20 @@ class _BudgetPageState extends State<BudgetPage> {
   }
 }
 
-class _CategoriesList extends StatelessWidget {
+class _CategoriesList extends StatefulWidget {
+  @override
+  __CategoriesListState createState() => __CategoriesListState();
+}
+
+class __CategoriesListState extends State<_CategoriesList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
@@ -71,14 +84,19 @@ class _CategoriesList extends StatelessWidget {
         child: CircularProgressIndicator(),
       );
     }
-    return ListView.separated(
-      itemCount: categories.length,
-      separatorBuilder: (BuildContext context, int index) =>
-          Divider(height: 1, color: Colors.black12),
-      itemBuilder: (context, index) {
-        final item = categories[index];
-        return (item is MainCategory) ? MainCategoryRow(cat: item) : SubcategoryRow(subcat: item);
-      },
+    return Scrollbar(
+      isAlwaysShown: true,
+      controller: _scrollController,
+      child: ListView.separated(
+        controller: _scrollController,
+        itemCount: categories.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            Divider(height: 1, color: Colors.black12),
+        itemBuilder: (context, index) {
+          final item = categories[index];
+          return (item is MainCategory) ? MainCategoryRow(cat: item) : SubcategoryRow(subcat: item);
+        },
+      ),
     );
   }
 }

@@ -306,7 +306,6 @@ class _AddTransactionPageView
     /// [onTap()] resets the value to a chosen default value.
     Container amountInputContainer = Container(
         height: 50,
-        color: Colors.blue,
         alignment: Alignment.centerRight,
         padding: new EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(

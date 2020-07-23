@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/constants.dart';
 
@@ -105,26 +104,45 @@ class _ShowTransactionPageView
   }
 }
 
-class _TransactionList extends StatelessWidget {
+class _TransactionList extends StatefulWidget {
   final Account account;
   _TransactionList(this.account);
+
+  @override
+  __TransactionListState createState() => __TransactionListState();
+}
+
+class __TransactionListState extends State<_TransactionList> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     var appState = Provider.of<AppState>(context);
 
     List<MoneyTransaction> transactionsOfAccount = appState.transactions
-        .where((transaction) => transaction.accountID == this.account.id)
+        .where((transaction) => transaction.accountID == this.widget.account.id)
         .toList();
+
     return new Container(
-        child: new ListView.separated(
-      shrinkWrap: true,
-      itemCount: transactionsOfAccount.length,
-      separatorBuilder: (BuildContext context, int index) =>
-          Divider(height: 1, color: Colors.black12),
-      itemBuilder: (BuildContext context, int index) {
-        return Card(child: TransactionRow(transactionsOfAccount[index], appState.allCategories));
-      },
+        child: Scrollbar(
+      isAlwaysShown: true,
+      controller: _scrollController,
+      child: new ListView.separated(
+        controller: _scrollController,
+        shrinkWrap: true,
+        itemCount: transactionsOfAccount.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            Divider(height: 1, color: Colors.black12),
+        itemBuilder: (BuildContext context, int index) {
+          return Card(child: TransactionRow(transactionsOfAccount[index], appState.allCategories));
+        },
+      ),
     ));
   }
 }
