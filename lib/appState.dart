@@ -83,18 +83,23 @@ class AppState extends ChangeNotifier {
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
     currentBudget = _getBudgetByDate(currentBudgetDate);
 
-    computeToBeBudgeted();
+    await computeToBeBudgeted();
 
     notifyListeners();
   }
 
-  Future<void> addAccount(String accountName, double startingBalance) async {
+  Future<void> addAccount(String accountName, double balance) async {
     int accountCount = await SQLQueryClass.accountCount();
-    Account account = Account(accountCount + 1, accountName, startingBalance);
+    Account account = Account(accountCount + 1, accountName, balance);
     accountCount++;
     SQLQueryClass.addAccount(account);
     _accounts.add(account);
-    computeToBeBudgeted();
+
+    MoneyTransaction startingBalance = MoneyTransaction(
+        moneyTransactionCount + 1, 0, 0, accountCount, balance, "Starting balance", DateTime.now());
+    await SQLQueryClass.addMoneyTransaction(startingBalance);
+    moneyTransactionCount++;
+    await computeToBeBudgeted();
     notifyListeners();
   }
 
@@ -266,7 +271,7 @@ class AppState extends ChangeNotifier {
         lastMonthAvailable = correspondingBudgetValue.available;
       }
 
-      computeToBeBudgeted();
+      await computeToBeBudgeted();
     }
 
     notifyListeners();
@@ -288,10 +293,12 @@ class AppState extends ChangeNotifier {
     SQLQueryClass.updateCategory(modifiedCategory);
   }
 
-  void computeToBeBudgeted() {
+  Future<void> computeToBeBudgeted() async {
     toBeBudgeted = 0;
     for (final Account account in _accounts) {
-      toBeBudgeted += account.balance;
+      MoneyTransaction firstTransaction =
+          await SQLQueryClass.getFirstTransactionOfAccount(account.id);
+      toBeBudgeted += firstTransaction.amount;
     }
     DateTime prevDate = startingBudgetDate;
     DateTime nextDate = startingBudgetDate;
@@ -304,11 +311,11 @@ class AppState extends ChangeNotifier {
     } while (currentBudgetDate.isAfter(prevDate));
   }
 
-  void incrementMonth() {
+  void incrementMonth() async {
     if (currentBudgetDate.isBefore(Jiffy(maxBudgetDate).subtract(months: 1))) {
       currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
       currentBudget = _getBudgetByDate(currentBudgetDate);
-      computeToBeBudgeted();
+      await computeToBeBudgeted();
       notifyListeners();
     }
   }
@@ -317,11 +324,11 @@ class AppState extends ChangeNotifier {
     print("[${date.month}/${date.year}]");
   }
 
-  void decrementMonth() {
+  void decrementMonth() async {
     if (currentBudgetDate.isAfter(startingBudgetDate)) {
       currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
       currentBudget = _getBudgetByDate(currentBudgetDate);
-      computeToBeBudgeted();
+      await computeToBeBudgeted();
       notifyListeners();
     }
   }

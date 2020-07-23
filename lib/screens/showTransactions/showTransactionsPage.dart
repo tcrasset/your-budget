@@ -26,7 +26,9 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   @override
   void initState() {
     AppState appState = Provider.of<AppState>(context, listen: false);
-    account = appState.accounts[0];
+    if (appState.accounts.isNotEmpty) {
+      account = appState.accounts[0];
+    }
     super.initState();
   }
 
@@ -52,42 +54,49 @@ class _ShowTransactionPageView
 
   @override
   Widget build(BuildContext context) {
+    AppState appState = Provider.of<AppState>(context, listen: false);
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
           leading: Icon(Constants.ALLTRANSACTION_ICON),
-          actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0, top: 18),
-              child: Consumer<AppState>(
-                  builder: (_, appState, __) => DropdownButton<Account>(
-                        value: state.account,
-                        selectedItemBuilder: (BuildContext context) {
-                          return appState.accounts.map((Account account) {
-                            return Text(
-                              "Account: ${account.name}",
-                              style: TextStyle(color: Colors.white, fontSize: 18),
-                            );
-                          }).toList();
-                        },
-                        onChanged: state.handleOnAccountChanged,
-                        items: appState.accounts.map<DropdownMenuItem<Account>>((Account account) {
-                          return DropdownMenuItem<Account>(
-                            value: account,
-                            child: Text(
-                              account.name,
-                              style: TextStyle(color: Colors.black, fontSize: 18),
-                            ),
-                          );
-                        }).toList(),
-                      )),
-            )
-          ],
+          actions: appState.accounts.isEmpty
+              ? null
+              : <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10.0, top: 18),
+                    child: Consumer<AppState>(
+                        builder: (_, appState, __) => DropdownButton<Account>(
+                              value: state.account,
+                              selectedItemBuilder: (BuildContext context) {
+                                return appState.accounts.map((Account account) {
+                                  return Text(
+                                    "Account: ${account.name}",
+                                    style: TextStyle(color: Colors.white, fontSize: 18),
+                                  );
+                                }).toList();
+                              },
+                              onChanged: state.handleOnAccountChanged,
+                              items: appState.accounts
+                                  .map<DropdownMenuItem<Account>>((Account account) {
+                                return DropdownMenuItem<Account>(
+                                  value: account,
+                                  child: Text(
+                                    account.name,
+                                    style: TextStyle(color: Colors.black, fontSize: 18),
+                                  ),
+                                );
+                              }).toList(),
+                            )),
+                  )
+                ],
         ),
         body: Consumer<AppState>(builder: (context, appState, child) {
-          if (appState.allCategories.isEmpty) {
+          if (appState.transactions.isEmpty) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: Text(
+                "No transactions logged. Add an account first.",
+                style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+              ),
             );
           } else {
             return _TransactionList(state.account);

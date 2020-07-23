@@ -113,6 +113,15 @@ class SQLQueryClass {
     return subcategories;
   }
 
+  static Future<MoneyTransaction> getFirstTransactionOfAccount(int accountId) async {
+    final String sql = '''SELECT * FROM ${DatabaseCreator.moneyTransactionTable}
+                          WHERE ${DatabaseCreator.ACCOUNT_ID_OUTSIDE} == $accountId
+                          ORDER BY ${DatabaseCreator.MONEYTRANSACTION_DATE} ASC LIMIT 1;''';
+    print(sql);
+    final data = await db.rawQuery(sql);
+    return MoneyTransaction.fromJson(data[0]);
+  }
+
   /// Adds the [category] of type [MainCategory] to the database.
   ///
   /// The [MainCategory] is specified using [category.id] and [category.name]

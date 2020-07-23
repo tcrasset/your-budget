@@ -37,12 +37,19 @@ class _TransactionRowState extends State<TransactionRow> {
 
   @override
   Widget build(BuildContext context) {
-    String subcategoryName = "No subcategory"; //Default value
-    SubCategory correspondingSubcategory;
+    String subcategoryName = "";
+    String payeeName;
     AppState appState = Provider.of<AppState>(context, listen: false);
 
-    String payeeName =
-        appState.payees.singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID).name;
+    if (appState.payees.isNotEmpty) {
+      // orElse is for starting balance
+      Payee payee = appState.payees
+          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
+
+      payeeName = payee != null ? payee.name : "";
+    } else {
+      payeeName = "";
+    }
 
     /// Extract name of subcategory associated to transaction [moneyTransaction]
     if (widget.moneyTransaction.subcatID == -1) {
@@ -54,13 +61,10 @@ class _TransactionRowState extends State<TransactionRow> {
       }
     } else {
       // Transaction into subcategories
-      for (final cat in widget.categories) {
-        if (cat is SubCategory && cat.id == widget.moneyTransaction.subcatID) {
-          correspondingSubcategory = cat;
-          subcategoryName = correspondingSubcategory.name;
-          break;
-        }
-      }
+      var correspondingSubcategory = widget.categories.singleWhere(
+          ((cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
+          orElse: () => null);
+      subcategoryName = correspondingSubcategory != null ? correspondingSubcategory.name : "";
     }
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10),
