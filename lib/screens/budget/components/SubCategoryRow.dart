@@ -21,15 +21,11 @@ class SubcategoryRow extends StatefulWidget {
 class _SubcategoryRowController extends State<SubcategoryRow> {
   AppState appState;
   MoneyMaskedTextController _budgetedController;
-  MoneyMaskedTextController _availableController;
 
   @override
   void initState() {
     super.initState();
     appState = Provider.of(context, listen: false);
-
-    _availableController = new MoneyMaskedTextController(
-        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
 
     _budgetedController = new MoneyMaskedTextController(
         decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
@@ -37,7 +33,6 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
   @override
   void dispose() {
-    _availableController.dispose();
     _budgetedController.dispose();
     super.dispose();
   }
@@ -71,7 +66,6 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
   @override
   Widget build(BuildContext context) {
     state._budgetedController.updateValue(widget.subcat.budgeted);
-    state._availableController.updateValue(widget.subcat.available);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 15),
@@ -98,11 +92,8 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                 onFieldSubmitted: (String value) => state.handleSubcategoryBudgetedChange()),
           ),
           Expanded(
-            child: TextField(
-              readOnly: true,
-              decoration: new InputDecoration.collapsed(
-                  hintText: "${widget.subcat.available.toStringAsFixed(2)}"),
-              controller: state._availableController,
+            child: Text(
+              "${widget.subcat.available.toStringAsFixed(2)} €",
               textAlign: TextAlign.right,
               style: widget.subcat.available > 0 ? _greenNumberTextStyle : _redNumberTextStyle,
             ),

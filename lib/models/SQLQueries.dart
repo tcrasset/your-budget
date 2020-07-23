@@ -117,7 +117,6 @@ class SQLQueryClass {
     final String sql = '''SELECT * FROM ${DatabaseCreator.moneyTransactionTable}
                           WHERE ${DatabaseCreator.ACCOUNT_ID_OUTSIDE} == $accountId
                           ORDER BY ${DatabaseCreator.MONEYTRANSACTION_DATE} ASC LIMIT 1;''';
-    print(sql);
     final data = await db.rawQuery(sql);
     return MoneyTransaction.fromJson(data[0]);
   }
