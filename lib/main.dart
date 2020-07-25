@@ -9,6 +9,7 @@ import 'package:mybudget/screens/addTransaction/addTransaction.dart';
 
 import 'package:mybudget/screens/budget/budgetPage.dart';
 import 'package:mybudget/models/database_creator.dart';
+import 'package:mybudget/screens/budget/budgetPageState.dart';
 import 'package:mybudget/waitingscreen.dart';
 import 'package:mybudget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
@@ -23,8 +24,10 @@ void main() async {
 class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AppState appState = AppState();
-    return ChangeNotifierProvider<AppState>.value(value: appState, child: HomeScreen());
+    return MultiProvider(providers: [
+      ChangeNotifierProvider<AppState>(create: (_) => AppState()),
+      ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
+    ], child: HomeScreen());
   }
 }
 
@@ -37,7 +40,8 @@ class HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   List<Widget> _tabs = [
-    BudgetPage(title: 'Bugdet Page'),
+    ChangeNotifierProvider(
+        create: (_) => BudgetPageState(), child: BudgetPage(title: 'Bugdet Page')),
     AddAccountRoute(title: 'Accounts'),
     AddTransactionPage(),
     ShowTransactionPage(title: "Transactions")

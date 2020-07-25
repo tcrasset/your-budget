@@ -4,8 +4,10 @@ import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/screens/budget/ModifyCategories.dart';
+import 'package:mybudget/screens/budget/budgetPageState.dart';
 import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
 import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
+import 'package:mybudget/screens/budget/components/buttonDial.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {
@@ -18,6 +20,8 @@ class BudgetPage extends StatefulWidget {
 }
 
 class _BudgetPageState extends State<BudgetPage> {
+  bool showMenu = true;
+
   void handleSettings() {}
 
   void handleModifyCategories() {
@@ -26,6 +30,7 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
+    BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context);
     print("Budget page build");
     return Scaffold(
         appBar: AppBar(
@@ -50,13 +55,16 @@ class _BudgetPageState extends State<BudgetPage> {
             )
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            _DateButtons(), //
-            _ToBeBudgeted(),
-            Expanded(child: _CategoriesList())
-          ],
-        ));
+        body: Column(children: <Widget>[
+          _DateButtons(), //
+          _ToBeBudgeted(),
+          Expanded(child: _CategoriesList()),
+
+          buttonDialState.showButtonDial
+              ? ButtonDial(MediaQuery.of(context).size.height * 0.25,
+                  MediaQuery.of(context).size.width * 0.6)
+              : ButtonDial(0, 0),
+        ]));
   }
 }
 
