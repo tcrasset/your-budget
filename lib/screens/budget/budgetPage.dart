@@ -35,6 +35,7 @@ class _BudgetPageState extends State<BudgetPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          backgroundColor: Constants.PRIMARY_COLOR,
           leading: Icon(Constants.BUDGET_ICON),
           actions: <Widget>[
             Container(
@@ -61,8 +62,8 @@ class _BudgetPageState extends State<BudgetPage> {
           Expanded(child: _CategoriesList()),
 
           buttonDialState.showButtonDial
-              ? ButtonDial(MediaQuery.of(context).size.height * 0.25,
-                  MediaQuery.of(context).size.width * 0.6)
+              ? ButtonDial(
+                  MediaQuery.of(context).size.height * 0.3, MediaQuery.of(context).size.width * 0.6)
               : ButtonDial(0, 0),
         ]));
   }
@@ -101,7 +102,7 @@ class __CategoriesListState extends State<_CategoriesList> {
         separatorBuilder: (BuildContext context, int index) =>
             Divider(height: 1, color: Colors.black12),
         itemBuilder: (context, index) {
-          final item = categories[index];
+          var item = categories[index];
           return (item is MainCategory) ? MainCategoryRow(cat: item) : SubcategoryRow(subcat: item);
         },
       ),
@@ -113,8 +114,10 @@ class _ToBeBudgeted extends StatelessWidget {
   final TextStyle _textStyle =
       TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25.0);
 
-  final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
+  final TextStyle _positiveAmountTextStyle =
+      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
+  final TextStyle _negativeAmountTextStyle =
+      new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
   @override
   Widget build(BuildContext context) {

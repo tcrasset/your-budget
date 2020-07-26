@@ -58,6 +58,7 @@ class _ShowTransactionPageView
         appBar: AppBar(
           title: Text(widget.title),
           leading: Icon(Constants.ALLTRANSACTION_ICON),
+          backgroundColor: Constants.PRIMARY_COLOR,
           actions: appState.accounts.isEmpty
               ? null
               : <Widget>[

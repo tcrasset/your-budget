@@ -58,11 +58,18 @@ class HomeScreenState extends State<HomeScreen> {
     AppState appState = Provider.of<AppState>(context);
     if (appState.allCategories.isNotEmpty) {
       return MaterialApp(
+        theme: ThemeData(
+          // Define the default brightness and colors.
+          brightness: Brightness.light,
+          primaryColor: Constants.PRIMARY_COLOR,
+          accentColor: Constants.SECONDARY_COLOR,
+        ),
         home: Scaffold(
           body: _tabs[_currentTab],
           bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: _currentTab,
+            unselectedItemColor: Colors.grey[500],
             onTap: _onItemTapped,
             items: [
               BottomNavigationBarItem(

@@ -28,8 +28,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   final NumberFormat currencyNumberFormat =
       NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: '€');
 
-  final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
+  final TextStyle _positiveAmountTextStyle =
+      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
+  final TextStyle _negativeAmountTextStyle =
+      new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -333,11 +335,11 @@ class _AddTransactionPageView
             child: Switch(
           value: state.isPositive,
           onChanged: (value) => state.handleSwitchOnChanged(),
-          activeTrackColor: Colors.greenAccent,
+          activeTrackColor: Constants.GREEN_COLOR,
           activeColor: Colors.grey[300],
           activeThumbImage: new AssetImage("assets/plus.png"),
           inactiveThumbImage: new AssetImage("assets/minus.png"),
-          inactiveTrackColor: Colors.redAccent,
+          inactiveTrackColor: Constants.RED_COLOR,
           inactiveThumbColor: Colors.grey[300],
         )),
       ],
@@ -424,7 +426,7 @@ class _AddTransactionPageView
 
         Container(
           padding: EdgeInsets.all(5),
-          child: Text("ERROR!", style: TextStyle(color: Colors.red)),
+          child: Text("ERROR!", style: TextStyle(color: Constants.RED_COLOR)),
         ),
         FloatingActionButton(
           child: Text("Enter"),

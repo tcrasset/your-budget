@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
+import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,9 @@ class _TransactionRowState extends State<TransactionRow> {
     amountStyle = TextStyle(
         fontSize: 22.0,
         fontWeight: FontWeight.w600,
-        color: widget.moneyTransaction.amount.isNegative ? Colors.red : Colors.green);
+        color: widget.moneyTransaction.amount.isNegative
+            ? Constants.RED_COLOR
+            : Constants.GREEN_COLOR);
     super.initState();
   }
 

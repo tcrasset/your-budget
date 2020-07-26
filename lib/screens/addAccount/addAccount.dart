@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/models/utils.dart';
 import 'package:provider/provider.dart';
@@ -51,8 +52,10 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
 class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
   final TextStyle _textBoxStyle = TextStyle(fontSize: 25);
   final TextStyle _accountNameStyle = TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
-  final TextStyle _positiveAmountTextStyle = new TextStyle(color: Colors.green, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle = new TextStyle(color: Colors.red, fontSize: 32.0);
+  final TextStyle _positiveAmountTextStyle =
+      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
+  final TextStyle _negativeAmountTextStyle =
+      new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
   InputDecoration _textBoxDecoration = InputDecoration(
     fillColor: Colors.white,
@@ -127,6 +130,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: RaisedButton(
+                            color: Theme.of(context).accentColor,
                             onPressed: () => state.handleAddAccount(context),
                             child: Text(
                               'Add account',
