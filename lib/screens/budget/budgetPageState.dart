@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +13,6 @@ class BudgetPageState extends ChangeNotifier {
   int selectedId = -1;
   MoneyMaskedTextController budgetedController;
   String budgetedText = "";
-  SubCategory selectedSubcategory;
 
   bool isSelected(int subcategoryId) {
     return this._isSelectedMap[subcategoryId];
@@ -64,20 +62,28 @@ class BudgetPageState extends ChangeNotifier {
   }
 
   void removeDigit() {
-    budgetedText = budgetedText.substring(0, budgetedText.length - 1);
-    double amount = formatCurrencyToDouble(budgetedText, true);
-    budgetedController.updateValue(amount);
-    print(budgetedText);
+    try {
+      budgetedText = budgetedText.substring(0, budgetedText.length - 1);
+      double amount = formatCurrencyToDouble(budgetedText, true);
+      budgetedController.updateValue(amount);
+      print(budgetedText);
+    } on RangeError {
+      print('Cannot remove any more digits');
+    }
   }
 
   void submitValue(BuildContext context) {
     /// When the budget value gets changed, change the shown budget value,
     /// but also the available value.
     print("Changed budgeted value in subcategory");
+    AppState appState = Provider.of<AppState>(context, listen: false);
+
+    SubCategory selectedSubcategory =
+        appState.subcategories.singleWhere((subcat) => subcat.id == selectedId);
+
     if (budgetedController.numberValue != selectedSubcategory.budgeted) {
       double beforeAfterDifference =
           (budgetedController.numberValue - selectedSubcategory.budgeted);
-      AppState appState = Provider.of<AppState>(context, listen: false);
       appState.updateSubcategory(SubCategory(
           selectedSubcategory.id,
           selectedSubcategory.parentId,
@@ -99,6 +105,5 @@ class BudgetPageState extends ChangeNotifier {
 
   void setSubcategory(SubCategory subcat) {
     this._isSelectedMap[subcat.id] = false;
-    selectedSubcategory = subcat;
   }
 }

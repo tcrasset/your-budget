@@ -23,16 +23,13 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
   AppState appState;
   MoneyMaskedTextController _budgetedController;
   BudgetPageState buttonDialState;
-  //TODO : Make toggling buttonDial + highlighting work, while fixing the
-  // problem of switching the months not changing the subcategories
-  // A wrong approach is moving all the stuff from initState in build,
-  // because then highligting doesn't work because all the widgets get built twice.
+
   void handleOnTap() {
-    buttonDialState.toggleButtonDial(widget.subcat.id);
-    buttonDialState.updateIsSelected(widget.subcat.id);
     if (!buttonDialState.isSelected(widget.subcat.id)) {
       buttonDialState.budgetedController = _budgetedController;
     }
+    buttonDialState.toggleButtonDial(widget.subcat.id);
+    buttonDialState.updateIsSelected(widget.subcat.id);
   }
 
   @override
@@ -84,6 +81,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
             Expanded(
                 child: TextField(
               readOnly: true,
+              enabled: false, //transparent for taps
               decoration: new InputDecoration.collapsed(
                 hintText: "",
               ),

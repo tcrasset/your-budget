@@ -146,8 +146,8 @@ class _ToBeBudgeted extends StatelessWidget {
 }
 
 class _DateButtons extends StatelessWidget {
-  void handleButtonOnPressed(BuildContext context, AppState appState) {
-    appState.incrementMonth();
+  void handleButtonOnPressed(BuildContext context, AppState appState, bool increment) {
+    increment ? appState.incrementMonth() : appState.decrementMonth();
     BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
     buttonDialState.toggleButtonDial(-1);
   }
@@ -159,12 +159,14 @@ class _DateButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          IconButton(icon: Icon(Icons.arrow_back), onPressed: appState.decrementMonth),
+          IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => handleButtonOnPressed(context, appState, false)),
           Text("${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
               style: TextStyle(fontSize: 20)),
           IconButton(
               icon: Icon(Icons.arrow_forward),
-              onPressed: () => handleButtonOnPressed(context, appState))
+              onPressed: () => handleButtonOnPressed(context, appState, true))
         ],
       );
     });

@@ -256,6 +256,7 @@ class AppState extends ChangeNotifier {
         SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
 
         // Modify the subcategory in each budget
+        print(currentBudgetDate);
         Budget budget = budgets.singleWhere(
             (budget) => (budget.year == newDate.year) && (budget.month == newDate.month));
         budget.makeSubcategoryChangeBySubcatId(
