@@ -146,6 +146,12 @@ class _ToBeBudgeted extends StatelessWidget {
 }
 
 class _DateButtons extends StatelessWidget {
+  void handleButtonOnPressed(BuildContext context, AppState appState) {
+    appState.incrementMonth();
+    BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
+    buttonDialState.toggleButtonDial(-1);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppState>(builder: (_, appState, __) {
@@ -156,7 +162,9 @@ class _DateButtons extends StatelessWidget {
           IconButton(icon: Icon(Icons.arrow_back), onPressed: appState.decrementMonth),
           Text("${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
               style: TextStyle(fontSize: 20)),
-          IconButton(icon: Icon(Icons.arrow_forward), onPressed: appState.incrementMonth)
+          IconButton(
+              icon: Icon(Icons.arrow_forward),
+              onPressed: () => handleButtonOnPressed(context, appState))
         ],
       );
     });

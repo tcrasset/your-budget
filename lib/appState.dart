@@ -240,19 +240,15 @@ class AppState extends ChangeNotifier {
       /// Change the available field in every Budget after the one that was
       /// modified.
       int monthDifference = (getMonthDifference(currentBudgetDate, maxBudgetDate)).abs();
-      debugPrint("Month difference: $monthDifference");
       double lastMonthAvailable = modifiedSubcategory.available;
 
       for (int i = 1; i < monthDifference; i++) {
-        debugPrint("Month difference: $i");
-
         /// Modify the BudgetValue in the state
         DateTime newDate = Jiffy(currentBudgetDate).add(months: i);
         correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
             (budgetValue.subcategoryId == modifiedSubcategory.id) &&
             (budgetValue.year == newDate.year) &&
             (budgetValue.month == newDate.month));
-        debugPrint("BudgetValue: $correspondingBudgetValue");
         // Combine the total available money from month to month
         correspondingBudgetValue.available = lastMonthAvailable + correspondingBudgetValue.budgeted;
 

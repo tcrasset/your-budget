@@ -37,6 +37,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
   @override
   void initState() {
+    super.initState();
     buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
     buttonDialState.setSubcategory(widget.subcat);
 
@@ -44,8 +45,6 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
     _budgetedController = new MoneyMaskedTextController(
         decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
-    _budgetedController.updateValue(widget.subcat.budgeted);
-    super.initState();
   }
 
   @override
@@ -67,6 +66,8 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
 
   @override
   Widget build(BuildContext context) {
+    state._budgetedController.updateValue(widget.subcat.budgeted);
+
     return GestureDetector(
       onTap: state.handleOnTap,
       child: Container(

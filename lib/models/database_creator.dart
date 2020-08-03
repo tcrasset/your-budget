@@ -173,7 +173,7 @@ class DatabaseCreator {
                     );''');
   }
 
-  _createBasicCategories(Database db) async {
+  Future<void> _createBasicCategories(Database db) async {
     const String CREATE_CATEGORY = '''INSERT INTO $categoryTable
       ($CATEGORY_ID,$CATEGORY_NAME)
       VALUES(?, ?);''';
@@ -221,16 +221,16 @@ class DatabaseCreator {
   }
 
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    print("Adding new table $budgetValueTable");
-    await db.execute('''
-            CREATE TABLE IF NOT EXISTS $budgetValueTable (
-              $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
-              $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-              $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
-              $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
-              $BUDGET_VALUE_YEAR INTEGER NOT NULL,
-              $BUDGET_VALUE_MONTH INTEGER NOT NULL,
-              FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
-          );''');
+    // print("Adding new table $budgetValueTable");
+    // await db.execute('''
+    //         CREATE TABLE IF NOT EXISTS $budgetValueTable (
+    //           $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
+    //           $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
+    //           $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
+    //           $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
+    //           $BUDGET_VALUE_YEAR INTEGER NOT NULL,
+    //           $BUDGET_VALUE_MONTH INTEGER NOT NULL,
+    //           FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
+    //       );''');
   }
 }

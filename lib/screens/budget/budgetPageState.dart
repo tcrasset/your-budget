@@ -9,7 +9,7 @@ import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatte
 import 'package:provider/provider.dart';
 
 class BudgetPageState extends ChangeNotifier {
-  bool showButtonDial = true;
+  bool showButtonDial = false;
   Map<int, bool> _isSelectedMap = HashMap();
   int selectedId = -1;
   MoneyMaskedTextController budgetedController;
@@ -23,13 +23,12 @@ class BudgetPageState extends ChangeNotifier {
   Map<int, bool> get isSelectedMap => _isSelectedMap;
 
   void updateIsSelected(int subcategoryId) async {
-    int subcategoryCount = await SQLQueryClass.subcategoryCount();
     //Set all selected to false
-    for (int i = 1; i < subcategoryCount; i++) {
-      this._isSelectedMap[i] = false;
-    }
+    _isSelectedMap.forEach((k, v) => _isSelectedMap[k] = false);
 
-    if (selectedId != subcategoryId) {
+    if (subcategoryId == -1) {
+      selectedId = -1;
+    } else if (selectedId != subcategoryId) {
       // Select the subcategory if we tapped on a different one than the one
       // that is currently highlighted
       this._isSelectedMap[subcategoryId] = true;
@@ -37,7 +36,7 @@ class BudgetPageState extends ChangeNotifier {
       resetText();
     } else {
       // The same subcategory was tapped, we remove the highlight i.e. we don't
-      //put it back to [true]
+      // put it back to [true]
       selectedId = -1;
     }
     print("Selected : $selectedId");
@@ -45,7 +44,11 @@ class BudgetPageState extends ChangeNotifier {
   }
 
   void toggleButtonDial(int subcategoryId) {
-    if (!showButtonDial) {
+    if (subcategoryId == -1) {
+      // When pressing date button
+      showButtonDial = false;
+      updateIsSelected(-1);
+    } else if (!showButtonDial) {
       showButtonDial = true;
     } else if (subcategoryId == selectedId) {
       showButtonDial = false;
@@ -75,12 +78,12 @@ class BudgetPageState extends ChangeNotifier {
       double beforeAfterDifference =
           (budgetedController.numberValue - selectedSubcategory.budgeted);
       AppState appState = Provider.of<AppState>(context, listen: false);
-      // appState.updateSubcategory(SubCategory(
-      //     selectedSubcategory.id,
-      //     selectedSubcategory.parentId,
-      //     selectedSubcategory.name,
-      //     budgetedController.numberValue,
-      //     selectedSubcategory.available + beforeAfterDifference));
+      appState.updateSubcategory(SubCategory(
+          selectedSubcategory.id,
+          selectedSubcategory.parentId,
+          selectedSubcategory.name,
+          budgetedController.numberValue,
+          selectedSubcategory.available + beforeAfterDifference));
 
       print("Previous subcat : \n $selectedSubcategory \n");
       print(
