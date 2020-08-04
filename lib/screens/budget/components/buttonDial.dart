@@ -107,6 +107,7 @@ void buttonPressed(BuildContext context, String buttonText) {
     buttonDialState.removeDigit();
   } else if (buttonText == "Goals") {
     print("Goals");
+    buttonDialState.addGoal(context);
   } else if (buttonText == "Budget") {
     print("Budget");
   }

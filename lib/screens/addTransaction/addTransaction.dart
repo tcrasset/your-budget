@@ -14,7 +14,7 @@ import 'package:mybudget/models/utils.dart';
 import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:mybudget/screens/addTransaction/selectValue.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
-import 'package:mybudget/screens/addTransaction/components/rowContainer.dart';
+import 'package:mybudget/components/rowContainer.dart';
 
 import 'package:provider/provider.dart';
 

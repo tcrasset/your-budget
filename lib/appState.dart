@@ -274,8 +274,6 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  ///TODO: Available amount is reflected on each month
-
   /// Update the name of the [MainCategory] pointed to
   /// by [modifiedCategory.id] to [modifiedCategory.name]
   void updateCategoryName(MainCategory modifiedCategory) {

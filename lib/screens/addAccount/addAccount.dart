@@ -16,7 +16,7 @@ class AddAccountRoute extends StatefulWidget {
 }
 
 class _AddAccountRouteController extends State<AddAccountRoute> {
-  final _catFormKey = GlobalKey<FormState>(); //FormCheck
+  final _accountFormKey = GlobalKey<FormState>(); //FormCheck
   double accountBalance;
   String accountName;
 
@@ -37,8 +37,8 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
   }
 
   void handleAddAccount(BuildContext context) async {
-    if (_catFormKey.currentState.validate()) {
-      _catFormKey.currentState.save();
+    if (_accountFormKey.currentState.validate()) {
+      _accountFormKey.currentState.save();
       AppState appState = Provider.of<AppState>(context, listen: false);
       // If form is valid, add subcategory to the database and add it to the state
       appState.addAccount(accountName, accountBalance);
@@ -78,7 +78,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
             child: Column(
               children: <Widget>[
                 Form(
-                    key: state._catFormKey,
+                    key: state._accountFormKey,
                     child: Column(
                       children: <Widget>[
                         Padding(
@@ -123,7 +123,9 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                                 validator: state.handleAccountBalanceValidate,
                                 onSaved: (balance) => state.accountBalance = double.parse(balance),
                                 keyboardType: TextInputType.number,
-                                inputFormatters: [WhitelistingTextInputFormatter(RegExp("[0-9-]"))],
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.allow(RegExp("[0-9-]"))
+                                ],
                                 textInputAction: TextInputAction.done,
                               ),
                             )),

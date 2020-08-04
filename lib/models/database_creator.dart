@@ -100,11 +100,8 @@ class DatabaseCreator {
       path,
       version: 1,
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
     );
   }
-
-  //TODO : Modify BudgetValue to hold month and year instead of date
 
   /// Creates the database by creating the different tables
   /// that will populate it, namely [categoryTable], [subcategoryTable],
@@ -201,6 +198,8 @@ class DatabaseCreator {
     }
 
     /// Insert [BudgetValues] corresponding to the subcategories into the data base
+    /// for every month of the budget, from the current Date to [MAX_NB_MONTHS_AHEAD]
+    /// months in the future.
     final DateTime startingDate = getDateFromMonthStart(DateTime.now());
     int budgetValueId = 1;
     for (int monthDifference = 0;
@@ -218,19 +217,5 @@ class DatabaseCreator {
         ]);
       }
     }
-  }
-
-  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    // print("Adding new table $budgetValueTable");
-    // await db.execute('''
-    //         CREATE TABLE IF NOT EXISTS $budgetValueTable (
-    //           $BUDGET_VALUE_ID INTEGER PRIMARY KEY ,
-    //           $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-    //           $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
-    //           $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
-    //           $BUDGET_VALUE_YEAR INTEGER NOT NULL,
-    //           $BUDGET_VALUE_MONTH INTEGER NOT NULL,
-    //           FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
-    //       );''');
   }
 }
