@@ -21,18 +21,23 @@ class _AddGoalController extends State<AddGoal> {
   GlobalKey _goalFormKey;
   DateTime _date;
 
-  String datePlaceHolder;
-  String _dateFieldName;
+  String datePlaceHolder = "Choose a date";
+  Object amountPlaceHolder = "Choose an amount";
   GoalType goalType;
   List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
   Goal testGoal =
       Goal(1, "Test", GoalType.MonthyGoal, 100.0, DateTime.now().month, DateTime.now().year);
 
+  String _amountFieldName;
+  String _dateFieldName;
+
+  double amount;
+
   @override
   void initState() {
     _date = DateTime.now();
-    datePlaceHolder = "Choose a date";
     _dateFieldName = datePlaceHolder;
+    _amountFieldName = amountPlaceHolder;
     super.initState();
   }
 
@@ -62,6 +67,12 @@ class _AddGoalController extends State<AddGoal> {
   void handleOnGoalTypeChange(GoalType selectedGoalType) {
     setState(() {
       goalType = selectedGoalType;
+    });
+  }
+
+  void handleSelectAmount(String selectedAmount) {
+    setState(() {
+      amount = double.parse(selectedAmount);
     });
   }
 }
@@ -102,6 +113,15 @@ class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
                             );
                           }).toList(),
                         )),
+                    rowContainer(
+                      "Amount",
+                      TextField(
+                        decoration: InputDecoration.collapsed(
+                            hintText: state._amountFieldName, hintStyle: defaultChildTextStyle),
+                        keyboardType: TextInputType.number,
+                        onChanged: state.handleSelectAmount,
+                      ),
+                    ),
                     GestureDetector(
                         onTap: state.handleSelectDate,
                         child: rowContainer(
