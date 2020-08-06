@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/rowContainer.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/models/constants.dart';
+import 'package:mybudget/models/goal.dart';
 import 'package:mybudget/models/utils.dart';
+import 'package:provider/provider.dart';
 
 class AddGoal extends StatefulWidget {
   final String subcategoryName;
@@ -20,6 +23,10 @@ class _AddGoalController extends State<AddGoal> {
 
   String datePlaceHolder;
   String _dateFieldName;
+  GoalType goalType;
+  List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
+  Goal testGoal =
+      Goal(1, "Test", GoalType.MonthyGoal, 100.0, DateTime.now().month, DateTime.now().year);
 
   @override
   void initState() {
@@ -49,6 +56,14 @@ class _AddGoalController extends State<AddGoal> {
       });
     }
   }
+
+  void handleSelectType() {}
+
+  void handleOnGoalTypeChange(GoalType selectedGoalType) {
+    setState(() {
+      goalType = selectedGoalType;
+    });
+  }
 }
 
 class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
@@ -56,6 +71,7 @@ class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
   final TextStyle defaultChildTextStyle =
       TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +86,22 @@ class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
                 key: state._goalFormKey,
                 child: Column(
                   children: <Widget>[
+                    rowContainer(
+                        "Goal Type",
+                        DropdownButton<GoalType>(
+                          value: state.goalType,
+                          onChanged: state.handleOnGoalTypeChange,
+                          items:
+                              GoalType.values.map<DropdownMenuItem<GoalType>>((GoalType goalType) {
+                            return DropdownMenuItem<GoalType>(
+                              value: goalType,
+                              child: Text(
+                                state.goalTypeNames[goalType.index],
+                                style: TextStyle(fontSize: 12),
+                              ),
+                            );
+                          }).toList(),
+                        )),
                     GestureDetector(
                         onTap: state.handleSelectDate,
                         child: rowContainer(

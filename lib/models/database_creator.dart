@@ -178,7 +178,7 @@ class DatabaseCreator {
                         $GOAL_TYPE INTEGER NOT NULL,
                         $GOAL_AMOUNT FLOAT NOT NULL,
                         $GOAL_YEAR INTEGER,
-                        $GOAL_MONTH INTEGER,
+                        $GOAL_MONTH INTEGER
                     );''');
 
     await db.execute('''
