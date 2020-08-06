@@ -18,6 +18,7 @@ class DatabaseCreator {
   static const String moneyTransactionTable = 'moneyTransaction';
   static const String budgetValueTable = 'budgetValue';
   static const String constantsTable = 'constants';
+  static const String goalTable = 'goal';
 
   static const String CATEGORY_ID = 'id';
   static const String CATEGORY_NAME = 'name';
@@ -48,10 +49,18 @@ class DatabaseCreator {
   static const String PAYEE_ID_OUTSIDE = 'payee_id';
   static const String ACCOUNT_ID_OUTSIDE = 'account_id';
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
+  static const String GOAL_VALUE_OUTSIDE = 'goal_id';
 
   static const String CONSTANT_ID = 'id';
   static const String CONSTANT_NAME = 'name';
   static const String CONSTANT_VALUE = 'value';
+
+  static const String GOAL_ID = "id";
+  static const String GOAL_NAME = "name";
+  static const String GOAL_TYPE = "type";
+  static const String GOAL_AMOUNT = "amount";
+  static const String GOAL_YEAR = "year";
+  static const String GOAL_MONTH = "month";
 
   /// Every action taken on the database gets logged to console
   ///
@@ -162,6 +171,16 @@ class DatabaseCreator {
                         $BUDGET_VALUE_MONTH INTEGER NOT NULL,
                         FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
                     );''');
+    await db.execute('''
+                      CREATE TABLE IF NOT EXISTS $goalTable (
+                        $GOAL_ID INTEGER PRIMARY KEY,
+                        $GOAL_NAME TEXT NOT NULL,
+                        $GOAL_TYPE INTEGER NOT NULL,
+                        $GOAL_AMOUNT FLOAT NOT NULL,
+                        $GOAL_YEAR INTEGER,
+                        $GOAL_MONTH INTEGER,
+                    );''');
+
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $constantsTable (
                         $CONSTANT_ID INTEGER PRIMARY KEY,
