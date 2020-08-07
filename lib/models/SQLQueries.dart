@@ -1,6 +1,7 @@
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/database_creator.dart';
 import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/models/goal.dart';
 
 class SQLQueryClass {
   /// Returns the list of all [MainCategory] in the database.
@@ -85,6 +86,19 @@ class SQLQueryClass {
     }
 
     return budgetvalues;
+  }
+
+  static Future<List<Goal>> getGoals() async {
+    final sql = '''SELECT * FROM ${DatabaseCreator.goalTable};''';
+    final data = await db.rawQuery(sql);
+
+    List<Goal> goals = List();
+    for (final node in data) {
+      final goal = Goal.fromJson(node);
+      goals.add(goal);
+    }
+
+    return goals;
   }
 
   static Future<List<SubCategory>> getSubCategoriesJoined(int year, int month) async {
@@ -261,6 +275,23 @@ class SQLQueryClass {
 
     final result = await db.rawInsert(sql, params);
     DatabaseCreator.databaseLog('Add budgetvalue', sql, null, result, params);
+  }
+
+  /// Adds the [Goal] to the database.
+  /// The [GoalType] is specified using it's index in the enumeration
+  static Future<void> addGoal(Goal goal) async {
+    final sql = '''INSERT INTO ${DatabaseCreator.goalTable}
+      (${DatabaseCreator.GOAL_ID},
+      ${DatabaseCreator.GOAL_TYPE},
+      ${DatabaseCreator.GOAL_AMOUNT},
+      ${DatabaseCreator.GOAL_MONTH},
+      ${DatabaseCreator.GOAL_YEAR}
+      )
+      VALUES(?, ?, ?, ?, ?);''';
+
+    List<dynamic> params = [goal.id, goal.goalType.index, goal.amount, goal.month, goal.year];
+    final result = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add goal', sql, null, result, params);
   }
 
   /// Deletes the [category] of id [category.id] from the database.
@@ -445,6 +476,13 @@ class SQLQueryClass {
   /// Returns the number of budgetVvalues in the database.
   static Future<int> budgetValuesCount() async {
     final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.budgetValueTable};''');
+    int count = data[0].values.elementAt(0);
+    return count;
+  }
+
+  /// Returns the number of goal in the database.
+  static Future<int> goalCount() async {
+    final data = await db.rawQuery('''SELECT COUNT(*) FROM ${DatabaseCreator.goalTable};''');
     int count = data[0].values.elementAt(0);
     return count;
   }

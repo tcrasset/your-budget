@@ -8,6 +8,7 @@ import 'package:mybudget/models/SQLQueries.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
+import 'package:mybudget/models/goal.dart';
 import 'package:mybudget/models/utils.dart';
 
 import 'models/SQLQueries.dart';
@@ -18,6 +19,7 @@ class AppState extends ChangeNotifier {
   List<Payee> _payees;
   List<Account> _accounts;
   List<MoneyTransaction> _transactions;
+  List<Goal> _goals;
   List<BudgetValue> _budgetValues;
   List<Budget> _budgets;
 
@@ -26,6 +28,7 @@ class AppState extends ChangeNotifier {
   int moneyTransactionCount;
   int accountCount;
   int payeeCount;
+  int goalCount;
   int budgetValueCount;
 
   double toBeBudgeted = 0;
@@ -72,12 +75,14 @@ class AppState extends ChangeNotifier {
     // _subcategories = await SQLQueryClass.getSubCategories();
     _transactions = await SQLQueryClass.getMoneyTransactions();
     _budgetValues = await SQLQueryClass.getBudgetValues();
+    _goals = await SQLQueryClass.getGoals();
 
     subcategoryCount = await SQLQueryClass.subcategoryCount();
     mainCategoryCount = await SQLQueryClass.categoryCount();
     accountCount = await SQLQueryClass.accountCount();
     payeeCount = await SQLQueryClass.payeeCount();
     budgetValueCount = await SQLQueryClass.budgetValuesCount();
+    goalCount = await SQLQueryClass.goalCount();
     moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
@@ -202,8 +207,24 @@ class AppState extends ChangeNotifier {
       final Account inAccount =
           accounts.singleWhere((account) => account.id == -transaction.payeeID);
       inAccount.balance += transaction.amount;
+      //TODO: Add notifyListeners() ????
     }
     //notifyListeners is called in updateSubcategory
+  }
+
+  void addGoal(GoalType goalType, double amount, DateTime date) {
+    Goal newGoal;
+    if (goalType == GoalType.TargetAmountByDate) {
+      newGoal = Goal(goalCount + 1, goalType, amount, date.month, date.year);
+    } else {
+      ///Use the current budget date, as there is no end date for the other types of goal
+      newGoal = Goal(goalCount + 1, goalType, amount, currentBudget.month, currentBudget.year);
+    }
+
+    goalCount++;
+    _goals.add(newGoal);
+    SQLQueryClass.addGoal(newGoal);
+    notifyListeners();
   }
 
   /// Update all the fields of [modifiedSubcategory]
@@ -363,11 +384,4 @@ class AppState extends ChangeNotifier {
   //     }
   //   }
   // }
-}
-
-Future<void> addDummyCategories() async {
-  MainCategory cat = MainCategory(1, "Savings");
-  SubCategory subcat = SubCategory(1, 1, "Savings", 200, 300);
-  await SQLQueryClass.addCategory(cat);
-  return await SQLQueryClass.addSubcategory(subcat);
 }

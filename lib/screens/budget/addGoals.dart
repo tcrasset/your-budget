@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
+import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/rowContainer.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/goal.dart';
 import 'package:mybudget/models/utils.dart';
+import 'package:provider/provider.dart';
 
 class AddGoal extends StatefulWidget {
   final String subcategoryName;
@@ -45,15 +47,12 @@ class _AddGoalController extends State<AddGoal> {
   }
 
   void handleOnGoalTypeChange(GoalType selectedGoalType) {
-    _goalFormKey.currentState.validate();
     setState(() {
       goalType = selectedGoalType;
     });
   }
 
   void handleSelectAmount(String selectedAmount) {
-    _goalFormKey.currentState.validate();
-
     setState(() {
       amount = double.parse(selectedAmount);
     });
@@ -61,9 +60,11 @@ class _AddGoalController extends State<AddGoal> {
 
   void handleCreateGoal() {
     if (_goalFormKey.currentState.validate()) {
+      _goalFormKey.currentState.save();
       print("Creating new goal");
-      Goal newGoal = Goal(1, goalType, amount, _date.month, _date.year);
-      print(newGoal);
+      AppState appState = Provider.of<AppState>(context, listen: false);
+
+      appState.addGoal(goalType, amount, _date);
     }
   }
 
@@ -74,6 +75,7 @@ class _AddGoalController extends State<AddGoal> {
   }
 
   String validateGoalTypeField(GoalType goalType) {
+    print("Validate goaltype");
     if (goalType == null) {
       return "Select the goal type";
     }
@@ -82,7 +84,6 @@ class _AddGoalController extends State<AddGoal> {
 
   String handleValidateDate(String value) {
     print("Validate date");
-    print(value);
     if (_date == null) {
       return "Select a date";
     }

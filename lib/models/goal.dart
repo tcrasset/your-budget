@@ -1,6 +1,7 @@
 import 'database_creator.dart';
 
-enum GoalType { TargetAmount, TargetAmountByDate, MonthyGoal }
+//DO NOT CHANGE THE ORDER OF THE ITEMS IN THE ENUMERATION
+enum GoalType { TargetAmount, TargetAmountByDate, MonthlyGoal }
 
 class Goal {
   int id;
@@ -13,7 +14,7 @@ class Goal {
 
   Goal.fromJson(Map<String, dynamic> json) {
     this.id = json[DatabaseCreator.GOAL_ID];
-    this.goalType = json[DatabaseCreator.GOAL_TYPE];
+    this.goalType = GoalType.values[json[DatabaseCreator.GOAL_TYPE]];
     this.amount = json[DatabaseCreator.GOAL_AMOUNT];
     this.year = json[DatabaseCreator.GOAL_YEAR];
     this.month = json[DatabaseCreator.GOAL_MONTH];

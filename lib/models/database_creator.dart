@@ -49,7 +49,7 @@ class DatabaseCreator {
   static const String PAYEE_ID_OUTSIDE = 'payee_id';
   static const String ACCOUNT_ID_OUTSIDE = 'account_id';
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
-  static const String GOAL_VALUE_OUTSIDE = 'goal_id';
+  static const String GOAL_ID_OUTSIDE = 'goal_id';
 
   static const String CONSTANT_ID = 'id';
   static const String CONSTANT_NAME = 'name';
