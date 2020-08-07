@@ -19,8 +19,9 @@ class ButtonDial extends StatelessWidget {
       // width: MediaQuery.of(context).size.width + 60,
 
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.15),
+        margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
         color: Constants.PRIMARY_COLOR,
+        // color: Constants.PRIMARY_COLOR,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -88,6 +89,20 @@ class ButtonDial extends StatelessWidget {
                         children: [Icon(Constants.BUDGET_ICON), Text("Budget")])),
               ],
             ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                CustomButton(
+                    "More",
+                    50.5,
+                    65,
+                    Constants.SECONDARY_COLOR,
+                    buttonPressed,
+                    Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [Icon(Icons.more_horiz), Text("More")])),
+              ],
+            ),
           ],
         ),
       ),
@@ -107,8 +122,10 @@ void buttonPressed(BuildContext context, String buttonText) {
     buttonDialState.removeDigit();
   } else if (buttonText == "Goals") {
     print("Goals");
-    buttonDialState.addGoal(context);
+    buttonDialState.goToNewPage(context, "Goals");
   } else if (buttonText == "Budget") {
     print("Budget");
+  } else if (buttonText == "More") {
+    buttonDialState.goToNewPage(context, "More");
   }
 }

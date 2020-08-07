@@ -63,7 +63,6 @@ class _AddGoalController extends State<AddGoal> {
       _goalFormKey.currentState.save();
       print("Creating new goal");
       AppState appState = Provider.of<AppState>(context, listen: false);
-
       appState.addGoal(goalType, amount, _date);
     }
   }

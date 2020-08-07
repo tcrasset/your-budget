@@ -6,6 +6,7 @@ import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:mybudget/screens/budget/addGoals.dart';
+import 'package:mybudget/screens/budget/subcategoryDetails.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPageState extends ChangeNotifier {
@@ -108,15 +109,17 @@ class BudgetPageState extends ChangeNotifier {
     this._isSelectedMap[subcat.id] = false;
   }
 
-  void addGoal(BuildContext context) {
+  void goToNewPage(BuildContext context, String pageName) {
     AppState appState = Provider.of<AppState>(context, listen: false);
-
     SubCategory selectedSubcategory =
         appState.subcategories.singleWhere((subcat) => subcat.id == selectedId);
+    Widget newPage;
+    if (pageName == "Goals") {
+      newPage = AddGoal(subcategoryName: selectedSubcategory.name);
+    } else if (pageName == "More") {
+      newPage = SubcategoryDetails(subcategoryName: selectedSubcategory.name);
+    }
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => AddGoal(subcategoryName: selectedSubcategory.name)));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => newPage));
   }
 }
