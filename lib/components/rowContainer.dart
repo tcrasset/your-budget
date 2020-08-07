@@ -14,6 +14,7 @@ Container rowContainer(String name, Widget childWidget) {
                       TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
             ),
             Expanded(
+              flex: 2,
               child: Row(
                 children: <Widget>[
                   Expanded(child: childWidget),

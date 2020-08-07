@@ -56,7 +56,6 @@ class DatabaseCreator {
   static const String CONSTANT_VALUE = 'value';
 
   static const String GOAL_ID = "id";
-  static const String GOAL_NAME = "name";
   static const String GOAL_TYPE = "type";
   static const String GOAL_AMOUNT = "amount";
   static const String GOAL_YEAR = "year";
@@ -174,7 +173,6 @@ class DatabaseCreator {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $goalTable (
                         $GOAL_ID INTEGER PRIMARY KEY,
-                        $GOAL_NAME TEXT NOT NULL,
                         $GOAL_TYPE INTEGER NOT NULL,
                         $GOAL_AMOUNT FLOAT NOT NULL,
                         $GOAL_YEAR INTEGER,

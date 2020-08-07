@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/rowContainer.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/goal.dart';
 import 'package:mybudget/models/utils.dart';
-import 'package:provider/provider.dart';
 
 class AddGoal extends StatefulWidget {
   final String subcategoryName;
@@ -18,28 +17,11 @@ class AddGoal extends StatefulWidget {
 }
 
 class _AddGoalController extends State<AddGoal> {
-  GlobalKey _goalFormKey;
-  DateTime _date;
-
-  String datePlaceHolder = "Choose a date";
-  Object amountPlaceHolder = "Choose an amount";
+  final _goalFormKey = GlobalKey<FormState>();
+  final TextEditingController dateController = TextEditingController();
   GoalType goalType;
-  List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
-  Goal testGoal =
-      Goal(1, "Test", GoalType.MonthyGoal, 100.0, DateTime.now().month, DateTime.now().year);
-
-  String _amountFieldName;
-  String _dateFieldName;
-
+  DateTime _date;
   double amount;
-
-  @override
-  void initState() {
-    _date = DateTime.now();
-    _dateFieldName = datePlaceHolder;
-    _amountFieldName = amountPlaceHolder;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) => _AddGoalView(this);
@@ -49,31 +31,62 @@ class _AddGoalController extends State<AddGoal> {
     DateTime now = DateTime.now();
     final DateTime picked = await showMonthPicker(
       context: context,
-      initialDate: getDateYMD(_date),
+      initialDate: getDateYMD(DateTime.now()),
       firstDate: DateTime(now.year, now.month),
       lastDate: Jiffy(DateTime(now.year, now.month)).add(months: Constants.MAX_NB_MONTHS_AHEAD),
     );
 
-    if (picked != null && picked != _date) {
+    if (picked != null) {
       setState(() {
         _date = picked;
-        _dateFieldName = "${monthStringFromDate(picked)} ${picked.year}";
+        dateController.text = "${monthStringFromDate(picked)} ${picked.year}";
       });
     }
   }
 
-  void handleSelectType() {}
-
   void handleOnGoalTypeChange(GoalType selectedGoalType) {
+    _goalFormKey.currentState.validate();
     setState(() {
       goalType = selectedGoalType;
     });
   }
 
   void handleSelectAmount(String selectedAmount) {
+    _goalFormKey.currentState.validate();
+
     setState(() {
       amount = double.parse(selectedAmount);
     });
+  }
+
+  void handleCreateGoal() {
+    if (_goalFormKey.currentState.validate()) {
+      print("Creating new goal");
+      Goal newGoal = Goal(1, goalType, amount, _date.month, _date.year);
+      print(newGoal);
+    }
+  }
+
+  //TODO: Add custom keyboard to goals
+  String validateAmountField(String value) {
+    if (isNumeric(value) && !double.parse(value).isNegative) return null;
+    return "Amount must be a valid non-negative value";
+  }
+
+  String validateGoalTypeField(GoalType goalType) {
+    if (goalType == null) {
+      return "Select the goal type";
+    }
+    return null;
+  }
+
+  String handleValidateDate(String value) {
+    print("Validate date");
+    print(value);
+    if (_date == null) {
+      return "Select a date";
+    }
+    return null;
   }
 }
 
@@ -82,6 +95,7 @@ class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
   final TextStyle defaultChildTextStyle =
       TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+  final List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
 
   @override
   Widget build(BuildContext context) {
@@ -99,37 +113,59 @@ class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
                   children: <Widget>[
                     rowContainer(
                         "Goal Type",
-                        DropdownButton<GoalType>(
+                        DropdownButtonFormField<GoalType>(
                           value: state.goalType,
+                          hint: Text(
+                            "Choose a goal type",
+                            style: defaultChildTextStyle,
+                          ),
                           onChanged: state.handleOnGoalTypeChange,
+                          validator: state.validateGoalTypeField,
+                          decoration: InputDecoration.collapsed(hintText: ''),
+                          iconEnabledColor: Colors.white,
                           items:
                               GoalType.values.map<DropdownMenuItem<GoalType>>((GoalType goalType) {
                             return DropdownMenuItem<GoalType>(
                               value: goalType,
-                              child: Text(
-                                state.goalTypeNames[goalType.index],
-                                style: TextStyle(fontSize: 12),
-                              ),
+                              child: Text(goalTypeNames[goalType.index],
+                                  style: selectedChildTextStyle),
                             );
                           }).toList(),
                         )),
                     rowContainer(
                       "Amount",
-                      TextField(
+                      TextFormField(
                         decoration: InputDecoration.collapsed(
-                            hintText: state._amountFieldName, hintStyle: defaultChildTextStyle),
+                            hintText: "Choose an amount", hintStyle: defaultChildTextStyle),
                         keyboardType: TextInputType.number,
                         onChanged: state.handleSelectAmount,
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9\.]"))],
+                        validator: state.validateAmountField,
                       ),
                     ),
-                    GestureDetector(
-                        onTap: state.handleSelectDate,
-                        child: rowContainer(
-                            "Date",
-                            Text(state._dateFieldName,
-                                style: (state._dateFieldName == state.datePlaceHolder)
-                                    ? defaultChildTextStyle
-                                    : selectedChildTextStyle)))
+                    if (state.goalType != null && state.goalType == GoalType.TargetAmountByDate)
+                      GestureDetector(
+                          onTap: state.handleSelectDate,
+                          child: rowContainer(
+                              "Date",
+                              TextFormField(
+                                  readOnly: true,
+                                  enabled: false,
+                                  decoration: InputDecoration.collapsed(
+                                      hintText: "Choose a date", hintStyle: defaultChildTextStyle),
+                                  validator: state.handleValidateDate,
+                                  controller: state.dateController,
+                                  style: selectedChildTextStyle))),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      child: RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        onPressed: state.handleCreateGoal,
+                        child: Text(
+                          'Add goal',
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               )
