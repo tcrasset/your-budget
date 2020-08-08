@@ -282,14 +282,22 @@ class SQLQueryClass {
   static Future<void> addGoal(Goal goal) async {
     final sql = '''INSERT INTO ${DatabaseCreator.goalTable}
       (${DatabaseCreator.GOAL_ID},
+      ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
       ${DatabaseCreator.GOAL_TYPE},
       ${DatabaseCreator.GOAL_AMOUNT},
       ${DatabaseCreator.GOAL_MONTH},
       ${DatabaseCreator.GOAL_YEAR}
       )
-      VALUES(?, ?, ?, ?, ?);''';
+      VALUES(?, ?, ?, ?, ?, ?);''';
 
-    List<dynamic> params = [goal.id, goal.goalType.index, goal.amount, goal.month, goal.year];
+    List<dynamic> params = [
+      goal.id,
+      goal.correspondingSubcategoryId,
+      goal.goalType.index,
+      goal.amount,
+      goal.month,
+      goal.year
+    ];
     final result = await db.rawInsert(sql, params);
     DatabaseCreator.databaseLog('Add goal', sql, null, result, params);
   }

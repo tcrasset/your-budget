@@ -5,15 +5,16 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/components/rowContainer.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/goal.dart';
 import 'package:mybudget/models/utils.dart';
 import 'package:provider/provider.dart';
 
 class AddGoal extends StatefulWidget {
-  final String subcategoryName;
+  final SubCategory subcat;
 
-  const AddGoal({Key key, this.subcategoryName}) : super(key: key);
+  const AddGoal({Key key, this.subcat}) : super(key: key);
   @override
   _AddGoalController createState() => _AddGoalController();
 }
@@ -63,7 +64,7 @@ class _AddGoalController extends State<AddGoal> {
       _goalFormKey.currentState.save();
       print("Creating new goal");
       AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.addGoal(goalType, amount, _date);
+      appState.addGoal(goalType, widget.subcat.id, amount, _date);
     }
   }
 
@@ -95,13 +96,12 @@ class _AddGoalView extends WidgetView<AddGoal, _AddGoalController> {
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
   final TextStyle defaultChildTextStyle =
       TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-  final List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Add a goal to subcategory ${widget.subcategoryName}"),
+          title: Text("Add a goal to subcategory ${widget.subcat.name}"),
         ),
         body: SingleChildScrollView(
             child: Container(

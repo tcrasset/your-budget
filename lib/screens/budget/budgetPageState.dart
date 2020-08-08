@@ -115,9 +115,9 @@ class BudgetPageState extends ChangeNotifier {
         appState.subcategories.singleWhere((subcat) => subcat.id == selectedId);
     Widget newPage;
     if (pageName == "Goals") {
-      newPage = AddGoal(subcategoryName: selectedSubcategory.name);
+      newPage = AddGoal(subcat: selectedSubcategory);
     } else if (pageName == "More") {
-      newPage = SubcategoryDetails(subcategoryName: selectedSubcategory.name);
+      newPage = SubcategoryDetails(subcat: selectedSubcategory);
     }
 
     Navigator.push(context, MaterialPageRoute(builder: (context) => newPage));

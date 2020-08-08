@@ -56,6 +56,7 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
   UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
+  UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
 
   AppState() {
     // addDummyVariables();
@@ -212,13 +213,14 @@ class AppState extends ChangeNotifier {
     //notifyListeners is called in updateSubcategory
   }
 
-  void addGoal(GoalType goalType, double amount, DateTime date) {
+  void addGoal(GoalType goalType, int subcategoryId, double amount, DateTime date) {
     Goal newGoal;
     if (goalType == GoalType.TargetAmountByDate) {
-      newGoal = Goal(goalCount + 1, goalType, amount, date.month, date.year);
+      newGoal = Goal(goalCount + 1, subcategoryId, goalType, amount, date.month, date.year);
     } else {
       ///Use the current budget date, as there is no end date for the other types of goal
-      newGoal = Goal(goalCount + 1, goalType, amount, currentBudget.month, currentBudget.year);
+      newGoal = Goal(
+          goalCount + 1, subcategoryId, goalType, amount, currentBudget.month, currentBudget.year);
     }
 
     goalCount++;

@@ -155,9 +155,9 @@ class DatabaseCreator {
                         $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
                         $MONEYTRANSACTION_MEMO TEXT,
                         $MONEYTRANSACTION_DATE INTEGER NOT NULL,
-                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES subcategory($SUBCAT_ID),
-                        FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES payee($PAYEE_ID),
-                        FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES account($ACCOUNT_ID)
+                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES $subcategoryTable($SUBCAT_ID),
+                        FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES $payeeTable($PAYEE_ID),
+                        FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES $accountTable($ACCOUNT_ID)
                     );''');
 
     await db.execute('''
@@ -168,15 +168,18 @@ class DatabaseCreator {
                         $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
                         $BUDGET_VALUE_YEAR INTEGER NOT NULL,
                         $BUDGET_VALUE_MONTH INTEGER NOT NULL,
-                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES category($SUBCAT_ID)
+                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES $categoryTable($SUBCAT_ID)
                     );''');
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $goalTable (
                         $GOAL_ID INTEGER PRIMARY KEY,
+                        $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
                         $GOAL_TYPE INTEGER NOT NULL,
                         $GOAL_AMOUNT FLOAT NOT NULL,
                         $GOAL_YEAR INTEGER,
-                        $GOAL_MONTH INTEGER
+                        $GOAL_MONTH INTEGER,
+                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES $subcategoryTable($SUBCAT_ID)
+
                     );''');
 
     await db.execute('''

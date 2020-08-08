@@ -22,6 +22,7 @@ class BudgetPage extends StatefulWidget {
 class _BudgetPageState extends State<BudgetPage> {
   bool showMenu = true;
 
+  //TODO: Settings
   void handleSettings() {}
 
   void handleModifyCategories() {
