@@ -89,11 +89,23 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
               textAlign: TextAlign.right,
               style: Constants.SUBCATEGORY_TEXT_STYLE,
             )),
-            Expanded(
-              child: Text(
-                "${widget.subcat.available.toStringAsFixed(2)} €",
-                textAlign: TextAlign.right,
-                style: widget.subcat.available > 0 ? _greenNumberTextStyle : _redNumberTextStyle,
+            Flexible(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Container(
+                  padding: EdgeInsets.all(2),
+                  decoration: new BoxDecoration(
+                    color: widget.subcat.available > 0
+                        ? Constants.GREEN_COLOR
+                        : Constants.RED_COLOR, //new Color.fromRGBO(255, 0, 0, 0.0),
+                    borderRadius: new BorderRadius.all(
+                      const Radius.circular(5.0),
+                    ),
+                  ),
+                  child: Text("${widget.subcat.available.toStringAsFixed(2)} €",
+                      textAlign: TextAlign.right,
+                      style: TextStyle(fontSize: 18, color: Colors.white)),
+                ),
               ),
             )
           ],

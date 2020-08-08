@@ -102,9 +102,9 @@ class SQLQueryClass {
   }
 
   static Future<List<SubCategory>> getSubCategoriesJoined(int year, int month) async {
-    (await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
-      print(row.values);
-    });
+    // (await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+    //   print(row.values);
+    // });
 
     final sql = '''SELECT ${DatabaseCreator.subcategoryTable}.${DatabaseCreator.SUBCAT_ID} as id,
         ${DatabaseCreator.CAT_ID_OUTSIDE},
