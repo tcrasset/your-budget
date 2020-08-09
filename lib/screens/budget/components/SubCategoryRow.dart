@@ -99,7 +99,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                         ? Constants.GREEN_COLOR
                         : Constants.RED_COLOR, //new Color.fromRGBO(255, 0, 0, 0.0),
                     borderRadius: new BorderRadius.all(
-                      const Radius.circular(5.0),
+                      const Radius.circular(10.0),
                     ),
                   ),
                   child: Text("${widget.subcat.available.toStringAsFixed(2)} €",

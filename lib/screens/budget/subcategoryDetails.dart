@@ -57,47 +57,54 @@ class Information extends StatelessWidget {
   final SubCategory subcat;
 
   Information(this.subcat, {Key key}) : super(key: key);
-  final TextStyle titleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+
   @override
   Widget build(BuildContext context) {
+    AppState appState = Provider.of<AppState>(context);
     return Container(
-      height: 70,
+      height: 120,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  "Budgeted",
-                  style: titleStyle,
-                ),
-              ),
-              Expanded(
-                  child: Text(
-                "${subcat.budgeted} €",
-                style: titleStyle,
-                textAlign: TextAlign.right,
-              ))
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                  child: Text(
-                "Available",
-                style: titleStyle,
-              )),
-              Expanded(
-                  child: Text(
-                "${subcat.available} €",
-                style: titleStyle,
-                textAlign: TextAlign.right,
-              ))
-            ],
-          ),
+          InformationRow("Budgeted", subcat.budgeted),
+          InformationRow("Available", subcat.available),
+          InformationRow("Average budgeted", appState.computeAverageBudgeted(subcat.id)),
+          InformationRow("Last month budgeted", appState.getLastMonthBudgeted(subcat.id)),
         ],
       ),
+    );
+  }
+}
+
+class InformationRow extends StatelessWidget {
+  final String title;
+  final double value;
+  InformationRow(
+    this.title,
+    this.value, {
+    Key key,
+  }) : super(key: key);
+
+  final TextStyle titleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Text(
+            title,
+            style: titleStyle,
+          ),
+        ),
+        Expanded(
+            child: Text(
+          value.toStringAsFixed(2) + " €",
+          style: titleStyle,
+          textAlign: TextAlign.right,
+        ))
+      ],
     );
   }
 }

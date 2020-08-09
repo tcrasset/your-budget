@@ -34,7 +34,7 @@ class AppState extends ChangeNotifier {
   double toBeBudgeted = 0;
 
   ///TODO: Put this into database
-  DateTime startingBudgetDate = DateTime(2020, 7, 1);
+  DateTime startingBudgetDate = DateTime(2020, 8, 1);
   DateTime maxBudgetDate =
       Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
 
@@ -348,6 +348,37 @@ class AppState extends ChangeNotifier {
       await computeToBeBudgeted();
       notifyListeners();
     }
+  }
+
+  double computeAverageBudgeted(int subcategoryId) {
+    double totalBudgeted = 0;
+    int nbNonZero = 0;
+    _budgets.forEach((budget) {
+      SubCategory subcat = budget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+      if (subcat.budgeted != 0.00) {
+        nbNonZero++;
+      }
+      totalBudgeted += subcat.budgeted;
+    });
+
+    if (nbNonZero == 0) return 0.00;
+    return totalBudgeted / nbNonZero;
+  }
+
+  double getLastMonthBudgeted(int subcategoryId) {
+    DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1);
+    Budget lastMonthBudget = _budgets.singleWhere(
+        (budget) => budget.year == lastMonthDate.year && budget.month == lastMonthDate.month,
+        orElse: () => null);
+
+    if (lastMonthBudget == null) {
+      return 0.00;
+    }
+
+    SubCategory lastMonthSubcat =
+        lastMonthBudget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+
+    return lastMonthSubcat.budgeted;
   }
 
   Future<List<Budget>> _createAllMonthlyBudgets(DateTime startDate, DateTime endDate) async {
