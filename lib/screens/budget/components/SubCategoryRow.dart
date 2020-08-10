@@ -61,6 +61,16 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
       new TextStyle(color: Constants.GREEN_COLOR, fontSize: 16.0);
   final TextStyle _redNumberTextStyle = new TextStyle(color: Constants.RED_COLOR, fontSize: 16.0);
 
+  Color setColor(double availableAmount) {
+    if (availableAmount > 0) {
+      return Constants.GREEN_COLOR;
+    } else if (availableAmount == 0) {
+      return Colors.grey[400];
+    } else {
+      return Constants.RED_COLOR;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     state._budgetedController.updateValue(widget.subcat.budgeted);
@@ -95,9 +105,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                 child: Container(
                   padding: EdgeInsets.all(2),
                   decoration: new BoxDecoration(
-                    color: widget.subcat.available > 0
-                        ? Constants.GREEN_COLOR
-                        : Constants.RED_COLOR, //new Color.fromRGBO(255, 0, 0, 0.0),
+                    color: setColor(widget.subcat.available),
                     borderRadius: new BorderRadius.all(
                       const Radius.circular(10.0),
                     ),
