@@ -4,6 +4,7 @@ import 'package:mybudget/models/constants.dart';
 
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
+import 'package:mybudget/screens/showTransactions/components/selectAccount.dart';
 import 'package:mybudget/screens/showTransactions/components/transaction.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +40,15 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
     });
   }
 
+  void handlePopUpMenuButtonSelected(String selectedItem) async {
+    if (selectedItem == "Select account") {
+      Account result = await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SelectAccountPage()));
+
+      if (result != null) handleOnAccountChanged(result);
+    }
+  }
+
   @override
   void dispose() {
     controller.dispose();
@@ -64,40 +74,20 @@ class _ShowTransactionPageView
     AppState appState = Provider.of<AppState>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
-        leading: Icon(Constants.ALLTRANSACTION_ICON),
-        backgroundColor: Constants.PRIMARY_COLOR,
-        actions: appState.accounts.isEmpty
-            ? null
-            : <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0, top: 18),
-                  child: Consumer<AppState>(
-                      builder: (_, appState, __) => DropdownButton<Account>(
-                            value: state.account,
-                            selectedItemBuilder: (BuildContext context) {
-                              return appState.accounts.map((Account account) {
-                                return Text(
-                                  "Account: ${account.name}",
-                                  style: TextStyle(color: Colors.white, fontSize: 18),
-                                );
-                              }).toList();
-                            },
-                            onChanged: state.handleOnAccountChanged,
-                            items:
-                                appState.accounts.map<DropdownMenuItem<Account>>((Account account) {
-                              return DropdownMenuItem<Account>(
-                                value: account,
-                                child: Text(
-                                  account.name,
-                                  style: TextStyle(color: Colors.black, fontSize: 18),
-                                ),
-                              );
-                            }).toList(),
-                          )),
-                )
+          title: Text(widget.title),
+          leading: Icon(Constants.ALLTRANSACTION_ICON),
+          backgroundColor: Constants.PRIMARY_COLOR,
+          actions: <Widget>[
+            PopupMenuButton(
+              onSelected: state.handlePopUpMenuButtonSelected,
+              itemBuilder: (context) => [
+                PopupMenuItem<String>(
+                  value: "Select account",
+                  child: Text("Select account"),
+                ),
               ],
-      ),
+            ),
+          ]),
       body: Consumer<AppState>(builder: (context, appState, child) {
         if (appState.transactions.isEmpty) {
           return Center(
