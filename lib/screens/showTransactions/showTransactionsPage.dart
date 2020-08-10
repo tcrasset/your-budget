@@ -20,6 +20,7 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   TextEditingController controller = new TextEditingController();
   String filter;
   Account account;
+  bool isEditable;
   List<MoneyTransaction> moneyTransactionList;
 
   @override
@@ -28,6 +29,7 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
     if (appState.accounts.isNotEmpty) {
       account = appState.accounts[0];
     }
+    isEditable = false;
     super.initState();
   }
 
@@ -45,6 +47,12 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
 
   @override
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
+
+  void handleFloatingActionButtonPress() {
+    setState(() {
+      isEditable = !isEditable;
+    });
+  }
 }
 
 class _ShowTransactionPageView
@@ -55,60 +63,65 @@ class _ShowTransactionPageView
   Widget build(BuildContext context) {
     AppState appState = Provider.of<AppState>(context, listen: false);
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          leading: Icon(Constants.ALLTRANSACTION_ICON),
-          backgroundColor: Constants.PRIMARY_COLOR,
-          actions: appState.accounts.isEmpty
-              ? null
-              : <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10.0, top: 18),
-                    child: Consumer<AppState>(
-                        builder: (_, appState, __) => DropdownButton<Account>(
-                              value: state.account,
-                              selectedItemBuilder: (BuildContext context) {
-                                return appState.accounts.map((Account account) {
-                                  return Text(
-                                    "Account: ${account.name}",
-                                    style: TextStyle(color: Colors.white, fontSize: 18),
-                                  );
-                                }).toList();
-                              },
-                              onChanged: state.handleOnAccountChanged,
-                              items: appState.accounts
-                                  .map<DropdownMenuItem<Account>>((Account account) {
-                                return DropdownMenuItem<Account>(
-                                  value: account,
-                                  child: Text(
-                                    account.name,
-                                    style: TextStyle(color: Colors.black, fontSize: 18),
-                                  ),
+      appBar: AppBar(
+        title: Text(widget.title),
+        leading: Icon(Constants.ALLTRANSACTION_ICON),
+        backgroundColor: Constants.PRIMARY_COLOR,
+        actions: appState.accounts.isEmpty
+            ? null
+            : <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0, top: 18),
+                  child: Consumer<AppState>(
+                      builder: (_, appState, __) => DropdownButton<Account>(
+                            value: state.account,
+                            selectedItemBuilder: (BuildContext context) {
+                              return appState.accounts.map((Account account) {
+                                return Text(
+                                  "Account: ${account.name}",
+                                  style: TextStyle(color: Colors.white, fontSize: 18),
                                 );
-                              }).toList(),
-                            )),
-                  )
-                ],
-        ),
-        body: Consumer<AppState>(builder: (context, appState, child) {
-          if (appState.transactions.isEmpty) {
-            return Center(
-              child: Text(
-                "No transactions logged. Add an account first.",
-                style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
-              ),
-            );
-          } else {
-            return _TransactionList(state.account, appState);
-          }
-        }));
+                              }).toList();
+                            },
+                            onChanged: state.handleOnAccountChanged,
+                            items:
+                                appState.accounts.map<DropdownMenuItem<Account>>((Account account) {
+                              return DropdownMenuItem<Account>(
+                                value: account,
+                                child: Text(
+                                  account.name,
+                                  style: TextStyle(color: Colors.black, fontSize: 18),
+                                ),
+                              );
+                            }).toList(),
+                          )),
+                )
+              ],
+      ),
+      body: Consumer<AppState>(builder: (context, appState, child) {
+        if (appState.transactions.isEmpty) {
+          return Center(
+            child: Text(
+              "No transactions logged. Add an account first.",
+              style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+            ),
+          );
+        } else {
+          return _TransactionList(state.account, appState, state.isEditable);
+        }
+      }),
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add), onPressed: state.handleFloatingActionButtonPress),
+    );
   }
 }
 
 class _TransactionList extends StatefulWidget {
   final Account account;
   final AppState appState;
-  _TransactionList(this.account, this.appState);
+  final bool isEditable;
+
+  _TransactionList(this.account, this.appState, this.isEditable);
 
   @override
   __TransactionListState createState() => __TransactionListState();
@@ -141,7 +154,8 @@ class __TransactionListState extends State<_TransactionList> {
             Divider(height: 1, color: Colors.black12),
         itemBuilder: (BuildContext context, int index) {
           return Card(
-              child: TransactionRow(transactionsOfAccount[index], widget.appState.allCategories));
+              child: TransactionRow(
+                  transactionsOfAccount[index], widget.appState.allCategories, widget.isEditable));
         },
       ),
     ));

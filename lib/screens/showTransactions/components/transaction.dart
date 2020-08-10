@@ -9,8 +9,9 @@ import 'package:provider/provider.dart';
 class TransactionRow extends StatefulWidget {
   final MoneyTransaction moneyTransaction;
   final List<Category> categories;
+  final bool isEditable;
 
-  TransactionRow(this.moneyTransaction, this.categories);
+  TransactionRow(this.moneyTransaction, this.categories, this.isEditable);
 
   @override
   _TransactionRowState createState() => _TransactionRowState();
@@ -70,16 +71,27 @@ class _TransactionRowState extends State<TransactionRow> {
       subcategoryName = correspondingSubcategory != null ? correspondingSubcategory.name : "";
     }
 
-    return RowWithCheckbox(
-        subcategoryName,
-        widget.moneyTransaction.memo,
-        memoStyle,
-        widget.moneyTransaction.amount,
-        amountStyle,
-        widget.moneyTransaction.date,
-        dateStyle,
-        payeeName,
-        subcategoryStyle);
+    return widget.isEditable
+        ? RowWithCheckbox(
+            subcategoryName,
+            widget.moneyTransaction.memo,
+            memoStyle,
+            widget.moneyTransaction.amount,
+            amountStyle,
+            widget.moneyTransaction.date,
+            dateStyle,
+            payeeName,
+            subcategoryStyle)
+        : RowWithoutCheckbox(
+            subcategoryName,
+            widget.moneyTransaction.memo,
+            memoStyle,
+            widget.moneyTransaction.amount,
+            amountStyle,
+            widget.moneyTransaction.date,
+            dateStyle,
+            payeeName,
+            subcategoryStyle);
   }
 }
 
