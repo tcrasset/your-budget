@@ -99,7 +99,7 @@ class _ShowTransactionPageView
               ),
             );
           } else {
-            return _TransactionList(state.account);
+            return _TransactionList(state.account, appState);
           }
         }));
   }
@@ -107,7 +107,8 @@ class _ShowTransactionPageView
 
 class _TransactionList extends StatefulWidget {
   final Account account;
-  _TransactionList(this.account);
+  final AppState appState;
+  _TransactionList(this.account, this.appState);
 
   @override
   __TransactionListState createState() => __TransactionListState();
@@ -124,9 +125,7 @@ class __TransactionListState extends State<_TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    var appState = Provider.of<AppState>(context);
-
-    List<MoneyTransaction> transactionsOfAccount = appState.transactions
+    List<MoneyTransaction> transactionsOfAccount = widget.appState.transactions
         .where((transaction) => transaction.accountID == this.widget.account.id)
         .toList();
 
@@ -141,7 +140,8 @@ class __TransactionListState extends State<_TransactionList> {
         separatorBuilder: (BuildContext context, int index) =>
             Divider(height: 1, color: Colors.black12),
         itemBuilder: (BuildContext context, int index) {
-          return Card(child: TransactionRow(transactionsOfAccount[index], appState.allCategories));
+          return Card(
+              child: TransactionRow(transactionsOfAccount[index], widget.appState.allCategories));
         },
       ),
     ));

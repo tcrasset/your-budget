@@ -69,38 +69,113 @@ class _TransactionRowState extends State<TransactionRow> {
           orElse: () => null);
       subcategoryName = correspondingSubcategory != null ? correspondingSubcategory.name : "";
     }
+
+    return RowWithCheckbox(
+        subcategoryName,
+        widget.moneyTransaction.memo,
+        memoStyle,
+        widget.moneyTransaction.amount,
+        amountStyle,
+        widget.moneyTransaction.date,
+        dateStyle,
+        payeeName,
+        subcategoryStyle);
+  }
+}
+
+class RowWithoutCheckbox extends StatelessWidget {
+  final String subcategoryName;
+  final TextStyle subcategoryStyle;
+
+  final String memo;
+  final TextStyle memoStyle;
+  final double amount;
+  final TextStyle amountStyle;
+  final DateTime date;
+  final TextStyle dateStyle;
+  final String payeeName;
+
+  const RowWithoutCheckbox(this.subcategoryName, this.memo, this.memoStyle, this.amount,
+      this.amountStyle, this.date, this.dateStyle, this.payeeName, this.subcategoryStyle,
+      {Key key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10),
         margin: EdgeInsets.symmetric(horizontal: 10),
         height: 70,
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 subcategoryName,
                 style: subcategoryStyle,
               ),
-              Text(getDatePhrase(widget.moneyTransaction.date),
-                  textAlign: TextAlign.right, style: dateStyle),
-            ],
-          ),
-          Column(
-            children: <Widget>[
               Text(
-                widget.moneyTransaction.memo == "" ? "No memo" : widget.moneyTransaction.memo,
+                memo == "" ? "No memo" : memo,
                 textAlign: TextAlign.left,
                 style: memoStyle,
               ),
+              Text("$amount €", style: amountStyle),
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text("${widget.moneyTransaction.amount} €", style: amountStyle),
+              Text(getDatePhrase(date), textAlign: TextAlign.right, style: dateStyle),
               Text("$payeeName")
             ],
           ),
         ]));
+  }
+}
+
+class RowWithCheckbox extends StatelessWidget {
+  final String subcategoryName;
+  final TextStyle subcategoryStyle;
+
+  final String memo;
+  final TextStyle memoStyle;
+  final double amount;
+  final TextStyle amountStyle;
+  final DateTime date;
+  final TextStyle dateStyle;
+  final String payeeName;
+
+  const RowWithCheckbox(this.subcategoryName, this.memo, this.memoStyle, this.amount,
+      this.amountStyle, this.date, this.dateStyle, this.payeeName, this.subcategoryStyle,
+      {Key key})
+      : super(key: key);
+
+  void handleCheckboxOnChanged(bool value) {}
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 10),
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Checkbox(value: true, onChanged: handleCheckboxOnChanged),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(getDateString(date), textAlign: TextAlign.right, style: dateStyle),
+                  Text(
+                    memo == "" ? "No memo" : memo,
+                    textAlign: TextAlign.left,
+                    style: memoStyle,
+                  ),
+                  Text("$amount €", style: amountStyle),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }
