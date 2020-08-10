@@ -145,7 +145,7 @@ class RowWithoutCheckbox extends StatelessWidget {
   }
 }
 
-class RowWithCheckbox extends StatelessWidget {
+class RowWithCheckbox extends StatefulWidget {
   final String subcategoryName;
   final TextStyle subcategoryStyle;
 
@@ -162,7 +162,18 @@ class RowWithCheckbox extends StatelessWidget {
       {Key key})
       : super(key: key);
 
-  void handleCheckboxOnChanged(bool value) {}
+  @override
+  _RowWithCheckboxState createState() => _RowWithCheckboxState();
+}
+
+class _RowWithCheckboxState extends State<RowWithCheckbox> {
+  bool isChecked = false;
+  void handleCheckboxOnChanged(bool value) {
+    setState(() {
+      isChecked = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -172,18 +183,19 @@ class RowWithCheckbox extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Checkbox(value: true, onChanged: handleCheckboxOnChanged),
+            Checkbox(value: isChecked, onChanged: handleCheckboxOnChanged),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(getDateString(date), textAlign: TextAlign.right, style: dateStyle),
+                  Text(getDateString(widget.date),
+                      textAlign: TextAlign.right, style: widget.dateStyle),
                   Text(
-                    memo == "" ? "No memo" : memo,
+                    widget.memo == "" ? "No memo" : widget.memo,
                     textAlign: TextAlign.left,
-                    style: memoStyle,
+                    style: widget.memoStyle,
                   ),
-                  Text("$amount €", style: amountStyle),
+                  Text("${widget.amount} €", style: widget.amountStyle),
                 ],
               ),
             ),
