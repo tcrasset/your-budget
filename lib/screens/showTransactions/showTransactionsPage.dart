@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/constants.dart';
 
@@ -58,10 +59,47 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   @override
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
 
-  void handleFloatingActionButtonPress() {
+  void toggleEditable() {
     setState(() {
       isEditable = !isEditable;
     });
+  }
+
+  Future<String> _showDeleteDialog(BuildContext context) async {
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete selected transactions?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop("Cancel");
+              },
+            ),
+            FlatButton(
+              child: Text('Delete'),
+              textColor: Constants.RED_COLOR,
+              onPressed: () {
+                Navigator.of(context).pop("Delete");
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+//TODO: Finish deleted transactions
+  void handleDeleteTransactions(BuildContext context) async {
+    String result = await _showDeleteDialog(context);
+    if (result == "Delete") {
+      AppState appState = Provider.of<AppState>(context, listen: false);
+      // appState.removeSubcategory(subcat.id);
+      print("Deleted transactions");
+    }
   }
 }
 
@@ -71,13 +109,16 @@ class _ShowTransactionPageView
 
   @override
   Widget build(BuildContext context) {
-    AppState appState = Provider.of<AppState>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.title),
           leading: Icon(Constants.ALLTRANSACTION_ICON),
           backgroundColor: Constants.PRIMARY_COLOR,
           actions: <Widget>[
+            IconButton(
+              icon: Icon(FontAwesomeIcons.checkSquare),
+              onPressed: state.toggleEditable,
+            ),
             PopupMenuButton(
               onSelected: state.handlePopUpMenuButtonSelected,
               itemBuilder: (context) => [
@@ -89,10 +130,10 @@ class _ShowTransactionPageView
             ),
           ]),
       body: Consumer<AppState>(builder: (context, appState, child) {
-        if (appState.transactions.isEmpty) {
+        if (state.account == null || appState.transactions.isEmpty) {
           return Center(
             child: Text(
-              "No transactions logged. Add an account first.",
+              "No transactions logged. Choose an account or add a transaction.",
               style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
             ),
           );
@@ -100,8 +141,13 @@ class _ShowTransactionPageView
           return _TransactionList(state.account, appState, state.isEditable);
         }
       }),
-      floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add), onPressed: state.handleFloatingActionButtonPress),
+      floatingActionButton: state.isEditable
+          ? FloatingActionButton(
+              onPressed: () => state.handleDeleteTransactions(context),
+              backgroundColor: Constants.RED_COLOR,
+              child: Icon(Icons.delete_outline),
+            )
+          : null,
     );
   }
 }

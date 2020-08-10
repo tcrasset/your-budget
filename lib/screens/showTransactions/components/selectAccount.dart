@@ -13,7 +13,6 @@ class SelectAccountPage extends StatelessWidget {
     List<Account> accounts = appState.accounts;
 
     void handleOnTap(int index) {
-      print("Popping");
       Navigator.pop(context, accounts[index]);
     }
 
