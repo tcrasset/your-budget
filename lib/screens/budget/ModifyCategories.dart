@@ -134,28 +134,66 @@ class _ModifySubcategoryRow extends StatelessWidget {
     }
   }
 
+  Future<String> _showDeleteDialog(BuildContext context) async {
+    return showDialog<String>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Delete Subcategory ${subcat.name} ?'),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop("Cancel");
+              },
+            ),
+            FlatButton(
+              child: Text('Delete'),
+              textColor: Constants.RED_COLOR,
+              onPressed: () {
+                Navigator.of(context).pop("Delete");
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void deleteSubcategory(BuildContext context) async {
+    String result = await _showDeleteDialog(context);
+    if (result == "Delete") {
+      AppState appState = Provider.of<AppState>(context, listen: false);
+      appState.removeSubcategory(subcat.id);
+      print("Deleted subcategory");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 40.0,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            GestureDetector(
-                onTap: () => handleSubCategoryNameChange(context),
-                child: Padding(
+    return GestureDetector(
+        onTap: () => handleSubCategoryNameChange(context),
+        onLongPress: () => deleteSubcategory(context),
+        child: Container(
+            color: Colors.blue,
+            height: 40.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(subcat.name,
                       style: TextStyle(
                         fontSize: Constants.SUBCATEGORY_TEXT_STYLE.fontSize,
                         fontWeight: Constants.SUBCATEGORY_TEXT_STYLE.fontWeight,
                       )),
-                )),
-            // Row(
-            //   children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
-            // )
-          ],
-        ));
+                )
+                // Row(
+                //   children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
+                // )
+              ],
+            )));
   }
 }
 

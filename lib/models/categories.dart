@@ -99,6 +99,11 @@ class MainCategory extends Category {
     updateFields();
   }
 
+  void removeSubcategory(int subcategoryId) {
+    subcategories.removeWhere((subcat) => subcat.id == subcategoryId);
+    updateFields();
+  }
+
   @override
   String toString() {
     return super.toString() +

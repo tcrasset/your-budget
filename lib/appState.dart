@@ -296,6 +296,30 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeSubcategory(int subcategoryId) {
+    // Take any subcategory of the same id, to be able to access the parentID field
+    SubCategory toBeRemoved =
+        currentBudget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+
+    //Remove subcategories from the budgets and from the database
+    _budgets.forEach((budget) {
+      budget.removeSubcategory(toBeRemoved);
+    });
+    SQLQueryClass.deleteSubcategory(subcategoryId);
+
+    // Remove the budget values linked to the subcategory from the
+    // _budgetValues array and from the data base
+    List<BudgetValue> correspondingBudgetValues =
+        _budgetValues.where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId).toList();
+
+    correspondingBudgetValues.forEach((budgetvalue) {
+      SQLQueryClass.deleteBudgetValue(budgetvalue.id);
+    });
+    _budgetValues.removeWhere((budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
+
+    notifyListeners();
+  }
+
   /// Update the name of the [MainCategory] pointed to
   /// by [modifiedCategory.id] to [modifiedCategory.name]
   void updateCategoryName(MainCategory modifiedCategory) {

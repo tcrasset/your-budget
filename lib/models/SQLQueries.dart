@@ -312,12 +312,12 @@ class SQLQueryClass {
     DatabaseCreator.databaseLog('Delete category', sql, null, result, params);
   }
 
-  /// Deletes the [subcategory] of id [subcategory.id] from the database.
-  static Future<void> deleteSubcategory(SubCategory subcategory) async {
+  /// Deletes the [SubCategory] of id [subcategoryID] from the database.
+  static Future<void> deleteSubcategory(int subcategoryID) async {
     final sql = '''DELETE FROM ${DatabaseCreator.subcategoryTable}
       WHERE ${DatabaseCreator.SUBCAT_ID} == ?;''';
 
-    List<dynamic> params = [subcategory.id];
+    List<dynamic> params = [subcategoryID];
     final result = await db.rawDelete(sql, params);
     DatabaseCreator.databaseLog('Delete subcategory', sql, null, result, params);
   }
@@ -353,11 +353,11 @@ class SQLQueryClass {
   }
 
   /// Deletes the [budgetValue] of id [budgetValue.id] from the database.
-  static Future<void> deleteBudgetValue(BudgetValue budgetValue) async {
+  static Future<void> deleteBudgetValue(int budgetValueId) async {
     final sql = '''DELETE FROM ${DatabaseCreator.budgetValueTable}
       WHERE ${DatabaseCreator.BUDGET_VALUE_ID} == ?;''';
 
-    List<dynamic> params = [budgetValue.id];
+    List<dynamic> params = [budgetValueId];
     final result = await db.rawDelete(sql, params);
     DatabaseCreator.databaseLog('Delete budgetvalue', sql, null, result, params);
   }

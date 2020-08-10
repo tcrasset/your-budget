@@ -116,4 +116,11 @@ class Budget {
     return super.toString() +
         """ {month: $month, year: $year, maincategories: $maincategories, subcategories: $subcategories}\n""";
   }
+
+  void removeSubcategory(SubCategory deletedSubcategory) {
+    subcategories.removeWhere((subcat) => subcat.id == deletedSubcategory.id);
+    MainCategory cat = maincategories.singleWhere((cat) => cat.id == deletedSubcategory.parentId);
+    cat.removeSubcategory(deletedSubcategory.id);
+    _updateTotalBudgeted();
+  }
 }
