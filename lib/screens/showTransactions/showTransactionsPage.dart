@@ -6,9 +6,10 @@ import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/showTransactions/components/selectAccount.dart';
-import 'package:mybudget/screens/showTransactions/components/transaction.dart';
+import 'package:mybudget/screens/showTransactions/components/transactionRow.dart';
 import 'package:provider/provider.dart';
 
+//TODO: Add TransactionPageState
 class ShowTransactionPage extends StatefulWidget {
   final String title;
 
@@ -133,7 +134,7 @@ class _ShowTransactionPageView
         if (state.account == null || appState.transactions.isEmpty) {
           return Center(
             child: Text(
-              "No transactions logged. Choose an account or add a transaction.",
+              "No transactions logged. Please choose an account.",
               style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
             ),
           );
