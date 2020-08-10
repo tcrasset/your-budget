@@ -3,8 +3,8 @@ import 'package:mybudget/appState.dart';
 import 'package:mybudget/models/categories.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
-import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/showTransactions/components/checkedUncheckedRow.dart';
+import 'package:mybudget/screens/showTransactions/components/UncheckedRow.dart';
+import 'package:mybudget/screens/showTransactions/components/checkedRow.dart';
 import 'package:provider/provider.dart';
 
 class TransactionRow extends StatefulWidget {
@@ -73,7 +73,7 @@ class _TransactionRowState extends State<TransactionRow> {
     }
 
     return widget.isEditable
-        ? RowWithCheckbox(
+        ? CheckedRow(
             subcategoryName,
             widget.moneyTransaction.memo,
             memoStyle,
@@ -83,7 +83,7 @@ class _TransactionRowState extends State<TransactionRow> {
             dateStyle,
             payeeName,
             subcategoryStyle)
-        : RowWithoutCheckbox(
+        : UncheckedRow(
             subcategoryName,
             widget.moneyTransaction.memo,
             memoStyle,

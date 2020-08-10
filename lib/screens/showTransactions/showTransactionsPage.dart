@@ -7,6 +7,8 @@ import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/showTransactions/components/selectAccount.dart';
 import 'package:mybudget/screens/showTransactions/components/transactionRow.dart';
+import 'package:mybudget/screens/showTransactions/components/transactionList.dart';
+import 'package:mybudget/screens/showTransactions/modifyTransactions.dart';
 import 'package:provider/provider.dart';
 
 //TODO: Add TransactionPageState
@@ -60,47 +62,8 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   @override
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
 
-  void toggleEditable() {
-    setState(() {
-      isEditable = !isEditable;
-    });
-  }
-
-  Future<String> _showDeleteDialog(BuildContext context) async {
-    return showDialog<String>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Delete selected transactions?'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop("Cancel");
-              },
-            ),
-            FlatButton(
-              child: Text('Delete'),
-              textColor: Constants.RED_COLOR,
-              onPressed: () {
-                Navigator.of(context).pop("Delete");
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-//TODO: Finish deleted transactions
-  void handleDeleteTransactions(BuildContext context) async {
-    String result = await _showDeleteDialog(context);
-    if (result == "Delete") {
-      AppState appState = Provider.of<AppState>(context, listen: false);
-      // appState.removeSubcategory(subcat.id);
-      print("Deleted transactions");
-    }
+  void handleModifyTransactions() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
   }
 }
 
@@ -118,7 +81,7 @@ class _ShowTransactionPageView
           actions: <Widget>[
             IconButton(
               icon: Icon(FontAwesomeIcons.checkSquare),
-              onPressed: state.toggleEditable,
+              onPressed: state.handleModifyTransactions,
             ),
             PopupMenuButton(
               onSelected: state.handlePopUpMenuButtonSelected,
@@ -139,62 +102,9 @@ class _ShowTransactionPageView
             ),
           );
         } else {
-          return _TransactionList(state.account, appState, state.isEditable);
+          return TransactionList(state.account, appState, state.isEditable);
         }
       }),
-      floatingActionButton: state.isEditable
-          ? FloatingActionButton(
-              onPressed: () => state.handleDeleteTransactions(context),
-              backgroundColor: Constants.RED_COLOR,
-              child: Icon(Icons.delete_outline),
-            )
-          : null,
     );
-  }
-}
-
-class _TransactionList extends StatefulWidget {
-  final Account account;
-  final AppState appState;
-  final bool isEditable;
-
-  _TransactionList(this.account, this.appState, this.isEditable);
-
-  @override
-  __TransactionListState createState() => __TransactionListState();
-}
-
-class __TransactionListState extends State<_TransactionList> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<MoneyTransaction> transactionsOfAccount = widget.appState.transactions
-        .where((transaction) => transaction.accountID == this.widget.account.id)
-        .toList();
-
-    return new Container(
-        child: Scrollbar(
-      isAlwaysShown: true,
-      controller: _scrollController,
-      child: new ListView.separated(
-        controller: _scrollController,
-        shrinkWrap: true,
-        itemCount: transactionsOfAccount.length,
-        separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 1, color: Colors.black12),
-        itemBuilder: (BuildContext context, int index) {
-          return Card(
-              child: TransactionRow(
-                  transactionsOfAccount[index], widget.appState.allCategories, widget.isEditable));
-        },
-      ),
-    ));
   }
 }

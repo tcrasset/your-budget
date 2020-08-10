@@ -34,23 +34,24 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
     List<Category> categories = appState.allCategories;
     if (categories.isNotEmpty) {
       return Scaffold(
-          appBar: AppBar(
-            title: Text("Modify categories"),
-            actions: <Widget>[
-              IconButton(
-                  icon: Icon(FontAwesomeIcons.plus),
-                  onPressed: () => state.handleAddCategory(context)),
-            ],
-          ),
-          body: ListView.builder(
-            itemCount: categories.length,
-            itemBuilder: (context, index) {
-              final item = categories[index];
-              return (item is MainCategory)
-                  ? _ModifyMainCategoryRow(cat: item)
-                  : _ModifySubcategoryRow(subcat: item);
-            },
-          ));
+        appBar: AppBar(
+          title: Text("Modify categories"),
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(FontAwesomeIcons.plus),
+                onPressed: () => state.handleAddCategory(context)),
+          ],
+        ),
+        body: ListView.builder(
+          itemCount: categories.length,
+          itemBuilder: (context, index) {
+            final item = categories[index];
+            return (item is MainCategory)
+                ? _ModifyMainCategoryRow(cat: item)
+                : _ModifySubcategoryRow(subcat: item);
+          },
+        ),
+      );
     }
     return Container();
   }
