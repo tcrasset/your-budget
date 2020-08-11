@@ -8,27 +8,41 @@ import 'package:provider/provider.dart';
 
 class ShowTransactionsState extends ChangeNotifier {
   Map<int, bool> _isSelectedMap = HashMap();
+  int nbSelected = 0;
 
   bool isSelected(int transactionId) {
     return this._isSelectedMap[transactionId];
   }
 
   void updateIsSelected(int transactionId) async {
-    _isSelectedMap[transactionId] = !_isSelectedMap[_isSelectedMap];
+    if (_isSelectedMap[transactionId]) {
+      _isSelectedMap[transactionId] = false;
+      nbSelected--;
+    } else {
+      _isSelectedMap[transactionId] = true;
+      nbSelected++;
+    }
+
+    print(nbSelected);
   }
 
-  void setTransaction(MoneyTransaction moneyTransaction) {
-    this._isSelectedMap[moneyTransaction.id] = false;
+  void setTransaction(int transactionId) {
+    this._isSelectedMap[transactionId] = false;
   }
 
   void deleteTransactions(BuildContext context) {
     AppState appState = Provider.of<AppState>(context, listen: false);
+    List<int> transactionIdsToDelete = [];
     _isSelectedMap.forEach((transactionId, value) {
       if (_isSelectedMap[transactionId]) {
-        // appState.deleteTransaction(transactionId);
-
-        _isSelectedMap.remove(transactionId);
+        transactionIdsToDelete.add(transactionId);
       }
     });
+    transactionIdsToDelete.forEach((transactionId) {
+      // appState.deleteTransaction(transactionId);
+      _isSelectedMap.remove(transactionId);
+    });
+
+    print("Deleted transactions $transactionIdsToDelete");
   }
 }

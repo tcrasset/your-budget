@@ -4,6 +4,7 @@ import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/screens/showTransactions/components/transactionList.dart';
+import 'package:mybudget/screens/showTransactions/showTransactionsState.dart';
 import 'package:provider/provider.dart';
 
 class ModifyTransactions extends StatefulWidget {
@@ -50,9 +51,9 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
   void handleDeleteTransactions(BuildContext context) async {
     String result = await _showDeleteDialog(context);
     if (result == "Delete") {
-      AppState appState = Provider.of<AppState>(context, listen: false);
-      // appState.removeSubcategory(subcat.id);
-      print("Deleted transactions");
+      ShowTransactionsState showTransactionsState =
+          Provider.of<ShowTransactionsState>(context, listen: false);
+      showTransactionsState.deleteTransactions(context);
     }
   }
 }
@@ -67,7 +68,8 @@ class _ModifyTransactionsView
       appBar: AppBar(
         title: Text("Modify categories"),
       ),
-      body: Consumer<AppState>(builder: (context, appState, child) {
+      body: Consumer2<AppState, ShowTransactionsState>(
+          builder: (_, appState, showTransactionsState, __) {
         return TransactionList(widget.account, appState, true);
       }),
       floatingActionButton: FloatingActionButton(

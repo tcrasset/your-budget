@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mybudget/models/utils.dart';
+import 'package:mybudget/screens/showTransactions/showTransactionsState.dart';
+import 'package:provider/provider.dart';
 
 class CheckedRow extends StatefulWidget {
   final String subcategoryName;
@@ -12,9 +14,10 @@ class CheckedRow extends StatefulWidget {
   final DateTime date;
   final TextStyle dateStyle;
   final String payeeName;
+  final int transactionId;
 
   const CheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
-      this.date, this.dateStyle, this.payeeName, this.subcategoryStyle,
+      this.date, this.dateStyle, this.payeeName, this.subcategoryStyle, this.transactionId,
       {Key key})
       : super(key: key);
 
@@ -24,10 +27,23 @@ class CheckedRow extends StatefulWidget {
 
 class _CheckedRowState extends State<CheckedRow> {
   bool isChecked = false;
+
   void handleCheckboxOnChanged(bool value) {
+    ShowTransactionsState showTransactionsState =
+        Provider.of<ShowTransactionsState>(context, listen: false);
+    showTransactionsState.updateIsSelected(widget.transactionId);
     setState(() {
       isChecked = value;
     });
+  }
+
+  @override
+  void initState() {
+    ShowTransactionsState showTransactionsState =
+        Provider.of<ShowTransactionsState>(context, listen: false);
+
+    showTransactionsState.setTransaction(widget.transactionId);
+    super.initState();
   }
 
   @override

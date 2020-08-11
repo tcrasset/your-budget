@@ -82,7 +82,8 @@ class _TransactionRowState extends State<TransactionRow> {
             widget.moneyTransaction.date,
             dateStyle,
             payeeName,
-            subcategoryStyle)
+            subcategoryStyle,
+            widget.moneyTransaction.id)
         : UncheckedRow(
             subcategoryName,
             widget.moneyTransaction.memo,

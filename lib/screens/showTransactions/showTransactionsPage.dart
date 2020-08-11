@@ -6,7 +6,6 @@ import 'package:mybudget/models/constants.dart';
 import 'package:mybudget/models/entries.dart';
 import 'package:mybudget/components/widgetViewClasses.dart';
 import 'package:mybudget/screens/showTransactions/components/selectAccount.dart';
-import 'package:mybudget/screens/showTransactions/components/transactionRow.dart';
 import 'package:mybudget/screens/showTransactions/components/transactionList.dart';
 import 'package:mybudget/screens/showTransactions/modifyTransactions.dart';
 import 'package:provider/provider.dart';
