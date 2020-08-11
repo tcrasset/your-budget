@@ -55,7 +55,8 @@ class _CheckedRowState extends State<CheckedRow> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Checkbox(value: isChecked, onChanged: handleCheckboxOnChanged),
+            if (widget.memo != "Starting balance")
+              Checkbox(value: isChecked, onChanged: handleCheckboxOnChanged),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

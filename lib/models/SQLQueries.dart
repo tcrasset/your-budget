@@ -137,7 +137,10 @@ class SQLQueryClass {
                           WHERE ${DatabaseCreator.ACCOUNT_ID_OUTSIDE} == $accountId
                           ORDER BY ${DatabaseCreator.MONEYTRANSACTION_DATE} ASC LIMIT 1;''';
     final data = await db.rawQuery(sql);
-    return MoneyTransaction.fromJson(data[0]);
+
+    if (data.isNotEmpty) {
+      return MoneyTransaction.fromJson(data[0]);
+    }
   }
 
   /// Adds the [category] of type [MainCategory] to the database.
@@ -343,11 +346,11 @@ class SQLQueryClass {
   }
 
   /// Deletes the [moneytransaction] of id [moneytransaction.id] from the database.
-  static Future<void> deleteTransaction(MoneyTransaction moneytransaction) async {
+  static Future<void> deleteTransaction(int moneytransactionId) async {
     final sql = '''DELETE FROM ${DatabaseCreator.moneyTransactionTable}
       WHERE ${DatabaseCreator.MONEYTRANSACTION_ID} == ?;''';
 
-    List<dynamic> params = [moneytransaction.id];
+    List<dynamic> params = [moneytransactionId];
     final result = await db.rawDelete(sql, params);
     DatabaseCreator.databaseLog('Delete moneyTransaction', sql, null, result, params);
   }

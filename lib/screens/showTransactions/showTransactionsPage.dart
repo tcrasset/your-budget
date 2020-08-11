@@ -93,6 +93,7 @@ class _ShowTransactionPageView
             ),
           ]),
       body: Consumer<AppState>(builder: (context, appState, child) {
+        //TODO: Staring balance does not appear before refreshing state after adding account
         if (state.account == null || appState.transactions.isEmpty) {
           return Center(
             child: Text(

@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/entries.dart';
 import 'package:provider/provider.dart';
 
 class ShowTransactionsState extends ChangeNotifier {
@@ -39,7 +38,7 @@ class ShowTransactionsState extends ChangeNotifier {
       }
     });
     transactionIdsToDelete.forEach((transactionId) {
-      // appState.deleteTransaction(transactionId);
+      appState.deleteTransaction(transactionId);
       _isSelectedMap.remove(transactionId);
     });
 

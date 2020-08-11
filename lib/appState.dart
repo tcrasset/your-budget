@@ -429,6 +429,13 @@ class AppState extends ChangeNotifier {
     return _budgets.singleWhere((budget) => budget.year == date.year && budget.month == date.month);
   }
 
+  void deleteTransaction(int transactionId) {
+    _transactions.removeWhere((transaction) => transaction.id == transactionId);
+
+    SQLQueryClass.deleteTransaction(transactionId);
+    notifyListeners();
+  }
+
   // void addSubcategoriesToBudgetValues() async {
   //   int id = await SQLQueryClass.budgetValuesCount() + 1;
   //   for (final int month in [8, 9, 10, 11, 12]) {
