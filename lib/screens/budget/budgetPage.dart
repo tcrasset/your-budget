@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/screens/budget/ModifyCategories.dart';
-import 'package:mybudget/screens/budget/budgetPageState.dart';
-import 'package:mybudget/screens/budget/components/MainCategoryRow.dart';
-import 'package:mybudget/screens/budget/components/SubCategoryRow.dart';
-import 'package:mybudget/screens/budget/components/buttonDial.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/screens/budget/ModifyCategories.dart';
+import 'package:your_budget/screens/budget/budgetPageState.dart';
+import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
+import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
+import 'package:your_budget/screens/budget/components/buttonDial.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {

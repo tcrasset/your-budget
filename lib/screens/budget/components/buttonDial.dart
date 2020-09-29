@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/budget/budgetPageState.dart';
-import 'package:mybudget/screens/budget/components/customButton.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/screens/budget/budgetPageState.dart';
+import 'package:your_budget/screens/budget/components/customButton.dart';
 import 'package:provider/provider.dart';
 
 class ButtonDial extends StatelessWidget {
@@ -77,7 +77,7 @@ class ButtonDial extends StatelessWidget {
                     buttonPressed,
                     Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.sports_soccer_rounded), Text("Goals")])),
+                        children: [Icon(Icons.fiber_new), Text("Goals")])),
                 CustomButton(
                     "Budget",
                     82.5,

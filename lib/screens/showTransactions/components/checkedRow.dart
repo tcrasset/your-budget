@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/showTransactions/showTransactionsState.dart';
+import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
 import 'package:provider/provider.dart';
 
 class CheckedRow extends StatefulWidget {

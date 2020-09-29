@@ -1,5 +1,5 @@
 import 'package:jiffy/jiffy.dart';
-import 'package:mybudget/models/categories.dart';
+import 'package:your_budget/models/categories.dart';
 
 class Budget {
   List<MainCategory> maincategories = [];

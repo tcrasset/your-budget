@@ -2,14 +2,14 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:mybudget/models/Budget.dart';
+import 'package:your_budget/models/Budget.dart';
 
-import 'package:mybudget/models/SQLQueries.dart';
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/models/entries.dart';
-import 'package:mybudget/models/goal.dart';
-import 'package:mybudget/models/utils.dart';
+import 'package:your_budget/models/SQLQueries.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/utils.dart';
 
 import 'models/SQLQueries.dart';
 import 'models/categories.dart';

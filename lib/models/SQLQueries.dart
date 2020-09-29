@@ -1,7 +1,7 @@
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/database_creator.dart';
-import 'package:mybudget/models/entries.dart';
-import 'package:mybudget/models/goal.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/database_creator.dart';
+import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/goal.dart';
 
 class SQLQueryClass {
   /// Returns the list of all [MainCategory] in the database.

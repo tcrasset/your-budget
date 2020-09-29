@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/models/entries.dart';
-import 'package:mybudget/screens/showTransactions/components/UncheckedRow.dart';
-import 'package:mybudget/screens/showTransactions/components/checkedRow.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/screens/showTransactions/components/UncheckedRow.dart';
+import 'package:your_budget/screens/showTransactions/components/checkedRow.dart';
 import 'package:provider/provider.dart';
 
 class TransactionRow extends StatefulWidget {

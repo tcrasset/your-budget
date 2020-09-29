@@ -1,12 +1,12 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/home/tom/flutter"
-export "FLUTTER_APPLICATION_PATH=/home/tom/Documents/Personal Projects/mybudget"
+export "FLUTTER_ROOT=/home/tomc/snap/flutter/common/flutter"
+export "FLUTTER_APPLICATION_PATH=/home/tomc/Documents/Personal Projects/my-budget-app/migration/your_budget"
 export "FLUTTER_TARGET=lib/main.dart"
 export "FLUTTER_BUILD_DIR=build"
 export "SYMROOT=${SOURCE_ROOT}/../build/ios"
 export "OTHER_LDFLAGS=$(inherited) -framework Flutter"
-export "FLUTTER_FRAMEWORK_DIR=/home/tom/flutter/bin/cache/artifacts/engine/ios"
+export "FLUTTER_FRAMEWORK_DIR=/home/tomc/snap/flutter/common/flutter/bin/cache/artifacts/engine/ios"
 export "FLUTTER_BUILD_NAME=1.0.0"
 export "FLUTTER_BUILD_NUMBER=1"
 export "DART_OBFUSCATION=false"

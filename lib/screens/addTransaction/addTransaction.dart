@@ -5,16 +5,16 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/components/overlayNotifications.dart';
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/models/entries.dart';
-import 'package:mybudget/models/utils.dart';
-import 'package:mybudget/screens/addTransaction/components/CurrencyInputFormatter.dart';
-import 'package:mybudget/screens/addTransaction/selectValue.dart';
-import 'package:mybudget/components/widgetViewClasses.dart';
-import 'package:mybudget/components/rowContainer.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/components/overlayNotifications.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
+import 'package:your_budget/screens/addTransaction/selectValue.dart';
+import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/components/rowContainer.dart';
 
 import 'package:provider/provider.dart';
 

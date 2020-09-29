@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/models/utils.dart';
+import 'package:your_budget/models/utils.dart';
 
 class UncheckedRow extends StatelessWidget {
   final String subcategoryName;

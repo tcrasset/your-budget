@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/constants.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/constants.dart';
 
-import 'package:mybudget/models/entries.dart';
-import 'package:mybudget/components/widgetViewClasses.dart';
-import 'package:mybudget/screens/showTransactions/components/selectAccount.dart';
-import 'package:mybudget/screens/showTransactions/components/transactionList.dart';
-import 'package:mybudget/screens/showTransactions/modifyTransactions.dart';
+import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/screens/showTransactions/components/selectAccount.dart';
+import 'package:your_budget/screens/showTransactions/components/transactionList.dart';
+import 'package:your_budget/screens/showTransactions/modifyTransactions.dart';
 import 'package:provider/provider.dart';
 
 //TODO: Add TransactionPageState

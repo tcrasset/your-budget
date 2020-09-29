@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:jiffy/jiffy.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/models/utils.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/utils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

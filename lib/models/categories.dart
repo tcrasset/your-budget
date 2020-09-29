@@ -1,4 +1,4 @@
-import 'package:mybudget/models/database_creator.dart';
+import 'package:your_budget/models/database_creator.dart';
 
 class Category {
   int id;

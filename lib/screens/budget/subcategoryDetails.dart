@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/goal.dart';
-import 'package:mybudget/models/utils.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/utils.dart';
 import 'package:provider/provider.dart';
 
 class SubcategoryDetails extends StatelessWidget {

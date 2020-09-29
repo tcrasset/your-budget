@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/constants.dart';
-import 'package:mybudget/screens/addAccount/addAccount.dart';
-// import 'package:mybudget/screens/addAccount/addAccount.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/screens/addAccount/addAccount.dart';
+// import 'package:your_budget/screens/addAccount/addAccount.dart';
 
-import 'package:mybudget/screens/addTransaction/addTransaction.dart';
+import 'package:your_budget/screens/addTransaction/addTransaction.dart';
 
-import 'package:mybudget/screens/budget/budgetPage.dart';
-import 'package:mybudget/models/database_creator.dart';
-import 'package:mybudget/screens/budget/budgetPageState.dart';
-import 'package:mybudget/screens/showTransactions/showTransactionsState.dart';
-import 'package:mybudget/waitingscreen.dart';
-import 'package:mybudget/screens/showTransactions/showTransactionsPage.dart';
+import 'package:your_budget/screens/budget/budgetPage.dart';
+import 'package:your_budget/models/database_creator.dart';
+import 'package:your_budget/screens/budget/budgetPageState.dart';
+import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
+import 'package:your_budget/waitingscreen.dart';
+import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
-// import 'package:mybudget/searchPage.dart';
+// import 'package:your_budget/searchPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

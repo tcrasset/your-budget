@@ -18,7 +18,7 @@ Container rowContainer(String name, Widget childWidget) {
               child: Row(
                 children: <Widget>[
                   Expanded(child: childWidget),
-                  name == "Date" ? Icon(Icons.date_range_outlined) : Icon(Icons.edit),
+                  name == "Date" ? Icon(Icons.date_range) : Icon(Icons.edit),
                 ],
               ),
             ),

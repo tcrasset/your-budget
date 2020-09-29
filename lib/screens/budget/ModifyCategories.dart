@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:mybudget/appState.dart';
-import 'package:mybudget/models/categories.dart';
-import 'package:mybudget/models/constants.dart';
+import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/widgetViewClasses.dart';
