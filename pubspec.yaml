@@ -43,9 +43,11 @@ dev_dependencies:
   flutter_launcher_icons: "^0.8.0"
 
 flutter_icons:
-  image_path: "assets/logo.png" 
   android: true
   ios: true
+  image_path: "assets/icon/yb_logo_all.png" 
+  adaptive_icon_background: "assets/icon/yb_logo_background.png"
+  adaptive_icon_foreground: "assets/icon/yb_logo_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
