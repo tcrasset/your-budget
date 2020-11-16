@@ -7,10 +7,13 @@ import 'package:your_budget/models/utils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
-//Global variable so as not to handle concurrency issues
+//Global database variable so as not to handle concurrency issues
 Database db;
 
+/// Class that is responsible for creating the database, filling up the default values
+/// and assigning it to global variable [db].
 class DatabaseCreator {
+  /// Names of the database tables
   static const String categoryTable = 'category';
   static const String subcategoryTable = 'subcategory';
   static const String payeeTable = 'payee';
@@ -20,30 +23,49 @@ class DatabaseCreator {
   static const String constantsTable = 'constants';
   static const String goalTable = 'goal';
 
+  /// Field names of the [categoryTable]
   static const String CATEGORY_ID = 'id';
   static const String CATEGORY_NAME = 'name';
 
+  /// Field names of the [subcategoryTable]
   static const String SUBCAT_ID = 'id';
   static const String SUBCAT_NAME = 'name';
 
+  /// Field names of the [payeeTable]
   static const String PAYEE_ID = 'id';
   static const String PAYEE_NAME = 'name';
 
+  /// Field names of the [accountTable]
   static const String ACCOUNT_ID = 'id';
   static const String ACCOUNT_NAME = 'name';
   static const String ACCOUNT_BALANCE = 'balance';
 
+  /// Field names of the [moneyTransactionTable]
   static const String MONEYTRANSACTION_ID = 'id';
   static const String MONEYTRANSACTION_AMOUNT = 'amount';
   static const String MONEYTRANSACTION_MEMO = 'memo';
   static const String MONEYTRANSACTION_DATE = 'date';
 
+  /// Field names of the [budgetValueTable]
   static const BUDGET_VALUE_ID = 'id';
   static const BUDGET_VALUE_BUDGETED = 'budgeted';
   static const BUDGET_VALUE_AVAILABLE = 'available';
   static const BUDGET_VALUE_YEAR = 'year';
   static const BUDGET_VALUE_MONTH = 'month';
 
+  /// Field names of the [constantsTable]
+  static const String CONSTANT_ID = 'id';
+  static const String CONSTANT_NAME = 'name';
+  static const String CONSTANT_VALUE = 'value';
+
+  /// Field names of the [goalTable]
+  static const String GOAL_ID = "id";
+  static const String GOAL_TYPE = "type";
+  static const String GOAL_AMOUNT = "amount";
+  static const String GOAL_YEAR = "year";
+  static const String GOAL_MONTH = "month";
+
+  /// Field names of the foreign keys
   static const String CAT_ID_OUTSIDE = 'cat_id';
   static const String SUBCAT_ID_OUTSIDE = 'subcat_id';
   static const String PAYEE_ID_OUTSIDE = 'payee_id';
@@ -51,22 +73,11 @@ class DatabaseCreator {
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
   static const String GOAL_ID_OUTSIDE = 'goal_id';
 
-  static const String CONSTANT_ID = 'id';
-  static const String CONSTANT_NAME = 'name';
-  static const String CONSTANT_VALUE = 'value';
-
-  static const String GOAL_ID = "id";
-  static const String GOAL_TYPE = "type";
-  static const String GOAL_AMOUNT = "amount";
-  static const String GOAL_YEAR = "year";
-  static const String GOAL_MONTH = "month";
-
-  /// Every action taken on the database gets logged to console
-  ///
-  /// Logs the method name [functionName] along with the raw sql query
-  /// [sql] and the parameters used.
+  /// Logs every action taken on the database to console.
+  /// The method name [functionName] along with the raw sql query
+  /// [sql] and the parameters used are logged.
   /// Furthermore, either the results [selectQueryResult] of a SELECT query or
-  /// the results [insertAndUpdateQueryResult] of a INSERT query are returned.
+  /// the results [insertAndUpdateQueryResult] of an INSERT query are returned.
   /// This depends on what action was taken on the database.
   static void databaseLog(String functionName, String sql,
       [List<Map<String, dynamic>> selectQueryResult,
@@ -86,7 +97,7 @@ class DatabaseCreator {
     }
   }
 
-  /// Returns the path of the database [dbName]
+  /// Returns the path of the database [dbName].
   Future<String> getDatabasePath(String dbName) async {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, dbName);
@@ -112,13 +123,15 @@ class DatabaseCreator {
   }
 
   /// Creates the database by creating the different tables
-  /// that will populate it, namely [categoryTable], [subcategoryTable],
-  /// [payeeTable], [accountTable], [moneyTransactionTable], [budgetValueTable]
+  /// that will populate it.
   Future<void> _onCreate(Database db, int version) async {
     await _createTables(db);
     await _createBasicCategories(db);
   }
 
+  /// Creates the table of the database. These are [categoryTable], [subcategoryTable],
+  /// [payeeTable], [accountTable], [moneyTransactionTable], [budgetValueTable], [constantsTable],
+  /// and [goalTable].
   Future<void> _createTables(Database db) async {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $categoryTable (
@@ -190,6 +203,8 @@ class DatabaseCreator {
                     );''');
   }
 
+  /// Populates the tables of database [db] with the default categories, subcategories and
+  /// their budgetValues.
   Future<void> _createBasicCategories(Database db) async {
     const String CREATE_CATEGORY = '''INSERT INTO $categoryTable
       ($CATEGORY_ID,$CATEGORY_NAME)
@@ -239,3 +254,5 @@ class DatabaseCreator {
     }
   }
 }
+
+//TODO: When starting a new month, create a new month in the database
