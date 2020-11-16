@@ -1,6 +1,10 @@
 import 'package:your_budget/models/database_creator.dart';
 
-class Category {
+/// Class representing a budgeting category.
+/// A category is represented an unique [id], a [name],
+/// the value [budgeted] is the money budgeted for the month and
+/// the value [available] is the money left to be spent for the month.
+abstract class Category {
   int id;
   String name;
   double budgeted;
@@ -9,14 +13,17 @@ class Category {
   Category(this.id, this.name, this.budgeted, this.available);
 }
 
+/// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
 class SubCategory extends Category {
   final parentId;
 
+  /// Default SubCategory constructor
   SubCategory(int id, int parentId, String name, double budgeted, double available)
       : parentId = parentId,
         super(id, name, budgeted, available);
 
-  // Subcategories are imported from the database as json file
+  /// Constructor building a SubCategory from a [json] representation taken
+  /// from a database
   SubCategory.fromJson(Map<String, dynamic> json)
       : parentId = json[DatabaseCreator.CAT_ID_OUTSIDE],
         super(
@@ -31,35 +38,32 @@ class SubCategory extends Category {
         """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}\n""";
   }
 
+  /// Creates a copy of this with zero money budgeted.
   SubCategory blank() {
     return SubCategory(id, parentId, name, 0.0, available);
   }
 
+  /// Creates an exact copy of this.
   SubCategory copy() {
     return SubCategory(id, parentId, name, budgeted, available);
   }
 }
 
+/// Budgeting [Category] that is a parent of one or multiple [SubCategory]'s
 class MainCategory extends Category {
   List<SubCategory> _subcategories = [];
 
+  /// Default [MainCategory] constructor, which sets the budgeted and available values to 0.00
   MainCategory(int id, String name) : super(id, name, 0.00, 0.00);
 
-  /// Categories are imported from the database as json file
+  /// Constructor building a MainCategory from a [json] representation taken
+  /// from a database
   MainCategory.fromJson(Map<String, dynamic> json)
       : super(
             json[DatabaseCreator.CATEGORY_ID], //
             json[DatabaseCreator.CATEGORY_NAME],
             0.00,
             0.00);
-
-  /// Convert a MainCategory into a Map.
-  Map<String, dynamic> toMap() {
-    return {
-      DatabaseCreator.CATEGORY_ID: id,
-      DatabaseCreator.CATEGORY_NAME: name,
-    };
-  }
 
   List<SubCategory> get subcategories {
     return _subcategories;
@@ -69,6 +73,8 @@ class MainCategory extends Category {
     _subcategories = subcategories;
   }
 
+  ///Computes the values of [budgeted] and [available] from the sum of the respective values of
+  ///their children in [_subcategories].
   void updateFields() {
     double budgeted = 0;
     double available = 0;
@@ -83,15 +89,18 @@ class MainCategory extends Category {
     this.available = available;
   }
 
+  /// Creates an exact copy of this.
   MainCategory copy() {
     return MainCategory(id, name);
   }
 
+  /// Adds [newSub] as a new subcategory to the list [_subcategories].
   void addSubcategory(SubCategory newSub) {
     this._subcategories.add(newSub);
     updateFields();
   }
 
+  /// Adds multiple [subcategories] as a new subcategories to the list [_subcategories].
   void addMultipleSubcategories(List<SubCategory> subcategories) {
     subcategories.forEach((sub) {
       this._subcategories.add(sub);
@@ -99,6 +108,7 @@ class MainCategory extends Category {
     updateFields();
   }
 
+  /// Removes the subcategory specified by [subcategoryId] from the list [_subcategories].
   void removeSubcategory(int subcategoryId) {
     subcategories.removeWhere((subcat) => subcat.id == subcategoryId);
     updateFields();
@@ -111,6 +121,8 @@ class MainCategory extends Category {
   }
 }
 
+/// Class representing the values tied to a SubCategory, represented by [subcategoryId], for a
+/// particular month set by [month] and [year].
 class BudgetValue {
   double budgeted;
   double available;
@@ -118,10 +130,11 @@ class BudgetValue {
   int subcategoryId;
   int month;
   int year;
-  //TODO: Convert date field to month/year field
+
   BudgetValue(this.id, this.subcategoryId, this.budgeted, this.available, this.year, this.month);
 
-  /// [BudgetValue] are imported from the database as json file
+  /// Constructor building a BudgetValue from a [json] representation taken
+  /// from a database.
   BudgetValue.fromJson(Map<String, dynamic> json)
       : id = json[DatabaseCreator.BUDGET_VALUE_ID], //
         subcategoryId = json[DatabaseCreator.SUBCAT_ID_OUTSIDE],
