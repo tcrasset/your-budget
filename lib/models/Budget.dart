@@ -1,6 +1,9 @@
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/models/categories.dart';
 
+/// Class representing budget that is held monthly, specified by [month] and [year].
+/// It holds a list of all [maincategories] and [subcategories], which are put in a specific
+/// order in [_allcategories]. The total budgeted value is held in [totalBudgeted].
 class Budget {
   List<MainCategory> maincategories = [];
   List<SubCategory> subcategories = [];
@@ -9,22 +12,15 @@ class Budget {
   int year;
   double totalBudgeted = 0;
 
-  List<Category> get allcategories {
-    _updateAllcategories();
-    return _allcategories;
-  }
-
-  String get monthAsString {
-    return Jiffy(DateTime(year, month)).format("MMMM");
-  }
-
+  /// Default constructor for [Budget]. It is declared for a month given by [month] and [year], and
+  /// will hold a list of MainCategories in [maincategories], and a list of their respective
+  /// children in [subcategories].
   Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
     for (final MainCategory cat in maincategories) {
       MainCategory newCat = cat.copy();
       List<SubCategory> correspondingSubcats =
           subcategories.where((subcat) => subcat.parentId == cat.id).toList();
       newCat.addMultipleSubcategories(correspondingSubcats);
-      newCat.updateFields();
       this.maincategories.add(newCat);
     }
     this.subcategories = subcategories;
@@ -34,6 +30,18 @@ class Budget {
     _updateAllcategories();
   }
 
+  /// The updated list of [_allcategories].
+  List<Category> get allcategories {
+    _updateAllcategories();
+    return _allcategories;
+  }
+
+  /// The month of the budget in human readable form, for example 'January' for month 1
+  String get monthAsString {
+    return Jiffy(DateTime(year, month)).format("MMMM");
+  }
+
+  /// Add the SubCategory [newSubcat] to this.
   void addSubcategory(SubCategory newSubcat) {
     SubCategory subcat = newSubcat.copy();
     this.subcategories.add(subcat);
@@ -42,11 +50,15 @@ class Budget {
     _updateTotalBudgeted();
   }
 
+  /// Replace the subcategory specified by [modifiedSubcategory.id] in the budget by
+  /// the values of [modifiedSubcategory].
   void makeCategoryChange(SubCategory modifiedSubcategory) {
     _updateSubCategory(modifiedSubcategory);
     _updateMainCategory(modifiedSubcategory);
   }
 
+  /// Modify the values of the SubCategory specified by [modifiedSubcategory.id]
+  ///
   ///Must be called before [_updateMainCategory()] because the former
   ///modifies the subcategories in each [MainCategory], and the latter
   ///updates the maincategories based on the subcategories' values.
@@ -67,12 +79,17 @@ class Budget {
     subcat.available = modifiedSubcategory.available;
   }
 
+  /// Modify the values, given by [modifiedSubcategory], of the MainCategory whose child is
+  /// specified by [modifiedSubcategory.id]
   void _updateMainCategory(SubCategory modifiedSubcategory) {
     MainCategory cat = maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
     cat.updateFields();
     _updateTotalBudgeted();
   }
 
+  /// Replace the attribute [field] of the SubCategory specified by [subcatId] with [value].
+  /// The parent of the SubCategory has to be specified [categoryId] to be able to
+  /// update it's values too.
   void makeSubcategoryChangeBySubcatId(int subcatId, int categoryId, String field, String value) {
     SubCategory oldSubcat = subcategories.singleWhere((subcat) => subcat.id == subcatId);
 
@@ -87,6 +104,7 @@ class Budget {
         oldSubcat.name = value;
         break;
       default:
+        //TODO: Raise error
         print("Pass in an actual field");
     }
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == categoryId);
@@ -95,6 +113,16 @@ class Budget {
     _updateTotalBudgeted();
   }
 
+  /// Fills the list [_allcategories] with each MainCategory followed by its children.
+  /// An example is the following:
+  /// "\[
+  ///   MainCategory_1
+  ///   SubCategory_1_1
+  ///   SubCategory_1_2
+  ///   SubCategory_1_3
+  ///   MainCategory_2
+  ///   SubCategory_2_1
+  /// ]
   void _updateAllcategories() {
     _allcategories = [];
     // Create a list of all MainCategories and Subcategories in order.
@@ -104,6 +132,7 @@ class Budget {
     }
   }
 
+  /// Updates the [totalBudgeted] value for the month.
   void _updateTotalBudgeted() {
     totalBudgeted = 0;
     for (final MainCategory cat in maincategories) {
@@ -117,6 +146,7 @@ class Budget {
         """ {month: $month, year: $year, maincategories: $maincategories, subcategories: $subcategories}\n""";
   }
 
+  /// Deletes the [deletedSubcategory] from the current Budget.
   void removeSubcategory(SubCategory deletedSubcategory) {
     subcategories.removeWhere((subcat) => subcat.id == deletedSubcategory.id);
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == deletedSubcategory.parentId);
