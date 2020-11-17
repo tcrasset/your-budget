@@ -35,7 +35,7 @@ class SubCategory extends Category {
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, parentId: $parentId, name: $name, available: $available, budgeted: $budgeted}\n""";
+        """ {id: $id, parentId: $parentId, name: $name, budgeted: $budgeted, available: $available}\n""";
   }
 
   /// Creates a copy of this with zero money budgeted.
