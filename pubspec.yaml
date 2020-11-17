@@ -39,13 +39,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  test: ^1.14.0
   flutter_launcher_icons: "^0.8.0"
 
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/icon/yb_logo_all.png" 
+  image_path: "assets/icon/yb_logo_all.png"
   adaptive_icon_background: "assets/icon/yb_logo_background.png"
   adaptive_icon_foreground: "assets/icon/yb_logo_foreground.png"
 
