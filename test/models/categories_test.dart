@@ -61,6 +61,17 @@ void main() {
       expect(catTest.available, 78.8);
     });
 
+    test('MainCategory.addMultipleSubcategories() adds multiple subcategories and updates values',
+        () {
+      final MainCategory catTest = MainCategory(1, "Test");
+      final SubCategory newSub1 = SubCategory(1, 1, "Test", 60, 70);
+      final SubCategory newSub2 = SubCategory(2, 1, "Test", 50, 70);
+
+      catTest.addMultipleSubcategories([newSub1, newSub2]);
+      expect(catTest.subcategories, [newSub1, newSub2]);
+      expect(catTest.budgeted, 110);
+      expect(catTest.available, 140);
+    });
     test('MainCategory.removeSubcategory() removes a subcategory and updates values', () {
       final MainCategory catTest = MainCategory(3, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
