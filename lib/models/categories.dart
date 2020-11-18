@@ -47,6 +47,15 @@ class SubCategory extends Category {
   SubCategory copy() {
     return SubCategory(id, parentId, name, budgeted, available);
   }
+
+  /// Checks whether [subCategory] is a copy of this.
+  bool hasSameValues(SubCategory subCategory) {
+    return subCategory.id == this.id &&
+        subCategory.parentId == this.parentId &&
+        subCategory.name == this.name &&
+        subCategory.budgeted == this.budgeted &&
+        subCategory.available == this.available;
+  }
 }
 
 /// Budgeting [Category] that is a parent of one or multiple [SubCategory]'s
