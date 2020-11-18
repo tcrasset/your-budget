@@ -15,6 +15,9 @@ class Budget {
   /// Default constructor for [Budget]. It is declared for a month given by [month] and [year], and
   /// will hold a list of MainCategories in [maincategories], and a list of their respective
   /// children in [subcategories].
+  ///
+  /// The contents of MainCategory.subcategories of each MainCategory passed in [maincategories] is not taken
+  /// into account and replaced with the corresponding [subcategories] .
   Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
     for (final MainCategory cat in maincategories) {
       MainCategory newCat = cat.copy();
