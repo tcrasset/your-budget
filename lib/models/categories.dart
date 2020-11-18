@@ -91,7 +91,7 @@ class MainCategory extends Category {
     this.available = available;
   }
 
-  /// Creates an exact copy of this.
+  /// Creates a new copy of this WITHOUT [subcategories]
   MainCategory copy() {
     return MainCategory(id, name);
   }
