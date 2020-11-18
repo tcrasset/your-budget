@@ -28,7 +28,7 @@ void main() {
     });
 
     test('MainCategory.copy() returns copy of MainCategory instance', () {
-      final MainCategory catTest = MainCategory(3, "Test");
+      final MainCategory catTest = MainCategory(1, "Test");
       // Check that the returned MainCategory is not the same instance.
       final MainCategory catCopy = catTest.copy();
       expect(identical(catCopy, catTest), false);
@@ -37,7 +37,7 @@ void main() {
     });
 
     test('MainCategory.updateFields() sums up values from subcategories', () {
-      final MainCategory catTest = MainCategory(3, "Test");
+      final MainCategory catTest = MainCategory(1, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
       catTest.subcategories = [newSub];
 
@@ -53,7 +53,7 @@ void main() {
     });
 
     test('MainCategory.addSubcategory() adds a subcategory and updates values', () {
-      final MainCategory catTest = MainCategory(3, "Test");
+      final MainCategory catTest = MainCategory(1, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
       catTest.addSubcategory(newSub);
       expect(catTest.subcategories, [newSub]);
@@ -73,7 +73,7 @@ void main() {
       expect(catTest.available, 140);
     });
     test('MainCategory.removeSubcategory() removes a subcategory and updates values', () {
-      final MainCategory catTest = MainCategory(3, "Test");
+      final MainCategory catTest = MainCategory(1, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
 
       // Add a subcategory
