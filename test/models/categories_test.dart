@@ -36,6 +36,17 @@ void main() {
       expect(catCopy.name, catCopy.name);
     });
 
+    test(
+        'MainCategory.hasSameValues() returns true for a subcategory and its copy and false otherwise',
+        () {
+      final SubCategory newSub = SubCategory(3, 1, "Same", 66.52, 78.8);
+      final SubCategory newSubCopy = SubCategory(3, 1, "Same", 66.52, 78.8);
+      final SubCategory otherSub = SubCategory(3, 1, "NotTheSame", 66.52, 78.8);
+      // Check that the copy and the subcategory are the same
+      expect(newSub.hasSameValues(newSubCopy), true);
+      // Check that newSub and otherSub are different
+      expect(newSub.hasSameValues(otherSub), false);
+    });
     test('MainCategory.updateFields() sums up values from subcategories', () {
       final MainCategory catTest = MainCategory(1, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
