@@ -39,7 +39,6 @@ class BudgetPageState extends ChangeNotifier {
       // put it back to [true]
       selectedId = -1;
     }
-    print("Selected : $selectedId");
     notifyListeners();
   }
 
