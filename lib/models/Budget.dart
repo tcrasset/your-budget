@@ -23,6 +23,7 @@ class Budget {
       MainCategory newCat = cat.copy();
       List<SubCategory> correspondingSubcats =
           subcategories.where((subcat) => subcat.parentId == cat.id).toList();
+      //TODO: Investigate why We make copies of maincategories, but not of subcategories.
       newCat.addMultipleSubcategories(correspondingSubcats);
       this.maincategories.add(newCat);
     }
