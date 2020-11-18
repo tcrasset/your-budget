@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:your_budget/appState.dart';
 
@@ -57,10 +56,6 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
   _SubcategoryRowView(_SubcategoryRowController state) : super(state);
 
-  final TextStyle _greenNumberTextStyle =
-      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 16.0);
-  final TextStyle _redNumberTextStyle = new TextStyle(color: Constants.RED_COLOR, fontSize: 16.0);
-
   Color setColor(double availableAmount) {
     if (availableAmount > 0) {
       return Constants.GREEN_COLOR;
@@ -107,7 +102,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                   decoration: new BoxDecoration(
                     color: setColor(widget.subcat.available),
                     borderRadius: new BorderRadius.all(
-                      const Radius.circular(10.0),
+                      const Radius.circular(9.0),
                     ),
                   ),
                   child: Text("${widget.subcat.available.toStringAsFixed(2)} €",
