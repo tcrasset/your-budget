@@ -2,6 +2,7 @@
 import 'package:jiffy/jiffy.dart';
 
 /// Gets the string representation of [datetime] in format DD/MM/YYYY
+/// Example DateTime(1996, 6, 6) returns "3/6/1996"
 String getDateString(DateTime datetime) {
   return "${datetime.day}/${datetime.month}/${datetime.year}";
 }
