@@ -44,7 +44,7 @@ class ButtonDial extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CustomButton(
-                    "R",
+                    "Remove",
                     50,
                     50,
                     Colors.white,
@@ -54,7 +54,7 @@ class ButtonDial extends StatelessWidget {
                       color: Constants.SECONDARY_COLOR,
                     )),
                 CustomButton(
-                    "D",
+                    "Done",
                     50,
                     50,
                     Colors.white,
@@ -114,10 +114,10 @@ void buttonPressed(BuildContext context, String buttonText) {
   BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
   if (isNumeric(buttonText)) {
     buttonDialState.addDigit(buttonText);
-  } else if (buttonText == "D") {
+  } else if (buttonText == "Done") {
     //Done
     buttonDialState.submitValue(context);
-  } else if (buttonText == "R") {
+  } else if (buttonText == "Remove") {
     //Done
     buttonDialState.removeDigit();
   } else if (buttonText == "Goals") {
