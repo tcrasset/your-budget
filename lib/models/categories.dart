@@ -73,6 +73,8 @@ class MainCategory extends Category {
     _subcategories = subcategories;
   }
 
+  //TODO: Use getters and setters to be able to make updateFields private (and even redundant)
+
   ///Computes the values of [budgeted] and [available] from the sum of the respective values of
   ///their children in [_subcategories].
   void updateFields() {
