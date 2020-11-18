@@ -36,6 +36,22 @@ void main() {
       expect(catCopy.name, catCopy.name);
     });
 
+    test('MainCategory.updateFields() sums up values from subcategories', () {
+      final MainCategory catTest = MainCategory(3, "Test");
+      final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
+      catTest.subcategories = [newSub];
+
+      // Verify it is 0 before updating fields.
+      expect(catTest.budgeted, 0);
+      expect(catTest.available, 0);
+
+      catTest.updateFields();
+
+      // Verify it is the sum of subcategories after updating fields.
+      expect(catTest.budgeted, 66.52);
+      expect(catTest.available, 78.8);
+    });
+
     test('MainCategory.addSubcategory() adds a subcategory and updates values', () {
       final MainCategory catTest = MainCategory(3, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
