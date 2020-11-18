@@ -72,6 +72,7 @@ void main() {
       expect(catTest.budgeted, 110);
       expect(catTest.available, 140);
     });
+
     test('MainCategory.removeSubcategory() removes a subcategory and updates values', () {
       final MainCategory catTest = MainCategory(1, "Test");
       final SubCategory newSub = SubCategory(3, 1, "Test", 66.52, 78.8);
