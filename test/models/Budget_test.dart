@@ -15,7 +15,7 @@ void main() {
     myBudget.addSubcategory(subcatTest);
 
     // Verify that the subcategory is added
-    expect(myBudget.subcategories.length, [subcatTest]);
+    expect(myBudget.subcategories.length, 1);
 
     // Verify that it is added as subcategory to the respective MainCategory
     expect(myBudget.maincategories[0].subcategories.length, 1);
