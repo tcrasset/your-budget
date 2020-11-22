@@ -19,6 +19,19 @@ void main() {
       expect(subcatCopy.budgeted, subcatCopy.budgeted);
       expect(subcatCopy.available, subcatCopy.available);
     });
+
+    test('SubCategory.update() returns an updated version of SubCategory instance', () {
+      final SubCategory subcatTest = SubCategory(3, 1, "Test", 66.52, 78.8);
+      final SubCategory changedSubcat = SubCategory(3, 1, "Passed", 70.52, 68.8);
+
+      //Update the subcategory with new values
+      subcatTest.update(changedSubcat);
+
+      //Check that the values got updated
+      expect(subcatTest.name, changedSubcat.name);
+      expect(subcatTest.budgeted, changedSubcat.budgeted);
+      expect(subcatTest.available, changedSubcat.available);
+    });
   });
 
   group('MainCategory', () {

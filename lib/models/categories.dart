@@ -48,6 +48,15 @@ class SubCategory extends Category {
     return SubCategory(id, parentId, name, budgeted, available);
   }
 
+  /// Updates values of this with those of [subcat].
+  void update(SubCategory subcat) {
+    assert(subcat.id == this.id);
+
+    this.available = subcat.available;
+    this.budgeted = subcat.budgeted;
+    this.name = subcat.name;
+  }
+
   /// Checks whether [subCategory] is a copy of this.
   bool hasSameValues(SubCategory subCategory) {
     return subCategory.id == this.id &&
