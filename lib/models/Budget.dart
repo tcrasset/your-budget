@@ -75,12 +75,8 @@ class Budget {
         subcategories.singleWhere((subcat) => modifiedSubcategory.id == subcat.id);
     oldSubcat.update(modifiedSubcategory);
 
-    //Modify subcategory that is inside the corresponding maincategory
+    // Update the values inside the corresponding subcategory
     MainCategory cat = maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
-    SubCategory subcat =
-        cat.subcategories.singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
-
-    subcat.update(modifiedSubcategory);
 
     cat.updateFields();
     _updateTotalBudgeted();
