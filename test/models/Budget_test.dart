@@ -109,4 +109,25 @@ void main() {
       expect(allcategories[i].hasSameValues(allcategoriesTest[i]), true);
     }
   });
+
+  test('Budget.totalBudgeted sums the budgeted value from every maincategory', () {
+    // Create a category and a subcategory that should be linked to it
+    final MainCategory catTest1 = MainCategory(1, "Test2");
+    final MainCategory catTest2 = MainCategory(2, "Test2");
+    final SubCategory subcatTest_1_1 = SubCategory(1, 1, "Test", 66.52, 78.8);
+    final SubCategory subcatTest_1_2 = SubCategory(2, 1, "Test", 66.52, 78.8);
+    final SubCategory subcatTest_2_1 = SubCategory(3, 2, "Test", 66.52, 78.8);
+
+    // Add the subcategories to their corresponding maincategory
+    catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
+    catTest2.addSubcategory(subcatTest_2_1);
+
+    // Construct Budget
+    final Budget myBudget =
+        Budget([catTest1, catTest2], [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
+
+    double totalBudgetedTest = catTest1.budgeted + catTest2.budgeted;
+
+    expect(myBudget.totalBudgeted, totalBudgetedTest);
+  });
 }
