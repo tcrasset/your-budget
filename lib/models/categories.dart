@@ -57,7 +57,7 @@ class SubCategory extends Category {
     this.name = subcat.name;
   }
 
-  /// Checks whether [subCategory] is a copy of this.
+  /// Checks whether [subCategory] has the same values as this..
   bool hasSameValues(SubCategory subCategory) {
     return subCategory.id == this.id &&
         subCategory.parentId == this.parentId &&
@@ -112,6 +112,40 @@ class MainCategory extends Category {
   /// Creates a new copy of this WITHOUT [subcategories]
   MainCategory copy() {
     return MainCategory(id, name);
+  }
+
+  /// Checks whether [mainCategory] has the same values as this..
+  bool hasSameValues(MainCategory mainCategory) {
+    bool subcategoriesAreEqual = true;
+
+    print(this.subcategories);
+    print(mainCategory.subcategories);
+    for (final SubCategory thissubcat in this.subcategories) {
+      // If the subcategory lists don't have the same order, we would
+      // still like the equality to hold.
+      // Therefore, we find the corresponding subcategory in [mainCategory].
+      int correspondingIndex = 0;
+      for (final SubCategory argsubcat in mainCategory.subcategories) {
+        print(correspondingIndex);
+        if (thissubcat.hasSameValues(argsubcat)) {
+          break;
+        }
+        correspondingIndex++;
+      }
+
+      // If we get to the end of the loop without having found a match,
+      // the subcategories don't match
+      if (correspondingIndex == this.subcategories.length) {
+        subcategoriesAreEqual = false;
+        break;
+      }
+    }
+
+    return subcategoriesAreEqual &&
+        mainCategory.id == this.id &&
+        mainCategory.name == this.name &&
+        mainCategory.budgeted == this.budgeted &&
+        mainCategory.available == this.available;
   }
 
   /// Adds [newSub] as a new subcategory to the list [_subcategories].

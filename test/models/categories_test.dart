@@ -20,6 +20,18 @@ void main() {
       expect(subcatCopy.available, subcatCopy.available);
     });
 
+    test(
+        'SubCategory.hasSameValues() returns true for a subcategory and its copy and false otherwise',
+        () {
+      final SubCategory newSub = SubCategory(3, 1, "Same", 66.52, 78.8);
+      final SubCategory newSubCopy = SubCategory(3, 1, "Same", 66.52, 78.8);
+      final SubCategory otherSub = SubCategory(3, 1, "NotTheSame", 66.52, 78.8);
+      // Check that the copy and the subcategory are the same
+      expect(newSub.hasSameValues(newSubCopy), true);
+      // Check that newSub and otherSub are different
+      expect(newSub.hasSameValues(otherSub), false);
+    });
+
     test('SubCategory.update() returns an updated version of SubCategory instance', () {
       final SubCategory subcatTest = SubCategory(3, 1, "Test", 66.52, 78.8);
       final SubCategory changedSubcat = SubCategory(3, 1, "Passed", 70.52, 68.8);
@@ -50,15 +62,21 @@ void main() {
     });
 
     test(
-        'MainCategory.hasSameValues() returns true for a subcategory and its copy and false otherwise',
+        'MainCategory.hasSameValues() returns true for a maincategory and its copy and false otherwise',
         () {
-      final SubCategory newSub = SubCategory(3, 1, "Same", 66.52, 78.8);
-      final SubCategory newSubCopy = SubCategory(3, 1, "Same", 66.52, 78.8);
-      final SubCategory otherSub = SubCategory(3, 1, "NotTheSame", 66.52, 78.8);
+      final MainCategory cat = MainCategory(1, "Same");
+      final MainCategory catCopy = MainCategory(1, "Same");
+      final MainCategory otherCat = MainCategory(1, "NotTheSame");
+
+      final SubCategory subcat = SubCategory(3, 1, "Same", 66.52, 78.8);
+      cat.addSubcategory(subcat);
+      catCopy.addSubcategory(subcat);
+      otherCat.addSubcategory(subcat);
+
       // Check that the copy and the subcategory are the same
-      expect(newSub.hasSameValues(newSubCopy), true);
+      expect(cat.hasSameValues(catCopy), true);
       // Check that newSub and otherSub are different
-      expect(newSub.hasSameValues(otherSub), false);
+      expect(cat.hasSameValues(otherCat), false);
     });
     test('MainCategory.updateFields() sums up values from subcategories', () {
       final MainCategory catTest = MainCategory(1, "Test");
