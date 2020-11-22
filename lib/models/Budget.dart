@@ -73,24 +73,21 @@ class Budget {
     // Modify subcategory in this.subcategories
     SubCategory oldSubcat =
         subcategories.singleWhere((subcat) => modifiedSubcategory.id == subcat.id);
-    oldSubcat.name = modifiedSubcategory.name;
-    oldSubcat.budgeted = modifiedSubcategory.budgeted;
-    oldSubcat.available = modifiedSubcategory.available;
+    oldSubcat.update(modifiedSubcategory);
 
     //Modify subcategory that is inside the corresponding maincategory
     MainCategory cat = maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
     SubCategory subcat =
         cat.subcategories.singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
-    subcat.name = modifiedSubcategory.name;
-    subcat.budgeted = modifiedSubcategory.budgeted;
-    subcat.available = modifiedSubcategory.available;
+
+    subcat.update(modifiedSubcategory);
 
     cat.updateFields();
     _updateTotalBudgeted();
   }
 
   /// Replace the attribute [field] of the SubCategory specified by [subcatId] with [value].
-  /// The parent of the SubCategory has to be specified [categoryId] to be able to
+  /// The parent of the SubCategory has to be specified with [categoryId] to be able to
   /// update it's values too.
   void makeSubcategoryChangeBySubcatId(int subcatId, int categoryId, String field, String value) {
     SubCategory oldSubcat = subcategories.singleWhere((subcat) => subcat.id == subcatId);
@@ -109,6 +106,7 @@ class Budget {
         //TODO: Raise error
         print("Pass in an actual field");
     }
+
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == categoryId);
     cat.updateFields();
     _updateTotalBudgeted();
