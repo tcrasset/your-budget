@@ -16,6 +16,8 @@ class Budget {
   /// will hold a list of MainCategories in [maincategories], and a list of their respective
   /// children in [subcategories].
   ///
+  /// [subcategories] will get linked to their corresponding MainCategory from [maincategories].
+  ///
   /// The contents of MainCategory.subcategories of each MainCategory passed in [maincategories] is not taken
   /// into account and replaced with the corresponding [subcategories] .
   Budget(List<MainCategory> maincategories, List<SubCategory> subcategories, int month, int year) {
@@ -82,12 +84,7 @@ class Budget {
     subcat.name = modifiedSubcategory.name;
     subcat.budgeted = modifiedSubcategory.budgeted;
     subcat.available = modifiedSubcategory.available;
-  }
 
-  /// Modify the values, given by [modifiedSubcategory], of the MainCategory whose child is
-  /// specified by [modifiedSubcategory.id]
-  void _updateMainCategory(SubCategory modifiedSubcategory) {
-    MainCategory cat = maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
     cat.updateFields();
     _updateTotalBudgeted();
   }
