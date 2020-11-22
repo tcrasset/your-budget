@@ -61,7 +61,7 @@ class Budget {
   /// the values of [modifiedSubcategory].
   void makeCategoryChange(SubCategory modifiedSubcategory) {
     _updateSubCategory(modifiedSubcategory);
-    _updateMainCategory(modifiedSubcategory);
+    //TODO: Replace outer method with inner method
   }
 
   /// Modify the values of the SubCategory specified by [modifiedSubcategory.id]
@@ -111,7 +111,6 @@ class Budget {
     }
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == categoryId);
     cat.updateFields();
-
     _updateTotalBudgeted();
   }
 
