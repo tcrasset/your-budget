@@ -118,8 +118,6 @@ class MainCategory extends Category {
   bool hasSameValues(MainCategory mainCategory) {
     bool subcategoriesAreEqual = true;
 
-    print(this.subcategories);
-    print(mainCategory.subcategories);
     for (final SubCategory thissubcat in this.subcategories) {
       // If the subcategory lists don't have the same order, we would
       // still like the equality to hold.
