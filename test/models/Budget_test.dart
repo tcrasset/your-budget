@@ -130,4 +130,33 @@ void main() {
 
     expect(myBudget.totalBudgeted, totalBudgetedTest);
   });
+
+  test('Budget.removeSubcategory() removes the subcategory and updates values', () {
+    // Create a category and a subcategory that should be linked to it
+    final MainCategory catTest1 = MainCategory(1, "Test2");
+    final MainCategory catTest2 = MainCategory(2, "Test2");
+    final SubCategory subcatTest_1_1 = SubCategory(1, 1, "Test", 66.52, 78.8);
+    final SubCategory subcatTest_1_2 = SubCategory(2, 1, "Test", 66.52, 78.8);
+    final SubCategory subcatTest_2_1 = SubCategory(3, 2, "Test", 66.52, 78.8);
+
+    // Add the subcategories to their corresponding maincategory
+    catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
+    catTest2.addSubcategory(subcatTest_2_1);
+
+    // Construct Budget
+    final Budget myBudget =
+        Budget([catTest1, catTest2], [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
+
+    // Remove subcategory
+    myBudget.removeSubcategory(subcatTest_1_2);
+
+    //Check that subcategory is not in the list
+    expect(myBudget.subcategories.contains(subcatTest_1_2), false);
+
+    //Check maincategory values got updated
+    expect(myBudget.maincategories[0].budgeted, 66.52);
+
+    //Check that totalBudgeted got updated
+    expect(myBudget.totalBudgeted, 66.52 + 66.52);
+  });
 }

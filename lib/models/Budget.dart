@@ -65,17 +65,13 @@ class Budget {
   }
 
   /// Modify the values of the SubCategory specified by [modifiedSubcategory.id]
-  ///
-  ///Must be called before [_updateMainCategory()] because the former
-  ///modifies the subcategories in each [MainCategory], and the latter
-  ///updates the maincategories based on the subcategories' values.
   void _updateSubCategory(SubCategory modifiedSubcategory) {
     // Modify subcategory in this.subcategories
     SubCategory oldSubcat =
         subcategories.singleWhere((subcat) => modifiedSubcategory.id == subcat.id);
     oldSubcat.update(modifiedSubcategory);
 
-    // Update the values inside the corresponding subcategory
+    // Update the values inside the corresponding maincategory
     MainCategory cat = maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
 
     cat.updateFields();
