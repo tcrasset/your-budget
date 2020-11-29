@@ -66,7 +66,7 @@ class _ModifyTransactionsView
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Modify categories"),
+        title: Text("Modify transactions"),
       ),
       body: Consumer2<AppState, ShowTransactionsState>(
           builder: (_, appState, showTransactionsState, __) {
