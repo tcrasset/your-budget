@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 class ButtonDial extends StatelessWidget {
   final double height;
   final double width;
+  final double buttonHeight = 55.0;
+  final double buttonWidth = 55.0;
   const ButtonDial(this.height, this.width, {Key key}) : super(key: key);
 
   @override
@@ -19,34 +21,34 @@ class ButtonDial extends StatelessWidget {
       // width: MediaQuery.of(context).size.width + 60,
 
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+        margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.20),
         color: Constants.PRIMARY_COLOR,
         // color: Constants.PRIMARY_COLOR,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton("7", 50, 50, Colors.white, buttonPressed),
-              CustomButton("4", 50, 50, Colors.white, buttonPressed),
-              CustomButton("1", 50, 50, Colors.white, buttonPressed),
+              CustomButton("7", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("4", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("1", buttonHeight, buttonWidth, Colors.white, buttonPressed),
             ]),
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton("8", 50, 50, Colors.white, buttonPressed),
-              CustomButton("5", 50, 50, Colors.white, buttonPressed),
-              CustomButton("2", 50, 50, Colors.white, buttonPressed),
+              CustomButton("8", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("5", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("2", buttonHeight, buttonWidth, Colors.white, buttonPressed),
             ]),
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton("9", 50, 50, Colors.white, buttonPressed),
-              CustomButton("6", 50, 50, Colors.white, buttonPressed),
-              CustomButton("3", 50, 50, Colors.white, buttonPressed),
+              CustomButton("9", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("6", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("3", buttonHeight, buttonWidth, Colors.white, buttonPressed),
             ]),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CustomButton(
                     "Remove",
-                    50,
-                    50,
+                    buttonHeight,
+                    buttonWidth,
                     Colors.white,
                     buttonPressed,
                     Icon(
@@ -55,52 +57,15 @@ class ButtonDial extends StatelessWidget {
                     )),
                 CustomButton(
                     "Done",
-                    50,
-                    50,
+                    buttonHeight,
+                    buttonWidth,
                     Colors.white,
                     buttonPressed,
                     Icon(
                       Icons.done,
                       color: Constants.SECONDARY_COLOR,
                     )),
-                CustomButton("0", 50, 50, Colors.white, buttonPressed),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CustomButton(
-                    "Goals",
-                    82.5,
-                    77,
-                    Constants.SECONDARY_COLOR,
-                    buttonPressed,
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.fiber_new), Text("Goals")])),
-                CustomButton(
-                    "Budget",
-                    82.5,
-                    77,
-                    Constants.SECONDARY_COLOR,
-                    buttonPressed,
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Constants.BUDGET_ICON), Text("Budget")])),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                CustomButton(
-                    "More",
-                    50.5,
-                    65,
-                    Constants.SECONDARY_COLOR,
-                    buttonPressed,
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Icon(Icons.more_horiz), Text("More")])),
+                CustomButton("0", buttonHeight, buttonWidth, Colors.white, buttonPressed),
               ],
             ),
           ],
