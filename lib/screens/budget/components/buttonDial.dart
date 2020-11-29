@@ -120,12 +120,5 @@ void buttonPressed(BuildContext context, String buttonText) {
   } else if (buttonText == "Remove") {
     //Done
     buttonDialState.removeDigit();
-  } else if (buttonText == "Goals") {
-    print("Goals");
-    buttonDialState.goToNewPage(context, "Goals");
-  } else if (buttonText == "Budget") {
-    print("Budget");
-  } else if (buttonText == "More") {
-    buttonDialState.goToNewPage(context, "More");
   }
 }

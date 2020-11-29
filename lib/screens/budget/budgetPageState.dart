@@ -5,8 +5,6 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
-import 'package:your_budget/screens/budget/addGoals.dart';
-import 'package:your_budget/screens/budget/subcategoryDetails.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPageState extends ChangeNotifier {
@@ -106,19 +104,5 @@ class BudgetPageState extends ChangeNotifier {
 
   void setSubcategory(SubCategory subcat) {
     this._isSelectedMap[subcat.id] = false;
-  }
-
-  void goToNewPage(BuildContext context, String pageName) {
-    AppState appState = Provider.of<AppState>(context, listen: false);
-    SubCategory selectedSubcategory =
-        appState.subcategories.singleWhere((subcat) => subcat.id == selectedId);
-    Widget newPage;
-    if (pageName == "Goals") {
-      newPage = AddGoal(subcat: selectedSubcategory);
-    } else if (pageName == "More") {
-      newPage = SubcategoryDetails(subcat: selectedSubcategory);
-    }
-
-    Navigator.push(context, MaterialPageRoute(builder: (context) => newPage));
   }
 }
