@@ -393,14 +393,6 @@ class _AddTransactionPageView
       ),
       //TODO : Add Repeat Option
       //TODO : Add color option
-      GestureDetector(
-          // Date gesture detector
-          onTap: () => {},
-          child: rowContainer("Repeat", Text("Never", style: selectedChildTextStyle))),
-      GestureDetector(
-          // Date gesture detector
-          onTap: () => {},
-          child: rowContainer("Color", Text("None", style: selectedChildTextStyle))),
     ];
 
     // Build the layout (ListView, error container, Button)
@@ -422,12 +414,7 @@ class _AddTransactionPageView
                     return containerList[index];
                   }),
             )),
-        //TODO : Error message
-
-        Container(
-          padding: EdgeInsets.all(5),
-          child: Text("ERROR!", style: TextStyle(color: Constants.RED_COLOR)),
-        ),
+        // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),
           onPressed: () => state.addMoneyTransaction(),
