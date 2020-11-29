@@ -57,7 +57,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
   final TextStyle _negativeAmountTextStyle =
       new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
-  InputDecoration _textBoxDecoration = InputDecoration(
+  final InputDecoration _textBoxDecoration = InputDecoration(
     fillColor: Colors.white,
     border: new OutlineInputBorder(
       borderRadius: new BorderRadius.circular(20.0),
@@ -97,6 +97,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                           // color: Colors.blue,
                           child: Center(
                             child: TextFormField(
+                              key: Key('accountNameTextField'),
                               decoration: _textBoxDecoration,
                               style: _textBoxStyle,
                               textAlign: TextAlign.center,
@@ -117,6 +118,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                             margin: EdgeInsets.symmetric(horizontal: 20),
                             child: Center(
                               child: TextFormField(
+                                key: Key('accountBalanceTextField'),
                                 decoration: _textBoxDecoration,
                                 style: _textBoxStyle,
                                 textAlign: TextAlign.center,
@@ -132,6 +134,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           child: RaisedButton(
+                            key: Key('addAccountButton'),
                             color: Theme.of(context).accentColor,
                             onPressed: () => state.handleAddAccount(context),
                             child: Text(
