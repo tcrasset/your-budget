@@ -47,7 +47,6 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
     );
   }
 
-//TODO: Finish deleted transactions
   void handleDeleteTransactions(BuildContext context) async {
     String result = await _showDeleteDialog(context);
     if (result == "Delete") {
