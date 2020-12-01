@@ -74,7 +74,6 @@ class BudgetPageState extends ChangeNotifier {
   void submitValue(BuildContext context) {
     /// When the budget value gets changed, change the shown budget value,
     /// but also the available value.
-    print("Changed budgeted value in subcategory");
     AppState appState = Provider.of<AppState>(context, listen: false);
 
     SubCategory selectedSubcategory =

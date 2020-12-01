@@ -95,7 +95,6 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> addAccount(String accountName, double balance) async {
-    int accountCount = await SQLQueryClass.accountCount();
     Account account = Account(accountCount + 1, accountName, balance);
     accountCount++;
     SQLQueryClass.addAccount(account);
@@ -292,7 +291,6 @@ class AppState extends ChangeNotifier {
 
       await computeToBeBudgeted();
     }
-
     notifyListeners();
   }
 
@@ -336,13 +334,18 @@ class AppState extends ChangeNotifier {
 
   Future<void> computeToBeBudgeted() async {
     toBeBudgeted = 0;
+
+    // Sum up starting total for every account
     for (final Account account in _accounts) {
       MoneyTransaction firstTransaction =
           await SQLQueryClass.getFirstTransactionOfAccount(account.id);
       toBeBudgeted += firstTransaction.amount;
     }
+
+    // Remove total budgeted of each month
     DateTime prevDate = startingBudgetDate;
     DateTime nextDate = startingBudgetDate;
+
     do {
       prevDate = nextDate;
       Budget budget = _getBudgetByDate(prevDate);

@@ -124,7 +124,6 @@ class MainCategory extends Category {
       // Therefore, we find the corresponding subcategory in [mainCategory].
       int correspondingIndex = 0;
       for (final SubCategory argsubcat in mainCategory.subcategories) {
-        print(correspondingIndex);
         if (thissubcat.hasSameValues(argsubcat)) {
           break;
         }
