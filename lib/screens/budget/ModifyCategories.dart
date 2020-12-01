@@ -120,8 +120,6 @@ class _ModifyMainCategoryRow extends StatelessWidget {
   }
 }
 
-//TODO: Adding a new subcategory to a category shows budget values instead of subcategories
-
 class _ModifySubcategoryRow extends StatelessWidget {
   final SubCategory subcat;
   const _ModifySubcategoryRow({Key key, this.subcat}) : super(key: key);

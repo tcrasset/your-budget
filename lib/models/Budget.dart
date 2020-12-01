@@ -53,8 +53,17 @@ class Budget {
     SubCategory subcat = newSubcat.copy();
     this.subcategories.add(subcat);
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == newSubcat.parentId);
-    cat.addSubcategory(subcat);
+    if (!_subcatAlreadyPresentIn(cat, newSubcat)) {
+      cat.addSubcategory(subcat);
+    }
     _updateTotalBudgeted();
+  }
+
+  bool _subcatAlreadyPresentIn(MainCategory cat, SubCategory subcat) {
+    SubCategory presentSubCat = cat.subcategories
+        .singleWhere((thissubcat) => thissubcat.id == subcat.id, orElse: () => null);
+    if (presentSubCat == null) return false;
+    return true;
   }
 
   /// Replace the subcategory specified by [modifiedSubcategory.id] in the budget by
