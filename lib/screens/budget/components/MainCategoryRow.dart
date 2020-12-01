@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:provider/provider.dart';
 
 // Widget containing and displaying the information of a category
 class MainCategoryRow extends StatelessWidget {

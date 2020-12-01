@@ -65,7 +65,10 @@ class SelectValuePageState extends State<SelectValuePage> {
             padding: new EdgeInsets.only(top: 20.0),
           ),
           new TextField(
-            decoration: new InputDecoration(hintText: "Search something", icon: Icon(Icons.search)),
+            decoration: new InputDecoration(
+              hintText: "Search something",
+              icon: Icon(Icons.search),
+            ),
             controller: searchController,
           ),
 

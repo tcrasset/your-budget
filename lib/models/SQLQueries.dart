@@ -140,6 +140,8 @@ class SQLQueryClass {
 
     if (data.isNotEmpty) {
       return MoneyTransaction.fromJson(data[0]);
+    } else {
+      throw Exception();
     }
   }
 

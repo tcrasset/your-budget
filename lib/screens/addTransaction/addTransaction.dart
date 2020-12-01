@@ -391,8 +391,6 @@ class _AddTransactionPageView
           controller: state._memoController,
         ),
       ),
-      //TODO : Add Repeat Option
-      //TODO : Add color option
     ];
 
     // Build the layout (ListView, error container, Button)
