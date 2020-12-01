@@ -95,7 +95,13 @@ class BudgetPageState extends ChangeNotifier {
           "Next subcat : \n ${SubCategory(selectedSubcategory.id, selectedSubcategory.parentId, selectedSubcategory.name, budgetedController.numberValue, selectedSubcategory.available + beforeAfterDifference)} \n");
 
       resetText();
+      closeButtonDialAndUpdate();
     }
+  }
+
+  void closeButtonDialAndUpdate() {
+    showButtonDial = false;
+    notifyListeners();
   }
 
   void resetText() {
