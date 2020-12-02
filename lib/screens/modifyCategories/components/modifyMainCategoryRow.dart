@@ -30,42 +30,44 @@ class ModifyMainCategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 80,
-        child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => handleMainCategoryNameChange(context),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: Text(cat.name,
-                          style: TextStyle(
-                              fontSize: Constants.CATEGORY_TEXT_STYLE.fontSize,
-                              fontWeight: Constants.CATEGORY_TEXT_STYLE.fontWeight,
-                              color: Constants.SECONDARY_COLOR)),
-                    ),
+      height: 80,
+      child: Column(
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => handleMainCategoryNameChange(context),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(cat.name,
+                        style: TextStyle(
+                            fontSize: Constants.CATEGORY_TEXT_STYLE.fontSize,
+                            fontWeight: Constants.CATEGORY_TEXT_STYLE.fontWeight,
+                            color: Constants.SECONDARY_COLOR)),
                   ),
                 ),
-                Row(
-                  children: <Widget>[
-                    IconButton(
-                        icon: Icon(FontAwesomeIcons.plusCircle),
-                        color: Constants.SECONDARY_COLOR,
-                        onPressed: () => handleAddSubcategory(context)),
-                    // IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)
-                  ],
-                )
-              ],
+              ),
+              Row(
+                children: <Widget>[
+                  IconButton(
+                      icon: Icon(FontAwesomeIcons.plusCircle),
+                      color: Constants.SECONDARY_COLOR,
+                      onPressed: () => handleAddSubcategory(context)),
+                  // IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)
+                ],
+              )
+            ],
+          ),
+          SizedBox(
+            height: 2.0,
+            child: Container(
+              color: Constants.SECONDARY_COLOR,
             ),
-            SizedBox(
-                height: 2.0,
-                child: Container(
-                  color: Constants.SECONDARY_COLOR,
-                )),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

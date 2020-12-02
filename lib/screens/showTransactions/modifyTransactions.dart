@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
+import 'package:your_budget/components/deleteDialog.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
@@ -20,35 +21,8 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
   @override
   Widget build(BuildContext context) => _ModifyTransactionsView(this);
 
-  Future<String> _showDeleteDialog(BuildContext context) async {
-    return showDialog<String>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Delete selected transactions?'),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop("Cancel");
-              },
-            ),
-            FlatButton(
-              child: Text('Delete'),
-              textColor: Constants.RED_COLOR,
-              onPressed: () {
-                Navigator.of(context).pop("Delete");
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void handleDeleteTransactions(BuildContext context) async {
-    String result = await _showDeleteDialog(context);
+    String result = await showDeleteDialog(context, 'Delete selected transactions?');
     if (result == "Delete") {
       ShowTransactionsState showTransactionsState =
           Provider.of<ShowTransactionsState>(context, listen: false);

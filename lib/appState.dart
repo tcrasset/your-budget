@@ -439,6 +439,8 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteCategory(int categoryId) {}
+
   // void addSubcategoriesToBudgetValues() async {
   //   int id = await SQLQueryClass.budgetValuesCount() + 1;
   //   for (final int month in [8, 9, 10, 11, 12]) {
