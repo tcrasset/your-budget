@@ -10,6 +10,7 @@ import 'package:your_budget/screens/addTransaction/addTransaction.dart';
 import 'package:your_budget/screens/budget/budgetPage.dart';
 import 'package:your_budget/models/database_creator.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
+import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
 import 'package:your_budget/waitingscreen.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
@@ -28,7 +29,8 @@ class MyBudget extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider<AppState>(create: (_) => AppState()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
-      ChangeNotifierProvider<ShowTransactionsState>(create: (_) => ShowTransactionsState())
+      ChangeNotifierProvider<ShowTransactionsState>(create: (_) => ShowTransactionsState()),
+      ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
     ], child: HomeScreen());
   }
 }

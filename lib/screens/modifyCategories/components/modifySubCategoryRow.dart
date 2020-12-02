@@ -58,26 +58,28 @@ class ModifySubcategoryRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => handleSubCategoryNameChange(context),
-        onLongPress: () => deleteSubcategory(context),
-        child: Container(
-            color: Colors.blue,
-            height: 40.0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(subcat.name,
-                      style: TextStyle(
-                        fontSize: Constants.SUBCATEGORY_TEXT_STYLE.fontSize,
-                        fontWeight: Constants.SUBCATEGORY_TEXT_STYLE.fontWeight,
-                      )),
-                )
-                // Row(
-                //   children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
-                // )
-              ],
-            )));
+      onTap: () => handleSubCategoryNameChange(context),
+      onLongPress: () => deleteSubcategory(context),
+      child: Container(
+        color: Colors.blue,
+        height: 40.0,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text(subcat.name,
+                  style: TextStyle(
+                    fontSize: Constants.SUBCATEGORY_TEXT_STYLE.fontSize,
+                    fontWeight: Constants.SUBCATEGORY_TEXT_STYLE.fontWeight,
+                  )),
+            )
+            // Row(
+            //   children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],
+            // )
+          ],
+        ),
+      ),
+    );
   }
 }

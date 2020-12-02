@@ -5,9 +5,10 @@ import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart'
 class CheckedRow extends StatefulWidget {
   final String subcategoryName;
   final int subcategoryId;
-  final TextStyle subcategoryStyle;
+  final type;
+  final TextStyle textStyle;
 
-  const CheckedRow(this.subcategoryName, this.subcategoryStyle, this.subcategoryId, {Key key})
+  const CheckedRow(this.subcategoryName, this.subcategoryId, this.type, this.textStyle, {Key key})
       : super(key: key);
 
   @override
@@ -48,7 +49,7 @@ class _CheckedRowState extends State<CheckedRow> {
           Expanded(
             child: Text(
               widget.subcategoryName,
-              style: widget.subcategoryStyle,
+              style: widget.textStyle,
             ),
           ),
         ],

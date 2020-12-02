@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:your_budget/appState.dart';
 import 'package:your_budget/components/deleteDialog.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
+import 'package:your_budget/screens/deleteCategories/components/CategoriesList.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +38,10 @@ class _DeleteCategoriesView extends WidgetView<DeleteCategories, _DeleteCategori
       appBar: AppBar(
         title: Text("Modify transactions"),
       ),
-      body: Container(),
+      body: Consumer2<AppState, DeleteCategoriesState>(
+          builder: (_, appState, deleteCategoriesState, __) {
+        return CategoriesList();
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => state.handleDeleteCategories(context),
         backgroundColor: Constants.RED_COLOR,
@@ -44,8 +50,3 @@ class _DeleteCategoriesView extends WidgetView<DeleteCategories, _DeleteCategori
     );
   }
 }
-
-//  Consumer2<AppState, ShowTransactionsState>(
-//           builder: (_, appState, showTransactionsState, __) {
-//         return TransactionList(widget.account, appState, true);
-//       }),
