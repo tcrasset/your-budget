@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/budget/ModifyCategories.dart';
+import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
