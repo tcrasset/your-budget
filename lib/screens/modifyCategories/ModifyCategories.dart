@@ -22,6 +22,8 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
 
   @override
   Widget build(BuildContext context) => _ModifyCategoriesView(this);
+
+  handleDeleteCategory(BuildContext context) {}
 }
 
 class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
@@ -37,6 +39,9 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
         appBar: AppBar(
           title: Text("Modify categories"),
           actions: <Widget>[
+            IconButton(
+                icon: Icon(FontAwesomeIcons.trash),
+                onPressed: () => state.handleDeleteCategory(context)),
             IconButton(
                 icon: Icon(FontAwesomeIcons.plus),
                 onPressed: () => state.handleAddCategory(context)),
