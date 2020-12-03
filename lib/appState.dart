@@ -439,8 +439,37 @@ class AppState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteCategory(int categoryId) {}
+  void removeCategory(int categoryId) {
+    MainCategory toBeRemoved =
+        currentBudget.maincategories.singleWhere((cat) => cat.id == categoryId);
 
+    List<SubCategory> correspondingSubcategories =
+        subcategories.where((subcat) => subcat.parentId == categoryId);
+
+    //Remove categories from the budgets and from the database
+    _budgets.forEach((budget) {
+      budget.removeCategory(toBeRemoved);
+    });
+    SQLQueryClass.deleteCategory(toBeRemoved.id);
+    for (SubCategory subcat in correspondingSubcategories) {
+      SQLQueryClass.deleteSubcategory(subcat.id);
+      _deleteCorrespondingBudgetValues(subcat.id);
+    }
+
+    notifyListeners();
+  }
+
+  void _deleteCorrespondingBudgetValues(int subcategoryId) {
+    // Remove the budget values linked to the subcategory from the
+    // _budgetValues array and from the data base
+    List<BudgetValue> correspondingBudgetValues =
+        _budgetValues.where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId).toList();
+
+    correspondingBudgetValues.forEach((budgetvalue) {
+      SQLQueryClass.deleteBudgetValue(budgetvalue.id);
+    });
+    _budgetValues.removeWhere((budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
+  }
   // void addSubcategoriesToBudgetValues() async {
   //   int id = await SQLQueryClass.budgetValuesCount() + 1;
   //   for (final int month in [8, 9, 10, 11, 12]) {
