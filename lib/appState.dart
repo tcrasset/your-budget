@@ -444,7 +444,7 @@ class AppState extends ChangeNotifier {
         currentBudget.maincategories.singleWhere((cat) => cat.id == categoryId);
 
     List<SubCategory> correspondingSubcategories =
-        subcategories.where((subcat) => subcat.parentId == categoryId);
+        subcategories.where((subcat) => subcat.parentId == categoryId).toList();
 
     //Remove categories from the budgets and from the database
     _budgets.forEach((budget) {
@@ -455,7 +455,7 @@ class AppState extends ChangeNotifier {
       SQLQueryClass.deleteSubcategory(subcat.id);
       _deleteCorrespondingBudgetValues(subcat.id);
     }
-
+    computeToBeBudgeted();
     notifyListeners();
   }
 

@@ -58,6 +58,7 @@ class DeleteCategoriesState extends ChangeNotifier {
   void deleteCategories(BuildContext context) {
     _deleteSubCategories(context);
     _deleteMainCategories(context);
+    notifyListeners();
   }
 
   void _deleteSubCategories(BuildContext context) {
@@ -65,6 +66,33 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   void _deleteMainCategories(BuildContext context) {
-    //TODO: Delete selected mainategories
+    AppState appState = Provider.of<AppState>(context, listen: false);
+    for (int categoryId in _getSelectedCategories()) {
+      appState.removeCategory(categoryId);
+    }
+    resetAllSelected();
+  }
+
+  List<int> _getSelectedCategories() {
+    List<int> selectedCategoryIds = [];
+
+    for (int id in this._isSelectedMapMainCategory.keys) {
+      if (this._isSelectedMapMainCategory[id] == true) selectedCategoryIds.add(id);
+    }
+    return selectedCategoryIds;
+  }
+
+  void resetAllSelected() {
+    List<int> subcatIds = this._isSelectedMapSubCategory.keys.toList();
+    List<int> catIds = this._isSelectedMapMainCategory.keys.toList();
+
+    for (int subcatId in subcatIds) {
+      this._isSelectedMapSubCategory[subcatId] = false;
+    }
+    for (int catId in catIds) {
+      this._isSelectedMapMainCategory[catId] = false;
+    }
+    nbSelectedMainCategory = 0;
+    nbSelectedSubCategory = 0;
   }
 }

@@ -19,12 +19,21 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
   @override
   Widget build(BuildContext context) => _DeleteCategoriesView(this);
 
+  @override
+  void didChangeDependencies() {
+    DeleteCategoriesState showTransactionsState =
+        Provider.of<DeleteCategoriesState>(context, listen: false);
+    showTransactionsState.resetAllSelected();
+    super.didChangeDependencies();
+  }
+
   void handleDeleteCategories(BuildContext context) async {
     String result = await showDeleteDialog(context, 'Delete selected categories?');
     if (result == "Delete") {
-      ShowTransactionsState showTransactionsState =
-          Provider.of<ShowTransactionsState>(context, listen: false);
-      showTransactionsState.deleteTransactions(context);
+      DeleteCategoriesState showTransactionsState =
+          Provider.of<DeleteCategoriesState>(context, listen: false);
+      showTransactionsState.deleteCategories(context);
+      showTransactionsState.resetAllSelected();
     }
   }
 }
