@@ -153,4 +153,10 @@ class Budget {
     cat.removeSubcategory(deletedSubcategory.id);
     _updateTotalBudgeted();
   }
+
+  void removeCategory(MainCategory toBeRemoved) {
+    maincategories.removeWhere((cat) => cat.id == toBeRemoved.id);
+    subcategories.removeWhere((subcat) => subcat.parentId == toBeRemoved.id);
+    _updateTotalBudgeted();
+  }
 }
