@@ -307,12 +307,12 @@ class SQLQueryClass {
     DatabaseCreator.databaseLog('Add goal', sql, null, result, params);
   }
 
-  /// Deletes the [category] of id [category.id] from the database.
-  static Future<void> deleteCategory(MainCategory category) async {
+  /// Deletes the [category] of id [categoryId] from the database.
+  static Future<void> deleteCategory(int categoryId) async {
     final sql = '''DELETE FROM ${DatabaseCreator.categoryTable}
       WHERE ${DatabaseCreator.CATEGORY_ID} == ?;''';
 
-    List<dynamic> params = [category.id];
+    List<dynamic> params = [categoryId];
     final result = await db.rawDelete(sql, params);
     DatabaseCreator.databaseLog('Delete category', sql, null, result, params);
   }
