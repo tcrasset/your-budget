@@ -258,9 +258,15 @@ class DatabaseCreator {
       ($CONSTANT_NAME, $CONSTANT_VALUE)
       VALUES(?, ?);''';
 
-    String firstOfMonthMillisecondsSinceEpoch =
+    /// Create the starting budget date based on the first time the user uses the app
+    String startingDateMillisecondsSinceEpoch =
         getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
-    db.rawInsert(CREATE_CONSTANT, ["STARTING_BUDGET_DATE", firstOfMonthMillisecondsSinceEpoch]);
+    db.rawInsert(CREATE_CONSTANT, ["STARTING_BUDGET_DATE", startingDateMillisecondsSinceEpoch]);
+
+    /// Create the maximum budget date based on current date + Constants.MAX_NB_MONTHS_AHEAD
+    String maxBudgetDateMillisecondsSinceEpoch =
+        getMaxBudgetDate().millisecondsSinceEpoch.toString();
+    db.rawInsert(CREATE_CONSTANT, ["MAX_BUDGET_DATE", maxBudgetDateMillisecondsSinceEpoch]);
   }
 }
 
