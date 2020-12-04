@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/database_creator.dart';
@@ -7,6 +8,12 @@ import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 
 class SQLQueryClass {
+  static Future<void> debugDatabase() async {
+    (await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+      debugPrint(row.values.toString());
+    });
+  }
+
   /// Returns the list of all [MainCategory] in the database.
   static Future<List<MainCategory>> getCategories() async {
     final sql = '''SELECT * FROM ${DatabaseCreator.categoryTable}''';
