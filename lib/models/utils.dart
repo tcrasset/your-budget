@@ -1,5 +1,12 @@
 /// This file will contain utiliy functions destined to be used throughout the project.
 import 'package:jiffy/jiffy.dart';
+import 'package:your_budget/models/constants.dart';
+
+///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
+///and the current date
+DateTime getMaxBudgetDate() {
+  return Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
+}
 
 /// Gets the string representation of [datetime] in format DD/MM/YYYY
 /// Example DateTime(1996, 6, 6) returns "3/6/1996"
