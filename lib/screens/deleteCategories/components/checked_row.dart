@@ -32,7 +32,7 @@ class _CheckedRowState extends State<CheckedRow> {
     DeleteCategoriesState showCategoriesState =
         Provider.of<DeleteCategoriesState>(context, listen: false);
 
-    showCategoriesState.setCategories(widget.categoryId, widget.type);
+    showCategoriesState.setCategoriesToFalse(widget.categoryId, widget.type);
     super.initState();
   }
 

@@ -48,7 +48,7 @@ class DeleteCategoriesState extends ChangeNotifier {
     print(nbSelectedSubCategory);
   }
 
-  void setCategories(int id, Type type) {
+  void setCategoriesToFalse(int id, Type type) {
     if (type == MainCategory)
       this._isSelectedMapMainCategory[id] = false;
     else
@@ -56,13 +56,19 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   void deleteCategories(BuildContext context) {
-    _deleteSubCategories(context);
+    _unallowDeletionOfEssentialMainCategory();
     _deleteMainCategories(context);
+    _unselectSubcategoriesUnderSelectedMainCategories(context);
+    _deleteSubCategories(context);
+    resetAllSelected();
     notifyListeners();
   }
 
   void _deleteSubCategories(BuildContext context) {
-    //TODO: Delete selected subategories
+    AppState appState = Provider.of<AppState>(context, listen: false);
+    for (int subcatId in _getSelectedSubcategories()) {
+      appState.removeSubcategory(subcatId);
+    }
   }
 
   void _deleteMainCategories(BuildContext context) {
@@ -70,16 +76,28 @@ class DeleteCategoriesState extends ChangeNotifier {
     for (int categoryId in _getSelectedCategories()) {
       appState.removeCategory(categoryId);
     }
-    resetAllSelected();
   }
 
   List<int> _getSelectedCategories() {
     List<int> selectedCategoryIds = [];
 
     for (int id in this._isSelectedMapMainCategory.keys) {
-      if (this._isSelectedMapMainCategory[id] == true) selectedCategoryIds.add(id);
+      if (this._isSelectedMapMainCategory[id] == true) {
+        selectedCategoryIds.add(id);
+      }
     }
     return selectedCategoryIds;
+  }
+
+  List<int> _getSelectedSubcategories() {
+    List<int> selectedSubcCategoryIds = [];
+
+    for (int id in this._isSelectedMapSubCategory.keys) {
+      if (this._isSelectedMapSubCategory[id] == true) {
+        selectedSubcCategoryIds.add(id);
+      }
+    }
+    return selectedSubcCategoryIds;
   }
 
   void resetAllSelected() {
@@ -95,4 +113,33 @@ class DeleteCategoriesState extends ChangeNotifier {
     nbSelectedMainCategory = 0;
     nbSelectedSubCategory = 0;
   }
+
+  void _unselectSubcategoriesUnderSelectedMainCategories(context) {
+    AppState appState = Provider.of<AppState>(context, listen: false);
+
+    for (int categoryId in _getSelectedCategories()) {
+      // Getting subcategories which are children of the MainCategory that
+      // we're going to delete.
+      List<SubCategory> toUnselect =
+          appState.subcategories.where((subcat) => subcat.parentId == categoryId).toList();
+
+      // Unselect categories by setting them to false
+      for (var subcat in toUnselect) {
+        setCategoriesToFalse(subcat.id, SubCategory);
+      }
+    }
+  }
+
+  void _unallowDeletionOfEssentialMainCategory() {
+    List<int> catIds = _getSelectedCategories();
+    for (var catId in catIds) {
+      if (catId == 1) {
+        setCategoriesToFalse(1, MainCategory);
+        //TODO: Show warning message on screen
+        print("You can't delete the Essentials MainCategory");
+      }
+    }
+  }
 }
+
+//TODO: Documentation for DeleteCategoriesState

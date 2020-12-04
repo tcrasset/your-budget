@@ -5,7 +5,6 @@ import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
 import 'package:your_budget/screens/deleteCategories/components/CategoriesList.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
 import 'package:provider/provider.dart';
 
 class DeleteCategories extends StatefulWidget {
@@ -21,6 +20,10 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
 
   @override
   void didChangeDependencies() {
+    /// Reset the selected maincategories and subcategories, so
+    /// that when we switch back and forth between the DeleteCategories
+    /// screen and the ModifyCategories screen, the selected
+    /// categories do not remain selected.
     DeleteCategoriesState showTransactionsState =
         Provider.of<DeleteCategoriesState>(context, listen: false);
     showTransactionsState.resetAllSelected();
@@ -33,7 +36,7 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
       DeleteCategoriesState showTransactionsState =
           Provider.of<DeleteCategoriesState>(context, listen: false);
       showTransactionsState.deleteCategories(context);
-      showTransactionsState.resetAllSelected();
+      Navigator.pop(context);
     }
   }
 }
