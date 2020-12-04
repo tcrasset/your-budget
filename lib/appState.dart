@@ -26,14 +26,6 @@ class AppState extends ChangeNotifier {
   List<BudgetValue> _budgetValues;
   List<Budget> _budgets;
 
-  int subcategoryCount;
-  int mainCategoryCount;
-  int moneyTransactionCount;
-  int accountCount;
-  int payeeCount;
-  int goalCount;
-  int budgetValueCount;
-
   double toBeBudgeted = 0;
 
   ///TODO: Put this into database
@@ -80,14 +72,6 @@ class AppState extends ChangeNotifier {
     _transactions = await SQLQueryClass.getMoneyTransactions();
     _budgetValues = await SQLQueryClass.getBudgetValues();
     _goals = await SQLQueryClass.getGoals();
-
-    subcategoryCount = await SQLQueryClass.subcategoryCount();
-    mainCategoryCount = await SQLQueryClass.categoryCount();
-    accountCount = await SQLQueryClass.accountCount();
-    payeeCount = await SQLQueryClass.payeeCount();
-    budgetValueCount = await SQLQueryClass.budgetValuesCount();
-    goalCount = await SQLQueryClass.goalCount();
-    moneyTransactionCount = await SQLQueryClass.moneyTransactionCount();
 
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
     currentBudget = _getBudgetByDate(currentBudgetDate);
@@ -539,15 +523,4 @@ class AppState extends ChangeNotifier {
     });
     _budgetValues.removeWhere((budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
   }
-  // void addSubcategoriesToBudgetValues() async {
-  //   int id = await SQLQueryClass.budgetValuesCount() + 1;
-  //   for (final int month in [8, 9, 10, 11, 12]) {
-  //     for (final SubCategory subcat in _subcategories) {
-  //       BudgetValue budgetvalue = BudgetValue(id, subcat.id, subcat.budgeted, subcat.available,
-  //           DateTime(2020, month, 1, 0, 0, 0, 0, 0));
-  //       id++;
-  //       await SQLQueryClass.addBudgetValue(budgetvalue);
-  //     }
-  //   }
-  // }
 }
