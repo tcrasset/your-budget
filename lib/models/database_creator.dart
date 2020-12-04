@@ -126,6 +126,7 @@ class DatabaseCreator {
   /// that will populate it.
   Future<void> _onCreate(Database db, int version) async {
     await _createTables(db);
+    await _createConstants(db);
     await _createBasicCategories(db);
   }
 
@@ -250,6 +251,16 @@ class DatabaseCreator {
         ]);
       }
     }
+  }
+
+  Future<void> _createConstants(Database db) async {
+    const String CREATE_CONSTANT = '''INSERT INTO $constantsTable
+      ($CONSTANT_NAME, $CONSTANT_VALUE)
+      VALUES(?, ?);''';
+
+    String firstOfMonthMillisecondsSinceEpoch =
+        getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
+    db.rawInsert(CREATE_CONSTANT, ["STARTING_BUDGET_DATE", firstOfMonthMillisecondsSinceEpoch]);
   }
 }
 
