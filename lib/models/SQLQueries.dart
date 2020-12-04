@@ -462,4 +462,13 @@ class SQLQueryClass {
     final result = await db.rawUpdate(sql, params);
     DatabaseCreator.databaseLog('Update budgetValue', sql, null, result, params);
   }
+
+  static Future<DateTime> getStartingBudgetDateConstant() async {
+    final sql = '''SELECT ${DatabaseCreator.CONSTANT_VALUE} FROM ${DatabaseCreator.constantsTable}
+      WHERE ${DatabaseCreator.CONSTANT_NAME} ==  'STARTING_BUDGET_DATE';''';
+
+    final data = await db.rawQuery(sql);
+    int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
+    return DateTime.fromMillisecondsSinceEpoch(startingBudgetDateMillisecondsSinceEpoch);
+  }
 }
