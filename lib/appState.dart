@@ -52,17 +52,13 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
 
   AppState() {
-    // addDummyVariables();
+    _checkIfNeedToIncrementMaxBudget();
     _loadStateFromDatabase();
   }
 
   void _loadStateFromDatabase() async {
-    // await addDummyVariables();
-    // await addDummyCategories();
-
     startingBudgetDate = await SQLQueryClass.getStartingBudgetDateConstant();
-    maxBudgetDate =
-        Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
+    maxBudgetDate = await SQLQueryClass.getMaxBudgetDateConstant();
 
     _budgets = await _createAllMonthlyBudgets(
         startingBudgetDate, Jiffy(startingBudgetDate).add(months: Constants.MAX_NB_MONTHS_AHEAD));
@@ -531,4 +527,6 @@ class AppState extends ChangeNotifier {
     });
     _budgetValues.removeWhere((budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
   }
+
+  void _checkIfNeedToIncrementMaxBudget() {}
 }

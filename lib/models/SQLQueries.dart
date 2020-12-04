@@ -471,4 +471,13 @@ class SQLQueryClass {
     int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
     return DateTime.fromMillisecondsSinceEpoch(startingBudgetDateMillisecondsSinceEpoch);
   }
+
+  static Future<DateTime> getMaxBudgetDateConstant() async {
+    final sql = '''SELECT ${DatabaseCreator.CONSTANT_VALUE} FROM ${DatabaseCreator.constantsTable}
+      WHERE ${DatabaseCreator.CONSTANT_NAME} ==  'MAX_BUDGET_DATE';''';
+
+    final data = await db.rawQuery(sql);
+    int maxBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
+    return DateTime.fromMillisecondsSinceEpoch(maxBudgetDateMillisecondsSinceEpoch);
+  }
 }
