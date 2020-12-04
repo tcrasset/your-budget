@@ -10,6 +10,7 @@ import 'package:your_budget/components/overlayNotifications.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
@@ -226,13 +227,17 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         // Input as payee ID the opposite of the account ID when we select
         // an account instead of a payee in the 'Payee' field
         print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
-
         int payeeId = _payee is Payee ? _payee.id : -_account.id;
-        MoneyTransaction moneyTransaction = new MoneyTransaction(appState.moneyTransactionCount + 1,
-            _subcategory.id, payeeId, _account.id, _amount, _memoController.text, _date);
-        print(moneyTransaction);
 
-        appState.addTransaction(moneyTransaction);
+        appState.addTransaction(
+          subcatId: _subcategory.id,
+          payeeId: payeeId,
+          accountId: _account.id,
+          amount: _amount,
+          memo: _memoController.text,
+          date: _date,
+        );
+
         resetToDefaultTransaction();
         showOverlayNotification(context, "Transaction added");
       } else {

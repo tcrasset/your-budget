@@ -135,33 +135,33 @@ class DatabaseCreator {
   Future<void> _createTables(Database db) async {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $categoryTable (
-                        $CATEGORY_ID INTEGER PRIMARY KEY ,
+                        $CATEGORY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $CATEGORY_NAME TEXT NOT NULL UNIQUE
                       );''');
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $subcategoryTable (
-                        $SUBCAT_ID INTEGER PRIMARY KEY,
+                        $SUBCAT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $CAT_ID_OUTSIDE INTEGER NOT NULL,
                         $SUBCAT_NAME TEXT NOT NULL
                     );''');
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $payeeTable (
-                        $PAYEE_ID INTEGER PRIMARY KEY ,
+                        $PAYEE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $PAYEE_NAME TEXT NOT NULL UNIQUE
                       );''');
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $accountTable (
-                        $ACCOUNT_ID INTEGER PRIMARY KEY ,
+                        $ACCOUNT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $ACCOUNT_NAME TEXT NOT NULL UNIQUE,
                         $ACCOUNT_BALANCE FLOAT NOT NULL
                       );''');
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $moneyTransactionTable (
-                        $MONEYTRANSACTION_ID INTEGER PRIMARY KEY ,
+                        $MONEYTRANSACTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
                         $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
                         $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
@@ -175,7 +175,7 @@ class DatabaseCreator {
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $budgetValueTable (
-                        $BUDGET_VALUE_ID INTEGER PRIMARY KEY,
+                        $BUDGET_VALUE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
                         $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
                         $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
@@ -185,7 +185,7 @@ class DatabaseCreator {
                     );''');
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $goalTable (
-                        $GOAL_ID INTEGER PRIMARY KEY,
+                        $GOAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
                         $GOAL_TYPE INTEGER NOT NULL,
                         $GOAL_AMOUNT FLOAT NOT NULL,
@@ -197,7 +197,7 @@ class DatabaseCreator {
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS $constantsTable (
-                        $CONSTANT_ID INTEGER PRIMARY KEY,
+                        $CONSTANT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
                         $CONSTANT_NAME TEXT,
                         $CONSTANT_VALUE TEXT
                     );''');
@@ -207,48 +207,46 @@ class DatabaseCreator {
   /// their budgetValues.
   Future<void> _createBasicCategories(Database db) async {
     const String CREATE_CATEGORY = '''INSERT INTO $categoryTable
-      ($CATEGORY_ID,$CATEGORY_NAME)
-      VALUES(?, ?);''';
+      ($CATEGORY_NAME)
+      VALUES(?);''';
 
     const String CREATE_SUBCATEGORY = '''INSERT INTO $subcategoryTable
-      ($SUBCAT_ID,
-      $CAT_ID_OUTSIDE,
+      ($CAT_ID_OUTSIDE,
       $SUBCAT_NAME)
-      VALUES(?, ?, ?);''';
+      VALUES(?, ?);''';
 
     const String CREATE_BUDGETVALUE = '''INSERT INTO $budgetValueTable
-      ($BUDGET_VALUE_ID,
-      $SUBCAT_ID_OUTSIDE,
+      ($SUBCAT_ID_OUTSIDE,
       $BUDGET_VALUE_BUDGETED,
       $BUDGET_VALUE_AVAILABLE,
       $BUDGET_VALUE_YEAR,
       $BUDGET_VALUE_MONTH)
-      VALUES(?, ?, ?, ?, ?, ?);''';
+      VALUES(?, ?, ?, ?, ?);''';
 
-    await db.rawInsert(CREATE_CATEGORY, [1, "Essentials"]);
+    int categoryId = await db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
 
     List<String> subcategoryNames = ["Rent", "Eletricity", "Water", "Food", "Internet", "Phone"];
-    for (int i = 1; i <= subcategoryNames.length; i++) {
-      await db.rawInsert(CREATE_SUBCATEGORY, [i, 1, subcategoryNames[i - 1]]);
+    List<int> subcategoryIds = [];
+    for (int i = 0; i < subcategoryNames.length; i++) {
+      int subcategoryId = await db.rawInsert(CREATE_SUBCATEGORY, [categoryId, subcategoryNames[i]]);
+      subcategoryIds.add(subcategoryId);
     }
 
     /// Insert [BudgetValues] corresponding to the subcategories into the data base
     /// for every month of the budget, from the current Date to [MAX_NB_MONTHS_AHEAD]
     /// months in the future.
     final DateTime startingDate = getDateFromMonthStart(DateTime.now());
-    int budgetValueId = 1;
     for (int monthDifference = 0;
         monthDifference < Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      for (int subcatId = 1; subcatId <= subcategoryNames.length; subcatId++) {
+      for (int subcatId in subcategoryIds) {
         DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
         await db.rawInsert(CREATE_BUDGETVALUE, [
-          budgetValueId++, //
           subcatId,
           0.00,
           0.00,
           newDate.year,
-          newDate.month
+          newDate.month,
         ]);
       }
     }

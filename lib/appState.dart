@@ -6,9 +6,12 @@ import 'package:your_budget/models/Budget.dart';
 
 import 'package:your_budget/models/SQLQueries.dart';
 import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/utils.dart';
 
 import 'models/SQLQueries.dart';
@@ -95,89 +98,144 @@ class AppState extends ChangeNotifier {
   }
 
   Future<void> addAccount(String accountName, double balance) async {
-    Account account = Account(accountCount + 1, accountName, balance);
-    accountCount++;
-    SQLQueryClass.addAccount(account);
+    AccountModel accountModel = AccountModel(name: accountName, balance: balance);
+    int accountId = await SQLQueryClass.addAccount(accountModel);
+    Account account = Account(accountId, accountName, balance);
     _accounts.add(account);
 
+    MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
+      subcatID: Constants.UNASSIGNED_SUBCAT_ID,
+      payeeID: Constants.UNASSIGNED_PAYEE_ID,
+      accountID: accountId,
+      amount: balance,
+      memo: "Starting balance",
+      date: DateTime.now(),
+    );
+
+    int moneyTransactionId = await SQLQueryClass.addMoneyTransaction(moneyTransactionModel);
     MoneyTransaction startingBalance = MoneyTransaction(
-        moneyTransactionCount + 1, 0, 0, accountCount, balance, "Starting balance", DateTime.now());
-    await SQLQueryClass.addMoneyTransaction(startingBalance);
-    moneyTransactionCount++;
+      id: moneyTransactionId,
+      subcatID: moneyTransactionModel.subcatID,
+      payeeID: moneyTransactionModel.payeeID,
+      accountID: moneyTransactionModel.accountID,
+      amount: moneyTransactionModel.amount,
+      memo: moneyTransactionModel.memo,
+      date: moneyTransactionModel.date,
+    );
+
+    _transactions.add(startingBalance);
     await computeToBeBudgeted();
     notifyListeners();
   }
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
-  void addCategory(String categoryName) {
-    MainCategory category = MainCategory(mainCategoryCount + 1, categoryName);
-    mainCategoryCount++;
-
+  void addCategory(String categoryName) async {
+    MainCategoryModel categoryModel = MainCategoryModel(name: categoryName);
+    int categoryId = await SQLQueryClass.addCategory(categoryModel);
+    MainCategory cat = MainCategory(categoryId, categoryName);
     for (final Budget budget in _budgets) {
-      budget.maincategories.add(category);
+      budget.maincategories.add(cat);
     }
-
     notifyListeners();
-    SQLQueryClass.addCategory(category);
   }
 
-  void addPayee(Payee payee) {
+  Future<Payee> addPayee({@required String payeeName}) async {
+    PayeeModel payeeModel = PayeeModel(name: payeeName);
+    int payeeId = await SQLQueryClass.addPayee(payeeModel);
+    Payee payee = Payee(payeeId, payeeName);
     _payees.add(payee);
     notifyListeners();
-    SQLQueryClass.addPayee(payee);
-    payeeCount++;
+    return payee;
   }
 
   /// Adds [subcategory] to the list [_subcategories],
   /// ,to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory(SubCategory subcategory) async {
-    subcategoryCount++;
-    // _subcategories.add(subcategory);
+  void addSubcategory(SubCategoryModel subcategoryModel) async {
+    int subcatId = await SQLQueryClass.addSubcategory(subcategoryModel);
+    SubCategory subcategory = SubCategory(
+      subcatId,
+      subcategoryModel.parentId,
+      subcategoryModel.name,
+      subcategoryModel.budgeted,
+      subcategoryModel.available,
+    );
+
     for (final Budget budget in _budgets) {
       budget.addSubcategory(subcategory);
     }
-    // _subcategories.add(subcategory);
-
-    SQLQueryClass.addSubcategory(subcategory);
 
     /// Insert a budget value for every month from [startingBudgetDate] until [MAX_NB_MONTHS_AHEAD]
     /// after [DateTime.now()],
-    /// Insert a budget value for every month until now
     for (int i = 0;
         i < Constants.MAX_NB_MONTHS_AHEAD + getMonthDifference(startingBudgetDate, DateTime.now());
         i++) {
       /// Update BudgetValues
       DateTime newDate = Jiffy(startingBudgetDate).add(months: i);
-      BudgetValue budgetvalue =
-          BudgetValue(budgetValueCount + 1, subcategory.id, 0, 0, newDate.year, newDate.month);
-      budgetValueCount++;
-      SQLQueryClass.addBudgetValue(budgetvalue);
-      _budgetValues.add(budgetvalue);
+
+      BudgetValueModel budgetValueModel = BudgetValueModel(
+        subcategoryId: subcatId,
+        budgeted: 0,
+        available: 0,
+        year: newDate.year,
+        month: newDate.month,
+      );
+
+      int budgetId = await SQLQueryClass.addBudgetValue(budgetValueModel);
+      BudgetValue budgetValue =
+          BudgetValue(budgetId, subcategory.id, 0, 0, newDate.year, newDate.month);
+
+      _budgetValues.add(budgetValue);
     }
     notifyListeners();
   }
 
   void addSubcategoryByName(String subcategoryName, int maincategoryId) {
-    addSubcategory(SubCategory(
-        subcategoryCount + 1, //
-        maincategoryId,
-        subcategoryName,
-        0.00,
-        0.00));
+    addSubcategory(SubCategoryModel(
+      parentId: maincategoryId,
+      name: subcategoryName,
+      budgeted: 0.00,
+      available: 0.00,
+    ));
   }
 
   /// Add the [transaction] to the [_transactions] list, persist it to
   /// the database and add the transaction amount to the corresponding subcategory.
   /// Finally, update the fields of the [MainCategory] which contains the
   /// subcategory.
-  void addTransaction(MoneyTransaction transaction) {
+  Future<void> addTransaction({
+    int subcatId,
+    int payeeId,
+    int accountId,
+    double amount,
+    String memo,
+    DateTime date,
+  }) async {
     // Add transaction to the state, to the database and update the count
+
+    MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
+      subcatID: subcatId,
+      payeeID: payeeId,
+      accountID: accountId,
+      amount: amount,
+      memo: memo,
+      date: date,
+    );
+
+    int moneyTransactionId = await SQLQueryClass.addMoneyTransaction(moneyTransactionModel);
+
+    MoneyTransaction transaction = MoneyTransaction(
+      id: moneyTransactionId,
+      subcatID: moneyTransactionModel.subcatID,
+      payeeID: moneyTransactionModel.payeeID,
+      accountID: moneyTransactionModel.accountID,
+      amount: moneyTransactionModel.amount,
+      memo: moneyTransactionModel.memo,
+      date: moneyTransactionModel.date,
+    );
     _transactions.add(transaction);
-    SQLQueryClass.addMoneyTransaction(transaction);
-    moneyTransactionCount++;
 
     /// If we do a MoneyTransaction between accounts (subcat.ID == -1)
     /// subcategories are not affected.
@@ -212,19 +270,30 @@ class AppState extends ChangeNotifier {
     //notifyListeners is called in updateSubcategory
   }
 
-  void addGoal(GoalType goalType, int subcategoryId, double amount, DateTime date) {
+  Future<void> addGoal({
+    @required GoalType goalType,
+    @required int subcategoryId,
+    @required double amount,
+    @required DateTime date,
+  }) async {
+    GoalModel goalModel = GoalModel(
+        correspondingSubcategoryId: subcategoryId,
+        goalType: goalType,
+        amount: amount,
+        month: date.month,
+        year: date.year);
+
+    int goalId = await SQLQueryClass.addGoal(goalModel);
+
     Goal newGoal;
     if (goalType == GoalType.TargetAmountByDate) {
-      newGoal = Goal(goalCount + 1, subcategoryId, goalType, amount, date.month, date.year);
+      newGoal = Goal(goalId, subcategoryId, goalType, amount, date.month, date.year);
     } else {
       ///Use the current budget date, as there is no end date for the other types of goal
-      newGoal = Goal(
-          goalCount + 1, subcategoryId, goalType, amount, currentBudget.month, currentBudget.year);
+      newGoal =
+          Goal(goalId, subcategoryId, goalType, amount, currentBudget.month, currentBudget.year);
     }
-
-    goalCount++;
     _goals.add(newGoal);
-    SQLQueryClass.addGoal(newGoal);
     notifyListeners();
   }
 

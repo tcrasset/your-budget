@@ -1,7 +1,10 @@
 import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/database_creator.dart';
 import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/goal_model.dart';
 
 class SQLQueryClass {
   /// Returns the list of all [MainCategory] in the database.
@@ -148,64 +151,93 @@ class SQLQueryClass {
   /// Adds the [category] of type [MainCategory] to the database.
   ///
   /// The [MainCategory] is specified using [category.id] and [category.name]
-  static Future<void> addCategory(MainCategory category) async {
+  static Future<int> addCategory(MainCategoryModel categoryModel) async {
     final sql = '''INSERT INTO ${DatabaseCreator.categoryTable}
-      (${DatabaseCreator.CATEGORY_ID},${DatabaseCreator.CATEGORY_NAME})
-      VALUES(?, ?);''';
+      (${DatabaseCreator.CATEGORY_NAME})
+      VALUES(?);''';
 
-    List<dynamic> params = [category.id, category.name];
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add category', sql, null, result, params);
+    List<dynamic> params = [categoryModel.name];
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add category', sql, null, id, params);
+    return id;
   }
 
   /// Adds the [subcategory] of type [SubCategory] to the database.
   ///
   /// The [SubCategory] is specified using [subcategory.id],
   /// [subcategory.parent_id], and [subcategory.name]
-  static Future<void> addSubcategory(SubCategory subcategory) async {
+  static Future<int> addSubcategory(SubCategoryModel subcategoryModel) async {
     final sql = '''INSERT INTO ${DatabaseCreator.subcategoryTable}
-      (${DatabaseCreator.SUBCAT_ID},
-      ${DatabaseCreator.CAT_ID_OUTSIDE},
+      (${DatabaseCreator.CAT_ID_OUTSIDE},
       ${DatabaseCreator.SUBCAT_NAME})
-      VALUES(?, ?, ?);''';
+      VALUES(?, ?);''';
 
     List<dynamic> params = [
-      subcategory.id,
-      subcategory.parentId,
-      subcategory.name,
+      subcategoryModel.parentId,
+      subcategoryModel.name,
     ];
 
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add subcategory', sql, null, result, params);
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add subcategory', sql, null, id, params);
+    return id;
   }
 
   /// Adds the [payee] of type [Payee] to the database.
   ///
   /// The [Payee] is specified using [payee.id] and [payee.name]
-  static Future<void> addPayee(Payee payee) async {
+  static Future<int> addPayee(PayeeModel payeeModel) async {
     final sql = '''INSERT INTO ${DatabaseCreator.payeeTable}
-      (${DatabaseCreator.PAYEE_ID},${DatabaseCreator.PAYEE_NAME})
-      VALUES(?, ?);''';
+      (${DatabaseCreator.PAYEE_NAME})
+      VALUES(?);''';
 
-    List<dynamic> params = [payee.id, payee.name];
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add payee', sql, null, result, params);
+    List<dynamic> params = [
+      payeeModel.name,
+    ];
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add payee', sql, null, id, params);
+    return id;
   }
 
   /// Adds the [account] of type [Account] to the database.
   ///
   /// The [Account] is specified using [account.id] and [account.name]
-  static Future<void> addAccount(Account account) async {
+  static Future<int> addAccount(AccountModel accountModel) async {
     final sql = '''INSERT INTO ${DatabaseCreator.accountTable}
-      (${DatabaseCreator.ACCOUNT_ID},
-      ${DatabaseCreator.ACCOUNT_NAME},
+      (${DatabaseCreator.ACCOUNT_NAME},
       ${DatabaseCreator.ACCOUNT_BALANCE}
       )
-      VALUES(?, ?, ?);''';
+      VALUES(?, ?);''';
 
-    List<dynamic> params = [account.id, account.name, account.balance];
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add account', sql, null, result, params);
+    List<dynamic> params = [
+      accountModel.name,
+      accountModel.balance,
+    ];
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add account', sql, null, id, params);
+    return id;
+  }
+
+  /// Adds the [budgetvalue] of type [BudgetValue] to the database.
+  static Future<int> addBudgetValue(BudgetValueModel budgetValueModel) async {
+    final sql = '''INSERT INTO ${DatabaseCreator.budgetValueTable}
+      (${DatabaseCreator.SUBCAT_ID_OUTSIDE},
+      ${DatabaseCreator.BUDGET_VALUE_BUDGETED},
+      ${DatabaseCreator.BUDGET_VALUE_AVAILABLE},
+      ${DatabaseCreator.BUDGET_VALUE_YEAR},
+      ${DatabaseCreator.BUDGET_VALUE_MONTH})
+      VALUES(?, ?, ?, ?, ?);''';
+
+    List<dynamic> params = [
+      budgetValueModel.subcategoryId,
+      budgetValueModel.budgeted,
+      budgetValueModel.available,
+      budgetValueModel.year,
+      budgetValueModel.month
+    ];
+
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add budgetvalue', sql, null, id, params);
+    return id;
   }
 
   /// Adds the [moneyTransaction] of type [MoneyTransaction] to the database.
@@ -232,79 +264,53 @@ class SQLQueryClass {
   ///
   ///
 
-  static Future<void> addMoneyTransaction(MoneyTransaction moneyTransaction) async {
+  static Future<int> addMoneyTransaction(MoneyTransactionModel moneyTransactionModel) async {
     final sql = '''INSERT INTO ${DatabaseCreator.moneyTransactionTable}
-      (${DatabaseCreator.MONEYTRANSACTION_ID},
-        ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
+      (${DatabaseCreator.SUBCAT_ID_OUTSIDE},
         ${DatabaseCreator.PAYEE_ID_OUTSIDE},
         ${DatabaseCreator.ACCOUNT_ID_OUTSIDE},
         ${DatabaseCreator.MONEYTRANSACTION_AMOUNT},
         ${DatabaseCreator.MONEYTRANSACTION_MEMO},
         ${DatabaseCreator.MONEYTRANSACTION_DATE})
 
-      VALUES(?, ?, ?, ?, ?, ?, ?);''';
-
-    List<dynamic> params = [
-      moneyTransaction.id,
-      moneyTransaction.subcatID,
-      moneyTransaction.payeeID,
-      moneyTransaction.accountID,
-      moneyTransaction.amount,
-      moneyTransaction.memo,
-      moneyTransaction.date.millisecondsSinceEpoch
-    ];
-
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add moneyTransaction', sql, null, result, params);
-  }
-
-  /// Adds the [budgetvalue] of type [BudgetValue] to the database.
-  static Future<void> addBudgetValue(BudgetValue budgetvalue) async {
-    final sql = '''INSERT INTO ${DatabaseCreator.budgetValueTable}
-      (${DatabaseCreator.BUDGET_VALUE_ID},
-      ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
-      ${DatabaseCreator.BUDGET_VALUE_BUDGETED},
-      ${DatabaseCreator.BUDGET_VALUE_AVAILABLE},
-      ${DatabaseCreator.BUDGET_VALUE_YEAR},
-      ${DatabaseCreator.BUDGET_VALUE_MONTH})
       VALUES(?, ?, ?, ?, ?, ?);''';
 
     List<dynamic> params = [
-      budgetvalue.id,
-      budgetvalue.subcategoryId,
-      budgetvalue.budgeted,
-      budgetvalue.available,
-      budgetvalue.year,
-      budgetvalue.month
+      moneyTransactionModel.subcatID,
+      moneyTransactionModel.payeeID,
+      moneyTransactionModel.accountID,
+      moneyTransactionModel.amount,
+      moneyTransactionModel.memo,
+      moneyTransactionModel.date.millisecondsSinceEpoch
     ];
 
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add budgetvalue', sql, null, result, params);
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add moneyTransaction', sql, null, id, params);
+    return id;
   }
 
   /// Adds the [Goal] to the database.
   /// The [GoalType] is specified using it's index in the enumeration
-  static Future<void> addGoal(Goal goal) async {
+  static Future<int> addGoal(GoalModel goalModel) async {
     final sql = '''INSERT INTO ${DatabaseCreator.goalTable}
-      (${DatabaseCreator.GOAL_ID},
-      ${DatabaseCreator.SUBCAT_ID_OUTSIDE},
+      (${DatabaseCreator.SUBCAT_ID_OUTSIDE},
       ${DatabaseCreator.GOAL_TYPE},
       ${DatabaseCreator.GOAL_AMOUNT},
       ${DatabaseCreator.GOAL_MONTH},
       ${DatabaseCreator.GOAL_YEAR}
       )
-      VALUES(?, ?, ?, ?, ?, ?);''';
+      VALUES(?, ?, ?, ?, ?);''';
 
     List<dynamic> params = [
-      goal.id,
-      goal.correspondingSubcategoryId,
-      goal.goalType.index,
-      goal.amount,
-      goal.month,
-      goal.year
+      goalModel.correspondingSubcategoryId,
+      goalModel.goalType.index,
+      goalModel.amount,
+      goalModel.month,
+      goalModel.year,
     ];
-    final result = await db.rawInsert(sql, params);
-    DatabaseCreator.databaseLog('Add goal', sql, null, result, params);
+    int id = await db.rawInsert(sql, params);
+    DatabaseCreator.databaseLog('Add goal', sql, null, id, params);
+    return id;
   }
 
   /// Deletes the [category] of id [categoryId] from the database.

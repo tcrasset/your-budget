@@ -1,3 +1,5 @@
+import 'package:meta/meta.dart';
+
 /// This file will contain the classes for the common objects used throughout the codebase, namely
 /// [Payee], [MoneyTransaction], and [Account].
 import 'package:your_budget/models/database_creator.dart';
@@ -57,8 +59,15 @@ class MoneyTransaction {
   DateTime date;
 
   /// Default constructor of [MoneyTransaction].
-  MoneyTransaction(
-      this.id, this.subcatID, this.payeeID, this.accountID, this.amount, this.memo, this.date);
+  MoneyTransaction({
+    @required this.id,
+    @required this.subcatID,
+    @required this.payeeID,
+    @required this.accountID,
+    @required this.amount,
+    @required this.memo,
+    @required this.date,
+  });
 
   /// Constructor building a [MoneyTransaction] from a [json] representation taken
   /// from a database.

@@ -40,15 +40,14 @@ class SelectValuePageState extends State<SelectValuePage> {
     Navigator.pop(context, item);
   }
 
-  handleCreateNewPayee(String name) async {
-    if (name == null || name.trim() == "") {
+  handleCreateNewPayee(String payeeName) async {
+    if (payeeName == null || payeeName.trim() == "") {
       print("Name must be valid");
       //TODO: Add error message
       return;
     }
-    Payee payee = Payee(appState.payeeCount + 1, name);
-    print("Created payee $payee");
-    appState.addPayee(payee);
+    print("Created payee $payeeName");
+    Payee payee = await appState.addPayee(payeeName: payeeName);
     handlePopContext(payee);
   }
 

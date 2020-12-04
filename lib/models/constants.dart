@@ -22,4 +22,6 @@ class Constants {
 
   /// Maximum number of months that can be budgeted ahead of the current month
   static const int MAX_NB_MONTHS_AHEAD = 24;
+  static const UNASSIGNED_SUBCAT_ID = 0;
+  static const UNASSIGNED_PAYEE_ID = 0;
 }
