@@ -302,12 +302,7 @@ class AppState extends ChangeNotifier {
       /// Change state objects
       currentBudget.makeCategoryChange(modifiedSubcategory);
 
-      BudgetValue correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
-          (budgetValue.subcategoryId == modifiedSubcategory.id) &&
-          (budgetValue.year == currentBudget.year) &&
-          (budgetValue.month == currentBudget.month));
-      correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
-      correspondingBudgetValue.available = modifiedSubcategory.available;
+      BudgetValue correspondingBudgetValue = _getCorrespondingBudgetValue(modifiedSubcategory);
 
       /// Persist the change in the DataBase
       SQLQueryClass.updateBudgetValue(correspondingBudgetValue);
@@ -345,6 +340,18 @@ class AppState extends ChangeNotifier {
       await computeToBeBudgeted();
     }
     notifyListeners();
+  }
+
+  BudgetValue _getCorrespondingBudgetValue(SubCategory modifiedSubcategory) {
+    BudgetValue correspondingBudgetValue = _budgetValues.singleWhere(
+      (budgetValue) =>
+          (budgetValue.subcategoryId == modifiedSubcategory.id) &&
+          (budgetValue.year == currentBudget.year) &&
+          (budgetValue.month == currentBudget.month),
+    );
+    correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
+    correspondingBudgetValue.available = modifiedSubcategory.available;
+    return correspondingBudgetValue;
   }
 
   void removeSubcategory(int subcategoryId) {
