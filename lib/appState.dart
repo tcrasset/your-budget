@@ -29,7 +29,7 @@ class AppState extends ChangeNotifier {
   double toBeBudgeted = 0;
 
   ///TODO: Put this into database
-  DateTime startingBudgetDate = DateTime(2020, 8, 1);
+  DateTime startingBudgetDate = DateTime(2020, 12, 1);
   DateTime maxBudgetDate =
       Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
 
