@@ -221,9 +221,9 @@ class AppState extends ChangeNotifier {
     );
     _transactions.add(transaction);
 
-    /// If we do a MoneyTransaction between accounts (subcat.ID == -1)
+    /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
     /// subcategories are not affected.
-    if (transaction.subcatID != -1) {
+    if (transaction.subcatID != Constants.UNASSIGNED_SUBCAT_ID) {
       // Update balance of the account
       final Account account =
           accounts.singleWhere((account) => account.id == transaction.accountID);

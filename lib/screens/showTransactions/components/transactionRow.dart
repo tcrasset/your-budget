@@ -57,7 +57,7 @@ class _TransactionRowState extends State<TransactionRow> {
     }
 
     /// Extract name of subcategory associated to transaction [moneyTransaction]
-    if (widget.moneyTransaction.subcatID == -1) {
+    if (widget.moneyTransaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
       // Transfer between accounts
       for (final Account account in appState.accounts) {
         if (account.id == -widget.moneyTransaction.payeeID) {

@@ -252,7 +252,7 @@ class SQLQueryClass {
   ///[moneyTransaction.date].
   ///
   ///When the money transaction is made between accounts, no subcategory is selected, so
-  ///that it doesn't affect the budget. Therefore, subcat.ID is set to '-1' and payee.id
+  ///that it doesn't affect the budget. Therefore, subcat.ID is set to Constants.UNASSIGNED_SUBCAT_ID and payee.id
   ///is set to the opposite of account.id.
   ///An example of this is the following :
   ///

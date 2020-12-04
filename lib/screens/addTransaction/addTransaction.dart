@@ -189,6 +189,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// The [DateTime] gets stored in [_date], and the string
   /// value of that date is saved in [_dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
+    //TODO: Restrict date to 24 months
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(_date),
@@ -210,9 +211,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      if (_payee is Account) {
-        _subcategory = SubCategory(-1, -1, "No subcategory", -1, -1);
-      }
       if (_payee != null && _account != null && _subcategory != null) {
         _amount = formatCurrencyToDouble(_amountController.text, isPositive);
 
@@ -220,7 +218,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Amount : $_amount");
         print("Payee : $_payeeFieldName");
         print("Account : $_accountFieldName");
-        print("Subcategory : $_subcategoryFieldName");
+        print("Subcategory : ${_payee is Payee ? 'No subcategory' : _subcategoryFieldName}");
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
 
@@ -230,7 +228,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         int payeeId = _payee is Payee ? _payee.id : -_account.id;
 
         appState.addTransaction(
-          subcatId: _subcategory.id,
+          subcatId: _payee is Payee ? _subcategory.id : Constants.UNASSIGNED_SUBCAT_ID,
           payeeId: payeeId,
           accountId: _account.id,
           amount: _amount,
