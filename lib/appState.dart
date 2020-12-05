@@ -309,7 +309,7 @@ class AppState extends ChangeNotifier {
       int monthDifference = (getMonthDifference(currentBudgetDate, maxBudgetDate)).abs();
       double lastMonthAvailable = modifiedSubcategory.available;
 
-      for (int i = 1; i < monthDifference; i++) {
+      for (int i = 1; i <= monthDifference; i++) {
         /// Modify the BudgetValue in the state
         DateTime newDate = Jiffy(currentBudgetDate).add(months: i);
         correspondingBudgetValue = _budgetValues.singleWhere((budgetValue) =>
