@@ -10,7 +10,6 @@ import 'package:your_budget/components/overlayNotifications.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
@@ -189,7 +188,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// The [DateTime] gets stored in [_date], and the string
   /// value of that date is saved in [_dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
-    //TODO: Restrict date to 24 months
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(_date),

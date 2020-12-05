@@ -1,5 +1,6 @@
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/utils.dart';
 
 /// Class representing budget that is held monthly, specified by [month] and [year].
 /// It holds a list of all [maincategories] and [subcategories], which are put in a specific
@@ -43,9 +44,8 @@ class Budget {
   }
 
   /// The month of the budget in human readable form, for example 'January' for month 1
-  /// TODO: Replace with utils.monthAsString
   String get monthAsString {
-    return Jiffy(DateTime(year, month)).format("MMMM");
+    return monthStringFromDate(DateTime(year, month));
   }
 
   /// Add the SubCategory [newSubcat] to this.
@@ -106,6 +106,7 @@ class Budget {
       default:
         //TODO: Raise error
         print("Pass in an actual field");
+        throw Exception();
     }
 
     MainCategory cat = maincategories.singleWhere((cat) => cat.id == categoryId);
