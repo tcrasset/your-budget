@@ -36,6 +36,14 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
     return null;
   }
 
+  void handleAccountBalanceSave(String balance) {
+    accountBalance = double.parse(balance);
+  }
+
+  void handleAccountNameSave(String name) {
+    accountName = name;
+  }
+
   void handleAddAccount(BuildContext context) async {
     if (_accountFormKey.currentState.validate()) {
       _accountFormKey.currentState.save();
@@ -103,7 +111,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                               style: _textBoxStyle,
                               textAlign: TextAlign.center,
                               validator: state.handleAccountNameValidate,
-                              onSaved: (name) => state.accountName = name,
+                              onSaved: state.handleAccountNameSave,
                               textInputAction: TextInputAction.next,
                             ),
                           ),
@@ -124,7 +132,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                                 style: _textBoxStyle,
                                 textAlign: TextAlign.center,
                                 validator: state.handleAccountBalanceValidate,
-                                onSaved: (balance) => state.accountBalance = double.parse(balance),
+                                onSaved: state.handleAccountBalanceSave,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.allow(RegExp("[0-9-]"))
