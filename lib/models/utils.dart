@@ -8,6 +8,10 @@ DateTime getMaxBudgetDate() {
   return Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
 }
 
+DateTime getLastDayOfMonth(DateTime datetime) {
+  return DateTime(datetime.year, datetime.month + 1, 0);
+}
+
 /// Gets the string representation of [datetime] in format DD/MM/YYYY
 /// Example DateTime(1996, 6, 6) returns "3/6/1996"
 String getDateString(DateTime datetime) {

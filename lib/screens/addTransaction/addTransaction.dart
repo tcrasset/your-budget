@@ -193,8 +193,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     final DateTime picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(_date),
-        firstDate: DateTime(2010, 8),
-        lastDate: DateTime(2101));
+        firstDate: appState.startingBudgetDate,
+        lastDate: getLastDayOfMonth(getMaxBudgetDate()));
     if (picked != null && picked != _date)
       setState(() {
         _date = picked;
