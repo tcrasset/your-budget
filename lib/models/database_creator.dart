@@ -238,7 +238,7 @@ class DatabaseCreator {
     /// months in the future.
     final DateTime startingDate = getDateFromMonthStart(DateTime.now());
     for (int monthDifference = 0;
-        monthDifference < Constants.MAX_NB_MONTHS_AHEAD;
+        monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
       for (int subcatId in subcategoryIds) {
         DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
