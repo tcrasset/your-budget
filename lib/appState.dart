@@ -28,9 +28,7 @@ class AppState extends ChangeNotifier {
 
   double toBeBudgeted = 0;
 
-  ///TODO: Put this into database
   DateTime startingBudgetDate;
-  DateTime maxBudgetDate;
   DateTime currentBudgetDate;
 
   Budget currentBudget;
@@ -58,8 +56,6 @@ class AppState extends ChangeNotifier {
   void _loadStateFromDatabase() async {
     print("Loading from database");
     startingBudgetDate = await SQLQueryClass.getStartingBudgetDateConstant();
-    // maxBudgetDate = await SQLQueryClass.getMaxBudgetDateConstant();
-    maxBudgetDate = getMaxBudgetDate();
 
     _budgets = await _createAllMonthlyBudgets();
 
@@ -306,7 +302,7 @@ class AppState extends ChangeNotifier {
 
       /// Change the available field in every Budget after the one that was
       /// modified.
-      int monthDifference = (getMonthDifference(currentBudgetDate, maxBudgetDate)).abs();
+      int monthDifference = (getMonthDifference(currentBudgetDate, getMaxBudgetDate())).abs();
       double lastMonthAvailable = modifiedSubcategory.available;
 
       for (int i = 1; i <= monthDifference; i++) {
@@ -413,7 +409,7 @@ class AppState extends ChangeNotifier {
   }
 
   void incrementMonth() async {
-    if (currentBudgetDate.isBefore(maxBudgetDate)) {
+    if (currentBudgetDate.isBefore(getMaxBudgetDate())) {
       currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
       currentBudget = _getBudgetByDate(currentBudgetDate);
       await computeToBeBudgeted();
