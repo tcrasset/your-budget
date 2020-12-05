@@ -413,7 +413,7 @@ class AppState extends ChangeNotifier {
   }
 
   void incrementMonth() async {
-    if (currentBudgetDate.isBefore(Jiffy(maxBudgetDate).subtract(months: 1))) {
+    if (currentBudgetDate.isBefore(maxBudgetDate)) {
       currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
       currentBudget = _getBudgetByDate(currentBudgetDate);
       await computeToBeBudgeted();
