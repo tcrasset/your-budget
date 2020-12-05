@@ -59,7 +59,7 @@ class AppState extends ChangeNotifier {
     print("Loading from database");
     startingBudgetDate = await SQLQueryClass.getStartingBudgetDateConstant();
     // maxBudgetDate = await SQLQueryClass.getMaxBudgetDateConstant();
-    maxBudgetDate = DateTime(2023, 12, 1);
+    maxBudgetDate = getMaxBudgetDate();
 
     _budgets = await _createAllMonthlyBudgets();
 
@@ -536,7 +536,6 @@ class AppState extends ChangeNotifier {
     DateTime previousDate = await SQLQueryClass.getMaxBudgetDateConstant();
     DateTime maxBudgetDate = getMaxBudgetDate();
 
-    print("Previous starting date is $previousDate");
     Budget currentMaxBudget = budgets.singleWhere(
       (budget) => budget.year == previousDate.year && budget.month == previousDate.month,
     );
@@ -553,7 +552,6 @@ class AppState extends ChangeNotifier {
       );
       previousDate = newDate;
 
-      debugPrint("Creating budget for $newDate");
       // Add all BudgetValue for the new month to the database
       // print(currentMaxBudget.subcategories);
       for (final SubCategory previousMonthSubcat in currentMaxBudget.subcategories) {
@@ -572,18 +570,21 @@ class AppState extends ChangeNotifier {
       // already existing list of budgets
       List<SubCategory> updatedSubcategories =
           await SQLQueryClass.getSubCategoriesJoined(newDate.year, newDate.month);
+
       Budget newBudget = Budget(
           currentMaxBudget.maincategories, updatedSubcategories, newDate.month, newDate.year);
       currentMaxBudget = newBudget;
       budgets.add(newBudget);
     } while (newDate.isBefore(maxBudgetDate));
 
+    //Update max budget date constant
+    await SQLQueryClass.setMaxBudgetDateConstant(maxBudgetDate);
+
     return budgets;
   }
 
   Future<bool> _checkIfNeedToIncrementMax() async {
     int nbMonthDifference = await _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate();
-    print("Number of months of difference: $nbMonthDifference");
     return nbMonthDifference > 0;
   }
 

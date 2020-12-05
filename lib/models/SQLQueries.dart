@@ -480,4 +480,15 @@ class SQLQueryClass {
     int maxBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
     return DateTime.fromMillisecondsSinceEpoch(maxBudgetDateMillisecondsSinceEpoch);
   }
+
+  static Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate) async {
+    final sql = '''UPDATE ${DatabaseCreator.constantsTable}
+                SET ${DatabaseCreator.CONSTANT_VALUE} = ?
+                WHERE ${DatabaseCreator.CONSTANT_NAME} == 'MAX_BUDGET_DATE'
+                ;''';
+
+    List<dynamic> params = [newMaxBudgetDate.millisecondsSinceEpoch];
+    final result = await db.rawUpdate(sql, params);
+    DatabaseCreator.databaseLog('Update maxBudgetDate', sql, null, result, params);
+  }
 }
