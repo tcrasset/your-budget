@@ -42,6 +42,7 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
       AppState appState = Provider.of<AppState>(context, listen: false);
       // If form is valid, add subcategory to the database and add it to the state
       appState.addAccount(accountName, accountBalance);
+      _accountFormKey.currentState.reset();
     }
   }
 
