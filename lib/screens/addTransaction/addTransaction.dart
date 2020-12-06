@@ -56,7 +56,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// Values used for the transaction
   dynamic _payee;
   Account _account;
-  SubCategory _subcategory;
+  var _subcategory;
   DateTime _date;
 
   /// List of values to choose each value from, e.g. [_payee]
