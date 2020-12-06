@@ -47,6 +47,10 @@ String monthStringFromDate(DateTime date) {
   return Jiffy(date).format("MMMM");
 }
 
+bool isSameMonth(DateTime date1, DateTime date2) {
+  return date1.month == date2.month && date1.year == date2.year;
+}
+
 /// Returns whether [s] is a string representation of a number or not.
 /// If [s] is null, returns false.
 bool isNumeric(String s) {
