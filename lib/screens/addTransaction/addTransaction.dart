@@ -235,7 +235,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         int payeeId = _payee is Payee ? _payee.id : -_account.id;
 
         appState.addTransaction(
-          subcatId: _payee is Payee ? _subcategory.id : Constants.UNASSIGNED_SUBCAT_ID,
+          subcatId: _selectSubcatId(),
           payeeId: payeeId,
           accountId: _account.id,
           amount: _amount,
@@ -249,6 +249,16 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("One of the fields does not contain a valid type");
       }
     }
+  }
+
+  _selectSubcatId() {
+    bool subcategoryIsToBeBudgeted = _subcategoryFieldName == "To be budgeted";
+    if (_payee is Payee && !subcategoryIsToBeBudgeted)
+      return _subcategory.id;
+    else if (_payee is Account && !subcategoryIsToBeBudgeted)
+      return Constants.UNASSIGNED_SUBCAT_ID;
+    else if (subcategoryIsToBeBudgeted) //
+      return Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
   }
 
   handleAmountOnSave() {
