@@ -57,12 +57,12 @@ class AppState extends ChangeNotifier {
     print("Loading from database");
     startingBudgetDate = await SQLQueryClass.getStartingBudgetDateConstant();
 
+    _transactions = await SQLQueryClass.getMoneyTransactions();
     _budgets = await _createAllMonthlyBudgets();
 
     _payees = await SQLQueryClass.getPayees();
     _accounts = await SQLQueryClass.getAccounts();
     // _subcategories = await SQLQueryClass.getSubCategories();
-    _transactions = await SQLQueryClass.getMoneyTransactions();
     _budgetValues = await SQLQueryClass.getBudgetValues();
     _goals = await SQLQueryClass.getGoals();
 
@@ -410,6 +410,7 @@ class AppState extends ChangeNotifier {
       prevDate = nextDate;
       Budget budget = _getBudgetByDate(prevDate);
       toBeBudgeted -= budget.totalBudgeted;
+      toBeBudgeted += budget.toBeBudgetedInputFromMoneyTransactions;
       //Go to next month
       nextDate = Jiffy(nextDate).add(months: 1);
     } while (currentBudgetDate.isAfter(prevDate));
@@ -470,19 +471,33 @@ class AppState extends ChangeNotifier {
 
   Future<List<Budget>> _createAllMonthlyBudgets() async {
     List<Budget> budgets = [];
-    DateTime prevDate = startingBudgetDate;
+    DateTime currentDate = startingBudgetDate;
     List<MainCategory> maincategories = await SQLQueryClass.getCategories();
     DateTime storedMaxBudgetDate = await SQLQueryClass.getMaxBudgetDateConstant();
     // Start with 1 month's difference and keep incrementing
     // until we overshoot the endDate
+
+    // Get every transaction made into 'To Be Budgeted'
+    List<MoneyTransaction> toBeBudgetedTransactions = _transactions
+        .where((transaction) =>
+            transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION)
+        .toList();
+
     do {
       List<SubCategory> subcategories =
-          await SQLQueryClass.getSubCategoriesJoined(prevDate.year, prevDate.month);
-      budgets.add(Budget(maincategories, subcategories, prevDate.month, prevDate.year));
+          await SQLQueryClass.getSubCategoriesJoined(currentDate.year, currentDate.month);
+      Budget budget = Budget(maincategories, subcategories, currentDate.month, currentDate.year);
+
+      double positiveAmountTransferedIntoToBeBudgeted = toBeBudgetedTransactions
+          .where((transaction) => isSameMonth(transaction.date, currentDate))
+          .fold(0, (total, transaction) => total + transaction.amount);
+
+      budget.toBeBudgetedInputFromMoneyTransactions += positiveAmountTransferedIntoToBeBudgeted;
+      budgets.add(budget);
 
       //Go to next month
-      prevDate = Jiffy(prevDate).add(months: 1);
-    } while (prevDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1)));
+      currentDate = Jiffy(currentDate).add(months: 1);
+    } while (currentDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1)));
 
     print("Creating budgets");
     if (await _checkIfNeedToIncrementMax()) {
