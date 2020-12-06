@@ -35,8 +35,13 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
     if (result == "Delete") {
       DeleteCategoriesState showTransactionsState =
           Provider.of<DeleteCategoriesState>(context, listen: false);
-      showTransactionsState.deleteCategories(context);
-      Navigator.pop(context);
+      bool showSnackBar = showTransactionsState.deleteCategories(context);
+      if (showSnackBar) {
+        SnackBar snackbar = SnackBar(content: Text("You can't delete the Essentials MainCategory"));
+        Scaffold.of(context).showSnackBar(snackbar);
+      } else {
+        Navigator.pop(context);
+      }
     }
   }
 }
@@ -54,10 +59,12 @@ class _DeleteCategoriesView extends WidgetView<DeleteCategories, _DeleteCategori
           builder: (_, appState, deleteCategoriesState, __) {
         return CategoriesList();
       }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => state.handleDeleteCategories(context),
-        backgroundColor: Constants.RED_COLOR,
-        child: Icon(Icons.delete_outline),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () => state.handleDeleteCategories(context),
+          backgroundColor: Constants.RED_COLOR,
+          child: Icon(Icons.delete_outline),
+        ),
       ),
     );
   }

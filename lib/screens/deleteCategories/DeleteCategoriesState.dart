@@ -55,13 +55,18 @@ class DeleteCategoriesState extends ChangeNotifier {
       this._isSelectedMapSubCategory[id] = false;
   }
 
-  void deleteCategories(BuildContext context) {
-    _unallowDeletionOfEssentialMainCategory();
-    _deleteMainCategories(context);
-    _unselectSubcategoriesUnderSelectedMainCategories(context);
-    _deleteSubCategories(context);
-    resetAllSelected();
-    notifyListeners();
+  bool deleteCategories(BuildContext context) {
+    bool triedToDeleteEssentials = _unallowDeletionOfEssentialMainCategory(context);
+    if (triedToDeleteEssentials) {
+      return true;
+    } else {
+      _deleteMainCategories(context);
+      _unselectSubcategoriesUnderSelectedMainCategories(context);
+      _deleteSubCategories(context);
+      resetAllSelected();
+      notifyListeners();
+      return false;
+    }
   }
 
   void _deleteSubCategories(BuildContext context) {
@@ -130,15 +135,15 @@ class DeleteCategoriesState extends ChangeNotifier {
     }
   }
 
-  void _unallowDeletionOfEssentialMainCategory() {
+  bool _unallowDeletionOfEssentialMainCategory(BuildContext context) {
     List<int> catIds = _getSelectedCategories();
     for (var catId in catIds) {
       if (catId == 1) {
-        setCategoriesToFalse(1, MainCategory);
-        //TODO: Show warning message on screen
         print("You can't delete the Essentials MainCategory");
+        return true;
       }
     }
+    return false;
   }
 }
 
