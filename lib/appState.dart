@@ -214,9 +214,28 @@ class AppState extends ChangeNotifier {
     );
     _transactions.add(transaction);
 
-    /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
-    /// subcategories are not affected.
-    if (transaction.subcatID != Constants.UNASSIGNED_SUBCAT_ID) {
+    if (transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+      print("Is to be budgeted money transaction");
+      // Update balance of the account
+      final Account account =
+          accounts.singleWhere((account) => account.id == transaction.accountID);
+      account.balance += transaction.amount;
+    } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
+      // If the transaction amount is positive, the transaction will remove money from
+      // outAccount and input it into inAccount.
+      // Otherwise, it is reversed.
+      final Account outAccount =
+          accounts.singleWhere((account) => account.id == transaction.accountID);
+      outAccount.balance -= transaction.amount;
+
+      final Account inAccount =
+          accounts.singleWhere((account) => account.id == -transaction.payeeID);
+      inAccount.balance += transaction.amount;
+      //TODO: Add notifyListeners() ????
+    } else {
+      /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
+      /// subcategories are not affected.
+
       // Update balance of the account
       final Account account =
           accounts.singleWhere((account) => account.id == transaction.accountID);
@@ -231,18 +250,6 @@ class AppState extends ChangeNotifier {
           oldSubcat.id, oldSubcat.parentId, oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
 
       updateSubcategory(newSubcat);
-    } else {
-      // If the transaction amount is positive, the transaction will remove money from
-      // outAccount and input it into inAccount.
-      // Otherwise, it is reversed.
-      final Account outAccount =
-          accounts.singleWhere((account) => account.id == transaction.accountID);
-      outAccount.balance -= transaction.amount;
-
-      final Account inAccount =
-          accounts.singleWhere((account) => account.id == -transaction.payeeID);
-      inAccount.balance += transaction.amount;
-      //TODO: Add notifyListeners() ????
     }
     //notifyListeners is called in updateSubcategory
   }
