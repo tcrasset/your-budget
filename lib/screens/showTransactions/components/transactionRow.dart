@@ -64,6 +64,10 @@ class _TransactionRowState extends State<TransactionRow> {
           subcategoryName = "To/From " + account.name;
         }
       }
+    } else if (widget.moneyTransaction.subcatID ==
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+      //Transaction into to be budgeted
+      subcategoryName = "To be budgeted";
     } else {
       // Transaction into subcategories
       var correspondingSubcategory = widget.categories.singleWhere(
