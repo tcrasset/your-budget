@@ -89,20 +89,20 @@ class SelectValuePageState extends State<SelectValuePage> {
                 Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
               var item = widget.listEntries[index];
-
-              // The filter is empty, show everything
-              if (filter == null || filter == "") {
-                return new ListTile(title: Text(item.name), onTap: () => handlePopContext(item));
-              } else {
+              print(item);
+              bool noFilter = filter == null || filter == "";
+              var itemToShow = item is Text ? item : Text(item.name);
+              var itemToFilter = item is Text ? item.data : item.name;
+              if (noFilter == true)
+                // The filter is empty, show everything
+                return ListTile(title: itemToShow, onTap: () => handlePopContext(item));
+              else if (noFilter = false) {
                 // The filter is not empty, we filter by name
-                if (item.name.toLowerCase().contains(filter.toLowerCase())) {
-                  return new ListTile(title: Text(item.name), onTap: () => handlePopContext(item));
-                }
-                // There is an error
-                else {
-                  return new Container();
-                }
+                if (itemToFilter.toLowerCase().contains(filter.toLowerCase()))
+                  return ListTile(title: item, onTap: () => handlePopContext(item));
               }
+              // There is an error
+              return new Container();
             },
           ))
         ],
