@@ -7,12 +7,15 @@ import 'package:provider/provider.dart';
 import 'package:your_budget/models/categories.dart';
 
 class DeleteCategoriesState extends ChangeNotifier {
+  /// HashMap to select or unselect Sub- and MainCategories using their id
   Map<int, bool> _isSelectedMapMainCategory = HashMap();
   Map<int, bool> _isSelectedMapSubCategory = HashMap();
   int nbSelectedMainCategory = 0;
   int nbSelectedSubCategory = 0;
 
   bool isSelected(int id, Type type) {
+    /// Checks if the Category of type [type] (SubCategory or MainCategory)
+    /// with the given [id] has been selected by the user.
     if (type == MainCategory)
       return this._isSelectedMapMainCategory[id];
     else
@@ -20,6 +23,10 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   void updateIsSelected(int id, Type type) async {
+    /// Toggles the selection status of Category of type [type]
+    /// (SubCategory or MainCategory)  with the given [id].
+    /// e.g. if it was not selected, this method selects it and
+    /// vice versa.
     if (type == MainCategory)
       _updateIsSelectMainCategory(id);
     else
@@ -49,6 +56,9 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   void setCategoriesToFalse(int id, Type type) {
+    /// Unselects the Category of type [type]
+    /// (SubCategory or MainCategory)  with the given [id].
+    /// This method is also used to fill up the HashMap
     if (type == MainCategory)
       this._isSelectedMapMainCategory[id] = false;
     else
@@ -56,6 +66,11 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   bool deleteCategories(BuildContext context) {
+    /// Deletes categories selected by the user and returns whether the deletion
+    /// was sucessfull (true) or not (false).
+    ///
+    /// It verifies that the "Essentials" is not selected for deletion.
+    /// If that is the case, the deletion process is aborted.
     bool triedToDeleteEssentials = _unallowDeletionOfEssentialMainCategory(context);
     if (triedToDeleteEssentials) {
       return false;
@@ -106,6 +121,8 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   void resetAllSelected() {
+    /// Resets all the counters and selected fields of the state
+    /// This DOES NOT unselect the checked boxes in the UI.
     List<int> subcatIds = this._isSelectedMapSubCategory.keys.toList();
     List<int> catIds = this._isSelectedMapMainCategory.keys.toList();
 
@@ -146,5 +163,3 @@ class DeleteCategoriesState extends ChangeNotifier {
     return false;
   }
 }
-
-//TODO: Documentation for DeleteCategoriesState
