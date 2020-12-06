@@ -35,12 +35,12 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
     if (result == "Delete") {
       DeleteCategoriesState showTransactionsState =
           Provider.of<DeleteCategoriesState>(context, listen: false);
-      bool showSnackBar = showTransactionsState.deleteCategories(context);
-      if (showSnackBar) {
+      bool sucessfulDeletion = showTransactionsState.deleteCategories(context);
+      if (sucessfulDeletion) {
+        Navigator.pop(context);
+      } else {
         SnackBar snackbar = SnackBar(content: Text("You can't delete the Essentials MainCategory"));
         Scaffold.of(context).showSnackBar(snackbar);
-      } else {
-        Navigator.pop(context);
       }
     }
   }

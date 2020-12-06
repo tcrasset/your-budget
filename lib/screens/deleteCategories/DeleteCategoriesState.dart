@@ -58,14 +58,14 @@ class DeleteCategoriesState extends ChangeNotifier {
   bool deleteCategories(BuildContext context) {
     bool triedToDeleteEssentials = _unallowDeletionOfEssentialMainCategory(context);
     if (triedToDeleteEssentials) {
-      return true;
+      return false;
     } else {
       _deleteMainCategories(context);
       _unselectSubcategoriesUnderSelectedMainCategories(context);
       _deleteSubCategories(context);
       resetAllSelected();
       notifyListeners();
-      return false;
+      return true;
     }
   }
 
