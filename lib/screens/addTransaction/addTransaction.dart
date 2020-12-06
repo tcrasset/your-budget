@@ -166,20 +166,20 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [SubCategory] object, it pushes to the route selecting
   /// a [SubCategory], whose value is stored in [_subcategory] and whose
   /// name is stored in [_subcategoryFieldName].
-  handleOnTapCategory() {
-    Navigator.push(
+  handleOnTapCategory() async {
+    dynamic returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
               SelectValuePage(title: "Subcategories", listEntries: subcategories)),
-    ).then((returnElement) {
-      if (returnElement != null) {
-        setState(() {
-          _subcategory = returnElement;
-          _subcategoryFieldName = returnElement.name;
-        });
-      }
-    });
+    );
+
+    if (returnElement != null) {
+      setState(() {
+        _subcategory = returnElement;
+        _subcategoryFieldName = returnElement.name;
+      });
+    }
   }
 
   /// When tapping on the Date row, it opens the DataPicker
