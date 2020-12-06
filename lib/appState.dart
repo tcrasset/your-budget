@@ -62,7 +62,7 @@ class AppState extends ChangeNotifier {
 
     _payees = await SQLQueryClass.getPayees();
     _accounts = await SQLQueryClass.getAccounts();
-    // _subcategories = await SQLQueryClass.getSubCategories();
+
     _budgetValues = await SQLQueryClass.getBudgetValues();
     _goals = await SQLQueryClass.getGoals();
 
@@ -220,6 +220,9 @@ class AppState extends ChangeNotifier {
       final Account account =
           accounts.singleWhere((account) => account.id == transaction.accountID);
       account.balance += transaction.amount;
+      SQLQueryClass.updateAccount(account);
+      await computeToBeBudgeted();
+      notifyListeners();
     } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
       // If the transaction amount is positive, the transaction will remove money from
       // outAccount and input it into inAccount.
@@ -231,6 +234,9 @@ class AppState extends ChangeNotifier {
       final Account inAccount =
           accounts.singleWhere((account) => account.id == -transaction.payeeID);
       inAccount.balance += transaction.amount;
+      SQLQueryClass.updateAccount(outAccount);
+      SQLQueryClass.updateAccount(inAccount);
+      notifyListeners();
       //TODO: Add notifyListeners() ????
     } else {
       /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
@@ -240,6 +246,7 @@ class AppState extends ChangeNotifier {
       final Account account =
           accounts.singleWhere((account) => account.id == transaction.accountID);
       account.balance += transaction.amount;
+      SQLQueryClass.updateAccount(account);
 
       Budget budget = _getBudgetByDate(DateTime(transaction.date.year, transaction.date.month));
       SubCategory oldSubcat =
@@ -250,8 +257,8 @@ class AppState extends ChangeNotifier {
           oldSubcat.id, oldSubcat.parentId, oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
 
       updateSubcategory(newSubcat);
+      //notifyListeners is called in updateSubcategory
     }
-    //notifyListeners is called in updateSubcategory
   }
 
   Future<void> addGoal({
