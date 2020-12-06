@@ -185,7 +185,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (returnElement != null) {
       setState(() {
         _subcategory = returnElement;
-        _subcategoryFieldName = returnElement.name;
+        _subcategoryFieldName =
+            returnElement is SubCategory ? returnElement.name : returnElement.data;
       });
     }
   }
