@@ -12,6 +12,7 @@ class Budget {
   int month;
   int year;
   double totalBudgeted = 0;
+  double toBeBudgetedInputFromMoneyTransactions = 0;
 
   /// Default constructor for [Budget]. It is declared for a month given by [month] and [year], and
   /// will hold a list of MainCategories in [maincategories], and a list of their respective
