@@ -170,8 +170,16 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     dynamic returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              SelectValuePage(title: "Subcategories", listEntries: subcategories)),
+        builder: (context) {
+          List subcatAndToBeBudgeted = [];
+          subcategories.forEach((subcat) {
+            subcatAndToBeBudgeted.add(subcat);
+          });
+          subcatAndToBeBudgeted.add(Text("To be budgeted"));
+
+          return SelectValuePage(title: "Subcategories", listEntries: subcatAndToBeBudgeted);
+        },
+      ),
     );
 
     if (returnElement != null) {
