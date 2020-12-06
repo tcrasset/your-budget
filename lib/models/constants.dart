@@ -24,4 +24,5 @@ class Constants {
   static const int MAX_NB_MONTHS_AHEAD = 24;
   static const UNASSIGNED_SUBCAT_ID = 0;
   static const UNASSIGNED_PAYEE_ID = 0;
+  static const TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION = 1048576;
 }
