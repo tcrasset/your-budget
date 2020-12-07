@@ -197,12 +197,13 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// The [DateTime] gets stored in [_date], and the string
   /// value of that date is saved in [_dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
+    DateTime picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(_date),
         firstDate: appState.startingBudgetDate,
         lastDate: getLastDayOfMonth(getMaxBudgetDate()));
     if (picked != null && picked != _date)
+      picked = addExactEntryTime(picked);
       setState(() {
         _date = picked;
         _dateFieldName = getDateString(picked);
