@@ -27,6 +27,7 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
       ShowTransactionsState showTransactionsState =
           Provider.of<ShowTransactionsState>(context, listen: false);
       showTransactionsState.deleteTransactions(context);
+      Navigator.pop(context);
     }
   }
 }
