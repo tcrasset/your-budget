@@ -170,7 +170,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
           padding: EdgeInsets.only(bottom: 10),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
             Text(account.name, style: _accountNameStyle),
-            Text("${account.balance.toString()} €",
+            Text(account.balance.toStringAsFixed(2) +" €",
                 style: account.balance.isNegative
                     ? _negativeAmountTextStyle
                     : _positiveAmountTextStyle)
