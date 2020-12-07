@@ -4,7 +4,6 @@ import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:provider/provider.dart';
 import 'package:your_budget/screens/deleteCategories/DeleteCategories.dart';
-import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
 import 'package:your_budget/screens/modifyCategories/components/modifyMainCategoryRow.dart';
 import 'package:your_budget/screens/modifyCategories/components/modifySubCategoryRow.dart';
 
