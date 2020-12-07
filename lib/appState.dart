@@ -237,7 +237,6 @@ class AppState extends ChangeNotifier {
       SQLQueryClass.updateAccount(outAccount);
       SQLQueryClass.updateAccount(inAccount);
       notifyListeners();
-      //TODO: Add notifyListeners() ????
     } else {
       /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
       /// subcategories are not affected.
@@ -549,7 +548,6 @@ class AppState extends ChangeNotifier {
       SQLQueryClass.updateAccount(outAccount);
       SQLQueryClass.updateAccount(inAccount);
       notifyListeners();
-      //TODO: Add notifyListeners() ????
     } else {
       final Account account = accounts
           .singleWhere((account) => account.id == transaction.accountID);
