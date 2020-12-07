@@ -517,10 +517,60 @@ class AppState extends ChangeNotifier {
     return _budgets.singleWhere((budget) => budget.year == date.year && budget.month == date.month);
   }
 
-  void deleteTransaction(int transactionId) {
-    _transactions.removeWhere((transaction) => transaction.id == transactionId);
+  void deleteTransaction(int transactionId) async {
+    MoneyTransaction transaction = _transactions
+        .singleWhere((transaction) => transaction.id == transactionId);
+
+    if (transaction.subcatID ==
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+      print("Is to be budgeted money transaction");
+      // Update balance of the account
+      final Account account = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
+      account.balance -= transaction.amount;
+      await SQLQueryClass.updateAccount(account);
+
+      Budget budget = _budgets
+          .singleWhere((budget) => isSameMonth(budget.date, transaction.date));
+      budget.toBeBudgetedInputFromMoneyTransactions -= transaction.amount;
+
+      await computeToBeBudgeted();
+      notifyListeners();
+    } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
+      /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
+      /// subcategories are not affected.
+      final Account outAccount = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
+      outAccount.balance += transaction.amount;
+
+      final Account inAccount =
+          accounts.singleWhere((account) => account.id == -transaction.payeeID);
+      inAccount.balance -= transaction.amount;
+      SQLQueryClass.updateAccount(outAccount);
+      SQLQueryClass.updateAccount(inAccount);
+      notifyListeners();
+      //TODO: Add notifyListeners() ????
+    } else {
+      final Account account = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
+      account.balance -= transaction.amount;
+      SQLQueryClass.updateAccount(account);
+
+      Budget budget = _getBudgetByDate(
+          DateTime(transaction.date.year, transaction.date.month));
+      SubCategory oldSubcat = budget.subcategories
+          .singleWhere((subcat) => subcat.id == transaction.subcatID);
+
+      double newAvailableAmount = oldSubcat.available - transaction.amount;
+      SubCategory newSubcat = SubCategory(oldSubcat.id, oldSubcat.parentId,
+          oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
+
+      updateSubcategory(newSubcat);
+      //notifyListeners is called in updateSubcategory
+    }
 
     SQLQueryClass.deleteTransaction(transactionId);
+    _transactions.remove(transaction);
     notifyListeners();
   }
 
