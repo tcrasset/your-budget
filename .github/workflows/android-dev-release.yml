@@ -27,7 +27,7 @@ jobs:
       with:
         name: gitversion
         path: version.txt
-build:
+  build:
     name: Build APK and Create release
     needs: [ version ]
     runs-on: ubuntu-latest
