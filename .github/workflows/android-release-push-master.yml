@@ -1,8 +1,8 @@
-name: Demo App Android Release
+name: Your Budget Android Release
 
 on:
   push:
-    branches: [ v0.0.1 ]
+    branches: [ master ]
 
 jobs:
   version:
