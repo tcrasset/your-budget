@@ -4,7 +4,7 @@
 
 One solution to having a budget for each month is to save the generic
 category names and subcategory names in a data base, and have another
-table for budgeted values with values
+table for budgeted values with values:
 
 - `id` #PRIMARY KEY
 - `subcategory.id`
