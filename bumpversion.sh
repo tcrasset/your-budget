@@ -27,5 +27,5 @@ fi
 # Commit and tag this change.
 version=`grep 'version: '  "$PUBDIR/pubspec.yaml" | sed 's/version: //'`
 echo "$version" > "$PUBDIR/version.txt"
-git commit -m "Bump version to $version" "$PUBDIR/pubspec.yaml"
+git commit -m "Bump version to $version" "$PUBDIR/pubspec.yaml" "$PUBDIR/version.txt"
 git tag "$version"
