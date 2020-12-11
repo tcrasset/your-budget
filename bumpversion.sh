@@ -11,15 +11,15 @@ if [ $# -eq 0 ]
 elif [[ $# -eq 1  && "$1" == "major" ]]
     then
     echo "Updating major version number"
-    perl -i -pe 's/^(version:\s+)(\d+)(\.)(\d+)(\.)(\d+)(\+)(\d+)$/$1.($2+1).$3.$4.$5.$6.$7.$8/e' "$PUBDIR/pubspec.yaml"
+    perl -i -pe 's/^(version:\s+)(\d+)(\.)(\d+)(\.)(\d+)(\+)(\d+)$/$1.($2+1).$3.$4.$5.$6.$7.($8+1)/e' "$PUBDIR/pubspec.yaml"
 elif [[ $# -eq 1  && "$1" == "minor" ]]
     then
     echo "Updating minor version number"
-    perl -i -pe 's/^(version:\s+)(\d+)(\.)(\d+)(\.)(\d+)(\+)(\d+)$/$1.$2.$3.($4+1).$5.$6.$7.$8/e' "$PUBDIR/pubspec.yaml"
+    perl -i -pe 's/^(version:\s+)(\d+)(\.)(\d+)(\.)(\d+)(\+)(\d+)$/$1.$2.$3.($4+1).$5.$6.$7.($8+1)/e' "$PUBDIR/pubspec.yaml"
 elif [[ $# -eq 1  && "$1" == "patch" ]]
     then
     echo "Updating patch version number"
-    perl -i -pe 's/^(version:\s+)(\d+)(\.)(\d+)(\.)(\d+)(\+)(\d+)$/$1.$2.$3.$4.$5.($6+1).$7.$8/e' "$PUBDIR/pubspec.yaml"
+    perl -i -pe 's/^(version:\s+)(\d+)(\.)(\d+)(\.)(\d+)(\+)(\d+)$/$1.$2.$3.$4.$5.($6+1).$7.($8+1)/e' "$PUBDIR/pubspec.yaml"
 else
     exit 1
 fi
