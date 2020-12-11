@@ -59,7 +59,7 @@ jobs:
     - run: flutter pub get
     - run: flutter test
     # - run: flutter build apk --release --split-per-abi
-    - run: flutter build appbundle
+    - run: flutter build appbundle --debug
     - name: Create a Release in GitHub
       uses: ncipollo/release-action@v1
       with:
