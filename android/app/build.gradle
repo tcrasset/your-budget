@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    throw new GradleException("Flutter version code not found. Define version code in the local.properties file.")
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    throw new GradleException("Flutter version name not found. Define version name in the local.properties file.")
 }
 
 apply plugin: 'com.android.application'
@@ -52,8 +52,8 @@ android {
         applicationId "com.tcrasset.yourBudget"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 1
-        versionName "0.0.1"
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     signingConfigs {
