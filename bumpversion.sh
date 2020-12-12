@@ -3,7 +3,7 @@ set -e
 
 PUBDIR="/home/tomc/Documents/Personal Projects/your-budget-app/"
 
-# Find and increment the version number.
+# Find and increment the version and build number.
 if [ $# -eq 0 ]
   then
     echo "Updating build number"
