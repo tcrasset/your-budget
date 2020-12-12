@@ -219,7 +219,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      if (_payee != null && _account != null && _subcategory != null) {
+      if (_payee != null && _account != null) {
         _amount = formatCurrencyToDouble(_amountController.text, isPositive);
 
         print("Form validated");
