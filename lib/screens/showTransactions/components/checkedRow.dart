@@ -62,12 +62,20 @@ class _CheckedRowState extends State<CheckedRow> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(getDateString(widget.date),
-                      textAlign: TextAlign.right, style: widget.dateStyle),
-                  Text(
-                    widget.memo == "" ? "No memo" : widget.memo,
-                    textAlign: TextAlign.left,
-                    style: widget.memoStyle,
+                      textAlign: TextAlign.right, style: widget.dateStyle,
                   ),
+                  SizedBox(width: 10,),
+                  Expanded(
+                    child: Text(
+                      widget.memo == "" ? "No memo" : widget.memo,
+                      textAlign: TextAlign.left,
+                      style: widget.memoStyle,
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
+                    ),
+                  ),
+                  SizedBox(width: 10,),
                   Text("${widget.amount} €", style: widget.amountStyle),
                 ],
               ),

@@ -10,7 +10,6 @@ import 'package:your_budget/screens/showTransactions/components/transactionList.
 import 'package:your_budget/screens/showTransactions/modifyTransactions.dart';
 import 'package:provider/provider.dart';
 
-//TODO: Add TransactionPageState
 class ShowTransactionPage extends StatefulWidget {
   final String title;
 

@@ -28,15 +28,27 @@ class UncheckedRow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                subcategoryName,
-                style: subcategoryStyle,
+              Expanded(
+                child: Text(
+                  subcategoryName,
+                  style: subcategoryStyle,
+                  overflow: TextOverflow.fade,
+                  maxLines: 1,
+                  softWrap: false,
+                ),
               ),
-              Text(
-                memo == "" ? "No memo" : memo,
-                textAlign: TextAlign.left,
-                style: memoStyle,
+              SizedBox(width: 10,),
+              Expanded(
+                child: Text(
+                  memo == "" ? "No memo" : memo,
+                  textAlign: TextAlign.left,
+                  style: memoStyle,
+                  overflow: TextOverflow.fade,
+                  maxLines: 1,
+                  softWrap: false,
+                ),
               ),
+              SizedBox(width: 10,),
               Text("$amount €", style: amountStyle),
             ],
           ),

@@ -26,7 +26,7 @@ class _TransactionRowState extends State<TransactionRow> {
       TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
 
   final TextStyle subcategoryStyle =
-      TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600, color: Colors.black);
+      TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
 
   TextStyle amountStyle;
 
