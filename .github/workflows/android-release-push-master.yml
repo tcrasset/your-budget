@@ -24,6 +24,7 @@ jobs:
       uses: juliangruber/read-file-action@v1
       with:
         path: version.txt
+    - run: flutter clean
     - run: flutter pub get
     - run: flutter test
     - run: flutter build appbundle -v
