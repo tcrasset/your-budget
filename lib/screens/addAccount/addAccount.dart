@@ -154,7 +154,10 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                       ],
                     )),
                 Consumer<AppState>(builder: (_, appState, __) {
-                  return Column(children: _buildAccountRows(appState));
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal:10),
+                    child: Column(children: _buildAccountRows(appState)),
+                  );
                 })
               ],
             ),
@@ -166,16 +169,22 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
     List<Widget> rows = [];
     for (final Account account in appState.accounts) {
       var row = Container(
-        child: Container(
-          padding: EdgeInsets.only(bottom: 10),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
-            Text(account.name, style: _accountNameStyle),
-            Text(account.balance.toStringAsFixed(2) +" €",
-                style: account.balance.isNegative
-                    ? _negativeAmountTextStyle
-                    : _positiveAmountTextStyle)
-          ]),
-        ),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
+          Expanded(
+            child: Text(account.name, style: _accountNameStyle,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  softWrap: false,),
+          ),
+          SizedBox(width: 10,),
+          Text(account.balance.toStringAsFixed(2) +" €",
+              style: account.balance.isNegative
+                  ? _negativeAmountTextStyle
+                  : _positiveAmountTextStyle,
+                overflow: TextOverflow.fade,
+                maxLines: 1,
+                softWrap: false,)
+        ]),
       );
       rows.add(row);
     }
