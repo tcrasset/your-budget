@@ -61,7 +61,6 @@ class ModifySubcategoryRow extends StatelessWidget {
       onTap: () => handleSubCategoryNameChange(context),
       onLongPress: () => deleteSubcategory(context),
       child: Container(
-        color: Colors.blue,
         height: 40.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
