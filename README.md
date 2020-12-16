@@ -1,3 +1,5 @@
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/tcrasset/your-budget/Your%20Budget%20Android%20Release) ![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/tcrasset/your-budget?include_prereleases)
+
 # Your Budget - Personal budgeting software
 
 ![Feature graphic](storeAssets/icons/yb_feature_graphic_1024x500.png)
