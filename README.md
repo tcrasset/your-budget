@@ -12,6 +12,10 @@ The top level directory structure follows the standard Flutter project directory
 
 We try to adhere as much as possible to the [GitFlow branching model](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow).
 
+**Please file an issue for whatever question or issue you have.**
+
+When bumping the version, follow the procedure at [docs/versioning-howto.md](./docs/versioning-howto.md).
+
 ## Screenshots
 
 ![Screenshots](storeAssets/Screenshots/Screenshots_aligned.png)
