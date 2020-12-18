@@ -4,6 +4,7 @@ import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
+import 'package:your_budget/screens/about/aboutScreen.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
@@ -23,7 +24,15 @@ class _BudgetPageState extends State<BudgetPage> {
   bool showMenu = true;
 
   //TODO: Settings
-  void handleSettings() {}
+  void handleSettings() {
+  }
+
+  void handlePopUpMenuButtonSelected(String selectedItem) async {
+    if (selectedItem == "About") {
+      await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AboutPage()));
+    }
+  }
 
   void handleModifyCategories() {
     Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyCategories()));
@@ -48,10 +57,15 @@ class _BudgetPageState extends State<BudgetPage> {
                     icon: Icon(FontAwesomeIcons.checkSquare),
                     onPressed: handleModifyCategories,
                   ),
-                  IconButton(
-                    icon: Icon(FontAwesomeIcons.bars),
-                    onPressed: handleSettings,
-                  ),
+                PopupMenuButton(
+                  onSelected: handlePopUpMenuButtonSelected,
+                  itemBuilder: (context) => [
+                    PopupMenuItem<String>(
+                      value: "About",
+                      child: Text("About"),
+                    ),
+                  ],
+                ),
                 ],
               ),
             )
