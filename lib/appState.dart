@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/models/Budget.dart';
 
-import 'package:your_budget/models/SQLQueries.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';
@@ -14,7 +13,6 @@ import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/utils.dart';
 
-import 'models/SQLQueries.dart';
 import 'package:your_budget/models/queries.dart';
 import 'models/categories.dart';
 
@@ -51,7 +49,7 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
 
-  AppState(Queries queryContext) {
+  AppState({@required Queries queryContext}) {
     queryContext = queryContext;
     _loadStateFromDatabase();
   }
