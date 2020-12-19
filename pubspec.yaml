@@ -37,6 +37,7 @@ dependencies:
   month_picker_dialog: ^0.3.2 # Picking a month/year combo instead of day/month/year
   font_awesome_flutter: ^8.8.1
   meta: ^1.1.8
+  get_it: ^5.0.3 # Service locator
 
 dev_dependencies:
   flutter_test:
