@@ -1,8 +1,9 @@
-import 'package:meta/meta.dart';
 
 /// This file will contain the classes for the common objects used throughout the codebase, namely
 /// [Payee], [MoneyTransaction], and [Account].
-import 'package:your_budget/models/database_provider.dart';
+
+import 'package:your_budget/models/constants.dart';
+import 'package:meta/meta.dart';
 
 /// Class that defines an entity/person that either received money or gave money to the budget
 /// holder.

@@ -1,4 +1,4 @@
-import 'package:your_budget/models/database_provider.dart';
+import 'package:your_budget/models/constants.dart';
 
 /// Class representing a budgeting category.
 /// A category is represented an unique [id], a [name],

@@ -7,6 +7,7 @@ import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/queries.dart';
+import 'package:your_budget/models/constants.dart';
 
 class SQLQueryClass implements Queries{
   Future<void> debugDatabase() async {
