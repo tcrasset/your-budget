@@ -20,7 +20,6 @@ import 'package:provider/provider.dart';
 import 'injection_container.dart' as injections;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseProvider().open();
   await injections.init();
   runApp(MyBudget());
 }

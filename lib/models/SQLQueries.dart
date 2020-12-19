@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/database_provider.dart';
@@ -10,6 +11,11 @@ import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/constants.dart';
 
 class SQLQueryClass implements Queries{
+
+  final Database db;
+
+  SQLQueryClass({@required this.db});
+
   Future<void> debugDatabase() async {
     (await db.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
       debugPrint(row.values.toString());
