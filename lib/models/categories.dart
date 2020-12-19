@@ -1,4 +1,4 @@
-import 'package:your_budget/models/database_creator.dart';
+import 'package:your_budget/models/database_provider.dart';
 
 /// Class representing a budgeting category.
 /// A category is represented an unique [id], a [name],
@@ -25,12 +25,12 @@ class SubCategory extends Category {
   /// Constructor building a SubCategory from a [json] representation taken
   /// from a database
   SubCategory.fromJson(Map<String, dynamic> json)
-      : parentId = json[DatabaseCreator.CAT_ID_OUTSIDE],
+      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE],
         super(
-            json[DatabaseCreator.SUBCAT_ID], //
-            json[DatabaseCreator.SUBCAT_NAME],
-            json[DatabaseCreator.BUDGET_VALUE_BUDGETED],
-            json[DatabaseCreator.BUDGET_VALUE_AVAILABLE]);
+            json[DatabaseConstants.SUBCAT_ID], //
+            json[DatabaseConstants.SUBCAT_NAME],
+            json[DatabaseConstants.BUDGET_VALUE_BUDGETED],
+            json[DatabaseConstants.BUDGET_VALUE_AVAILABLE]);
 
   @override
   String toString() {
@@ -78,8 +78,8 @@ class MainCategory extends Category {
   /// from a database
   MainCategory.fromJson(Map<String, dynamic> json)
       : super(
-            json[DatabaseCreator.CATEGORY_ID], //
-            json[DatabaseCreator.CATEGORY_NAME],
+            json[DatabaseConstants.CATEGORY_ID], //
+            json[DatabaseConstants.CATEGORY_NAME],
             0.00,
             0.00);
 
@@ -187,12 +187,12 @@ class BudgetValue {
   /// Constructor building a BudgetValue from a [json] representation taken
   /// from a database.
   BudgetValue.fromJson(Map<String, dynamic> json)
-      : id = json[DatabaseCreator.BUDGET_VALUE_ID], //
-        subcategoryId = json[DatabaseCreator.SUBCAT_ID_OUTSIDE],
-        budgeted = json[DatabaseCreator.BUDGET_VALUE_BUDGETED],
-        available = json[DatabaseCreator.BUDGET_VALUE_AVAILABLE],
-        year = json[DatabaseCreator.BUDGET_VALUE_YEAR],
-        month = json[DatabaseCreator.BUDGET_VALUE_MONTH];
+      : id = json[DatabaseConstants.BUDGET_VALUE_ID], //
+        subcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE],
+        budgeted = json[DatabaseConstants.BUDGET_VALUE_BUDGETED],
+        available = json[DatabaseConstants.BUDGET_VALUE_AVAILABLE],
+        year = json[DatabaseConstants.BUDGET_VALUE_YEAR],
+        month = json[DatabaseConstants.BUDGET_VALUE_MONTH];
 
   @override
   String toString() {

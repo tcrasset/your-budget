@@ -9,7 +9,7 @@ import 'package:your_budget/screens/addAccount/addAccount.dart';
 import 'package:your_budget/screens/addTransaction/addTransaction.dart';
 
 import 'package:your_budget/screens/budget/budgetPage.dart';
-import 'package:your_budget/models/database_creator.dart';
+import 'package:your_budget/models/database_provider.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
@@ -20,8 +20,8 @@ import 'package:provider/provider.dart';
 import 'injection_container.dart' as injections;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseCreator().open();
-  injections.init();
+  await DatabaseProvider().open();
+  await injections.init();
   runApp(MyBudget());
 }
 

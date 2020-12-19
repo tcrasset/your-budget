@@ -1,6 +1,6 @@
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
-import 'package:your_budget/models/database_creator.dart';
+import 'package:your_budget/models/database_provider.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
@@ -108,7 +108,7 @@ abstract class Queries {
 
   /// Update category with id [category.id] in the database.
   ///
-  /// Fields that can be changed [DatabaseCreator.CATEGORY_NAME]
+  /// Fields that can be changed [DatabaseConstants.CATEGORY_NAME]
   Future<void> updateCategory(MainCategory category);
 
   /// Update subcategory with id [subcategory.id] in the database.

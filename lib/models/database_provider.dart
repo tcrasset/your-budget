@@ -12,7 +12,7 @@ Database db;
 
 /// Class that is responsible for creating the database, filling up the default values
 /// and assigning it to global variable [db].
-class DatabaseCreator {
+class DatabaseConstants {
   /// Names of the database tables
   static const String categoryTable = 'category';
   static const String subcategoryTable = 'subcategory';
@@ -73,6 +73,9 @@ class DatabaseCreator {
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
   static const String GOAL_ID_OUTSIDE = 'goal_id';
 
+}
+
+class DatabaseProvider {
   /// Logs every action taken on the database to console.
   /// The method name [functionName] along with the raw sql query
   /// [sql] and the parameters used are logged.
@@ -113,13 +116,15 @@ class DatabaseCreator {
   /// Initiates the database and assigns it to the global variable [db]
   /// by calling [DatabaseCreator.onCreate()] with the path to the database
   /// and the version number.
-  Future<void> open() async {
+  Future<Database> open() async {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
       version: 1,
       onCreate: _onCreate,
     );
+
+    return db;
   }
 
   /// Creates the database by creating the different tables
@@ -135,93 +140,93 @@ class DatabaseCreator {
   /// and [goalTable].
   Future<void> _createTables(Database db) async {
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $categoryTable (
-                        $CATEGORY_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $CATEGORY_NAME TEXT NOT NULL UNIQUE
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.categoryTable} (
+                        ${DatabaseConstants.CATEGORY_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.CATEGORY_NAME} TEXT NOT NULL UNIQUE
                       );''');
 
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $subcategoryTable (
-                        $SUBCAT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $CAT_ID_OUTSIDE INTEGER NOT NULL,
-                        $SUBCAT_NAME TEXT NOT NULL
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.subcategoryTable} (
+                        ${DatabaseConstants.SUBCAT_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.CAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.SUBCAT_NAME} TEXT NOT NULL
                     );''');
 
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $payeeTable (
-                        $PAYEE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $PAYEE_NAME TEXT NOT NULL UNIQUE
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.payeeTable} (
+                        ${DatabaseConstants.PAYEE_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.PAYEE_NAME} TEXT NOT NULL UNIQUE
                       );''');
 
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $accountTable (
-                        $ACCOUNT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $ACCOUNT_NAME TEXT NOT NULL UNIQUE,
-                        $ACCOUNT_BALANCE FLOAT NOT NULL
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.accountTable} (
+                        ${DatabaseConstants.ACCOUNT_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.ACCOUNT_NAME} TEXT NOT NULL UNIQUE,
+                        ${DatabaseConstants.ACCOUNT_BALANCE} FLOAT NOT NULL
                       );''');
 
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $moneyTransactionTable (
-                        $MONEYTRANSACTION_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-                        $PAYEE_ID_OUTSIDE INTEGER NOT NULL,
-                        $ACCOUNT_ID_OUTSIDE INTEGER NOT NULL,
-                        $MONEYTRANSACTION_AMOUNT FLOAT NOT NULL,
-                        $MONEYTRANSACTION_MEMO TEXT,
-                        $MONEYTRANSACTION_DATE INTEGER NOT NULL,
-                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES $subcategoryTable($SUBCAT_ID),
-                        FOREIGN KEY ($PAYEE_ID_OUTSIDE) REFERENCES $payeeTable($PAYEE_ID),
-                        FOREIGN KEY ($ACCOUNT_ID_OUTSIDE) REFERENCES $accountTable($ACCOUNT_ID)
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.moneyTransactionTable} (
+                        ${DatabaseConstants.MONEYTRANSACTION_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.PAYEE_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.MONEYTRANSACTION_AMOUNT} FLOAT NOT NULL,
+                        ${DatabaseConstants.MONEYTRANSACTION_MEMO} TEXT,
+                        ${DatabaseConstants.MONEYTRANSACTION_DATE} INTEGER NOT NULL,
+                        FOREIGN KEY (${DatabaseConstants.SUBCAT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.subcategoryTable}(${DatabaseConstants.SUBCAT_ID}),
+                        FOREIGN KEY (${DatabaseConstants.PAYEE_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.payeeTable}(${DatabaseConstants.PAYEE_ID}),
+                        FOREIGN KEY (${DatabaseConstants.ACCOUNT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.accountTable}(${DatabaseConstants.ACCOUNT_ID})
                     );''');
 
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $budgetValueTable (
-                        $BUDGET_VALUE_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-                        $BUDGET_VALUE_BUDGETED FLOAT DEFAULT 0.00,
-                        $BUDGET_VALUE_AVAILABLE FLOAT DEFAULT 0.00,
-                        $BUDGET_VALUE_YEAR INTEGER NOT NULL,
-                        $BUDGET_VALUE_MONTH INTEGER NOT NULL,
-                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES $categoryTable($SUBCAT_ID)
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.budgetValueTable} (
+                        ${DatabaseConstants.BUDGET_VALUE_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.BUDGET_VALUE_BUDGETED} FLOAT DEFAULT 0.00,
+                        ${DatabaseConstants.BUDGET_VALUE_AVAILABLE} FLOAT DEFAULT 0.00,
+                        ${DatabaseConstants.BUDGET_VALUE_YEAR} INTEGER NOT NULL,
+                        ${DatabaseConstants.BUDGET_VALUE_MONTH} INTEGER NOT NULL,
+                        FOREIGN KEY (${DatabaseConstants.SUBCAT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.categoryTable}(${DatabaseConstants.SUBCAT_ID})
                     );''');
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $goalTable (
-                        $GOAL_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $SUBCAT_ID_OUTSIDE INTEGER NOT NULL,
-                        $GOAL_TYPE INTEGER NOT NULL,
-                        $GOAL_AMOUNT FLOAT NOT NULL,
-                        $GOAL_YEAR INTEGER,
-                        $GOAL_MONTH INTEGER,
-                        FOREIGN KEY ($SUBCAT_ID_OUTSIDE) REFERENCES $subcategoryTable($SUBCAT_ID)
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.goalTable} (
+                        ${DatabaseConstants.GOAL_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.GOAL_TYPE} INTEGER NOT NULL,
+                        ${DatabaseConstants.GOAL_AMOUNT} FLOAT NOT NULL,
+                        ${DatabaseConstants.GOAL_YEAR} INTEGER,
+                        ${DatabaseConstants.GOAL_MONTH} INTEGER,
+                        FOREIGN KEY (${DatabaseConstants.SUBCAT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.subcategoryTable}(${DatabaseConstants.SUBCAT_ID})
 
                     );''');
 
     await db.execute('''
-                      CREATE TABLE IF NOT EXISTS $constantsTable (
-                        $CONSTANT_ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        $CONSTANT_NAME TEXT,
-                        $CONSTANT_VALUE TEXT
+                      CREATE TABLE IF NOT EXISTS ${DatabaseConstants.constantsTable} (
+                        ${DatabaseConstants.CONSTANT_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.CONSTANT_NAME} TEXT,
+                        ${DatabaseConstants.CONSTANT_VALUE} TEXT
                     );''');
   }
 
   /// Populates the tables of database [db] with the default categories, subcategories and
   /// their budgetValues.
   Future<void> _createBasicCategories(Database db) async {
-    const String CREATE_CATEGORY = '''INSERT INTO $categoryTable
-      ($CATEGORY_NAME)
+    const String CREATE_CATEGORY = '''INSERT INTO ${DatabaseConstants.categoryTable}
+      (${DatabaseConstants.CATEGORY_NAME})
       VALUES(?);''';
 
-    const String CREATE_SUBCATEGORY = '''INSERT INTO $subcategoryTable
-      ($CAT_ID_OUTSIDE,
-      $SUBCAT_NAME)
+    const String CREATE_SUBCATEGORY = '''INSERT INTO ${DatabaseConstants.subcategoryTable}
+      (${DatabaseConstants.CAT_ID_OUTSIDE},
+      ${DatabaseConstants.SUBCAT_NAME})
       VALUES(?, ?);''';
 
-    const String CREATE_BUDGETVALUE = '''INSERT INTO $budgetValueTable
-      ($SUBCAT_ID_OUTSIDE,
-      $BUDGET_VALUE_BUDGETED,
-      $BUDGET_VALUE_AVAILABLE,
-      $BUDGET_VALUE_YEAR,
-      $BUDGET_VALUE_MONTH)
+    const String CREATE_BUDGETVALUE = '''INSERT INTO ${DatabaseConstants.budgetValueTable}
+      (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+      ${DatabaseConstants.BUDGET_VALUE_BUDGETED},
+      ${DatabaseConstants.BUDGET_VALUE_AVAILABLE},
+      ${DatabaseConstants.BUDGET_VALUE_YEAR},
+      ${DatabaseConstants.BUDGET_VALUE_MONTH})
       VALUES(?, ?, ?, ?, ?);''';
 
     int categoryId = await db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
@@ -254,8 +259,8 @@ class DatabaseCreator {
   }
 
   Future<void> _createConstants(Database db) async {
-    const String CREATE_CONSTANT = '''INSERT INTO $constantsTable
-      ($CONSTANT_NAME, $CONSTANT_VALUE)
+    const String CREATE_CONSTANT = '''INSERT INTO ${DatabaseConstants.constantsTable}
+      (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
       VALUES(?, ?);''';
 
     /// Create the starting budget date based on the first time the user uses the app

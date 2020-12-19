@@ -1,4 +1,4 @@
-import 'database_creator.dart';
+import 'package:your_budget/models/database_provider.dart';
 
 //DO NOT CHANGE THE ORDER OF THE ITEMS IN THE ENUMERATION
 enum GoalType { TargetAmount, TargetAmountByDate, MonthlyGoal }
@@ -35,12 +35,12 @@ class Goal {
   /// Constructor building a [Goal] from a [json] representation taken
   /// from a database.
   Goal.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseCreator.GOAL_ID];
-    this.correspondingSubcategoryId = json[DatabaseCreator.SUBCAT_ID_OUTSIDE];
-    this.goalType = GoalType.values[json[DatabaseCreator.GOAL_TYPE]];
-    this.amount = json[DatabaseCreator.GOAL_AMOUNT];
-    this.year = json[DatabaseCreator.GOAL_YEAR];
-    this.month = json[DatabaseCreator.GOAL_MONTH];
+    this.id = json[DatabaseConstants.GOAL_ID];
+    this.correspondingSubcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE];
+    this.goalType = GoalType.values[json[DatabaseConstants.GOAL_TYPE]];
+    this.amount = json[DatabaseConstants.GOAL_AMOUNT];
+    this.year = json[DatabaseConstants.GOAL_YEAR];
+    this.month = json[DatabaseConstants.GOAL_MONTH];
   }
 
   @override
