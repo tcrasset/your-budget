@@ -269,5 +269,3 @@ class DatabaseCreator {
     db.rawInsert(CREATE_CONSTANT, ["MAX_BUDGET_DATE", maxBudgetDateMillisecondsSinceEpoch]);
   }
 }
-
-//TODO: When starting a new month, create a new month in the database
