@@ -19,9 +19,9 @@ import 'package:provider/provider.dart';
 
 import 'injection_container.dart' as injections;
 void main() async {
-  injections.init();
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseCreator().initDatabase();
+  injections.init();
   runApp(MyBudget());
 }
 
