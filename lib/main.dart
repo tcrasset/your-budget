@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
+
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/addAccount/addAccount.dart';
-// import 'package:your_budget/screens/addAccount/addAccount.dart';
 
 import 'package:your_budget/screens/addTransaction/addTransaction.dart';
 
@@ -15,9 +16,10 @@ import 'package:your_budget/screens/showTransactions/showTransactionsState.dart'
 import 'package:your_budget/waitingscreen.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
-// import 'package:your_budget/searchPage.dart';
 
+import 'injection_container.dart' as injections;
 void main() async {
+  injections.init();
   WidgetsFlutterBinding.ensureInitialized();
   await DatabaseCreator().initDatabase();
   runApp(MyBudget());
@@ -27,7 +29,7 @@ class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<AppState>(create: (_) => AppState()),
+      ChangeNotifierProvider<AppState>(create: (_) => GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
       ChangeNotifierProvider<ShowTransactionsState>(create: (_) => ShowTransactionsState()),
       ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
