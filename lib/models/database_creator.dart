@@ -113,7 +113,7 @@ class DatabaseCreator {
   /// Initiates the database and assigns it to the global variable [db]
   /// by calling [DatabaseCreator.onCreate()] with the path to the database
   /// and the version number.
-  Future<void> initDatabase() async {
+  Future<void> open() async {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
