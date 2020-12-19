@@ -50,7 +50,7 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
 
   AppState({@required Queries queryContext}) {
-    queryContext = queryContext;
+    this.queryContext = queryContext;
     _loadStateFromDatabase();
   }
 
