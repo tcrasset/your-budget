@@ -346,7 +346,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void _setAmountToZero() {
     String zero = currencyNumberFormat.format(0).trim();
     amountController.text = isPositive ? zero : "-" + zero;
-    _setOffsetToLastDigit();
   }
 
   /// Set the cursor offset to the last digit of the text.
@@ -373,35 +372,31 @@ class _AddTransactionPageView
       child: Column(children: [
         Container(
             height: 400,
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: state._scrollController,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(child: AmountInputContainer(state: state)),
-                      AmountSwitch(state: state),
-                    ],
-                  ),
-                  PayeeField(
-                      state: state,
-                      defaultChildTextStyle: defaultChildTextStyle,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  AccountField(
-                      state: state,
-                      defaultChildTextStyle: defaultChildTextStyle,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  SubcategoryField(
-                      state: state,
-                      defaultChildTextStyle: defaultChildTextStyle,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  DateField(
-                      state: state,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  MemoField(state: state),
-                ],
-              ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: AmountInputContainer(state: state)),
+                    AmountSwitch(state: state),
+                  ],
+                ),
+                PayeeField(
+                    state: state,
+                    defaultChildTextStyle: defaultChildTextStyle,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                AccountField(
+                    state: state,
+                    defaultChildTextStyle: defaultChildTextStyle,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                SubcategoryField(
+                    state: state,
+                    defaultChildTextStyle: defaultChildTextStyle,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                DateField(
+                    state: state,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                MemoField(state: state),
+              ],
             )),
         // TODO: Error message
         FloatingActionButton(
