@@ -355,23 +355,6 @@ class _AddTransactionPageView
           onTap: () => state.handleAmountOnTap(),
         ));
 
-    //Populate the list of container with the number controllers and
-    //the custom listTiles
-    List<Widget> containerList = [
-      Row(
-      children: [
-        Expanded(child: amountInputContainer),
-        AmountSwitch(state: state),
-      ],
-    ),
-      PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-      AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-      SubcategoryField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-      DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
-      MemoField(state: state),
-    ];
-
-    // Build the layout (ListView, error container, Button)
     return SingleChildScrollView(
       child: Column(children: [
         Container(
@@ -379,17 +362,18 @@ class _AddTransactionPageView
             child: Scrollbar(
               isAlwaysShown: true,
               controller: state._scrollController,
-              child: ListView.separated(
-                  controller: state._scrollController,
-                  shrinkWrap: false,
-                  addAutomaticKeepAlives: true,
-                  itemCount: containerList.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(height: 1, color: Colors.black26),
-                  itemBuilder: (context, index) {
-                    return containerList[index];
-                  }),
-            )),
+              child: Column(children: [      Row(
+                children: [
+                  Expanded(child: amountInputContainer),
+                  AmountSwitch(state: state),
+                ],
+              ),
+                PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
+                AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
+                SubcategoryField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
+                DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
+                MemoField(state: state),],),
+                      )),
         // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),
