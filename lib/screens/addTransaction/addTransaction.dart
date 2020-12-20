@@ -222,6 +222,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// value of that date is saved in [dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
     DateTime picked = await _pickDate(context);
+    _setDate(picked);
+  }
+
+  void _setDate(DateTime picked) {
     if (picked != null && picked != _date) picked = addExactEntryTime(picked);
     setState(() {
       _date = picked;
