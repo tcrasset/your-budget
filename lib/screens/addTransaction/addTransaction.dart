@@ -254,23 +254,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       if (payee != null && _account != null) {
         _amount = formatCurrencyToDouble(amountController.text, isPositive);
 
-        print("Form validated");
-        print("Amount : $_amount");
-        print("Payee : $payeeFieldName");
-        print("Account : $accountFieldName");
-        print(
-            "Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
-        print("Date: $dateFieldName");
-        print("Memo : ${memoController.text}");
-
-        // Input as payee ID the opposite of the account ID when we select
-        // an account instead of a payee in the 'Payee' field
-        print("payee is of type ${payee is Payee ? "Payee" : "Account"}");
-        int payeeId = payee is Payee ? payee.id : -_account.id;
+        _printTransactionInformation();
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),
-          payeeId: payeeId,
+          payeeId: _selectPayeeId(),
           accountId: _account.id,
           amount: _amount,
           memo: memoController.text,
@@ -283,6 +271,26 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("One of the fields does not contain a valid type");
       }
     }
+  }
+
+  void _printTransactionInformation() {
+    print("Form validated");
+    print("Amount : $_amount");
+    print("Payee : $payeeFieldName");
+    print("Account : $accountFieldName");
+    print(
+        "Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
+    print("Date: $dateFieldName");
+    print("Memo : ${memoController.text}");
+
+    // Input as payee ID the opposite of the account ID when we select
+    // an account instead of a payee in the 'Payee' field
+    print("payee is of type ${payee is Payee ? "Payee" : "Account"}");
+  }
+
+  int _selectPayeeId() {
+    int payeeId = payee is Payee ? payee.id : -_account.id;
+    return payeeId;
   }
 
   _selectSubcatId() {
