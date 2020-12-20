@@ -12,6 +12,7 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
+import 'package:your_budget/screens/addTransaction/components/account_field.dart';
 import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
 import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
@@ -42,7 +43,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// Default names will have a different style than selected ones
   final String defaultPayeeFieldName = "Select payee";
-  final String _defaultAccountFieldName = "Select account";
+  final String defaultAccountFieldName = "Select account";
   final String _defaultSubcategoryFieldName = "Select subcategory";
 
   double _amount;
@@ -51,7 +52,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// String values of the variables which are displayed.
   String payeeFieldName;
-  String _accountFieldName;
+  String accountFieldName;
   String _subcategoryFieldName;
   String _dateFieldName;
 
@@ -93,7 +94,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
     // Set the default values for the UI
     payeeFieldName = defaultPayeeFieldName;
-    _accountFieldName = _defaultAccountFieldName;
+    accountFieldName = defaultAccountFieldName;
     _subcategoryFieldName = _defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
 
@@ -112,7 +113,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _subcategory = null;
       _date = DateTime.now();
       payeeFieldName = defaultPayeeFieldName;
-      _accountFieldName = _defaultAccountFieldName;
+      accountFieldName = defaultAccountFieldName;
       _subcategoryFieldName = _defaultSubcategoryFieldName;
       _dateFieldName = getDateString(_date);
       _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
@@ -148,7 +149,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [Account] object, it pushes to the route selecting
   /// a  [Account], whose value is stored in [_account] and whose
-  /// name is stored in [_accountFieldName].
+  /// name is stored in [accountFieldName].
   handleOnTapAccount() {
     Navigator.push(
       context,
@@ -158,7 +159,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       if (returnElement != null) {
         setState(() {
           _account = returnElement;
-          _accountFieldName = returnElement.name;
+          accountFieldName = returnElement.name;
         });
       }
     });
@@ -227,7 +228,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Form validated");
         print("Amount : $_amount");
         print("Payee : $payeeFieldName");
-        print("Account : $_accountFieldName");
+        print("Account : $accountFieldName");
         print("Subcategory : ${_payee is Payee ? 'No subcategory' : _subcategoryFieldName}");
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
@@ -361,15 +362,7 @@ class _AddTransactionPageView
       ],
     ),
       PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-      GestureDetector(
-          // Accounts gesture detectory leading to 'Accounts' SelectValuePage
-          onTap: () => state.handleOnTapAccount(),
-          child: rowContainer(
-              "Account",
-              Text(state._accountFieldName,
-                  style: (state._accountFieldName == state._defaultAccountFieldName)
-                      ? defaultChildTextStyle
-                      : selectedChildTextStyle))),
+      AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       GestureDetector(
           // Subcategory gesture detectory leading to 'Categories' SelectValuePage
 
