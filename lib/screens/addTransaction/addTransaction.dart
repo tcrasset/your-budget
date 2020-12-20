@@ -16,6 +16,7 @@ import 'package:your_budget/screens/addTransaction/components/account_field.dart
 import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
 import 'package:your_budget/screens/addTransaction/components/date_field.dart';
 import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
+import 'package:your_budget/screens/addTransaction/components/memo_field.dart';
 import 'package:your_budget/screens/addTransaction/components/subcategory_field.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
@@ -40,7 +41,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _memoController = new TextEditingController();
+  final TextEditingController memoController = new TextEditingController();
   final ScrollController _scrollController = new ScrollController();
 
   /// Default names will have a different style than selected ones
@@ -119,7 +120,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       subcategoryFieldName = defaultSubcategoryFieldName;
       dateFieldName = getDateString(_date);
       _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
-      _memoController.clear();
+      memoController.clear();
     });
   }
 
@@ -233,7 +234,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Account : $accountFieldName");
         print("Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
         print("Date: $dateFieldName");
-        print("Memo : ${_memoController.text}");
+        print("Memo : ${memoController.text}");
 
         // Input as payee ID the opposite of the account ID when we select
         // an account instead of a payee in the 'Payee' field
@@ -245,7 +246,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
           payeeId: payeeId,
           accountId: _account.id,
           amount: _amount,
-          memo: _memoController.text,
+          memo: memoController.text,
           date: _date,
         );
 
@@ -367,13 +368,7 @@ class _AddTransactionPageView
       AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       SubcategoryField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
-      rowContainer(
-        "Memo",
-        TextField(
-          decoration: new InputDecoration(hintText: "Add a memo"),
-          controller: state._memoController,
-        ),
-      ),
+      MemoField(state: state),
     ];
 
     // Build the layout (ListView, error container, Button)
