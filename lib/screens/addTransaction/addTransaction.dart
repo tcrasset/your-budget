@@ -12,6 +12,7 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
+import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/components/rowContainer.dart';
@@ -349,26 +350,15 @@ class _AddTransactionPageView
           onTap: () => state.handleAmountOnTap(),
         ));
 
-    Row containerAndButton = Row(
-      children: [
-        Expanded(child: amountInputContainer),
-        Container(
-            child: Switch(
-          value: state.isPositive,
-          onChanged: (value) => state.handleSwitchOnChanged(),
-          activeTrackColor: Constants.GREEN_COLOR,
-          activeColor: Colors.grey[300],
-          activeThumbImage: new AssetImage("assets/plus.png"),
-          inactiveThumbImage: new AssetImage("assets/minus.png"),
-          inactiveTrackColor: Constants.RED_COLOR,
-          inactiveThumbColor: Colors.grey[300],
-        )),
-      ],
-    );
     //Populate the list of container with the number controllers and
     //the custom listTiles
     List<Widget> containerList = [
-      containerAndButton,
+      Row(
+      children: [
+        Expanded(child: amountInputContainer),
+        AmountSwitch(state: state),
+      ],
+    ),
       GestureDetector(
           // Payees gesture detectory leading to 'Payees' SelectValuePage
           onTap: () => state.handleOnTapPayee(),
