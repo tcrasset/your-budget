@@ -185,14 +185,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       context,
       MaterialPageRoute(
         builder: (context) {
-          List subcatAndToBeBudgeted = [];
-          subcategories.forEach((subcat) {
-            subcatAndToBeBudgeted.add(subcat);
-          });
-          subcatAndToBeBudgeted.add(Text("To be budgeted"));
-
           return SelectValuePage(
-              title: "Subcategories", listEntries: subcatAndToBeBudgeted);
+              title: "Subcategories",
+              listEntries: _combineSubcategoriesAndToBeBudgeted(),);
         },
       ),
     );
@@ -205,6 +200,15 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
             : returnElement.data;
       });
     }
+  }
+
+  List _combineSubcategoriesAndToBeBudgeted() {
+    List subcatAndToBeBudgeted = [];
+    subcategories.forEach((subcat) {
+      subcatAndToBeBudgeted.add(subcat);
+    });
+    subcatAndToBeBudgeted.add(Text("To be budgeted"));
+    return subcatAndToBeBudgeted;
   }
 
   /// When tapping on the Date row, it opens the DataPicker
