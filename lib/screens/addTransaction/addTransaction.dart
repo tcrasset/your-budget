@@ -133,16 +133,15 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// a [Payee], whose value is stored in [payee] and whose
   /// name is stored in [payeeFieldName].
   handleOnTapPayee() {
-    Navigator.push(
+    var returnElement = Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
               SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
-    ).then((returnElement) {
-      if (returnElement != null)
-        _setPayee(returnElement);
+    );
 
-    });
+    if (returnElement != null)
+      _setPayee(returnElement);
   }
 
   void _setPayee(returnElement) {
@@ -157,16 +156,15 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// a  [Account], whose value is stored in [_account] and whose
   /// name is stored in [accountFieldName].
   handleOnTapAccount() {
-    Navigator.push(
+    var returnElement = Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
               SelectValuePage(title: "Accounts", listEntries: accounts)),
-    ).then((returnElement) {
-      if (returnElement != null) {
-        _setAccount(returnElement);
-      }
-    });
+    );
+
+    if (returnElement != null)
+      _setAccount(returnElement);
   }
 
   void _setAccount(returnElement) {
@@ -181,7 +179,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// a [SubCategory], whose value is stored in [_subcategory] and whose
   /// name is stored in [subcategoryFieldName].
   handleOnTapCategory() async {
-    dynamic returnElement = await Navigator.push(
+    var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
@@ -192,9 +190,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       ),
     );
 
-    if (returnElement != null) {
+    if (returnElement != null)
       _setSubcategory(returnElement);
-    }
+
   }
 
   void _setSubcategory(returnElement) {
@@ -307,8 +305,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _amount = formatCurrencyToDouble(amountController.text, isPositive);
   }
 
-  // When the switch is set to the 'off' position, the text style changes
-  // and a minus sign is added in front of the text.
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
@@ -336,7 +332,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     amountController.text = amountController.text.substring(1);
   }
 
-  /// Checks that the amount of the transaction is not 0.
   handleAmountValidate(String value) {
     if (formatCurrencyToDouble(amountController.text, isPositive) == 0) {
       return "Value must be different than 0";
@@ -344,8 +339,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     return null;
   }
 
-  /// Reset [amountController.text] to "0.00 €" or "-0.00€", depending on
-  /// the value of [isPositive]
   handleAmountOnTap() {
     _setAmountToZero();
     _setOffsetToLastDigit();
@@ -355,8 +348,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     String zero = currencyNumberFormat.format(0).trim();
     amountController.text = isPositive ? zero : "-" + zero;
   }
-
-  /// Set the cursor offset to the last digit of the text.
   _setOffsetToLastDigit() {
     amountController.selection =
         TextSelection.collapsed(offset: amountController.text.length - 2);
