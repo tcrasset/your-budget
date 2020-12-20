@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:your_budget/components/rowContainer.dart';
+
+import '../../../components/rowContainer.dart';
 
 class PayeeField extends StatelessWidget {
-
-  final  state; //_AddTransactionPageController
+  final state; //_AddTransactionPageController
   final TextStyle defaultChildTextStyle;
   final TextStyle selectedChildTextStyle;
 

@@ -4,30 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/components/overlayNotifications.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
-import 'package:your_budget/screens/addTransaction/components/account_field.dart';
-import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
-import 'package:your_budget/screens/addTransaction/components/date_field.dart';
-import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
-import 'package:your_budget/screens/addTransaction/components/memo_field.dart';
-import 'package:your_budget/screens/addTransaction/components/amount_input_container.dart';
-import 'package:your_budget/screens/addTransaction/components/subcategory_field.dart';
-import 'package:your_budget/screens/addTransaction/selectValue.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/components/rowContainer.dart';
-
 import 'package:provider/provider.dart';
+
+import '../../appState.dart';
+import '../../components/overlayNotifications.dart';
+import '../../components/widgetViewClasses.dart';
+import '../../models/categories.dart';
+import '../../models/constants.dart';
+import '../../models/entries.dart';
+import '../../models/utils.dart';
+import 'components/CurrencyInputFormatter.dart';
+import 'components/account_field.dart';
+import 'components/amount_input_container.dart';
+import 'components/amount_switch.dart';
+import 'components/date_field.dart';
+import 'components/memo_field.dart';
+import 'components/payee_field.dart';
+import 'components/subcategory_field.dart';
+import 'selectValue.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
-  _AddTransactionPageController createState() => _AddTransactionPageController();
+  _AddTransactionPageController createState() =>
+      _AddTransactionPageController();
 }
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
@@ -97,7 +96,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     subcategoryFieldName = defaultSubcategoryFieldName;
     dateFieldName = getDateString(_date);
 
-    amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
+    amountController =
+        TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
 
   /// Resets all the field to their default value
@@ -115,7 +115,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       accountFieldName = defaultAccountFieldName;
       subcategoryFieldName = defaultSubcategoryFieldName;
       dateFieldName = getDateString(_date);
-      amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
+      amountController =
+          TextEditingController(text: currencyNumberFormat.format(0).trim());
       memoController.clear();
     });
   }
@@ -134,7 +135,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
+          builder: (context) =>
+              SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     ).then((returnElement) {
       if (returnElement != null) {
         setState(() {
@@ -153,7 +155,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Accounts", listEntries: accounts)),
+          builder: (context) =>
+              SelectValuePage(title: "Accounts", listEntries: accounts)),
     ).then((returnElement) {
       if (returnElement != null) {
         setState(() {
@@ -179,7 +182,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
           });
           subcatAndToBeBudgeted.add(Text("To be budgeted"));
 
-          return SelectValuePage(title: "Subcategories", listEntries: subcatAndToBeBudgeted);
+          return SelectValuePage(
+              title: "Subcategories", listEntries: subcatAndToBeBudgeted);
         },
       ),
     );
@@ -187,8 +191,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (returnElement != null) {
       setState(() {
         _subcategory = returnElement;
-        subcategoryFieldName =
-            returnElement is SubCategory ? returnElement.name : returnElement.data;
+        subcategoryFieldName = returnElement is SubCategory
+            ? returnElement.name
+            : returnElement.data;
       });
     }
   }
@@ -204,12 +209,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         initialDate: getDateYMD(_date),
         firstDate: appState.startingBudgetDate,
         lastDate: getLastDayOfMonth(getMaxBudgetDate()));
-    if (picked != null && picked != _date)
-      picked = addExactEntryTime(picked);
-      setState(() {
-        _date = picked;
-        dateFieldName = getDateString(picked);
-      });
+    if (picked != null && picked != _date) picked = addExactEntryTime(picked);
+    setState(() {
+      _date = picked;
+      dateFieldName = getDateString(picked);
+    });
   }
 
   /// Check that all the necessary fields in the form
@@ -228,7 +232,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Amount : $_amount");
         print("Payee : $payeeFieldName");
         print("Account : $accountFieldName");
-        print("Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
+        print(
+            "Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
         print("Date: $dateFieldName");
         print("Memo : ${memoController.text}");
 
@@ -315,12 +320,12 @@ class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
   _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
-  final TextStyle defaultChildTextStyle =
-      TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-  final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
+  final TextStyle defaultChildTextStyle = TextStyle(
+      color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+  final TextStyle selectedChildTextStyle =
+      TextStyle(color: Colors.black, fontSize: 16.0);
 
   Widget _myBuildMethod() {
-
     return SingleChildScrollView(
       child: Column(children: [
         Container(
@@ -328,18 +333,33 @@ class _AddTransactionPageView
             child: Scrollbar(
               isAlwaysShown: true,
               controller: state._scrollController,
-              child: Column(children: [      Row(
+              child: Column(
                 children: [
-                  Expanded(child: AmountInputContainer(state: state)),
-                  AmountSwitch(state: state),
+                  Row(
+                    children: [
+                      Expanded(child: AmountInputContainer(state: state)),
+                      AmountSwitch(state: state),
+                    ],
+                  ),
+                  PayeeField(
+                      state: state,
+                      defaultChildTextStyle: defaultChildTextStyle,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  AccountField(
+                      state: state,
+                      defaultChildTextStyle: defaultChildTextStyle,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  SubcategoryField(
+                      state: state,
+                      defaultChildTextStyle: defaultChildTextStyle,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  DateField(
+                      state: state,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  MemoField(state: state),
                 ],
               ),
-                PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-                AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-                SubcategoryField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-                DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
-                MemoField(state: state),],),
-                      )),
+            )),
         // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),

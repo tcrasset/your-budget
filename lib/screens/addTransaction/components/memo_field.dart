@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:your_budget/components/rowContainer.dart';
+
+import '../../../components/rowContainer.dart';
 
 class MemoField extends StatelessWidget {
   final state; //_AddTransactionPageController

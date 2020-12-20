@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:your_budget/models/constants.dart';
+
+import '../../../models/constants.dart';
 
 class AmountSwitch extends StatelessWidget {
   const AmountSwitch({
@@ -8,7 +8,7 @@ class AmountSwitch extends StatelessWidget {
     @required this.state,
   }) : super(key: key);
 
-  final  state; //_AddTransactionPageController
+  final state; //_AddTransactionPageController
 
   @override
   Widget build(BuildContext context) {
