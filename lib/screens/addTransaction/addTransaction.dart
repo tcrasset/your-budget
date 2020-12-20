@@ -139,15 +139,14 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
               SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     );
 
-    if (returnElement != null)
-      _setPayee(returnElement);
+    if (returnElement != null) _setPayee(returnElement);
   }
 
   void _setPayee(returnElement) {
     setState(() {
-        payee = returnElement;
-        payeeFieldName = returnElement.name;
-      });
+      payee = returnElement;
+      payeeFieldName = returnElement.name;
+    });
   }
 
   /// When tapping on the [SelectValuePage] widget pertaining
@@ -162,8 +161,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
               SelectValuePage(title: "Accounts", listEntries: accounts)),
     );
 
-    if (returnElement != null)
-      _setAccount(returnElement);
+    if (returnElement != null) _setAccount(returnElement);
   }
 
   void _setAccount(returnElement) {
@@ -183,15 +181,14 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       MaterialPageRoute(
         builder: (context) {
           return SelectValuePage(
-              title: "Subcategories",
-              listEntries: _combineSubcategoriesAndToBeBudgeted(),);
+            title: "Subcategories",
+            listEntries: _combineSubcategoriesAndToBeBudgeted(),
+          );
         },
       ),
     );
 
-    if (returnElement != null)
-      _setSubcategory(returnElement);
-
+    if (returnElement != null) _setSubcategory(returnElement);
   }
 
   void _setSubcategory(returnElement) {
@@ -308,11 +305,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     setState(() {
       isPositive = !isPositive;
 
-      bool positiveWithMinusSign = isPositive && amountController.text[0] == '-';
+      bool positiveWithMinusSign =
+          isPositive && amountController.text[0] == '-';
       if (positiveWithMinusSign)
         _removeMinusSign();
-      else if (!isPositive)
-        _addMinusSign();
+      else if (!isPositive) _addMinusSign();
 
       _updateAmountLength();
       _setOffsetToLastDigit();
@@ -347,6 +344,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     String zero = currencyNumberFormat.format(0).trim();
     amountController.text = isPositive ? zero : "-" + zero;
   }
+
   _setOffsetToLastDigit() {
     amountController.selection =
         TextSelection.collapsed(offset: amountController.text.length - 2);
