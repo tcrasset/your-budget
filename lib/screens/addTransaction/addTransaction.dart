@@ -13,6 +13,7 @@ import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
+import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/components/rowContainer.dart';
@@ -40,7 +41,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   final ScrollController _scrollController = new ScrollController();
 
   /// Default names will have a different style than selected ones
-  final String _defaultPayeeFieldName = "Select payee";
+  final String defaultPayeeFieldName = "Select payee";
   final String _defaultAccountFieldName = "Select account";
   final String _defaultSubcategoryFieldName = "Select subcategory";
 
@@ -49,7 +50,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   int amountLength; //Number of max. characters for the amount
 
   /// String values of the variables which are displayed.
-  String _payeeFieldName;
+  String payeeFieldName;
   String _accountFieldName;
   String _subcategoryFieldName;
   String _dateFieldName;
@@ -91,7 +92,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _date = DateTime.now();
 
     // Set the default values for the UI
-    _payeeFieldName = _defaultPayeeFieldName;
+    payeeFieldName = defaultPayeeFieldName;
     _accountFieldName = _defaultAccountFieldName;
     _subcategoryFieldName = _defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
@@ -110,7 +111,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _account = null;
       _subcategory = null;
       _date = DateTime.now();
-      _payeeFieldName = _defaultPayeeFieldName;
+      payeeFieldName = defaultPayeeFieldName;
       _accountFieldName = _defaultAccountFieldName;
       _subcategoryFieldName = _defaultSubcategoryFieldName;
       _dateFieldName = getDateString(_date);
@@ -128,7 +129,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [Payee] object, it pushes to the route selecting
   /// a [Payee], whose value is stored in [_payee] and whose
-  /// name is stored in [_payeeFieldName].
+  /// name is stored in [payeeFieldName].
   handleOnTapPayee() {
     Navigator.push(
       context,
@@ -138,7 +139,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       if (returnElement != null) {
         setState(() {
           _payee = returnElement;
-          _payeeFieldName = returnElement.name;
+          payeeFieldName = returnElement.name;
         });
       }
     });
@@ -225,7 +226,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
         print("Form validated");
         print("Amount : $_amount");
-        print("Payee : $_payeeFieldName");
+        print("Payee : $payeeFieldName");
         print("Account : $_accountFieldName");
         print("Subcategory : ${_payee is Payee ? 'No subcategory' : _subcategoryFieldName}");
         print("Date: $_dateFieldName");
@@ -359,15 +360,7 @@ class _AddTransactionPageView
         AmountSwitch(state: state),
       ],
     ),
-      GestureDetector(
-          // Payees gesture detectory leading to 'Payees' SelectValuePage
-          onTap: () => state.handleOnTapPayee(),
-          child: rowContainer(
-              "Payee",
-              Text(state._payeeFieldName,
-                  style: (state._payeeFieldName == state._defaultPayeeFieldName)
-                      ? defaultChildTextStyle
-                      : selectedChildTextStyle))),
+      PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       GestureDetector(
           // Accounts gesture detectory leading to 'Accounts' SelectValuePage
           onTap: () => state.handleOnTapAccount(),
