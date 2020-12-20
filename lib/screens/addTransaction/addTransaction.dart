@@ -193,13 +193,17 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     );
 
     if (returnElement != null) {
-      setState(() {
-        _subcategory = returnElement;
-        subcategoryFieldName = returnElement is SubCategory
-            ? returnElement.name
-            : returnElement.data;
-      });
+      _setSubcategory(returnElement);
     }
+  }
+
+  void _setSubcategory(returnElement) {
+    setState(() {
+      _subcategory = returnElement;
+      subcategoryFieldName = returnElement is SubCategory
+          ? returnElement.name
+          : returnElement.data;
+    });
   }
 
   List _combineSubcategoriesAndToBeBudgeted() {
