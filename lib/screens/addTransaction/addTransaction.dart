@@ -124,6 +124,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   @override
   void dispose() {
     amountController.dispose();
+    memoController.dispose();
     super.dispose();
   }
 
@@ -138,13 +139,17 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
           builder: (context) =>
               SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     ).then((returnElement) {
-      if (returnElement != null) {
-        setState(() {
-          payee = returnElement;
-          payeeFieldName = returnElement.name;
-        });
-      }
+      if (returnElement != null)
+        _setPayee(returnElement);
+
     });
+  }
+
+  void _setPayee(returnElement) {
+    setState(() {
+        payee = returnElement;
+        payeeFieldName = returnElement.name;
+      });
   }
 
   /// When tapping on the [SelectValuePage] widget pertaining
