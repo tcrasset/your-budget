@@ -37,7 +37,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController memoController = new TextEditingController();
-  final ScrollController _scrollController = new ScrollController();
 
   /// Default names will have a different style than selected ones
   final String defaultPayeeFieldName = "Select payee";
