@@ -339,6 +339,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// Reset [amountController.text] to "0.00 €" or "-0.00€", depending on
   /// the value of [isPositive]
   handleAmountOnTap() {
+    _setAmountToZero();
+    _setOffsetToLastDigit();
+  }
+
+  void _setAmountToZero() {
     String zero = currencyNumberFormat.format(0).trim();
     amountController.text = isPositive ? zero : "-" + zero;
     _setOffsetToLastDigit();
