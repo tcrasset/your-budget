@@ -15,6 +15,7 @@ import 'package:your_budget/screens/addTransaction/components/CurrencyInputForma
 import 'package:your_budget/screens/addTransaction/components/account_field.dart';
 import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
 import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
+import 'package:your_budget/screens/addTransaction/components/subcategory_field.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/components/rowContainer.dart';
@@ -44,7 +45,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// Default names will have a different style than selected ones
   final String defaultPayeeFieldName = "Select payee";
   final String defaultAccountFieldName = "Select account";
-  final String _defaultSubcategoryFieldName = "Select subcategory";
+  final String defaultSubcategoryFieldName = "Select subcategory";
 
   double _amount;
   bool isPositive;
@@ -53,16 +54,16 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// String values of the variables which are displayed.
   String payeeFieldName;
   String accountFieldName;
-  String _subcategoryFieldName;
+  String subcategoryFieldName;
   String _dateFieldName;
 
   /// Values used for the transaction
-  dynamic _payee;
+  dynamic payee;
   Account _account;
   var _subcategory;
   DateTime _date;
 
-  /// List of values to choose each value from, e.g. [_payee]
+  /// List of values to choose each value from, e.g. [payee]
   /// will be chosen from one of the [payees]
   List<Payee> payees;
   List<SubCategory> subcategories;
@@ -87,7 +88,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     payeesAndAccounts.addAll(accounts);
 
     // Set initial values of the transaction
-    _payee = null;
+    payee = null;
     _account = null;
     _subcategory = null;
     _date = DateTime.now();
@@ -95,7 +96,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     // Set the default values for the UI
     payeeFieldName = defaultPayeeFieldName;
     accountFieldName = defaultAccountFieldName;
-    _subcategoryFieldName = _defaultSubcategoryFieldName;
+    subcategoryFieldName = defaultSubcategoryFieldName;
     _dateFieldName = getDateString(_date);
 
     _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
@@ -108,13 +109,13 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _amount = 0;
       amountLength = 16;
 
-      _payee = null;
+      payee = null;
       _account = null;
       _subcategory = null;
       _date = DateTime.now();
       payeeFieldName = defaultPayeeFieldName;
       accountFieldName = defaultAccountFieldName;
-      _subcategoryFieldName = _defaultSubcategoryFieldName;
+      subcategoryFieldName = defaultSubcategoryFieldName;
       _dateFieldName = getDateString(_date);
       _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       _memoController.clear();
@@ -129,7 +130,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [Payee] object, it pushes to the route selecting
-  /// a [Payee], whose value is stored in [_payee] and whose
+  /// a [Payee], whose value is stored in [payee] and whose
   /// name is stored in [payeeFieldName].
   handleOnTapPayee() {
     Navigator.push(
@@ -139,7 +140,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     ).then((returnElement) {
       if (returnElement != null) {
         setState(() {
-          _payee = returnElement;
+          payee = returnElement;
           payeeFieldName = returnElement.name;
         });
       }
@@ -168,7 +169,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [SubCategory] object, it pushes to the route selecting
   /// a [SubCategory], whose value is stored in [_subcategory] and whose
-  /// name is stored in [_subcategoryFieldName].
+  /// name is stored in [subcategoryFieldName].
   handleOnTapCategory() async {
     dynamic returnElement = await Navigator.push(
       context,
@@ -188,7 +189,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (returnElement != null) {
       setState(() {
         _subcategory = returnElement;
-        _subcategoryFieldName =
+        subcategoryFieldName =
             returnElement is SubCategory ? returnElement.name : returnElement.data;
       });
     }
@@ -222,21 +223,21 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void addMoneyTransaction() async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      if (_payee != null && _account != null) {
+      if (payee != null && _account != null) {
         _amount = formatCurrencyToDouble(_amountController.text, isPositive);
 
         print("Form validated");
         print("Amount : $_amount");
         print("Payee : $payeeFieldName");
         print("Account : $accountFieldName");
-        print("Subcategory : ${_payee is Payee ? 'No subcategory' : _subcategoryFieldName}");
+        print("Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
 
         // Input as payee ID the opposite of the account ID when we select
         // an account instead of a payee in the 'Payee' field
-        print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
-        int payeeId = _payee is Payee ? _payee.id : -_account.id;
+        print("payee is of type ${payee is Payee ? "Payee" : "Account"}");
+        int payeeId = payee is Payee ? payee.id : -_account.id;
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),
@@ -256,10 +257,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   _selectSubcatId() {
-    bool subcategoryIsToBeBudgeted = _subcategoryFieldName == "To be budgeted";
-    if (_payee is Payee && !subcategoryIsToBeBudgeted)
+    bool subcategoryIsToBeBudgeted = subcategoryFieldName == "To be budgeted";
+    if (payee is Payee && !subcategoryIsToBeBudgeted)
       return _subcategory.id;
-    else if (_payee is Account && !subcategoryIsToBeBudgeted)
+    else if (payee is Account && !subcategoryIsToBeBudgeted)
       return Constants.UNASSIGNED_SUBCAT_ID;
     else if (subcategoryIsToBeBudgeted) //
       return Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
@@ -363,20 +364,7 @@ class _AddTransactionPageView
     ),
       PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-      GestureDetector(
-          // Subcategory gesture detectory leading to 'Categories' SelectValuePage
-
-          /// [state._payee] accepts both an object of type [Payee] or [Account].
-          /// If it is of type Account, make the GestureDetector untappable,
-          /// set the default text style and change the text.
-          onTap: () => state._payee is Account ? null : state.handleOnTapCategory(),
-          child: rowContainer(
-              "Category",
-              Text(state._payee is Account ? "No subcategory needed" : state._subcategoryFieldName,
-                  style: (state._subcategoryFieldName == state._defaultSubcategoryFieldName ||
-                          state._payee is Account)
-                      ? defaultChildTextStyle
-                      : selectedChildTextStyle))),
+      SubcategoryField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       GestureDetector(
           // Date gesture detector
           onTap: () => state.handleOnTapDate(state.context),
