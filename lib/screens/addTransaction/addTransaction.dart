@@ -17,6 +17,7 @@ import 'package:your_budget/screens/addTransaction/components/amount_switch.dart
 import 'package:your_budget/screens/addTransaction/components/date_field.dart';
 import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
 import 'package:your_budget/screens/addTransaction/components/memo_field.dart';
+import 'package:your_budget/screens/addTransaction/components/amount_input_container.dart';
 import 'package:your_budget/screens/addTransaction/components/subcategory_field.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
@@ -30,14 +31,9 @@ class AddTransactionPage extends StatefulWidget {
 }
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
-  TextEditingController _amountController;
+  TextEditingController amountController;
   final NumberFormat currencyNumberFormat =
       NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: '€');
-
-  final TextStyle _positiveAmountTextStyle =
-      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle =
-      new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
   final _formKey = GlobalKey<FormState>();
 
@@ -101,7 +97,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     subcategoryFieldName = defaultSubcategoryFieldName;
     dateFieldName = getDateString(_date);
 
-    _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
+    amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
 
   /// Resets all the field to their default value
@@ -119,14 +115,14 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       accountFieldName = defaultAccountFieldName;
       subcategoryFieldName = defaultSubcategoryFieldName;
       dateFieldName = getDateString(_date);
-      _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
+      amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       memoController.clear();
     });
   }
 
   @override
   void dispose() {
-    _amountController.dispose();
+    amountController.dispose();
     super.dispose();
   }
 
@@ -226,7 +222,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
       if (payee != null && _account != null) {
-        _amount = formatCurrencyToDouble(_amountController.text, isPositive);
+        _amount = formatCurrencyToDouble(amountController.text, isPositive);
 
         print("Form validated");
         print("Amount : $_amount");
@@ -269,7 +265,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   handleAmountOnSave() {
-    _amount = formatCurrencyToDouble(_amountController.text, isPositive);
+    _amount = formatCurrencyToDouble(amountController.text, isPositive);
   }
 
   // When the switch is set to the 'off' position, the text style changes
@@ -277,9 +273,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
-      if (isPositive && _amountController.text[0] == '-')
-        _amountController.text = _amountController.text.substring(1);
-      else if (!isPositive) _amountController.text = "-" + _amountController.text;
+      if (isPositive && amountController.text[0] == '-')
+        amountController.text = amountController.text.substring(1);
+      else if (!isPositive) amountController.text = "-" + amountController.text;
 
       // Change the maximal possible length of the amount to account for
       // the minus sign.
@@ -291,24 +287,24 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// Checks that the amount of the transaction is not 0.
   handleAmountValidate(String value) {
-    if (formatCurrencyToDouble(_amountController.text, isPositive) == 0) {
+    if (formatCurrencyToDouble(amountController.text, isPositive) == 0) {
       return "Value must be different than 0";
     }
     return null;
   }
 
-  /// Reset [_amountController.text] to "0.00 €" or "-0.00€", depending on
+  /// Reset [amountController.text] to "0.00 €" or "-0.00€", depending on
   /// the value of [isPositive]
   handleAmountOnTap() {
     String zero = currencyNumberFormat.format(0).trim();
-    _amountController.text = isPositive ? zero : "-" + zero;
+    amountController.text = isPositive ? zero : "-" + zero;
     _setOffsetToLastDigit();
   }
 
   /// Set the cursor offset to the last digit of the text.
   _setOffsetToLastDigit() {
-    _amountController.selection =
-        TextSelection.collapsed(offset: _amountController.text.length - 2);
+    amountController.selection =
+        TextSelection.collapsed(offset: amountController.text.length - 2);
   }
 
   @override
@@ -324,36 +320,6 @@ class _AddTransactionPageView
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
   Widget _myBuildMethod() {
-    // Create number controller
-    /// This [TextFormField] handles the amount selected while providing
-    /// an intuitive experience to the user, who does not need to manually
-    /// separators and currencies.
-    /// The length is limited by a [LengthLimitingTextInputFormatter] to
-    /// [state.amountLength] which is equivalent to a maximal value of
-    /// 999.999.999,99 €.
-    /// The currency format is handled by [CurrencyInputFormatter].
-    /// [onTap()] resets the value to a chosen default value.
-    Container amountInputContainer = Container(
-        height: 50,
-        alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(horizontal: 10.0),
-        child: TextFormField(
-          decoration: new InputDecoration.collapsed(
-            hintText: "",
-          ),
-          keyboardType: TextInputType.number,
-          controller: state._amountController,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(state.amountLength),
-            CurrencyInputFormatter(state.currencyNumberFormat, state.isPositive),
-          ],
-          textInputAction: TextInputAction.done,
-          textAlign: TextAlign.right,
-          style: state.isPositive ? state._positiveAmountTextStyle : state._negativeAmountTextStyle,
-          validator: (value) => state.handleAmountValidate(value),
-          // onSaved: state.handleAmountOnSave(),
-          onTap: () => state.handleAmountOnTap(),
-        ));
 
     return SingleChildScrollView(
       child: Column(children: [
@@ -364,7 +330,7 @@ class _AddTransactionPageView
               controller: state._scrollController,
               child: Column(children: [      Row(
                 children: [
-                  Expanded(child: amountInputContainer),
+                  Expanded(child: AmountInputContainer(state: state)),
                   AmountSwitch(state: state),
                 ],
               ),
