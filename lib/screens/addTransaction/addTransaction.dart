@@ -14,6 +14,7 @@ import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
 import 'package:your_budget/screens/addTransaction/components/account_field.dart';
 import 'package:your_budget/screens/addTransaction/components/amount_switch.dart';
+import 'package:your_budget/screens/addTransaction/components/date_field.dart';
 import 'package:your_budget/screens/addTransaction/components/payee_field.dart';
 import 'package:your_budget/screens/addTransaction/components/subcategory_field.dart';
 import 'package:your_budget/screens/addTransaction/selectValue.dart';
@@ -55,7 +56,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   String payeeFieldName;
   String accountFieldName;
   String subcategoryFieldName;
-  String _dateFieldName;
+  String dateFieldName;
 
   /// Values used for the transaction
   dynamic payee;
@@ -97,7 +98,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     payeeFieldName = defaultPayeeFieldName;
     accountFieldName = defaultAccountFieldName;
     subcategoryFieldName = defaultSubcategoryFieldName;
-    _dateFieldName = getDateString(_date);
+    dateFieldName = getDateString(_date);
 
     _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
@@ -116,7 +117,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       payeeFieldName = defaultPayeeFieldName;
       accountFieldName = defaultAccountFieldName;
       subcategoryFieldName = defaultSubcategoryFieldName;
-      _dateFieldName = getDateString(_date);
+      dateFieldName = getDateString(_date);
       _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       _memoController.clear();
     });
@@ -199,7 +200,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// which allows one to choose the date as a [DateTime].
   /// Defaults to the current day-year-month.
   /// The [DateTime] gets stored in [_date], and the string
-  /// value of that date is saved in [_dateFieldName].
+  /// value of that date is saved in [dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
         context: context,
@@ -210,7 +211,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       picked = addExactEntryTime(picked);
       setState(() {
         _date = picked;
-        _dateFieldName = getDateString(picked);
+        dateFieldName = getDateString(picked);
       });
   }
 
@@ -231,7 +232,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         print("Payee : $payeeFieldName");
         print("Account : $accountFieldName");
         print("Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
-        print("Date: $_dateFieldName");
+        print("Date: $dateFieldName");
         print("Memo : ${_memoController.text}");
 
         // Input as payee ID the opposite of the account ID when we select
@@ -365,10 +366,7 @@ class _AddTransactionPageView
       PayeeField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       AccountField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
       SubcategoryField(state: state, defaultChildTextStyle: defaultChildTextStyle, selectedChildTextStyle: selectedChildTextStyle),
-      GestureDetector(
-          // Date gesture detector
-          onTap: () => state.handleOnTapDate(state.context),
-          child: rowContainer("Date", Text(state._dateFieldName, style: selectedChildTextStyle))),
+      DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
       rowContainer(
         "Memo",
         TextField(
