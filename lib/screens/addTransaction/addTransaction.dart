@@ -164,11 +164,15 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
               SelectValuePage(title: "Accounts", listEntries: accounts)),
     ).then((returnElement) {
       if (returnElement != null) {
-        setState(() {
-          _account = returnElement;
-          accountFieldName = returnElement.name;
-        });
+        _setAccount(returnElement);
       }
+    });
+  }
+
+  void _setAccount(returnElement) {
+    setState(() {
+      _account = returnElement;
+      accountFieldName = returnElement.name;
     });
   }
 
