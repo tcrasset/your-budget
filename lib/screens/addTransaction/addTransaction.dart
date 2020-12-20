@@ -304,16 +304,28 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
-      if (isPositive && amountController.text[0] == '-')
-        amountController.text = amountController.text.substring(1);
-      else if (!isPositive) amountController.text = "-" + amountController.text;
 
-      // Change the maximal possible length of the amount to account for
-      // the minus sign.
-      amountLength = isPositive ? 16 : 17;
-      // Lastly, set the offset to the correct position.
+      bool positiveWithMinusSign = isPositive && amountController.text[0] == '-';
+      if (positiveWithMinusSign)
+        _removeMinusSign();
+      else if (!isPositive)
+        _addMinusSign();
+
+      _updateAmountLength();
       _setOffsetToLastDigit();
     });
+  }
+
+  void _updateAmountLength() {
+    amountLength = isPositive ? 16 : 17;
+  }
+
+  void _addMinusSign() {
+    amountController.text = "-" + amountController.text;
+  }
+
+  void _removeMinusSign() {
+    amountController.text = amountController.text.substring(1);
   }
 
   /// Checks that the amount of the transaction is not 0.
