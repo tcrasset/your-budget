@@ -8,7 +8,7 @@ import 'package:your_budget/screens/modifyCategories/components/modifyMainCatego
 import 'package:your_budget/screens/modifyCategories/components/modifySubCategoryRow.dart';
 
 import '../../components/widgetViewClasses.dart';
-
+import '../../components/addDialog.dart';
 class ModifyCategories extends StatefulWidget {
   @override
   _ModifyCategoriesController createState() => _ModifyCategoriesController();
@@ -17,7 +17,9 @@ class ModifyCategories extends StatefulWidget {
 class _ModifyCategoriesController extends State<ModifyCategories> {
   void handleAddCategory(BuildContext context) async {
     AppState appState = Provider.of<AppState>(context, listen: false);
-    String categoryName = await createAddCategoryDialog(context, "Add new category", "");
+    String hintText = "Add new category";
+
+    String categoryName = await addDialog(context: context, title: hintText, hintText: hintText, nameValidator: validateCategoryName, successButtonName: "Submit");
     if (categoryName != null) appState.addCategory(categoryName);
   }
 
@@ -65,38 +67,8 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
   }
 }
 
-Future<String> createAddCategoryDialog(BuildContext context, String title, String hintText) {
-  TextEditingController textController = TextEditingController();
-
-  final _formKey = GlobalKey<FormState>();
-  return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          content: Form(
-            key: _formKey,
-            child: TextFormField(
-              decoration: new InputDecoration(
-                  hintText: hintText, filled: true, fillColor: Colors.grey[200]),
-              controller: textController,
-              validator: (_) => validateCategoryName(textController.text),
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    Navigator.of(context).pop(textController.text);
-                  }
-                },
-                child: Text("Submit"))
-          ],
-        );
-      });
-}
-
 String validateCategoryName(String name) {
-  if (name == null || name.isEmpty) return "(Sub)Category name must not be empty.";
+  if (name == null || name.isEmpty)
+    return "Name can't be empty.";
   return null;
 }

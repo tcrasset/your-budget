@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
+import 'package:your_budget/components/addDialog.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:provider/provider.dart';
 
@@ -40,15 +41,29 @@ class SelectValuePageState extends State<SelectValuePage> {
     Navigator.pop(context, item);
   }
 
-  handleCreateNewPayee(String payeeName) async {
+  String newPayeeValidator(String payeeName) {
     if (payeeName == null || payeeName.trim() == "") {
-      print("Name must be valid");
-      //TODO: Add error message
-      return;
+      return "Name must be valid";
     }
-    print("Created payee $payeeName");
-    Payee payee = await appState.addPayee(payeeName: payeeName);
-    handlePopContext(payee);
+    return null;
+  }
+
+  void createNewPayee(
+      {@required BuildContext context, String defaultName}) async {
+    String hint = "Add new payee";
+    String payeeName = await addDialog(
+        context: context,
+        title: hint,
+        hintText: hint,
+        successButtonName: "Create and select",
+        defaultValue: defaultName,
+        nameValidator: newPayeeValidator);
+
+    if (payeeName != null) {
+      print("Created payee $payeeName");
+      Payee payee = await appState.addPayee(payeeName: payeeName);
+      handlePopContext(payee);
+    }
   }
 
   @override
@@ -75,10 +90,12 @@ class SelectValuePageState extends State<SelectValuePage> {
           if (isPayee)
             ListTile(
               title: Text(
-                "Create new payee \"${(filter == null) ? "" : filter}\"",
-                style: TextStyle(fontStyle: FontStyle.italic),
+                "Create new payee",
+                style: TextStyle(
+                    fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
               ),
-              onTap: () => handleCreateNewPayee(filter),
+              onTap: () => createNewPayee(
+                  context: context, defaultName: searchController.text),
             ),
 
           new Expanded(
@@ -95,11 +112,13 @@ class SelectValuePageState extends State<SelectValuePage> {
               var itemToFilter = item is Text ? item.data : item.name;
               if (noFilter == true)
                 // The filter is empty, show everything
-                return ListTile(title: itemToShow, onTap: () => handlePopContext(item));
+                return ListTile(
+                    title: itemToShow, onTap: () => handlePopContext(item));
               else if (noFilter = false) {
                 // The filter is not empty, we filter by name
                 if (itemToFilter.toLowerCase().contains(filter.toLowerCase()))
-                  return ListTile(title: item, onTap: () => handlePopContext(item));
+                  return ListTile(
+                      title: item, onTap: () => handlePopContext(item));
               }
               // There is an error
               return new Container();

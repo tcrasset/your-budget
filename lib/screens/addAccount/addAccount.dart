@@ -134,7 +134,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                                 onSaved: state.handleAccountBalanceSave,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp("[0-9-]"))
+                                  FilteringTextInputFormatter.allow(RegExp("[0-9-.]"))
                                 ],
                                 textInputAction: TextInputAction.done,
                               ),

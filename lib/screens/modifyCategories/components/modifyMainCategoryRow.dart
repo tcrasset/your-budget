@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
+
+import '../../../appState.dart';
+import '../../../models/categories.dart';
+import '../../../models/constants.dart';
+import '../../../components/addDialog.dart';
 
 class ModifyMainCategoryRow extends StatelessWidget {
   final MainCategory cat;
@@ -12,7 +14,13 @@ class ModifyMainCategoryRow extends StatelessWidget {
   ModifyMainCategoryRow({Key key, this.cat}) : super(key: key);
 
   void handleAddSubcategory(BuildContext context) async {
-    String subcategoryName = await createAddCategoryDialog(context, "Add new subcategory", "");
+    String hintText = "Add new subcategory";
+    String subcategoryName = await addDialog(
+        context: context,
+        title: hintText,
+        hintText: hintText,
+        successButtonName: "Submit",
+        nameValidator: validateCategoryName);
     if (subcategoryName != null) {
       AppState appState = Provider.of<AppState>(context, listen: false);
       appState.addSubcategoryByName(subcategoryName, cat.id);
@@ -20,7 +28,13 @@ class ModifyMainCategoryRow extends StatelessWidget {
   }
 
   void handleMainCategoryNameChange(BuildContext context) async {
-    String categoryName = await createAddCategoryDialog(context, "Modify category name", cat.name);
+    String hintText = "Modify category name";
+    String categoryName = await addDialog(
+        context: context,
+        title: hintText,
+        hintText: hintText,
+        successButtonName: "Submit",
+        nameValidator: validateCategoryName);
     if (categoryName != null) {
       AppState appState = Provider.of<AppState>(context, listen: false);
       appState.updateCategoryName(MainCategory(cat.id, categoryName));
@@ -44,7 +58,8 @@ class ModifyMainCategoryRow extends StatelessWidget {
                     child: Text(cat.name,
                         style: TextStyle(
                             fontSize: Constants.CATEGORY_TEXT_STYLE.fontSize,
-                            fontWeight: Constants.CATEGORY_TEXT_STYLE.fontWeight,
+                            fontWeight:
+                                Constants.CATEGORY_TEXT_STYLE.fontWeight,
                             color: Constants.SECONDARY_COLOR)),
                   ),
                 ),

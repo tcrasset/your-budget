@@ -4,18 +4,24 @@ import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
+import '../../../components/addDialog.dart';
 
 class ModifySubcategoryRow extends StatelessWidget {
   final SubCategory subcat;
   const ModifySubcategoryRow({Key key, this.subcat}) : super(key: key);
 
   handleSubCategoryNameChange(BuildContext context) async {
-    String subcategoryName =
-        await createAddCategoryDialog(context, "Modify subcategory name", subcat.name);
+    String hintText = "Modify subcategory name";
+    String subcategoryName = await addDialog(
+        context: context,
+        title: hintText,
+        hintText: hintText,
+        successButtonName: "Submit",
+        nameValidator: validateCategoryName);
     if (subcategoryName != null) {
       AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.updateSubcategory(SubCategory(
-          subcat.id, subcat.parentId, subcategoryName, subcat.budgeted, subcat.available));
+      appState.updateSubcategory(SubCategory(subcat.id, subcat.parentId,
+          subcategoryName, subcat.budgeted, subcat.available));
     }
   }
 

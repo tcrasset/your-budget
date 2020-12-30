@@ -1,5 +1,10 @@
 # Changelog
 
+## Version 1.1.1
+
+- FEATURE: Creating new payee show a dialog
+- BUGFIX: Account starting balances allow for comma values
+
 ## Version 1.1.0
 
 - Refactor database code to be testable using dependecy injections with the get_it package
