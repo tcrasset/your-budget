@@ -122,18 +122,18 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [Payee] object, it pushes to the route selecting
   /// a [Payee], whose value is stored in [payee] and whose
   /// name is stored in [payeeFieldName].
-  handleOnTapPayee() {
-      List payeesAndAccounts = [];
+  handleOnTapPayee() async {
+    List payeesAndAccounts = [];
     payeesAndAccounts.addAll(appState.payees);
     payeesAndAccounts.addAll(appState.accounts);
 
-    var returnElement = Navigator.push(
+    var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
               SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     );
-
+    print(returnElement);
     if (returnElement != null) _setPayee(returnElement);
   }
 
@@ -148,8 +148,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [Account] object, it pushes to the route selecting
   /// a  [Account], whose value is stored in [_account] and whose
   /// name is stored in [accountFieldName].
-  handleOnTapAccount() {
-    var returnElement = Navigator.push(
+  handleOnTapAccount()  async {
+    var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
