@@ -85,7 +85,7 @@ class MoneyTransaction {
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}""";
+        """{id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}\n""";
   }
 }
 
