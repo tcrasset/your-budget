@@ -29,7 +29,7 @@ class _TransactionListState extends State<TransactionList> {
   @override
   Widget build(BuildContext context) {
     List<MoneyTransaction> transactionsOfAccount =
-        _computeToFromMoneyTransactions(
+        _getMoneyTransactions(
             widget.appState.transactions, this.widget.account.id);
 
     return Container(
@@ -52,7 +52,7 @@ class _TransactionListState extends State<TransactionList> {
   }
 }
 
-List<MoneyTransaction> _computeToFromMoneyTransactions(
+List<MoneyTransaction> _getMoneyTransactions(
     UnmodifiableListView<MoneyTransaction> transactions, int currentAccountId) {
   /// Here, [currentAccountId] is the outgoingAccount.
 
