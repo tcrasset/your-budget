@@ -61,10 +61,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// List of values to choose each value from, e.g. [_payee]
   /// will be chosen from one of the [payees]
-  List<Payee> payees;
   List<SubCategory> subcategories;
-  List<Account> accounts;
-  List payeesAndAccounts = [];
   AppState appState;
 
   @override
@@ -76,13 +73,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     amountLength = 16;
     // Load list of objects from the state/database
     appState = Provider.of<AppState>(context, listen: false);
-    payees = appState.payees;
-    accounts = appState.accounts;
     subcategories = appState.subcategories;
-
-    payeesAndAccounts.addAll(payees);
-    payeesAndAccounts.addAll(accounts);
-
     // Set initial values of the transaction
     _payee = null;
     _account = null;
@@ -129,6 +120,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// a [Payee], whose value is stored in [_payee] and whose
   /// name is stored in [_payeeFieldName].
   handleOnTapPayee() {
+
+    List payeesAndAccounts = [];
+    payeesAndAccounts.addAll(appState.payees);
+    payeesAndAccounts.addAll(appState.accounts);
+
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -151,7 +147,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Accounts", listEntries: accounts)),
+          builder: (context) => SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
     ).then((returnElement) {
       if (returnElement != null) {
         setState(() {
@@ -233,7 +229,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         // Input as payee ID the opposite of the account ID when we select
         // an account instead of a payee in the 'Payee' field
         print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
-        int payeeId = _payee is Payee ? _payee.id : -_account.id;
+        int payeeId = _payee is Payee ? _payee.id : -_payee.id;
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),

@@ -1,4 +1,3 @@
-
 /// This file will contain the classes for the common objects used throughout the codebase, namely
 /// [Payee], [MoneyTransaction], and [Account].
 
@@ -79,13 +78,25 @@ class MoneyTransaction {
     this.accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE];
     this.amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT];
     this.memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO];
-    this.date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseConstants.MONEYTRANSACTION_DATE]);
+    this.date = DateTime.fromMillisecondsSinceEpoch(
+        json[DatabaseConstants.MONEYTRANSACTION_DATE]);
   }
 
   @override
   String toString() {
     return super.toString() +
-        """ {id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}""";
+        """{id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}\n""";
+  }
+
+  MoneyTransaction copy() {
+    return MoneyTransaction(
+        id: this.id,
+        subcatID: this.subcatID,
+        payeeID: this.payeeID,
+        accountID: this.accountID,
+        amount: this.amount,
+        memo: this.memo,
+        date: this.date);
   }
 }
 

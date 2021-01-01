@@ -1,5 +1,9 @@
 # Changelog
 
+## Version 1.1.2
+
+- BUGFIX: Transactions between accounts now appear in both accounts
+
 ## Version 1.1.1
 
 - FEATURE: Creating new payee show a dialog
