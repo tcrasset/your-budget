@@ -53,18 +53,18 @@ class SelectValuePageState extends State<SelectValuePage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: new AppBar(
+      appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: new Column(
+      body: Column(
         children: [
-          new Padding(
-            padding: new EdgeInsets.only(top: 20.0),
+         Padding(
+            padding: EdgeInsets.only(top: 20.0),
           ),
-          new TextField(
-            decoration: new InputDecoration(
+          TextField(
+            decoration: InputDecoration(
               hintText: "Search something",
               icon: Icon(Icons.search),
             ),
@@ -81,8 +81,8 @@ class SelectValuePageState extends State<SelectValuePage> {
               onTap: () => handleCreateNewPayee(filter),
             ),
 
-          new Expanded(
-              child: new ListView.separated(
+          Expanded(
+              child: ListView.separated(
             shrinkWrap: true,
             itemCount: widget.listEntries.length,
             separatorBuilder: (BuildContext context, int index) =>
@@ -102,7 +102,7 @@ class SelectValuePageState extends State<SelectValuePage> {
                   return ListTile(title: item, onTap: () => handlePopContext(item));
               }
               // There is an error
-              return new Container();
+              return Container();
             },
           ))
         ],

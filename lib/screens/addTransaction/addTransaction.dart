@@ -61,10 +61,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// List of values to choose each value from, e.g. [payee]
   /// will be chosen from one of the [payees]
-  List<Payee> payees;
   List<SubCategory> subcategories;
-  List<Account> accounts;
-  List payeesAndAccounts = [];
   AppState appState;
 
   @override
@@ -76,13 +73,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     amountLength = 16;
     // Load list of objects from the state/database
     appState = Provider.of<AppState>(context, listen: false);
-    payees = appState.payees;
-    accounts = appState.accounts;
     subcategories = appState.subcategories;
-
-    payeesAndAccounts.addAll(payees);
-    payeesAndAccounts.addAll(accounts);
-
     // Set initial values of the transaction
     payee = null;
     _account = null;
@@ -132,6 +123,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// a [Payee], whose value is stored in [payee] and whose
   /// name is stored in [payeeFieldName].
   handleOnTapPayee() {
+      List payeesAndAccounts = [];
+    payeesAndAccounts.addAll(appState.payees);
+    payeesAndAccounts.addAll(appState.accounts);
+
     var returnElement = Navigator.push(
       context,
       MaterialPageRoute(
@@ -158,7 +153,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       context,
       MaterialPageRoute(
           builder: (context) =>
-              SelectValuePage(title: "Accounts", listEntries: accounts)),
+              SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
     );
 
     if (returnElement != null) _setAccount(returnElement);
