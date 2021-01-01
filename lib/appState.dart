@@ -225,9 +225,12 @@ class AppState extends ChangeNotifier {
       await computeToBeBudgeted();
       notifyListeners();
     } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
-      // If the transaction amount is positive, the transaction will remove money from
-      // outAccount and input it into inAccount.
-      // Otherwise, it is reversed.
+      /// If the transaction amount is positive, the transaction will remove money from
+      /// [outAccount] and input it into [inAccount].
+      /// Otherwise, it is reversed.
+
+      /// [outAccount] is ALWAYS the one pointed to by accountID.
+      /// Therefore, [inAccount] will be the one defined by [-payee.id].
       final Account outAccount =
           accounts.singleWhere((account) => account.id == transaction.accountID);
       outAccount.balance -= transaction.amount;
