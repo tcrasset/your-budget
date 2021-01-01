@@ -278,7 +278,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   int _selectPayeeId() {
-    int payeeId = payee is Payee ? payee.id : -_account.id;
+    int payeeId = payee is Payee ? payee.id : -payee.id;
     return payeeId;
   }
 
