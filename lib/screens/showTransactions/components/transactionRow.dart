@@ -32,7 +32,7 @@ class _TransactionRowState extends State<TransactionRow> {
   Widget build(BuildContext context) {
     String subcategoryName = "";
     String payeeName;
-      TextStyle amountStyle = TextStyle(
+    TextStyle amountStyle = TextStyle(
         fontSize: 22.0,
         fontWeight: FontWeight.w600,
         color: widget.moneyTransaction.amount.isNegative
@@ -40,15 +40,7 @@ class _TransactionRowState extends State<TransactionRow> {
             : Constants.GREEN_COLOR);
     AppState appState = Provider.of<AppState>(context, listen: false);
 
-    if (appState.payees.isNotEmpty) {
-      // orElse is for starting balance
-      Payee payee = appState.payees
-          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
-
-      payeeName = payee != null ? payee.name : "";
-    } else {
-      payeeName = "";
-    }
+    payeeName = _setPayeeName(appState);
 
     /// Extract name of subcategory associated to transaction [moneyTransaction]
     if (widget.moneyTransaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
@@ -92,5 +84,16 @@ class _TransactionRowState extends State<TransactionRow> {
             dateStyle,
             payeeName,
             subcategoryStyle);
+  }
+
+  String _setPayeeName(AppState appState) {
+    if (appState.payees.isNotEmpty) {
+      // orElse is for starting balance
+      Payee payee = appState.payees
+          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
+
+      return payee != null ? payee.name : "";
+    }
+    return "";
   }
 }
