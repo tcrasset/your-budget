@@ -1,4 +1,3 @@
-
 /// This file will contain the classes for the common objects used throughout the codebase, namely
 /// [Payee], [MoneyTransaction], and [Account].
 
@@ -79,7 +78,8 @@ class MoneyTransaction {
     this.accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE];
     this.amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT];
     this.memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO];
-    this.date = DateTime.fromMillisecondsSinceEpoch(json[DatabaseConstants.MONEYTRANSACTION_DATE]);
+    this.date = DateTime.fromMillisecondsSinceEpoch(
+        json[DatabaseConstants.MONEYTRANSACTION_DATE]);
   }
 
   @override
