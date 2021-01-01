@@ -28,22 +28,16 @@ class _TransactionRowState extends State<TransactionRow> {
   final TextStyle subcategoryStyle =
       TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
 
-  TextStyle amountStyle;
-
-  void initState() {
-    amountStyle = TextStyle(
+  @override
+  Widget build(BuildContext context) {
+    String subcategoryName = "";
+    String payeeName;
+      TextStyle amountStyle = TextStyle(
         fontSize: 22.0,
         fontWeight: FontWeight.w600,
         color: widget.moneyTransaction.amount.isNegative
             ? Constants.RED_COLOR
             : Constants.GREEN_COLOR);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String subcategoryName = "";
-    String payeeName;
     AppState appState = Provider.of<AppState>(context, listen: false);
 
     if (appState.payees.isNotEmpty) {
