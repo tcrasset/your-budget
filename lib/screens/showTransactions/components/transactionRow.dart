@@ -41,26 +41,7 @@ class _TransactionRowState extends State<TransactionRow> {
     AppState appState = Provider.of<AppState>(context, listen: false);
 
     payeeName = _setPayeeName(appState);
-
-    /// Extract name of subcategory associated to transaction [moneyTransaction]
-    if (widget.moneyTransaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
-      // Transfer between accounts
-      for (final Account account in appState.accounts) {
-        if (account.id == -widget.moneyTransaction.payeeID) {
-          subcategoryName = "To/From " + account.name;
-        }
-      }
-    } else if (widget.moneyTransaction.subcatID ==
-        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
-      //Transaction into to be budgeted
-      subcategoryName = "To be budgeted";
-    } else {
-      // Transaction into subcategories
-      var correspondingSubcategory = widget.categories.singleWhere(
-          ((cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
-          orElse: () => null);
-      subcategoryName = correspondingSubcategory != null ? correspondingSubcategory.name : "";
-    }
+    subcategoryName = _setSubcategoryName(appState);
 
     return widget.isEditable
         ? CheckedRow(
@@ -84,6 +65,28 @@ class _TransactionRowState extends State<TransactionRow> {
             dateStyle,
             payeeName,
             subcategoryStyle);
+  }
+
+  String _setSubcategoryName(AppState appState) {
+    /// Extract name of subcategory associated to transaction [moneyTransaction]
+    if (widget.moneyTransaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
+      // Transfer between accounts
+      for (final Account account in appState.accounts) {
+        if (account.id == -widget.moneyTransaction.payeeID) {
+          return "To/From " + account.name;
+        }
+      }
+    } else if (widget.moneyTransaction.subcatID ==
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+      //Transaction into to be budgeted
+      return "To be budgeted";
+    }
+    // Transaction into subcategories
+    var correspondingSubcategory = widget.categories.singleWhere(
+        ((cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
+        orElse: () => null);
+    return correspondingSubcategory != null ? correspondingSubcategory.name : "";
+
   }
 
   String _setPayeeName(AppState appState) {
