@@ -87,6 +87,17 @@ class MoneyTransaction {
     return super.toString() +
         """{id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}\n""";
   }
+
+  MoneyTransaction copy() {
+    return MoneyTransaction(
+        id: this.id,
+        subcatID: this.subcatID,
+        payeeID: this.payeeID,
+        accountID: this.accountID,
+        amount: this.amount,
+        memo: this.memo,
+        date: this.date);
+  }
 }
 
 /// Class representing the physical account where the money is stored.
