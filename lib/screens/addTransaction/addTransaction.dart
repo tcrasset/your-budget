@@ -229,7 +229,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         // Input as payee ID the opposite of the account ID when we select
         // an account instead of a payee in the 'Payee' field
         print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
-        int payeeId = _payee is Payee ? _payee.id : -_account.id;
+        int payeeId = _payee is Payee ? _payee.id : -_payee.id;
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),
