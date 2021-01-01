@@ -58,33 +58,23 @@ List<MoneyTransaction> _computeToFromMoneyTransactions(
 
   List<MoneyTransaction> transactionsOfAccount = [];
   for (var transaction in transactions) {
-    bool isStandardPayee = transaction.payeeID > 0;
     bool isAccountPayee = transaction.payeeID < 0;
-    bool isStartingBalanceTransaction =
-        transaction.payeeID == Constants.UNASSIGNED_PAYEE_ID;
 
     bool currentAccountIsPayeeAccount =
         -transaction.payeeID == currentAccountId;
     bool currentAccountIsStandardAccount =
         transaction.accountID == currentAccountId;
 
-    bool isPositiveTransaction = transaction.amount > 0;
-    bool isNegativeTransaction = !isPositiveTransaction;
-
-    if (isStartingBalanceTransaction && currentAccountIsStandardAccount)
+    if ((currentAccountIsStandardAccount && !isAccountPayee) ||
+        (currentAccountIsPayeeAccount && isAccountPayee)) {
       transactionsOfAccount.add(transaction);
-    if (currentAccountIsStandardAccount &&
-        isStandardPayee &&
-        !isStartingBalanceTransaction)
-      transactionsOfAccount.add(transaction);
-    else if ((currentAccountIsStandardAccount && isAccountPayee)) {
+    } else if ((currentAccountIsStandardAccount && isAccountPayee)) {
       // The transaction is reversed.i.e. removes money from outAccount(accountId)
       // into inAccount(payeeId)
       MoneyTransaction negativeAmountTransaction = transaction.copy();
       negativeAmountTransaction.amount *= -1;
       transactionsOfAccount.add(negativeAmountTransaction);
-    } else if (currentAccountIsPayeeAccount && isAccountPayee)
-      transactionsOfAccount.add(transaction);
+    }
   }
 
   return transactionsOfAccount;
