@@ -69,13 +69,13 @@ class SelectValuePageState extends State<SelectValuePage> {
     }
   }
 
-  List<dynamic> _getDuplicateEntries(){
+  List<dynamic> _getDuplicateEntries() {
     var map = Map<String, int>(); // Mapping between name and id
 
     Set<int> duplicateIDs = Set<int>();
     widget.listEntries.forEach((element) {
-      if(element is SubCategory){
-        if(!map.containsKey(element.name)) {
+      if (element is SubCategory) {
+        if (!map.containsKey(element.name)) {
           map[element.name] = element.id;
         } else {
           duplicateIDs.add(element.id);
@@ -83,25 +83,27 @@ class SelectValuePageState extends State<SelectValuePage> {
         }
       }
     });
-    return appState.subcategories.where((element) => duplicateIDs.contains(element.id)).toList();
+    return appState.subcategories
+        .where((element) => duplicateIDs.contains(element.id))
+        .toList();
   }
 
-
   List _addLabelForDuplicateEntries(List<dynamic> duplicateEntries) {
-
     List modifiedListEntries = [];
-    List maincategories = appState.allCategories.whereType<MainCategory>().toList();
+    List maincategories =
+        appState.allCategories.whereType<MainCategory>().toList();
 
     widget.listEntries.forEach((entry) {
-      if(entry is SubCategory){
-
+      if (entry is SubCategory) {
         bool isDuplicate = duplicateEntries.singleWhere(
-          (duplicate) => duplicate.id == entry.id, orElse: () => null) != null;
+                (duplicate) => duplicate.id == entry.id,
+                orElse: () => null) !=
+            null;
 
-        if(isDuplicate){
+        if (isDuplicate) {
           var modifiedEntry = _addCategoryName(entry, maincategories);
           modifiedListEntries.add(modifiedEntry);
-        }else{
+        } else {
           modifiedListEntries.add(entry);
         }
       }
@@ -111,26 +113,23 @@ class SelectValuePageState extends State<SelectValuePage> {
 
   dynamic _addCategoryName(var entry, List maincategories) {
     var modifiedEntry = entry.copy();
-    MainCategory category = maincategories.singleWhere((maincat) => maincat.id == entry.parentId, orElse: null);
-    modifiedEntry.name = modifiedEntry.name + ' (' + category.name + ')' ?? "" ;
+    MainCategory category = maincategories
+        .singleWhere((maincat) => maincat.id == entry.parentId, orElse: null);
+    modifiedEntry.name = modifiedEntry.name + ' (' + category.name + ')' ?? "";
     return modifiedEntry;
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     List listEntries = [];
-    if(isSubcategories){
 
+    if (isSubcategories) {
       List<dynamic> duplicates = _getDuplicateEntries();
-      if(duplicates.isNotEmpty)
+      if (duplicates.isNotEmpty)
         listEntries = _addLabelForDuplicateEntries(duplicates);
-
       else
         listEntries = widget.listEntries;
-    }
-    else
+    } else
       listEntries = widget.listEntries;
 
     return Scaffold(
@@ -140,7 +139,7 @@ class SelectValuePageState extends State<SelectValuePage> {
       ),
       body: Column(
         children: [
-         Padding(
+          Padding(
             padding: EdgeInsets.only(top: 20.0),
           ),
           TextField(
@@ -170,7 +169,6 @@ class SelectValuePageState extends State<SelectValuePage> {
             separatorBuilder: (BuildContext context, int index) =>
                 Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
-
               var item = listEntries[index];
               var itemToShow = item is Text ? item : Text(item.name);
               var itemToFilter = item is Text ? item.data : item.name;
@@ -194,5 +192,4 @@ class SelectValuePageState extends State<SelectValuePage> {
       ),
     );
   }
-
 }
