@@ -221,7 +221,8 @@ class AppState extends ChangeNotifier {
       final Account account =
           accounts.singleWhere((account) => account.id == transaction.accountID);
       account.balance += transaction.amount;
-      queryContext.updateAccount(account);
+      await queryContext.updateAccount(account);
+      _budgets = await _createAllMonthlyBudgets();
       await computeToBeBudgeted();
       notifyListeners();
     } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {

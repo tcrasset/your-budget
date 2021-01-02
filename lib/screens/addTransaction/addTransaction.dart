@@ -106,6 +106,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _dateFieldName = getDateString(_date);
       _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       _memoController.clear();
+      _setOffsetToLastDigit();
     });
   }
 
