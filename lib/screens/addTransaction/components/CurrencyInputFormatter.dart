@@ -5,7 +5,8 @@ import 'package:intl/intl.dart';
 /// this method returns the double value of [currencyText], making sure
 /// it is positive when [isPositive] is true, and negative when not.
 double formatCurrencyToDouble(String currencyText, bool isPositive) {
-  String integers, decimals;
+  String integers = "0";
+  String decimals = "0";
   String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
   int textLength = onlyNumbers.length;
 
