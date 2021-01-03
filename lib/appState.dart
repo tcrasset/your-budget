@@ -132,6 +132,10 @@ class AppState extends ChangeNotifier {
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
   void addSubcategory(SubCategoryModel subcategoryModel) async {
+    DateTime newDate = startingBudgetDate;
+    DateTime maxBudgetDate = getMaxBudgetDate();
+    DateTime previousDate;
+
     int subcatId = await queryContext.addSubcategory(subcategoryModel);
     SubCategory subcategory = SubCategory(
       subcatId,
@@ -147,26 +151,28 @@ class AppState extends ChangeNotifier {
 
     /// Insert a budget value for every month from [startingBudgetDate] until [MAX_NB_MONTHS_AHEAD]
     /// after [DateTime.now()],
-    for (int i = 0;
-        i < Constants.MAX_NB_MONTHS_AHEAD + getMonthDifference(startingBudgetDate, DateTime.now());
-        i++) {
+    do {
       /// Update BudgetValues
-      DateTime newDate = Jiffy(startingBudgetDate).add(months: i);
+
+      previousDate = newDate;
 
       BudgetValueModel budgetValueModel = BudgetValueModel(
         subcategoryId: subcatId,
         budgeted: 0,
         available: 0,
-        year: newDate.year,
-        month: newDate.month,
+        year: previousDate.year,
+        month: previousDate.month,
       );
 
       int budgetId = await queryContext.addBudgetValue(budgetValueModel);
       BudgetValue budgetValue =
-          BudgetValue(budgetId, subcategory.id, 0, 0, newDate.year, newDate.month);
+          BudgetValue(budgetId, subcategory.id, 0, 0, previousDate.year, previousDate.month);
 
       _budgetValues.add(budgetValue);
-    }
+      newDate = Jiffy(previousDate).add(months: 1);
+
+    } while(previousDate.isBefore(maxBudgetDate));
+
     notifyListeners();
   }
 
