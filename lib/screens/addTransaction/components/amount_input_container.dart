@@ -30,12 +30,13 @@ class AmountInputContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 50,
         alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
-          decoration: new InputDecoration.collapsed(
+          decoration: InputDecoration(
             hintText: "",
+            helperText: "",
+            enabledBorder: InputBorder.none,
           ),
           keyboardType: TextInputType.number,
           controller: state.amountController,

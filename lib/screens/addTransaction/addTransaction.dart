@@ -388,7 +388,6 @@ class _AddTransactionPageView
     return SingleChildScrollView(
       child: Column(children: [
         Container(
-            height: 400,
             child: Column(
               children: [
                 Row(
