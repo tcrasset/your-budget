@@ -213,17 +213,32 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// with the information entered, add the transaction and
   /// reset the whole [AddTransactionPage] to the default values
   /// and display a notification.
-  void addMoneyTransaction() async {
+  void addMoneyTransaction(BuildContext context) async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      if (_payee != null && _account != null) {
+
+      bool isNegativeTransactionsIntoToBeBudgeted = !isPositive && _subcategoryFieldName == "To be budgeted";
+      bool isPositiveTranasctionsIntoSubcategory = isPositive && !(_payee is Account) && _subcategoryFieldName != "To be budgeted";
+
+      if (isNegativeTransactionsIntoToBeBudgeted){
+          SnackBar snackbar = SnackBar(content: Text("Can't have negative transaction on to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
+          Scaffold.of(context).showSnackBar(snackbar);
+
+      }
+      else if (isPositiveTranasctionsIntoSubcategory){
+          SnackBar snackbar = SnackBar(content: Text("Positive transactions should go into to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
+          Scaffold.of(context).showSnackBar(snackbar);
+
+      }
+
+      else if (_payee != null && _account != null) {
         _amount = formatCurrencyToDouble(_amountController.text, isPositive);
 
         print("Form validated");
         print("Amount : $_amount");
         print("Payee : $_payeeFieldName");
         print("Account : $_accountFieldName");
-        print("Subcategory : ${_payee is Payee ? 'No subcategory' : _subcategoryFieldName}");
+        print("Subcategory : ${_payee is Payee ? _subcategoryFieldName : 'No subcategory'}");
         print("Date: $_dateFieldName");
         print("Memo : ${_memoController.text}");
 
@@ -242,8 +257,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         );
 
         resetToDefaultTransaction();
-        showOverlayNotification(context, "Transaction added");
-      } else {
+        SnackBar snackbar = SnackBar(content: Text("Transaction added", style: TextStyle(color: Colors.white),), backgroundColor: Colors.green,);
+        Scaffold.of(context).showSnackBar(snackbar);
+      }
+        else {
         print("One of the fields does not contain a valid type");
       }
     }
@@ -314,7 +331,7 @@ class _AddTransactionPageView
       TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
   final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
-  Widget _myBuildMethod() {
+  Widget _myBuildMethod(BuildContext context) {
     // Create number controller
     /// This [TextFormField] handles the amount selected while providing
     /// an intuitive experience to the user, who does not need to manually
@@ -433,7 +450,7 @@ class _AddTransactionPageView
         // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),
-          onPressed: () => state.addMoneyTransaction(),
+          onPressed: () => state.addMoneyTransaction(context),
         )
       ]),
     );
@@ -460,7 +477,7 @@ class _AddTransactionPageView
           } else {
             return Form(
               key: state._formKey,
-              child: _myBuildMethod(),
+              child: _myBuildMethod(context),
             );
           }
         }));
