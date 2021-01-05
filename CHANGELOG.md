@@ -1,5 +1,13 @@
 # Changelog
 
+## Version 1.1.4
+
+- BUGFIX: Fix bug where you couldn't delete last character when setting budgeted value for a subcategory
+- BUGFIX: Changing the name of a subcategory takes effect immediately
+- BUGFIX: Fix amount field sliding up when having an error in the Add Transaction tab
+- FEATURE: Transaction success or error is now shown using SnackBars
+- REFACTOR: [WIP] Refactor addTransactionScreen
+
 ## Version 1.1.3
 
 - BUGFIX: To Be budgeted now gets updated directly after transaction
