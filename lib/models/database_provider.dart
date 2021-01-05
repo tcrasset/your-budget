@@ -168,7 +168,7 @@ class DatabaseProvider {
 
     int categoryId = await db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
 
-    List<String> subcategoryNames = ["Rent", "Eletricity", "Water", "Food", "Internet", "Phone"];
+    List<String> subcategoryNames = ["Rent", "Electricity", "Water", "Food", "Internet", "Phone"];
     List<int> subcategoryIds = [];
     for (int i = 0; i < subcategoryNames.length; i++) {
       int subcategoryId = await db.rawInsert(CREATE_SUBCATEGORY, [categoryId, subcategoryNames[i]]);

@@ -4,62 +4,62 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/components/overlayNotifications.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
-import 'package:your_budget/screens/addTransaction/selectValue.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/components/rowContainer.dart';
-
 import 'package:provider/provider.dart';
+
+import '../../appState.dart';
+import '../../components/overlayNotifications.dart';
+import '../../components/widgetViewClasses.dart';
+import '../../models/categories.dart';
+import '../../models/constants.dart';
+import '../../models/entries.dart';
+import '../../models/utils.dart';
+import 'components/CurrencyInputFormatter.dart';
+import 'components/account_field.dart';
+import 'components/amount_input_container.dart';
+import 'components/amount_switch.dart';
+import 'components/date_field.dart';
+import 'components/memo_field.dart';
+import 'components/payee_field.dart';
+import 'components/subcategory_field.dart';
+import 'selectValue.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
-  _AddTransactionPageController createState() => _AddTransactionPageController();
+  _AddTransactionPageController createState() =>
+      _AddTransactionPageController();
 }
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
-  TextEditingController _amountController;
+  TextEditingController amountController;
   final NumberFormat currencyNumberFormat =
       NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: '€');
 
-  final TextStyle _positiveAmountTextStyle =
-      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle =
-      new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
-
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _memoController = new TextEditingController();
-  final ScrollController _scrollController = new ScrollController();
+  final TextEditingController memoController = new TextEditingController();
 
   /// Default names will have a different style than selected ones
-  final String _defaultPayeeFieldName = "Select payee";
-  final String _defaultAccountFieldName = "Select account";
-  final String _defaultSubcategoryFieldName = "Select subcategory";
+  final String defaultPayeeFieldName = "Select payee";
+  final String defaultAccountFieldName = "Select account";
+  final String defaultSubcategoryFieldName = "Select subcategory";
 
   double _amount;
   bool isPositive;
   int amountLength; //Number of max. characters for the amount
 
   /// String values of the variables which are displayed.
-  String _payeeFieldName;
-  String _accountFieldName;
-  String _subcategoryFieldName;
-  String _dateFieldName;
+  String payeeFieldName;
+  String accountFieldName;
+  String subcategoryFieldName;
+  String dateFieldName;
 
   /// Values used for the transaction
-  dynamic _payee;
+  dynamic payee;
   Account _account;
   var _subcategory;
   DateTime _date;
 
-  /// List of values to choose each value from, e.g. [_payee]
+  /// List of values to choose each value from, e.g. [payee]
   /// will be chosen from one of the [payees]
   List<SubCategory> subcategories;
   AppState appState;
@@ -75,18 +75,19 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     appState = Provider.of<AppState>(context, listen: false);
     subcategories = appState.subcategories;
     // Set initial values of the transaction
-    _payee = null;
+    payee = null;
     _account = null;
     _subcategory = null;
     _date = DateTime.now();
 
     // Set the default values for the UI
-    _payeeFieldName = _defaultPayeeFieldName;
-    _accountFieldName = _defaultAccountFieldName;
-    _subcategoryFieldName = _defaultSubcategoryFieldName;
-    _dateFieldName = getDateString(_date);
+    payeeFieldName = defaultPayeeFieldName;
+    accountFieldName = defaultAccountFieldName;
+    subcategoryFieldName = defaultSubcategoryFieldName;
+    dateFieldName = getDateString(_date);
 
-    _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
+    amountController =
+        TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
 
   /// Resets all the field to their default value
@@ -96,115 +97,140 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       _amount = 0;
       amountLength = 16;
 
-      _payee = null;
+      payee = null;
       _account = null;
       _subcategory = null;
       _date = DateTime.now();
-      _payeeFieldName = _defaultPayeeFieldName;
-      _accountFieldName = _defaultAccountFieldName;
-      _subcategoryFieldName = _defaultSubcategoryFieldName;
-      _dateFieldName = getDateString(_date);
-      _amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
-      _memoController.clear();
+      payeeFieldName = defaultPayeeFieldName;
+      accountFieldName = defaultAccountFieldName;
+      subcategoryFieldName = defaultSubcategoryFieldName;
+      dateFieldName = getDateString(_date);
+      amountController =
+          TextEditingController(text: currencyNumberFormat.format(0).trim());
+      memoController.clear();
       _setOffsetToLastDigit();
+
     });
   }
 
   @override
   void dispose() {
-    _amountController.dispose();
+    amountController.dispose();
+    memoController.dispose();
     super.dispose();
   }
 
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [Payee] object, it pushes to the route selecting
-  /// a [Payee], whose value is stored in [_payee] and whose
-  /// name is stored in [_payeeFieldName].
-  handleOnTapPayee() {
-
+  /// a [Payee], whose value is stored in [payee] and whose
+  /// name is stored in [payeeFieldName].
+  handleOnTapPayee() async {
     List payeesAndAccounts = [];
     payeesAndAccounts.addAll(appState.payees);
     payeesAndAccounts.addAll(appState.accounts);
 
-    Navigator.push(
+    var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
-    ).then((returnElement) {
-      if (returnElement != null) {
-        setState(() {
-          _payee = returnElement;
-          _payeeFieldName = returnElement.name;
-        });
-      }
+          builder: (context) =>
+              SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
+    );
+    print(returnElement);
+    if (returnElement != null) _setPayee(returnElement);
+  }
+
+  void _setPayee(returnElement) {
+    setState(() {
+      payee = returnElement;
+      payeeFieldName = returnElement.name;
     });
   }
 
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [Account] object, it pushes to the route selecting
   /// a  [Account], whose value is stored in [_account] and whose
-  /// name is stored in [_accountFieldName].
-  handleOnTapAccount() {
-    Navigator.push(
+  /// name is stored in [accountFieldName].
+  handleOnTapAccount()  async {
+    var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
-    ).then((returnElement) {
-      if (returnElement != null) {
-        setState(() {
-          _account = returnElement;
-          _accountFieldName = returnElement.name;
-        });
-      }
+          builder: (context) =>
+              SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
+    );
+
+    if (returnElement != null) _setAccount(returnElement);
+  }
+
+  void _setAccount(returnElement) {
+    setState(() {
+      _account = returnElement;
+      accountFieldName = returnElement.name;
     });
   }
 
   /// When tapping on the [SelectValuePage] widget pertaining
   /// to the [SubCategory] object, it pushes to the route selecting
   /// a [SubCategory], whose value is stored in [_subcategory] and whose
-  /// name is stored in [_subcategoryFieldName].
+  /// name is stored in [subcategoryFieldName].
   handleOnTapCategory() async {
-    dynamic returnElement = await Navigator.push(
+    var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
-          List subcatAndToBeBudgeted = [];
-          subcategories.forEach((subcat) {
-            subcatAndToBeBudgeted.add(subcat);
-          });
-          subcatAndToBeBudgeted.add(Text("To be budgeted"));
-
-          return SelectValuePage(title: "Subcategories", listEntries: subcatAndToBeBudgeted);
+          return SelectValuePage(
+            title: "Subcategories",
+            listEntries: _combineSubcategoriesAndToBeBudgeted(),
+          );
         },
       ),
     );
 
-    if (returnElement != null) {
-      setState(() {
-        _subcategory = returnElement;
-        _subcategoryFieldName =
-            returnElement is SubCategory ? returnElement.name : returnElement.data;
-      });
-    }
+    if (returnElement != null) _setSubcategory(returnElement);
+  }
+
+  void _setSubcategory(returnElement) {
+    setState(() {
+      _subcategory = returnElement;
+      subcategoryFieldName = returnElement is SubCategory
+          ? returnElement.name
+          : returnElement.data;
+    });
+  }
+
+  List _combineSubcategoriesAndToBeBudgeted() {
+    List subcatAndToBeBudgeted = [];
+    subcategories.forEach((subcat) {
+      subcatAndToBeBudgeted.add(subcat);
+    });
+    subcatAndToBeBudgeted.add(Text("To be budgeted"));
+    return subcatAndToBeBudgeted;
   }
 
   /// When tapping on the Date row, it opens the DataPicker
   /// which allows one to choose the date as a [DateTime].
   /// Defaults to the current day-year-month.
   /// The [DateTime] gets stored in [_date], and the string
-  /// value of that date is saved in [_dateFieldName].
+  /// value of that date is saved in [dateFieldName].
   Future<Null> handleOnTapDate(BuildContext context) async {
+    DateTime picked = await _pickDate(context);
+    _setDate(picked);
+  }
+
+  void _setDate(DateTime picked) {
+    if (picked != null && picked != _date) picked = addExactEntryTime(picked);
+    setState(() {
+      _date = picked;
+      dateFieldName = getDateString(picked);
+    });
+  }
+
+  Future<DateTime> _pickDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(_date),
         firstDate: appState.startingBudgetDate,
         lastDate: getLastDayOfMonth(getMaxBudgetDate()));
-    if (picked != null && picked != _date)
-      picked = addExactEntryTime(picked);
-      setState(() {
-        _date = picked;
-        _dateFieldName = getDateString(picked);
-      });
+    return picked;
   }
 
   /// Check that all the necessary fields in the form
@@ -213,93 +239,132 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// with the information entered, add the transaction and
   /// reset the whole [AddTransactionPage] to the default values
   /// and display a notification.
-  void addMoneyTransaction() async {
+  void addMoneyTransaction(BuildContext context) async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      if (_payee != null && _account != null) {
-        _amount = formatCurrencyToDouble(_amountController.text, isPositive);
 
-        print("Form validated");
-        print("Amount : $_amount");
-        print("Payee : $_payeeFieldName");
-        print("Account : $_accountFieldName");
-        print("Subcategory : ${_payee is Payee ? 'No subcategory' : _subcategoryFieldName}");
-        print("Date: $_dateFieldName");
-        print("Memo : ${_memoController.text}");
+      bool isNegativeTransactionsIntoToBeBudgeted = !isPositive && subcategoryFieldName == "To be budgeted";
+      bool isPositiveTranasctionsIntoSubcategory = isPositive && !(payee is Account) && subcategoryFieldName != "To be budgeted";
 
-        // Input as payee ID the opposite of the account ID when we select
-        // an account instead of a payee in the 'Payee' field
-        print("_payee is of type ${_payee is Payee ? "Payee" : "Account"}");
-        int payeeId = _payee is Payee ? _payee.id : -_payee.id;
+      if (isNegativeTransactionsIntoToBeBudgeted){
+          SnackBar snackbar = SnackBar(content: Text("Can't have negative transaction on to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
+          Scaffold.of(context).showSnackBar(snackbar);
+
+      }
+      else if (isPositiveTranasctionsIntoSubcategory){
+          SnackBar snackbar = SnackBar(content: Text("Positive transactions should go into to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
+          Scaffold.of(context).showSnackBar(snackbar);
+
+      }
+
+
+
+      else if (payee != null && _account != null) {
+        _amount = formatCurrencyToDouble(amountController.text, isPositive);
+
+        _printTransactionInformation();
+
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),
-          payeeId: payeeId,
+          payeeId: _selectPayeeId(),
           accountId: _account.id,
           amount: _amount,
-          memo: _memoController.text,
+          memo: memoController.text,
           date: _date,
         );
 
         resetToDefaultTransaction();
-        showOverlayNotification(context, "Transaction added");
-      } else {
+        SnackBar snackbar = SnackBar(content: Text("Transaction added", style: TextStyle(color: Colors.white),), backgroundColor: Colors.green,);
+        Scaffold.of(context).showSnackBar(snackbar);
+      }
+        else {
         print("One of the fields does not contain a valid type");
       }
     }
   }
 
+  void _printTransactionInformation() {
+    print("Form validated");
+    print("Amount : $_amount");
+    print("Payee : $payeeFieldName");
+    print("Account : $accountFieldName");
+    print(
+        "Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
+    print("Date: $dateFieldName");
+    print("Memo : ${memoController.text}");
+
+    // Input as payee ID the opposite of the account ID when we select
+    // an account instead of a payee in the 'Payee' field
+    print("payee is of type ${payee is Payee ? "Payee" : "Account"}");
+  }
+
+  int _selectPayeeId() {
+    int payeeId = payee is Payee ? payee.id : -payee.id;
+    return payeeId;
+  }
+
   _selectSubcatId() {
-    bool subcategoryIsToBeBudgeted = _subcategoryFieldName == "To be budgeted";
-    if (_payee is Payee && !subcategoryIsToBeBudgeted)
+    bool subcategoryIsToBeBudgeted = subcategoryFieldName == "To be budgeted";
+    if (payee is Payee && !subcategoryIsToBeBudgeted)
       return _subcategory.id;
-    else if (_payee is Account && !subcategoryIsToBeBudgeted)
+    else if (payee is Account && !subcategoryIsToBeBudgeted)
       return Constants.UNASSIGNED_SUBCAT_ID;
     else if (subcategoryIsToBeBudgeted) //
       return Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
   }
 
   handleAmountOnSave() {
-    _amount = formatCurrencyToDouble(_amountController.text, isPositive);
+    _amount = formatCurrencyToDouble(amountController.text, isPositive);
   }
 
-  // When the switch is set to the 'off' position, the text style changes
-  // and a minus sign is added in front of the text.
   void handleSwitchOnChanged() {
     setState(() {
       isPositive = !isPositive;
-      if (isPositive && _amountController.text[0] == '-')
-        _amountController.text = _amountController.text.substring(1);
-      else if (!isPositive) _amountController.text = "-" + _amountController.text;
 
-      // Change the maximal possible length of the amount to account for
-      // the minus sign.
-      amountLength = isPositive ? 16 : 17;
-      // Lastly, set the offset to the correct position.
+      bool positiveWithMinusSign =
+          isPositive && amountController.text[0] == '-';
+      if (positiveWithMinusSign)
+        _removeMinusSign();
+      else if (!isPositive) _addMinusSign();
+
+      _updateAmountLength();
       _setOffsetToLastDigit();
     });
   }
 
-  /// Checks that the amount of the transaction is not 0.
+  void _updateAmountLength() {
+    amountLength = isPositive ? 16 : 17;
+  }
+
+  void _addMinusSign() {
+    amountController.text = "-" + amountController.text;
+  }
+
+  void _removeMinusSign() {
+    amountController.text = amountController.text.substring(1);
+  }
+
   handleAmountValidate(String value) {
-    if (formatCurrencyToDouble(_amountController.text, isPositive) == 0) {
+    if (formatCurrencyToDouble(amountController.text, isPositive) == 0) {
       return "Value must be different than 0";
     }
     return null;
   }
 
-  /// Reset [_amountController.text] to "0.00 €" or "-0.00€", depending on
-  /// the value of [isPositive]
   handleAmountOnTap() {
-    String zero = currencyNumberFormat.format(0).trim();
-    _amountController.text = isPositive ? zero : "-" + zero;
+    _setAmountToZero();
     _setOffsetToLastDigit();
   }
 
-  /// Set the cursor offset to the last digit of the text.
+  void _setAmountToZero() {
+    String zero = currencyNumberFormat.format(0).trim();
+    amountController.text = isPositive ? zero : "-" + zero;
+  }
+
   _setOffsetToLastDigit() {
-    _amountController.selection =
-        TextSelection.collapsed(offset: _amountController.text.length - 2);
+    amountController.selection =
+        TextSelection.collapsed(offset: amountController.text.length - 2);
   }
 
   @override
@@ -310,130 +375,49 @@ class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
   _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
-  final TextStyle defaultChildTextStyle =
-      TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-  final TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
+  final TextStyle defaultChildTextStyle = TextStyle(
+      color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+  final TextStyle selectedChildTextStyle =
+      TextStyle(color: Colors.black, fontSize: 16.0);
 
-  Widget _myBuildMethod() {
-    // Create number controller
-    /// This [TextFormField] handles the amount selected while providing
-    /// an intuitive experience to the user, who does not need to manually
-    /// separators and currencies.
-    /// The length is limited by a [LengthLimitingTextInputFormatter] to
-    /// [state.amountLength] which is equivalent to a maximal value of
-    /// 999.999.999,99 €.
-    /// The currency format is handled by [CurrencyInputFormatter].
-    /// [onTap()] resets the value to a chosen default value.
-    Container amountInputContainer = Container(
-        height: 50,
-        alignment: Alignment.centerRight,
-        padding: new EdgeInsets.symmetric(horizontal: 10.0),
-        child: TextFormField(
-          decoration: new InputDecoration.collapsed(
-            hintText: "",
-          ),
-          keyboardType: TextInputType.number,
-          controller: state._amountController,
-          inputFormatters: [
-            LengthLimitingTextInputFormatter(state.amountLength),
-            CurrencyInputFormatter(state.currencyNumberFormat, state.isPositive),
-          ],
-          textInputAction: TextInputAction.done,
-          textAlign: TextAlign.right,
-          style: state.isPositive ? state._positiveAmountTextStyle : state._negativeAmountTextStyle,
-          validator: (value) => state.handleAmountValidate(value),
-          // onSaved: state.handleAmountOnSave(),
-          onTap: () => state.handleAmountOnTap(),
-        ));
-
-    Row containerAndButton = Row(
-      children: [
-        Expanded(child: amountInputContainer),
-        Container(
-            child: Switch(
-          value: state.isPositive,
-          onChanged: (value) => state.handleSwitchOnChanged(),
-          activeTrackColor: Constants.GREEN_COLOR,
-          activeColor: Colors.grey[300],
-          activeThumbImage: new AssetImage("assets/plus.png"),
-          inactiveThumbImage: new AssetImage("assets/minus.png"),
-          inactiveTrackColor: Constants.RED_COLOR,
-          inactiveThumbColor: Colors.grey[300],
-        )),
-      ],
-    );
+  Widget _myBuildMethod(BuildContext context) {
     //Populate the list of container with the number controllers and
     //the custom listTiles
-    List<Widget> containerList = [
-      containerAndButton,
-      GestureDetector(
-          // Payees gesture detectory leading to 'Payees' SelectValuePage
-          onTap: () => state.handleOnTapPayee(),
-          child: rowContainer(
-              "Payee",
-              Text(state._payeeFieldName,
-                  style: (state._payeeFieldName == state._defaultPayeeFieldName)
-                      ? defaultChildTextStyle
-                      : selectedChildTextStyle))),
-      GestureDetector(
-          // Accounts gesture detectory leading to 'Accounts' SelectValuePage
-          onTap: () => state.handleOnTapAccount(),
-          child: rowContainer(
-              "Account",
-              Text(state._accountFieldName,
-                  style: (state._accountFieldName == state._defaultAccountFieldName)
-                      ? defaultChildTextStyle
-                      : selectedChildTextStyle))),
-      GestureDetector(
-          // Subcategory gesture detectory leading to 'Categories' SelectValuePage
-
-          /// [state._payee] accepts both an object of type [Payee] or [Account].
-          /// If it is of type Account, make the GestureDetector untappable,
-          /// set the default text style and change the text.
-          onTap: () => state._payee is Account ? null : state.handleOnTapCategory(),
-          child: rowContainer(
-              "Category",
-              Text(state._payee is Account ? "No subcategory needed" : state._subcategoryFieldName,
-                  style: (state._subcategoryFieldName == state._defaultSubcategoryFieldName ||
-                          state._payee is Account)
-                      ? defaultChildTextStyle
-                      : selectedChildTextStyle))),
-      GestureDetector(
-          // Date gesture detector
-          onTap: () => state.handleOnTapDate(state.context),
-          child: rowContainer("Date", Text(state._dateFieldName, style: selectedChildTextStyle))),
-      rowContainer(
-        "Memo",
-        TextField(
-          decoration: new InputDecoration(hintText: "Add a memo"),
-          controller: state._memoController,
-        ),
-      ),
-    ];
 
     // Build the layout (ListView, error container, Button)
     return SingleChildScrollView(
       child: Column(children: [
         Container(
-            height: 400,
-            child: Scrollbar(
-              isAlwaysShown: true,
-              controller: state._scrollController,
-              child: ListView.separated(
-                  controller: state._scrollController,
-                  shrinkWrap: false,
-                  addAutomaticKeepAlives: true,
-                  itemCount: containerList.length,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      Divider(height: 1, color: Colors.black26),
-                  itemBuilder: (context, index) {
-                    return containerList[index];
-                  }),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: AmountInputContainer(state: state)),
+                    AmountSwitch(state: state),
+                  ],
+                ),
+                PayeeField(
+                    state: state,
+                    defaultChildTextStyle: defaultChildTextStyle,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                AccountField(
+                    state: state,
+                    defaultChildTextStyle: defaultChildTextStyle,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                SubcategoryField(
+                    state: state,
+                    defaultChildTextStyle: defaultChildTextStyle,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                DateField(
+                    state: state,
+                    selectedChildTextStyle: selectedChildTextStyle),
+                MemoField(state: state),
+              ],
             )),
         // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),
-          onPressed: () => state.addMoneyTransaction(),
+          onPressed: () => state.addMoneyTransaction(context),
         )
       ]),
     );
@@ -460,7 +444,7 @@ class _AddTransactionPageView
           } else {
             return Form(
               key: state._formKey,
-              child: _myBuildMethod(),
+              child: _myBuildMethod(context),
             );
           }
         }));
