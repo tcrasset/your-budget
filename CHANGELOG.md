@@ -1,5 +1,20 @@
 # Changelog
 
+## Version 1.1.3
+
+- BUGFIX: To Be budgeted now gets updated directly after transaction
+- BUGFIX: Reset amount field when adding two transactions right after another
+- FEATURE: Add category name for duplicate subcategories when adding new transaction
+
+## Version 1.1.2
+
+- BUGFIX: Transactions between accounts now appear in both accounts
+
+## Version 1.1.1
+
+- FEATURE: Creating new payee show a dialog
+- BUGFIX: Account starting balances allow for comma values
+
 ## Version 1.1.0
 
 - Refactor database code to be testable using dependecy injections with the get_it package

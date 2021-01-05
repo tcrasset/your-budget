@@ -108,6 +108,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       amountController =
           TextEditingController(text: currencyNumberFormat.format(0).trim());
       memoController.clear();
+      _setOffsetToLastDigit();
+
     });
   }
 
@@ -237,13 +239,31 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// with the information entered, add the transaction and
   /// reset the whole [AddTransactionPage] to the default values
   /// and display a notification.
-  void addMoneyTransaction() async {
+  void addMoneyTransaction(BuildContext context) async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      if (payee != null && _account != null) {
+
+      bool isNegativeTransactionsIntoToBeBudgeted = !isPositive && subcategoryFieldName == "To be budgeted";
+      bool isPositiveTranasctionsIntoSubcategory = isPositive && !(payee is Account) && subcategoryFieldName != "To be budgeted";
+
+      if (isNegativeTransactionsIntoToBeBudgeted){
+          SnackBar snackbar = SnackBar(content: Text("Can't have negative transaction on to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
+          Scaffold.of(context).showSnackBar(snackbar);
+
+      }
+      else if (isPositiveTranasctionsIntoSubcategory){
+          SnackBar snackbar = SnackBar(content: Text("Positive transactions should go into to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
+          Scaffold.of(context).showSnackBar(snackbar);
+
+      }
+
+
+
+      else if (payee != null && _account != null) {
         _amount = formatCurrencyToDouble(amountController.text, isPositive);
 
         _printTransactionInformation();
+
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),
@@ -255,8 +275,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         );
 
         resetToDefaultTransaction();
-        showOverlayNotification(context, "Transaction added");
-      } else {
+        SnackBar snackbar = SnackBar(content: Text("Transaction added", style: TextStyle(color: Colors.white),), backgroundColor: Colors.green,);
+        Scaffold.of(context).showSnackBar(snackbar);
+      }
+        else {
         print("One of the fields does not contain a valid type");
       }
     }
@@ -358,7 +380,11 @@ class _AddTransactionPageView
   final TextStyle selectedChildTextStyle =
       TextStyle(color: Colors.black, fontSize: 16.0);
 
-  Widget _myBuildMethod() {
+  Widget _myBuildMethod(BuildContext context) {
+    //Populate the list of container with the number controllers and
+    //the custom listTiles
+
+    // Build the layout (ListView, error container, Button)
     return SingleChildScrollView(
       child: Column(children: [
         Container(
@@ -392,7 +418,7 @@ class _AddTransactionPageView
         // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),
-          onPressed: () => state.addMoneyTransaction(),
+          onPressed: () => state.addMoneyTransaction(context),
         )
       ]),
     );
@@ -419,7 +445,7 @@ class _AddTransactionPageView
           } else {
             return Form(
               key: state._formKey,
-              child: _myBuildMethod(),
+              child: _myBuildMethod(context),
             );
           }
         }));

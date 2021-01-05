@@ -28,53 +28,20 @@ class _TransactionRowState extends State<TransactionRow> {
   final TextStyle subcategoryStyle =
       TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
 
-  TextStyle amountStyle;
-
-  void initState() {
-    amountStyle = TextStyle(
+  @override
+  Widget build(BuildContext context) {
+    String subcategoryName = "";
+    String payeeName;
+    TextStyle amountStyle = TextStyle(
         fontSize: 22.0,
         fontWeight: FontWeight.w600,
         color: widget.moneyTransaction.amount.isNegative
             ? Constants.RED_COLOR
             : Constants.GREEN_COLOR);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    String subcategoryName = "";
-    String payeeName;
     AppState appState = Provider.of<AppState>(context, listen: false);
 
-    if (appState.payees.isNotEmpty) {
-      // orElse is for starting balance
-      Payee payee = appState.payees
-          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
-
-      payeeName = payee != null ? payee.name : "";
-    } else {
-      payeeName = "";
-    }
-
-    /// Extract name of subcategory associated to transaction [moneyTransaction]
-    if (widget.moneyTransaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
-      // Transfer between accounts
-      for (final Account account in appState.accounts) {
-        if (account.id == -widget.moneyTransaction.payeeID) {
-          subcategoryName = "To/From " + account.name;
-        }
-      }
-    } else if (widget.moneyTransaction.subcatID ==
-        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
-      //Transaction into to be budgeted
-      subcategoryName = "To be budgeted";
-    } else {
-      // Transaction into subcategories
-      var correspondingSubcategory = widget.categories.singleWhere(
-          ((cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
-          orElse: () => null);
-      subcategoryName = correspondingSubcategory != null ? correspondingSubcategory.name : "";
-    }
+    payeeName = _setPayeeName(appState);
+    subcategoryName = _setSubcategoryName(appState);
 
     return widget.isEditable
         ? CheckedRow(
@@ -98,5 +65,38 @@ class _TransactionRowState extends State<TransactionRow> {
             dateStyle,
             payeeName,
             subcategoryStyle);
+  }
+
+  String _setSubcategoryName(AppState appState) {
+    /// Extract name of subcategory associated to transaction [moneyTransaction]
+    if (widget.moneyTransaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
+      // Transfer between accounts
+      for (final Account account in appState.accounts) {
+        if (account.id == -widget.moneyTransaction.payeeID) {
+          return "To/From " + account.name;
+        }
+      }
+    } else if (widget.moneyTransaction.subcatID ==
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+      //Transaction into to be budgeted
+      return "To be budgeted";
+    }
+    // Transaction into subcategories
+    var correspondingSubcategory = widget.categories.singleWhere(
+        ((cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
+        orElse: () => null);
+    return correspondingSubcategory != null ? correspondingSubcategory.name : "";
+
+  }
+
+  String _setPayeeName(AppState appState) {
+    if (appState.payees.isNotEmpty) {
+      // orElse is for starting balance
+      Payee payee = appState.payees
+          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
+
+      return payee != null ? payee.name : "";
+    }
+    return "";
   }
 }
