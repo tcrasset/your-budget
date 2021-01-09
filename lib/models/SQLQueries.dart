@@ -514,4 +514,15 @@ class SQLQueryClass implements Queries{
     DatabaseProvider.databaseLog('Update most recent account used', sql, null, result, params);
 
   }
+
+  @override
+  Future<int> getMostRecentAccountUsed() async {
+    final sql = '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
+      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MOST_RECENT_ACCOUNT}';''';
+
+    final data = await database.rawQuery(sql);
+    int accountId = int.parse(data[0]['value'].toString());
+    print(accountId);
+    return accountId;
+  }
 }

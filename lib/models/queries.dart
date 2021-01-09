@@ -144,4 +144,6 @@ abstract class Queries {
 
   Future<void> updateMostRecentAccountUsed(int accountId);
 
+  Future<int> getMostRecentAccountUsed();
+
 }
