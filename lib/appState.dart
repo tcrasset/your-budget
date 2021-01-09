@@ -221,6 +221,8 @@ class AppState extends ChangeNotifier {
     );
     _transactions.add(transaction);
 
+    setMostRecentAccountUsed(accountId);
+
     if (transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
       print("Is to be budgeted money transaction");
       // Update balance of the account
@@ -676,5 +678,9 @@ class AppState extends ChangeNotifier {
     DateTime currentMaxBudgetDate = getMaxBudgetDate();
     DateTime storedMaxBudgetDate = await queryContext.getMaxBudgetDateConstant();
     return getMonthDifference(currentMaxBudgetDate, storedMaxBudgetDate);
+  }
+
+  void setMostRecentAccountUsed(int accountId){
+    queryContext.updateMostRecentAccountUsed(accountId);
   }
 }
