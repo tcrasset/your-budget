@@ -57,8 +57,9 @@ class DatabaseProvider {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
 
     return db;
@@ -215,8 +216,15 @@ class DatabaseProvider {
 
   }
 
-    ///Save account most recently used.
-    db.rawInsert(CREATE_CONSTANT, ["MOST_RECENT_ACCOUNT", 0]);
+  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) {
+    const String CREATE_CONSTANT = '''INSERT INTO ${DatabaseConstants.constantsTable}
+      (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
+      VALUES(?, ?);''';
 
+      if(oldVersion == 1){
+          ///Save account most recently used.
+          db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
+          print("Upgrading from version 1 to version 2");
+      }
   }
 }
