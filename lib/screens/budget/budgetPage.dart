@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
 import 'package:your_budget/screens/about/aboutScreen.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
-import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/buttonDial.dart';
 import 'package:your_budget/screens/budget/components/toBeBudgeted.dart';
 import 'package:your_budget/screens/budget/components/dateButtons.dart';
+import 'package:your_budget/screens/budget/components/categoriesList.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {
@@ -76,53 +73,12 @@ class _BudgetPageState extends State<BudgetPage> {
         body: Column(children: <Widget>[
           DateButtons(), //
           ToBeBudgeted(),
-          Expanded(child: _CategoriesList()),
+          Expanded(child: CategoriesList()),
 
           buttonDialState.showButtonDial
               ? ButtonDial(
                   MediaQuery.of(context).size.height * 0.3, MediaQuery.of(context).size.width * 0.6)
               : ButtonDial(0, 0),
         ]));
-  }
-}
-
-class _CategoriesList extends StatefulWidget {
-  @override
-  __CategoriesListState createState() => __CategoriesListState();
-}
-
-class __CategoriesListState extends State<_CategoriesList> {
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final AppState appState = Provider.of<AppState>(context);
-    final List<Category> categories = appState.allCategories;
-
-    if (categories.isEmpty) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-    return Scrollbar(
-      isAlwaysShown: true,
-      controller: _scrollController,
-      child: ListView.separated(
-        controller: _scrollController,
-        itemCount: categories.length,
-        separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 1, color: Colors.black12),
-        itemBuilder: (context, index) {
-          var item = categories[index];
-          return (item is MainCategory) ? MainCategoryRow(cat: item) : SubcategoryRow(subcat: item);
-        },
-      ),
-    );
   }
 }
