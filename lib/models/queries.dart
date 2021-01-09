@@ -142,4 +142,6 @@ abstract class Queries {
 
   Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate);
 
+  Future<void> updateMostRecentAccountUsed(int accountId);
+
 }

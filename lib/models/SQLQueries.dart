@@ -499,4 +499,19 @@ class SQLQueryClass implements Queries{
     final result = await database.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update maxBudgetDate', sql, null, result, params);
   }
+
+  @override
+  Future<void> updateMostRecentAccountUsed(int accountId) async{
+    // TODO: implement setMostRecentAccountUsed
+
+    final sql = '''UPDATE ${DatabaseConstants.constantsTable}
+                SET ${DatabaseConstants.CONSTANT_VALUE} = ?
+                WHERE ${DatabaseConstants.CONSTANT_NAME} == 'MOST_RECENT_ACCOUNT'
+                ;''';
+
+    List<dynamic> params = [accountId];
+    final result = await database.rawUpdate(sql, params);
+    DatabaseProvider.databaseLog('Update most recent account used', sql, null, result, params);
+
+  }
 }
