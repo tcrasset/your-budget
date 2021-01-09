@@ -211,7 +211,7 @@ class DatabaseProvider {
     db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MAX_BUDGET_DATE, maxBudgetDateMillisecondsSinceEpoch]);
 
     ///Save account most recently used.
-    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, 0]);
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
 
   }
 

@@ -509,7 +509,7 @@ class SQLQueryClass implements Queries{
                 WHERE ${DatabaseConstants.CONSTANT_NAME} == ${DatabaseConstants.MOST_RECENT_ACCOUNT}
                 ;''';
 
-    List<dynamic> params = [accountId];
+    List<dynamic> params = [accountId.toString()];
     final result = await database.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update most recent account used', sql, null, result, params);
 
