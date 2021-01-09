@@ -473,7 +473,7 @@ class SQLQueryClass implements Queries{
 
   Future<DateTime> getStartingBudgetDateConstant() async {
     final sql = '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
-      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  'STARTING_BUDGET_DATE';''';
+      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.STARTING_BUDGET_DATE}';''';
 
     final data = await database.rawQuery(sql);
     int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
@@ -482,7 +482,7 @@ class SQLQueryClass implements Queries{
 
   Future<DateTime> getMaxBudgetDateConstant() async {
     final sql = '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
-      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  'MAX_BUDGET_DATE';''';
+      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MAX_BUDGET_DATE}';''';
 
     final data = await database.rawQuery(sql);
     int maxBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
@@ -492,11 +492,37 @@ class SQLQueryClass implements Queries{
   Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate) async {
     final sql = '''UPDATE ${DatabaseConstants.constantsTable}
                 SET ${DatabaseConstants.CONSTANT_VALUE} = ?
-                WHERE ${DatabaseConstants.CONSTANT_NAME} == 'MAX_BUDGET_DATE'
+                WHERE ${DatabaseConstants.CONSTANT_NAME} == '${DatabaseConstants.MAX_BUDGET_DATE}'
                 ;''';
 
     List<dynamic> params = [newMaxBudgetDate.millisecondsSinceEpoch];
     final result = await database.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update maxBudgetDate', sql, null, result, params);
+  }
+
+  @override
+  Future<void> updateMostRecentAccountUsed(int accountId) async{
+    // TODO: implement setMostRecentAccountUsed
+
+    final sql = '''UPDATE ${DatabaseConstants.constantsTable}
+                SET ${DatabaseConstants.CONSTANT_VALUE} = ?
+                WHERE ${DatabaseConstants.CONSTANT_NAME} == '${DatabaseConstants.MOST_RECENT_ACCOUNT}'
+                ;''';
+
+    List<dynamic> params = [accountId.toString()];
+    final result = await database.rawUpdate(sql, params);
+    DatabaseProvider.databaseLog('Update most recent account used', sql, null, result, params);
+
+  }
+
+  @override
+  Future<int> getMostRecentAccountUsed() async {
+    final sql = '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
+      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MOST_RECENT_ACCOUNT}';''';
+
+    final data = await database.rawQuery(sql);
+    int accountId = int.parse(data[0]['value'].toString());
+    print(accountId);
+    return accountId;
   }
 }

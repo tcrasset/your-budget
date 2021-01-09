@@ -1,6 +1,11 @@
 # Changelog
 
-## Version 1.1.4
+## Version 1.2.1
+
+- FEATURE: Payees are sorted by alphabetical order
+- FEATURE: By default, the transactions of the most recently used account are used
+
+## Version 1.2.0
 
 - BUGFIX: Fix bug where you couldn't delete last character when setting budgeted value for a subcategory
 - BUGFIX: Changing the name of a subcategory takes effect immediately

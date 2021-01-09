@@ -57,8 +57,9 @@ class DatabaseProvider {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
     );
 
     return db;
@@ -203,11 +204,27 @@ class DatabaseProvider {
     /// Create the starting budget date based on the first time the user uses the app
     String startingDateMillisecondsSinceEpoch =
         getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
-    db.rawInsert(CREATE_CONSTANT, ["STARTING_BUDGET_DATE", startingDateMillisecondsSinceEpoch]);
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch]);
 
     /// Create the maximum budget date based on current date + Constants.MAX_NB_MONTHS_AHEAD
     String maxBudgetDateMillisecondsSinceEpoch =
         getMaxBudgetDate().millisecondsSinceEpoch.toString();
-    db.rawInsert(CREATE_CONSTANT, ["MAX_BUDGET_DATE", maxBudgetDateMillisecondsSinceEpoch]);
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MAX_BUDGET_DATE, maxBudgetDateMillisecondsSinceEpoch]);
+
+    ///Save account most recently used.
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
+
+  }
+
+  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) {
+    const String CREATE_CONSTANT = '''INSERT INTO ${DatabaseConstants.constantsTable}
+      (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
+      VALUES(?, ?);''';
+
+      if(oldVersion == 1){
+          ///Save account most recently used.
+          db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
+          print("Upgrading from version 1 to version 2");
+      }
   }
 }

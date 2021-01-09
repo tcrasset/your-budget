@@ -25,6 +25,7 @@ class AppState extends ChangeNotifier {
   List<BudgetValue> _budgetValues;
   List<Budget> _budgets;
   Queries queryContext;
+  Account _mostRecentAccount;
 
   double toBeBudgeted = 0;
 
@@ -48,6 +49,7 @@ class AppState extends ChangeNotifier {
   UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
+  Account get mostRecentAccount => _mostRecentAccount ?? _accounts[0];
 
   AppState({@required Queries queryContext}) {
     this.queryContext = queryContext;
@@ -67,8 +69,11 @@ class AppState extends ChangeNotifier {
     _budgetValues = await queryContext.getBudgetValues();
     _goals = await queryContext.getGoals();
 
+    _mostRecentAccount = await getMostRecentAccountUsed();
+
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
     currentBudget = _getBudgetByDate(currentBudgetDate);
+
 
     await computeToBeBudgeted();
 
@@ -220,6 +225,8 @@ class AppState extends ChangeNotifier {
       date: moneyTransactionModel.date,
     );
     _transactions.add(transaction);
+
+    setMostRecentAccountUsed(accountId);
 
     if (transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
       print("Is to be budgeted money transaction");
@@ -676,5 +683,15 @@ class AppState extends ChangeNotifier {
     DateTime currentMaxBudgetDate = getMaxBudgetDate();
     DateTime storedMaxBudgetDate = await queryContext.getMaxBudgetDateConstant();
     return getMonthDifference(currentMaxBudgetDate, storedMaxBudgetDate);
+  }
+
+  void setMostRecentAccountUsed(int accountId){
+    queryContext.updateMostRecentAccountUsed(accountId);
+    _mostRecentAccount = accounts.singleWhere((account) => account.id == accountId, orElse: () => null);
+  }
+
+  Future<Account> getMostRecentAccountUsed() async {
+    int accountId = await queryContext.getMostRecentAccountUsed();
+    return accounts.singleWhere((account) => account.id == accountId, orElse: () => null);
   }
 }
