@@ -10,6 +10,7 @@ import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/buttonDial.dart';
 import 'package:your_budget/screens/budget/components/toBeBudgeted.dart';
+import 'package:your_budget/screens/budget/components/dateButtons.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {
@@ -73,7 +74,7 @@ class _BudgetPageState extends State<BudgetPage> {
           ],
         ),
         body: Column(children: <Widget>[
-          _DateButtons(), //
+          DateButtons(), //
           ToBeBudgeted(),
           Expanded(child: _CategoriesList()),
 
@@ -123,34 +124,5 @@ class __CategoriesListState extends State<_CategoriesList> {
         },
       ),
     );
-  }
-}
-
-
-class _DateButtons extends StatelessWidget {
-  void handleButtonOnPressed(BuildContext context, AppState appState, bool increment) {
-    increment ? appState.incrementMonth() : appState.decrementMonth();
-    BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
-    buttonDialState.toggleButtonDial(-1);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AppState>(builder: (_, appState, __) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => handleButtonOnPressed(context, appState, false)),
-          Text("${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
-              style: TextStyle(fontSize: 20)),
-          IconButton(
-              icon: Icon(Icons.arrow_forward),
-              onPressed: () => handleButtonOnPressed(context, appState, true))
-        ],
-      );
-    });
   }
 }
