@@ -76,6 +76,6 @@ List<MoneyTransaction> _getMoneyTransactions(
       transactionsOfAccount.add(negativeAmountTransaction);
     }
   }
-
-  return transactionsOfAccount;
+  transactionsOfAccount.sort((a, b) => a.date.compareTo(b.date));
+  return transactionsOfAccount.reversed.toList();
 }
