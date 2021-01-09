@@ -9,6 +9,7 @@ import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
 import 'package:your_budget/screens/budget/components/buttonDial.dart';
+import 'package:your_budget/screens/budget/components/toBeBudgeted.dart';
 import 'package:provider/provider.dart';
 
 class BudgetPage extends StatefulWidget {
@@ -73,7 +74,7 @@ class _BudgetPageState extends State<BudgetPage> {
         ),
         body: Column(children: <Widget>[
           _DateButtons(), //
-          _ToBeBudgeted(),
+          ToBeBudgeted(),
           Expanded(child: _CategoriesList()),
 
           buttonDialState.showButtonDial
@@ -125,40 +126,6 @@ class __CategoriesListState extends State<_CategoriesList> {
   }
 }
 
-class _ToBeBudgeted extends StatelessWidget {
-  final TextStyle _textStyle =
-      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25.0);
-
-  final TextStyle _positiveAmountTextStyle =
-      new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle =
-      new TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 50,
-        child: Row(
-          children: [
-            Expanded(
-                child: Text(
-              "To be budgeted",
-              style: _textStyle,
-            )),
-            Consumer<AppState>(
-              builder: (context, appState, child) {
-                return Text(
-                  appState.toBeBudgeted.toStringAsFixed(2) + " €" ?? "0.00" + " €",
-                  style: appState.toBeBudgeted >= 0
-                      ? _positiveAmountTextStyle
-                      : _negativeAmountTextStyle,
-                );
-              },
-            )
-          ],
-        ));
-  }
-}
 
 class _DateButtons extends StatelessWidget {
   void handleButtonOnPressed(BuildContext context, AppState appState, bool increment) {
