@@ -209,5 +209,9 @@ class DatabaseProvider {
     String maxBudgetDateMillisecondsSinceEpoch =
         getMaxBudgetDate().millisecondsSinceEpoch.toString();
     db.rawInsert(CREATE_CONSTANT, ["MAX_BUDGET_DATE", maxBudgetDateMillisecondsSinceEpoch]);
+
+    ///Save account most recently used.
+    db.rawInsert(CREATE_CONSTANT, ["MOST_RECENT_ACCOUNT", 0]);
+
   }
 }
