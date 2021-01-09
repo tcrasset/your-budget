@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:your_budget/appState.dart';
@@ -28,22 +27,34 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   Widget build(BuildContext context) {
-    final AppState appState = Provider.of<AppState>(context);
-    final List<Category> categories = appState.allCategories;
-
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
-      child: ListView.separated(
+      child: SingleChildScrollView(
         controller: _scrollController,
-        itemCount: categories.length,
-        separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 1, color: Colors.black12),
-        itemBuilder: (context, index) {
-          var item = categories[index];
-          return (item is MainCategory) ? MainCategoryRow(cat: item) : SubcategoryRow(subcat: item);
-        },
+        child: Consumer<AppState>(
+          builder: (_, appState, __) => Column(
+            children: _buildList(appState),
+          ),
+        ),
       ),
     );
   }
+}
+
+List<Widget> _buildList(AppState appState) {
+  List<Category> categories = appState.allCategories;
+  List<Widget> widgetList = [];
+
+  Divider divider = Divider(height: 1, color: Colors.black12);
+
+  for (final Category category in categories) {
+    var categoryWidget = (category is MainCategory)
+        ? MainCategoryRow(cat: category)
+        : SubcategoryRow(subcat: category);
+    widgetList.add(categoryWidget);
+    widgetList.add(divider);
+  }
+
+  return widgetList;
 }
