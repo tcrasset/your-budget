@@ -30,7 +30,7 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   void initState() {
     AppState appState = Provider.of<AppState>(context, listen: false);
     if (appState.accounts.isNotEmpty) {
-      account = appState.accounts[0];
+      account = appState.mostRecentAccount;
     }
     isEditable = false;
     super.initState();
