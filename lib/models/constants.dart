@@ -88,4 +88,10 @@ class DatabaseConstants {
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
   static const String GOAL_ID_OUTSIDE = 'goal_id';
 
+
+  /// Constants
+  static const String STARTING_BUDGET_DATE = "STARTING_BUDGET_DATE";
+  static const String MAX_BUDGET_DATE = "MAX_BUDGET_DATE";
+  static const String MOST_RECENT_ACCOUNT = "MOST_RECENT_ACCOUNT";
+
 }

@@ -473,7 +473,7 @@ class SQLQueryClass implements Queries{
 
   Future<DateTime> getStartingBudgetDateConstant() async {
     final sql = '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
-      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  'STARTING_BUDGET_DATE';''';
+      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  ${DatabaseConstants.STARTING_BUDGET_DATE};''';
 
     final data = await database.rawQuery(sql);
     int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
@@ -482,7 +482,7 @@ class SQLQueryClass implements Queries{
 
   Future<DateTime> getMaxBudgetDateConstant() async {
     final sql = '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
-      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  'MAX_BUDGET_DATE';''';
+      WHERE ${DatabaseConstants.CONSTANT_NAME} ==  ${DatabaseConstants.MAX_BUDGET_DATE};''';
 
     final data = await database.rawQuery(sql);
     int maxBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
@@ -492,7 +492,7 @@ class SQLQueryClass implements Queries{
   Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate) async {
     final sql = '''UPDATE ${DatabaseConstants.constantsTable}
                 SET ${DatabaseConstants.CONSTANT_VALUE} = ?
-                WHERE ${DatabaseConstants.CONSTANT_NAME} == 'MAX_BUDGET_DATE'
+                WHERE ${DatabaseConstants.CONSTANT_NAME} == ${DatabaseConstants.MAX_BUDGET_DATE}
                 ;''';
 
     List<dynamic> params = [newMaxBudgetDate.millisecondsSinceEpoch];
@@ -506,7 +506,7 @@ class SQLQueryClass implements Queries{
 
     final sql = '''UPDATE ${DatabaseConstants.constantsTable}
                 SET ${DatabaseConstants.CONSTANT_VALUE} = ?
-                WHERE ${DatabaseConstants.CONSTANT_NAME} == 'MOST_RECENT_ACCOUNT'
+                WHERE ${DatabaseConstants.CONSTANT_NAME} == ${DatabaseConstants.MOST_RECENT_ACCOUNT}
                 ;''';
 
     List<dynamic> params = [accountId];

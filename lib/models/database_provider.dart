@@ -203,12 +203,17 @@ class DatabaseProvider {
     /// Create the starting budget date based on the first time the user uses the app
     String startingDateMillisecondsSinceEpoch =
         getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
-    db.rawInsert(CREATE_CONSTANT, ["STARTING_BUDGET_DATE", startingDateMillisecondsSinceEpoch]);
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch]);
 
     /// Create the maximum budget date based on current date + Constants.MAX_NB_MONTHS_AHEAD
     String maxBudgetDateMillisecondsSinceEpoch =
         getMaxBudgetDate().millisecondsSinceEpoch.toString();
-    db.rawInsert(CREATE_CONSTANT, ["MAX_BUDGET_DATE", maxBudgetDateMillisecondsSinceEpoch]);
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MAX_BUDGET_DATE, maxBudgetDateMillisecondsSinceEpoch]);
+
+    ///Save account most recently used.
+    db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, 0]);
+
+  }
 
     ///Save account most recently used.
     db.rawInsert(CREATE_CONSTANT, ["MOST_RECENT_ACCOUNT", 0]);
