@@ -12,8 +12,13 @@ class CategoriesList extends StatefulWidget {
 }
 
 class _CategoriesListState extends State<CategoriesList> {
-  final ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController;
 
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
 
   @override
   void dispose() {
