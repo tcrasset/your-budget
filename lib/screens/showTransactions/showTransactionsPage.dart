@@ -16,7 +16,8 @@ class ShowTransactionPage extends StatefulWidget {
   const ShowTransactionPage({Key key, this.title}) : super(key: key);
 
   @override
-  _ShowTransactionPageController createState() => _ShowTransactionPageController();
+  _ShowTransactionPageController createState() =>
+      _ShowTransactionPageController();
 }
 
 class _ShowTransactionPageController extends State<ShowTransactionPage> {
@@ -44,8 +45,8 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
 
   void handlePopUpMenuButtonSelected(String selectedItem) async {
     if (selectedItem == "Select account") {
-      Account result = await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SelectAccountPage()));
+      Account result = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => SelectAccountPage()));
 
       if (result != null) handleOnAccountChanged(result);
     }
@@ -61,7 +62,8 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
 
   void handleModifyTransactions() {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
   }
 }
 
@@ -96,11 +98,22 @@ class _ShowTransactionPageView
           return Center(
             child: Text(
               "No transactions logged. Please choose an account.",
-              style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+              style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 15,
+                  fontStyle: FontStyle.italic),
             ),
           );
         } else {
-          return TransactionList(state.account, appState, state.isEditable);
+          return Column(children: [
+            Text(
+              state.account.name,
+              style: TextStyle(fontSize: 20),
+            ),
+            Expanded(
+                child:
+                    TransactionList(state.account, appState, state.isEditable)),
+          ]);
         }
       }),
     );
