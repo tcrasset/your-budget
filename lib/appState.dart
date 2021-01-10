@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:your_budget/appState_repository.dart';
 import 'package:your_budget/models/Budget.dart';
 
 import 'package:your_budget/models/categories.dart';
@@ -16,7 +17,7 @@ import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/models/queries.dart';
 import 'models/categories.dart';
 
-class AppState extends ChangeNotifier {
+class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
   List<Payee> _payees;
   List<Account> _accounts;
