@@ -132,7 +132,7 @@ class SelectValuePageState extends State<SelectValuePage> {
     } else
       listEntries = widget.listEntries;
 
-    if (isPayee){
+    if (isPayee) {
       listEntries.sort((a, b) => a.name.compareTo(b.name));
     }
 

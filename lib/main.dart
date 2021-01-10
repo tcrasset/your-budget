@@ -7,7 +7,6 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/addAccount/addAccount.dart';
 
 import 'package:your_budget/screens/addTransaction/addTransaction.dart';
-import 'package:your_budget/screens/addTransaction/addTransactionState.dart';
 
 import 'package:your_budget/screens/budget/budgetPage.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
@@ -18,6 +17,7 @@ import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
 
 import 'injection_container.dart' as injections;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
@@ -30,9 +30,10 @@ class MyBudget extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider<AppState>.value(value: GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
-      ChangeNotifierProvider<ShowTransactionsState>(create: (_) => ShowTransactionsState()),
-      ChangeNotifierProvider<AddTransactionState>(create: (_) => AddTransactionState()),
-      ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
+      ChangeNotifierProvider<ShowTransactionsState>(
+          create: (_) => ShowTransactionsState()),
+      ChangeNotifierProvider<DeleteCategoriesState>(
+          create: (_) => DeleteCategoriesState()),
     ], child: HomeScreen());
   }
 }
@@ -47,7 +48,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   List<Widget> _tabs = [
     ChangeNotifierProvider(
-        create: (_) => BudgetPageState(), child: BudgetPage(title: 'Bugdet Page')),
+        create: (_) => BudgetPageState(),
+        child: BudgetPage(title: 'Bugdet Page')),
     AddAccountRoute(title: 'Accounts'),
     AddTransactionPage(),
     ShowTransactionPage(title: "Transactions")
@@ -87,9 +89,11 @@ class HomeScreenState extends State<HomeScreen> {
                 title: Text("Accounts"),
               ),
               BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON), title: Text("Add transaction")),
+                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
+                  title: Text("Add transaction")),
               BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ALLTRANSACTION_ICON), title: Text("Transactions")),
+                  icon: FaIcon(Constants.ALLTRANSACTION_ICON),
+                  title: Text("Transactions")),
             ],
           ),
         ),

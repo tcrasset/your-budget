@@ -53,7 +53,8 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
   Widget build(BuildContext context) => _SubcategoryRowView(this);
 }
 
-class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
+class _SubcategoryRowView
+    extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
   _SubcategoryRowView(_SubcategoryRowController state) : super(state);
 
   Color setColor(double availableAmount) {
@@ -75,7 +76,9 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 15),
         margin: EdgeInsets.symmetric(horizontal: 10),
-        color: state.buttonDialState.isSelected(widget.subcat.id) ? Colors.grey[200] : Colors.white,
+        color: state.buttonDialState.isSelected(widget.subcat.id)
+            ? Colors.grey[200]
+            : Colors.white,
         child: Row(
           children: <Widget>[
             Expanded(

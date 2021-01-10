@@ -12,8 +12,9 @@ class SubcategoryDetails extends StatelessWidget {
   List<Widget> createListOfGoals(BuildContext context) {
     AppState appState = Provider.of<AppState>(context);
     List<GoalRow> goalWidgets = [];
-    List<Goal> goals =
-        appState.goals.where((goal) => goal.correspondingSubcategoryId == subcat.id).toList();
+    List<Goal> goals = appState.goals
+        .where((goal) => goal.correspondingSubcategoryId == subcat.id)
+        .toList();
 
     goals.forEach((goal) {
       goalWidgets.add(GoalRow(goal));
@@ -68,8 +69,10 @@ class Information extends StatelessWidget {
         children: [
           InformationRow("Budgeted", subcat.budgeted),
           InformationRow("Available", subcat.available),
-          InformationRow("Average budgeted", appState.computeAverageBudgeted(subcat.id)),
-          InformationRow("Last month budgeted", appState.getLastMonthBudgeted(subcat.id)),
+          InformationRow(
+              "Average budgeted", appState.computeAverageBudgeted(subcat.id)),
+          InformationRow(
+              "Last month budgeted", appState.getLastMonthBudgeted(subcat.id)),
         ],
       ),
     );
@@ -85,7 +88,8 @@ class InformationRow extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  final TextStyle titleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+  final TextStyle titleStyle =
+      TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +126,8 @@ class GoalRow extends StatelessWidget {
         children: [
           Text("${goalTypeNames[goal.goalType.index]}"),
           Text("${goal.amount} €"),
-          Text("${monthStringFromDate(DateTime(goal.year, goal.month))} ${goal.year}")
+          Text(
+              "${monthStringFromDate(DateTime(goal.year, goal.month))} ${goal.year}")
         ],
       ),
     );
@@ -156,8 +161,10 @@ class GoalRowsTitle extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text("Goal Type", textAlign: TextAlign.left, style: subtitlesStyle),
-                Text("Amount", textAlign: TextAlign.left, style: subtitlesStyle),
+                Text("Goal Type",
+                    textAlign: TextAlign.left, style: subtitlesStyle),
+                Text("Amount",
+                    textAlign: TextAlign.left, style: subtitlesStyle),
                 Text("Date", textAlign: TextAlign.left, style: subtitlesStyle)
               ],
             ),

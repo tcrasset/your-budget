@@ -12,5 +12,4 @@ Future<void> init() async {
   DatabaseProvider dbProvider = DatabaseProvider();
   var database = await dbProvider.open();
   sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: database));
-
 }

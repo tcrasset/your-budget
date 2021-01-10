@@ -1,6 +1,5 @@
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
-import 'package:your_budget/models/database_provider.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
@@ -56,7 +55,6 @@ abstract class Queries {
 
   /// Adds the [budgetvalue] of type [BudgetValue] to the database.
   Future<int> addBudgetValue(BudgetValueModel budgetValueModel);
-
 
   /// Adds the [moneyTransaction] of type [MoneyTransaction] to the database.
   ///
@@ -139,11 +137,9 @@ abstract class Queries {
 
   Future<DateTime> getMaxBudgetDateConstant();
 
-
   Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate);
 
   Future<void> updateMostRecentAccountUsed(int accountId);
 
   Future<int> getMostRecentAccountUsed();
-
 }

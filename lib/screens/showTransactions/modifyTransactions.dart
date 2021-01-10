@@ -14,7 +14,8 @@ class ModifyTransactions extends StatefulWidget {
   const ModifyTransactions(this.account, {Key key}) : super(key: key);
 
   @override
-  _ModifyTransactionsController createState() => _ModifyTransactionsController();
+  _ModifyTransactionsController createState() =>
+      _ModifyTransactionsController();
 }
 
 class _ModifyTransactionsController extends State<ModifyTransactions> {
@@ -22,7 +23,8 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
   Widget build(BuildContext context) => _ModifyTransactionsView(this);
 
   void handleDeleteTransactions(BuildContext context) async {
-    String result = await showDeleteDialog(context, 'Delete selected transactions?');
+    String result =
+        await showDeleteDialog(context, 'Delete selected transactions?');
     if (result == "Delete") {
       ShowTransactionsState showTransactionsState =
           Provider.of<ShowTransactionsState>(context, listen: false);

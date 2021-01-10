@@ -13,7 +13,9 @@ showOverlayNotification(BuildContext context, String text) async {
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
               color: Colors.grey[700].withOpacity(0.5),
             ),
-            child: Center(child: Text(text, style: TextStyle(fontSize: 12.0, color: Colors.white))),
+            child: Center(
+                child: Text(text,
+                    style: TextStyle(fontSize: 12.0, color: Colors.white))),
           )));
 
   overlayState.insert(overlayEntry);

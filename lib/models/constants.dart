@@ -16,9 +16,10 @@ class Constants {
   static const Color RED_COLOR = Color.fromRGBO(231, 111, 81, 1);
 
   /// [TextStyle]'s used throughout the project
-  static const TextStyle CATEGORY_TEXT_STYLE =
-      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0);
-  static const TextStyle SUBCATEGORY_TEXT_STYLE = TextStyle(color: Colors.black, fontSize: 18.0);
+  static const TextStyle CATEGORY_TEXT_STYLE = TextStyle(
+      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20.0);
+  static const TextStyle SUBCATEGORY_TEXT_STYLE =
+      TextStyle(color: Colors.black, fontSize: 18.0);
 
   /// Maximum number of months that can be budgeted ahead of the current month
   static const int MAX_NB_MONTHS_AHEAD = 24;
@@ -88,10 +89,8 @@ class DatabaseConstants {
   static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
   static const String GOAL_ID_OUTSIDE = 'goal_id';
 
-
   /// Constants
   static const String STARTING_BUDGET_DATE = "STARTING_BUDGET_DATE";
   static const String MAX_BUDGET_DATE = "MAX_BUDGET_DATE";
   static const String MOST_RECENT_ACCOUNT = "MOST_RECENT_ACCOUNT";
-
 }

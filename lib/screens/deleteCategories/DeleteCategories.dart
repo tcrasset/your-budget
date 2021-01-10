@@ -31,7 +31,8 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
   }
 
   void handleDeleteCategories(BuildContext context) async {
-    String result = await showDeleteDialog(context, 'Delete selected categories?');
+    String result =
+        await showDeleteDialog(context, 'Delete selected categories?');
     if (result == "Delete") {
       DeleteCategoriesState showTransactionsState =
           Provider.of<DeleteCategoriesState>(context, listen: false);
@@ -39,14 +40,16 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
       if (sucessfulDeletion) {
         Navigator.pop(context);
       } else {
-        SnackBar snackbar = SnackBar(content: Text("You can't delete the Essentials MainCategory"));
+        SnackBar snackbar = SnackBar(
+            content: Text("You can't delete the Essentials MainCategory"));
         Scaffold.of(context).showSnackBar(snackbar);
       }
     }
   }
 }
 
-class _DeleteCategoriesView extends WidgetView<DeleteCategories, _DeleteCategoriesController> {
+class _DeleteCategoriesView
+    extends WidgetView<DeleteCategories, _DeleteCategoriesController> {
   _DeleteCategoriesView(_DeleteCategoriesController state) : super(state);
 
   @override

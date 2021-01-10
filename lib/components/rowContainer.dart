@@ -10,8 +10,10 @@ Container rowContainer(String name, Widget childWidget) {
             Expanded(
               child: Text(name,
                   textAlign: TextAlign.left,
-                  style:
-                      TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.0)),
             ),
             Expanded(
               flex: 2,

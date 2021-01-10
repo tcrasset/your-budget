@@ -8,7 +8,9 @@ class CheckedRow extends StatefulWidget {
   final Type type;
   final TextStyle textStyle;
 
-  const CheckedRow(this.categoryName, this.categoryId, this.type, this.textStyle, {Key key})
+  const CheckedRow(
+      this.categoryName, this.categoryId, this.type, this.textStyle,
+      {Key key})
       : super(key: key);
 
   @override

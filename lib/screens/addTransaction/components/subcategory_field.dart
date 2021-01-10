@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../components/rowContainer.dart';
@@ -24,11 +23,16 @@ class SubcategoryField extends StatelessWidget {
         /// [state.payee] accepts both an object of type [Payee] or [Account].
         /// If it is of type Account, make the GestureDetector untappable,
         /// set the default text style and change the text.
-        onTap: () => state.payee is Account ? null : state.handleOnTapCategory(),
+        onTap: () =>
+            state.payee is Account ? null : state.handleOnTapCategory(),
         child: rowContainer(
             "Category",
-            Text(state.payee is Account ? "No subcategory needed" : state.subcategoryFieldName,
-                style: (state.subcategoryFieldName == state.defaultSubcategoryFieldName ||
+            Text(
+                state.payee is Account
+                    ? "No subcategory needed"
+                    : state.subcategoryFieldName,
+                style: (state.subcategoryFieldName ==
+                            state.defaultSubcategoryFieldName ||
                         state.payee is Account)
                     ? defaultChildTextStyle
                     : selectedChildTextStyle)));

@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/screens/showTransactions/components/transactionRow.dart';
 
@@ -28,9 +27,8 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    List<MoneyTransaction> transactionsOfAccount =
-        _getMoneyTransactions(
-            widget.appState.transactions, this.widget.account.id);
+    List<MoneyTransaction> transactionsOfAccount = _getMoneyTransactions(
+        widget.appState.transactions, this.widget.account.id);
 
     return Container(
         child: Scrollbar(

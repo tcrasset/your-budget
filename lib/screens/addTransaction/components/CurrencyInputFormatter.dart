@@ -32,7 +32,8 @@ class CurrencyInputFormatter extends TextInputFormatter {
   CurrencyInputFormatter(this.currencyFormatter, this.isPositive);
 
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     print("newValue : ${newValue.text}");
 
     /// [newValue] is empty, return an empty String

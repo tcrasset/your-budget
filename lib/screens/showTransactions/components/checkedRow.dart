@@ -16,8 +16,17 @@ class CheckedRow extends StatefulWidget {
   final String payeeName;
   final int transactionId;
 
-  const CheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
-      this.date, this.dateStyle, this.payeeName, this.subcategoryStyle, this.transactionId,
+  const CheckedRow(
+      this.subcategoryName,
+      this.memo,
+      this.memoStyle,
+      this.amount,
+      this.amountStyle,
+      this.date,
+      this.dateStyle,
+      this.payeeName,
+      this.subcategoryStyle,
+      this.transactionId,
       {Key key})
       : super(key: key);
 
@@ -61,10 +70,14 @@ class _CheckedRowState extends State<CheckedRow> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(getDateString(widget.date),
-                      textAlign: TextAlign.right, style: widget.dateStyle,
+                  Text(
+                    getDateString(widget.date),
+                    textAlign: TextAlign.right,
+                    style: widget.dateStyle,
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Expanded(
                     child: Text(
                       widget.memo == "" ? "No memo" : widget.memo,
@@ -75,7 +88,9 @@ class _CheckedRowState extends State<CheckedRow> {
                       softWrap: false,
                     ),
                   ),
-                  SizedBox(width: 10,),
+                  SizedBox(
+                    width: 10,
+                  ),
                   Text("${widget.amount} €", style: widget.amountStyle),
                 ],
               ),

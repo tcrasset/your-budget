@@ -9,6 +9,7 @@ import 'package:your_budget/screens/modifyCategories/components/modifySubCategor
 
 import '../../components/widgetViewClasses.dart';
 import '../../components/addDialog.dart';
+
 class ModifyCategories extends StatefulWidget {
   @override
   _ModifyCategoriesController createState() => _ModifyCategoriesController();
@@ -19,7 +20,12 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
     AppState appState = Provider.of<AppState>(context, listen: false);
     String hintText = "Add new category";
 
-    String categoryName = await addDialog(context: context, title: hintText, hintText: hintText, nameValidator: validateCategoryName, successButtonName: "Submit");
+    String categoryName = await addDialog(
+        context: context,
+        title: hintText,
+        hintText: hintText,
+        nameValidator: validateCategoryName,
+        successButtonName: "Submit");
     if (categoryName != null) appState.addCategory(categoryName);
   }
 
@@ -27,11 +33,13 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
   Widget build(BuildContext context) => _ModifyCategoriesView(this);
 
   handleDeleteCategory(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => DeleteCategories()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DeleteCategories()));
   }
 }
 
-class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
+class _ModifyCategoriesView
+    extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
   _ModifyCategoriesView(_ModifyCategoriesController state) : super(state);
 
   @override
@@ -68,7 +76,6 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
 }
 
 String validateCategoryName(String name) {
-  if (name == null || name.isEmpty)
-    return "Name can't be empty.";
+  if (name == null || name.isEmpty) return "Name can't be empty.";
   return null;
 }

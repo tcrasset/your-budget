@@ -7,7 +7,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../appState.dart';
-import '../../components/overlayNotifications.dart';
 import '../../components/widgetViewClasses.dart';
 import '../../models/categories.dart';
 import '../../models/constants.dart';
@@ -109,7 +108,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
           TextEditingController(text: currencyNumberFormat.format(0).trim());
       memoController.clear();
       _setOffsetToLastDigit();
-
     });
   }
 
@@ -150,12 +148,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [Account] object, it pushes to the route selecting
   /// a  [Account], whose value is stored in [_account] and whose
   /// name is stored in [accountFieldName].
-  handleOnTapAccount()  async {
+  handleOnTapAccount() async {
     var returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
+          builder: (context) => SelectValuePage(
+              title: "Accounts", listEntries: appState.accounts)),
     );
 
     if (returnElement != null) _setAccount(returnElement);
@@ -242,28 +240,34 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void addMoneyTransaction(BuildContext context) async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
+      bool isNegativeTransactionsIntoToBeBudgeted =
+          !isPositive && subcategoryFieldName == "To be budgeted";
+      bool isPositiveTranasctionsIntoSubcategory = isPositive &&
+          !(payee is Account) &&
+          subcategoryFieldName != "To be budgeted";
 
-      bool isNegativeTransactionsIntoToBeBudgeted = !isPositive && subcategoryFieldName == "To be budgeted";
-      bool isPositiveTranasctionsIntoSubcategory = isPositive && !(payee is Account) && subcategoryFieldName != "To be budgeted";
-
-      if (isNegativeTransactionsIntoToBeBudgeted){
-          SnackBar snackbar = SnackBar(content: Text("Can't have negative transaction on to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
-          Scaffold.of(context).showSnackBar(snackbar);
-
-      }
-      else if (isPositiveTranasctionsIntoSubcategory){
-          SnackBar snackbar = SnackBar(content: Text("Positive transactions should go into to be budgeted", style: TextStyle(color: Colors.white),), backgroundColor: Colors.red,);
-          Scaffold.of(context).showSnackBar(snackbar);
-
-      }
-
-
-
-      else if (payee != null && _account != null) {
+      if (isNegativeTransactionsIntoToBeBudgeted) {
+        SnackBar snackbar = SnackBar(
+          content: Text(
+            "Can't have negative transaction on to be budgeted",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        );
+        Scaffold.of(context).showSnackBar(snackbar);
+      } else if (isPositiveTranasctionsIntoSubcategory) {
+        SnackBar snackbar = SnackBar(
+          content: Text(
+            "Positive transactions should go into to be budgeted",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.red,
+        );
+        Scaffold.of(context).showSnackBar(snackbar);
+      } else if (payee != null && _account != null) {
         _amount = formatCurrencyToDouble(amountController.text, isPositive);
 
         _printTransactionInformation();
-
 
         appState.addTransaction(
           subcatId: _selectSubcatId(),
@@ -275,10 +279,15 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         );
 
         resetToDefaultTransaction();
-        SnackBar snackbar = SnackBar(content: Text("Transaction added", style: TextStyle(color: Colors.white),), backgroundColor: Colors.green,);
+        SnackBar snackbar = SnackBar(
+          content: Text(
+            "Transaction added",
+            style: TextStyle(color: Colors.white),
+          ),
+          backgroundColor: Colors.green,
+        );
         Scaffold.of(context).showSnackBar(snackbar);
-      }
-        else {
+      } else {
         print("One of the fields does not contain a valid type");
       }
     }
@@ -389,31 +398,30 @@ class _AddTransactionPageView
       child: Column(children: [
         Container(
             child: Column(
+          children: [
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(child: AmountInputContainer(state: state)),
-                    AmountSwitch(state: state),
-                  ],
-                ),
-                PayeeField(
-                    state: state,
-                    defaultChildTextStyle: defaultChildTextStyle,
-                    selectedChildTextStyle: selectedChildTextStyle),
-                AccountField(
-                    state: state,
-                    defaultChildTextStyle: defaultChildTextStyle,
-                    selectedChildTextStyle: selectedChildTextStyle),
-                SubcategoryField(
-                    state: state,
-                    defaultChildTextStyle: defaultChildTextStyle,
-                    selectedChildTextStyle: selectedChildTextStyle),
-                DateField(
-                    state: state,
-                    selectedChildTextStyle: selectedChildTextStyle),
-                MemoField(state: state),
+                Expanded(child: AmountInputContainer(state: state)),
+                AmountSwitch(state: state),
               ],
-            )),
+            ),
+            PayeeField(
+                state: state,
+                defaultChildTextStyle: defaultChildTextStyle,
+                selectedChildTextStyle: selectedChildTextStyle),
+            AccountField(
+                state: state,
+                defaultChildTextStyle: defaultChildTextStyle,
+                selectedChildTextStyle: selectedChildTextStyle),
+            SubcategoryField(
+                state: state,
+                defaultChildTextStyle: defaultChildTextStyle,
+                selectedChildTextStyle: selectedChildTextStyle),
+            DateField(
+                state: state, selectedChildTextStyle: selectedChildTextStyle),
+            MemoField(state: state),
+          ],
+        )),
         // TODO: Error message
         FloatingActionButton(
           child: Text("Enter"),

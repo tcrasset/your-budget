@@ -46,7 +46,8 @@ class AppState extends ChangeNotifier {
       UnmodifiableListView(currentBudget.subcategories);
   UnmodifiableListView<Payee> get payees => UnmodifiableListView(_payees);
   UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
-  UnmodifiableListView<MoneyTransaction> get transactions => UnmodifiableListView(_transactions);
+  UnmodifiableListView<MoneyTransaction> get transactions =>
+      UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   Account get mostRecentAccount => _mostRecentAccount ?? _accounts[0];
@@ -74,14 +75,14 @@ class AppState extends ChangeNotifier {
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
     currentBudget = _getBudgetByDate(currentBudgetDate);
 
-
     await computeToBeBudgeted();
 
     notifyListeners();
   }
 
   Future<void> addAccount(String accountName, double balance) async {
-    AccountModel accountModel = AccountModel(name: accountName, balance: balance);
+    AccountModel accountModel =
+        AccountModel(name: accountName, balance: balance);
     int accountId = await queryContext.addAccount(accountModel);
     Account account = Account(accountId, accountName, balance);
     _accounts.add(account);
@@ -95,7 +96,8 @@ class AppState extends ChangeNotifier {
       date: DateTime.now(),
     );
 
-    int moneyTransactionId = await queryContext.addMoneyTransaction(moneyTransactionModel);
+    int moneyTransactionId =
+        await queryContext.addMoneyTransaction(moneyTransactionModel);
     MoneyTransaction startingBalance = MoneyTransaction(
       id: moneyTransactionId,
       subcatID: moneyTransactionModel.subcatID,
@@ -170,13 +172,12 @@ class AppState extends ChangeNotifier {
       );
 
       int budgetId = await queryContext.addBudgetValue(budgetValueModel);
-      BudgetValue budgetValue =
-          BudgetValue(budgetId, subcategory.id, 0, 0, previousDate.year, previousDate.month);
+      BudgetValue budgetValue = BudgetValue(budgetId, subcategory.id, 0, 0,
+          previousDate.year, previousDate.month);
 
       _budgetValues.add(budgetValue);
       newDate = Jiffy(previousDate).add(months: 1);
-
-    } while(previousDate.isBefore(maxBudgetDate));
+    } while (previousDate.isBefore(maxBudgetDate));
 
     notifyListeners();
   }
@@ -213,7 +214,8 @@ class AppState extends ChangeNotifier {
       date: date,
     );
 
-    int moneyTransactionId = await queryContext.addMoneyTransaction(moneyTransactionModel);
+    int moneyTransactionId =
+        await queryContext.addMoneyTransaction(moneyTransactionModel);
 
     MoneyTransaction transaction = MoneyTransaction(
       id: moneyTransactionId,
@@ -228,11 +230,12 @@ class AppState extends ChangeNotifier {
 
     setMostRecentAccountUsed(accountId);
 
-    if (transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+    if (transaction.subcatID ==
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
       print("Is to be budgeted money transaction");
       // Update balance of the account
-      final Account account =
-          accounts.singleWhere((account) => account.id == transaction.accountID);
+      final Account account = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
       account.balance += transaction.amount;
       await queryContext.updateAccount(account);
       _budgets = await _createAllMonthlyBudgets();
@@ -245,8 +248,8 @@ class AppState extends ChangeNotifier {
 
       /// [outAccount] is ALWAYS the one pointed to by accountID.
       /// Therefore, [inAccount] will be the one defined by [-payee.id].
-      final Account outAccount =
-          accounts.singleWhere((account) => account.id == transaction.accountID);
+      final Account outAccount = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
       outAccount.balance -= transaction.amount;
 
       final Account inAccount =
@@ -260,18 +263,19 @@ class AppState extends ChangeNotifier {
       /// subcategories are not affected.
 
       // Update balance of the account
-      final Account account =
-          accounts.singleWhere((account) => account.id == transaction.accountID);
+      final Account account = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
       account.balance += transaction.amount;
       queryContext.updateAccount(account);
 
-      Budget budget = _getBudgetByDate(DateTime(transaction.date.year, transaction.date.month));
-      SubCategory oldSubcat =
-          budget.subcategories.singleWhere((subcat) => subcat.id == transaction.subcatID);
+      Budget budget = _getBudgetByDate(
+          DateTime(transaction.date.year, transaction.date.month));
+      SubCategory oldSubcat = budget.subcategories
+          .singleWhere((subcat) => subcat.id == transaction.subcatID);
 
       double newAvailableAmount = oldSubcat.available + transaction.amount;
-      SubCategory newSubcat = SubCategory(
-          oldSubcat.id, oldSubcat.parentId, oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
+      SubCategory newSubcat = SubCategory(oldSubcat.id, oldSubcat.parentId,
+          oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
 
       updateSubcategory(newSubcat);
       //notifyListeners is called in updateSubcategory
@@ -295,11 +299,12 @@ class AppState extends ChangeNotifier {
 
     Goal newGoal;
     if (goalType == GoalType.TargetAmountByDate) {
-      newGoal = Goal(goalId, subcategoryId, goalType, amount, date.month, date.year);
+      newGoal =
+          Goal(goalId, subcategoryId, goalType, amount, date.month, date.year);
     } else {
       ///Use the current budget date, as there is no end date for the other types of goal
-      newGoal =
-          Goal(goalId, subcategoryId, goalType, amount, currentBudget.month, currentBudget.year);
+      newGoal = Goal(goalId, subcategoryId, goalType, amount,
+          currentBudget.month, currentBudget.year);
     }
     _goals.add(newGoal);
     notifyListeners();
@@ -308,8 +313,8 @@ class AppState extends ChangeNotifier {
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
   void updateSubcategory(SubCategory modifiedSubcategory) async {
-    SubCategory previousSubcategory =
-        currentBudget.subcategories.singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
+    SubCategory previousSubcategory = currentBudget.subcategories
+        .singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
 
     /// Differentiate between name change, where we only modify
     /// [SubCategory] and the budgeted/available change,
@@ -326,14 +331,16 @@ class AppState extends ChangeNotifier {
       /// Change state objects
       currentBudget.makeCategoryChange(modifiedSubcategory);
 
-      BudgetValue correspondingBudgetValue = _getCorrespondingBudgetValue(modifiedSubcategory);
+      BudgetValue correspondingBudgetValue =
+          _getCorrespondingBudgetValue(modifiedSubcategory);
 
       /// Persist the change in the DataBase
       queryContext.updateBudgetValue(correspondingBudgetValue);
 
       /// Change the available field in every Budget after the one that was
       /// modified.
-      int monthDifference = (getMonthDifference(currentBudgetDate, getMaxBudgetDate())).abs();
+      int monthDifference =
+          (getMonthDifference(currentBudgetDate, getMaxBudgetDate())).abs();
       double lastMonthAvailable = modifiedSubcategory.available;
 
       for (int i = 1; i <= monthDifference; i++) {
@@ -344,14 +351,15 @@ class AppState extends ChangeNotifier {
             (budgetValue.year == newDate.year) &&
             (budgetValue.month == newDate.month));
         // Combine the total available money from month to month
-        correspondingBudgetValue.available = lastMonthAvailable + correspondingBudgetValue.budgeted;
+        correspondingBudgetValue.available =
+            lastMonthAvailable + correspondingBudgetValue.budgeted;
 
         /// Persist the change in the DataBase
         queryContext.updateBudgetValue(correspondingBudgetValue);
 
         // Modify the subcategory in each budget
-        Budget budget = budgets.singleWhere(
-            (budget) => (budget.year == newDate.year) && (budget.month == newDate.month));
+        Budget budget = budgets.singleWhere((budget) =>
+            (budget.year == newDate.year) && (budget.month == newDate.month));
         budget.makeSubcategoryChangeBySubcatId(
             modifiedSubcategory.id, //
             modifiedSubcategory.parentId,
@@ -380,8 +388,8 @@ class AppState extends ChangeNotifier {
 
   void removeSubcategory(int subcategoryId) {
     // Take any subcategory of the same id, to be able to access the parentID field
-    SubCategory toBeRemoved =
-        currentBudget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+    SubCategory toBeRemoved = currentBudget.subcategories
+        .singleWhere((subcat) => subcat.id == subcategoryId);
 
     //Remove subcategories from the budgets and from the database
     _budgets.forEach((budget) {
@@ -391,13 +399,15 @@ class AppState extends ChangeNotifier {
 
     // Remove the budget values linked to the subcategory from the
     // _budgetValues array and from the data base
-    List<BudgetValue> correspondingBudgetValues =
-        _budgetValues.where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId).toList();
+    List<BudgetValue> correspondingBudgetValues = _budgetValues
+        .where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId)
+        .toList();
 
     correspondingBudgetValues.forEach((budgetvalue) {
       queryContext.deleteBudgetValue(budgetvalue.id);
     });
-    _budgetValues.removeWhere((budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
+    _budgetValues.removeWhere(
+        (budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
 
     notifyListeners();
   }
@@ -407,7 +417,8 @@ class AppState extends ChangeNotifier {
   void updateCategoryName(MainCategory modifiedCategory) {
     //Change in all budgets
     for (Budget budget in _budgets) {
-      MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == modifiedCategory.id);
+      MainCategory cat = budget.maincategories
+          .singleWhere((cat) => cat.id == modifiedCategory.id);
       cat.name = modifiedCategory.name;
     }
     notifyListeners();
@@ -466,7 +477,8 @@ class AppState extends ChangeNotifier {
     double totalBudgeted = 0;
     int nbNonZero = 0;
     _budgets.forEach((budget) {
-      SubCategory subcat = budget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+      SubCategory subcat = budget.subcategories
+          .singleWhere((subcat) => subcat.id == subcategoryId);
       if (subcat.budgeted != 0.00) {
         nbNonZero++;
       }
@@ -480,15 +492,17 @@ class AppState extends ChangeNotifier {
   double getLastMonthBudgeted(int subcategoryId) {
     DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1);
     Budget lastMonthBudget = _budgets.singleWhere(
-        (budget) => budget.year == lastMonthDate.year && budget.month == lastMonthDate.month,
+        (budget) =>
+            budget.year == lastMonthDate.year &&
+            budget.month == lastMonthDate.month,
         orElse: () => null);
 
     if (lastMonthBudget == null) {
       return 0.00;
     }
 
-    SubCategory lastMonthSubcat =
-        lastMonthBudget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+    SubCategory lastMonthSubcat = lastMonthBudget.subcategories
+        .singleWhere((subcat) => subcat.id == subcategoryId);
 
     return lastMonthSubcat.budgeted;
   }
@@ -497,26 +511,30 @@ class AppState extends ChangeNotifier {
     List<Budget> budgets = [];
     DateTime currentDate = startingBudgetDate;
     List<MainCategory> maincategories = await queryContext.getCategories();
-    DateTime storedMaxBudgetDate = await queryContext.getMaxBudgetDateConstant();
+    DateTime storedMaxBudgetDate =
+        await queryContext.getMaxBudgetDateConstant();
     // Start with 1 month's difference and keep incrementing
     // until we overshoot the endDate
 
     // Get every transaction made into 'To Be Budgeted'
     List<MoneyTransaction> toBeBudgetedTransactions = _transactions
         .where((transaction) =>
-            transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION)
+            transaction.subcatID ==
+            Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION)
         .toList();
 
     do {
-      List<SubCategory> subcategories =
-          await queryContext.getSubCategoriesJoined(currentDate.year, currentDate.month);
-      Budget budget = Budget(maincategories, subcategories, currentDate.month, currentDate.year);
+      List<SubCategory> subcategories = await queryContext
+          .getSubCategoriesJoined(currentDate.year, currentDate.month);
+      Budget budget = Budget(
+          maincategories, subcategories, currentDate.month, currentDate.year);
 
       double positiveAmountTransferedIntoToBeBudgeted = toBeBudgetedTransactions
           .where((transaction) => isSameMonth(transaction.date, currentDate))
           .fold(0, (total, transaction) => total + transaction.amount);
 
-      budget.toBeBudgetedInputFromMoneyTransactions += positiveAmountTransferedIntoToBeBudgeted;
+      budget.toBeBudgetedInputFromMoneyTransactions +=
+          positiveAmountTransferedIntoToBeBudgeted;
       budgets.add(budget);
 
       //Go to next month
@@ -531,7 +549,8 @@ class AppState extends ChangeNotifier {
   }
 
   Budget _getBudgetByDate(DateTime date) {
-    return _budgets.singleWhere((budget) => budget.year == date.year && budget.month == date.month);
+    return _budgets.singleWhere(
+        (budget) => budget.year == date.year && budget.month == date.month);
   }
 
   void deleteTransaction(int transactionId) async {
@@ -613,22 +632,27 @@ class AppState extends ChangeNotifier {
   void _deleteCorrespondingBudgetValues(int subcategoryId) {
     // Remove the budget values linked to the subcategory from the
     // _budgetValues array and from the data base
-    List<BudgetValue> correspondingBudgetValues =
-        _budgetValues.where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId).toList();
+    List<BudgetValue> correspondingBudgetValues = _budgetValues
+        .where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId)
+        .toList();
 
     correspondingBudgetValues.forEach((budgetvalue) {
       queryContext.deleteBudgetValue(budgetvalue.id);
     });
-    _budgetValues.removeWhere((budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
+    _budgetValues.removeWhere(
+        (budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
   }
 
-  Future<List<Budget>> _incrementMaxBudgetAndUpdateBudgets(List<Budget> budgets) async {
+  Future<List<Budget>> _incrementMaxBudgetAndUpdateBudgets(
+      List<Budget> budgets) async {
     DateTime newDate;
     DateTime previousDate = await queryContext.getMaxBudgetDateConstant();
     DateTime maxBudgetDate = getMaxBudgetDate();
 
     Budget currentMaxBudget = budgets.singleWhere(
-      (budget) => budget.year == previousDate.year && budget.month == previousDate.month,
+      (budget) =>
+          budget.year == previousDate.year &&
+          budget.month == previousDate.month,
     );
 
     budgets.forEach((element) {
@@ -639,13 +663,16 @@ class AppState extends ChangeNotifier {
       newDate = Jiffy(previousDate).add(months: 1);
 
       currentMaxBudget = budgets.singleWhere(
-        (budget) => budget.year == previousDate.year && budget.month == previousDate.month,
+        (budget) =>
+            budget.year == previousDate.year &&
+            budget.month == previousDate.month,
       );
       previousDate = newDate;
 
       // Add all BudgetValue for the new month to the database
       // print(currentMaxBudget.subcategories);
-      for (final SubCategory previousMonthSubcat in currentMaxBudget.subcategories) {
+      for (final SubCategory previousMonthSubcat
+          in currentMaxBudget.subcategories) {
         BudgetValueModel budgetValueModel = BudgetValueModel(
           subcategoryId: previousMonthSubcat.id,
           budgeted: 0,
@@ -659,11 +686,11 @@ class AppState extends ChangeNotifier {
 
       // Fetch the newly added BudgetValues and create a new budget, adding it to the
       // already existing list of budgets
-      List<SubCategory> updatedSubcategories =
-          await queryContext.getSubCategoriesJoined(newDate.year, newDate.month);
+      List<SubCategory> updatedSubcategories = await queryContext
+          .getSubCategoriesJoined(newDate.year, newDate.month);
 
-      Budget newBudget = Budget(
-          currentMaxBudget.maincategories, updatedSubcategories, newDate.month, newDate.year);
+      Budget newBudget = Budget(currentMaxBudget.maincategories,
+          updatedSubcategories, newDate.month, newDate.year);
       currentMaxBudget = newBudget;
       budgets.add(newBudget);
     } while (newDate.isBefore(maxBudgetDate));
@@ -675,23 +702,28 @@ class AppState extends ChangeNotifier {
   }
 
   Future<bool> _checkIfNeedToIncrementMax() async {
-    int nbMonthDifference = await _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate();
+    int nbMonthDifference =
+        await _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate();
     return nbMonthDifference > 0;
   }
 
-  Future<int> _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate() async {
+  Future<int>
+      _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate() async {
     DateTime currentMaxBudgetDate = getMaxBudgetDate();
-    DateTime storedMaxBudgetDate = await queryContext.getMaxBudgetDateConstant();
+    DateTime storedMaxBudgetDate =
+        await queryContext.getMaxBudgetDateConstant();
     return getMonthDifference(currentMaxBudgetDate, storedMaxBudgetDate);
   }
 
-  void setMostRecentAccountUsed(int accountId){
+  void setMostRecentAccountUsed(int accountId) {
     queryContext.updateMostRecentAccountUsed(accountId);
-    _mostRecentAccount = accounts.singleWhere((account) => account.id == accountId, orElse: () => null);
+    _mostRecentAccount = accounts
+        .singleWhere((account) => account.id == accountId, orElse: () => null);
   }
 
   Future<Account> getMostRecentAccountUsed() async {
     int accountId = await queryContext.getMostRecentAccountUsed();
-    return accounts.singleWhere((account) => account.id == accountId, orElse: () => null);
+    return accounts.singleWhere((account) => account.id == accountId,
+        orElse: () => null);
   }
 }

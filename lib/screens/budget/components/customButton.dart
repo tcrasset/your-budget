@@ -7,8 +7,8 @@ class CustomButton extends StatelessWidget {
   final Color buttonColor;
   final Function handleOnPressed;
   final Widget child;
-  CustomButton(
-      this.buttonText, this.buttonHeight, this.buttonWidth, this.buttonColor, this.handleOnPressed,
+  CustomButton(this.buttonText, this.buttonHeight, this.buttonWidth,
+      this.buttonColor, this.handleOnPressed,
       [this.child]);
 
   @override
@@ -17,7 +17,8 @@ class CustomButton extends StatelessWidget {
       height: this.buttonHeight,
       width: this.buttonWidth,
       child: RaisedButton(
-          shape: RoundedRectangleBorder(borderRadius: new BorderRadius.circular(5.0)),
+          shape: RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(5.0)),
           color: buttonColor,
           onPressed: () => this.handleOnPressed(context, buttonText),
           child: this.child ??

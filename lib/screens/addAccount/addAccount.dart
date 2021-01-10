@@ -58,9 +58,11 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
   Widget build(BuildContext context) => _AddAccountRouteView(this);
 }
 
-class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
+class _AddAccountRouteView
+    extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
   final TextStyle _textBoxStyle = TextStyle(fontSize: 25);
-  final TextStyle _accountNameStyle = TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
+  final TextStyle _accountNameStyle =
+      TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
   final TextStyle _positiveAmountTextStyle =
       new TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
   final TextStyle _negativeAmountTextStyle =
@@ -134,7 +136,8 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                                 onSaved: state.handleAccountBalanceSave,
                                 keyboardType: TextInputType.number,
                                 inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp("[0-9-.]"))
+                                  FilteringTextInputFormatter.allow(
+                                      RegExp("[0-9-.]"))
                                 ],
                                 textInputAction: TextInputAction.done,
                               ),
@@ -154,7 +157,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                     )),
                 Consumer<AppState>(builder: (_, appState, __) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal:10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: Column(children: _buildAccountRows(appState)),
                   );
                 })
@@ -168,22 +171,31 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
     List<Widget> rows = [];
     for (final Account account in appState.accounts) {
       var row = Container(
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
-          Expanded(
-            child: Text(account.name, style: _accountNameStyle,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  account.name,
+                  style: _accountNameStyle,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                  softWrap: false,),
-          ),
-          SizedBox(width: 10,),
-          Text(account.balance.toStringAsFixed(2) +" €",
-              style: account.balance.isNegative
-                  ? _negativeAmountTextStyle
-                  : _positiveAmountTextStyle,
+                  softWrap: false,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                account.balance.toStringAsFixed(2) + " €",
+                style: account.balance.isNegative
+                    ? _negativeAmountTextStyle
+                    : _positiveAmountTextStyle,
                 overflow: TextOverflow.fade,
                 maxLines: 1,
-                softWrap: false,)
-        ]),
+                softWrap: false,
+              )
+            ]),
       );
       rows.add(row);
     }

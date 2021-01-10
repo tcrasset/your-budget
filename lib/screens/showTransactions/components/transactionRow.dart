@@ -22,11 +22,11 @@ class _TransactionRowState extends State<TransactionRow> {
   final TextStyle memoStyle =
       TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Colors.grey);
 
-  final TextStyle dateStyle =
-      TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
+  final TextStyle dateStyle = TextStyle(
+      fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
 
-  final TextStyle subcategoryStyle =
-      TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
+  final TextStyle subcategoryStyle = TextStyle(
+      fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
 
   @override
   Widget build(BuildContext context) {
@@ -83,17 +83,20 @@ class _TransactionRowState extends State<TransactionRow> {
     }
     // Transaction into subcategories
     var correspondingSubcategory = widget.categories.singleWhere(
-        ((cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
+        ((cat) =>
+            cat is SubCategory && cat.id == widget.moneyTransaction.subcatID),
         orElse: () => null);
-    return correspondingSubcategory != null ? correspondingSubcategory.name : "";
-
+    return correspondingSubcategory != null
+        ? correspondingSubcategory.name
+        : "";
   }
 
   String _setPayeeName(AppState appState) {
     if (appState.payees.isNotEmpty) {
       // orElse is for starting balance
-      Payee payee = appState.payees
-          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
+      Payee payee = appState.payees.singleWhere(
+          (payee) => payee.id == widget.moneyTransaction.payeeID,
+          orElse: () => null);
 
       return payee != null ? payee.name : "";
     }

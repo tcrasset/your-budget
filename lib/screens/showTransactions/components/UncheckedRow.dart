@@ -13,8 +13,16 @@ class UncheckedRow extends StatelessWidget {
   final TextStyle dateStyle;
   final String payeeName;
 
-  const UncheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
-      this.date, this.dateStyle, this.payeeName, this.subcategoryStyle,
+  const UncheckedRow(
+      this.subcategoryName,
+      this.memo,
+      this.memoStyle,
+      this.amount,
+      this.amountStyle,
+      this.date,
+      this.dateStyle,
+      this.payeeName,
+      this.subcategoryStyle,
       {Key key})
       : super(key: key);
 
@@ -24,7 +32,8 @@ class UncheckedRow extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10),
         margin: EdgeInsets.symmetric(horizontal: 10),
         height: 70,
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -37,7 +46,9 @@ class UncheckedRow extends StatelessWidget {
                   softWrap: false,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Expanded(
                 child: Text(
                   memo == "" ? "No memo" : memo,
@@ -48,14 +59,17 @@ class UncheckedRow extends StatelessWidget {
                   softWrap: false,
                 ),
               ),
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text("$amount €", style: amountStyle),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(getDatePhrase(date), textAlign: TextAlign.right, style: dateStyle),
+              Text(getDatePhrase(date),
+                  textAlign: TextAlign.right, style: dateStyle),
               Text("$payeeName")
             ],
           ),
