@@ -3,14 +3,13 @@ import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/goal.dart';
-import 'package:your_budget/models/queries.dart';
 
 import 'models/entries.dart';
 
 abstract class AppStateRepository {
   void _loadStateFromDatabase();
 
-  Future<void> addAccount(String accountName, double balance);
+  Future<void> addAccount({@required String accountName, @required  double balance});
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.

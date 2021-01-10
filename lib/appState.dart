@@ -81,7 +81,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     notifyListeners();
   }
 
-  Future<void> addAccount(String accountName, double balance) async {
+  Future<void> addAccount({@required String accountName, @required  double balance}) async {
     AccountModel accountModel =
         AccountModel(name: accountName, balance: balance);
     int accountId = await queryContext.addAccount(accountModel);
