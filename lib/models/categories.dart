@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:your_budget/models/constants.dart';
 
 /// Class representing a budgeting category.
@@ -10,7 +11,7 @@ abstract class Category {
   double budgeted;
   double available;
 
-  Category(this.id, this.name, this.budgeted, this.available);
+  Category({@required this.id,@required  this.name,@required  this.budgeted,@required  this.available});
 }
 
 /// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
@@ -21,17 +22,17 @@ class SubCategory extends Category {
   SubCategory(
       int id, int parentId, String name, double budgeted, double available)
       : parentId = parentId,
-        super(id, name, budgeted, available);
+        super(id:id, name:name, budgeted:budgeted, available:available);
 
   /// Constructor building a SubCategory from a [json] representation taken
   /// from a database
   SubCategory.fromJson(Map<String, dynamic> json)
       : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE],
         super(
-            json[DatabaseConstants.SUBCAT_ID], //
-            json[DatabaseConstants.SUBCAT_NAME],
-            json[DatabaseConstants.BUDGET_VALUE_BUDGETED],
-            json[DatabaseConstants.BUDGET_VALUE_AVAILABLE]);
+            id:json[DatabaseConstants.SUBCAT_ID], //
+            name:json[DatabaseConstants.SUBCAT_NAME],
+            budgeted:json[DatabaseConstants.BUDGET_VALUE_BUDGETED],
+            available:json[DatabaseConstants.BUDGET_VALUE_AVAILABLE]);
 
   @override
   String toString() {
@@ -41,12 +42,12 @@ class SubCategory extends Category {
 
   /// Creates a copy of this with zero money budgeted.
   SubCategory blank() {
-    return SubCategory(id, parentId, name, 0.0, available);
+    return SubCategory(id:id,parentId: parentId, name:name, budgeted:0.0, available:available);
   }
 
   /// Creates an exact copy of this.
   SubCategory copy() {
-    return SubCategory(id, parentId, name, budgeted, available);
+    return SubCategory(id:id, parentId:parentId, name:name, budgeted:budgeted, available:available);
   }
 
   /// Updates values of this with those of [subcat].
@@ -73,16 +74,16 @@ class MainCategory extends Category {
   List<SubCategory> _subcategories = [];
 
   /// Default [MainCategory] constructor, which sets the budgeted and available values to 0.00
-  MainCategory(int id, String name) : super(id, name, 0.00, 0.00);
+  MainCategory({@required int id, @required String name}) : super(id:id, name:name, budgeted: 0.00, available: 0.00);
 
   /// Constructor building a MainCategory from a [json] representation taken
   /// from a database
   MainCategory.fromJson(Map<String, dynamic> json)
       : super(
-            json[DatabaseConstants.CATEGORY_ID], //
-            json[DatabaseConstants.CATEGORY_NAME],
-            0.00,
-            0.00);
+            id:json[DatabaseConstants.CATEGORY_ID], //
+            name:json[DatabaseConstants.CATEGORY_NAME],
+            budgeted:0.00,
+            available:0.00);
 
   List<SubCategory> get subcategories {
     return _subcategories;
@@ -112,7 +113,7 @@ class MainCategory extends Category {
 
   /// Creates a new copy of this WITHOUT [subcategories]
   MainCategory copy() {
-    return MainCategory(id, name);
+    return MainCategory(id:id,name: name);
   }
 
   /// Checks whether [mainCategory] has the same values as this..

@@ -119,7 +119,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   void addCategory(String categoryName) async {
     MainCategoryModel categoryModel = MainCategoryModel(name: categoryName);
     int categoryId = await queryContext.addCategory(categoryModel);
-    MainCategory cat = MainCategory(categoryId, categoryName);
+    MainCategory cat = MainCategory(id:categoryId, name:categoryName);
     for (final Budget budget in _budgets) {
       budget.maincategories.add(cat);
     }
@@ -146,11 +146,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     int subcatId = await queryContext.addSubcategory(subcategoryModel);
     SubCategory subcategory = SubCategory(
-      subcatId,
-      subcategoryModel.parentId,
-      subcategoryModel.name,
-      subcategoryModel.budgeted,
-      subcategoryModel.available,
+      id:subcatId,
+      parentId:subcategoryModel.parentId,
+      name:subcategoryModel.name,
+      budgeted:subcategoryModel.budgeted,
+      available:subcategoryModel.available,
     );
 
     for (final Budget budget in _budgets) {
@@ -275,8 +275,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           .singleWhere((subcat) => subcat.id == transaction.subcatID);
 
       double newAvailableAmount = oldSubcat.available + transaction.amount;
-      SubCategory newSubcat = SubCategory(oldSubcat.id, oldSubcat.parentId,
-          oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
+      SubCategory newSubcat = SubCategory(id:oldSubcat.id, parentId:oldSubcat.parentId,
+          name:oldSubcat.name,budgeted:oldSubcat.budgeted,available: newAvailableAmount);
 
       updateSubcategory(newSubcat);
       //notifyListeners is called in updateSubcategory
@@ -598,8 +598,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           .singleWhere((subcat) => subcat.id == transaction.subcatID);
 
       double newAvailableAmount = oldSubcat.available - transaction.amount;
-      SubCategory newSubcat = SubCategory(oldSubcat.id, oldSubcat.parentId,
-          oldSubcat.name, oldSubcat.budgeted, newAvailableAmount);
+      SubCategory newSubcat = SubCategory(id:oldSubcat.id,parentId: oldSubcat.parentId,
+          name:oldSubcat.name,budgeted: oldSubcat.budgeted,available: newAvailableAmount);
 
       updateSubcategory(newSubcat);
       //notifyListeners is called in updateSubcategory

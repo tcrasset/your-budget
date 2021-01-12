@@ -37,7 +37,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
         nameValidator: validateCategoryName);
     if (categoryName != null) {
       AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.updateCategoryName(MainCategory(cat.id, categoryName));
+      appState.updateCategoryName(MainCategory(id:cat.id, name:categoryName));
     }
   }
 

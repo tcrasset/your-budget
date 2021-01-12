@@ -83,11 +83,11 @@ class BudgetPageState extends ChangeNotifier {
       double beforeAfterDifference =
           (budgetedController.numberValue - selectedSubcategory.budgeted);
       appState.updateSubcategory(SubCategory(
-          selectedSubcategory.id,
-          selectedSubcategory.parentId,
-          selectedSubcategory.name,
-          budgetedController.numberValue,
-          selectedSubcategory.available + beforeAfterDifference));
+          id:selectedSubcategory.id,
+          parentId:selectedSubcategory.parentId,
+          name:selectedSubcategory.name,
+          budgeted:budgetedController.numberValue,
+          available:selectedSubcategory.available + beforeAfterDifference));
 
       print("Previous subcat : \n $selectedSubcategory \n");
       print(

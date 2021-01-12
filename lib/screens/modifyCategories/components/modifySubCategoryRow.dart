@@ -20,8 +20,8 @@ class ModifySubcategoryRow extends StatelessWidget {
         nameValidator: validateCategoryName);
     if (subcategoryName != null) {
       AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.updateSubcategory(SubCategory(subcat.id, subcat.parentId,
-          subcategoryName, subcat.budgeted, subcat.available));
+      appState.updateSubcategory(SubCategory(id:subcat.id,parentId: subcat.parentId,
+          name:subcategoryName,budgeted: subcat.budgeted, available:subcat.available));
     }
   }
 
