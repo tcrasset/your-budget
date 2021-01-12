@@ -173,8 +173,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       );
 
       int budgetId = await queryContext.addBudgetValue(budgetValueModel);
-      BudgetValue budgetValue = BudgetValue(budgetId, subcategory.id, 0, 0,
-          previousDate.year, previousDate.month);
+      BudgetValue budgetValue = BudgetValue(id:budgetId, subcategoryId:subcategory.id, budgeted:0, available:0,
+          year:previousDate.year,month: previousDate.month);
 
       _budgetValues.add(budgetValue);
       newDate = Jiffy(previousDate).add(months: 1);

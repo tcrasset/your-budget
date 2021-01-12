@@ -19,8 +19,8 @@ class SubCategory extends Category {
   final parentId;
 
   /// Default SubCategory constructor
-  SubCategory(
-      int id, int parentId, String name, double budgeted, double available)
+  SubCategory({
+      @required int id,@required  int parentId, @required String name,@required  double budgeted,@required  double available})
       : parentId = parentId,
         super(id:id, name:name, budgeted:budgeted, available:available);
 
@@ -184,8 +184,8 @@ class BudgetValue {
   int month;
   int year;
 
-  BudgetValue(this.id, this.subcategoryId, this.budgeted, this.available,
-      this.year, this.month);
+  BudgetValue({@required this.id, @required this.subcategoryId, @required this.budgeted, @required this.available,
+      @required this.year, @required this.month});
 
   /// Constructor building a BudgetValue from a [json] representation taken
   /// from a database.
