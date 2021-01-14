@@ -194,7 +194,6 @@ class DatabaseProvider {
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      for (int subcatId in subcategoryIds) {
       DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
       for (int subcatId in subcategoryIds) {
         await db.rawInsert(CREATE_BUDGETVALUE, [
