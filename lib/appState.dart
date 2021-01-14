@@ -112,7 +112,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
-  void addCategory(String categoryName) async {
+  void addCategory({@required String categoryName}) async {
     MainCategoryModel categoryModel = MainCategoryModel(name: categoryName);
     int categoryId = await queryContext.addCategory(categoryModel);
     MainCategory cat = MainCategory(id:categoryId, name:categoryName);

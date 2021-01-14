@@ -26,7 +26,7 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
         hintText: hintText,
         nameValidator: validateCategoryName,
         successButtonName: "Submit");
-    if (categoryName != null) appState.addCategory(categoryName);
+    if (categoryName != null) appState.addCategory(categoryName: categoryName);
   }
 
   @override
