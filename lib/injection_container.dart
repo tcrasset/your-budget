@@ -7,9 +7,12 @@ import 'package:your_budget/models/queries.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  sl.registerFactory(() => AppState(queryContext: sl()));
 
   DatabaseProvider dbProvider = DatabaseProvider();
   var database = await dbProvider.open();
   sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: database));
+
+  AppState appState = AppState(queryContext: sl());
+  await appState.loadStateFromDatabase();
+  sl.registerLazySingleton(() => appState);
 }

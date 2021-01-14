@@ -25,7 +25,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   List<Goal> _goals;
   List<BudgetValue> _budgetValues;
   List<Budget> _budgets;
-  Queries queryContext;
+  final Queries queryContext;
   Account _mostRecentAccount;
 
   double toBeBudgeted = 0;
@@ -53,13 +53,9 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   Account get mostRecentAccount => _mostRecentAccount ?? _accounts[0];
 
-  AppState({@required Queries queryContext}) {
-    this.queryContext = queryContext;
-    _loadStateFromDatabase();
-  }
+  AppState({@required this.queryContext});
 
-  void _loadStateFromDatabase() async {
-    print("Loading from database");
+  Future<void> loadStateFromDatabase() async {
     startingBudgetDate = await queryContext.getStartingBudgetDateConstant();
 
     _transactions = await queryContext.getMoneyTransactions();
