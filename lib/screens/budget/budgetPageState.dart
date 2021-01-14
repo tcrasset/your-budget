@@ -89,10 +89,6 @@ class BudgetPageState extends ChangeNotifier {
           budgeted:budgetedController.numberValue,
           available:selectedSubcategory.available + beforeAfterDifference));
 
-      print("Previous subcat : \n $selectedSubcategory \n");
-      print(
-          "Next subcat : \n ${SubCategory(selectedSubcategory.id, selectedSubcategory.parentId, selectedSubcategory.name, budgetedController.numberValue, selectedSubcategory.available + beforeAfterDifference)} \n");
-
       resetText();
       closeButtonDialAndUpdate();
     }
