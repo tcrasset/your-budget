@@ -15,7 +15,7 @@ class Payee {
   String name;
 
   /// Default constructor of [Payee]
-  Payee(this.id, this.name);
+  Payee({@required this.id, @required  this.name});
 
   /// Constructor building a [Payee] from a [json] representation taken
   /// from a database.

@@ -125,7 +125,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Future<Payee> addPayee({@required String payeeName}) async {
     PayeeModel payeeModel = PayeeModel(name: payeeName);
     int payeeId = await queryContext.addPayee(payeeModel);
-    Payee payee = Payee(payeeId, payeeName);
+    Payee payee = Payee(id:payeeId, name:payeeName);
     _payees.add(payee);
     notifyListeners();
     return payee;
