@@ -28,6 +28,10 @@ class Payee {
   String toString() {
     return super.toString() + """ {id: $id, name: $name}""";
   }
+
+  bool hasSameValues(Payee payee) {
+    return payee.id == this.id && payee.name == this.name;
+  }
 }
 
 /// Class that defines a MoneyTransaction between the user and another entity.

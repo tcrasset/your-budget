@@ -127,4 +127,29 @@ test('when addCategory() is called, add category to the database and to each bud
 
 });
 
+test('when addPayee() is called then add a payee to the state and the database', () async{
+
+
+  //!Arrange
+  String tPayeeName = "Savings";
+  int tPayeeId = 1;
+  Payee tPayee = Payee(id: tPayeeId, name:tPayeeName);
+
+  when(mockQueries.addPayee(argThat(isA<PayeeModel>()))).thenAnswer((_) async => tPayeeId);
+
+  //!Act
+  await appState.addPayee(payeeName: tPayeeName);
+
+
+  //!Assert
+  verify(mockQueries.addPayee(argThat(isA<PayeeModel>())));
+
+  Payee payee = appState.payees.singleWhere((payee) => payee.id == tPayeeId);
+  bool result = tPayee.hasSameValues(payee);
+
+  expect(result, true);
+
+
+});
+
 }
