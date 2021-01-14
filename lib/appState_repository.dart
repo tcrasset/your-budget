@@ -13,7 +13,7 @@ abstract class AppStateRepository {
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
-  void addCategory(String categoryName);
+  void addCategory({@required String categoryName});
 
   Future<Payee> addPayee({@required String payeeName});
 

@@ -1,8 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:your_budget/appState.dart';
+import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/entries_model.dart';
@@ -71,4 +72,27 @@ main() {
     expect(appState.transactions[0].accountID, tMoneyTransaction.accountID);
     expect(appState.transactions[0].amount, tMoneyTransaction.amount);
   });
+
+test('when addCategory() is called, add category to the database and to each budget', () {
+
+  //!Arrange
+  String tCategoryName = "Essentials";
+  int tCategoryId = 1;
+  MainCategory tCategory = MainCategory(id: tCategoryId, name: tCategoryName);
+
+  when(mockQueries.addCategory(argThat(isA<MainCategoryModel>()))).thenAnswer((_) async => tCategoryId);
+
+  //!Act
+  appState.addCategory(categoryName: tCategoryName);
+
+  //!Assert
+  verify(mockQueries.addCategory(argThat(isA<MainCategoryModel>())));
+  for (final Budget budget in appState.budgets) {
+    MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == tCategoryId);
+    bool result = cat.hasSameValues(tCategory);
+    expect(result,true);
+  }
+
+});
+
 }
