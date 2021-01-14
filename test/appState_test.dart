@@ -9,6 +9,7 @@ import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/queries.dart';
 import 'fake_database.dart';
+
 class MockQueries extends Mock implements Queries {}
 
 main() {
@@ -22,6 +23,37 @@ main() {
     await fakeDatabase.setup();
     appState = AppState(queryContext: mockQueries);
     await appState.loadStateFromDatabase();
+  });
+
+
+  test('when loadStateFromDatabase() then load all necessary stuff from the' +
+  'the database to the state', () async{
+
+    //!Arrange
+    // Clear the interactions of call of loadStateFromDatabase()
+    // in the setUp() method
+    clearInteractions(mockQueries);
+
+    //!Act
+    await appState.loadStateFromDatabase();
+
+    //!Assert
+    verify(mockQueries.getStartingBudgetDateConstant()).called(1);
+    verify(mockQueries.getMoneyTransactions()).called(1);
+
+    // In _createAllMonthlyBudgets()
+    verify(mockQueries.getCategories()).called(1);
+    // Called 2 - 3 times: in _createAllMonthlyBudgets, in _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate,
+    // and optionally in _incrementMaxBudgetAndUpdateBudgets
+    verify(mockQueries.getMaxBudgetDateConstant()).called(greaterThan(1));
+
+    verify(mockQueries.getPayees()).called(1);
+    verify(mockQueries.getAccounts()).called(1);
+    verify(mockQueries.getBudgetValues()).called(1);
+    verify(mockQueries.getGoals()).called(1);
+
+    //In getMostRecentAccountUsed()
+    verify(mockQueries.getMostRecentAccountUsed()).called(1);
 
   });
 
