@@ -44,8 +44,8 @@ main() {
 
     when(mockQueries.getFirstTransactionOfAccount(accountId))
         .thenAnswer((_) async => tMoneyTransaction);
-    when(mockQueries.addAccount(any)).thenAnswer((_) async => accountId);
-    when(mockQueries.addMoneyTransaction(any))
+    when(mockQueries.addAccount(argThat(isA<AccountModel>()))).thenAnswer((_) async => accountId);
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => moneyTransactionId);
 
     //!Act
