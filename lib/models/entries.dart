@@ -123,6 +123,12 @@ class Account {
     this.balance = json[DatabaseConstants.ACCOUNT_BALANCE];
   }
 
+  bool hasSameValues(Account account) {
+    return account.id == this.id &&
+        account.name == this.name &&
+        account.balance == this.balance;
+  }
+
   @override
   String toString() {
     return super.toString() + """ {id: $id, name: $name, balance: $balance}""";
