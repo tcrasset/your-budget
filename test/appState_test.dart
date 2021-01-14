@@ -24,7 +24,9 @@ main() {
 
   });
 
-  test('addAccount() adds an account to the state, the database and adds', () async{
+  test('when addAccount() is called then add account and moneyTranasction to the state and database'+
+  'and call computeToBeBudgeted() once after.'
+  , () async{
 
     //!Arrange
     String accountName = "Savings";
