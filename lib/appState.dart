@@ -20,8 +20,8 @@ import 'models/categories.dart';
 class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
   List<Payee> _payees;
-  List<Account> _accounts;
-  List<MoneyTransaction> _transactions;
+  List<Account> _accounts = [];
+  List<MoneyTransaction> _transactions = [];
   List<Goal> _goals;
   List<BudgetValue> _budgetValues;
   List<Budget> _budgets;

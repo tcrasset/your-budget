@@ -20,6 +20,10 @@
 # is commented out by default.
 #.vscode/
 
+# For the moment, do not include launch configurations
+.vscode/launch.json
+
+
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
