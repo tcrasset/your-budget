@@ -7,7 +7,7 @@ import 'package:your_budget/models/goal.dart';
 import 'models/entries.dart';
 
 abstract class AppStateRepository {
-  void _loadStateFromDatabase();
+  Future<void> loadStateFromDatabase();
 
   Future<void> addAccount({@required String accountName, @required  double balance});
 
