@@ -19,16 +19,15 @@ main() {
 
   setUp(() async {
     mockQueries = MockQueries();
-    fakeDatabase = FakeDatabase(mockQueries:mockQueries);
+    fakeDatabase = FakeDatabase(mockQueries: mockQueries);
     await fakeDatabase.setup();
     appState = AppState(queryContext: mockQueries);
     await appState.loadStateFromDatabase();
   });
 
-
-  test('when loadStateFromDatabase() then load all necessary stuff from the' +
-  'the database to the state', () async{
-
+  test(
+      'when loadStateFromDatabase() then load all necessary stuff from the' +
+          'the database to the state', () async {
     //!Arrange
     // Clear the interactions of call of loadStateFromDatabase()
     // in the setUp() method
@@ -54,13 +53,11 @@ main() {
 
     //In getMostRecentAccountUsed()
     verify(mockQueries.getMostRecentAccountUsed()).called(1);
-
   });
 
-  test('when addAccount() is called then add account and moneyTranasction to the state and database'+
-  'and call computeToBeBudgeted() once after.'
-  , () async{
-
+  test(
+      'when addAccount() is called then add account and moneyTranasction to the state and database' +
+          'and call computeToBeBudgeted() once after.', () async {
     //!Arrange
     String accountName = "Savings";
     double balance = 999.99;
@@ -76,10 +73,10 @@ main() {
         payeeID: Constants.UNASSIGNED_PAYEE_ID,
         subcatID: Constants.UNASSIGNED_SUBCAT_ID);
 
-
     when(mockQueries.getFirstTransactionOfAccount(accountId))
         .thenAnswer((_) async => tMoneyTransaction);
-    when(mockQueries.addAccount(argThat(isA<AccountModel>()))).thenAnswer((_) async => accountId);
+    when(mockQueries.addAccount(argThat(isA<AccountModel>())))
+        .thenAnswer((_) async => accountId);
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => moneyTransactionId);
 
@@ -88,10 +85,12 @@ main() {
 
     //!Assert
     verify(mockQueries.addAccount(argThat(isA<AccountModel>())));
-    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
+    verify(
+        mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
 
     // Verify that we call computeToBeBudgeted() once (we only added a single account)
-    verify(mockQueries.getFirstTransactionOfAccount(argThat(isA<int>()))).called(1);
+    verify(mockQueries.getFirstTransactionOfAccount(argThat(isA<int>())))
+        .called(1);
 
     // Compare accounts
     bool accountResult = tAccount.hasSameValues(appState.accounts[0]);
@@ -105,51 +104,50 @@ main() {
     expect(appState.transactions[0].amount, tMoneyTransaction.amount);
   });
 
-test('when addCategory() is called, add category to the database and to each budget', () {
+  test(
+      'when addCategory() is called, add category to the database and to each budget',
+      () {
+    //!Arrange
+    String tCategoryName = "Essentials";
+    int tCategoryId = 1;
+    MainCategory tCategory = MainCategory(id: tCategoryId, name: tCategoryName);
 
-  //!Arrange
-  String tCategoryName = "Essentials";
-  int tCategoryId = 1;
-  MainCategory tCategory = MainCategory(id: tCategoryId, name: tCategoryName);
+    when(mockQueries.addCategory(argThat(isA<MainCategoryModel>())))
+        .thenAnswer((_) async => tCategoryId);
 
-  when(mockQueries.addCategory(argThat(isA<MainCategoryModel>()))).thenAnswer((_) async => tCategoryId);
+    //!Act
+    appState.addCategory(categoryName: tCategoryName);
 
-  //!Act
-  appState.addCategory(categoryName: tCategoryName);
+    //!Assert
+    verify(mockQueries.addCategory(argThat(isA<MainCategoryModel>())));
+    for (final Budget budget in appState.budgets) {
+      MainCategory cat =
+          budget.maincategories.singleWhere((cat) => cat.id == tCategoryId);
+      bool result = cat.hasSameValues(tCategory);
+      expect(result, true);
+    }
+  });
 
-  //!Assert
-  verify(mockQueries.addCategory(argThat(isA<MainCategoryModel>())));
-  for (final Budget budget in appState.budgets) {
-    MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == tCategoryId);
-    bool result = cat.hasSameValues(tCategory);
-    expect(result,true);
-  }
+  test(
+      'when addPayee() is called then add a payee to the state and the database',
+      () async {
+    //!Arrange
+    String tPayeeName = "Savings";
+    int tPayeeId = 1;
+    Payee tPayee = Payee(id: tPayeeId, name: tPayeeName);
 
-});
+    when(mockQueries.addPayee(argThat(isA<PayeeModel>())))
+        .thenAnswer((_) async => tPayeeId);
 
-test('when addPayee() is called then add a payee to the state and the database', () async{
+    //!Act
+    await appState.addPayee(payeeName: tPayeeName);
 
+    //!Assert
+    verify(mockQueries.addPayee(argThat(isA<PayeeModel>())));
 
-  //!Arrange
-  String tPayeeName = "Savings";
-  int tPayeeId = 1;
-  Payee tPayee = Payee(id: tPayeeId, name:tPayeeName);
+    Payee payee = appState.payees.singleWhere((payee) => payee.id == tPayeeId);
+    bool result = tPayee.hasSameValues(payee);
 
-  when(mockQueries.addPayee(argThat(isA<PayeeModel>()))).thenAnswer((_) async => tPayeeId);
-
-  //!Act
-  await appState.addPayee(payeeName: tPayeeName);
-
-
-  //!Assert
-  verify(mockQueries.addPayee(argThat(isA<PayeeModel>())));
-
-  Payee payee = appState.payees.singleWhere((payee) => payee.id == tPayeeId);
-  bool result = tPayee.hasSameValues(payee);
-
-  expect(result, true);
-
-
-});
-
+    expect(result, true);
+  });
 }
