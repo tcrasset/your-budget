@@ -21,9 +21,7 @@ abstract class AppStateRepository {
   /// ,to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory(SubCategoryModel subcategoryModel);
-
-  void addSubcategoryByName(String subcategoryName, int maincategoryId);
+  void addSubcategory({@required String subcategoryName, @required  int maincategoryId});
 
   /// Add the [transaction] to the [_transactions] list, persist it to
   /// the database and add the transaction amount to the corresponding subcategory.

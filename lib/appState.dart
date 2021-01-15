@@ -132,13 +132,20 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   /// Adds [subcategory] to the list [_subcategories],
-  /// ,to the data base and update the list  [_allCategories] by
+  /// to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory(SubCategoryModel subcategoryModel) async {
+  void addSubcategory({@required String subcategoryName, @required  int maincategoryId}) async {
     DateTime newDate = startingBudgetDate;
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime previousDate;
+
+    SubCategoryModel subcategoryModel = SubCategoryModel(
+      parentId: maincategoryId,
+      name: subcategoryName,
+      budgeted: 0.00,
+      available: 0.00,
+    );
 
     int subcatId = await queryContext.addSubcategory(subcategoryModel);
     SubCategory subcategory = SubCategory(
@@ -177,15 +184,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     } while (previousDate.isBefore(maxBudgetDate));
 
     notifyListeners();
-  }
-
-  void addSubcategoryByName(String subcategoryName, int maincategoryId) {
-    addSubcategory(SubCategoryModel(
-      parentId: maincategoryId,
-      name: subcategoryName,
-      budgeted: 0.00,
-      available: 0.00,
-    ));
   }
 
   /// Add the [transaction] to the [_transactions] list, persist it to
