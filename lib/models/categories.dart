@@ -177,10 +177,10 @@ class MainCategory extends Category {
 /// Class representing the values tied to a SubCategory, represented by [subcategoryId], for a
 /// particular month set by [month] and [year].
 class BudgetValue {
-  double budgeted;
-  double available;
   int id;
   int subcategoryId;
+  double budgeted;
+  double available;
   int month;
   int year;
 
@@ -201,5 +201,14 @@ class BudgetValue {
   String toString() {
     return super.toString() +
         """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, year: $year, month:$month}\n""";
+  }
+
+  bool hasSameValues(BudgetValue budgetValue) {
+    return this.id == budgetValue.id &&
+      this.subcategoryId == budgetValue.subcategoryId &&
+      this.budgeted == budgetValue.budgeted &&
+      this.available == budgetValue.available &&
+      this.year == budgetValue.year &&
+      this.month == budgetValue.month;
   }
 }
