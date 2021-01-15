@@ -76,7 +76,7 @@ class FakeDatabase {
 
     //! Subcategories joined with BudgetValues
     when(mockQueries.getSubCategoriesJoined(
-            argThat(isInstanceOf<int>()), argThat(isInstanceOf<int>())))
+            argThat(isA<int>()), argThat(isA<int>())))
         .thenAnswer((invocation) async {
       int year = invocation.positionalArguments[0];
       int month = invocation.positionalArguments[1];
