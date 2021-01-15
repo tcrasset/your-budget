@@ -51,6 +51,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
+  UnmodifiableListView<BudgetValue> get budgetValues => UnmodifiableListView(_budgetValues);
   Account get mostRecentAccount => _mostRecentAccount ?? _accounts[0];
 
   AppState({@required this.queryContext});
