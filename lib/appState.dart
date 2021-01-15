@@ -135,7 +135,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory({@required String subcategoryName, @required  int maincategoryId}) async {
+  Future<void> addSubcategory({@required String subcategoryName, @required  int maincategoryId}) async {
     DateTime newDate = startingBudgetDate;
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime previousDate;
