@@ -117,7 +117,7 @@ class Account {
 
   /// Default constructor for [Account] with an unique [id], a [name] and the
   /// current [balance].
-  Account(this.id, this.name, this.balance);
+  Account({@required this.id, @required  this.name, @required  this.balance});
 
   /// Constructor building an [Account] from a [json] representation taken
   /// from a database.

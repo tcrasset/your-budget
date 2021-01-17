@@ -82,7 +82,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     AccountModel accountModel =
         AccountModel(name: accountName, balance: balance);
     int accountId = await queryContext.addAccount(accountModel);
-    Account account = Account(accountId, accountName, balance);
+    Account account = Account(id:accountId, name:accountName, balance:balance);
     _accounts.add(account);
 
     MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(

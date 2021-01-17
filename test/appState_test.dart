@@ -65,7 +65,7 @@ main() {
     double balance = 999.99;
     int accountId = 1;
     int moneyTransactionId = 1;
-    Account tAccount = Account(accountId, accountName, balance);
+    Account tAccount = Account(id:accountId, name:accountName,balance: balance);
     MoneyTransaction tMoneyTransaction = MoneyTransaction(
         id: moneyTransactionId,
         accountID: accountId,
