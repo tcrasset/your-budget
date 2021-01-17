@@ -382,10 +382,10 @@ main() {
         .thenAnswer((_) async => tTransactionId);
 
     // Get previous account balances
-    final Account outAccount = appState.accounts
-        .singleWhere((account) => account.id == tAccountId);
-    final Account inAccount = appState.accounts
-        .singleWhere((account) => account.id == -tPayeeId);
+    final Account outAccount =
+        appState.accounts.singleWhere((account) => account.id == tAccountId);
+    final Account inAccount =
+        appState.accounts.singleWhere((account) => account.id == -tPayeeId);
     final double outAccountPreviousBalance = outAccount.balance;
     final double inAccountPreviousBalance = inAccount.balance;
 
@@ -398,7 +398,6 @@ main() {
         date: tDate,
         memo: tMemo);
 
-
     //!Assert
     // Verify that accounts get updated
     expect(outAccount.balance, outAccountPreviousBalance - tAmount);
@@ -407,11 +406,10 @@ main() {
     verify(mockQueries.updateAccount(inAccount));
   });
 
-
-test('when addTransaction() is called with a standard transaction, update'
-+'the account, the budget and', () async{
-
-  //!Arrange
+  test(
+      'when addTransaction() is called with a standard transaction, update' +
+          'the account, the budget and', () async {
+    //!Arrange
 
     final int tTransactionId = 111;
     final int tSubcatId = FakeDatabase.TEST_SUBCATEGORY_ID;
@@ -424,8 +422,8 @@ test('when addTransaction() is called with a standard transaction, update'
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => tTransactionId);
 
-    final Account account = appState.accounts
-        .singleWhere((account) => account.id == tAccountId);
+    final Account account =
+        appState.accounts.singleWhere((account) => account.id == tAccountId);
     final double previousAccountBalance = account.balance;
 
     //!Act
@@ -437,13 +435,12 @@ test('when addTransaction() is called with a standard transaction, update'
         date: tDate,
         memo: tMemo);
 
-  //!Assert
+    //!Assert
     verify(mockQueries.updateAccount(account));
     expect(account.balance, previousAccountBalance + tAmount);
 
     // Verify that it updates the budget values of every month after
     int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs() + 2;
     verify(mockQueries.updateBudgetValue(any)).called(nbMonths);
-
-});
+  });
 }

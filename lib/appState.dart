@@ -236,25 +236,29 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       await _addTransactionBetweenAccounts(transaction);
       notifyListeners();
     } else {
-
-      // Update balance of the account
-      final Account account = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      account.balance += transaction.amount;
-      queryContext.updateAccount(account);
-
-      Budget budget = _getBudgetByDate(
-          DateTime(transaction.date.year, transaction.date.month));
-      SubCategory oldSubcat = budget.subcategories
-          .singleWhere((subcat) => subcat.id == transaction.subcatID);
-
-      double newAvailableAmount = oldSubcat.available + transaction.amount;
-      SubCategory newSubcat = SubCategory(id:oldSubcat.id, parentId:oldSubcat.parentId,
-          name:oldSubcat.name,budgeted:oldSubcat.budgeted,available: newAvailableAmount);
-
-      updateSubcategory(newSubcat);
-      //notifyListeners is called in updateSubcategory
+      //notifyListeners is called in _addStandardTransaction
+      _addStandardTransaction(transaction);
     }
+  }
+
+  void _addStandardTransaction(MoneyTransaction transaction) {
+    // Update balance of the account
+    final Account account = accounts
+        .singleWhere((account) => account.id == transaction.accountID);
+    account.balance += transaction.amount;
+    queryContext.updateAccount(account);
+
+    Budget budget = _getBudgetByDate(
+        DateTime(transaction.date.year, transaction.date.month));
+    SubCategory oldSubcat = budget.subcategories
+        .singleWhere((subcat) => subcat.id == transaction.subcatID);
+
+    double newAvailableAmount = oldSubcat.available + transaction.amount;
+    SubCategory newSubcat = SubCategory(id:oldSubcat.id, parentId:oldSubcat.parentId,
+        name:oldSubcat.name,budgeted:oldSubcat.budgeted,available: newAvailableAmount);
+
+    //notifyListeners is called in updateSubcategory
+    updateSubcategory(newSubcat);
   }
 
   Future<void> _addTransactionBetweenAccounts(MoneyTransaction transaction) async {
