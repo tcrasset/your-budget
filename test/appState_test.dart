@@ -258,7 +258,7 @@ main() {
     int tTransactionId = 111;
     int tSubcatId = FakeDatabase.TEST_SUBCATEGORY_ID;
     int tPayeeId = 88;
-    int tAccountId = FakeDatabase.TEST_ACCOUNT_ID;
+    int tAccountId = FakeDatabase.TEST_ACCOUNT_ID_1;
     double tAmount = 1000.00;
     String tMemo = "Test Passed";
 
@@ -311,7 +311,7 @@ main() {
     final int tTransactionId = 111;
     final int tSubcatId = Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
     final int tPayeeId = 88;
-    final int tAccountId = FakeDatabase.TEST_ACCOUNT_ID;
+    final int tAccountId = FakeDatabase.TEST_ACCOUNT_ID_1;
     final double tAmount = 1000.00;
     final String tMemo = "Test Passed";
     final DateTime tDate = DateTime.now();

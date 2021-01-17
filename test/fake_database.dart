@@ -11,7 +11,8 @@ import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/utils.dart';
 
 class FakeDatabase {
-  static const TEST_ACCOUNT_ID = 77;
+  static const TEST_ACCOUNT_ID_1 = 77;
+  static const TEST_ACCOUNT_ID_2 = 770;
   static const TEST_PAYEE_ID = 88;
   static const TEST_MONEYTRANSACTION_ID = 99;
   static const TEST_SUBCATEGORY_ID = 5;
@@ -162,7 +163,7 @@ class FakeDatabase {
 
   List<MoneyTransaction> _buildMoneyTransactions() {
     MoneyTransaction mt = MoneyTransaction(
-        accountID: TEST_ACCOUNT_ID,
+        accountID: TEST_ACCOUNT_ID_1,
         amount: 999.99,
         date: startingBudgetDate,
         id: TEST_MONEYTRANSACTION_ID,
@@ -177,7 +178,7 @@ class FakeDatabase {
   }
 
   List<Account> _buildAccounts() {
-    return [Account(id: TEST_ACCOUNT_ID, balance: 1000.00, name: "Savings")];
+    return [Account(id: TEST_ACCOUNT_ID_1, balance: 1000.00, name: "Savings")];
   }
 
   List<Goal> _buildGoals() {
