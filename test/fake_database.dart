@@ -11,11 +11,10 @@ import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/utils.dart';
 
 class FakeDatabase {
-
-  static const ACCOUNT_ID = 77;
-  static const PAYEE_ID = 88;
-  static const MONEYTRANSACTION_ID = 99;
-  static const SUBCATEGORY_ID = 111;
+  static const TEST_ACCOUNT_ID = 77;
+  static const TEST_PAYEE_ID = 88;
+  static const TEST_MONEYTRANSACTION_ID = 99;
+  static const TEST_SUBCATEGORY_ID = 5;
 
   final Queries mockQueries;
   final startingBudgetDate = DateTime.now();
@@ -53,8 +52,7 @@ class FakeDatabase {
         .thenAnswer((_) async => startingBudgetDate);
 
     //! MainCategories
-    when(mockQueries.getCategories())
-        .thenAnswer((_) async => maincategories);
+    when(mockQueries.getCategories()).thenAnswer((_) async => maincategories);
 
     //! MoneyTransactions
     when(mockQueries.getMoneyTransactions())
@@ -92,7 +90,6 @@ class FakeDatabase {
           .toList();
       List<SubCategory> joinedSubcategories = [];
 
-
       for (final SubCategory subcat in subCategories) {
         BudgetValue budgetValue = budgetValuesOfMonth
             .singleWhere((bv) => bv.subcategoryId == subcat.id);
@@ -106,7 +103,7 @@ class FakeDatabase {
 
     //! First transaction of account
     when(mockQueries.getFirstTransactionOfAccount(any))
-        .thenAnswer( (_) async=> moneyTransactions[0]);
+        .thenAnswer((_) async => moneyTransactions[0]);
 
     // //! Add account
     // AccountModel aModel;
@@ -164,7 +161,14 @@ class FakeDatabase {
   }
 
   List<MoneyTransaction> _buildMoneyTransactions() {
-    MoneyTransaction mt = MoneyTransaction(accountID: ACCOUNT_ID, amount: 999.99, date: startingBudgetDate, id: MONEYTRANSACTION_ID, payeeID: PAYEE_ID, subcatID: SUBCATEGORY_ID, memo: "");
+    MoneyTransaction mt = MoneyTransaction(
+        accountID: TEST_ACCOUNT_ID,
+        amount: 999.99,
+        date: startingBudgetDate,
+        id: TEST_MONEYTRANSACTION_ID,
+        payeeID: TEST_PAYEE_ID,
+        subcatID: TEST_SUBCATEGORY_ID,
+        memo: "");
     return [mt];
   }
 
@@ -173,7 +177,7 @@ class FakeDatabase {
   }
 
   List<Account> _buildAccounts() {
-    return [Account(id: ACCOUNT_ID, balance: 1000.00, name: "Savings")];
+    return [Account(id: TEST_ACCOUNT_ID, balance: 1000.00, name: "Savings")];
   }
 
   List<Goal> _buildGoals() {

@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:mockito/mockito.dart';
@@ -233,4 +236,130 @@ main() {
     BudgetValue budgetValue = budgetValues.singleWhere((bv) => isSameMonth(DateTime(bv.year, bv.month), previousDate), orElse: () => null);
     expect(budgetValue, null);
   });
+
+
+  test('when addTransaction() is called, add a MoneyTransaction to the state and to'
+  + 'the database, and update most recent account used', () async{
+
+    //!Arrange
+    int tTransactionId = 111;
+    int tSubcatId = FakeDatabase.TEST_SUBCATEGORY_ID;
+    int tPayeeId = 88;
+    int tAccountId = FakeDatabase.TEST_ACCOUNT_ID;
+    double tAmount = 1000.00;
+    String tMemo = "Test Passed";
+
+    MoneyTransaction tMoneyTransaction = MoneyTransaction(
+    id: tTransactionId,
+     payeeID: tPayeeId,
+      accountID: tAccountId,
+    subcatID: tSubcatId,
+    amount: tAmount,
+    date: DateTime.now(),
+     memo: tMemo,
+     );
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransactionId);
+
+    //!Act
+    await appState.addTransaction(
+      subcatId: tSubcatId,
+      accountId: tAccountId,
+    payeeId: tPayeeId,
+    amount: tAmount,
+    date: DateTime.now(),
+    memo: tMemo);
+
+    //!Assert
+    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
+    verify(mockQueries.updateMostRecentAccountUsed(tAccountId));
+
+    MoneyTransaction transaction = appState.transactions.singleWhere((tr) => tr.id == tTransactionId);
+
+    // Compare transactions (without data comparison)
+    expect(transaction.id, tMoneyTransaction.id);
+    expect(transaction.subcatID, tMoneyTransaction.subcatID);
+    expect(transaction.payeeID, tMoneyTransaction.payeeID);
+    expect(transaction.accountID, tMoneyTransaction.accountID);
+    expect(transaction.amount, tMoneyTransaction.amount);
+
+
+  });
+
+  test('when addTransaction() is called with a transaction into "To Be Budgeted",' +
+  'then update the corresponding account balance, the budgets and To Be Budgeted total', () async{
+
+    //!Arrange
+
+    clearInteractions(mockQueries);
+
+    final int tTransactionId = 111;
+    final int tSubcatId = Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
+    final int tPayeeId = 88;
+    final int tAccountId = FakeDatabase.TEST_ACCOUNT_ID;
+    final double tAmount = 1000.00;
+    final String tMemo = "Test Passed";
+    final DateTime tDate = DateTime.now();
+    final MoneyTransaction tMoneyTransaction = MoneyTransaction(
+      id: tTransactionId,
+      payeeID: tPayeeId,
+      accountID: tAccountId,
+      subcatID: tSubcatId,
+      amount: tAmount,
+      date: tDate,
+      memo: tMemo,
+     );
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransactionId);
+
+    final double previousToBeBudgeted = appState.toBeBudgeted;
+    final Account account = appState.accounts
+          .singleWhere((account) => account.id == tAccountId);
+    final double previousAccountBalance = account.balance;
+
+    /// Saving the [toBeBudgetedInputFromMoneyTransactions] of every
+    /// [budget] before adding the transaction
+    HashMap<DateTime, double> inputFromMoneyTranasctionsBefore = HashMap<DateTime, double>();
+    for(final budget in appState.budgets){
+      DateTime budgetDate = DateTime(budget.year, budget.month);
+      inputFromMoneyTranasctionsBefore[budgetDate] = budget.toBeBudgetedInputFromMoneyTransactions;
+    }
+
+
+    //!Act
+    await appState.addTransaction(
+      subcatId: tSubcatId,
+      accountId: tAccountId,
+    payeeId: tPayeeId,
+    amount: tAmount,
+    date: DateTime.now(),
+    memo: tMemo);
+
+    //!Assert
+    // Verify that the account was updated
+    final double afterAccountBalance = account.balance;
+    final double accountBalanceDifference = afterAccountBalance - previousAccountBalance;
+    expect(accountBalanceDifference, tAmount);
+    verify(mockQueries.updateAccount(account));
+
+    // Verify that the budgets were updated
+    for(final budget in appState.budgets){
+      DateTime budgetDate = DateTime(budget.year, budget.month);
+      debugPrint(budgetDate.toString());
+      debugPrint(budget.toBeBudgetedInputFromMoneyTransactions.toString());
+      if(isSameMonth(budgetDate, tDate))
+         expect(budget.toBeBudgetedInputFromMoneyTransactions,
+          inputFromMoneyTranasctionsBefore[budgetDate] + tAmount);
+      else
+        expect(inputFromMoneyTranasctionsBefore[budgetDate],
+        budget.toBeBudgetedInputFromMoneyTransactions);
+    }
+    // Verify that computeToBeBudgeted() was called and toBeBudgeted updated
+    verify(mockQueries.getFirstTransactionOfAccount(tAccountId)).called(1);
+    expect(appState.toBeBudgeted, previousToBeBudgeted + tAmount);
+  });
+
+
 }
