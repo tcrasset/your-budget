@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:mockito/mockito.dart';
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/Budget.dart';
@@ -8,6 +9,7 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/queries.dart';
+import 'package:your_budget/models/utils.dart';
 import 'fake_database.dart';
 
 class MockQueries extends Mock implements Queries {}
@@ -184,4 +186,46 @@ main() {
     }
   });
 
+
+  test(
+      'when addSubcategory() is called, add BudgetValues to the state and' +
+          ' the database, from the date the budget was started up until' +
+          ' the maximal budget date', () async {
+    //!Arrange
+    String tSubcategoryName = "Groceries";
+    int tMaincategoryId = 1;
+    int tSubcategoryId = 99;
+    int tBudgetId = 1001;
+
+    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())))
+        .thenAnswer((_) async => tSubcategoryId);
+
+    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())))
+        .thenAnswer((_) async => tBudgetId);
+
+
+    //! Act
+    await appState.addSubcategory(subcategoryName:tSubcategoryName, maincategoryId: tMaincategoryId);
+
+    //! Assert
+    List<BudgetValue> budgetValues = appState.budgetValues.where((bv) => bv.id == tBudgetId).toList();
+    DateTime newDate = await mockQueries.getStartingBudgetDateConstant();
+    DateTime maxBudgetDate = getMaxBudgetDate();
+    DateTime previousDate;
+    // Loop over all dates between startingBudgetDate and maxBudgetDate
+    // and verify that there is one and only one transaction on that date.
+    do {
+      previousDate = newDate;
+      BudgetValue tBudgetValue = BudgetValue(id: tBudgetId, subcategoryId: tSubcategoryId, budgeted: 0.0, available: 0.0, year: previousDate.year, month: previousDate.month);
+      BudgetValue budgetValue = budgetValues.singleWhere((bv) => isSameMonth(DateTime(bv.year, bv.month), previousDate), orElse: () => null);
+      bool result = tBudgetValue.hasSameValues(budgetValue);
+      expect(result, true);
+      newDate = Jiffy(previousDate).add(months: 1);
+    } while (previousDate.isBefore(maxBudgetDate));
+
+    // Check that there are no transactions after that date
+    previousDate = Jiffy(previousDate).add(months: 1);
+    BudgetValue budgetValue = budgetValues.singleWhere((bv) => isSameMonth(DateTime(bv.year, bv.month), previousDate), orElse: () => null);
+    expect(budgetValue, null);
+  });
 }
