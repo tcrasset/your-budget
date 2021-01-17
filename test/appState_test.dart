@@ -28,15 +28,14 @@ main() {
     await fakeDatabase.setup();
     appState = AppState(queryContext: mockQueries);
     await appState.loadStateFromDatabase();
+
+    clearInteractions(mockQueries);
   });
 
   test(
       'when loadStateFromDatabase() then load all necessary stuff from the' +
           'the database to the state', () async {
     //!Arrange
-    // Clear the interactions of call of loadStateFromDatabase()
-    // in the setUp() method
-    clearInteractions(mockQueries);
 
     //!Act
     await appState.loadStateFromDatabase();
@@ -306,8 +305,6 @@ main() {
       () async {
     //!Arrange
 
-    clearInteractions(mockQueries);
-
     final int tTransactionId = 111;
     final int tSubcatId = Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
     final int tPayeeId = 88;
@@ -499,7 +496,7 @@ main() {
 
   test(
       'when incrementMonth() is called, change the current budget date,' +
-          ', current budget and update to be budgeted', () {
+          ', current budget and update to be budgeted', () async {
     //!Arrange
     int tYear = 2021;
     int tMonth = 6;
@@ -511,11 +508,12 @@ main() {
 
     appState.currentBudgetDate = juneDate;
     //!Act
-    appState.incrementMonth();
+    await appState.incrementMonth();
 
     //!Assert
     expect(appState.currentBudget, julyBudget);
     expect(appState.currentBudgetDate, julyDate);
+    verify(mockQueries.getFirstTransactionOfAccount(any));
   });
 
   test(
@@ -530,5 +528,6 @@ main() {
 
     //!Assert
     expect(appState.currentBudgetDate, maxBudgetDate);
+    verifyNever(mockQueries.getFirstTransactionOfAccount(any));
   });
 }
