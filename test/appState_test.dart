@@ -443,4 +443,35 @@ main() {
     int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs() + 2;
     verify(mockQueries.updateBudgetValue(any)).called(nbMonths);
   });
+
+  test(
+      'when removeSubcategory() is called, remove subcategory from the budgets' +
+          ' and the database ', () async {
+    //!Arrange
+    int subcatIdToRemove = FakeDatabase.TEST_SUBCATEGORY_ID;
+
+    int nbBudgetValuesToRemove = appState.budgetValues
+        .where((bv) => bv.subcategoryId == subcatIdToRemove)
+        .toList().length;
+
+    //!Act
+    appState.removeSubcategory(subcatIdToRemove);
+
+    //!Assert
+    // Verify that the subcategory was removed from every budget
+    for (final budget in appState.budgets) {
+      final SubCategory subcat = budget.subcategories.singleWhere(
+          (subcat) => subcat.id == subcatIdToRemove,
+          orElse: () => null);
+      expect(subcat, null);
+    }
+    verify(mockQueries.deleteSubcategory(subcatIdToRemove));
+
+    //Verify that the budgetvalues have been removed from the state
+    for (final budgetvalue in appState.budgetValues) {
+      bool hasSameId = budgetvalue.subcategoryId == subcatIdToRemove;
+      expect(hasSameId, false);
+    }
+    verify(mockQueries.deleteBudgetValue(any)).called(nbBudgetValuesToRemove);
+  });
 }
