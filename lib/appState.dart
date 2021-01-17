@@ -226,16 +226,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     setMostRecentAccountUsed(accountId);
 
-    if (transaction.subcatID ==
-        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
-      print("Is to be budgeted money transaction");
-      // Update balance of the account
-      final Account account = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      account.balance += transaction.amount;
-      await queryContext.updateAccount(account);
-      _budgets = await _createAllMonthlyBudgets();
-      await computeToBeBudgeted();
+    bool isTransactionIntoToBeBudgeted = transaction.subcatID ==
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
+    if (isTransactionIntoToBeBudgeted) {
+      await _addTransactionIntoToBeBudgeted(transaction);
       notifyListeners();
     } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
       /// If the transaction amount is positive, the transaction will remove money from
@@ -277,6 +271,19 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       //notifyListeners is called in updateSubcategory
     }
   }
+
+
+  Future<void> _addTransactionIntoToBeBudgeted(MoneyTransaction transaction) async{
+      print("Is to be budgeted money transaction");
+      // Update balance of the account
+      final Account account = accounts
+          .singleWhere((account) => account.id == transaction.accountID);
+      account.balance += transaction.amount;
+      await queryContext.updateAccount(account);
+      _budgets = await _createAllMonthlyBudgets();
+      await computeToBeBudgeted();
+  }
+
 
   Future<void> addGoal({
     @required GoalType goalType,
