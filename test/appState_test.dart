@@ -150,4 +150,38 @@ main() {
 
     expect(result, true);
   });
+
+  test(
+      'when addSubcategory() is called, then add a subcategory to the state, the database' +
+          'to the budget', () async {
+    //!Arrange
+    String tSubcategoryName = "Groceries";
+    int tSubcategoryId = 99;
+    int tMaincategoryId = 1;
+    SubCategory tSubcategory = SubCategory(
+        id: tSubcategoryId,
+        parentId: tMaincategoryId,
+        name: tSubcategoryName,
+        budgeted: 0.00,
+        available: 0.00);
+
+    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())))
+        .thenAnswer((_) async => tSubcategoryId);
+
+    //!Act
+    await appState.addSubcategory(
+        subcategoryName: tSubcategoryName, maincategoryId: tMaincategoryId);
+
+    //!Assert
+    verify(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())));
+
+    // Verify that the subcategory was added to every budget
+    for (final Budget budget in appState.budgets) {
+      SubCategory subcat = budget.subcategories
+          .singleWhere((subcat) => subcat.id == tSubcategoryId);
+      bool result = subcat.hasSameValues(tSubcategory);
+      expect(result, true);
+    }
+  });
+
 }
