@@ -363,8 +363,6 @@ main() {
     // Verify that the budgets were updated
     for (final budget in appState.budgets) {
       DateTime budgetDate = DateTime(budget.year, budget.month);
-      debugPrint(budgetDate.toString());
-      debugPrint(budget.toBeBudgetedInputFromMoneyTransactions.toString());
       if (isSameMonth(budgetDate, tDate))
         expect(budget.toBeBudgetedInputFromMoneyTransactions,
             inputFromMoneyTranasctionsBefore[budgetDate] + tAmount);
@@ -375,5 +373,55 @@ main() {
     // Verify that computeToBeBudgeted() was called and toBeBudgeted updated
     verify(mockQueries.getFirstTransactionOfAccount(tAccountId)).called(1);
     expect(appState.toBeBudgeted, previousToBeBudgeted + tAmount);
+  });
+
+  test(
+      'when addTransaction() is called with a transaction between accounts' +
+          ', then update both accounts', () async {
+    final int tTransactionId = 111;
+    final int tSubcatId = Constants.UNASSIGNED_SUBCAT_ID;
+    final int tPayeeId =
+        -FakeDatabase.TEST_ACCOUNT_ID_2; //Negative account id as payee id
+    final int tAccountId = FakeDatabase.TEST_ACCOUNT_ID_1;
+    final double tAmount = 1000.00;
+    final String tMemo = "Test Passed";
+    final DateTime tDate = DateTime.now();
+    final MoneyTransaction tMoneyTransaction = MoneyTransaction(
+      id: tTransactionId,
+      payeeID: tPayeeId,
+      accountID: tAccountId,
+      subcatID: tSubcatId,
+      amount: tAmount,
+      date: tDate,
+      memo: tMemo,
+    );
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransactionId);
+
+    // Get previous account balances
+    final Account outAccount = appState.accounts
+        .singleWhere((account) => account.id == tAccountId);
+    final Account inAccount = appState.accounts
+        .singleWhere((account) => account.id == -tPayeeId);
+    final double outAccountPreviousBalance = outAccount.balance;
+    final double inAccountPreviousBalance = inAccount.balance;
+
+    //!Act
+    await appState.addTransaction(
+        subcatId: tSubcatId,
+        accountId: tAccountId,
+        payeeId: tPayeeId,
+        amount: tAmount,
+        date: DateTime.now(),
+        memo: tMemo);
+
+
+    //!Assert
+    // Verify that accounts get updated
+    expect(outAccount.balance, outAccountPreviousBalance - tAmount);
+    expect(inAccount.balance, inAccountPreviousBalance + tAmount);
+    verify(mockQueries.updateAccount(outAccount));
+    verify(mockQueries.updateAccount(inAccount));
   });
 }
