@@ -178,7 +178,10 @@ class FakeDatabase {
   }
 
   List<Account> _buildAccounts() {
-    return [Account(id: TEST_ACCOUNT_ID_1, balance: 1000.00, name: "Savings")];
+    return [
+      Account(id: TEST_ACCOUNT_ID_1, balance: 1000.00, name: "Savings"),
+      Account(id: TEST_ACCOUNT_ID_2, balance: 500.00, name: "Cash")
+    ];
   }
 
   List<Goal> _buildGoals() {
