@@ -496,4 +496,39 @@ main() {
 
     verify(mockQueries.updateCategory(tCat));
   });
+
+  test(
+      'when incrementMonth() is called, change the current budget date,' +
+          ', current budget and update to be budgeted', () {
+    //!Arrange
+    int tYear = 2021;
+    int tMonth = 6;
+    DateTime juneDate = DateTime(tYear, tMonth);
+    DateTime julyDate = DateTime(tYear, tMonth + 1);
+    Budget julyBudget = appState.budgets.singleWhere(
+      (budget) => budget.year == tYear && budget.month == tMonth + 1,
+    );
+
+    appState.currentBudgetDate = juneDate;
+    //!Act
+    appState.incrementMonth();
+
+    //!Assert
+    expect(appState.currentBudget, julyBudget);
+    expect(appState.currentBudgetDate, julyDate);
+  });
+
+  test(
+      'when incrementMonth() is called, and we are already at maxBudgetDate,' +
+          ' do not increment ', () {
+    //!Arrange
+    DateTime maxBudgetDate = getMaxBudgetDate();
+
+    appState.currentBudgetDate = maxBudgetDate;
+    //!Act
+    appState.incrementMonth();
+
+    //!Assert
+    expect(appState.currentBudgetDate, maxBudgetDate);
+  });
 }
