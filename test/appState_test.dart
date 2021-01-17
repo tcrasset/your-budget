@@ -496,7 +496,7 @@ main() {
 
   test(
       'when incrementMonth() is called, change the current budget date,' +
-          ', current budget and update to be budgeted', () async {
+          ', current budget and update to be budgeted', () {
     //!Arrange
     int tYear = 2021;
     int tMonth = 6;
@@ -508,7 +508,7 @@ main() {
 
     appState.currentBudgetDate = juneDate;
     //!Act
-    await appState.incrementMonth();
+    appState.incrementMonth();
 
     //!Assert
     expect(appState.currentBudget, julyBudget);
@@ -528,6 +528,44 @@ main() {
 
     //!Assert
     expect(appState.currentBudgetDate, maxBudgetDate);
+    verifyNever(mockQueries.getFirstTransactionOfAccount(any));
+  });
+
+  test(
+      'when decrementMonth() is called, decrement the current budget date' +
+          ', the budget and call computeToBeBudgeted()', () {
+    //!Arrange
+    int tYear = 2021;
+    int tMonth = 6;
+    DateTime juneDate = DateTime(tYear, tMonth);
+    DateTime mayDate = DateTime(tYear, tMonth - 1);
+    Budget mayBudget = appState.budgets.singleWhere(
+      (budget) => budget.year == tYear && budget.month == tMonth - 1,
+    );
+
+    appState.currentBudgetDate = juneDate;
+    //!Act
+    appState.decrementMonth();
+
+    //!Assert
+    expect(appState.currentBudget, mayBudget);
+    expect(appState.currentBudgetDate, mayDate);
+    verify(mockQueries.getFirstTransactionOfAccount(any));
+  });
+
+  test(
+      'when decrementMonth() is called, and we are already at startingBudgetDate' +
+          ', dont decrement', () async {
+    //!Arrange
+    DateTime startingBudgetDate =
+        await mockQueries.getStartingBudgetDateConstant();
+    appState.currentBudgetDate = startingBudgetDate;
+
+    //!Act
+    appState.decrementMonth();
+
+    //!Assert
+    expect(appState.currentBudgetDate, startingBudgetDate);
     verifyNever(mockQueries.getFirstTransactionOfAccount(any));
   });
 }
