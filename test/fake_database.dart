@@ -11,6 +11,12 @@ import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/utils.dart';
 
 class FakeDatabase {
+
+  static const ACCOUNT_ID = 77;
+  static const PAYEE_ID = 88;
+  static const MONEYTRANSACTION_ID = 99;
+  static const SUBCATEGORY_ID = 111;
+
   final Queries mockQueries;
   final startingBudgetDate = DateTime.now();
 
@@ -98,15 +104,9 @@ class FakeDatabase {
       return joinedSubcategories;
     });
 
-    // //! First transaction of account
-    // when(mockQueries.getFirstTransactionOfAccount(any))
-    //     .thenAnswer((invocation) async {
-    //   moneyTransactions.sort((a, b) => a.date.compareTo(b.date));
-    //   int accountId = invocation.positionalArguments[0];
-    //   MoneyTransaction moneyTransaction =
-    //       moneyTransactions.singleWhere((mT) => mT.accountID == accountId);
-    //   return moneyTransaction;
-    // });
+    //! First transaction of account
+    when(mockQueries.getFirstTransactionOfAccount(any))
+        .thenAnswer( (_) async=> moneyTransactions[0]);
 
     // //! Add account
     // AccountModel aModel;
@@ -164,7 +164,8 @@ class FakeDatabase {
   }
 
   List<MoneyTransaction> _buildMoneyTransactions() {
-    return [];
+    MoneyTransaction mt = MoneyTransaction(accountID: ACCOUNT_ID, amount: 999.99, date: startingBudgetDate, id: MONEYTRANSACTION_ID, payeeID: PAYEE_ID, subcatID: SUBCATEGORY_ID, memo: "");
+    return [mt];
   }
 
   List<Payee> _buildPayees() {
@@ -172,7 +173,7 @@ class FakeDatabase {
   }
 
   List<Account> _buildAccounts() {
-    return [];
+    return [Account(id: ACCOUNT_ID, balance: 1000.00, name: "Savings")];
   }
 
   List<Goal> _buildGoals() {

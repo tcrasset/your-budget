@@ -91,19 +91,20 @@ main() {
         mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
 
     // Verify that we call computeToBeBudgeted() once (we only added a single account)
-    verify(mockQueries.getFirstTransactionOfAccount(argThat(isA<int>())))
-        .called(1);
-
+    verify(mockQueries.getFirstTransactionOfAccount(argThat(isA<int>())));
     // Compare accounts
-    bool accountResult = tAccount.hasSameValues(appState.accounts[0]);
+    Account account = appState.accounts.singleWhere((acc) => acc.id == accountId);
+    bool accountResult = tAccount.hasSameValues(account);
     expect(accountResult, true);
 
     // Compare transactions (without data comparison)
-    expect(appState.transactions[0].id, tMoneyTransaction.id);
-    expect(appState.transactions[0].subcatID, tMoneyTransaction.subcatID);
-    expect(appState.transactions[0].payeeID, tMoneyTransaction.payeeID);
-    expect(appState.transactions[0].accountID, tMoneyTransaction.accountID);
-    expect(appState.transactions[0].amount, tMoneyTransaction.amount);
+    MoneyTransaction transaction = appState.transactions.singleWhere((transaction) => transaction.id == tMoneyTransaction.id);
+
+    expect(transaction.id, tMoneyTransaction.id);
+    expect(transaction.subcatID, tMoneyTransaction.subcatID);
+    expect(transaction.payeeID, tMoneyTransaction.payeeID);
+    expect(transaction.accountID, tMoneyTransaction.accountID);
+    expect(transaction.amount, tMoneyTransaction.amount);
   });
 
   test(
