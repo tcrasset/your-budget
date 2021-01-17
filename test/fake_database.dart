@@ -16,6 +16,7 @@ class FakeDatabase {
   static const TEST_PAYEE_ID = 88;
   static const TEST_MONEYTRANSACTION_ID = 99;
   static const TEST_SUBCATEGORY_ID = 5;
+  static const TEST_CATEGORY_ID = 1;
 
   final Queries mockQueries;
   final startingBudgetDate = DateTime.now();
@@ -138,7 +139,7 @@ class FakeDatabase {
   }
 
   List<MainCategory> _buildMaincategories() {
-    return [MainCategory(id: 1, name: "Essentials")];
+    return [MainCategory(id: TEST_CATEGORY_ID, name: "Essentials")];
   }
 
   List<SubCategory> _buildSubcategories() {

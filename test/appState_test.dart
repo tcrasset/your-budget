@@ -477,7 +477,7 @@ main() {
       'when calling updateCategoryName(), then update the name in the database' +
           ' and in the budgets', () {
     //!Arrange
-    int catId = 1;
+    int catId = FakeDatabase.TEST_CATEGORY_ID;
     //Original is MainCategory(id: 1, name: "Essentials")
     MainCategory tCat = MainCategory(id: catId, name: "Necessities");
 

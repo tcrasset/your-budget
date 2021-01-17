@@ -160,14 +160,13 @@ class Budget {
   void removeSubcategory(SubCategory deletedSubcategory) {
     subcategories.removeWhere((subcat) => subcat.id == deletedSubcategory.id);
     MainCategory cat = maincategories
-        .singleWhere((cat) => cat.id == deletedSubcategory.parentId);
-    cat.removeSubcategory(deletedSubcategory.id);
+        .singleWhere((cat) => cat.id == deletedSubcategory.parentId, orElse: () => null);
+    cat?.removeSubcategory(deletedSubcategory.id);
     _updateTotalBudgeted();
   }
 
   void removeCategory(MainCategory toBeRemoved) {
     maincategories.removeWhere((cat) => cat.id == toBeRemoved.id);
-    subcategories.removeWhere((subcat) => subcat.parentId == toBeRemoved.id);
     _updateTotalBudgeted();
   }
 }

@@ -629,26 +629,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       budget.removeCategory(toBeRemoved);
     });
     queryContext.deleteCategory(toBeRemoved.id);
-    for (SubCategory subcat in correspondingSubcategories) {
-      queryContext.deleteSubcategory(subcat.id);
-      _deleteCorrespondingBudgetValues(subcat.id);
-    }
+
+    correspondingSubcategories.forEach((subcat) => removeSubcategory(subcat.id));
+
     computeToBeBudgeted();
     notifyListeners();
-  }
-
-  void _deleteCorrespondingBudgetValues(int subcategoryId) {
-    // Remove the budget values linked to the subcategory from the
-    // _budgetValues array and from the data base
-    List<BudgetValue> correspondingBudgetValues = _budgetValues
-        .where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId)
-        .toList();
-
-    correspondingBudgetValues.forEach((budgetvalue) {
-      queryContext.deleteBudgetValue(budgetvalue.id);
-    });
-    _budgetValues.removeWhere(
-        (budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
   }
 
   Future<List<Budget>> _incrementMaxBudgetAndUpdateBudgets(
