@@ -473,10 +473,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     }
   }
 
-  void printDate(DateTime date) {
-    print("[${date.month}/${date.year}]");
-  }
-
   void decrementMonth() async {
     if (currentBudgetDate.isAfter(startingBudgetDate)) {
       currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
