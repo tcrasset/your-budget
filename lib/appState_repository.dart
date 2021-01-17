@@ -59,10 +59,6 @@ abstract class AppStateRepository {
 
   void incrementMonth();
 
-  void printDate(DateTime date) {
-    print("[${date.month}/${date.year}]");
-  }
-
   void decrementMonth();
 
   double computeAverageBudgeted(int subcategoryId);
