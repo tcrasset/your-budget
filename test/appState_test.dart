@@ -445,8 +445,8 @@ main() {
   });
 
   test(
-      'when removeSubcategory() is called, remove subcategory from the budgets' +
-          ' and the database ', () async {
+      'when removeSubcategory() is called, remove subcategory as well as the budgetvalues' +
+          ' from the budgets and the database', () async {
     //!Arrange
     int subcatIdToRemove = FakeDatabase.TEST_SUBCATEGORY_ID;
 
@@ -473,5 +473,26 @@ main() {
       expect(hasSameId, false);
     }
     verify(mockQueries.deleteBudgetValue(any)).called(nbBudgetValuesToRemove);
+  });
+
+  test('when calling updateCategoryName(), then update the name in the database'
+  +' and in the budgets', () {
+
+
+    //!Arrange
+    int catId = 1;
+    //Original is MainCategory(id: 1, name: "Essentials")
+    MainCategory tCat = MainCategory(id: catId, name: "Necessities");
+
+    //!Act
+    appState.updateCategoryName(tCat);
+
+    //!Assert
+    for(final budget in appState.budgets){
+      MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == catId);
+      expect(cat.name, tCat.name);
+    }
+
+    verify(mockQueries.updateCategory(tCat));
   });
 }
