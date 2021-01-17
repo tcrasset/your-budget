@@ -51,7 +51,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
-  UnmodifiableListView<BudgetValue> get budgetValues => UnmodifiableListView(_budgetValues);
+  UnmodifiableListView<BudgetValue> get budgetValues =>
+      UnmodifiableListView(_budgetValues);
   Account get mostRecentAccount => _mostRecentAccount ?? _accounts[0];
 
   AppState({@required this.queryContext});
@@ -78,11 +79,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     notifyListeners();
   }
 
-  Future<void> addAccount({@required String accountName, @required  double balance}) async {
+  Future<void> addAccount(
+      {@required String accountName, @required double balance}) async {
     AccountModel accountModel =
         AccountModel(name: accountName, balance: balance);
     int accountId = await queryContext.addAccount(accountModel);
-    Account account = Account(id:accountId, name:accountName, balance:balance);
+    Account account =
+        Account(id: accountId, name: accountName, balance: balance);
     _accounts.add(account);
 
     MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
@@ -116,7 +119,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   void addCategory({@required String categoryName}) async {
     MainCategoryModel categoryModel = MainCategoryModel(name: categoryName);
     int categoryId = await queryContext.addCategory(categoryModel);
-    MainCategory cat = MainCategory(id:categoryId, name:categoryName);
+    MainCategory cat = MainCategory(id: categoryId, name: categoryName);
     for (final Budget budget in _budgets) {
       budget.maincategories.add(cat);
     }
@@ -126,7 +129,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Future<Payee> addPayee({@required String payeeName}) async {
     PayeeModel payeeModel = PayeeModel(name: payeeName);
     int payeeId = await queryContext.addPayee(payeeModel);
-    Payee payee = Payee(id:payeeId, name:payeeName);
+    Payee payee = Payee(id: payeeId, name: payeeName);
     _payees.add(payee);
     notifyListeners();
     return payee;
@@ -136,7 +139,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  Future<void> addSubcategory({@required String subcategoryName, @required  int maincategoryId}) async {
+  Future<void> addSubcategory(
+      {@required String subcategoryName, @required int maincategoryId}) async {
     DateTime newDate = startingBudgetDate;
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime previousDate;
@@ -150,11 +154,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     int subcatId = await queryContext.addSubcategory(subcategoryModel);
     SubCategory subcategory = SubCategory(
-      id:subcatId,
-      parentId:subcategoryModel.parentId,
-      name:subcategoryModel.name,
-      budgeted:subcategoryModel.budgeted,
-      available:subcategoryModel.available,
+      id: subcatId,
+      parentId: subcategoryModel.parentId,
+      name: subcategoryModel.name,
+      budgeted: subcategoryModel.budgeted,
+      available: subcategoryModel.available,
     );
 
     for (final Budget budget in _budgets) {
@@ -177,8 +181,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       );
 
       int budgetId = await queryContext.addBudgetValue(budgetValueModel);
-      BudgetValue budgetValue = BudgetValue(id:budgetId, subcategoryId:subcategory.id, budgeted:0, available:0,
-          year:previousDate.year,month: previousDate.month);
+      BudgetValue budgetValue = BudgetValue(
+          id: budgetId,
+          subcategoryId: subcategory.id,
+          budgeted: 0,
+          available: 0,
+          year: previousDate.year,
+          month: previousDate.month);
 
       _budgetValues.add(budgetValue);
       newDate = Jiffy(previousDate).add(months: 1);
@@ -226,9 +235,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     setMostRecentAccountUsed(accountId);
 
-    bool isTransactionIntoToBeBudgeted = transaction.subcatID ==
-        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
-    bool isTransactionBetweenAccounts = transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID;
+    bool isTransactionIntoToBeBudgeted =
+        transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
+    bool isTransactionBetweenAccounts =
+        transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID;
     if (isTransactionIntoToBeBudgeted) {
       await _addTransactionIntoToBeBudgeted(transaction);
       notifyListeners();
@@ -243,8 +253,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   void _addStandardTransaction(MoneyTransaction transaction) {
     // Update balance of the account
-    final Account account = accounts
-        .singleWhere((account) => account.id == transaction.accountID);
+    final Account account =
+        accounts.singleWhere((account) => account.id == transaction.accountID);
     account.balance += transaction.amount;
     queryContext.updateAccount(account);
 
@@ -254,22 +264,27 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         .singleWhere((subcat) => subcat.id == transaction.subcatID);
 
     double newAvailableAmount = oldSubcat.available + transaction.amount;
-    SubCategory newSubcat = SubCategory(id:oldSubcat.id, parentId:oldSubcat.parentId,
-        name:oldSubcat.name,budgeted:oldSubcat.budgeted,available: newAvailableAmount);
+    SubCategory newSubcat = SubCategory(
+        id: oldSubcat.id,
+        parentId: oldSubcat.parentId,
+        name: oldSubcat.name,
+        budgeted: oldSubcat.budgeted,
+        available: newAvailableAmount);
 
     //notifyListeners is called in updateSubcategory
     updateSubcategory(newSubcat);
   }
 
-  Future<void> _addTransactionBetweenAccounts(MoneyTransaction transaction) async {
+  Future<void> _addTransactionBetweenAccounts(
+      MoneyTransaction transaction) async {
     /// If the transaction amount is positive, the transaction will remove money from
     /// [outAccount] and input it into [inAccount].
     /// Otherwise, it is reversed.
 
     /// [outAccount] is ALWAYS the one pointed to by accountID.
     /// Therefore, [inAccount] will be the one defined by [-payee.id].
-    final Account outAccount = accounts
-        .singleWhere((account) => account.id == transaction.accountID);
+    final Account outAccount =
+        accounts.singleWhere((account) => account.id == transaction.accountID);
     outAccount.balance -= transaction.amount;
 
     final Account inAccount =
@@ -279,18 +294,17 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     await queryContext.updateAccount(inAccount);
   }
 
-
-  Future<void> _addTransactionIntoToBeBudgeted(MoneyTransaction transaction) async{
-      print("Is to be budgeted money transaction");
-      // Update balance of the account
-      final Account account = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      account.balance += transaction.amount;
-      await queryContext.updateAccount(account);
-      _budgets = await _createAllMonthlyBudgets();
-      await computeToBeBudgeted();
+  Future<void> _addTransactionIntoToBeBudgeted(
+      MoneyTransaction transaction) async {
+    print("Is to be budgeted money transaction");
+    // Update balance of the account
+    final Account account =
+        accounts.singleWhere((account) => account.id == transaction.accountID);
+    account.balance += transaction.amount;
+    await queryContext.updateAccount(account);
+    _budgets = await _createAllMonthlyBudgets();
+    await computeToBeBudgeted();
   }
-
 
   Future<void> addGoal({
     @required GoalType goalType,
@@ -605,8 +619,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           .singleWhere((subcat) => subcat.id == transaction.subcatID);
 
       double newAvailableAmount = oldSubcat.available - transaction.amount;
-      SubCategory newSubcat = SubCategory(id:oldSubcat.id,parentId: oldSubcat.parentId,
-          name:oldSubcat.name,budgeted: oldSubcat.budgeted,available: newAvailableAmount);
+      SubCategory newSubcat = SubCategory(
+          id: oldSubcat.id,
+          parentId: oldSubcat.parentId,
+          name: oldSubcat.name,
+          budgeted: oldSubcat.budgeted,
+          available: newAvailableAmount);
 
       updateSubcategory(newSubcat);
       //notifyListeners is called in updateSubcategory
@@ -630,7 +648,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     });
     queryContext.deleteCategory(toBeRemoved.id);
 
-    correspondingSubcategories.forEach((subcat) => removeSubcategory(subcat.id));
+    correspondingSubcategories
+        .forEach((subcat) => removeSubcategory(subcat.id));
 
     computeToBeBudgeted();
     notifyListeners();
