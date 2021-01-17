@@ -349,6 +349,9 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
       /// Change the available field in every Budget after the one that was
       /// modified.
+      ///
+
+      //TODO: Check if currentBudgetDate should not actually be transaction date
       int monthDifference =
           (getMonthDifference(currentBudgetDate, getMaxBudgetDate())).abs();
       double lastMonthAvailable = modifiedSubcategory.available;
