@@ -568,4 +568,34 @@ main() {
     expect(appState.currentBudgetDate, startingBudgetDate);
     verifyNever(mockQueries.getFirstTransactionOfAccount(any));
   });
+
+  test(
+      'when removeCategory() is called, remove a category and its SubCategories from ' +
+          'the database and from the state, and call computeToBeBudgeted()',
+      () {
+    //!Arrange
+    int catIdToBeRemoved = FakeDatabase.TEST_CATEGORY_ID;
+    List subcategoriesToBeDeleted = appState.subcategories
+        .where((subcat) => subcat.parentId == catIdToBeRemoved)
+        .toList();
+
+    //!Act
+    appState.removeCategory(catIdToBeRemoved);
+
+    //!Assert
+    //Verify that the category got removed
+    for (final budget in appState.budgets) {
+      MainCategory cat = budget.maincategories
+          .singleWhere((cat) => cat.id == catIdToBeRemoved, orElse: () => null);
+      expect(cat, null);
+    }
+    verify(mockQueries.deleteCategory(catIdToBeRemoved));
+
+    //Verify that the subcategories got removed
+    for (final SubCategory subcat in subcategoriesToBeDeleted)
+      verify(mockQueries.deleteSubcategory(subcat.id));
+
+    //Verify that computeToBeBudgeted got called
+    verify(mockQueries.getFirstTransactionOfAccount(any));
+  });
 }
