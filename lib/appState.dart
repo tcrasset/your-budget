@@ -228,29 +228,14 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     bool isTransactionIntoToBeBudgeted = transaction.subcatID ==
         Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
+    bool isTransactionBetweenAccounts = transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID;
     if (isTransactionIntoToBeBudgeted) {
       await _addTransactionIntoToBeBudgeted(transaction);
       notifyListeners();
-    } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
-      /// If the transaction amount is positive, the transaction will remove money from
-      /// [outAccount] and input it into [inAccount].
-      /// Otherwise, it is reversed.
-
-      /// [outAccount] is ALWAYS the one pointed to by accountID.
-      /// Therefore, [inAccount] will be the one defined by [-payee.id].
-      final Account outAccount = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      outAccount.balance -= transaction.amount;
-
-      final Account inAccount =
-          accounts.singleWhere((account) => account.id == -transaction.payeeID);
-      inAccount.balance += transaction.amount;
-      queryContext.updateAccount(outAccount);
-      queryContext.updateAccount(inAccount);
+    } else if (isTransactionBetweenAccounts) {
+      await _addTransactionBetweenAccounts(transaction);
       notifyListeners();
     } else {
-      /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
-      /// subcategories are not affected.
 
       // Update balance of the account
       final Account account = accounts
@@ -270,6 +255,24 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       updateSubcategory(newSubcat);
       //notifyListeners is called in updateSubcategory
     }
+  }
+
+  Future<void> _addTransactionBetweenAccounts(MoneyTransaction transaction) async {
+    /// If the transaction amount is positive, the transaction will remove money from
+    /// [outAccount] and input it into [inAccount].
+    /// Otherwise, it is reversed.
+
+    /// [outAccount] is ALWAYS the one pointed to by accountID.
+    /// Therefore, [inAccount] will be the one defined by [-payee.id].
+    final Account outAccount = accounts
+        .singleWhere((account) => account.id == transaction.accountID);
+    outAccount.balance -= transaction.amount;
+
+    final Account inAccount =
+        accounts.singleWhere((account) => account.id == -transaction.payeeID);
+    inAccount.balance += transaction.amount;
+    await queryContext.updateAccount(outAccount);
+    await queryContext.updateAccount(inAccount);
   }
 
 
@@ -562,7 +565,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     if (transaction.subcatID ==
         Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
-      print("Is to be budgeted money transaction");
       // Update balance of the account
       final Account account = accounts
           .singleWhere((account) => account.id == transaction.accountID);

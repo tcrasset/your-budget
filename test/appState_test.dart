@@ -315,15 +315,6 @@ main() {
     final double tAmount = 1000.00;
     final String tMemo = "Test Passed";
     final DateTime tDate = DateTime.now();
-    final MoneyTransaction tMoneyTransaction = MoneyTransaction(
-      id: tTransactionId,
-      payeeID: tPayeeId,
-      accountID: tAccountId,
-      subcatID: tSubcatId,
-      amount: tAmount,
-      date: tDate,
-      memo: tMemo,
-    );
 
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => tTransactionId);
@@ -386,15 +377,6 @@ main() {
     final double tAmount = 1000.00;
     final String tMemo = "Test Passed";
     final DateTime tDate = DateTime.now();
-    final MoneyTransaction tMoneyTransaction = MoneyTransaction(
-      id: tTransactionId,
-      payeeID: tPayeeId,
-      accountID: tAccountId,
-      subcatID: tSubcatId,
-      amount: tAmount,
-      date: tDate,
-      memo: tMemo,
-    );
 
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => tTransactionId);
@@ -413,7 +395,7 @@ main() {
         accountId: tAccountId,
         payeeId: tPayeeId,
         amount: tAmount,
-        date: DateTime.now(),
+        date: tDate,
         memo: tMemo);
 
 
@@ -424,4 +406,44 @@ main() {
     verify(mockQueries.updateAccount(outAccount));
     verify(mockQueries.updateAccount(inAccount));
   });
+
+
+test('when addTransaction() is called with a standard transaction, update'
++'the account, the budget and', () async{
+
+  //!Arrange
+
+    final int tTransactionId = 111;
+    final int tSubcatId = FakeDatabase.TEST_SUBCATEGORY_ID;
+    final int tPayeeId = 88;
+    final int tAccountId = FakeDatabase.TEST_ACCOUNT_ID_1;
+    final double tAmount = 1000.00;
+    final String tMemo = "Test Passed";
+    final DateTime tDate = DateTime.now();
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransactionId);
+
+    final Account account = appState.accounts
+        .singleWhere((account) => account.id == tAccountId);
+    final double previousAccountBalance = account.balance;
+
+    //!Act
+    await appState.addTransaction(
+        subcatId: tSubcatId,
+        accountId: tAccountId,
+        payeeId: tPayeeId,
+        amount: tAmount,
+        date: tDate,
+        memo: tMemo);
+
+  //!Assert
+    verify(mockQueries.updateAccount(account));
+    expect(account.balance, previousAccountBalance + tAmount);
+
+    // Verify that it updates the budget values of every month after
+    int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs() + 2;
+    verify(mockQueries.updateBudgetValue(any)).called(nbMonths);
+
+});
 }
