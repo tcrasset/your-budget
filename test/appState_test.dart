@@ -452,7 +452,8 @@ main() {
 
     int nbBudgetValuesToRemove = appState.budgetValues
         .where((bv) => bv.subcategoryId == subcatIdToRemove)
-        .toList().length;
+        .toList()
+        .length;
 
     //!Act
     appState.removeSubcategory(subcatIdToRemove);
@@ -475,10 +476,9 @@ main() {
     verify(mockQueries.deleteBudgetValue(any)).called(nbBudgetValuesToRemove);
   });
 
-  test('when calling updateCategoryName(), then update the name in the database'
-  +' and in the budgets', () {
-
-
+  test(
+      'when calling updateCategoryName(), then update the name in the database' +
+          ' and in the budgets', () {
     //!Arrange
     int catId = 1;
     //Original is MainCategory(id: 1, name: "Essentials")
@@ -488,8 +488,9 @@ main() {
     appState.updateCategoryName(tCat);
 
     //!Assert
-    for(final budget in appState.budgets){
-      MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == catId);
+    for (final budget in appState.budgets) {
+      MainCategory cat =
+          budget.maincategories.singleWhere((cat) => cat.id == catId);
       expect(cat.name, tCat.name);
     }
 
