@@ -213,6 +213,7 @@ main() {
     DateTime newDate = await mockQueries.getStartingBudgetDateConstant();
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime previousDate;
+    int nbCalls = 0;
     // Loop over all dates between startingBudgetDate and maxBudgetDate
     // and verify that there is one and only one transaction on that date.
     do {
@@ -222,7 +223,10 @@ main() {
       bool result = tBudgetValue.hasSameValues(budgetValue);
       expect(result, true);
       newDate = Jiffy(previousDate).add(months: 1);
+      nbCalls++;
     } while (previousDate.isBefore(maxBudgetDate));
+
+    verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>()))).called(nbCalls);
 
     // Check that there are no transactions after that date
     previousDate = Jiffy(previousDate).add(months: 1);
