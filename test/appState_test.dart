@@ -437,8 +437,8 @@ main() {
     expect(account.balance, previousAccountBalance + tAmount);
 
     // Verify that it updates the budget values of every month after
-    int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs() + 2;
-    verify(mockQueries.updateBudgetValue(any)).called(nbMonths);
+    int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs();
+    verify(mockQueries.updateBudgetValue(any)).called(nbMonths + 1);
   });
 
   test(
