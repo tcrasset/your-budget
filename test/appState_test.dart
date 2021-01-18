@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:mockito/mockito.dart';
@@ -630,5 +629,108 @@ main() {
     //!Assert
     expect(account, tAccount);
     verify(mockQueries.getMostRecentAccountUsed());
+  });
+
+  test(
+      'when udpateSubcategory() is called with a name change, update the subcategory in the database' +
+          'and in the budget', () {
+    //!Arrange
+    String tName = "Name got changed";
+    SubCategory tSubcat = fakeDatabase.subCategories[0];
+
+    //!Act
+    tSubcat.name = tName;
+    appState.updateSubcategory(tSubcat, DateTime.now());
+
+    //!Assert
+    verify(mockQueries.updateSubcategory(tSubcat));
+
+    for (final Budget budget in appState.budgets) {
+      final SubCategory subcat =
+          budget.subcategories.singleWhere((subcat) => subcat.id == tSubcat.id);
+      expect(subcat.name, tName);
+    }
+
+    //Verify that for a name change, we don't modify BudgetValues
+    verifyNever(mockQueries.updateBudgetValue(any));
+  });
+
+  test(
+      'when updateSubcategory() is called with another change, update the subcategory and the' +
+          ' budgetvalue (available + budgeted) of the current budget', () {
+    //!Arrange
+    double tBudgeted = 987.65;
+    double tAvailable = 432.10;
+    SubCategory tSubcat = fakeDatabase.subCategories[0];
+
+    //!Act
+    tSubcat.budgeted = tBudgeted;
+    tSubcat.available = tAvailable;
+    appState.updateSubcategory(tSubcat, DateTime.now());
+
+    //!Assert
+
+    // Verify that we updated the current budget
+    final SubCategory subcat = appState.currentBudget.subcategories
+        .singleWhere((subcat) => subcat.id == tSubcat.id);
+    expect(subcat.budgeted, tBudgeted);
+    expect(subcat.available, tAvailable);
+
+    // Verify that we update the budget and available amount of the budgetvalue
+    // for that subcategory for the month it belongs to
+    BudgetValue correspondingBudgetValue = appState.budgetValues.singleWhere(
+      (budgetValue) =>
+          (budgetValue.subcategoryId == tSubcat.id) &&
+          (budgetValue.year == appState.currentBudgetDate.year) &&
+          (budgetValue.month == appState.currentBudgetDate.month),
+    );
+    verify(mockQueries.updateBudgetValue(correspondingBudgetValue));
+  });
+
+  test(
+      'when updateSubcategory() is called with another change, update the subcategory and the' +
+          ' budgetvalue (available only) of all the sucessing budgets', () {
+    //!Arrange
+    double tBudgeted = 987.65;
+    SubCategory tSubcat = fakeDatabase.subCategories[0];
+    DateTime tDate = DateTime.now();
+
+    //!Act
+    tSubcat.budgeted = tBudgeted;
+    appState.updateSubcategory(tSubcat, tDate);
+
+    //!Assert
+
+    DateTime maxBudgetDate = getMaxBudgetDate();
+    DateTime date = Jiffy(tDate).add(months: 1);
+    double lastMonthAvailable = tSubcat.available;
+
+    while (date.isBefore(maxBudgetDate)) {
+      // Verify that the available value in each BudgetValue was updated correctly
+      BudgetValue correspondingBudgetValue = appState.budgetValues.singleWhere(
+        (budgetValue) =>
+            (budgetValue.subcategoryId == tSubcat.id) &&
+            (budgetValue.year == date.year) &&
+            (budgetValue.month == date.month),
+      );
+      expect(correspondingBudgetValue.available,
+          lastMonthAvailable + correspondingBudgetValue.budgeted);
+      lastMonthAvailable = correspondingBudgetValue.available;
+
+      verify(mockQueries.updateBudgetValue(correspondingBudgetValue));
+
+      // Verify that we modify the subcategory in each budget
+      Budget budget = appState.budgets.singleWhere((budget) =>
+          (budget.year == date.year) && (budget.month == date.month));
+      SubCategory subcat =
+          budget.subcategories.singleWhere((subcat) => subcat.id == tSubcat.id);
+      expect(subcat.available, correspondingBudgetValue.available);
+
+      date = Jiffy(date).add(months: 1);
+    }
+
+    //Verify that we call computeToBeBudgeted() after
+    verify(mockQueries.getFirstTransactionOfAccount(any));
+
   });
 }
