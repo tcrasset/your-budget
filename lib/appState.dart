@@ -272,7 +272,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         available: newAvailableAmount);
 
     //notifyListeners is called in updateSubcategory
-    updateSubcategory(newSubcat);
+    updateSubcategory(newSubcat, transaction.date);
   }
 
   Future<void> _addTransactionBetweenAccounts(
