@@ -613,6 +613,22 @@ main() {
     appState.setMostRecentAccountUsed(tAccount_2.id);
     //!Assert
     expect(appState.mostRecentAccount, tAccount_2);
+    verify(mockQueries.updateMostRecentAccountUsed(tAccount_2.id));
+  });
+
+  test(
+      'when getMostRecentAccountUsed() is called, then return the most recently' +
+          ' used account.', () async {
+    Account tAccount = fakeDatabase.accounts[0];
+
+    //!Arrange
+    appState.setMostRecentAccountUsed(tAccount.id);
+
+    //!Act
+    Account account = await appState.getMostRecentAccountUsed();
+
+    //!Assert
+    expect(account, tAccount);
     verify(mockQueries.getMostRecentAccountUsed());
   });
 }
