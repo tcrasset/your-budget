@@ -350,14 +350,14 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       _updateSubcategoryName(modifiedSubcategory);
     } else {
       _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
-      _updateSubcategoryInSubsequentBudgets(dateMofidied, modifiedSubcategory);
+      _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
       await computeToBeBudgeted();
     }
     notifyListeners();
   }
 
   void _updateSubcategoryInSubsequentBudgets(
-      DateTime dateMofidied, SubCategory modifiedSubcategory) {
+      SubCategory modifiedSubcategory, DateTime dateMofidied) {
     double lastMonthAvailable = modifiedSubcategory.available;
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime date = Jiffy(dateMofidied).add(months: 1);
