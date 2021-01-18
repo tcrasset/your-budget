@@ -343,16 +343,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     /// Differentiate between name change, where we only modify
     /// [SubCategory] and the budgeted/available change,
     /// where we modify the [BudgetValue] and the [SubCategory].
-    if (previousSubcategory.name != modifiedSubcategory.name) {
-      /// Persist the change in the DataBase
-      queryContext.updateSubcategory(modifiedSubcategory);
 
-      /// Change state objects
-      for (Budget budget in _budgets) {
-        budget.makeCategoryChange(modifiedSubcategory);
-      }
+    bool isNameChange = previousSubcategory.name != modifiedSubcategory.name;
+    if (isNameChange) {
+      /// Persist the change in the DataBase
+      _updateSubcategoryName(modifiedSubcategory);
     } else {
-      /// Change state objects
+      /// Change budgeted and available value for the current budget
       currentBudget.makeCategoryChange(modifiedSubcategory);
 
       BudgetValue correspondingBudgetValue =
@@ -373,7 +370,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       for (int i = 1; i <= monthDifference; i++) {
         /// Modify the BudgetValue in the state
         DateTime newDate = Jiffy(dateMofidied).add(months: i);
-
         correspondingBudgetValue = _getCorrespondingBudgetValue(newDate, modifiedSubcategory);
 
         // Combine the total available money from month to month
@@ -398,6 +394,16 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       await computeToBeBudgeted();
     }
     notifyListeners();
+  }
+
+  void _updateSubcategoryName(SubCategory modifiedSubcategory) {
+    /// Persist the change in the DataBase
+    queryContext.updateSubcategory(modifiedSubcategory);
+
+    /// Change state objects
+    for (Budget budget in _budgets) {
+      budget.makeCategoryChange(modifiedSubcategory);
+    }
   }
 
   BudgetValue _getCorrespondingBudgetValue(DateTime budgetDate, SubCategory modifiedSubcategory) {
