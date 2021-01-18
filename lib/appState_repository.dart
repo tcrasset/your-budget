@@ -45,7 +45,7 @@ abstract class AppStateRepository {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  void updateSubcategory(SubCategory modifiedSubcategory);
+  void updateSubcategory(SubCategory modifiedSubcategory, DateTime dateMofidied);
 
   BudgetValue _getCorrespondingBudgetValue(SubCategory modifiedSubcategory);
 

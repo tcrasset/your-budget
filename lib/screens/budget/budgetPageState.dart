@@ -87,7 +87,8 @@ class BudgetPageState extends ChangeNotifier {
           parentId:selectedSubcategory.parentId,
           name:selectedSubcategory.name,
           budgeted:budgetedController.numberValue,
-          available:selectedSubcategory.available + beforeAfterDifference));
+          available:selectedSubcategory.available + beforeAfterDifference),
+        appState.currentBudgetDate);
 
       resetText();
       closeButtonDialAndUpdate();
