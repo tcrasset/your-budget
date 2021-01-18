@@ -341,10 +341,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     SubCategory previousSubcategory = currentBudget.subcategories
         .singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
 
-    /// Differentiate between name change, where we only modify
-    /// [SubCategory] and the budgeted/available change,
-    /// where we modify the [BudgetValue] and the [SubCategory].
-
     bool isNameChange = previousSubcategory.name != modifiedSubcategory.name;
     if (isNameChange) {
       _updateSubcategoryName(modifiedSubcategory);
