@@ -598,4 +598,21 @@ main() {
     //Verify that computeToBeBudgeted got called
     verify(mockQueries.getFirstTransactionOfAccount(any));
   });
+
+  test(
+      'when setMostRecentAccountUsed() is called, change th account used in' +
+          ' the state and in the database', () {
+    //!Arrange
+    Account tAccount_1 = fakeDatabase.accounts[0];
+    Account tAccount_2 = fakeDatabase.accounts[1];
+
+    //Before changing
+    expect(appState.mostRecentAccount, tAccount_1);
+    // expect(appState.mostRecentAccount, tAccount_2);
+    //!Act
+    appState.setMostRecentAccountUsed(tAccount_2.id);
+    //!Assert
+    expect(appState.mostRecentAccount, tAccount_2);
+    verify(mockQueries.getMostRecentAccountUsed());
+  });
 }
