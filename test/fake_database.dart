@@ -9,6 +9,7 @@ import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/utils.dart';
+import 'dart:math';
 
 class FakeDatabase {
   static const TEST_ACCOUNT_ID_1 = 77;
@@ -197,6 +198,7 @@ class FakeDatabase {
     List<BudgetValue> budgetValues = [];
     final DateTime startingDate = getDateFromMonthStart(startingBudgetDate);
     int id = 1;
+    Random random = new Random();
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
@@ -205,8 +207,8 @@ class FakeDatabase {
         BudgetValue budgetValue = BudgetValue(
           id: id,
           subcategoryId: subcatId,
-          budgeted: 0.00,
-          available: 0.00,
+          budgeted: random.nextDouble() * 100,
+          available: random.nextDouble() * 100,
           year: newDate.year,
           month: newDate.month,
         );

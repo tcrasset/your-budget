@@ -131,8 +131,8 @@ main() {
     for (final Budget budget in appState.budgets) {
       MainCategory cat =
           budget.maincategories.singleWhere((cat) => cat.id == tCategoryId);
-      bool result = cat.hasSameValues(tCategory);
-      expect(result, true);
+      expect(cat.id, tCategory.id);
+      expect(cat.name, tCategory.name);
     }
   });
 
