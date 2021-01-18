@@ -336,7 +336,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  void updateSubcategory(SubCategory modifiedSubcategory, DateTime dateMofidied) async {
+  void updateSubcategory(
+      SubCategory modifiedSubcategory, DateTime dateMofidied) async {
     SubCategory previousSubcategory = currentBudget.subcategories
         .singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
 
@@ -349,20 +350,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       /// Persist the change in the DataBase
       _updateSubcategoryName(modifiedSubcategory);
     } else {
-      /// Change budgeted and available value for the current budget
-      currentBudget.makeCategoryChange(modifiedSubcategory);
-
-      BudgetValue correspondingBudgetValue =
-          _getCorrespondingBudgetValue(dateMofidied, modifiedSubcategory);
-
-      correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
-      correspondingBudgetValue.available = modifiedSubcategory.available;
-
-      queryContext.updateBudgetValue(correspondingBudgetValue);
-
-      /// Change the available field in every Budget after the one that was
-      /// modified.
-
+      _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
       int monthDifference =
           (getMonthDifference(dateMofidied, getMaxBudgetDate())).abs();
       double lastMonthAvailable = modifiedSubcategory.available;
@@ -370,7 +358,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       for (int i = 1; i <= monthDifference; i++) {
         /// Modify the BudgetValue in the state
         DateTime newDate = Jiffy(dateMofidied).add(months: i);
-        correspondingBudgetValue = _getCorrespondingBudgetValue(newDate, modifiedSubcategory);
+        BudgetValue correspondingBudgetValue =
+            _getCorrespondingBudgetValue(newDate, modifiedSubcategory);
 
         // Combine the total available money from month to month
         correspondingBudgetValue.available =
@@ -396,6 +385,20 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     notifyListeners();
   }
 
+  void _updateSubcategoryInCurrentBudget(
+      SubCategory modifiedSubcategory, DateTime dateMofidied) {
+    /// Change budgeted and available value for the current budget
+    currentBudget.makeCategoryChange(modifiedSubcategory);
+
+    BudgetValue correspondingBudgetValue =
+        _getCorrespondingBudgetValue(dateMofidied, modifiedSubcategory);
+
+    correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
+    correspondingBudgetValue.available = modifiedSubcategory.available;
+
+    queryContext.updateBudgetValue(correspondingBudgetValue);
+  }
+
   void _updateSubcategoryName(SubCategory modifiedSubcategory) {
     /// Persist the change in the DataBase
     queryContext.updateSubcategory(modifiedSubcategory);
@@ -406,7 +409,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     }
   }
 
-  BudgetValue _getCorrespondingBudgetValue(DateTime budgetDate, SubCategory modifiedSubcategory) {
+  BudgetValue _getCorrespondingBudgetValue(
+      DateTime budgetDate, SubCategory modifiedSubcategory) {
     BudgetValue correspondingBudgetValue = _budgetValues.singleWhere(
       (budgetValue) =>
           (budgetValue.subcategoryId == modifiedSubcategory.id) &&
