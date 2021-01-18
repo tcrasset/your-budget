@@ -47,7 +47,7 @@ abstract class AppStateRepository {
   /// in both the state and in the data base.
   void updateSubcategory(SubCategory modifiedSubcategory, DateTime dateMofidied);
 
-  BudgetValue _getCorrespondingBudgetValue(SubCategory modifiedSubcategory);
+  BudgetValue _getBudgetValue(SubCategory modifiedSubcategory);
 
   void removeSubcategory(int subcategoryId);
 

@@ -363,15 +363,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     DateTime date = Jiffy(dateMofidied).add(months: 1);
 
     while (date.isBefore(maxBudgetDate)) {
-      BudgetValue correspondingBudgetValue =
-          _getCorrespondingBudgetValue(date, modifiedSubcategory);
+      BudgetValue budgetValue = _getBudgetValue(date, modifiedSubcategory.id);
 
       // Combine the total available money from month to month
-      correspondingBudgetValue.available =
-          lastMonthAvailable + correspondingBudgetValue.budgeted;
-      lastMonthAvailable = correspondingBudgetValue.available;
+      budgetValue.available = lastMonthAvailable + budgetValue.budgeted;
+      lastMonthAvailable = budgetValue.available;
 
-      queryContext.updateBudgetValue(correspondingBudgetValue);
+      queryContext.updateBudgetValue(budgetValue);
 
       Budget budget = budgets.singleWhere((budget) =>
           (budget.year == date.year) && (budget.month == date.month));
@@ -379,7 +377,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           modifiedSubcategory.id, //
           modifiedSubcategory.parentId,
           "available",
-          correspondingBudgetValue.available.toString());
+          budgetValue.available.toString());
 
       date = Jiffy(date).add(months: 1);
     }
@@ -389,13 +387,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       SubCategory modifiedSubcategory, DateTime dateMofidied) {
     currentBudget.makeCategoryChange(modifiedSubcategory);
 
-    BudgetValue correspondingBudgetValue =
-        _getCorrespondingBudgetValue(dateMofidied, modifiedSubcategory);
+    BudgetValue budgetValue =
+        _getBudgetValue(dateMofidied, modifiedSubcategory.id);
 
-    correspondingBudgetValue.budgeted = modifiedSubcategory.budgeted;
-    correspondingBudgetValue.available = modifiedSubcategory.available;
+    budgetValue.budgeted = modifiedSubcategory.budgeted;
+    budgetValue.available = modifiedSubcategory.available;
 
-    queryContext.updateBudgetValue(correspondingBudgetValue);
+    queryContext.updateBudgetValue(budgetValue);
   }
 
   void _updateSubcategoryName(SubCategory modifiedSubcategory) {
@@ -405,16 +403,15 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     queryContext.updateSubcategory(modifiedSubcategory);
   }
 
-  BudgetValue _getCorrespondingBudgetValue(
-      DateTime budgetDate, SubCategory modifiedSubcategory) {
-    BudgetValue correspondingBudgetValue = _budgetValues.singleWhere(
+  BudgetValue _getBudgetValue(DateTime date, int subcatId) {
+    BudgetValue budgetValue = _budgetValues.singleWhere(
       (budgetValue) =>
-          (budgetValue.subcategoryId == modifiedSubcategory.id) &&
-          (budgetValue.year == budgetDate.year) &&
-          (budgetValue.month == budgetDate.month),
+          (budgetValue.subcategoryId == subcatId) &&
+          (budgetValue.year == date.year) &&
+          (budgetValue.month == date.month),
     );
 
-    return correspondingBudgetValue;
+    return budgetValue;
   }
 
   void removeSubcategory(int subcategoryId) {
