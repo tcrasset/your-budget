@@ -347,12 +347,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     bool isNameChange = previousSubcategory.name != modifiedSubcategory.name;
     if (isNameChange) {
-      /// Persist the change in the DataBase
       _updateSubcategoryName(modifiedSubcategory);
     } else {
       _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
       _updateSubcategoryInSubsequentBudgets(dateMofidied, modifiedSubcategory);
-
       await computeToBeBudgeted();
     }
     notifyListeners();
