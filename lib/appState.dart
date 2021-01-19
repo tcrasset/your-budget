@@ -577,18 +577,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     MoneyTransaction transaction = _transactions
         .singleWhere((transaction) => transaction.id == transactionId);
 
-    if (transaction.subcatID ==
-        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
-      // Update balance of the account
-      final Account account = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      account.balance -= transaction.amount;
-      await queryContext.updateAccount(account);
-
-      Budget budget = _budgets
-          .singleWhere((budget) => isSameMonth(budget.date, transaction.date));
-      budget.toBeBudgetedInputFromMoneyTransactions -= transaction.amount;
-
+    bool isTransactionIntoToBeBudgeted =
+        transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
+    bool isTransactionBetweenAccounts =
+        transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID;
+    if (isTransactionIntoToBeBudgeted) {
+      await _deleteTransactionIntoToBeBudgeted(transaction);
       await computeToBeBudgeted();
       notifyListeners();
     } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
@@ -630,6 +624,18 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     queryContext.deleteTransaction(transactionId);
     _transactions.remove(transaction);
     notifyListeners();
+  }
+
+  Future<void> _deleteTransactionIntoToBeBudgeted(MoneyTransaction transaction) async {
+    // Update balance of the account
+    final Account account = accounts
+        .singleWhere((account) => account.id == transaction.accountID);
+    account.balance -= transaction.amount;
+    await queryContext.updateAccount(account);
+
+    Budget budget = _budgets
+        .singleWhere((budget) => isSameMonth(budget.date, transaction.date));
+    budget.toBeBudgetedInputFromMoneyTransactions -= transaction.amount;
   }
 
   void removeCategory(int categoryId) {
