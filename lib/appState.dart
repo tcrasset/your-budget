@@ -581,22 +581,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
     bool isTransactionBetweenAccounts =
         transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID;
+
     if (isTransactionIntoToBeBudgeted) {
       await _deleteTransactionIntoToBeBudgeted(transaction);
       await computeToBeBudgeted();
       notifyListeners();
-    } else if (transaction.subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
-      /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
-      /// subcategories are not affected.
-      final Account outAccount = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      outAccount.balance += transaction.amount;
-
-      final Account inAccount =
-          accounts.singleWhere((account) => account.id == -transaction.payeeID);
-      inAccount.balance -= transaction.amount;
-      queryContext.updateAccount(outAccount);
-      queryContext.updateAccount(inAccount);
+    } else if (isTransactionBetweenAccounts) {
+      _deleteTransactionBetweenAccounts(transaction);
       notifyListeners();
     } else {
       final Account account = accounts
@@ -624,6 +615,20 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     queryContext.deleteTransaction(transactionId);
     _transactions.remove(transaction);
     notifyListeners();
+  }
+
+  void _deleteTransactionBetweenAccounts(MoneyTransaction transaction) {
+    /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
+    /// subcategories are not affected.
+    final Account outAccount = accounts
+        .singleWhere((account) => account.id == transaction.accountID);
+    outAccount.balance += transaction.amount;
+
+    final Account inAccount =
+        accounts.singleWhere((account) => account.id == -transaction.payeeID);
+    inAccount.balance -= transaction.amount;
+    queryContext.updateAccount(outAccount);
+    queryContext.updateAccount(inAccount);
   }
 
   Future<void> _deleteTransactionIntoToBeBudgeted(MoneyTransaction transaction) async {
