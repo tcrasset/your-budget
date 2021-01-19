@@ -590,38 +590,41 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       _deleteTransactionBetweenAccounts(transaction);
       notifyListeners();
     } else {
-      final Account account = accounts
-          .singleWhere((account) => account.id == transaction.accountID);
-      account.balance -= transaction.amount;
-      queryContext.updateAccount(account);
-
-      Budget budget = _getBudgetByDate(
-          DateTime(transaction.date.year, transaction.date.month));
-      SubCategory oldSubcat = budget.subcategories
-          .singleWhere((subcat) => subcat.id == transaction.subcatID);
-
-      double newAvailableAmount = oldSubcat.available - transaction.amount;
-      SubCategory newSubcat = SubCategory(
-          id: oldSubcat.id,
-          parentId: oldSubcat.parentId,
-          name: oldSubcat.name,
-          budgeted: oldSubcat.budgeted,
-          available: newAvailableAmount);
-
-      updateSubcategory(newSubcat, transaction.date);
-      //notifyListeners is called in updateSubcategory
+      _deleteStandardTransaction(transaction);
     }
 
     queryContext.deleteTransaction(transactionId);
     _transactions.remove(transaction);
-    notifyListeners();
+  }
+
+  void _deleteStandardTransaction(MoneyTransaction transaction) {
+    final Account account =
+        accounts.singleWhere((account) => account.id == transaction.accountID);
+    account.balance -= transaction.amount;
+    queryContext.updateAccount(account);
+
+    Budget budget = _getBudgetByDate(
+        DateTime(transaction.date.year, transaction.date.month));
+    SubCategory oldSubcat = budget.subcategories
+        .singleWhere((subcat) => subcat.id == transaction.subcatID);
+
+    double newAvailableAmount = oldSubcat.available - transaction.amount;
+    SubCategory newSubcat = SubCategory(
+        id: oldSubcat.id,
+        parentId: oldSubcat.parentId,
+        name: oldSubcat.name,
+        budgeted: oldSubcat.budgeted,
+        available: newAvailableAmount);
+
+    //notifyListeners is called in updateSubcategory
+    updateSubcategory(newSubcat, transaction.date);
   }
 
   void _deleteTransactionBetweenAccounts(MoneyTransaction transaction) {
     /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
     /// subcategories are not affected.
-    final Account outAccount = accounts
-        .singleWhere((account) => account.id == transaction.accountID);
+    final Account outAccount =
+        accounts.singleWhere((account) => account.id == transaction.accountID);
     outAccount.balance += transaction.amount;
 
     final Account inAccount =
@@ -631,10 +634,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     queryContext.updateAccount(inAccount);
   }
 
-  Future<void> _deleteTransactionIntoToBeBudgeted(MoneyTransaction transaction) async {
+  Future<void> _deleteTransactionIntoToBeBudgeted(
+      MoneyTransaction transaction) async {
     // Update balance of the account
-    final Account account = accounts
-        .singleWhere((account) => account.id == transaction.accountID);
+    final Account account =
+        accounts.singleWhere((account) => account.id == transaction.accountID);
     account.balance -= transaction.amount;
     await queryContext.updateAccount(account);
 
