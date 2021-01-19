@@ -731,6 +731,172 @@ main() {
 
     //Verify that we call computeToBeBudgeted() after
     verify(mockQueries.getFirstTransactionOfAccount(any));
+  });
 
+  test(
+      'when deleteTransaction() is called, delete the transaction from the' +
+          ' state and from the database', () {
+    //!Arrange
+    MoneyTransaction tTransaction = fakeDatabase.moneyTransactions[0];
+
+    //!Act
+    appState.deleteTransaction(tTransaction.id);
+
+    //!Assert
+
+    verify(mockQueries.deleteTransaction(tTransaction.id));
+    MoneyTransaction shouldBeNullTransaction = appState.transactions
+        .singleWhere((tr) => tr.id == tTransaction.id, orElse: () => null);
+    expect(shouldBeNullTransaction, null);
+  });
+
+  test(
+      'when deleteTransaction() is called on a transaction into to be budgeted,' +
+          ' then update the account and the budgets', () async {
+    //!Arrange
+    MoneyTransaction tTransaction = MoneyTransaction(
+      id: 875,
+      accountID: FakeDatabase.TEST_ACCOUNT_ID_1,
+      payeeID: FakeDatabase.TEST_PAYEE_ID,
+      subcatID: Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION,
+      amount: 875.42,
+      date: DateTime.now(),
+      memo: "",
+    );
+
+    Account account = appState.accounts
+        .singleWhere((acc) => acc.id == tTransaction.accountID);
+    Budget budget = appState.budgets
+        .singleWhere((budget) => isSameMonth(budget.date, tTransaction.date));
+
+    double previousBudgetToBeBudgeted =
+        budget.toBeBudgetedInputFromMoneyTransactions;
+    double previousAccountBalance = account.balance;
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransaction.id);
+
+    //!Act
+    await appState.addTransaction(
+        subcatId: tTransaction.subcatID,
+        accountId: tTransaction.accountID,
+        payeeId: tTransaction.payeeID,
+        amount: tTransaction.amount,
+        date: tTransaction.date,
+        memo: tTransaction.memo);
+
+    clearInteractions(mockQueries);
+
+    await appState.deleteTransaction(tTransaction.id);
+
+    //!Assert
+    //Verify that the balance was the same as before (add and remove)
+    expect(account.balance.toStringAsFixed(2),
+        previousAccountBalance.toStringAsFixed(2));
+    verify(mockQueries.updateAccount(account));
+
+    //Verify that the to be budgeted field in bduget is the same (add and remove)
+    expect(budget.toBeBudgetedInputFromMoneyTransactions,
+        previousBudgetToBeBudgeted);
+
+    verify(mockQueries.getFirstTransactionOfAccount(any));
+  });
+
+
+  test('when deleteTransaction() is called with a transaction between accounts,'
+  +' update both accounts', () async{
+
+    //!Arrange
+    MoneyTransaction tTransaction = MoneyTransaction(
+      id: 875,
+      accountID: FakeDatabase.TEST_ACCOUNT_ID_1,
+      payeeID: -FakeDatabase.TEST_ACCOUNT_ID_2, //Negative account id as payee id
+      subcatID: Constants.UNASSIGNED_SUBCAT_ID,
+      amount: 875.42,
+      date: DateTime.now(),
+      memo: "",
+    );
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransaction.id);
+
+    // Get previous account balances
+    final Account outAccount =
+        appState.accounts.singleWhere((account) => account.id == tTransaction.accountID);
+    final Account inAccount =
+        appState.accounts.singleWhere((account) => account.id == -tTransaction.payeeID);
+
+    final double outAccountPreviousBalance = outAccount.balance;
+    final double inAccountPreviousBalance = inAccount.balance;
+
+    //!Act
+    // Add and delete transaction
+    await appState.addTransaction(
+        subcatId: tTransaction.subcatID,
+        accountId: tTransaction.accountID,
+        payeeId: tTransaction.payeeID,
+        amount: tTransaction.amount,
+        date: tTransaction.date,
+        memo: tTransaction.memo);
+
+    clearInteractions(mockQueries);
+
+    appState.deleteTransaction(tTransaction.id);
+    //!Assert
+    // Verify that accounts get updated (add and remove)
+    expect(outAccount.balance.toStringAsFixed(2), outAccountPreviousBalance.toStringAsFixed(2));
+    expect(inAccount.balance.toStringAsFixed(2), inAccountPreviousBalance.toStringAsFixed(2));
+    verify(mockQueries.updateAccount(outAccount));
+    verify(mockQueries.updateAccount(inAccount));
+
+  });
+
+  test('when deleteTransaction() is called with a standard transaction, '+
+  'udpate the account, and the budgets', () async{
+
+
+    //!Arrange
+    DateTime tDate = DateTime.now();
+    MoneyTransaction tTransaction = MoneyTransaction(
+      id: 875,
+      accountID: FakeDatabase.TEST_ACCOUNT_ID_1,
+      payeeID: 88, //Negative account id as payee id
+      subcatID: FakeDatabase.TEST_SUBCATEGORY_ID,
+      amount: 875.42,
+      date: tDate,
+      memo: "",
+    );
+
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+        .thenAnswer((_) async => tTransaction.id);
+
+    final Account account =
+        appState.accounts.singleWhere((account) => account.id == tTransaction.accountID);
+    final double previousAccountBalance = account.balance;
+
+    //!Act
+    // Add and delete transaction
+    await appState.addTransaction(
+        subcatId: tTransaction.subcatID,
+        accountId: tTransaction.accountID,
+        payeeId: tTransaction.payeeID,
+        amount: tTransaction.amount,
+        date: tTransaction.date,
+        memo: tTransaction.memo);
+
+    clearInteractions(mockQueries);
+
+    appState.deleteTransaction(tTransaction.id);
+
+    //!Assert
+    verify(mockQueries.updateAccount(account));
+    expect(account.balance.toStringAsFixed(2), previousAccountBalance.toStringAsFixed(2));
+
+    // Verify that it updates the budget values of every month after
+    int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs();
+    verify(mockQueries.updateBudgetValue(any)).called(nbMonths + 1);
+
+    //Verify that it calls computeToBeBudgeted
+    verify(mockQueries.getFirstTransactionOfAccount(any));
   });
 }
