@@ -15,7 +15,8 @@ class FakeDatabase {
   static const TEST_ACCOUNT_ID_1 = 77;
   static const TEST_ACCOUNT_ID_2 = 770;
   static const TEST_PAYEE_ID = 88;
-  static const TEST_MONEYTRANSACTION_ID = 99;
+  static const TEST_MONEYTRANSACTION_ID_1 = 99;
+  static const TEST_MONEYTRANSACTION_ID_2 = 990;
   static const TEST_SUBCATEGORY_ID = 5;
   static const TEST_CATEGORY_ID = 1;
 
@@ -164,15 +165,24 @@ class FakeDatabase {
   }
 
   List<MoneyTransaction> _buildMoneyTransactions() {
-    MoneyTransaction mt = MoneyTransaction(
+    MoneyTransaction mt1 = MoneyTransaction(
         accountID: TEST_ACCOUNT_ID_1,
         amount: 999.99,
         date: startingBudgetDate,
-        id: TEST_MONEYTRANSACTION_ID,
+        id: TEST_MONEYTRANSACTION_ID_1,
         payeeID: TEST_PAYEE_ID,
         subcatID: TEST_SUBCATEGORY_ID,
         memo: "");
-    return [mt];
+
+    MoneyTransaction mt2 = MoneyTransaction(
+        accountID: TEST_ACCOUNT_ID_1,
+        amount: 888.88,
+        date: startingBudgetDate,
+        id: TEST_MONEYTRANSACTION_ID_2,
+        payeeID: TEST_PAYEE_ID,
+        subcatID: TEST_SUBCATEGORY_ID,
+        memo: "");
+    return [mt1, mt2];
   }
 
   List<Payee> _buildPayees() {
