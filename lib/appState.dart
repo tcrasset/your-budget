@@ -573,7 +573,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         (budget) => budget.year == date.year && budget.month == date.month);
   }
 
-  void deleteTransaction(int transactionId) async {
+  Future<void> deleteTransaction(int transactionId) async {
     MoneyTransaction transaction = _transactions
         .singleWhere((transaction) => transaction.id == transactionId);
 
