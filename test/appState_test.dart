@@ -907,7 +907,8 @@ main() {
       () async {
     //!Arrange
     DateTime tCurrentBudgetDate = DateTime(2021, 7);
-    double tToBeBudgeted = _testComputeToBeBudgeted(fakeDatabase, appState, tCurrentBudgetDate);
+    double tToBeBudgeted =
+        _testComputeToBeBudgeted(fakeDatabase, appState, tCurrentBudgetDate);
 
     when(mockQueries
             .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1))
@@ -926,15 +927,47 @@ main() {
     //!Assert
     expect(appState.toBeBudgeted, tToBeBudgeted);
     verify(mockQueries
-            .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1));
-  verify(mockQueries
-            .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2));
+        .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1));
+    verify(mockQueries
+        .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2));
+  });
+
+  test('when computeAverageBudgeted() is called, compute the average budgeted',
+      () {
+    //!Arrange
+    double tAverage =
+        _testComputeAverageBudgeted(appState, FakeDatabase.TEST_SUBCATEGORY_ID);
+    //!Act
+    double average =
+        appState.computeAverageBudgeted(FakeDatabase.TEST_SUBCATEGORY_ID);
+    //!Assert
+    expect(average, tAverage);
   });
 }
 
-double _testComputeToBeBudgeted(FakeDatabase fakeDatabase, AppState appState, DateTime tCurrentBudgetDate) {
+double _testComputeAverageBudgeted(AppState appState, int subcatId) {
+  double totalBudgeted = 0;
+  int nbNonZero = 0;
+
+  appState.budgets.forEach((budget) {
+    SubCategory subcat =
+        budget.subcategories.singleWhere((subcat) => subcat.id == subcatId);
+    if (subcat.budgeted != 0.00) {
+      nbNonZero++;
+    }
+    totalBudgeted += subcat.budgeted;
+  });
+
+  if (nbNonZero == 0)
+    return 0.00;
+  else
+    return totalBudgeted / nbNonZero;
+}
+
+double _testComputeToBeBudgeted(
+    FakeDatabase fakeDatabase, AppState appState, DateTime tCurrentBudgetDate) {
   // Sum up starting total for every account
-    double tToBeBudgeted = 0;
+  double tToBeBudgeted = 0;
 
   for (final MoneyTransaction mT in fakeDatabase.moneyTransactions) {
     tToBeBudgeted += mT.amount;
