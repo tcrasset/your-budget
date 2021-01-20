@@ -1006,8 +1006,6 @@ double _testComputeToBeBudgeted(
 
 double _testLastMonthBudgeted(
     int subcatId, DateTime tCurrentBudgetDate, AppState appState) {
-  double tLastMonthBudgeted;
-
   DateTime lastMonthDate = Jiffy(tCurrentBudgetDate).subtract(months: 1);
   Budget lastMonthBudget = appState.budgets.singleWhere(
       (budget) =>
