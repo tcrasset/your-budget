@@ -943,6 +943,23 @@ main() {
     //!Assert
     expect(average, tAverage);
   });
+
+  test(
+      'when getLastMonthBudgeted is called, return the budgeted amount of last months subcategory',
+      () {
+    //!Arrange
+    int tSubcatId = FakeDatabase.TEST_SUBCATEGORY_ID;
+    DateTime tCurrentBudgetDate = DateTime(2021, 7);
+
+    double tLastMonthBudgeted =
+        _testLastMonthBudgeted(tSubcatId, tCurrentBudgetDate, appState);
+    //!Act
+    appState.currentBudgetDate = tCurrentBudgetDate;
+    double lastMonthBudgeted = appState.getLastMonthBudgeted(tSubcatId);
+
+    //!Assert
+    expect(lastMonthBudgeted, tLastMonthBudgeted);
+  });
 }
 
 double _testComputeAverageBudgeted(AppState appState, int subcatId) {
@@ -985,4 +1002,24 @@ double _testComputeToBeBudgeted(
     nextDate = Jiffy(nextDate).add(months: 1);
   } while (tCurrentBudgetDate.isAfter(prevDate));
   return tToBeBudgeted;
+}
+
+double _testLastMonthBudgeted(
+    int subcatId, DateTime tCurrentBudgetDate, AppState appState) {
+  double tLastMonthBudgeted;
+
+  DateTime lastMonthDate = Jiffy(tCurrentBudgetDate).subtract(months: 1);
+  Budget lastMonthBudget = appState.budgets.singleWhere(
+      (budget) =>
+          budget.year == lastMonthDate.year &&
+          budget.month == lastMonthDate.month,
+      orElse: () => null);
+
+  if (lastMonthBudget == null) {
+    return 0.00;
+  }
+
+  SubCategory lastMonthSubcat = lastMonthBudget.subcategories
+      .singleWhere((subcat) => subcat.id == subcatId);
+  return lastMonthSubcat.budgeted;
 }
