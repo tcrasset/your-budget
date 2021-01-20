@@ -945,7 +945,7 @@ main() {
   });
 
   test(
-      'when getLastMonthBudgeted is called, return the budgeted amount of last months subcategory',
+      'when computeLastMonthBudgeted() is called, return the budgeted amount of last months subcategory',
       () {
     //!Arrange
     int tSubcatId = FakeDatabase.TEST_SUBCATEGORY_ID;
@@ -955,7 +955,7 @@ main() {
         _testLastMonthBudgeted(tSubcatId, tCurrentBudgetDate, appState);
     //!Act
     appState.currentBudgetDate = tCurrentBudgetDate;
-    double lastMonthBudgeted = appState.getLastMonthBudgeted(tSubcatId);
+    double lastMonthBudgeted = appState.computeLastMonthBudgeted(tSubcatId);
 
     //!Assert
     expect(lastMonthBudgeted, tLastMonthBudgeted);

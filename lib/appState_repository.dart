@@ -63,7 +63,7 @@ abstract class AppStateRepository {
 
   double computeAverageBudgeted(int subcategoryId);
 
-  double getLastMonthBudgeted(int subcategoryId);
+  double computeLastMonthBudgeted(int subcategoryId);
 
   Future<List<Budget>> _createAllMonthlyBudgets();
 

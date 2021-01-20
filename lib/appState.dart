@@ -509,7 +509,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     return totalBudgeted / nbNonZero;
   }
 
-  double getLastMonthBudgeted(int subcategoryId) {
+  double computeLastMonthBudgeted(int subcategoryId) {
     DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1);
     Budget lastMonthBudget = _budgets.singleWhere(
         (budget) =>

@@ -72,7 +72,7 @@ class Information extends StatelessWidget {
           InformationRow(
               "Average budgeted", appState.computeAverageBudgeted(subcat.id)),
           InformationRow(
-              "Last month budgeted", appState.getLastMonthBudgeted(subcat.id)),
+              "Last month budgeted", appState.computeLastMonthBudgeted(subcat.id)),
         ],
       ),
     );
