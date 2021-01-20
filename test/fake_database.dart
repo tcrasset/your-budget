@@ -165,24 +165,25 @@ class FakeDatabase {
   }
 
   List<MoneyTransaction> _buildMoneyTransactions() {
-    MoneyTransaction mt1 = MoneyTransaction(
+    MoneyTransaction startingTransaction1 = MoneyTransaction(
         accountID: TEST_ACCOUNT_ID_1,
-        amount: 999.99,
+        amount: 1000,
         date: startingBudgetDate,
         id: TEST_MONEYTRANSACTION_ID_1,
         payeeID: TEST_PAYEE_ID,
         subcatID: TEST_SUBCATEGORY_ID,
         memo: "");
 
-    MoneyTransaction mt2 = MoneyTransaction(
-        accountID: TEST_ACCOUNT_ID_1,
-        amount: 888.88,
+    MoneyTransaction startingTransaction2 = MoneyTransaction(
+        accountID: TEST_ACCOUNT_ID_2,
+        amount: 500,
         date: startingBudgetDate,
         id: TEST_MONEYTRANSACTION_ID_2,
         payeeID: TEST_PAYEE_ID,
         subcatID: TEST_SUBCATEGORY_ID,
         memo: "");
-    return [mt1, mt2];
+
+    return [startingTransaction1, startingTransaction2];
   }
 
   List<Payee> _buildPayees() {
