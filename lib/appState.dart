@@ -61,7 +61,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     startingBudgetDate = await queryContext.getStartingBudgetDateConstant();
 
     _transactions = await queryContext.getMoneyTransactions();
-    _budgets = await _createAllMonthlyBudgets();
+    _budgets = await createAllMonthlyBudgets();
 
     _payees = await queryContext.getPayees();
     _accounts = await queryContext.getAccounts();
@@ -302,7 +302,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         accounts.singleWhere((account) => account.id == transaction.accountID);
     account.balance += transaction.amount;
     await queryContext.updateAccount(account);
-    _budgets = await _createAllMonthlyBudgets();
+    _budgets = await createAllMonthlyBudgets();
     await computeToBeBudgeted();
   }
 
@@ -527,7 +527,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     return lastMonthSubcat.budgeted;
   }
 
-  Future<List<Budget>> _createAllMonthlyBudgets() async {
+  @visibleForTesting
+  Future<List<Budget>> createAllMonthlyBudgets() async {
     List<Budget> budgets = [];
     DateTime currentDate = startingBudgetDate;
     List<MainCategory> maincategories = await queryContext.getCategories();

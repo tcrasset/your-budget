@@ -65,7 +65,7 @@ abstract class AppStateRepository {
 
   double computeLastMonthBudgeted(int subcategoryId);
 
-  Future<List<Budget>> _createAllMonthlyBudgets();
+  Future<List<Budget>> createAllMonthlyBudgets();
 
   Budget _getBudgetByDate(DateTime date);
 
