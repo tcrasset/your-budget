@@ -29,6 +29,7 @@ class FakeDatabase {
   List<Account> accounts;
   List<MoneyTransaction> moneyTransactions;
   List<BudgetValue> budgetValues;
+  List<Budget> budgets;
   List<Goal> goals;
 
   FakeDatabase({@required this.mockQueries}) {
@@ -38,6 +39,7 @@ class FakeDatabase {
     accounts = _buildAccounts();
     moneyTransactions = _buildMoneyTransactions();
     budgetValues = _buildBudgetValues();
+    budgets = _buildBudgets(maincategories, subCategories, budgetValues);
     goals = _buildGoals();
   }
 
@@ -159,9 +161,39 @@ class FakeDatabase {
     return subcategories;
   }
 
-  List<Budget> _buildBudgets() {
+  List<Budget> _buildBudgets(List<MainCategory> maincategories,
+      List<SubCategory> subcategories, List<BudgetValue> budgetvalues) {
     //TODO: Implement getSubcategoriesJoined()
-    throw UnimplementedError();
+
+    DateTime currentDate = startingBudgetDate;
+    DateTime maxBudgetDate = getMaxBudgetDate();
+    List<Budget> budgets = [];
+
+    do {
+      List<SubCategory> mergedSubcategories = [];
+      for (final SubCategory subcat in subcategories) {
+        BudgetValue budgetvalue = budgetvalues.singleWhere((bv) =>
+            bv.subcategoryId == subcat.id &&
+            bv.month == currentDate.month &&
+            bv.year == currentDate.year);
+
+        SubCategory mergedSubcat = SubCategory(
+            id: subcat.id,
+            parentId: subcat.parentId,
+            name: subcat.name,
+            available: budgetvalue.available,
+            budgeted: budgetvalue.budgeted);
+
+        mergedSubcategories.add(mergedSubcat);
+      }
+
+      Budget budget = Budget(maincategories, mergedSubcategories,
+          currentDate.month, currentDate.year);
+      budgets.add(budget);
+      currentDate = Jiffy(currentDate).add(months: 1);
+    } while (currentDate.isBefore(Jiffy(maxBudgetDate).add(months: 1)));
+
+    return budgets;
   }
 
   List<MoneyTransaction> _buildMoneyTransactions() {
