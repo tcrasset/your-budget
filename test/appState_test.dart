@@ -960,6 +960,20 @@ main() {
     //!Assert
     expect(lastMonthBudgeted, tLastMonthBudgeted);
   });
+
+  test('when createMonthlyBudgets() is called, create the budgets of every month,'+
+  'from startingDate to maxBudgetDate', () async {
+
+    //!Arrange
+    DateTime currentDate = fakeDatabase.startingBudgetDate;
+
+    DateTime storedMaxBudgetDate =
+        await mockQueries.getMaxBudgetDateConstant();
+    //!Act
+
+    //!Assert
+
+  });
 }
 
 double _testComputeAverageBudgeted(AppState appState, int subcatId) {
