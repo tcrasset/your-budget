@@ -13,6 +13,7 @@ import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/models/payee_list.dart';
 
 import 'package:your_budget/models/queries.dart';
 import 'models/categories.dart';
@@ -27,6 +28,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   List<Budget> _budgets = [];
   final Queries queryContext;
   Account _mostRecentAccount;
+
+  PayeeList payeeList;
 
   double toBeBudgeted = 0;
 
@@ -45,7 +48,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   UnmodifiableListView<SubCategory> get subcategories =>
       UnmodifiableListView(currentBudget.subcategories);
-  UnmodifiableListView<Payee> get payees => UnmodifiableListView(_payees);
+  UnmodifiableListView<Payee> get payees => UnmodifiableListView(payeeList.payees);
   UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
   UnmodifiableListView<MoneyTransaction> get transactions =>
       UnmodifiableListView(_transactions);
@@ -73,6 +76,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
     currentBudget = _getBudgetByDate(currentBudgetDate);
+
+    payeeList = PayeeList(queryContext, _payees);
 
     await computeToBeBudgeted();
 
@@ -130,7 +135,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     PayeeModel payeeModel = PayeeModel(name: payeeName);
     int payeeId = await queryContext.addPayee(payeeModel);
     Payee payee = Payee(id: payeeId, name: payeeName);
-    _payees.add(payee);
+
+    payeeList.add(payee);
     notifyListeners();
     return payee;
   }
