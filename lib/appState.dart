@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/appState_repository.dart';
 import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/models/account_list.dart';
 
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
@@ -21,7 +22,6 @@ import 'models/categories.dart';
 class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
   List<Payee> _payees = [];
-  List<Account> _accounts = [];
   List<MoneyTransaction> _transactions = [];
   List<Goal> _goals = [];
   List<BudgetValue> _budgetValues = [];
@@ -30,6 +30,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Account _mostRecentAccount;
 
   PayeeList payeeList;
+  AccountList accountList;
 
   double toBeBudgeted = 0;
 
@@ -49,14 +50,14 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<SubCategory> get subcategories =>
       UnmodifiableListView(currentBudget.subcategories);
   UnmodifiableListView<Payee> get payees => UnmodifiableListView(payeeList.payees);
-  UnmodifiableListView<Account> get accounts => UnmodifiableListView(_accounts);
+  UnmodifiableListView<Account> get accounts => UnmodifiableListView(accountList.accounts);
   UnmodifiableListView<MoneyTransaction> get transactions =>
       UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   UnmodifiableListView<BudgetValue> get budgetValues =>
       UnmodifiableListView(_budgetValues);
-  Account get mostRecentAccount => _mostRecentAccount ?? _accounts[0];
+  Account get mostRecentAccount => _mostRecentAccount ?? accountList.accounts[0];
 
   AppState({@required this.queryContext});
 
@@ -67,17 +68,16 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     _budgets = await createAllMonthlyBudgets();
 
     _payees = await queryContext.getPayees();
-    _accounts = await queryContext.getAccounts();
 
     _budgetValues = await queryContext.getBudgetValues();
     _goals = await queryContext.getGoals();
-
-    _mostRecentAccount = await getMostRecentAccountUsed();
 
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
     currentBudget = _getBudgetByDate(currentBudgetDate);
 
     payeeList = PayeeList(queryContext, _payees);
+    accountList = AccountList(queryContext, await queryContext.getAccounts());
+    _mostRecentAccount = await getMostRecentAccountUsed();
 
     await computeToBeBudgeted();
 
@@ -91,7 +91,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     int accountId = await queryContext.addAccount(accountModel);
     Account account =
         Account(id: accountId, name: accountName, balance: balance);
-    _accounts.add(account);
+    accountList.add(account);
 
     MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
       subcatID: Constants.UNASSIGNED_SUBCAT_ID,
@@ -461,7 +461,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     toBeBudgeted = 0;
 
     // Sum up starting total for every account
-    for (final Account account in _accounts) {
+    for (final Account account in accounts) {
       MoneyTransaction firstTransaction =
           await queryContext.getFirstTransactionOfAccount(account.id);
       toBeBudgeted += firstTransaction.amount;
