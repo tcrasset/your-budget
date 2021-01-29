@@ -1,7 +1,8 @@
 import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
 
-class AccountList {
+class AccountList implements ObjectList<Account> {
   final Queries queryContext;
   List<Account> _accounts = [];
 
@@ -11,7 +12,7 @@ class AccountList {
     this._accounts,
   );
 
-  void add(Account account){
+  void add(Account account) {
     _accounts.add(account);
   }
 }
