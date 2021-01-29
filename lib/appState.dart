@@ -15,6 +15,7 @@ import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/models/payee_list.dart';
+import 'package:your_budget/models/account_creator.dart';
 
 import 'package:your_budget/models/queries.dart';
 import 'models/categories.dart';
@@ -48,15 +49,18 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   UnmodifiableListView<SubCategory> get subcategories =>
       UnmodifiableListView(currentBudget.subcategories);
-  UnmodifiableListView<Payee> get payees => UnmodifiableListView(payeeList.payees);
-  UnmodifiableListView<Account> get accounts => UnmodifiableListView(accountList.accounts);
+  UnmodifiableListView<Payee> get payees =>
+      UnmodifiableListView(payeeList.payees);
+  UnmodifiableListView<Account> get accounts =>
+      UnmodifiableListView(accountList.accounts);
   UnmodifiableListView<MoneyTransaction> get transactions =>
       UnmodifiableListView(_transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   UnmodifiableListView<BudgetValue> get budgetValues =>
       UnmodifiableListView(_budgetValues);
-  Account get mostRecentAccount => _mostRecentAccount ?? accountList.accounts[0];
+  Account get mostRecentAccount =>
+      _mostRecentAccount ?? accountList.accounts[0];
 
   AppState({@required this.queryContext});
 
@@ -65,7 +69,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     _transactions = await queryContext.getMoneyTransactions();
     _budgets = await createAllMonthlyBudgets();
-
 
     _budgetValues = await queryContext.getBudgetValues();
     _goals = await queryContext.getGoals();
@@ -84,35 +87,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   Future<void> addAccount(
       {@required String accountName, @required double balance}) async {
-    AccountModel accountModel =
-        AccountModel(name: accountName, balance: balance);
-    int accountId = await queryContext.addAccount(accountModel);
-    Account account =
-        Account(id: accountId, name: accountName, balance: balance);
-    accountList.add(account);
+    AccountCreator creator = AccountCreator(
+        queryContext: queryContext, balance: balance, name: accountName);
+    accountList.add(await creator.create());
+    _transactions.add(await creator.getStartingMoneyTransaction());
 
-    MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
-      subcatID: Constants.UNASSIGNED_SUBCAT_ID,
-      payeeID: Constants.UNASSIGNED_PAYEE_ID,
-      accountID: accountId,
-      amount: balance,
-      memo: "Starting balance",
-      date: DateTime.now(),
-    );
-
-    int moneyTransactionId =
-        await queryContext.addMoneyTransaction(moneyTransactionModel);
-    MoneyTransaction startingBalance = MoneyTransaction(
-      id: moneyTransactionId,
-      subcatID: moneyTransactionModel.subcatID,
-      payeeID: moneyTransactionModel.payeeID,
-      accountID: moneyTransactionModel.accountID,
-      amount: moneyTransactionModel.amount,
-      memo: moneyTransactionModel.memo,
-      date: moneyTransactionModel.date,
-    );
-
-    _transactions.add(startingBalance);
     await computeToBeBudgeted();
     notifyListeners();
   }
