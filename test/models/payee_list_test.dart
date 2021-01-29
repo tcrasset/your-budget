@@ -33,15 +33,4 @@ main() {
     //!Assert
     expect(payeeList.payees, [tPayee, tPayee2]);
   });
-
-  test('when addAll() is called, add a list of Payees', () {
-    //!Arrange
-
-    //!Act
-    PayeeList payeeList = PayeeList(mockQueries, []);
-
-    payeeList.addAll([tPayee, tPayee2]);
-    //!Assert
-    expect(payeeList.payees, [tPayee, tPayee2]);
-  });
 }

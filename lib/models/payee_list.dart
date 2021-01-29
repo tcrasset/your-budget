@@ -15,10 +15,4 @@ class PayeeList {
   void add(Payee payee) {
     _payees.add(payee);
   }
-
-  void addAll(List<Payee> payees) {
-    _payees.addAll(payees);
-  }
-
-
 }
