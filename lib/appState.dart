@@ -14,6 +14,7 @@ import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/maincategory_creator.dart';
 import 'package:your_budget/models/money_transaction_creator.dart';
+import 'package:your_budget/models/money_transaction_list.dart';
 import 'package:your_budget/models/payee_creator.dart';
 import 'package:your_budget/models/subcategory_creator.dart';
 import 'package:your_budget/models/utils.dart';
@@ -26,7 +27,6 @@ import 'models/categories.dart';
 
 class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
-  List<MoneyTransaction> _transactions = [];
   List<Goal> _goals = [];
   List<BudgetValue> _budgetValues = [];
   List<Budget> _budgets = [];
@@ -35,6 +35,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   PayeeList payeeList;
   AccountList accountList;
+  MoneyTransactionList transactionList;
 
   double toBeBudgeted = 0;
 
@@ -58,7 +59,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<Account> get accounts =>
       UnmodifiableListView(accountList.accounts);
   UnmodifiableListView<MoneyTransaction> get transactions =>
-      UnmodifiableListView(_transactions);
+      UnmodifiableListView(transactionList.transactions);
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   UnmodifiableListView<BudgetValue> get budgetValues =>
@@ -71,7 +72,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Future<void> loadStateFromDatabase() async {
     startingBudgetDate = await queryContext.getStartingBudgetDateConstant();
 
-    _transactions = await queryContext.getMoneyTransactions();
+    transactionList = MoneyTransactionList(
+        queryContext, await queryContext.getMoneyTransactions());
     _budgets = await createAllMonthlyBudgets();
 
     _budgetValues = await queryContext.getBudgetValues();
@@ -94,7 +96,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     AccountCreator creator = AccountCreator(
         queryContext: queryContext, balance: balance, name: accountName);
     accountList.add(await creator.create());
-    _transactions.add(await creator.getStartingMoneyTransaction());
+    transactionList.add(await creator.getStartingMoneyTransaction());
 
     await computeToBeBudgeted();
     notifyListeners();
@@ -167,7 +169,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     notifyListeners();
   }
 
-  /// Add the [transaction] to the [_transactions] list, persist it to
+  /// Add the [transaction] to the [transactionList], persist it to
   /// the database and add the transaction amount to the corresponding subcategory.
   /// Finally, update the fields of the [MainCategory] which contains the
   /// subcategory.
@@ -192,7 +194,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     );
 
     MoneyTransaction transaction = await creator.create();
-    _transactions.add(transaction);
+    transactionList.add(transaction);
 
     setMostRecentAccountUsed(accountId);
 
@@ -499,11 +501,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     // until we overshoot the endDate
 
     // Get every transaction made into 'To Be Budgeted'
-    List<MoneyTransaction> toBeBudgetedTransactions = _transactions
-        .where((transaction) =>
-            transaction.subcatID ==
-            Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION)
-        .toList();
+    List<MoneyTransaction> toBeBudgetedTransactions =
+        transactionList.getToBeBudgetedTransactions();
 
     do {
       List<SubCategory> subcategories = await queryContext
@@ -536,8 +535,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   Future<void> deleteTransaction(int transactionId) async {
-    MoneyTransaction transaction = _transactions
-        .singleWhere((transaction) => transaction.id == transactionId);
+    MoneyTransaction transaction = transactionList.getById(transactionId);
 
     bool isTransactionIntoToBeBudgeted =
         transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
@@ -556,7 +554,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     }
 
     queryContext.deleteTransaction(transactionId);
-    _transactions.remove(transaction);
+    transactionList.remove(transactionId);
   }
 
   void _deleteStandardTransaction(MoneyTransaction transaction) {
