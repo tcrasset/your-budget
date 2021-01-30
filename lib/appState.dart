@@ -371,7 +371,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     //Remove subcategories from the budgets and from the database
     _budgets.forEach((budget) {
-      budget.removeSubcategory(toBeRemoved);
+      budget.removeSubcategory(toBeRemoved.id, toBeRemoved.parentId);
     });
     queryContext.deleteSubcategory(subcategoryId);
     budgetValueList.removeBySubcatId(subcategoryId);

@@ -198,7 +198,7 @@ void main() {
         [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
 
     // Remove subcategory
-    myBudget.removeSubcategory(subcatTest_1_2);
+    myBudget.removeSubcategory(subcatTest_1_2.id, subcatTest_1_2.parentId);
 
     //Check that subcategory is not in the list
     expect(myBudget.subcategories.contains(subcatTest_1_2), false);

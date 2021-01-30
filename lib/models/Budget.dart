@@ -163,12 +163,11 @@ class Budget {
   }
 
   /// Deletes the [deletedSubcategory] from the current Budget.
-  void removeSubcategory(SubCategory deletedSubcategory) {
-    subcategories.removeWhere((subcat) => subcat.id == deletedSubcategory.id);
-    MainCategory cat = maincategories.singleWhere(
-        (cat) => cat.id == deletedSubcategory.parentId,
+  void removeSubcategory(int subcatId, int catId) {
+    subcategories.removeWhere((subcat) => subcat.id == subcatId);
+    MainCategory cat = maincategories.singleWhere((cat) => cat.id == catId,
         orElse: () => null);
-    cat?.removeSubcategory(deletedSubcategory.id);
+    cat?.removeSubcategory(subcatId);
     _updateTotalBudgeted();
   }
 
