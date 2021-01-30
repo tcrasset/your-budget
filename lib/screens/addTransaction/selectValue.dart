@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/components/addDialog.dart';
 import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/payee.dart';
 import 'package:provider/provider.dart';
 
 class SelectValuePage extends StatefulWidget {

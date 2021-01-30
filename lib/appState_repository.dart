@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/goal.dart';
-
-import 'models/entries.dart';
-
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/models/account.dart';
 abstract class AppStateRepository {
   Future<void> loadStateFromDatabase();
 

@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/money_transaction_list.dart';
 

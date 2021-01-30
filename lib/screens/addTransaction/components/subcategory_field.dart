@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../components/rowContainer.dart';
-import '../../../models/entries.dart';
+import '../../../models/account.dart';
 
 class SubcategoryField extends StatelessWidget {
   const SubcategoryField({

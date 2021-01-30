@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/account.dart';
 import 'package:provider/provider.dart';
 
 class SelectAccountPage extends StatelessWidget {
@@ -10,7 +10,7 @@ class SelectAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppState appState = Provider.of<AppState>(context);
-    List<Account> accounts = appState.accounts;
+    List<Account> accounts = appState.accounts.toList();
 
     void handleOnTap(int index) {
       Navigator.pop(context, accounts[index]);

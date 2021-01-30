@@ -1,6 +1,7 @@
-import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
+
+import 'account.dart';
 
 class AccountList implements ObjectList<Account> {
   final Queries queryContext;

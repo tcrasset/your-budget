@@ -5,11 +5,12 @@ import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/appState_repository.dart';
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/account_list.dart';
-
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/maincategory_creator.dart';

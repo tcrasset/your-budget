@@ -1,8 +1,7 @@
 import 'package:meta/meta.dart';
 import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/queries.dart';
+import 'package:your_budget/models/money_transaction.dart';
 
 class MoneyTransactionCreator implements Creator<MoneyTransaction> {
   final Queries queryContext;

@@ -1,39 +1,6 @@
-/// This file will contain the classes for the common objects used throughout the codebase, namely
-/// [Payee], [MoneyTransaction], and [Account].
-
 import 'package:meta/meta.dart';
 
 import 'package:your_budget/models/constants.dart';
-
-/// Class that defines an entity/person that either received money or gave money to the budget
-/// holder.
-/// It is defined using an unique [id] and a [name].
-class Payee {
-  /// Unique id of this.
-  int id;
-
-  /// Name of this.
-  String name;
-
-  /// Default constructor of [Payee]
-  Payee({@required this.id, @required  this.name});
-
-  /// Constructor building a [Payee] from a [json] representation taken
-  /// from a database.
-  Payee.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.PAYEE_ID];
-    this.name = json[DatabaseConstants.PAYEE_NAME];
-  }
-
-  @override
-  String toString() {
-    return super.toString() + """ {id: $id, name: $name}""";
-  }
-
-  bool hasSameValues(Payee payee) {
-    return payee.id == this.id && payee.name == this.name;
-  }
-}
 
 /// Class that defines a MoneyTransaction between the user and another entity.
 /// The [amount] is transfered between the user and the entity specified by [payeeID] at the given
@@ -114,37 +81,21 @@ class MoneyTransaction {
   }
 }
 
-/// Class representing the physical account where the money is stored.
-class Account {
-  /// Unique id of this.
-  int id;
 
-  /// Name given to this.
-  String name;
+class MoneyTransactionModel {
+  final int subcatID;
+  final int payeeID;
+  final int accountID;
+  final double amount;
+  final String memo;
+  final DateTime date;
 
-  /// Balance of this.
-  double balance;
-
-  /// Default constructor for [Account] with an unique [id], a [name] and the
-  /// current [balance].
-  Account({@required this.id, @required  this.name, @required  this.balance});
-
-  /// Constructor building an [Account] from a [json] representation taken
-  /// from a database.
-  Account.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.ACCOUNT_ID];
-    this.name = json[DatabaseConstants.ACCOUNT_NAME];
-    this.balance = json[DatabaseConstants.ACCOUNT_BALANCE];
-  }
-
-  bool hasSameValues(Account account) {
-    return account.id == this.id &&
-        account.name == this.name &&
-        account.balance == this.balance;
-  }
-
-  @override
-  String toString() {
-    return super.toString() + """ {id: $id, name: $name, balance: $balance}""";
-  }
+  MoneyTransactionModel({
+    @required this.subcatID,
+    @required this.payeeID,
+    @required this.accountID,
+    @required this.amount,
+    @required this.memo,
+    @required this.date,
+  });
 }

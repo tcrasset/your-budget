@@ -2,7 +2,8 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/screens/showTransactions/components/transactionRow.dart';
 
 class TransactionList extends StatefulWidget {

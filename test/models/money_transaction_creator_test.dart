@@ -1,7 +1,6 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/entries_model.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/money_transaction_creator.dart';
 

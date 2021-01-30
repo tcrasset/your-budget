@@ -1,4 +1,4 @@
-import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/payee.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
 

@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/entries_model.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/money_transaction_creator.dart';
 

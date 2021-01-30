@@ -3,7 +3,7 @@ import 'package:your_budget/appState.dart';
 import 'package:your_budget/components/deleteDialog.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
+import 'package:your_budget/models/account.dart';
 import 'package:your_budget/screens/showTransactions/components/transactionList.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
+import 'package:your_budget/models/money_transaction.dart';
 
 class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   final Queries queryContext;
