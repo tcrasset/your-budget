@@ -30,7 +30,6 @@ import 'models/categories.dart';
 class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
   List<Goal> _goals = [];
-  List<BudgetValue> _budgetValues = [];
   List<Budget> _budgets = [];
   final Queries queryContext;
   Account _mostRecentAccount;
@@ -79,8 +78,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         queryContext, await queryContext.getMoneyTransactions());
     _budgets = await createAllMonthlyBudgets();
 
-    _budgetValues = await queryContext.getBudgetValues();
-    budgetValueList = BudgetValueList(queryContext, _budgetValues);
+    budgetValueList = BudgetValueList(queryContext, await queryContext.getBudgetValues());
     _goals = await queryContext.getGoals();
 
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
