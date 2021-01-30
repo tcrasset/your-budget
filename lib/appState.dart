@@ -11,9 +11,9 @@ import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
-import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
+import 'package:your_budget/models/money_transaction_creator.dart';
 import 'package:your_budget/models/payee_creator.dart';
 import 'package:your_budget/models/subcategory_creator.dart';
 import 'package:your_budget/models/utils.dart';
@@ -180,27 +180,17 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }) async {
     // Add transaction to the state, to the database and update the count
 
-    MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
-      subcatID: subcatId,
-      payeeID: payeeId,
-      accountID: accountId,
+    MoneyTransactionCreator creator = MoneyTransactionCreator(
+      queryContext: queryContext,
+      subcatId: subcatId,
+      payeeId: payeeId,
+      accountId: accountId,
       amount: amount,
       memo: memo,
       date: date,
     );
 
-    int moneyTransactionId =
-        await queryContext.addMoneyTransaction(moneyTransactionModel);
-
-    MoneyTransaction transaction = MoneyTransaction(
-      id: moneyTransactionId,
-      subcatID: moneyTransactionModel.subcatID,
-      payeeID: moneyTransactionModel.payeeID,
-      accountID: moneyTransactionModel.accountID,
-      amount: moneyTransactionModel.amount,
-      memo: moneyTransactionModel.memo,
-      date: moneyTransactionModel.date,
-    );
+    MoneyTransaction transaction = await creator.create();
     _transactions.add(transaction);
 
     setMostRecentAccountUsed(accountId);
