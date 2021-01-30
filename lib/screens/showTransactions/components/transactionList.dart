@@ -69,7 +69,7 @@ List<MoneyTransaction> _getMoneyTransactions(
     } else if ((currentAccountIsStandardAccount && isAccountPayee)) {
       // The transaction is reversed.i.e. removes money from outAccount(accountId)
       // into inAccount(payeeId)
-      MoneyTransaction negativeAmountTransaction = transaction.copy();
+      MoneyTransaction negativeAmountTransaction = transaction.copyWith();
       negativeAmountTransaction.amount *= -1;
       transactionsOfAccount.add(negativeAmountTransaction);
     }

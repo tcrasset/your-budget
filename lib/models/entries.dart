@@ -1,8 +1,9 @@
 /// This file will contain the classes for the common objects used throughout the codebase, namely
 /// [Payee], [MoneyTransaction], and [Account].
 
-import 'package:your_budget/models/constants.dart';
 import 'package:meta/meta.dart';
+
+import 'package:your_budget/models/constants.dart';
 
 /// Class that defines an entity/person that either received money or gave money to the budget
 /// holder.
@@ -92,15 +93,24 @@ class MoneyTransaction {
         """{id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}\n""";
   }
 
-  MoneyTransaction copy() {
+  MoneyTransaction copyWith({
+    int id,
+    int subcatID,
+    int payeeID,
+    int accountID,
+    double amount,
+    String memo,
+    DateTime date,
+  }) {
     return MoneyTransaction(
-        id: this.id,
-        subcatID: this.subcatID,
-        payeeID: this.payeeID,
-        accountID: this.accountID,
-        amount: this.amount,
-        memo: this.memo,
-        date: this.date);
+      id: id ?? this.id,
+      subcatID: subcatID ?? this.subcatID,
+      payeeID: payeeID ?? this.payeeID,
+      accountID: accountID ?? this.accountID,
+      amount: amount ?? this.amount,
+      memo: memo ?? this.memo,
+      date: date ?? this.date,
+    );
   }
 }
 
