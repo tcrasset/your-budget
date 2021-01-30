@@ -12,6 +12,7 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
+import 'package:your_budget/models/maincategory_creator.dart';
 import 'package:your_budget/models/money_transaction_creator.dart';
 import 'package:your_budget/models/payee_creator.dart';
 import 'package:your_budget/models/subcategory_creator.dart';
@@ -102,9 +103,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
   void addCategory({@required String categoryName}) async {
-    MainCategoryModel categoryModel = MainCategoryModel(name: categoryName);
-    int categoryId = await queryContext.addCategory(categoryModel);
-    MainCategory cat = MainCategory(id: categoryId, name: categoryName);
+    MainCategory cat = await MainCategoryCreator(
+            queryContext: queryContext, name: categoryName)
+        .create();
+
     for (final Budget budget in _budgets) {
       budget.maincategories.add(cat);
     }
