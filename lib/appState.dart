@@ -13,6 +13,7 @@ import 'package:your_budget/models/entries.dart';
 import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
+import 'package:your_budget/models/payee_creator.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/models/payee_list.dart';
 import 'package:your_budget/models/account_creator.dart';
@@ -109,10 +110,9 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   Future<Payee> addPayee({@required String payeeName}) async {
-    PayeeModel payeeModel = PayeeModel(name: payeeName);
-    int payeeId = await queryContext.addPayee(payeeModel);
-    Payee payee = Payee(id: payeeId, name: payeeName);
-
+    PayeeCreator creator =
+        PayeeCreator(queryContext: queryContext, name: payeeName);
+    Payee payee = await creator.create();
     payeeList.add(payee);
     notifyListeners();
     return payee;
