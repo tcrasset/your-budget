@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/appState_repository.dart';
+import 'package:your_budget/main.dart';
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/account_list.dart';
 
@@ -14,6 +15,7 @@ import 'package:your_budget/models/entries_model.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
 import 'package:your_budget/models/payee_creator.dart';
+import 'package:your_budget/models/subcategory_creator.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/models/payee_list.dart';
 import 'package:your_budget/models/account_creator.dart';
@@ -128,21 +130,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime previousDate;
 
-    SubCategoryModel subcategoryModel = SubCategoryModel(
-      parentId: maincategoryId,
-      name: subcategoryName,
-      budgeted: 0.00,
-      available: 0.00,
-    );
-
-    int subcatId = await queryContext.addSubcategory(subcategoryModel);
-    SubCategory subcategory = SubCategory(
-      id: subcatId,
-      parentId: subcategoryModel.parentId,
-      name: subcategoryModel.name,
-      budgeted: subcategoryModel.budgeted,
-      available: subcategoryModel.available,
-    );
+    SubCategory subcategory = await SubCategoryCreator(
+            queryContext: queryContext,
+            name: subcategoryName,
+            parentId: maincategoryId,
+            budgeted: 0.00,
+            available: 0.00)
+        .create();
 
     for (final Budget budget in _budgets) {
       budget.addSubcategory(subcategory);
@@ -156,7 +150,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       previousDate = newDate;
 
       BudgetValueModel budgetValueModel = BudgetValueModel(
-        subcategoryId: subcatId,
+        subcategoryId: subcategory.id,
         budgeted: 0,
         available: 0,
         year: previousDate.year,
