@@ -586,17 +586,15 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void removeCategory(int categoryId) {
-    MainCategory toBeRemoved =
-        currentBudget.maincategories.singleWhere((cat) => cat.id == categoryId);
 
     List<SubCategory> correspondingSubcategories =
         subcategories.where((subcat) => subcat.parentId == categoryId).toList();
 
     //Remove categories from the budgets and from the database
     _budgets.forEach((budget) {
-      budget.removeCategory(toBeRemoved);
+      budget.removeCategory(categoryId);
     });
-    queryContext.deleteCategory(toBeRemoved.id);
+    queryContext.deleteCategory(categoryId);
 
     correspondingSubcategories
         .forEach((subcat) => removeSubcategory(subcat.id));

@@ -171,8 +171,9 @@ class Budget {
     _updateTotalBudgeted();
   }
 
-  void removeCategory(MainCategory toBeRemoved) {
-    maincategories.removeWhere((cat) => cat.id == toBeRemoved.id);
+  void removeCategory(int catId) {
+    //! Must call removeSubcategory separately for linked subcategories
+    maincategories.removeWhere((cat) => cat.id == catId);
     _updateTotalBudgeted();
   }
 }

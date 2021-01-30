@@ -76,6 +76,7 @@ void main() {
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
     final MainCategory newCat = MainCategory(id: 1, name: "Name changed");
 
+    //TODO: Enforce name only change
     // Construct the Budget
     final Budget myBudget = Budget([catTest], [], 6, 1996);
 
