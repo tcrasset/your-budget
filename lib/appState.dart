@@ -19,6 +19,7 @@ import 'package:your_budget/models/subcategory_creator.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/models/payee_list.dart';
 import 'package:your_budget/models/account_creator.dart';
+import 'package:your_budget/models/budget_value_creator.dart';
 
 import 'package:your_budget/models/queries.dart';
 import 'models/categories.dart';
@@ -149,7 +150,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
       previousDate = newDate;
 
-      BudgetValueModel budgetValueModel = BudgetValueModel(
+      BudgetValueCreator creator = BudgetValueCreator(
+        queryContext: queryContext,
         subcategoryId: subcategory.id,
         budgeted: 0,
         available: 0,
@@ -157,16 +159,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         month: previousDate.month,
       );
 
-      int budgetId = await queryContext.addBudgetValue(budgetValueModel);
-      BudgetValue budgetValue = BudgetValue(
-          id: budgetId,
-          subcategoryId: subcategory.id,
-          budgeted: 0,
-          available: 0,
-          year: previousDate.year,
-          month: previousDate.month);
-
-      _budgetValues.add(budgetValue);
+      _budgetValues.add(await creator.create());
       newDate = Jiffy(previousDate).add(months: 1);
     } while (previousDate.isBefore(maxBudgetDate));
 
