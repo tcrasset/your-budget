@@ -933,18 +933,6 @@ main() {
         .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2));
   });
 
-  test('when computeAverageBudgeted() is called, compute the average budgeted',
-      () {
-    //!Arrange
-    double tAverage =
-        _testComputeAverageBudgeted(appState, FakeDatabase.TEST_SUBCATEGORY_ID);
-    //!Act
-    double average =
-        appState.computeAverageBudgeted(FakeDatabase.TEST_SUBCATEGORY_ID);
-    //!Assert
-    expect(average, tAverage);
-  });
-
   test(
       'when computeLastMonthBudgeted() is called, return the budgeted amount of last months subcategory',
       () {
@@ -965,6 +953,7 @@ main() {
   test(
       'when createMonthlyBudgets() is called, create the budgets of every month,' +
           'from startingDate to maxBudgetDate', () async {
+    //TODO: Implement test for createMonthlyBudgets
     //!Arrange
     DateTime currentDate = fakeDatabase.startingBudgetDate;
 
@@ -973,25 +962,6 @@ main() {
 
     //!Assert
   });
-}
-
-double _testComputeAverageBudgeted(AppState appState, int subcatId) {
-  double totalBudgeted = 0;
-  int nbNonZero = 0;
-
-  appState.budgets.forEach((budget) {
-    SubCategory subcat =
-        budget.subcategories.singleWhere((subcat) => subcat.id == subcatId);
-    if (subcat.budgeted != 0.00) {
-      nbNonZero++;
-    }
-    totalBudgeted += subcat.budgeted;
-  });
-
-  if (nbNonZero == 0)
-    return 0.00;
-  else
-    return totalBudgeted / nbNonZero;
 }
 
 double _testComputeToBeBudgeted(
