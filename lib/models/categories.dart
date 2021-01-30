@@ -130,7 +130,14 @@ class MainCategory extends Category {
 
   /// Creates a new copy of this WITHOUT [subcategories]
   MainCategory copy() {
-    return MainCategory(id:id,name: name);
+    return MainCategory(id: id, name: name);
+  }
+
+  MainCategory copyWith({int id, String name}) {
+    return MainCategory(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
   }
 
   /// Checks whether [mainCategory] has the same values as this..
