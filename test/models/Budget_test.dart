@@ -85,7 +85,6 @@ void main() {
 
     // Check that the modification were made in the maincategory
     MainCategory budgetCat = myBudget.maincategories[0];
-    print(budgetCat);
     expect(budgetCat.hasSameValues(newCat), true);
   });
 
