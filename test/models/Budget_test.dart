@@ -31,6 +31,20 @@ void main() {
     expect(myBudget.maincategories[0].subcategories.length, 1);
   });
 
+  test('when addMaincategory is called, add a MainCategory to the budget', () {
+    
+    //!Arrange
+    final MainCategory catTest = MainCategory(id:1, name:"Test");
+    // No maincategories in constructor because it gets copied in it
+    final Budget myBudget = Budget([], [], 6, 1996);
+    
+    //!Act
+    myBudget.addMaincategory(catTest);
+  
+    //!Assert
+    expect(myBudget.maincategories, [catTest]);
+  });
+
   test('Budget.makeCategoryChange() modifies the subcategory in the Budget correctly', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id:1, name:"Test");

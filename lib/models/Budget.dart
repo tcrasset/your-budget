@@ -1,3 +1,4 @@
+import 'package:your_budget/main.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/utils.dart';
 
@@ -61,6 +62,10 @@ class Budget {
       cat.addSubcategory(subcat);
     }
     _updateTotalBudgeted();
+  }
+
+  void addMaincategory(MainCategory maincat) {
+    maincategories.add(maincat);
   }
 
   bool _subcatAlreadyPresentIn(MainCategory cat, SubCategory subcat) {
@@ -159,8 +164,9 @@ class Budget {
   /// Deletes the [deletedSubcategory] from the current Budget.
   void removeSubcategory(SubCategory deletedSubcategory) {
     subcategories.removeWhere((subcat) => subcat.id == deletedSubcategory.id);
-    MainCategory cat = maincategories
-        .singleWhere((cat) => cat.id == deletedSubcategory.parentId, orElse: () => null);
+    MainCategory cat = maincategories.singleWhere(
+        (cat) => cat.id == deletedSubcategory.parentId,
+        orElse: () => null);
     cat?.removeSubcategory(deletedSubcategory.id);
     _updateTotalBudgeted();
   }
