@@ -51,6 +51,22 @@ class SubCategory extends Category {
     return SubCategory(id:id, parentId:parentId, name:name, budgeted:budgeted, available:available);
   }
 
+  SubCategory copyWith({
+    int id,
+    int parentId,
+    String name,
+    double budgeted,
+    double available,
+  }) {
+    return SubCategory(
+      id: id ?? this.id,
+      parentId: parentId ?? this.parentId,
+      name : name ?? this.name,
+      budgeted: budgeted ?? this.budgeted,
+      available: available ?? this.available,
+    );
+  }
+
   /// Updates values of this with those of [subcat].
   void update(SubCategory subcat) {
     assert(subcat.id == this.id);
