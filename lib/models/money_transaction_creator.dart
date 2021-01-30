@@ -34,7 +34,7 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
 
     int id = await queryContext.addMoneyTransaction(moneyTransactionModel);
 
-    MoneyTransaction moneyTransaction = MoneyTransaction(
+    return MoneyTransaction(
         id: id,
         accountID: accountId,
         payeeID: payeeId,
@@ -42,7 +42,5 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
         amount: amount,
         date: date,
         memo: memo);
-
-    return moneyTransaction;
   }
 }
