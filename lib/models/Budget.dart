@@ -6,6 +6,7 @@ import 'package:your_budget/models/utils.dart';
 /// It holds a list of all [maincategories] and [subcategories], which are put in a specific
 /// order in [_allcategories]. The total budgeted value is held in [totalBudgeted].
 class Budget {
+  //TODO: Refactor budget
   List<MainCategory> maincategories = [];
   List<SubCategory> subcategories = [];
   List<Category> _allcategories;
@@ -90,6 +91,12 @@ class Budget {
 
     cat.updateFields();
     _updateTotalBudgeted();
+  }
+
+  void updateMaincategory(MainCategory modifiedMaincategory) {
+    MainCategory cat =
+        maincategories.singleWhere((cat) => cat.id == modifiedMaincategory.id);
+    cat.name = modifiedMaincategory.name;
   }
 
   /// Replace the attribute [field] of the SubCategory specified by [subcatId] with [value].

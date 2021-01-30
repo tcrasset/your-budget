@@ -47,7 +47,7 @@ void main() {
   });
 
   test(
-      'Budget.makeCategoryChange() modifies the subcategory in the Budget correctly',
+      'Budget.updateSubCategory() modifies the subcategory in the Budget correctly',
       () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
@@ -70,6 +70,22 @@ void main() {
     //Check that the modifications were made in the MainCategory
     MainCategory myBudgetCat = myBudget.maincategories[0];
     expect(myBudgetCat.available, subcatTest.available);
+  });
+
+  test('Budget.updateMaincategory() modifies the maincategory name (only)', () {
+    final MainCategory catTest = MainCategory(id: 1, name: "Test");
+    final MainCategory newCat = MainCategory(id: 1, name: "Name changed");
+
+    // Construct the Budget
+    final Budget myBudget = Budget([catTest], [], 6, 1996);
+
+    //Make the modification in [myBudget]
+    myBudget.updateMaincategory(newCat);
+
+    // Check that the modification were made in the maincategory
+    MainCategory budgetCat = myBudget.maincategories[0];
+    print(budgetCat);
+    expect(budgetCat.hasSameValues(newCat), true);
   });
 
   test(
