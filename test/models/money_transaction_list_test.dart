@@ -73,8 +73,8 @@ main() {
   });
 
   test(
-      'when getAllById() is called, return a list of all the transactions' +
-          'with the same id', () {
+      'when getAllBySubcatId() is called, return a list of all the transactions' +
+          'with the same subcategory id', () {
     //!Arrange
     transactionList.add(tMoneyTransaction);
     //!Act
