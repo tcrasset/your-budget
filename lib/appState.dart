@@ -346,7 +346,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   void _updateSubcategoryInCurrentBudget(
       SubCategory modifiedSubcategory, DateTime dateMofidied) {
-    currentBudget.makeCategoryChange(modifiedSubcategory);
+    currentBudget.updateSubCategory(modifiedSubcategory);
 
     BudgetValue budgetValue =
         budgetValueList.getByBudget(dateMofidied, modifiedSubcategory.id);
@@ -359,7 +359,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   void _updateSubcategoryName(SubCategory modifiedSubcategory) {
     for (Budget budget in _budgets) {
-      budget.makeCategoryChange(modifiedSubcategory);
+      budget.updateSubCategory(modifiedSubcategory);
     }
     queryContext.updateSubcategory(modifiedSubcategory);
   }

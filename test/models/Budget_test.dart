@@ -61,7 +61,7 @@ void main() {
     subcatTest.available = 11.11;
 
     //Make the modification in [myBudget]
-    myBudget.makeCategoryChange(subcatTest);
+    myBudget.updateSubCategory(subcatTest);
 
     // Check that the modification were made in the subcategory
     SubCategory myBudgetSubcat = myBudget.subcategories[0];

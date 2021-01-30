@@ -78,13 +78,7 @@ class Budget {
 
   /// Replace the subcategory specified by [modifiedSubcategory.id] in the budget by
   /// the values of [modifiedSubcategory].
-  void makeCategoryChange(SubCategory modifiedSubcategory) {
-    _updateSubCategory(modifiedSubcategory);
-    //TODO: Replace outer method with inner method
-  }
-
-  /// Modify the values of the SubCategory specified by [modifiedSubcategory.id]
-  void _updateSubCategory(SubCategory modifiedSubcategory) {
+  void updateSubCategory(SubCategory modifiedSubcategory) {
     // Modify subcategory in this.subcategories
     SubCategory oldSubcat = subcategories
         .singleWhere((subcat) => modifiedSubcategory.id == subcat.id);
