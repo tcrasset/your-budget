@@ -3,7 +3,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/appState_repository.dart';
-import 'package:your_budget/main.dart';
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/account_list.dart';
 
