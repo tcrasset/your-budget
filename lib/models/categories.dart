@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+
 import 'package:your_budget/models/constants.dart';
 
 /// Class representing a budgeting category.
@@ -210,5 +211,23 @@ class BudgetValue {
       this.available == budgetValue.available &&
       this.year == budgetValue.year &&
       this.month == budgetValue.month;
+  }
+
+  BudgetValue copyWith({
+    int id,
+    int subcategoryId,
+    double budgeted,
+    double available,
+    int month,
+    int year,
+  }) {
+    return BudgetValue(
+      id: id ?? this.id,
+      subcategoryId: subcategoryId ?? this.subcategoryId,
+      budgeted: budgeted ?? this.budgeted,
+      available: available ?? this.available,
+      month: month ?? this.month,
+      year: year ?? this.year,
+    );
   }
 }
