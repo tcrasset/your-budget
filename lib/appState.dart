@@ -22,6 +22,7 @@ import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/models/payee_list.dart';
 import 'package:your_budget/models/account_creator.dart';
 import 'package:your_budget/models/budget_value_creator.dart';
+import 'package:your_budget/models/budget_value_list.dart';
 
 import 'package:your_budget/models/queries.dart';
 import 'models/categories.dart';
@@ -37,6 +38,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   PayeeList payeeList;
   AccountList accountList;
   MoneyTransactionList transactionList;
+  BudgetValueList budgetValueList;
 
   double toBeBudgeted = 0;
 
@@ -64,7 +66,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<Budget> get budgets => UnmodifiableListView(_budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   UnmodifiableListView<BudgetValue> get budgetValues =>
-      UnmodifiableListView(_budgetValues);
+      UnmodifiableListView(budgetValueList.budgetvalues);
   Account get mostRecentAccount =>
       _mostRecentAccount ?? accountList.accounts[0];
 
@@ -78,6 +80,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     _budgets = await createAllMonthlyBudgets();
 
     _budgetValues = await queryContext.getBudgetValues();
+    budgetValueList = BudgetValueList(queryContext, _budgetValues);
     _goals = await queryContext.getGoals();
 
     currentBudgetDate = getDateFromMonthStart(DateTime.now());
@@ -163,7 +166,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         month: previousDate.month,
       );
 
-      _budgetValues.add(await creator.create());
+      budgetValueList.add(await creator.create());
       newDate = Jiffy(previousDate).add(months: 1);
     } while (previousDate.isBefore(maxBudgetDate));
 
@@ -260,7 +263,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   Future<void> _addTransactionIntoToBeBudgeted(
       MoneyTransaction transaction) async {
-    print("Is to be budgeted money transaction");
     // Update balance of the account
     final Account account =
         accounts.singleWhere((account) => account.id == transaction.accountID);
@@ -323,7 +325,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     DateTime date = Jiffy(dateMofidied).add(months: 1);
 
     while (date.isBefore(maxBudgetDate)) {
-      BudgetValue budgetValue = _getBudgetValue(date, modifiedSubcategory.id);
+      BudgetValue budgetValue =
+          budgetValueList.getByBudget(date, modifiedSubcategory.id);
 
       // Combine the total available money from month to month
       budgetValue.available = lastMonthAvailable + budgetValue.budgeted;
@@ -348,7 +351,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     currentBudget.makeCategoryChange(modifiedSubcategory);
 
     BudgetValue budgetValue =
-        _getBudgetValue(dateMofidied, modifiedSubcategory.id);
+        budgetValueList.getByBudget(dateMofidied, modifiedSubcategory.id);
 
     budgetValue.budgeted = modifiedSubcategory.budgeted;
     budgetValue.available = modifiedSubcategory.available;
@@ -363,17 +366,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     queryContext.updateSubcategory(modifiedSubcategory);
   }
 
-  BudgetValue _getBudgetValue(DateTime date, int subcatId) {
-    BudgetValue budgetValue = _budgetValues.singleWhere(
-      (budgetValue) =>
-          (budgetValue.subcategoryId == subcatId) &&
-          (budgetValue.year == date.year) &&
-          (budgetValue.month == date.month),
-    );
-
-    return budgetValue;
-  }
-
   void removeSubcategory(int subcategoryId) {
     // Take any subcategory of the same id, to be able to access the parentID field
     SubCategory toBeRemoved = currentBudget.subcategories
@@ -384,19 +376,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       budget.removeSubcategory(toBeRemoved);
     });
     queryContext.deleteSubcategory(subcategoryId);
-
-    // Remove the budget values linked to the subcategory from the
-    // _budgetValues array and from the data base
-    List<BudgetValue> correspondingBudgetValues = _budgetValues
-        .where((budgetvalue) => budgetvalue.subcategoryId == subcategoryId)
-        .toList();
-
-    correspondingBudgetValues.forEach((budgetvalue) {
-      queryContext.deleteBudgetValue(budgetvalue.id);
-    });
-    _budgetValues.removeWhere(
-        (budgetvalue) => budgetvalue.subcategoryId == subcategoryId);
-
+    budgetValueList.removeBySubcatId(subcategoryId);
     notifyListeners();
   }
 
@@ -523,7 +503,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       currentDate = Jiffy(currentDate).add(months: 1);
     } while (currentDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1)));
 
-    print("Creating budgets");
     if (await _checkIfNeedToIncrementMax()) {
       budgets = await _incrementMaxBudgetAndUpdateBudgets(budgets);
     }
@@ -554,8 +533,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       _deleteStandardTransaction(transaction);
     }
 
-    queryContext.deleteTransaction(transactionId);
     transactionList.remove(transactionId);
+    queryContext.deleteTransaction(transactionId);
   }
 
   void _deleteStandardTransaction(MoneyTransaction transaction) {
