@@ -236,7 +236,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         available: newAvailableAmount);
 
     //notifyListeners is called in updateSubcategory
-    updateSubcategory(newSubcat, transaction.date);
+    updateSubcategoryValues(newSubcat, transaction.date);
   }
 
   Future<void> _addTransactionBetweenAccounts(
@@ -299,7 +299,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  void updateSubcategory(
+  void updateSubcategoryValues(
       SubCategory modifiedSubcategory, DateTime dateMofidied) async {
     _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
     _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
@@ -513,7 +513,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         available: newAvailableAmount);
 
     //notifyListeners is called in updateSubcategory
-    updateSubcategory(newSubcat, transaction.date);
+    updateSubcategoryValues(newSubcat, transaction.date);
   }
 
   void _deleteTransactionBetweenAccounts(MoneyTransaction transaction) {

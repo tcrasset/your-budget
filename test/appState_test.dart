@@ -657,7 +657,7 @@ main() {
   });
 
   test(
-      'when updateSubcategory() is called with another change, update the subcategory and the' +
+      'when updateSubcategoryValues() is called with another change, update the subcategory and the' +
           ' budgetvalue (available + budgeted) of the current budget', () {
     //!Arrange
     double tBudgeted = 987.65;
@@ -667,7 +667,7 @@ main() {
     //!Act
     tSubcat.budgeted = tBudgeted;
     tSubcat.available = tAvailable;
-    appState.updateSubcategory(tSubcat, DateTime.now());
+    appState.updateSubcategoryValues(tSubcat, DateTime.now());
 
     //!Assert
 
@@ -698,7 +698,7 @@ main() {
 
     //!Act
     tSubcat.budgeted = tBudgeted;
-    appState.updateSubcategory(tSubcat, tDate);
+    appState.updateSubcategoryValues(tSubcat, tDate);
 
     //!Assert
 

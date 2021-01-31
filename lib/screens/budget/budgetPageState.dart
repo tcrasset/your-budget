@@ -82,7 +82,7 @@ class BudgetPageState extends ChangeNotifier {
     if (budgetedController.numberValue != selectedSubcategory.budgeted) {
       double beforeAfterDifference =
           (budgetedController.numberValue - selectedSubcategory.budgeted);
-      appState.updateSubcategory(SubCategory(
+      appState.updateSubcategoryValues(SubCategory(
           id:selectedSubcategory.id,
           parentId:selectedSubcategory.parentId,
           name:selectedSubcategory.name,
