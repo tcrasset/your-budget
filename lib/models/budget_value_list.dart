@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
 
@@ -36,5 +37,17 @@ class BudgetValueList implements ObjectList<BudgetValue> {
     return _budgetvalues
         .where((budgetvalue) => budgetvalue.subcategoryId == subcatId)
         .toList();
+  }
+
+  void updateBudgetValue({
+    @required int subcatId,
+    @required DateTime date,
+    @required double newBudgeted,
+    @required double newAvailable,
+  }) {
+    BudgetValue budgetValue = getByBudget(date, subcatId);
+    budgetValue.budgeted = newBudgeted;
+    budgetValue.available = newAvailable;
+    queryContext.updateBudgetValue(budgetValue);
   }
 }

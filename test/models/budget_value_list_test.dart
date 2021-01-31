@@ -13,6 +13,8 @@ main() {
   BudgetValueList budgetValuesList;
   int testId_1 = 25;
   int tSubcatId = 10;
+  int tMonth = 1;
+  int tYear = 2021;
   setUp(() async {
     mockQueries = MockQueries();
     tBudgetValue = BudgetValue(
@@ -20,8 +22,8 @@ main() {
         subcategoryId: tSubcatId,
         budgeted: 99.99,
         available: 88.88,
-        month: 1,
-        year: 2021);
+        month: tMonth,
+        year: tYear);
 
     budgetValuesList = BudgetValueList(mockQueries, [tBudgetValue]);
   });
@@ -92,5 +94,28 @@ main() {
 
     //!Assert
     expect(budgetvalues, [otherBudgetValue]);
+  });
+
+  test(
+      'verify that updateBudgetValue() update the available and budgeted fields',
+      () {
+    //!Arrange
+    double tBudgeted = 56.54;
+    double tAvailable = 87.21;
+    DateTime tDate = DateTime(tYear, tMonth);
+    //!Act
+
+    budgetValuesList.updateBudgetValue(
+        subcatId: tSubcatId,
+        date: tDate,
+        newBudgeted: tBudgeted,
+        newAvailable: tAvailable);
+
+    //!Assert
+    verify(mockQueries.updateBudgetValue(argThat(isA<BudgetValue>())));
+
+    BudgetValue budgetValue = budgetValuesList.getByBudget(tDate, tSubcatId);
+    expect(budgetValue.budgeted, tBudgeted);
+    expect(budgetValue.available, tAvailable);
   });
 }

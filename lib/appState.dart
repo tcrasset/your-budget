@@ -314,6 +314,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime date = Jiffy(dateMofidied).add(months: 1);
 
+    ///TODO: THink about removing BudgetValue from appState and only storing it in Budgets
+
     while (date.isBefore(maxBudgetDate)) {
       BudgetValue budgetValue =
           budgetValueList.getByBudget(date, modifiedSubcategory.id);
@@ -324,8 +326,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
       queryContext.updateBudgetValue(budgetValue);
 
-      Budget budget = budgets.singleWhere((budget) =>
-          (budget.year == date.year) && (budget.month == date.month));
+      Budget budget = budgetList.getByDate(date);
       budget.makeSubcategoryChangeBySubcatId(
           modifiedSubcategory.id, //
           modifiedSubcategory.parentId,
@@ -340,13 +341,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       SubCategory modifiedSubcategory, DateTime dateMofidied) {
     currentBudget.updateSubCategory(modifiedSubcategory);
 
-    BudgetValue budgetValue =
-        budgetValueList.getByBudget(dateMofidied, modifiedSubcategory.id);
-
-    budgetValue.budgeted = modifiedSubcategory.budgeted;
-    budgetValue.available = modifiedSubcategory.available;
-
-    queryContext.updateBudgetValue(budgetValue);
+    budgetValueList.updateBudgetValue(
+        subcatId: modifiedSubcategory.id,
+        date: dateMofidied,
+        newBudgeted: modifiedSubcategory.budgeted,
+        newAvailable: modifiedSubcategory.available);
   }
 
   void updateSubcategoryName(int id, String newName) {
