@@ -9,28 +9,63 @@ class MockQueries extends Mock implements Queries {}
 main() {
   Queries mockQueries;
   Account tAccount;
-  Account tAccount2;
-
+  AccountList accountList;
+  int tId = 99;
   setUp(() async {
     mockQueries = MockQueries();
-    tAccount = Account(id: 99, name: "Test account", balance: 100.00);
-    tAccount2 = Account(id: 100, name: "Test account 2", balance: 200.00);
+    tAccount = Account(id: tId, name: "Test account", balance: 100.00);
+    accountList = AccountList(mockQueries, [tAccount]);
   });
 
   test('when creating an AccountList, ensure the accounts are passed in', () {
     //!Arrange
     //!Act
-    AccountList accountList = AccountList(mockQueries, [tAccount]);
     //!Assert
     expect(accountList.accounts, [tAccount]);
   });
 
   test('when add() is called, add an Account', () {
     //!Arrange
+    Account tAccount2 =
+        Account(id: 100, name: "Test account 2", balance: 200.00);
+
     //!Act
-    AccountList accountList = AccountList(mockQueries, [tAccount]);
     accountList.add(tAccount2);
     //!Assert
     expect(accountList.accounts, [tAccount, tAccount2]);
+  });
+
+  test(
+      'verify that creditAccount() adds the specified amout to the given account',
+      () {
+    //!Arrange
+    double tAmount = 50.00;
+    double previousBalance = tAccount.balance;
+    //!Act
+    accountList.creditAccount(id:tId,amount: tAmount);
+    //!Assert
+    verify(mockQueries.updateAccount(argThat(isA<Account>())));
+
+    final Account account =
+        accountList.accounts.singleWhere((account) => account.id == tId);
+    expect(account.balance, previousBalance + tAmount );
+
+  });
+
+  test(
+      'verify that debitAccount() removes the a specified amout to the given account',
+      () {
+    //!Arrange
+    double tAmount = 50.00;
+    double previousBalance = tAccount.balance;
+    //!Act
+    accountList.debitAccount(id:tId,amount: tAmount);
+    //!Assert
+    verify(mockQueries.updateAccount(argThat(isA<Account>())));
+
+    final Account account =
+        accountList.accounts.singleWhere((account) => account.id == tId);
+    expect(account.balance, previousBalance - tAmount);
+
   });
 }

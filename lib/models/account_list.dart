@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
 
@@ -15,5 +16,19 @@ class AccountList implements ObjectList<Account> {
 
   void add(Account account) {
     _accounts.add(account);
+  }
+
+  void creditAccount({@required int id, @required double amount}) {
+    final Account account =
+        _accounts.singleWhere((account) => account.id == id);
+    account.balance += amount;
+    queryContext.updateAccount(account);
+  }
+
+  void debitAccount({@required int id, @required double amount}) {
+    final Account account =
+        _accounts.singleWhere((account) => account.id == id);
+    account.balance -= amount;
+    queryContext.updateAccount(account);
   }
 }
