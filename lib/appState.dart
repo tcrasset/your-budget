@@ -216,11 +216,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void _addStandardTransaction(MoneyTransaction transaction) {
-    // Update balance of the account
-    final Account account =
-        accounts.singleWhere((account) => account.id == transaction.accountID);
-    account.balance += transaction.amount;
-    queryContext.updateAccount(account);
+
+    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount);
 
     Budget budget = budgetList
         .getByDate(DateTime(transaction.date.year, transaction.date.month));
@@ -247,24 +244,17 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     /// [outAccount] is ALWAYS the one pointed to by accountID.
     /// Therefore, [inAccount] will be the one defined by [-payee.id].
-    final Account outAccount =
-        accounts.singleWhere((account) => account.id == transaction.accountID);
-    outAccount.balance -= transaction.amount;
-
-    final Account inAccount =
-        accounts.singleWhere((account) => account.id == -transaction.payeeID);
-    inAccount.balance += transaction.amount;
-    await queryContext.updateAccount(outAccount);
-    await queryContext.updateAccount(inAccount);
+    accountList.debitAccount(
+        id: transaction.accountID, amount: transaction.amount);
+    accountList.creditAccount(
+        id: -transaction.payeeID, amount: transaction.amount);
   }
 
   Future<void> _addTransactionIntoToBeBudgeted(
       MoneyTransaction transaction) async {
-    // Update balance of the account
-    final Account account =
-        accounts.singleWhere((account) => account.id == transaction.accountID);
-    account.balance += transaction.amount;
-    await queryContext.updateAccount(account);
+    accountList.creditAccount(
+        id: transaction.accountID, amount: transaction.amount);
+
     budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
     await computeToBeBudgeted();
   }
@@ -493,10 +483,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void _deleteStandardTransaction(MoneyTransaction transaction) {
-    final Account account =
-        accounts.singleWhere((account) => account.id == transaction.accountID);
-    account.balance -= transaction.amount;
-    queryContext.updateAccount(account);
+    accountList.debitAccount(
+        id: transaction.accountID, amount: transaction.amount);
 
     Budget budget = budgetList
         .getByDate(DateTime(transaction.date.year, transaction.date.month));
@@ -518,24 +506,16 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   void _deleteTransactionBetweenAccounts(MoneyTransaction transaction) {
     /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
     /// subcategories are not affected.
-    final Account outAccount =
-        accounts.singleWhere((account) => account.id == transaction.accountID);
-    outAccount.balance += transaction.amount;
-
-    final Account inAccount =
-        accounts.singleWhere((account) => account.id == -transaction.payeeID);
-    inAccount.balance -= transaction.amount;
-    queryContext.updateAccount(outAccount);
-    queryContext.updateAccount(inAccount);
+    accountList.creditAccount(
+        id: transaction.accountID, amount: transaction.amount);
+    accountList.debitAccount(
+        id: -transaction.payeeID, amount: transaction.amount);
   }
 
   Future<void> _deleteTransactionIntoToBeBudgeted(
       MoneyTransaction transaction) async {
-    // Update balance of the account
-    final Account account =
-        accounts.singleWhere((account) => account.id == transaction.accountID);
-    account.balance -= transaction.amount;
-    await queryContext.updateAccount(account);
+    accountList.debitAccount(
+        id: transaction.accountID, amount: transaction.amount);
 
     Budget budget = budgetList.getByDate(transaction.date);
     budget.toBeBudgetedInputFromMoneyTransactions -= transaction.amount;
