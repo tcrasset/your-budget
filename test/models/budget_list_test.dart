@@ -121,6 +121,27 @@ main() {
     }
   });
 
+
+  test('verify that updateSubcategoryName() updates the name of the subcategory'
+  +' in every budget ', () {
+  
+    //!Arrange
+    String tNewName = "Name change";
+    Budget tOtherBudget = Budget([], [tSubCategory], tMonth, tYear);
+
+    budgetList.add(tOtherBudget);
+
+    //!Act
+    budgetList.updateSubcategoryName(id:tSubCategory.id, newName: tNewName);
+  
+    //!Assert
+    for (final Budget budget in budgetList.budgets) {
+      SubCategory subcat = budget.subcategories
+          .singleWhere((subcat) => subcat.id == tSubCategory.id);
+      expect(subcat.name, tNewName);
+    }
+  });
+
   test(
       'when updateMaincategory() is called, then update the corresponding maincategory' +
           ' in every budget', () {

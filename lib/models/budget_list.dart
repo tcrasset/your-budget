@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/object_list.dart';
@@ -37,6 +38,12 @@ class BudgetList implements ObjectList<Budget> {
   void updateSubcategory(SubCategory subcat) {
     for (final Budget budget in _budgets) {
       budget.updateSubCategory(subcat);
+    }
+  }
+
+  void updateSubcategoryName({@required int id, @required String newName}) {
+    for (final Budget budget in _budgets) {
+      budget.updateSubCategoryName(id: id, newName: newName);
     }
   }
 

@@ -209,4 +209,27 @@ void main() {
     //Check that totalBudgeted got updated
     expect(myBudget.totalBudgeted, 66.52 + 66.52);
   });
+
+  test('verify that updateSubCategoryName updates the names of the subcategory',
+      () {
+    //!Arrange
+    int tSubcatId = 3;
+    String tNewName = "Name changed";
+    final SubCategory subcatTest = SubCategory(
+      id: tSubcatId,
+      parentId: 1,
+      name: "Test",
+      budgeted: 66.52,
+      available: 78.8,
+    );
+
+    final Budget myBudget = Budget([], [subcatTest], 6, 1996);
+
+    //!Act
+    myBudget.updateSubCategoryName(id: tSubcatId, newName: tNewName);
+
+    //!Assert
+    SubCategory subcat = myBudget.subcategories.singleWhere((subcat)  => subcat.id == tSubcatId);
+    expect(subcat.name, tNewName);
+  });
 }

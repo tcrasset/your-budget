@@ -301,17 +301,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// in both the state and in the data base.
   void updateSubcategory(
       SubCategory modifiedSubcategory, DateTime dateMofidied) async {
-    SubCategory previousSubcategory = currentBudget.subcategories
-        .singleWhere((subcat) => subcat.id == modifiedSubcategory.id);
+    _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
+    _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
+    await computeToBeBudgeted();
 
-    bool isNameChange = previousSubcategory.name != modifiedSubcategory.name;
-    if (isNameChange) {
-      _updateSubcategoryName(modifiedSubcategory);
-    } else {
-      _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
-      _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
-      await computeToBeBudgeted();
-    }
     notifyListeners();
   }
 
@@ -356,9 +349,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     queryContext.updateBudgetValue(budgetValue);
   }
 
-  void _updateSubcategoryName(SubCategory modifiedSubcategory) {
-    budgetList.updateSubcategory(modifiedSubcategory);
-    queryContext.updateSubcategory(modifiedSubcategory);
+  void updateSubcategoryName(int id, String newName) {
+    budgetList.updateSubcategoryName(id: id, newName: newName);
+    notifyListeners();
+    queryContext.updateSubcategoryName(id, newName);
   }
 
   void removeSubcategory(int subcategoryId) {

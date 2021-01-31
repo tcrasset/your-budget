@@ -633,7 +633,7 @@ main() {
   });
 
   test(
-      'when udpateSubcategory() is called with a name change, update the subcategory in the database' +
+      'verify udpateSubcategoryName() changes the name of the subcateggory in the database' +
           'and in the budget', () {
     //!Arrange
     String tName = "Name got changed";
@@ -641,10 +641,10 @@ main() {
 
     //!Act
     tSubcat.name = tName;
-    appState.updateSubcategory(tSubcat, DateTime.now());
+    appState.updateSubcategoryName(tSubcat.id, tName);
 
     //!Assert
-    verify(mockQueries.updateSubcategory(tSubcat));
+    verify(mockQueries.updateSubcategoryName(tSubcat.id, tName));
 
     for (final Budget budget in appState.budgets) {
       final SubCategory subcat =

@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:your_budget/main.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/utils.dart';
@@ -91,6 +92,11 @@ class Budget {
 
     cat.updateFields();
     _updateTotalBudgeted();
+  }
+
+  void updateSubCategoryName({@required int id, @required String newName}) {
+    SubCategory subcat = subcategories.singleWhere((subcat) => subcat.id == id);
+    subcat.name = newName;
   }
 
   void updateMaincategory(MainCategory modifiedMaincategory) {

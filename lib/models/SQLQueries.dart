@@ -411,21 +411,18 @@ class SQLQueryClass implements Queries {
     DatabaseProvider.databaseLog('Update category', sql, null, result, params);
   }
 
-  /// Update subcategory with id [subcategory.id] in the database.
-  ///
-  /// Fields that can be changed are [subcategory.name],
-  /// [subcategory.budgeted] and [subcategory.available].
-  Future<void> updateSubcategory(SubCategory subcategory) async {
+  /// Update subcategory name of [subcategory.id] in the database.
+  Future<void> updateSubcategoryName(int id, String newName) async {
     final sql = '''UPDATE ${DatabaseConstants.subcategoryTable}
                     SET ${DatabaseConstants.SUBCAT_NAME} = ?
                     WHERE ${DatabaseConstants.SUBCAT_ID} == ?
                     ;''';
 
-    List<dynamic> params = [subcategory.name, subcategory.id];
+    List<dynamic> params = [newName, id];
 
     final result = await database.rawUpdate(sql, params);
     DatabaseProvider.databaseLog(
-        'Update subcategory', sql, null, result, params);
+        'Update subcategory name', sql, null, result, params);
   }
 
   /// Update account with id [account.id] in the database.

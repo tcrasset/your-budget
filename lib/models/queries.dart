@@ -110,11 +110,8 @@ abstract class Queries {
   /// Fields that can be changed [DatabaseConstants.CATEGORY_NAME]
   Future<void> updateCategory(MainCategory category);
 
-  /// Update subcategory with id [subcategory.id] in the database.
-  ///
-  /// Fields that can be changed are [subcategory.name],
-  /// [subcategory.budgeted] and [subcategory.available].
-  Future<void> updateSubcategory(SubCategory subcategory);
+  /// Update subcategory name of [subcategory.id] in the database.
+  Future<void> updateSubcategoryName(int id, String newName);
 
   /// Update account with id [account.id] in the database.
   ///
