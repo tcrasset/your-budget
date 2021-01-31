@@ -18,16 +18,18 @@ class AccountList implements ObjectList<Account> {
     _accounts.add(account);
   }
 
+  Account _getById(int id) {
+    return _accounts.singleWhere((account) => account.id == id);
+  }
+
   void creditAccount({@required int id, @required double amount}) {
-    final Account account =
-        _accounts.singleWhere((account) => account.id == id);
+    final Account account = _getById(id);
     account.balance += amount;
     queryContext.updateAccount(account);
   }
 
   void debitAccount({@required int id, @required double amount}) {
-    final Account account =
-        _accounts.singleWhere((account) => account.id == id);
+    final Account account = _getById(id);
     account.balance -= amount;
     queryContext.updateAccount(account);
   }
