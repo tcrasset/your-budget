@@ -1,7 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/budget_value_list.dart';
 import 'package:your_budget/models/queries.dart';
 
