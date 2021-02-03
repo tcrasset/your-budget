@@ -1,6 +1,9 @@
 import 'package:meta/meta.dart';
+import 'package:your_budget/models/TBB_money_transaction.dart';
+import 'package:your_budget/models/between_accounts_money_transaction.dart';
 
 import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/standard_money_transaction.dart';
 
 /// Class that defines a MoneyTransaction between the user and another entity.
 /// The [amount] is transfered between the user and the entity specified by [payeeID] at the given
@@ -8,57 +11,64 @@ import 'package:your_budget/models/constants.dart';
 /// by [subcategoryID].
 /// A [memo] detailing the transaction is added as well.
 
-class MoneyTransaction {
-  /// Unique id of this.
-  int id;
-
-  /// Id of the SubCategory that this is operating on.
-  int subcatID;
-
-  /// Id of the entity where the money comes from/goes to.
-  int payeeID;
-
-  /// Id of the account where the money is input/output.
-  int accountID;
-
-  /// Monetary value that is exchanged.
-  double amount;
-
-  /// Description of this.
-  String memo;
-
-  /// Date of this.
-  DateTime date;
-
+abstract class MoneyTransaction {
   /// Default constructor of [MoneyTransaction].
-  MoneyTransaction({
-    @required this.id,
-    @required this.subcatID,
-    @required this.payeeID,
-    @required this.accountID,
-    @required this.amount,
-    @required this.memo,
-    @required this.date,
-  });
+
+  factory MoneyTransaction(
+      {@required id,
+      @required subcatID,
+      @required payeeID,
+      @required accountID,
+      @required amount,
+      @required memo,
+      @required date}) {
+    if (subcatID == Constants.UNASSIGNED_SUBCAT_ID) {
+      return BetweenAccountsMoneyTransaction(
+          id: id,
+          accountID: accountID,
+          payeeID: payeeID,
+          subcatID: subcatID,
+          amount: amount,
+          date: date,
+          memo: memo);
+    } else if (subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION) {
+      return TBBMoneyTransaction(
+          id: id,
+          accountID: accountID,
+          payeeID: payeeID,
+          subcatID: subcatID,
+          amount: amount,
+          date: date,
+          memo: memo);
+    } else {
+      return StandardMoneyTransaction(
+          id: id,
+          accountID: accountID,
+          payeeID: payeeID,
+          subcatID: subcatID,
+          amount: amount,
+          date: date,
+          memo: memo);
+    }
+  }
 
   /// Constructor building a [MoneyTransaction] from a [json] representation taken
   /// from a database.
-  MoneyTransaction.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.MONEYTRANSACTION_ID];
-    this.subcatID = json[DatabaseConstants.SUBCAT_ID_OUTSIDE];
-    this.payeeID = json[DatabaseConstants.PAYEE_ID_OUTSIDE];
-    this.accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE];
-    this.amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT];
-    this.memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO];
-    this.date = DateTime.fromMillisecondsSinceEpoch(
-        json[DatabaseConstants.MONEYTRANSACTION_DATE]);
+  factory MoneyTransaction.fromJson(Map<String, dynamic> json) {
+    return MoneyTransaction(
+      id: json[DatabaseConstants.MONEYTRANSACTION_ID],
+      subcatID: json[DatabaseConstants.SUBCAT_ID_OUTSIDE],
+      payeeID: json[DatabaseConstants.PAYEE_ID_OUTSIDE],
+      accountID: json[DatabaseConstants.ACCOUNT_ID_OUTSIDE],
+      amount: json[DatabaseConstants.MONEYTRANSACTION_AMOUNT],
+      memo: json[DatabaseConstants.MONEYTRANSACTION_MEMO],
+      date: DateTime.fromMillisecondsSinceEpoch(
+          json[DatabaseConstants.MONEYTRANSACTION_DATE]),
+    );
   }
 
   @override
-  String toString() {
-    return super.toString() +
-        """{id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, date: $date}\n""";
-  }
+  String toString();
 
   MoneyTransaction copyWith({
     int id,
@@ -68,19 +78,8 @@ class MoneyTransaction {
     double amount,
     String memo,
     DateTime date,
-  }) {
-    return MoneyTransaction(
-      id: id ?? this.id,
-      subcatID: subcatID ?? this.subcatID,
-      payeeID: payeeID ?? this.payeeID,
-      accountID: accountID ?? this.accountID,
-      amount: amount ?? this.amount,
-      memo: memo ?? this.memo,
-      date: date ?? this.date,
-    );
-  }
+  });
 }
-
 
 class MoneyTransactionModel {
   final int subcatID;
