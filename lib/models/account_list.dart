@@ -8,11 +8,14 @@ class AccountList implements ObjectList<Account> {
   final Queries queryContext;
   List<Account> _accounts = [];
   Account _mostRecentAccount;
+  int _mostRecentAccountIndex = 0;
 
   Future<Account> get mostRecentAccount async {
     if (_mostRecentAccount == null) {
       int id = await queryContext.getMostRecentAccountUsed();
+
       _mostRecentAccount = _getById(id);
+      _mostRecentAccountIndex = accounts.indexOf(_mostRecentAccount);
     }
     return _mostRecentAccount ?? _accounts[0];
   }
@@ -20,6 +23,7 @@ class AccountList implements ObjectList<Account> {
   set mostRecentAccount(id) {
     queryContext.updateMostRecentAccountUsed(id);
     _mostRecentAccount = _getById(id);
+    _mostRecentAccountIndex = accounts.indexOf(_mostRecentAccount);
   }
 
   List<Account> get accounts => _accounts;
@@ -41,11 +45,19 @@ class AccountList implements ObjectList<Account> {
     final Account account = _getById(id);
     account.balance += amount;
     queryContext.updateAccount(account);
+    mostRecentAccount = id;
   }
 
   void debitAccount({@required int id, @required double amount}) {
     final Account account = _getById(id);
     account.balance -= amount;
     queryContext.updateAccount(account);
+    mostRecentAccount = id;
+  }
+
+  void cycleNextAccount() {
+    int nextIndex = (_mostRecentAccountIndex + 1) % _accounts.length;
+    int nextAccountId = _accounts[nextIndex].id;
+    mostRecentAccount = nextAccountId;
   }
 }
