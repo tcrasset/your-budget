@@ -23,26 +23,23 @@ class ShowTransactionPage extends StatefulWidget {
 
 class _ShowTransactionPageController extends State<ShowTransactionPage> {
   String filter;
-  Account account;
+  Future<Account> accountFuture;
   bool isEditable;
   List<MoneyTransaction> moneyTransactionList;
 
   @override
   void initState() {
+    AppState appState = Provider.of<AppState>(context, listen: false);
+    accountFuture = appState.mostRecentAccount;
     isEditable = false;
     super.initState();
-  }
-
-  void handleOnAccountChanged(Account newAccount) {
-    setState(() {
-      account = newAccount;
-    });
   }
 
   @override
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
 
-  void handleModifyTransactions() {
+  void handleModifyTransactions() async {
+    Account account = await accountFuture;
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
   }
@@ -58,22 +55,23 @@ class _ShowTransactionPageView
 
     if (appState.accounts.isEmpty) return EmptyTransactionList();
 
-    return FutureBuilder(
-        future: appState.mostRecentAccount,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final Account account = snapshot.data;
-            return Scaffold(
-              appBar: getAppbar(widget.title, state.handleModifyTransactions),
-              body: AtLeastOneTransactionList(
-                account: account,
-                isEditable: state.isEditable,
-              ),
-            );
-          } else {
-            return EmptyTransactionList();
-          }
-        });
+    return FutureBuilder<Account>(
+      future: state.accountFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final Account account = snapshot.data;
+          return Scaffold(
+            appBar: getAppbar(widget.title, state.handleModifyTransactions),
+            body: AtLeastOneTransactionList(
+              account: account,
+              isEditable: state.isEditable,
+            ),
+          );
+        } else {
+          return EmptyTransactionList();
+        }
+      },
+    );
   }
 }
 
