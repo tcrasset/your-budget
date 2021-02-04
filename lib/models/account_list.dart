@@ -7,6 +7,20 @@ import 'account.dart';
 class AccountList implements ObjectList<Account> {
   final Queries queryContext;
   List<Account> _accounts = [];
+  Account _mostRecentAccount;
+
+  Future<Account> get mostRecentAccount async {
+    if (_mostRecentAccount == null) {
+      int id = await queryContext.getMostRecentAccountUsed();
+      _mostRecentAccount = _getById(id);
+    }
+    return _mostRecentAccount ?? _accounts[0];
+  }
+
+  set mostRecentAccount(id) {
+    queryContext.updateMostRecentAccountUsed(id);
+    _mostRecentAccount = _getById(id);
+  }
 
   List<Account> get accounts => _accounts;
   AccountList(
@@ -19,7 +33,8 @@ class AccountList implements ObjectList<Account> {
   }
 
   Account _getById(int id) {
-    return _accounts.singleWhere((account) => account.id == id);
+    return _accounts.singleWhere((account) => account.id == id,
+        orElse: () => null);
   }
 
   void creditAccount({@required int id, @required double amount}) {

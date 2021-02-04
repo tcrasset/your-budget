@@ -32,7 +32,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
   List<Goal> _goals = [];
   final Queries queryContext;
-  Account _mostRecentAccount;
 
   PayeeList payeeList;
   AccountList accountList;
@@ -68,8 +67,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   UnmodifiableListView<BudgetValue> get budgetValues =>
       UnmodifiableListView(budgetValueList.budgetvalues);
-  Account get mostRecentAccount =>
-      _mostRecentAccount ?? accountList.accounts[0];
+  Future<Account> get mostRecentAccount => accountList.mostRecentAccount;
 
   AppState({@required this.queryContext});
 
@@ -89,7 +87,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     payeeList = PayeeList(queryContext, await queryContext.getPayees());
     accountList = AccountList(queryContext, await queryContext.getAccounts());
-    _mostRecentAccount = await getMostRecentAccountUsed();
 
     await computeToBeBudgeted();
 
@@ -197,7 +194,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     MoneyTransaction transaction = await creator.create();
     transactionList.add(transaction);
 
-    setMostRecentAccountUsed(accountId);
+    accountList.mostRecentAccount = accountId;
 
     bool isTransactionIntoToBeBudgeted =
         transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
@@ -216,8 +213,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void _addStandardTransaction(MoneyTransaction transaction) {
-
-    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount);
+    accountList.creditAccount(
+        id: transaction.accountID, amount: transaction.amount);
 
     Budget budget = budgetList
         .getByDate(DateTime(transaction.date.year, transaction.date.month));
@@ -605,17 +602,5 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     DateTime storedMaxBudgetDate =
         await queryContext.getMaxBudgetDateConstant();
     return getMonthDifference(currentMaxBudgetDate, storedMaxBudgetDate);
-  }
-
-  void setMostRecentAccountUsed(int accountId) {
-    queryContext.updateMostRecentAccountUsed(accountId);
-    _mostRecentAccount = accounts
-        .singleWhere((account) => account.id == accountId, orElse: () => null);
-  }
-
-  Future<Account> getMostRecentAccountUsed() async {
-    int accountId = await queryContext.getMostRecentAccountUsed();
-    return accounts.singleWhere((account) => account.id == accountId,
-        orElse: () => null);
   }
 }

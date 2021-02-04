@@ -42,14 +42,13 @@ main() {
     double tAmount = 50.00;
     double previousBalance = tAccount.balance;
     //!Act
-    accountList.creditAccount(id:tId,amount: tAmount);
+    accountList.creditAccount(id: tId, amount: tAmount);
     //!Assert
     verify(mockQueries.updateAccount(argThat(isA<Account>())));
 
     final Account account =
         accountList.accounts.singleWhere((account) => account.id == tId);
-    expect(account.balance, previousBalance + tAmount );
-
+    expect(account.balance, previousBalance + tAmount);
   });
 
   test(
@@ -59,13 +58,44 @@ main() {
     double tAmount = 50.00;
     double previousBalance = tAccount.balance;
     //!Act
-    accountList.debitAccount(id:tId,amount: tAmount);
+    accountList.debitAccount(id: tId, amount: tAmount);
     //!Assert
     verify(mockQueries.updateAccount(argThat(isA<Account>())));
 
     final Account account =
         accountList.accounts.singleWhere((account) => account.id == tId);
     expect(account.balance, previousBalance - tAmount);
+  });
 
+  test(
+      'when the mostRecentAccount setter is called, verify that the the most recent' +
+          ' account is updated in the database', () {
+    //!Arrange
+
+    //!Act
+    accountList.mostRecentAccount = tAccount.id;
+    //!Assert
+    verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
+  });
+
+  test(
+      'when mostRecentAccount getter is called, return the most recently' +
+          ' used account.', () async {
+    //!Arrange
+    when(mockQueries.getMostRecentAccountUsed())
+        .thenAnswer((_) async => tAccount.id);
+    //!Act
+    Account mostRecent = await accountList.mostRecentAccount;
+    //!Assert
+
+    // On first call, check that it gets it from the database
+    verify(mockQueries.getMostRecentAccountUsed());
+
+    expect(mostRecent, tAccount);
+
+    clearInteractions(mockQueries);
+    // On second call, check that it was cached
+    mostRecent = await accountList.mostRecentAccount;
+    verifyNever(mockQueries.getMostRecentAccountUsed());
   });
 }

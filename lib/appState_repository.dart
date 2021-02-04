@@ -79,8 +79,4 @@ abstract class AppStateRepository {
   Future<bool> _checkIfNeedToIncrementMax();
 
   Future<int> _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate();
-
-  void setMostRecentAccountUsed(int accountId);
-
-  Future<Account> getMostRecentAccountUsed();
 }

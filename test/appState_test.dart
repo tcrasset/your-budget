@@ -54,9 +54,6 @@ main() {
     verify(mockQueries.getAccounts()).called(1);
     verify(mockQueries.getBudgetValues()).called(1);
     verify(mockQueries.getGoals()).called(1);
-
-    //In getMostRecentAccountUsed()
-    verify(mockQueries.getMostRecentAccountUsed()).called(1);
   });
 
   test(
@@ -599,38 +596,6 @@ main() {
     verify(mockQueries.getFirstTransactionOfAccount(any));
   });
 
-  test(
-      'when setMostRecentAccountUsed() is called, change th account used in' +
-          ' the state and in the database', () {
-    //!Arrange
-    Account tAccount_1 = fakeDatabase.accounts[0];
-    Account tAccount_2 = fakeDatabase.accounts[1];
-
-    //Before changing
-    expect(appState.mostRecentAccount, tAccount_1);
-    // expect(appState.mostRecentAccount, tAccount_2);
-    //!Act
-    appState.setMostRecentAccountUsed(tAccount_2.id);
-    //!Assert
-    expect(appState.mostRecentAccount, tAccount_2);
-    verify(mockQueries.updateMostRecentAccountUsed(tAccount_2.id));
-  });
-
-  test(
-      'when getMostRecentAccountUsed() is called, then return the most recently' +
-          ' used account.', () async {
-    Account tAccount = fakeDatabase.accounts[0];
-
-    //!Arrange
-    appState.setMostRecentAccountUsed(tAccount.id);
-
-    //!Act
-    Account account = await appState.getMostRecentAccountUsed();
-
-    //!Assert
-    expect(account, tAccount);
-    verify(mockQueries.getMostRecentAccountUsed());
-  });
 
   test(
       'verify udpateSubcategoryName() changes the name of the subcateggory in the database' +
