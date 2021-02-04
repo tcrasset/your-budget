@@ -22,7 +22,6 @@ class ShowTransactionPage extends StatefulWidget {
 }
 
 class _ShowTransactionPageController extends State<ShowTransactionPage> {
-  TextEditingController controller = new TextEditingController();
   String filter;
   Account account;
   bool isEditable;
@@ -30,10 +29,6 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
 
   @override
   void initState() {
-    AppState appState = Provider.of<AppState>(context, listen: false);
-    if (appState.accounts.isNotEmpty) {
-      account = appState.mostRecentAccount;
-    }
     isEditable = false;
     super.initState();
   }
@@ -53,11 +48,6 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
     }
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
@@ -74,49 +64,93 @@ class _ShowTransactionPageView
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(widget.title),
-          leading: Icon(Constants.ALLTRANSACTION_ICON),
-          backgroundColor: Constants.PRIMARY_COLOR,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(FontAwesomeIcons.checkSquare),
-              onPressed: state.handleModifyTransactions,
-            ),
-            PopupMenuButton(
-              onSelected: state.handlePopUpMenuButtonSelected,
-              itemBuilder: (context) => [
-                PopupMenuItem<String>(
-                  value: "Select account",
-                  child: Text("Select account"),
-                ),
-              ],
-            ),
-          ]),
-      body: Consumer<AppState>(builder: (context, appState, child) {
-        if (state.account == null || appState.transactions.isEmpty) {
-          return Center(
-            child: Text(
-              "No transactions logged. Please choose an account.",
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic),
-            ),
-          );
-        } else {
-          return Column(children: [
-            Text(
-              state.account.name,
-              style: TextStyle(fontSize: 20),
-            ),
-            Expanded(
-                child:
-                    TransactionList(state.account, appState, state.isEditable)),
-          ]);
-        }
-      }),
+    AppState appState = Provider.of<AppState>(context, listen: true);
+
+    if (appState.accounts.isEmpty) return EmptyTransactionList();
+
+    return FutureBuilder(
+        future: appState.mostRecentAccount,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            final Account account = snapshot.data;
+            return Scaffold(
+              appBar: getAppbar(
+                widget.title,
+                state.handleModifyTransactions,
+                state.handlePopUpMenuButtonSelected,
+              ),
+              body: AtLeastOneTransactionList(
+                account: account,
+                isEditable: state.isEditable,
+              ),
+            );
+          } else {
+            return EmptyTransactionList();
+          }
+        });
+  }
+}
+
+class AtLeastOneTransactionList extends StatelessWidget {
+  final bool isEditable;
+  final Account account;
+
+  const AtLeastOneTransactionList({
+    Key key,
+    @required this.account,
+    @required this.isEditable,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppState>(builder: (_, appState, __) {
+      return Column(children: [
+        Text(
+          account.name,
+          style: TextStyle(fontSize: 20),
+        ),
+        Expanded(child: TransactionList(account, appState, isEditable)),
+      ]);
+    });
+  }
+}
+
+class EmptyTransactionList extends StatelessWidget {
+  const EmptyTransactionList({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "No transactions logged. Please choose an account.",
+        style: TextStyle(
+            color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+      ),
     );
   }
+}
+
+AppBar getAppbar(String title, Function() handleModifyTransactions,
+    Function(String) handlePopUpMenuButtonSelected) {
+  return AppBar(
+      title: Text(title),
+      leading: Icon(Constants.ALLTRANSACTION_ICON),
+      backgroundColor: Constants.PRIMARY_COLOR,
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(FontAwesomeIcons.checkSquare),
+          onPressed: handleModifyTransactions,
+        ),
+        PopupMenuButton(
+          onSelected: handlePopUpMenuButtonSelected,
+          itemBuilder: (context) => [
+            PopupMenuItem<String>(
+              value: "Select account",
+              child: Text("Select account"),
+            ),
+          ],
+        ),
+      ]);
 }
