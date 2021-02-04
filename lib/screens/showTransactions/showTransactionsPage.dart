@@ -39,16 +39,6 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
     });
   }
 
-  void handlePopUpMenuButtonSelected(String selectedItem) async {
-    if (selectedItem == "Select account") {
-      Account result = await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => SelectAccountPage()));
-
-      if (result != null) handleOnAccountChanged(result);
-    }
-  }
-
-
   @override
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
 
@@ -74,11 +64,7 @@ class _ShowTransactionPageView
           if (snapshot.hasData) {
             final Account account = snapshot.data;
             return Scaffold(
-              appBar: getAppbar(
-                widget.title,
-                state.handleModifyTransactions,
-                state.handlePopUpMenuButtonSelected,
-              ),
+              appBar: getAppbar(widget.title, state.handleModifyTransactions),
               body: AtLeastOneTransactionList(
                 account: account,
                 isEditable: state.isEditable,
@@ -132,8 +118,7 @@ class EmptyTransactionList extends StatelessWidget {
   }
 }
 
-AppBar getAppbar(String title, Function() handleModifyTransactions,
-    Function(String) handlePopUpMenuButtonSelected) {
+AppBar getAppbar(String title, Function() handleModifyTransactions) {
   return AppBar(
       title: Text(title),
       leading: Icon(Constants.ALLTRANSACTION_ICON),
@@ -142,15 +127,6 @@ AppBar getAppbar(String title, Function() handleModifyTransactions,
         IconButton(
           icon: Icon(FontAwesomeIcons.checkSquare),
           onPressed: handleModifyTransactions,
-        ),
-        PopupMenuButton(
-          onSelected: handlePopUpMenuButtonSelected,
-          itemBuilder: (context) => [
-            PopupMenuItem<String>(
-              value: "Select account",
-              child: Text("Select account"),
-            ),
-          ],
         ),
       ]);
 }
