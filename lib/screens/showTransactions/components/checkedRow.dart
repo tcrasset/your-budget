@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
+import 'package:your_budget/screens/showTransactions/modifyTransactionsState.dart';
 import 'package:provider/provider.dart';
 
 class CheckedRow extends StatefulWidget {
@@ -38,8 +38,8 @@ class _CheckedRowState extends State<CheckedRow> {
   bool isChecked = false;
 
   void handleCheckboxOnChanged(bool value) {
-    ShowTransactionsState showTransactionsState =
-        Provider.of<ShowTransactionsState>(context, listen: false);
+    ModifyTransactionsState showTransactionsState =
+        Provider.of<ModifyTransactionsState>(context, listen: false);
     showTransactionsState.updateIsSelected(widget.transactionId);
     setState(() {
       isChecked = value;
@@ -48,8 +48,8 @@ class _CheckedRowState extends State<CheckedRow> {
 
   @override
   void initState() {
-    ShowTransactionsState showTransactionsState =
-        Provider.of<ShowTransactionsState>(context, listen: false);
+    ModifyTransactionsState showTransactionsState =
+        Provider.of<ModifyTransactionsState>(context, listen: false);
 
     showTransactionsState.setTransaction(widget.transactionId);
     super.initState();

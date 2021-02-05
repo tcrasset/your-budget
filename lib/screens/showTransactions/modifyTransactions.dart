@@ -5,7 +5,7 @@ import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/screens/showTransactions/components/transactionList.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
+import 'package:your_budget/screens/showTransactions/modifyTransactionsState.dart';
 import 'package:provider/provider.dart';
 
 class ModifyTransactions extends StatefulWidget {
@@ -26,8 +26,8 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
     String result =
         await showDeleteDialog(context, 'Delete selected transactions?');
     if (result == "Delete") {
-      ShowTransactionsState showTransactionsState =
-          Provider.of<ShowTransactionsState>(context, listen: false);
+      ModifyTransactionsState showTransactionsState =
+          Provider.of<ModifyTransactionsState>(context, listen: false);
       showTransactionsState.deleteTransactions(context);
       Navigator.pop(context);
     }
@@ -44,7 +44,7 @@ class _ModifyTransactionsView
       appBar: AppBar(
         title: Text("Modify transactions"),
       ),
-      body: Consumer2<AppState, ShowTransactionsState>(
+      body: Consumer2<AppState, ModifyTransactionsState>(
           builder: (_, appState, showTransactionsState, __) {
         return TransactionList(widget.account, appState, true);
       }),

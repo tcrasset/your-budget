@@ -11,7 +11,7 @@ import 'package:your_budget/screens/addTransaction/addTransaction.dart';
 import 'package:your_budget/screens/budget/budgetPage.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
+import 'package:your_budget/screens/showTransactions/modifyTransactionsState.dart';
 import 'package:your_budget/waitingscreen.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +30,8 @@ class MyBudget extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider<AppState>.value(value: GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
-      ChangeNotifierProvider<ShowTransactionsState>(
-          create: (_) => ShowTransactionsState()),
+      ChangeNotifierProvider<ModifyTransactionsState>(
+          create: (_) => ModifyTransactionsState()),
       ChangeNotifierProvider<DeleteCategoriesState>(
           create: (_) => DeleteCategoriesState()),
     ], child: HomeScreen());

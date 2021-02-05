@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:your_budget/appState.dart';
 import 'package:provider/provider.dart';
 
-class ShowTransactionsState extends ChangeNotifier {
+class ModifyTransactionsState extends ChangeNotifier {
   Map<int, bool> _isSelectedMap = HashMap();
   int nbSelected = 0;
 
