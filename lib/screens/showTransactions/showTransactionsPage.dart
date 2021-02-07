@@ -128,3 +128,35 @@ AppBar getAppbar(String title, Function() handleModifyTransactions) {
         ),
       ]);
 }
+
+class AccountButtons extends StatelessWidget {
+  final String accountName;
+
+  const AccountButtons({Key key, this.accountName}) : super(key: key);
+  void handleButtonOnPressed(BuildContext context) async{
+    AppState appState = Provider.of<AppState>(context, listen: false);
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppState>(builder: (_, appState, __) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () => handleButtonOnPressed(context)),
+          Text(
+            accountName,
+            style: TextStyle(fontSize: 20),
+          ),
+          IconButton(
+              icon: Icon(Icons.arrow_forward),
+              onPressed: () => handleButtonOnPressed(context))
+        ],
+      );
+    });
+  }
+}
