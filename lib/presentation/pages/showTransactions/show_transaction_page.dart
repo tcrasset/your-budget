@@ -11,8 +11,8 @@ import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
 import '../../../models/money_transaction.dart';
-import 'components/transaction_list.dart';
-import 'modify_transactions.dart';
+import '../core/transactions/transaction_list.dart';
+import '../modifyTransactions/modify_transactions.dart';
 
 class ShowTransactionPage extends StatefulWidget {
   final String title;

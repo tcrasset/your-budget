@@ -5,8 +5,7 @@ import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/account.dart';
-import 'package:your_budget/presentation/pages/showTransactions/components/transaction_list.dart';
-import 'package:your_budget/presentation/pages/showTransactions/modify_transaction_state.dart';
+import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -15,7 +14,7 @@ import '../../../components/delete_dialog.dart';
 import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
-import 'components/transaction_list.dart';
+import '../core/transactions/transaction_list.dart';
 
 class ModifyTransactions extends StatefulWidget {
   final Account account;
