@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/models/categories.dart';
+import '../../../appstate.dart';
+import '../../../models/categories.dart';
 
 class DeleteCategoriesState extends ChangeNotifier {
   /// HashMap to select or unselect Sub- and MainCategories using their id

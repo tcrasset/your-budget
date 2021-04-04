@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import 'constants.dart';
 
 /// Class that defines an entity/person that either received money or gave money to the budget
 /// holder.

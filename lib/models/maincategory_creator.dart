@@ -2,10 +2,10 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/categories_model.dart';
-import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/queries.dart';
+import 'categories.dart';
+import 'categories_model.dart';
+import 'creator.dart';
+import 'queries.dart';
 
 class MainCategoryCreator implements Creator<MainCategory> {
   final Queries queryContext;

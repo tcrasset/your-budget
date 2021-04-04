@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
-import 'package:your_budget/presentation/pages/budget/components/custom_button.dart';
+import '../../../../models/constants.dart';
+import '../../../../models/utils.dart';
+import '../budget_page_state.dart';
+import 'custom_button.dart';
 
 class ButtonDial extends StatelessWidget {
   final double height;

@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import 'constants.dart';
 
 class AccountModel {
   final String name;

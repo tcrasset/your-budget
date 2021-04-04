@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/main.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/utils.dart';
+import '../main.dart';
+import 'categories.dart';
+import 'utils.dart';
 
 /// Class representing budget that is held monthly, specified by [month] and [year].
 /// It holds a list of all [maincategories] and [subcategories], which are put in a specific

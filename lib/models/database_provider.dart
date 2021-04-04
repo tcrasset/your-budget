@@ -8,8 +8,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/utils.dart';
+import 'constants.dart';
+import 'utils.dart';
 
 //Global database variable so as not to handle concurrency issues
 Database db;

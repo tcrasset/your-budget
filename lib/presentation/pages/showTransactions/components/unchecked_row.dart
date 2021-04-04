@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:your_budget/models/utils.dart';
+import '../../../../models/utils.dart';
 
 class UncheckedRow extends StatelessWidget {
   final String subcategoryName;

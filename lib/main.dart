@@ -7,17 +7,17 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
-import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import 'package:your_budget/presentation/pages/budget/budget_page.dart';
-import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
-import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
-import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
-import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page_state.dart';
-import 'package:your_budget/waiting_screen.dart';
+import 'appstate.dart';
 import 'injection_container.dart' as injections;
+import 'models/constants.dart';
+import 'presentation/pages/addAccount/add_account.dart';
+import 'presentation/pages/addTransaction/add_transaction.dart';
+import 'presentation/pages/budget/budget_page.dart';
+import 'presentation/pages/budget/budget_page_state.dart';
+import 'presentation/pages/deleteCategories/delete_categories_state.dart';
+import 'presentation/pages/showTransactions/show_transaction_page.dart';
+import 'presentation/pages/showTransactions/show_transaction_page_state.dart';
+import 'waiting_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

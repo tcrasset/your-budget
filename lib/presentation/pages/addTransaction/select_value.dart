@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/components/add_dialog.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/payee.dart';
+import '../../../appstate.dart';
+import '../../../components/add_dialog.dart';
+import '../../../models/categories.dart';
+import '../../../models/payee.dart';
 
 class SelectValuePage extends StatefulWidget {
   final List listEntries;

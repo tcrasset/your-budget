@@ -1,8 +1,8 @@
 // Project imports:
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/money_transaction.dart';
-import 'package:your_budget/models/object_list.dart';
-import 'package:your_budget/models/queries.dart';
+import 'constants.dart';
+import 'money_transaction.dart';
+import 'object_list.dart';
+import 'queries.dart';
 
 class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   final Queries queryContext;

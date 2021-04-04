@@ -6,11 +6,11 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
+import '../../../../appstate.dart';
+import '../../../../components/widgetViewClasses.dart';
+import '../../../../models/categories.dart';
+import '../../../../models/constants.dart';
+import '../budget_page_state.dart';
 
 // Widget containing and displaying the information a subcategory
 

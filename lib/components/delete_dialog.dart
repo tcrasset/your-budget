@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import '../models/constants.dart';
 
 Future<String> showDeleteDialog(
     BuildContext context, String warningText) async {

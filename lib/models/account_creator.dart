@@ -2,12 +2,12 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/money_transaction.dart';
-import 'package:your_budget/models/money_transaction_creator.dart';
-import 'package:your_budget/models/queries.dart';
+import 'account.dart';
+import 'constants.dart';
+import 'creator.dart';
+import 'money_transaction.dart';
+import 'money_transaction_creator.dart';
+import 'queries.dart';
 
 class AccountCreator implements Creator<Account> {
   final Queries queryContext;

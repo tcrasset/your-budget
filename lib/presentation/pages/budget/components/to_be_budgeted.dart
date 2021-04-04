@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/models/constants.dart';
+import '../../../../appstate.dart';
+import '../../../../models/constants.dart';
 
 class ToBeBudgeted extends StatelessWidget {
   final TextStyle _textStyle = const TextStyle(

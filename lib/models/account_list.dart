@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/object_list.dart';
-import 'package:your_budget/models/queries.dart';
 import 'account.dart';
+import 'object_list.dart';
+import 'queries.dart';
 
 class AccountList implements ObjectList<Account> {
   final Queries queryContext;

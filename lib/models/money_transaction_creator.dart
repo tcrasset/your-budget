@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/money_transaction.dart';
-import 'package:your_budget/models/queries.dart';
+import 'creator.dart';
+import 'money_transaction.dart';
+import 'queries.dart';
 
 class MoneyTransactionCreator implements Creator<MoneyTransaction> {
   final Queries queryContext;

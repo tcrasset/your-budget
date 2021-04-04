@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
 // Project imports:
-import 'package:your_budget/components/widgetViewClasses.dart';
+import '../../../components/widgetViewClasses.dart';
 
 class AboutPage extends StatefulWidget {
   @override

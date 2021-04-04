@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/presentation/pages/deleteCategories/components/categories_list.dart';
-import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
+import '../../../appstate.dart';
+import '../../../components/delete_dialog.dart';
+import '../../../components/widgetViewClasses.dart';
+import '../../../models/constants.dart';
+import 'components/categories_list.dart';
+import 'delete_categories_state.dart';
 
 class DeleteCategories extends StatefulWidget {
   const DeleteCategories({Key key}) : super(key: key);

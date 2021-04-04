@@ -6,11 +6,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/presentation/pages/modifyCategories/modify_categories.dart';
 import '../../../../appstate.dart';
 import '../../../../components/add_dialog.dart';
 import '../../../../models/categories.dart';
 import '../../../../models/constants.dart';
+import '../modify_categories.dart';
 
 class ModifyMainCategoryRow extends StatelessWidget {
   final MainCategory cat;

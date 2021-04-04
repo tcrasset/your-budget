@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/utils.dart';
+import '../../../appstate.dart';
+import '../../../components/widgetViewClasses.dart';
+import '../../../models/account.dart';
+import '../../../models/constants.dart';
+import '../../../models/utils.dart';
 
 class AddAccountRoute extends StatefulWidget {
   final String title;

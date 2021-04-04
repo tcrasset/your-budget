@@ -6,14 +6,14 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/money_transaction.dart';
-import 'package:your_budget/presentation/pages/showTransactions/components/select_account.dart';
-import 'package:your_budget/presentation/pages/showTransactions/components/transaction_list.dart';
-import 'package:your_budget/presentation/pages/showTransactions/modify_transactions.dart';
+import '../../../appstate.dart';
+import '../../../components/widgetViewClasses.dart';
+import '../../../models/account.dart';
+import '../../../models/constants.dart';
+import '../../../models/money_transaction.dart';
+import 'components/select_account.dart';
+import 'components/transaction_list.dart';
+import 'modify_transactions.dart';
 
 class ShowTransactionPage extends StatefulWidget {
   final String title;

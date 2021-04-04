@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import 'constants.dart';
 
 /// Class representing a budgeting category.
 /// A category is represented an unique [id], a [name],

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import 'models/constants.dart';
 
 class WaitingScreen extends StatelessWidget {
   const WaitingScreen({Key key}) : super(key: key);

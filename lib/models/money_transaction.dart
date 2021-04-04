@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import 'constants.dart';
 
 /// Class that defines a MoneyTransaction between the user and another entity.
 /// The [amount] is transfered between the user and the entity specified by [payeeID] at the given

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/constants.dart';
+import '../../../../appstate.dart';
+import '../../../../models/account.dart';
+import '../../../../models/constants.dart';
 
 class SelectAccountPage extends StatelessWidget {
   const SelectAccountPage({Key key}) : super(key: key);

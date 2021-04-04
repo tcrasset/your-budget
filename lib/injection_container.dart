@@ -2,10 +2,10 @@
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/models/database_provider.dart';
-import 'package:your_budget/models/queries.dart';
-import 'package:your_budget/models/sql_queries.dart';
+import 'appstate.dart';
+import 'models/database_provider.dart';
+import 'models/queries.dart';
+import 'models/sql_queries.dart';
 
 final sl = GetIt.instance;
 

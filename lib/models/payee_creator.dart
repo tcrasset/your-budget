@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/payee.dart';
-import 'package:your_budget/models/queries.dart';
+import 'creator.dart';
+import 'payee.dart';
+import 'queries.dart';
 
 class PayeeCreator implements Creator<Payee> {
   final String name;

@@ -1,5 +1,5 @@
 // Project imports:
-import 'package:your_budget/models/constants.dart';
+import 'constants.dart';
 
 //DO NOT CHANGE THE ORDER OF THE ITEMS IN THE ENUMERATION
 enum GoalType { TargetAmount, TargetAmountByDate, MonthlyGoal }

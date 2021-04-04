@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
+import '../../../appstate.dart';
 
 class ShowTransactionsState extends ChangeNotifier {
   final Map<int, bool> _isSelectedMap = HashMap();
