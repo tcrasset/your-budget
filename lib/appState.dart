@@ -72,7 +72,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
   UnmodifiableListView<BudgetValue> get budgetValues =>
       UnmodifiableListView(budgetValueList.budgetvalues);
-  Future<Account> get mostRecentAccount => accountList.mostRecentAccount;
+  Future<Account> get mostRecentAccount => accountList.getMostRecentAccount();
 
   AppState({@required this.queryContext});
 
@@ -205,7 +205,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     final MoneyTransaction transaction = await creator.create();
     transactionList.add(transaction);
 
-    accountList.mostRecentAccount = accountId;
+    accountList.setMostRecentAccount(accountId);
 
     final bool isTransactionIntoToBeBudgeted =
         transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;

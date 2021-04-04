@@ -11,15 +11,15 @@ class AccountList implements ObjectList<Account> {
   final List<Account> _accounts;
   Account _mostRecentAccount;
 
-  Future<Account> get mostRecentAccount async {
+  Future<Account> getMostRecentAccount() async {
     if (_mostRecentAccount == null) {
-      int id = await queryContext.getMostRecentAccountUsed();
+      final int id = await queryContext.getMostRecentAccountUsed();
       _mostRecentAccount = _getById(id);
     }
     return _mostRecentAccount ?? _accounts[0];
   }
 
-  set mostRecentAccount(int id) {
+  void setMostRecentAccount(int id) {
     queryContext.updateMostRecentAccountUsed(id);
     _mostRecentAccount = _getById(id);
   }

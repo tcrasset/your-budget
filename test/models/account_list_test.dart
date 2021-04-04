@@ -76,7 +76,7 @@ void main() {
     //!Arrange
 
     //!Act
-    accountList.mostRecentAccount = tAccount.id;
+    accountList.setMostRecentAccount(tAccount.id);
     //!Assert
     verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
   });
@@ -88,7 +88,7 @@ void main() {
     when(mockQueries.getMostRecentAccountUsed())
         .thenAnswer((_) async => tAccount.id);
     //!Act
-    Account mostRecent = await accountList.mostRecentAccount;
+    Account mostRecent = await accountList.getMostRecentAccount();
     //!Assert
 
     // On first call, check that it gets it from the database
@@ -98,7 +98,7 @@ void main() {
 
     clearInteractions(mockQueries);
     // On second call, check that it was cached
-    mostRecent = await accountList.mostRecentAccount;
+    mostRecent = await accountList.getMostRecentAccount();
     verifyNever(mockQueries.getMostRecentAccountUsed());
   });
 }
