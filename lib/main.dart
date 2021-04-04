@@ -15,8 +15,8 @@ import 'presentation/pages/addTransaction/add_transaction.dart';
 import 'presentation/pages/budget/budget_page.dart';
 import 'presentation/pages/budget/budget_page_state.dart';
 import 'presentation/pages/deleteCategories/delete_categories_state.dart';
+import 'presentation/pages/modifyTransactions/modify_transaction_state.dart';
 import 'presentation/pages/showTransactions/show_transaction_page.dart';
-import 'presentation/pages/showTransactions/modify_transaction_state.dart';
 import 'waiting_screen.dart';
 
 Future<void> main() async {
