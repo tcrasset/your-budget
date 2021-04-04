@@ -1,11 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:your_budget/appstate.dart';
-import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -15,6 +11,7 @@ import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
 import '../core/transactions/transaction_list.dart';
+import 'modify_transaction_state.dart';
 
 class ModifyTransactions extends StatefulWidget {
   final Account account;
