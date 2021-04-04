@@ -1,16 +1,19 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+
+// Project imports:
 import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/account_list.dart';
+import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}
 
-main() {
+void main() {
   Queries mockQueries;
   Account tAccount;
   AccountList accountList;
-  int tId = 99;
+  const int tId = 99;
   setUp(() async {
     mockQueries = MockQueries();
     tAccount = Account(id: tId, name: "Test account", balance: 100.00);
@@ -26,7 +29,7 @@ main() {
 
   test('when add() is called, add an Account', () {
     //!Arrange
-    Account tAccount2 =
+    final Account tAccount2 =
         Account(id: 100, name: "Test account 2", balance: 200.00);
 
     //!Act
@@ -39,8 +42,8 @@ main() {
       'verify that creditAccount() adds the specified amout to the given account',
       () {
     //!Arrange
-    double tAmount = 50.00;
-    double previousBalance = tAccount.balance;
+    const double tAmount = 50.00;
+    final double previousBalance = tAccount.balance;
     //!Act
     accountList.creditAccount(id: tId, amount: tAmount);
     //!Assert
@@ -56,8 +59,8 @@ main() {
       'verify that debitAccount() removes the a specified amout to the given account',
       () {
     //!Arrange
-    double tAmount = 50.00;
-    double previousBalance = tAccount.balance;
+    const double tAmount = 50.00;
+    final double previousBalance = tAccount.balance;
     //!Act
     accountList.debitAccount(id: tId, amount: tAmount);
     //!Assert
@@ -75,7 +78,7 @@ main() {
     //!Arrange
 
     //!Act
-    accountList.mostRecentAccount = tAccount.id;
+    accountList.setMostRecentAccount(tAccount.id);
     //!Assert
     verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
   });
@@ -87,7 +90,7 @@ main() {
     when(mockQueries.getMostRecentAccountUsed())
         .thenAnswer((_) async => tAccount.id);
     //!Act
-    Account mostRecent = await accountList.mostRecentAccount;
+    Account mostRecent = await accountList.getMostRecentAccount();
     //!Assert
 
     // On first call, check that it gets it from the database
@@ -97,7 +100,7 @@ main() {
 
     clearInteractions(mockQueries);
     // On second call, check that it was cached
-    mostRecent = await accountList.mostRecentAccount;
+    mostRecent = await accountList.getMostRecentAccount();
     verifyNever(mockQueries.getMostRecentAccountUsed());
   });
 

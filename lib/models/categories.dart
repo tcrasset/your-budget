@@ -1,6 +1,8 @@
+// Package imports:
 import 'package:meta/meta.dart';
 
-import 'package:your_budget/models/constants.dart';
+// Project imports:
+import 'constants.dart';
 
 /// Class representing a budgeting category.
 /// A category is represented an unique [id], a [name],
@@ -12,28 +14,37 @@ abstract class Category {
   double budgeted;
   double available;
 
-  Category({@required this.id,@required  this.name,@required  this.budgeted,@required  this.available});
+  Category(
+      {@required this.id,
+      @required this.name,
+      @required this.budgeted,
+      @required this.available});
 }
 
 /// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
 class SubCategory extends Category {
-  final parentId;
+  final int parentId;
 
   /// Default SubCategory constructor
-  SubCategory({
-      @required int id,@required  int parentId, @required String name,@required  double budgeted,@required  double available})
+  SubCategory(
+      {@required int id,
+      @required int parentId,
+      @required String name,
+      @required double budgeted,
+      @required double available})
       : parentId = parentId,
-        super(id:id, name:name, budgeted:budgeted, available:available);
+        super(id: id, name: name, budgeted: budgeted, available: available);
 
   /// Constructor building a SubCategory from a [json] representation taken
   /// from a database
   SubCategory.fromJson(Map<String, dynamic> json)
-      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE],
+      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE] as int,
         super(
-            id:json[DatabaseConstants.SUBCAT_ID], //
-            name:json[DatabaseConstants.SUBCAT_NAME],
-            budgeted:json[DatabaseConstants.BUDGET_VALUE_BUDGETED],
-            available:json[DatabaseConstants.BUDGET_VALUE_AVAILABLE]);
+            id: json[DatabaseConstants.SUBCAT_ID] as int, //
+            name: json[DatabaseConstants.SUBCAT_NAME] as String,
+            budgeted: json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double,
+            available:
+                json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double);
 
   @override
   String toString() {
@@ -43,12 +54,22 @@ class SubCategory extends Category {
 
   /// Creates a copy of this with zero money budgeted.
   SubCategory blank() {
-    return SubCategory(id:id,parentId: parentId, name:name, budgeted:0.0, available:available);
+    return SubCategory(
+        id: id,
+        parentId: parentId,
+        name: name,
+        budgeted: 0.0,
+        available: available);
   }
 
   /// Creates an exact copy of this.
   SubCategory copy() {
-    return SubCategory(id:id, parentId:parentId, name:name, budgeted:budgeted, available:available);
+    return SubCategory(
+        id: id,
+        parentId: parentId,
+        name: name,
+        budgeted: budgeted,
+        available: available);
   }
 
   SubCategory copyWith({
@@ -61,7 +82,7 @@ class SubCategory extends Category {
     return SubCategory(
       id: id ?? this.id,
       parentId: parentId ?? this.parentId,
-      name : name ?? this.name,
+      name: name ?? this.name,
       budgeted: budgeted ?? this.budgeted,
       available: available ?? this.available,
     );
@@ -71,18 +92,18 @@ class SubCategory extends Category {
   void update(SubCategory subcat) {
     assert(subcat.id == this.id);
 
-    this.available = subcat.available;
-    this.budgeted = subcat.budgeted;
-    this.name = subcat.name;
+    available = subcat.available;
+    budgeted = subcat.budgeted;
+    name = subcat.name;
   }
 
   /// Checks whether [subCategory] has the same values as this..
   bool hasSameValues(SubCategory subCategory) {
-    return subCategory.id == this.id &&
-        subCategory.parentId == this.parentId &&
-        subCategory.name == this.name &&
-        subCategory.budgeted == this.budgeted &&
-        subCategory.available == this.available;
+    return subCategory.id == id &&
+        subCategory.parentId == parentId &&
+        subCategory.name == name &&
+        subCategory.budgeted == budgeted &&
+        subCategory.available == available;
   }
 }
 
@@ -91,16 +112,17 @@ class MainCategory extends Category {
   List<SubCategory> _subcategories = [];
 
   /// Default [MainCategory] constructor, which sets the budgeted and available values to 0.00
-  MainCategory({@required int id, @required String name}) : super(id:id, name:name, budgeted: 0.00, available: 0.00);
+  MainCategory({@required int id, @required String name})
+      : super(id: id, name: name, budgeted: 0.00, available: 0.00);
 
   /// Constructor building a MainCategory from a [json] representation taken
   /// from a database
   MainCategory.fromJson(Map<String, dynamic> json)
       : super(
-            id:json[DatabaseConstants.CATEGORY_ID], //
-            name:json[DatabaseConstants.CATEGORY_NAME],
-            budgeted:0.00,
-            available:0.00);
+            id: json[DatabaseConstants.CATEGORY_ID] as int, //
+            name: json[DatabaseConstants.CATEGORY_NAME] as String,
+            budgeted: 0.00,
+            available: 0.00);
 
   List<SubCategory> get subcategories {
     return _subcategories;
@@ -117,10 +139,10 @@ class MainCategory extends Category {
   void updateFields() {
     double budgeted = 0;
     double available = 0;
-    this._subcategories.forEach((SubCategory cat) {
+    _subcategories.forEach((SubCategory cat) {
       budgeted += cat.budgeted;
     });
-    this._subcategories.forEach((SubCategory cat) {
+    _subcategories.forEach((SubCategory cat) {
       available += cat.available;
     });
 
@@ -144,7 +166,8 @@ class MainCategory extends Category {
   bool hasSameValues(MainCategory mainCategory) {
     bool subcategoriesAreEqual = true;
 
-    for (final SubCategory thissubcat in this.subcategories) {
+    //TODO: Just changed this.subcategories to _subcategorie. Check if that introduced some bugs
+    for (final SubCategory thissubcat in _subcategories) {
       // If the subcategory lists don't have the same order, we would
       // still like the equality to hold.
       // Therefore, we find the corresponding subcategory in [mainCategory].
@@ -158,29 +181,29 @@ class MainCategory extends Category {
 
       // If we get to the end of the loop without having found a match,
       // the subcategories don't match
-      if (correspondingIndex == this.subcategories.length) {
+      if (correspondingIndex == _subcategories.length) {
         subcategoriesAreEqual = false;
         break;
       }
     }
 
     return subcategoriesAreEqual &&
-        mainCategory.id == this.id &&
-        mainCategory.name == this.name &&
-        mainCategory.budgeted == this.budgeted &&
-        mainCategory.available == this.available;
+        mainCategory.id == id &&
+        mainCategory.name == name &&
+        mainCategory.budgeted == budgeted &&
+        mainCategory.available == available;
   }
 
   /// Adds [newSub] as a new subcategory to the list [_subcategories].
   void addSubcategory(SubCategory newSub) {
-    this._subcategories.add(newSub);
+    _subcategories.add(newSub);
     updateFields();
   }
 
   /// Adds multiple [subcategories] as a new subcategories to the list [_subcategories].
   void addMultipleSubcategories(List<SubCategory> subcategories) {
     subcategories.forEach((sub) {
-      this._subcategories.add(sub);
+      _subcategories.add(sub);
     });
     updateFields();
   }
@@ -208,18 +231,23 @@ class BudgetValue {
   int month;
   int year;
 
-  BudgetValue({@required this.id, @required this.subcategoryId, @required this.budgeted, @required this.available,
-      @required this.year, @required this.month});
+  BudgetValue(
+      {@required this.id,
+      @required this.subcategoryId,
+      @required this.budgeted,
+      @required this.available,
+      @required this.year,
+      @required this.month});
 
   /// Constructor building a BudgetValue from a [json] representation taken
   /// from a database.
   BudgetValue.fromJson(Map<String, dynamic> json)
-      : id = json[DatabaseConstants.BUDGET_VALUE_ID], //
-        subcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE],
-        budgeted = json[DatabaseConstants.BUDGET_VALUE_BUDGETED],
-        available = json[DatabaseConstants.BUDGET_VALUE_AVAILABLE],
-        year = json[DatabaseConstants.BUDGET_VALUE_YEAR],
-        month = json[DatabaseConstants.BUDGET_VALUE_MONTH];
+      : id = json[DatabaseConstants.BUDGET_VALUE_ID] as int, //
+        subcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int,
+        budgeted = json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double,
+        available = json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double,
+        year = json[DatabaseConstants.BUDGET_VALUE_YEAR] as int,
+        month = json[DatabaseConstants.BUDGET_VALUE_MONTH] as int;
 
   @override
   String toString() {
@@ -228,12 +256,12 @@ class BudgetValue {
   }
 
   bool hasSameValues(BudgetValue budgetValue) {
-    return this.id == budgetValue.id &&
-      this.subcategoryId == budgetValue.subcategoryId &&
-      this.budgeted == budgetValue.budgeted &&
-      this.available == budgetValue.available &&
-      this.year == budgetValue.year &&
-      this.month == budgetValue.month;
+    return id == budgetValue.id &&
+        subcategoryId == budgetValue.subcategoryId &&
+        budgeted == budgetValue.budgeted &&
+        available == budgetValue.available &&
+        year == budgetValue.year &&
+        month == budgetValue.month;
   }
 
   BudgetValue copyWith({

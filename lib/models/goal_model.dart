@@ -1,5 +1,8 @@
+// Package imports:
 import 'package:meta/meta.dart';
-import 'package:your_budget/models/goal.dart';
+
+// Project imports:
+import 'goal.dart';
 
 class GoalModel {
   final GoalType goalType;

@@ -1,9 +1,12 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/money_transaction.dart';
-import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/money_transaction_list.dart';
+import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}
 
@@ -101,6 +104,7 @@ main() {
         transactionList.getToBeBudgetedTransactions();
     //!Assert
     expect(transactions.length, 3);
-    expect(transactions[0].subcatID, Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
+    expect(transactions[0].subcatID,
+        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
   });
 }

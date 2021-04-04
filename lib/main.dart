@@ -1,24 +1,25 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/addAccount/addAccount.dart';
-
-import 'package:your_budget/screens/addTransaction/addTransaction.dart';
-
-import 'package:your_budget/screens/budget/budgetPage.dart';
-import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
-import 'package:your_budget/screens/showTransactions/modifyTransactionsState.dart';
-import 'package:your_budget/waitingscreen.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
 import 'package:provider/provider.dart';
 
+// Project imports:
+import 'appstate.dart';
 import 'injection_container.dart' as injections;
+import 'models/constants.dart';
+import 'presentation/pages/addAccount/add_account.dart';
+import 'presentation/pages/addTransaction/add_transaction.dart';
+import 'presentation/pages/budget/budget_page.dart';
+import 'presentation/pages/budget/budget_page_state.dart';
+import 'presentation/pages/deleteCategories/delete_categories_state.dart';
+import 'presentation/pages/showTransactions/show_transaction_page.dart';
+import 'presentation/pages/showTransactions/modify_transaction_state.dart';
+import 'waiting_screen.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
   runApp(MyBudget());
@@ -46,13 +47,13 @@ class HomeScreen extends StatefulWidget {
 class HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
-  List<Widget> _tabs = [
+  final List<Widget> _tabs = [
     ChangeNotifierProvider(
         create: (_) => BudgetPageState(),
-        child: BudgetPage(title: 'Bugdet Page')),
-    AddAccountRoute(title: 'Accounts'),
+        child: const BudgetPage(title: 'Bugdet Page')),
+    const AddAccountRoute(title: 'Accounts'),
     AddTransactionPage(),
-    ShowTransactionPage(title: "Transactions")
+    const ShowTransactionPage(title: "Transactions")
   ];
 
   void _onItemTapped(int index) {
@@ -63,7 +64,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    AppState appState = Provider.of<AppState>(context);
+    final AppState appState = Provider.of<AppState>(context);
     if (appState.allCategories.isNotEmpty) {
       return MaterialApp(
         theme: ThemeData(
@@ -80,25 +81,25 @@ class HomeScreenState extends State<HomeScreen> {
             unselectedItemColor: Colors.grey[500],
             onTap: _onItemTapped,
             items: [
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: FaIcon(Constants.BUDGET_ICON),
-                title: Text("Budget"),
+                label: "Budget",
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: FaIcon(Constants.ACCOUNT_ICON),
-                title: Text("Accounts"),
+                label: "Accounts",
               ),
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                   icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
-                  title: Text("Add transaction")),
-              BottomNavigationBarItem(
+                  label: "Add transaction"),
+              const BottomNavigationBarItem(
                   icon: FaIcon(Constants.ALLTRANSACTION_ICON),
-                  title: Text("Transactions")),
+                  label: "Transactions"),
             ],
           ),
         ),
       );
     }
-    return WaitingScreen();
+    return const WaitingScreen();
   }
 }

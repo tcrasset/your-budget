@@ -1,11 +1,15 @@
+// Dart imports:
 import 'dart:async';
 import 'dart:io';
 
+// Package imports:
 import 'package:jiffy/jiffy.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/utils.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+
+// Project imports:
+import 'constants.dart';
+import 'utils.dart';
 
 //Global database variable so as not to handle concurrency issues
 Database db;

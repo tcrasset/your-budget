@@ -1,5 +1,9 @@
 /// This file will contain utiliy functions destined to be used throughout the project.
+
+// Package imports:
 import 'package:jiffy/jiffy.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 ///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
@@ -33,13 +37,13 @@ DateTime getDateYMD(DateTime datetime) {
 /// Creates a datetime object starting from the first of the month, with year and month given
 /// by [datetime].
 DateTime getDateFromMonthStart(DateTime datetime) {
-  return DateTime(datetime.year, datetime.month, 1);
+  return DateTime(datetime.year, datetime.month);
 }
 
 /// Returns the number of months between [date1] and [date2].
 /// If [date1] > [date2], the result will be positive.
 int getMonthDifference(DateTime date1, DateTime date2) {
-  return Jiffy(date1).diff(Jiffy(date2), Units.MONTH);
+  return Jiffy(date1).diff(Jiffy(date2), Units.MONTH) as int;
 }
 
 /// Returns the English noun for the month given by [date].
@@ -53,7 +57,7 @@ bool isSameMonth(DateTime date1, DateTime date2) {
 }
 
 DateTime addExactEntryTime(DateTime date) {
-  DateTime now = DateTime.now();
+  final DateTime now = DateTime.now();
   return DateTime(
       date.year, date.month, date.day, now.hour, now.minute, now.second);
 }

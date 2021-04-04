@@ -1,7 +1,10 @@
+// Package imports:
 import 'package:meta/meta.dart';
-import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/queries.dart';
-import 'package:your_budget/models/money_transaction.dart';
+
+// Project imports:
+import 'creator.dart';
+import 'money_transaction.dart';
+import 'queries.dart';
 
 class MoneyTransactionCreator implements Creator<MoneyTransaction> {
   final Queries queryContext;
@@ -22,8 +25,9 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
     @required this.memo,
   });
 
+  @override
   Future<MoneyTransaction> create() async {
-    MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
+    final MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
         accountID: accountId,
         payeeID: payeeId,
         subcatID: subcatId,
@@ -31,7 +35,8 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
         date: date,
         memo: memo);
 
-    int id = await queryContext.addMoneyTransaction(moneyTransactionModel);
+    final int id =
+        await queryContext.addMoneyTransaction(moneyTransactionModel);
 
     return MoneyTransaction(
         id: id,

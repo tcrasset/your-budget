@@ -1,37 +1,40 @@
+// Package imports:
 import 'package:meta/meta.dart';
-import 'package:your_budget/models/object_list.dart';
-import 'package:your_budget/models/queries.dart';
 
+// Project imports:
 import 'account.dart';
+import 'object_list.dart';
+import 'queries.dart';
 
 class AccountList implements ObjectList<Account> {
   final Queries queryContext;
-  List<Account> _accounts = [];
+  final List<Account> _accounts;
   Account _mostRecentAccount;
   int _mostRecentAccountIndex = 0;
 
-  Future<Account> get mostRecentAccount async {
+  Future<Account> getMostRecentAccount() async {
     if (_mostRecentAccount == null) {
-      int id = await queryContext.getMostRecentAccountUsed();
-
+      final int id = await queryContext.getMostRecentAccountUsed();
       _mostRecentAccount = _getById(id);
       _mostRecentAccountIndex = accounts.indexOf(_mostRecentAccount);
     }
     return _mostRecentAccount ?? _accounts[0];
   }
 
-  set mostRecentAccount(id) {
+  void setMostRecentAccount(int id) {
     queryContext.updateMostRecentAccountUsed(id);
     _mostRecentAccount = _getById(id);
     _mostRecentAccountIndex = accounts.indexOf(_mostRecentAccount);
   }
 
   List<Account> get accounts => _accounts;
+
   AccountList(
     this.queryContext,
     this._accounts,
   );
 
+  @override
   void add(Account account) {
     _accounts.add(account);
   }
@@ -45,19 +48,19 @@ class AccountList implements ObjectList<Account> {
     final Account account = _getById(id);
     account.balance += amount;
     queryContext.updateAccount(account);
-    mostRecentAccount = id;
+    setMostRecentAccount(id);
   }
 
   void debitAccount({@required int id, @required double amount}) {
     final Account account = _getById(id);
     account.balance -= amount;
     queryContext.updateAccount(account);
-    mostRecentAccount = id;
+    setMostRecentAccount(id);
   }
 
   void cycleNextAccount() {
     int nextIndex = (_mostRecentAccountIndex + 1) % _accounts.length;
     int nextAccountId = _accounts[nextIndex].id;
-    mostRecentAccount = nextAccountId;
+    setMostRecentAccount(nextAccountId);
   }
 }

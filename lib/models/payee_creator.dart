@@ -1,7 +1,10 @@
+// Package imports:
 import 'package:meta/meta.dart';
-import 'package:your_budget/models/creator.dart';
-import 'package:your_budget/models/payee.dart';
-import 'package:your_budget/models/queries.dart';
+
+// Project imports:
+import 'creator.dart';
+import 'payee.dart';
+import 'queries.dart';
 
 class PayeeCreator implements Creator<Payee> {
   final String name;
@@ -11,8 +14,8 @@ class PayeeCreator implements Creator<Payee> {
 
   @override
   Future<Payee> create() async {
-    PayeeModel payeeModel = PayeeModel(name: name);
-    int id = await queryContext.addPayee(payeeModel);
+    final PayeeModel payeeModel = PayeeModel(name: name);
+    final int id = await queryContext.addPayee(payeeModel);
 
     return Payee(id: id, name: name);
   }

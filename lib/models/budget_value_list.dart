@@ -1,8 +1,10 @@
+// Package imports:
 import 'package:meta/meta.dart';
-import 'package:your_budget/models/object_list.dart';
-import 'package:your_budget/models/queries.dart';
 
+// Project imports:
 import 'categories.dart';
+import 'object_list.dart';
+import 'queries.dart';
 
 class BudgetValueList implements ObjectList<BudgetValue> {
   final Queries queryContext;
@@ -17,7 +19,7 @@ class BudgetValueList implements ObjectList<BudgetValue> {
   }
 
   void removeBySubcatId(int subcatId) {
-    List<BudgetValue> toRemove = _budgetvalues
+    final List<BudgetValue> toRemove = _budgetvalues
         .where((budgetvalue) => budgetvalue.subcategoryId == subcatId)
         .toList();
     toRemove.forEach((budgetvalue) {
@@ -45,7 +47,7 @@ class BudgetValueList implements ObjectList<BudgetValue> {
     @required double newBudgeted,
     @required double newAvailable,
   }) {
-    BudgetValue budgetValue = getByBudget(date, subcatId);
+    final BudgetValue budgetValue = getByBudget(date, subcatId);
     budgetValue.budgeted = newBudgeted;
     budgetValue.available = newAvailable;
     queryContext.updateBudgetValue(budgetValue);

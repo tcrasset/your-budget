@@ -1,4 +1,6 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
 // https://blog.gskinner.com/archives/2020/02/flutter-widgetview-a-simple-separation-of-layout-and-logic.html
 
 abstract class WidgetView<T1, T2> extends StatelessWidget {
