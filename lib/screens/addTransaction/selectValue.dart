@@ -195,7 +195,7 @@ class SelectValuePageState extends State<SelectValuePage> {
                 if (itemToFilter.toLowerCase().contains(filter.toLowerCase()) ==
                     true) {
                   return ListTile(
-                      title: item, onTap: () => handlePopContext(item));
+                      title: item as Text, onTap: () => handlePopContext(item));
                 }
               }
               // There is an error
