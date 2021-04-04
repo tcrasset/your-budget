@@ -108,21 +108,21 @@ void main() {
       'verify that cycleNextAccount() cycles through all accounts and sets' +
           'mostRecentAccount appropriately', () async {
     //!Arrange
-    Account tAccount2 =
+    final Account tAccount2 =
         Account(id: 100, name: "Test account 2", balance: 200.00);
-    Account tAccount3 =
+    final Account tAccount3 =
         Account(id: 300, name: "Test account 3", balance: 300.00);
     accountList.add(tAccount2);
     accountList.add(tAccount3);
 
-    accountList.mostRecentAccount = tAccount.id;
+    accountList.setMostRecentAccount(tAccount.id);
     //!Act
     accountList.cycleNextAccount();
-    expect(await accountList.mostRecentAccount, tAccount2);
+    expect(await accountList.getMostRecentAccount(), tAccount2);
     accountList.cycleNextAccount();
-    expect(await accountList.mostRecentAccount, tAccount3);
+    expect(await accountList.getMostRecentAccount(), tAccount3);
     accountList.cycleNextAccount();
-    expect(await accountList.mostRecentAccount, tAccount);
+    expect(await accountList.getMostRecentAccount(), tAccount);
 
     //!Assert
   });
