@@ -9,13 +9,13 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/addAccount/add_account.dart';
-import 'package:your_budget/screens/addTransaction/add_transaction.dart';
-import 'package:your_budget/screens/budget/budget_page.dart';
-import 'package:your_budget/screens/budget/budget_page_state.dart';
-import 'package:your_budget/screens/deleteCategories/delete_categories_state.dart';
-import 'package:your_budget/screens/showTransactions/show_transaction_page.dart';
-import 'package:your_budget/screens/showTransactions/show_transaction_page_state.dart';
+import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
+import 'package:your_budget/presentation/pages/budget/budget_page.dart';
+import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
+import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
+import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
+import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page_state.dart';
 import 'package:your_budget/waiting_screen.dart';
 import 'injection_container.dart' as injections;
 
