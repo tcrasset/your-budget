@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/object_list.dart';
@@ -7,7 +10,7 @@ import 'package:your_budget/models/utils.dart';
 
 class BudgetList implements ObjectList<Budget> {
   final Queries queryContext;
-  List<Budget> _budgets;
+  final List<Budget> _budgets;
 
   List<Budget> get budgets => _budgets;
 
@@ -70,7 +73,7 @@ class BudgetList implements ObjectList<Budget> {
     int nbNonZero = 0;
 
     _budgets.forEach((budget) {
-      SubCategory subcat =
+      final SubCategory subcat =
           budget.subcategories.singleWhere((subcat) => subcat.id == subcatId);
       if (subcat.budgeted != 0.00) {
         nbNonZero++;

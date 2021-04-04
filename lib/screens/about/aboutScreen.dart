@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
+
+// Package imports:
 import 'package:package_info/package_info.dart';
+
+// Project imports:
+import 'package:your_budget/components/widgetViewClasses.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -13,7 +18,7 @@ class _AboutPageController extends State<AboutPage> {
 }
 
 class _AboutPageView extends WidgetView<AboutPage, _AboutPageController> {
-  _AboutPageView(_AboutPageController state) : super(state);
+  const _AboutPageView(_AboutPageController state) : super(state);
 
   @override
   Widget build(BuildContext context) {
@@ -24,47 +29,45 @@ class _AboutPageView extends WidgetView<AboutPage, _AboutPageController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('About'),
+        title: const Text('About'),
       ),
-      body: Container(
-        child: FutureBuilder<PackageInfo>(
-          future: PackageInfo
-              .fromPlatform(), // a previously-obtained Future<String> or null
-          builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("App name : "),
-                      Text(snapshot.data.appName),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("Version : "),
-                      Text(snapshot.data.version),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text("Build number : "),
-                      Text(snapshot.data.buildNumber),
-                    ],
-                  ),
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text("Error loading app version");
-            } else {
-              return CircularProgressIndicator();
-            }
-          },
-        ),
+      body: FutureBuilder<PackageInfo>(
+        future: PackageInfo
+            .fromPlatform(), // a previously-obtained Future<String> or null
+        builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
+          if (snapshot.hasData) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text("App name : "),
+                    Text(snapshot.data.appName),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text("Version : "),
+                    Text(snapshot.data.version),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Text("Build number : "),
+                    Text(snapshot.data.buildNumber),
+                  ],
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return const Text("Error loading app version");
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
       ),
     );
   }

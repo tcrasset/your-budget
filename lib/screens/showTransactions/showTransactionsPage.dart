@@ -1,15 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/constants.dart';
 
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/money_transaction.dart';
+// Package imports:
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
+import 'package:your_budget/appState.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/screens/showTransactions/components/selectAccount.dart';
 import 'package:your_budget/screens/showTransactions/components/transactionList.dart';
 import 'package:your_budget/screens/showTransactions/modifyTransactions.dart';
-import 'package:provider/provider.dart';
 
 class ShowTransactionPage extends StatefulWidget {
   final String title;
@@ -22,7 +26,7 @@ class ShowTransactionPage extends StatefulWidget {
 }
 
 class _ShowTransactionPageController extends State<ShowTransactionPage> {
-  TextEditingController controller = new TextEditingController();
+  final TextEditingController controller = TextEditingController();
   String filter;
   Account account;
   bool isEditable;
@@ -30,7 +34,7 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
 
   @override
   void initState() {
-    AppState appState = Provider.of<AppState>(context, listen: false);
+    final AppState appState = Provider.of<AppState>(context, listen: false);
     if (appState.accounts.isNotEmpty) {
       account = appState.accounts[0];
     }
@@ -44,10 +48,10 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
     });
   }
 
-  void handlePopUpMenuButtonSelected(String selectedItem) async {
+  Future<void> handlePopUpMenuButtonSelected(String selectedItem) async {
     if (selectedItem == "Select account") {
-      Account result = await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => SelectAccountPage()));
+      final Account result = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const SelectAccountPage()));
 
       if (result != null) handleOnAccountChanged(result);
     }
@@ -70,24 +74,25 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
 
 class _ShowTransactionPageView
     extends WidgetView<ShowTransactionPage, _ShowTransactionPageController> {
-  _ShowTransactionPageView(_ShowTransactionPageController state) : super(state);
+  const _ShowTransactionPageView(_ShowTransactionPageController state)
+      : super(state);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: Text(widget.title),
-          leading: Icon(Constants.ALLTRANSACTION_ICON),
+          leading: const Icon(Constants.ALLTRANSACTION_ICON),
           backgroundColor: Constants.PRIMARY_COLOR,
           actions: <Widget>[
             IconButton(
-              icon: Icon(FontAwesomeIcons.checkSquare),
+              icon: const Icon(FontAwesomeIcons.checkSquare),
               onPressed: state.handleModifyTransactions,
             ),
             PopupMenuButton(
               onSelected: state.handlePopUpMenuButtonSelected,
               itemBuilder: (context) => [
-                PopupMenuItem<String>(
+                const PopupMenuItem<String>(
                   value: "Select account",
                   child: Text("Select account"),
                 ),
@@ -96,7 +101,7 @@ class _ShowTransactionPageView
           ]),
       body: Consumer<AppState>(builder: (context, appState, child) {
         if (state.account == null || appState.transactions.isEmpty) {
-          return Center(
+          return const Center(
             child: Text(
               "No transactions logged. Please choose an account.",
               style: TextStyle(
@@ -109,7 +114,7 @@ class _ShowTransactionPageView
           return Column(children: [
             Text(
               state.account.name,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             Expanded(
                 child:

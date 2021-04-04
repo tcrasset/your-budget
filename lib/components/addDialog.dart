@@ -1,3 +1,4 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 Future<String> addDialog(
@@ -7,7 +8,7 @@ Future<String> addDialog(
     @required String successButtonName,
     @required Function(String) nameValidator,
     String defaultValue}) {
-  TextEditingController textController = TextEditingController();
+  final TextEditingController textController = TextEditingController();
 
   if (defaultValue != null && defaultValue.trim() != "") {
     textController.text = defaultValue;
@@ -23,12 +24,12 @@ Future<String> addDialog(
           content: Form(
             key: _formKey,
             child: TextFormField(
-              decoration: new InputDecoration(
+              decoration: InputDecoration(
                   hintText: hintText,
                   filled: true,
                   fillColor: Colors.grey[200]),
               controller: textController,
-              validator: (_) => nameValidator(textController.text),
+              validator: (_) => nameValidator(textController.text) as String,
             ),
           ),
           actions: <Widget>[

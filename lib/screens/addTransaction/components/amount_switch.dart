@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../models/constants.dart';
 
 class AmountSwitch extends StatelessWidget {
@@ -12,16 +14,15 @@ class AmountSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Switch(
-      value: state.isPositive,
+    return Switch(
+      value: state.isPositive as bool,
       onChanged: (_) => state.handleSwitchOnChanged(),
       activeTrackColor: Constants.GREEN_COLOR,
       activeColor: Colors.grey[300],
-      activeThumbImage: new AssetImage("assets/plus.png"),
-      inactiveThumbImage: new AssetImage("assets/minus.png"),
+      activeThumbImage: const AssetImage("assets/plus.png"),
+      inactiveThumbImage: const AssetImage("assets/minus.png"),
       inactiveTrackColor: Constants.RED_COLOR,
       inactiveThumbColor: Colors.grey[300],
-    ));
+    );
   }
 }

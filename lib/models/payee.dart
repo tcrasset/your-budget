@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 /// Class that defines an entity/person that either received money or gave money to the budget
@@ -17,8 +20,8 @@ class Payee {
   /// Constructor building a [Payee] from a [json] representation taken
   /// from a database.
   Payee.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.PAYEE_ID];
-    this.name = json[DatabaseConstants.PAYEE_NAME];
+    id = json[DatabaseConstants.PAYEE_ID] as int;
+    name = json[DatabaseConstants.PAYEE_NAME] as String;
   }
 
   @override
@@ -27,10 +30,9 @@ class Payee {
   }
 
   bool hasSameValues(Payee payee) {
-    return payee.id == this.id && payee.name == this.name;
+    return payee.id == id && payee.name == name;
   }
 }
-
 
 class PayeeModel {
   final String name;

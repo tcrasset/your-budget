@@ -1,18 +1,22 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_masked_text/flutter_masked_text.dart';
-import 'package:your_budget/appState.dart';
 
-import 'package:your_budget/models/categories.dart';
+// Package imports:
+import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
+import 'package:your_budget/appState.dart';
 import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:provider/provider.dart';
 
 // Widget containing and displaying the information a subcategory
 
 class SubcategoryRow extends StatefulWidget {
   final SubCategory subcat;
-  SubcategoryRow({Key key, @required this.subcat}) : super(key: key);
+  const SubcategoryRow({Key key, @required this.subcat}) : super(key: key);
 
   @override
   _SubcategoryRowController createState() => _SubcategoryRowController();
@@ -39,8 +43,8 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
     appState = Provider.of(context, listen: false);
 
-    _budgetedController = new MoneyMaskedTextController(
-        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: ' \€');
+    _budgetedController = MoneyMaskedTextController(
+        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: '€');
   }
 
   @override
@@ -55,7 +59,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
 class _SubcategoryRowView
     extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
-  _SubcategoryRowView(_SubcategoryRowController state) : super(state);
+  const _SubcategoryRowView(_SubcategoryRowController state) : super(state);
 
   Color setColor(double availableAmount) {
     if (availableAmount > 0) {
@@ -74,8 +78,8 @@ class _SubcategoryRowView
     return GestureDetector(
       onTap: state.handleOnTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15),
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         color: state.buttonDialState.isSelected(widget.subcat.id)
             ? Colors.grey[200]
             : Colors.white,
@@ -90,7 +94,7 @@ class _SubcategoryRowView
                 child: TextField(
               readOnly: true,
               enabled: false, //transparent for taps
-              decoration: new InputDecoration.collapsed(
+              decoration: const InputDecoration.collapsed(
                 hintText: "",
               ),
               controller: state._budgetedController,
@@ -101,16 +105,17 @@ class _SubcategoryRowView
               child: Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                  padding: EdgeInsets.all(2),
-                  decoration: new BoxDecoration(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
                     color: setColor(widget.subcat.available),
-                    borderRadius: new BorderRadius.all(
-                      const Radius.circular(9.0),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(9.0),
                     ),
                   ),
                   child: Text("${widget.subcat.available.toStringAsFixed(2)} €",
                       textAlign: TextAlign.right,
-                      style: TextStyle(fontSize: 18, color: Colors.white)),
+                      style:
+                          const TextStyle(fontSize: 18, color: Colors.white)),
                 ),
               ),
             )

@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 //DO NOT CHANGE THE ORDER OF THE ITEMS IN THE ENUMERATION
@@ -39,12 +40,13 @@ class Goal {
   /// Constructor building a [Goal] from a [json] representation taken
   /// from a database.
   Goal.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.GOAL_ID];
-    this.correspondingSubcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE];
-    this.goalType = GoalType.values[json[DatabaseConstants.GOAL_TYPE]];
-    this.amount = json[DatabaseConstants.GOAL_AMOUNT];
-    this.year = json[DatabaseConstants.GOAL_YEAR];
-    this.month = json[DatabaseConstants.GOAL_MONTH];
+    id = json[DatabaseConstants.GOAL_ID] as int;
+    correspondingSubcategoryId =
+        json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int;
+    goalType = GoalType.values[json[DatabaseConstants.GOAL_TYPE] as int];
+    amount = json[DatabaseConstants.GOAL_AMOUNT] as double;
+    year = json[DatabaseConstants.GOAL_YEAR] as int;
+    month = json[DatabaseConstants.GOAL_MONTH] as int;
   }
 
   @override

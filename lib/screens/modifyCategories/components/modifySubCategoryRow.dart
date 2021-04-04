@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
@@ -10,16 +15,16 @@ class ModifySubcategoryRow extends StatelessWidget {
   final SubCategory subcat;
   const ModifySubcategoryRow({Key key, this.subcat}) : super(key: key);
 
-  handleSubCategoryNameChange(BuildContext context) async {
-    String hintText = "Modify subcategory name";
-    String subcategoryName = await addDialog(
+  Future<void> handleSubCategoryNameChange(BuildContext context) async {
+    const String hintText = "Modify subcategory name";
+    final String subcategoryName = await addDialog(
         context: context,
         title: hintText,
         hintText: hintText,
         successButtonName: "Submit",
         nameValidator: validateCategoryName);
     if (subcategoryName != null) {
-      AppState appState = Provider.of<AppState>(context, listen: false);
+      final AppState appState = Provider.of<AppState>(context, listen: false);
       appState.updateSubcategoryName(subcat.id, subcategoryName);
     }
   }
@@ -33,17 +38,17 @@ class ModifySubcategoryRow extends StatelessWidget {
           title: Text('Delete Subcategory ${subcat.name} ?'),
           actions: <Widget>[
             FlatButton(
-              child: Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop("Cancel");
               },
+              child: const Text('Cancel'),
             ),
             FlatButton(
-              child: Text('Delete'),
               textColor: Constants.RED_COLOR,
               onPressed: () {
                 Navigator.of(context).pop("Delete");
               },
+              child: const Text('Delete'),
             ),
           ],
         );
@@ -51,10 +56,10 @@ class ModifySubcategoryRow extends StatelessWidget {
     );
   }
 
-  void deleteSubcategory(BuildContext context) async {
-    String result = await _showDeleteDialog(context);
+  Future<void> deleteSubcategory(BuildContext context) async {
+    final String result = await _showDeleteDialog(context);
     if (result == "Delete") {
-      AppState appState = Provider.of<AppState>(context, listen: false);
+      final AppState appState = Provider.of<AppState>(context, listen: false);
       appState.removeSubcategory(subcat.id);
       print("Deleted subcategory");
     }
@@ -65,7 +70,7 @@ class ModifySubcategoryRow extends StatelessWidget {
     return GestureDetector(
       onTap: () => handleSubCategoryNameChange(context),
       onLongPress: () => deleteSubcategory(context),
-      child: Container(
+      child: SizedBox(
         height: 40.0,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

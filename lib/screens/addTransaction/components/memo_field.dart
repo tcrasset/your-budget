@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../components/rowContainer.dart';
 
 class MemoField extends StatelessWidget {
@@ -12,8 +14,8 @@ class MemoField extends StatelessWidget {
     return rowContainer(
       "Memo",
       TextField(
-        decoration: new InputDecoration(hintText: "Add a memo"),
-        controller: state.memoController,
+        decoration: const InputDecoration(hintText: "Add a memo"),
+        controller: state.memoController as TextEditingController,
       ),
     );
   }

@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 Future<String> showDeleteDialog(
@@ -11,17 +14,17 @@ Future<String> showDeleteDialog(
         title: Text(warningText),
         actions: <Widget>[
           FlatButton(
-            child: Text('Cancel'),
             onPressed: () {
               Navigator.of(context).pop("Cancel");
             },
+            child: const Text('Cancel'),
           ),
           FlatButton(
-            child: Text('Delete'),
             textColor: Constants.RED_COLOR,
             onPressed: () {
               Navigator.of(context).pop("Delete");
             },
+            child: const Text('Delete'),
           ),
         ],
       );

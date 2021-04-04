@@ -1,26 +1,32 @@
+// Dart imports:
 import 'dart:collection';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/screens/addTransaction/components/CurrencyInputFormatter.dart';
-import 'package:provider/provider.dart';
 
 class BudgetPageState extends ChangeNotifier {
   bool showButtonDial = false;
-  Map<int, bool> _isSelectedMap = HashMap();
+  final Map<int, bool> _isSelectedMap = HashMap();
   int selectedId = -1;
   MoneyMaskedTextController budgetedController;
   String budgetedText = "";
 
   bool isSelected(int subcategoryId) {
-    return this._isSelectedMap[subcategoryId];
+    return _isSelectedMap[subcategoryId];
   }
 
   Map<int, bool> get isSelectedMap => _isSelectedMap;
 
-  void updateIsSelected(int subcategoryId) async {
+  Future<void> updateIsSelected(int subcategoryId) async {
     //Set all selected to false
     _isSelectedMap.forEach((k, v) => _isSelectedMap[k] = false);
 
@@ -29,7 +35,7 @@ class BudgetPageState extends ChangeNotifier {
     } else if (selectedId != subcategoryId) {
       // Select the subcategory if we tapped on a different one than the one
       // that is currently highlighted
-      this._isSelectedMap[subcategoryId] = true;
+      _isSelectedMap[subcategoryId] = true;
       selectedId = subcategoryId;
       resetText();
     } else {
@@ -55,7 +61,7 @@ class BudgetPageState extends ChangeNotifier {
 
   void addDigit(String digit) {
     budgetedText += digit;
-    double amount = formatCurrencyToDouble(budgetedText, true);
+    final double amount = formatCurrencyToDouble(budgetedText, true);
     budgetedController.updateValue(amount);
     print(budgetedText);
   }
@@ -63,7 +69,7 @@ class BudgetPageState extends ChangeNotifier {
   void removeDigit() {
     try {
       budgetedText = budgetedText.substring(0, budgetedText.length - 1);
-      double amount = formatCurrencyToDouble(budgetedText, true);
+      final double amount = formatCurrencyToDouble(budgetedText, true);
       budgetedController.updateValue(amount);
       print(budgetedText);
     } on RangeError {
@@ -74,21 +80,22 @@ class BudgetPageState extends ChangeNotifier {
   void submitValue(BuildContext context) {
     /// When the budget value gets changed, change the shown budget value,
     /// but also the available value.
-    AppState appState = Provider.of<AppState>(context, listen: false);
+    final AppState appState = Provider.of<AppState>(context, listen: false);
 
-    SubCategory selectedSubcategory =
+    final SubCategory selectedSubcategory =
         appState.subcategories.singleWhere((subcat) => subcat.id == selectedId);
 
     if (budgetedController.numberValue != selectedSubcategory.budgeted) {
-      double beforeAfterDifference =
-          (budgetedController.numberValue - selectedSubcategory.budgeted);
-      appState.updateSubcategoryValues(SubCategory(
-          id:selectedSubcategory.id,
-          parentId:selectedSubcategory.parentId,
-          name:selectedSubcategory.name,
-          budgeted:budgetedController.numberValue,
-          available:selectedSubcategory.available + beforeAfterDifference),
-        appState.currentBudgetDate);
+      final double beforeAfterDifference =
+          budgetedController.numberValue - selectedSubcategory.budgeted;
+      appState.updateSubcategoryValues(
+          SubCategory(
+              id: selectedSubcategory.id,
+              parentId: selectedSubcategory.parentId,
+              name: selectedSubcategory.name,
+              budgeted: budgetedController.numberValue,
+              available: selectedSubcategory.available + beforeAfterDifference),
+          appState.currentBudgetDate);
 
       resetText();
       closeButtonDialAndUpdate();
@@ -105,6 +112,6 @@ class BudgetPageState extends ChangeNotifier {
   }
 
   void setSubcategory(SubCategory subcat) {
-    this._isSelectedMap[subcat.id] = false;
+    _isSelectedMap[subcat.id] = false;
   }
 }

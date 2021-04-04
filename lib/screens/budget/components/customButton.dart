@@ -1,3 +1,4 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -7,24 +8,24 @@ class CustomButton extends StatelessWidget {
   final Color buttonColor;
   final Function handleOnPressed;
   final Widget child;
-  CustomButton(this.buttonText, this.buttonHeight, this.buttonWidth,
+  const CustomButton(this.buttonText, this.buttonHeight, this.buttonWidth,
       this.buttonColor, this.handleOnPressed,
       [this.child]);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: this.buttonHeight,
-      width: this.buttonWidth,
+    return SizedBox(
+      height: buttonHeight,
+      width: buttonWidth,
       child: RaisedButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(5.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
           color: buttonColor,
-          onPressed: () => this.handleOnPressed(context, buttonText),
-          child: this.child ??
+          onPressed: () => handleOnPressed(context, buttonText),
+          child: child ??
               Text(
                 buttonText,
-                style: TextStyle(fontSize: 20.0),
+                style: const TextStyle(fontSize: 20.0),
               )),
     );
   }

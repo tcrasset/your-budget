@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:intl/intl.dart';
 
 /// Given the [currencyText] String returned from [NumberFormat.format()],
@@ -7,8 +10,8 @@ import 'package:intl/intl.dart';
 double formatCurrencyToDouble(String currencyText, bool isPositive) {
   String integers = "0";
   String decimals = "0";
-  String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
-  int textLength = onlyNumbers.length;
+  final String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
+  final int textLength = onlyNumbers.length;
 
   if (textLength > 2) {
     integers = onlyNumbers.substring(0, textLength - 2);
@@ -21,7 +24,7 @@ double formatCurrencyToDouble(String currencyText, bool isPositive) {
     decimals = "0" + onlyNumbers;
   }
 
-  double number = double.parse(integers + "." + decimals);
+  final double number = double.parse(integers + "." + decimals);
   return isPositive ? number : -number;
 }
 

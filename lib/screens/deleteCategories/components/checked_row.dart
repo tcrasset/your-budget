@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
 
 class CheckedRow extends StatefulWidget {

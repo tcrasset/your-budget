@@ -1,7 +1,8 @@
+// Project imports:
 import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
-import 'package:your_budget/models/money_transaction.dart';
 
 class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   final Queries queryContext;
@@ -12,6 +13,7 @@ class MoneyTransactionList implements ObjectList<MoneyTransaction> {
 
   MoneyTransactionList(this.queryContext, this._transactions);
 
+  @override
   void add(MoneyTransaction moneytransaction) {
     _transactions.add(moneytransaction);
   }
@@ -26,7 +28,9 @@ class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   }
 
   List<MoneyTransaction> getAllBySubcatId(int subcatId) {
-    return _transactions.where((transaction) => transaction.subcatID == subcatId).toList();
+    return _transactions
+        .where((transaction) => transaction.subcatID == subcatId)
+        .toList();
   }
 
   List<MoneyTransaction> getToBeBudgetedTransactions() {

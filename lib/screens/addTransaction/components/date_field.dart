@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../components/rowContainer.dart';
 
 class DateField extends StatelessWidget {
@@ -20,7 +22,7 @@ class DateField extends StatelessWidget {
         child: rowContainer(
             "Date",
             Text(
-              state.dateFieldName,
+              state.dateFieldName as String,
               style: selectedChildTextStyle,
             )));
   }

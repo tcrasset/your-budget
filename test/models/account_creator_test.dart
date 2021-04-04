@@ -1,14 +1,17 @@
+// Package imports:
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
-import 'package:your_budget/models/constants.dart';
+
+// Project imports:
 import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/account_creator.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/queries.dart';
-import 'package:your_budget/models/account_creator.dart';
 
 class MockQueries extends Mock implements Queries {}
 
-main() {
+void main() {
   Queries mockQueries;
   String tAccountName;
   double tAccountBalance;
@@ -39,11 +42,11 @@ main() {
       'when the create() method is called, create and return the account' +
           ' and verify that the call to the database was made', () async {
     //!Arrange
-    int tId = 25;
+    const int tId = 25;
     when(mockQueries.addAccount(argThat(isA<AccountModel>())))
         .thenAnswer((_) async => tId);
     //!Act
-    Account account = await creator.create();
+    final Account account = await creator.create();
 
     //!Assert
     verify(mockQueries.addAccount(argThat(isA<AccountModel>())));
@@ -59,7 +62,7 @@ main() {
     await creator.create();
 
     //!Act
-    MoneyTransaction moneyTransaction =
+    final MoneyTransaction moneyTransaction =
         await creator.getStartingMoneyTransaction();
 
     //!Assert

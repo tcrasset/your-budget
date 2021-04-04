@@ -1,9 +1,14 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/budget/components/customButton.dart';
-import 'package:provider/provider.dart';
 
 class ButtonDial extends StatelessWidget {
   final double height;
@@ -17,7 +22,7 @@ class ButtonDial extends StatelessWidget {
     return Container(
       color: Constants.PRIMARY_COLOR,
       // color: Colors.grey[900],
-      height: this.height,
+      height: height,
       // width: MediaQuery.of(context).size.width + 60,
 
       child: Container(
@@ -61,7 +66,7 @@ class ButtonDial extends StatelessWidget {
                     buttonWidth,
                     Colors.white,
                     buttonPressed,
-                    Icon(
+                    const Icon(
                       Icons.backspace,
                       color: Constants.SECONDARY_COLOR,
                     )),
@@ -71,7 +76,7 @@ class ButtonDial extends StatelessWidget {
                     buttonWidth,
                     Colors.white,
                     buttonPressed,
-                    Icon(
+                    const Icon(
                       Icons.done,
                       color: Constants.SECONDARY_COLOR,
                     )),
@@ -87,7 +92,7 @@ class ButtonDial extends StatelessWidget {
 }
 
 void buttonPressed(BuildContext context, String buttonText) {
-  BudgetPageState buttonDialState =
+  final BudgetPageState buttonDialState =
       Provider.of<BudgetPageState>(context, listen: false);
   if (isNumeric(buttonText)) {
     buttonDialState.addDigit(buttonText);

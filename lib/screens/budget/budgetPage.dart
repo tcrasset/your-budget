@@ -1,14 +1,19 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
 import 'package:your_budget/screens/about/aboutScreen.dart';
 import 'package:your_budget/screens/budget/budgetPageState.dart';
 import 'package:your_budget/screens/budget/components/buttonDial.dart';
-import 'package:your_budget/screens/budget/components/toBeBudgeted.dart';
-import 'package:your_budget/screens/budget/components/dateButtons.dart';
 import 'package:your_budget/screens/budget/components/categoriesList.dart';
-import 'package:provider/provider.dart';
+import 'package:your_budget/screens/budget/components/dateButtons.dart';
+import 'package:your_budget/screens/budget/components/toBeBudgeted.dart';
+import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
 
 class BudgetPage extends StatefulWidget {
   final String title;
@@ -25,7 +30,7 @@ class _BudgetPageState extends State<BudgetPage> {
   //TODO: Settings
   void handleSettings() {}
 
-  void handlePopUpMenuButtonSelected(String selectedItem) async {
+  Future<void> handlePopUpMenuButtonSelected(String selectedItem) async {
     if (selectedItem == "About") {
       await Navigator.push(
           context, MaterialPageRoute(builder: (context) => AboutPage()));
@@ -39,8 +44,9 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
-    BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context);
-    ButtonDial buttonDial = buttonDialState.showButtonDial
+    final BudgetPageState buttonDialState =
+        Provider.of<BudgetPageState>(context);
+    final ButtonDial buttonDial = buttonDialState.showButtonDial
         ? ButtonDial(MediaQuery.of(context).size.height * 0.3,
             MediaQuery.of(context).size.width * 0.6)
         : null;
@@ -50,21 +56,21 @@ class _BudgetPageState extends State<BudgetPage> {
         appBar: AppBar(
           title: Text(widget.title),
           backgroundColor: Constants.PRIMARY_COLOR,
-          leading: Icon(Constants.BUDGET_ICON),
+          leading: const Icon(Constants.BUDGET_ICON),
           actions: <Widget>[
-            Container(
+            SizedBox(
               width: 100,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(FontAwesomeIcons.checkSquare),
+                    icon: const Icon(FontAwesomeIcons.checkSquare),
                     onPressed: handleModifyCategories,
                   ),
                   PopupMenuButton(
                     onSelected: handlePopUpMenuButtonSelected,
                     itemBuilder: (context) => [
-                      PopupMenuItem<String>(
+                      const PopupMenuItem<String>(
                         value: "About",
                         child: Text("About"),
                       ),

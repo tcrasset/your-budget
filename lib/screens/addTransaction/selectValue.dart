@@ -1,28 +1,33 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/components/addDialog.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/payee.dart';
-import 'package:provider/provider.dart';
 
 class SelectValuePage extends StatefulWidget {
   final List listEntries;
   final String title;
-  SelectValuePage({@required this.title, @required this.listEntries});
+  const SelectValuePage({@required this.title, @required this.listEntries});
 
   @override
-  State createState() => new SelectValuePageState();
+  State createState() => SelectValuePageState();
 }
 
 class SelectValuePageState extends State<SelectValuePage> {
-  TextEditingController searchController = new TextEditingController();
+  TextEditingController searchController = TextEditingController();
   String filter;
   bool isPayee;
   bool isSubcategories;
 
   AppState appState;
   @override
-  initState() {
+  void initState() {
     super.initState();
     appState = Provider.of(context, listen: false);
     isPayee = widget.title == "Payees";
@@ -40,7 +45,7 @@ class SelectValuePageState extends State<SelectValuePage> {
     super.dispose();
   }
 
-  handlePopContext(dynamic item) {
+  void handlePopContext(dynamic item) {
     Navigator.pop(context, item);
   }
 
@@ -51,10 +56,10 @@ class SelectValuePageState extends State<SelectValuePage> {
     return null;
   }
 
-  void createNewPayee(
+  Future<void> createNewPayee(
       {@required BuildContext context, String defaultName}) async {
-    String hint = "Add new payee";
-    String payeeName = await addDialog(
+    const String hint = "Add new payee";
+    final String payeeName = await addDialog(
         context: context,
         title: hint,
         hintText: hint,
@@ -64,15 +69,15 @@ class SelectValuePageState extends State<SelectValuePage> {
 
     if (payeeName != null) {
       print("Created payee $payeeName");
-      Payee payee = await appState.addPayee(payeeName: payeeName);
+      final Payee payee = await appState.addPayee(payeeName: payeeName);
       handlePopContext(payee);
     }
   }
 
   List<dynamic> _getDuplicateEntries() {
-    var map = Map<String, int>(); // Mapping between name and id
+    final map = Map<String, int>(); // Mapping between name and id
 
-    Set<int> duplicateIDs = Set<int>();
+    final Set<int> duplicateIDs = Set<int>();
     widget.listEntries.forEach((element) {
       if (element is SubCategory) {
         if (!map.containsKey(element.name)) {
@@ -89,19 +94,19 @@ class SelectValuePageState extends State<SelectValuePage> {
   }
 
   List _addLabelForDuplicateEntries(List<dynamic> duplicateEntries) {
-    List modifiedListEntries = [];
-    List maincategories =
+    final List modifiedListEntries = [];
+    final List maincategories =
         appState.allCategories.whereType<MainCategory>().toList();
 
     widget.listEntries.forEach((entry) {
       if (entry is SubCategory) {
-        bool isDuplicate = duplicateEntries.singleWhere(
+        final bool isDuplicate = duplicateEntries.singleWhere(
                 (duplicate) => duplicate.id == entry.id,
                 orElse: () => null) !=
             null;
 
         if (isDuplicate) {
-          var modifiedEntry = _addCategoryName(entry, maincategories);
+          final modifiedEntry = _addCategoryName(entry, maincategories);
           modifiedListEntries.add(modifiedEntry);
         } else {
           modifiedListEntries.add(entry);
@@ -112,10 +117,11 @@ class SelectValuePageState extends State<SelectValuePage> {
   }
 
   dynamic _addCategoryName(var entry, List maincategories) {
-    var modifiedEntry = entry.copy();
-    MainCategory category = maincategories
-        .singleWhere((maincat) => maincat.id == entry.parentId, orElse: null);
-    modifiedEntry.name = modifiedEntry.name + ' (' + category.name + ')' ?? "";
+    final modifiedEntry = entry.copy();
+    final MainCategory category = maincategories.singleWhere(
+        (maincat) => maincat.id == entry.parentId,
+        orElse: () => null) as MainCategory;
+    modifiedEntry.name = modifiedEntry.name + ' (' + category.name + ")" ?? "";
     return modifiedEntry;
   }
 
@@ -124,16 +130,18 @@ class SelectValuePageState extends State<SelectValuePage> {
     List listEntries = [];
 
     if (isSubcategories) {
-      List<dynamic> duplicates = _getDuplicateEntries();
-      if (duplicates.isNotEmpty)
+      final List<dynamic> duplicates = _getDuplicateEntries();
+      if (duplicates.isNotEmpty) {
         listEntries = _addLabelForDuplicateEntries(duplicates);
-      else
+      } else {
         listEntries = widget.listEntries;
-    } else
+      }
+    } else {
       listEntries = widget.listEntries;
+    }
 
     if (isPayee) {
-      listEntries.sort((a, b) => a.name.compareTo(b.name));
+      listEntries.sort((a, b) => a.name.compareTo(b.name) as int);
     }
 
     return Scaffold(
@@ -143,11 +151,11 @@ class SelectValuePageState extends State<SelectValuePage> {
       ),
       body: Column(
         children: [
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(top: 20.0),
           ),
           TextField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Search something",
               icon: Icon(Icons.search),
             ),
@@ -157,7 +165,7 @@ class SelectValuePageState extends State<SelectValuePage> {
           // Add the "Create new payee" if we are on the payee page
           if (isPayee)
             ListTile(
-              title: Text(
+              title: const Text(
                 "Create new payee",
                 style: TextStyle(
                     fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
@@ -171,22 +179,24 @@ class SelectValuePageState extends State<SelectValuePage> {
             shrinkWrap: true,
             itemCount: listEntries.length,
             separatorBuilder: (BuildContext context, int index) =>
-                Divider(height: 1, color: Colors.black12),
+                const Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
-              var item = listEntries[index];
-              var itemToShow = item is Text ? item : Text(item.name);
-              var itemToFilter = item is Text ? item.data : item.name;
-              bool noFilter = filter == null || filter == "";
+              final item = listEntries[index];
+              final itemToShow =
+                  item is Text ? item : Text(item.name as String);
+              final itemToFilter = item is Text ? item.data : item.name;
+              final bool noFilter = filter == null || filter == "";
 
-              if (noFilter == true)
-                // The filter is empty, show everything
+              if (noFilter == true) {
                 return ListTile(
                     title: itemToShow, onTap: () => handlePopContext(item));
-              else if (noFilter == false) {
+              } else if (noFilter == false) {
                 // The filter is not empty, we filter by name
-                if (itemToFilter.toLowerCase().contains(filter.toLowerCase()))
+                if (itemToFilter.toLowerCase().contains(filter.toLowerCase()) ==
+                    true) {
                   return ListTile(
                       title: item, onTap: () => handlePopContext(item));
+                }
               }
               // There is an error
               return Container();

@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/creator.dart';
@@ -12,8 +15,8 @@ class MainCategoryCreator implements Creator<MainCategory> {
 
   @override
   Future<MainCategory> create() async {
-    MainCategoryModel model = MainCategoryModel(name: name);
-    int id = await queryContext.addCategory(model);
+    final MainCategoryModel model = MainCategoryModel(name: name);
+    final int id = await queryContext.addCategory(model);
     return MainCategory(id: id, name: name);
   }
 }

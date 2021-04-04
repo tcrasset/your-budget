@@ -1,8 +1,9 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
-showOverlayNotification(BuildContext context, String text) async {
-  OverlayState overlayState = Overlay.of(context);
-  OverlayEntry overlayEntry = OverlayEntry(
+Future<void> showOverlayNotification(BuildContext context, String text) async {
+  final OverlayState overlayState = Overlay.of(context);
+  final OverlayEntry overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
           left: 150,
           top: 500,
@@ -10,17 +11,18 @@ showOverlayNotification(BuildContext context, String text) async {
             width: 150.0,
             height: 50.0,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              borderRadius: const BorderRadius.all(Radius.circular(8.0)),
               color: Colors.grey[700].withOpacity(0.5),
             ),
             child: Center(
                 child: Text(text,
-                    style: TextStyle(fontSize: 12.0, color: Colors.white))),
+                    style:
+                        const TextStyle(fontSize: 12.0, color: Colors.white))),
           )));
 
   overlayState.insert(overlayEntry);
 
-  await Future.delayed(Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 2));
 
   overlayEntry.remove();
 }

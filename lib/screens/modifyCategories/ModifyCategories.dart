@@ -1,14 +1,18 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
-import 'package:provider/provider.dart';
 import 'package:your_budget/screens/deleteCategories/DeleteCategories.dart';
 import 'package:your_budget/screens/modifyCategories/components/modifyMainCategoryRow.dart';
 import 'package:your_budget/screens/modifyCategories/components/modifySubCategoryRow.dart';
-
-import '../../components/widgetViewClasses.dart';
 import '../../components/addDialog.dart';
+import '../../components/widgetViewClasses.dart';
 
 class ModifyCategories extends StatefulWidget {
   @override
@@ -16,11 +20,11 @@ class ModifyCategories extends StatefulWidget {
 }
 
 class _ModifyCategoriesController extends State<ModifyCategories> {
-  void handleAddCategory(BuildContext context) async {
-    AppState appState = Provider.of<AppState>(context, listen: false);
-    String hintText = "Add new category";
+  Future<void> handleAddCategory(BuildContext context) async {
+    final AppState appState = Provider.of<AppState>(context, listen: false);
+    const String hintText = "Add new category";
 
-    String categoryName = await addDialog(
+    final String categoryName = await addDialog(
         context: context,
         title: hintText,
         hintText: hintText,
@@ -32,31 +36,31 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
   @override
   Widget build(BuildContext context) => _ModifyCategoriesView(this);
 
-  handleDeleteCategory(BuildContext context) {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DeleteCategories()));
+  void handleDeleteCategory(BuildContext context) {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => const DeleteCategories()));
   }
 }
 
 class _ModifyCategoriesView
     extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
-  _ModifyCategoriesView(_ModifyCategoriesController state) : super(state);
+  const _ModifyCategoriesView(_ModifyCategoriesController state) : super(state);
 
   @override
   Widget build(BuildContext context) {
-    AppState appState = Provider.of<AppState>(context);
+    final AppState appState = Provider.of<AppState>(context);
 
-    List<Category> categories = appState.allCategories;
+    final List<Category> categories = appState.allCategories;
     if (categories.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
-          title: Text("Modify categories"),
+          title: const Text("Modify categories"),
           actions: <Widget>[
             IconButton(
-                icon: Icon(FontAwesomeIcons.trash),
+                icon: const Icon(FontAwesomeIcons.trash),
                 onPressed: () => state.handleDeleteCategory(context)),
             IconButton(
-                icon: Icon(FontAwesomeIcons.plus),
+                icon: const Icon(FontAwesomeIcons.plus),
                 onPressed: () => state.handleAddCategory(context)),
           ],
         ),
@@ -66,7 +70,7 @@ class _ModifyCategoriesView
             final item = categories[index];
             return (item is MainCategory)
                 ? ModifyMainCategoryRow(cat: item)
-                : ModifySubcategoryRow(subcat: item);
+                : ModifySubcategoryRow(subcat: item as SubCategory);
           },
         ),
       );

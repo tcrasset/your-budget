@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:your_budget/models/utils.dart';
 
 class UncheckedRow extends StatelessWidget {
@@ -29,8 +32,8 @@ class UncheckedRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         height: 70,
         child:
             Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -46,7 +49,7 @@ class UncheckedRow extends StatelessWidget {
                   softWrap: false,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Expanded(
@@ -59,7 +62,7 @@ class UncheckedRow extends StatelessWidget {
                   softWrap: false,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               Text("$amount €", style: amountStyle),
@@ -70,7 +73,7 @@ class UncheckedRow extends StatelessWidget {
             children: <Widget>[
               Text(getDatePhrase(date),
                   textAlign: TextAlign.right, style: dateStyle),
-              Text("$payeeName")
+              Text(payeeName)
             ],
           ),
         ]));

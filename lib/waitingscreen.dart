@@ -1,5 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 class WaitingScreen extends StatelessWidget {
@@ -11,10 +14,10 @@ class WaitingScreen extends StatelessWidget {
       home: Scaffold(
         body: Container(
             color: Constants.PRIMARY_COLOR,
-            child: Center(
+            child: const Center(
                 child: CircularProgressIndicator(
               valueColor:
-                  new AlwaysStoppedAnimation<Color>(Constants.SECONDARY_COLOR),
+                  AlwaysStoppedAnimation<Color>(Constants.SECONDARY_COLOR),
             ))),
       ),
     );

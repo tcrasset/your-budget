@@ -1,12 +1,14 @@
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
-
 import 'account.dart';
 
 class AccountList implements ObjectList<Account> {
   final Queries queryContext;
-  List<Account> _accounts = [];
+  final List<Account> _accounts;
   Account _mostRecentAccount;
 
   Future<Account> get mostRecentAccount async {
@@ -17,17 +19,19 @@ class AccountList implements ObjectList<Account> {
     return _mostRecentAccount ?? _accounts[0];
   }
 
-  set mostRecentAccount(id) {
+  set mostRecentAccount(int id) {
     queryContext.updateMostRecentAccountUsed(id);
     _mostRecentAccount = _getById(id);
   }
 
   List<Account> get accounts => _accounts;
+
   AccountList(
     this.queryContext,
     this._accounts,
   );
 
+  @override
   void add(Account account) {
     _accounts.add(account);
   }

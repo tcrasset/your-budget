@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
 
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 /// Class that defines a MoneyTransaction between the user and another entity.
@@ -44,14 +46,14 @@ class MoneyTransaction {
   /// Constructor building a [MoneyTransaction] from a [json] representation taken
   /// from a database.
   MoneyTransaction.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.MONEYTRANSACTION_ID];
-    this.subcatID = json[DatabaseConstants.SUBCAT_ID_OUTSIDE];
-    this.payeeID = json[DatabaseConstants.PAYEE_ID_OUTSIDE];
-    this.accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE];
-    this.amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT];
-    this.memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO];
-    this.date = DateTime.fromMillisecondsSinceEpoch(
-        json[DatabaseConstants.MONEYTRANSACTION_DATE]);
+    id = json[DatabaseConstants.MONEYTRANSACTION_ID] as int;
+    subcatID = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int;
+    payeeID = json[DatabaseConstants.PAYEE_ID_OUTSIDE] as int;
+    accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE] as int;
+    amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT] as double;
+    memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO] as String;
+    date = DateTime.fromMillisecondsSinceEpoch(
+        json[DatabaseConstants.MONEYTRANSACTION_DATE] as int);
   }
 
   @override
@@ -80,7 +82,6 @@ class MoneyTransaction {
     );
   }
 }
-
 
 class MoneyTransactionModel {
   final int subcatID;

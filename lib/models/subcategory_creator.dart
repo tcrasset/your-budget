@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/creator.dart';
@@ -21,14 +24,14 @@ class SubCategoryCreator implements Creator<SubCategory> {
 
   @override
   Future<SubCategory> create() async {
-    SubCategoryModel model = SubCategoryModel(
+    final SubCategoryModel model = SubCategoryModel(
       name: name,
       parentId: parentId,
       budgeted: budgeted,
       available: available,
     );
 
-    int id = await queryContext.addSubcategory(model);
+    final int id = await queryContext.addSubcategory(model);
     return SubCategory(
       id: id,
       parentId: parentId,

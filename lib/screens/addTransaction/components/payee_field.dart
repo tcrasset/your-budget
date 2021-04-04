@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../components/rowContainer.dart';
 
 class PayeeField extends StatelessWidget {
@@ -18,10 +20,10 @@ class PayeeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         // Payees gesture detectory leading to 'Payees' SelectValuePage
-        onTap: state.handleOnTapPayee,
+        onTap: state.handleOnTapPayee as Function(),
         child: rowContainer(
             "Payee",
-            Text(state.payeeFieldName,
+            Text(state.payeeFieldName as String,
                 style: (state.payeeFieldName == state.defaultPayeeFieldName)
                     ? defaultChildTextStyle
                     : selectedChildTextStyle)));

@@ -1,13 +1,16 @@
+// Package imports:
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+
+// Project imports:
+import 'package:your_budget/models/budget_value_creator.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/queries.dart';
-import 'package:your_budget/models/budget_value_creator.dart';
 
 class MockQueries extends Mock implements Queries {}
 
-main() {
+void main() {
   Queries mockQueries;
   int tSubcategoryId;
   double tBudgeted;
@@ -46,13 +49,13 @@ main() {
       'verify that create() creates a BudgetValue and makes a call to the database',
       () async {
     //!Arrange
-    int tId = 25;
+    const int tId = 25;
 
     when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())))
         .thenAnswer((_) async => tId);
 
     //!Act
-    BudgetValue budgetValue = await creator.create();
+    final BudgetValue budgetValue = await creator.create();
 
     //!Assert
     verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())));

@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
@@ -43,15 +48,15 @@ class _CategoriesListState extends State<CategoriesList> {
 }
 
 List<Widget> _buildList(AppState appState) {
-  List<Category> categories = appState.allCategories;
-  List<Widget> widgetList = [];
+  final List<Category> categories = appState.allCategories;
+  final List<Widget> widgetList = [];
 
-  Divider divider = Divider(height: 1, color: Colors.black12);
+  const Divider divider = Divider(height: 1, color: Colors.black12);
 
   for (final Category category in categories) {
-    var categoryWidget = (category is MainCategory)
+    final categoryWidget = (category is MainCategory)
         ? MainCategoryRow(cat: category)
-        : SubcategoryRow(subcat: category);
+        : SubcategoryRow(subcat: category as SubCategory);
     widgetList.add(categoryWidget);
     widgetList.add(divider);
   }

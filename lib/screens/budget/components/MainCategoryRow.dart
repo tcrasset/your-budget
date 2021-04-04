@@ -1,4 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 
@@ -9,8 +12,8 @@ class MainCategoryRow extends StatelessWidget {
 
   final mainCategoryDivider = SizedBox(
     height: 8.0,
-    child: new Container(
-      color: new Color(0xFFE8E8E8),
+    child: Container(
+      color: const Color(0xFFE8E8E8),
     ),
   );
 
@@ -21,8 +24,8 @@ class MainCategoryRow extends StatelessWidget {
         // Divider separating MainCategories
         mainCategoryDivider,
         Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          margin: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: <Widget>[
               Expanded(
@@ -35,10 +38,10 @@ class MainCategoryRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Budgeted',
+                    const Text('Budgeted',
                         textAlign: TextAlign.right,
                         style: Constants.CATEGORY_TEXT_STYLE),
-                    Text('${cat.budgeted.toStringAsFixed(2)}',
+                    Text(cat.budgeted.toStringAsFixed(2),
                         textAlign: TextAlign.right,
                         style: Constants.CATEGORY_TEXT_STYLE)
                   ],
@@ -49,10 +52,10 @@ class MainCategoryRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Available',
+                    const Text('Available',
                         textAlign: TextAlign.right,
                         style: Constants.CATEGORY_TEXT_STYLE),
-                    Text('${cat.available.toStringAsFixed(2)}',
+                    Text(cat.available.toStringAsFixed(2),
                         textAlign: TextAlign.right,
                         style: Constants.CATEGORY_TEXT_STYLE)
                   ],

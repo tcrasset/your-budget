@@ -1,12 +1,15 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+
+// Project imports:
 import 'package:your_budget/models/payee.dart';
-import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/payee_list.dart';
+import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}
 
-main() {
+void main() {
   Queries mockQueries;
   Payee tPayee;
   Payee tPayee2;
@@ -20,7 +23,7 @@ main() {
   test('when creating a PayeeList, ensure the payees are passed in', () {
     //!Arrange
     //!Act
-    PayeeList payeeList = PayeeList(mockQueries, [tPayee]);
+    final PayeeList payeeList = PayeeList(mockQueries, [tPayee]);
     //!Assert
     expect(payeeList.payees, [tPayee]);
   });
@@ -28,7 +31,7 @@ main() {
   test('when add() is called, add a Payee', () {
     //!Arrange
     //!Act
-    PayeeList payeeList = PayeeList(mockQueries, [tPayee]);
+    final PayeeList payeeList = PayeeList(mockQueries, [tPayee]);
     payeeList.add(tPayee2);
     //!Assert
     expect(payeeList.payees, [tPayee, tPayee2]);

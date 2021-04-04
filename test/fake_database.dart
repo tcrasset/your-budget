@@ -1,17 +1,22 @@
+// Dart imports:
+import 'dart:math';
+
+// Package imports:
 import 'package:jiffy/jiffy.dart';
 import 'package:meta/meta.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
+
+// Project imports:
 import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/payee.dart';
-import 'package:your_budget/models/account.dart';
-import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/money_transaction.dart';
+import 'package:your_budget/models/payee.dart';
 import 'package:your_budget/models/queries.dart';
 import 'package:your_budget/models/utils.dart';
-import 'dart:math';
 
 class FakeDatabase {
   static const TEST_ACCOUNT_ID_1 = 77;
@@ -90,18 +95,18 @@ class FakeDatabase {
     when(mockQueries.getSubCategoriesJoined(
             argThat(isA<int>()), argThat(isA<int>())))
         .thenAnswer((invocation) async {
-      int year = invocation.positionalArguments[0];
-      int month = invocation.positionalArguments[1];
+      final int year = invocation.positionalArguments[0] as int;
+      final int month = invocation.positionalArguments[1] as int;
 
-      List<BudgetValue> budgetValuesOfMonth = budgetValues
+      final List<BudgetValue> budgetValuesOfMonth = budgetValues
           .where((bv) => bv.year == year && bv.month == month)
           .toList();
-      List<SubCategory> joinedSubcategories = [];
+      final List<SubCategory> joinedSubcategories = [];
 
       for (final SubCategory subcat in subCategories) {
-        BudgetValue budgetValue = budgetValuesOfMonth
+        final BudgetValue budgetValue = budgetValuesOfMonth
             .singleWhere((bv) => bv.subcategoryId == subcat.id);
-        SubCategory subcatJoined = subcat.copy();
+        final SubCategory subcatJoined = subcat.copy();
         subcatJoined.budgeted = budgetValue.budgeted;
         subcatJoined.available = budgetValue.available;
         joinedSubcategories.add(subcatJoined);
@@ -149,10 +154,10 @@ class FakeDatabase {
   }
 
   List<SubCategory> _buildSubcategories() {
-    List<SubCategory> subcategories = [];
+    final List<SubCategory> subcategories = [];
 
     for (int i = 0; i < subcategoryNames.length; i++) {
-      SubCategory subcat = SubCategory(
+      final SubCategory subcat = SubCategory(
           id: i + 1,
           parentId: 1,
           name: subcategoryNames[i],
@@ -168,18 +173,18 @@ class FakeDatabase {
     //TODO: Implement getSubcategoriesJoined()
 
     DateTime currentDate = startingBudgetDate;
-    DateTime maxBudgetDate = getMaxBudgetDate();
-    List<Budget> budgets = [];
+    final DateTime maxBudgetDate = getMaxBudgetDate();
+    final List<Budget> budgets = [];
 
     do {
-      List<SubCategory> mergedSubcategories = [];
+      final List<SubCategory> mergedSubcategories = [];
       for (final SubCategory subcat in subcategories) {
-        BudgetValue budgetvalue = budgetvalues.singleWhere((bv) =>
+        final BudgetValue budgetvalue = budgetvalues.singleWhere((bv) =>
             bv.subcategoryId == subcat.id &&
             bv.month == currentDate.month &&
             bv.year == currentDate.year);
 
-        SubCategory mergedSubcat = SubCategory(
+        final SubCategory mergedSubcat = SubCategory(
             id: subcat.id,
             parentId: subcat.parentId,
             name: subcat.name,
@@ -189,7 +194,7 @@ class FakeDatabase {
         mergedSubcategories.add(mergedSubcat);
       }
 
-      Budget budget = Budget(maincategories, mergedSubcategories,
+      final Budget budget = Budget(maincategories, mergedSubcategories,
           currentDate.month, currentDate.year);
       budgets.add(budget);
       currentDate = Jiffy(currentDate).add(months: 1);
@@ -199,7 +204,7 @@ class FakeDatabase {
   }
 
   List<MoneyTransaction> _buildMoneyTransactions() {
-    MoneyTransaction startingTransaction1 = MoneyTransaction(
+    final MoneyTransaction startingTransaction1 = MoneyTransaction(
         accountID: TEST_ACCOUNT_ID_1,
         amount: 1000,
         date: startingBudgetDate,
@@ -208,7 +213,7 @@ class FakeDatabase {
         subcatID: TEST_SUBCATEGORY_ID,
         memo: "");
 
-    MoneyTransaction startingTransaction2 = MoneyTransaction(
+    final MoneyTransaction startingTransaction2 = MoneyTransaction(
         accountID: TEST_ACCOUNT_ID_2,
         amount: 500,
         date: startingBudgetDate,
@@ -240,16 +245,16 @@ class FakeDatabase {
     /// for every month of the budget, from the current Date to [MAX_NB_MONTHS_AHEAD]
     /// months in the future.
 
-    List<BudgetValue> budgetValues = [];
+    final List<BudgetValue> budgetValues = [];
     final DateTime startingDate = getDateFromMonthStart(startingBudgetDate);
     int id = 1;
-    Random random = new Random();
+    final Random random = new Random();
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
+      final DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
       for (int subcatId = 1; subcatId <= subcategoryNames.length; subcatId++) {
-        BudgetValue budgetValue = BudgetValue(
+        final BudgetValue budgetValue = BudgetValue(
           id: id,
           subcategoryId: subcatId,
           budgeted: random.nextDouble() * 100,

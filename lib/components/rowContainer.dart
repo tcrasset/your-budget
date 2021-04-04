@@ -1,16 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
 Container rowContainer(String name, Widget childWidget) {
   return Container(
-      padding: EdgeInsets.symmetric(vertical: 20),
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(children: [
         Row(
           children: <Widget>[
             Expanded(
               child: Text(name,
                   textAlign: TextAlign.left,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 16.0)),
@@ -20,7 +21,10 @@ Container rowContainer(String name, Widget childWidget) {
               child: Row(
                 children: <Widget>[
                   Expanded(child: childWidget),
-                  name == "Date" ? Icon(Icons.date_range) : Icon(Icons.edit),
+                  if (name == "Date")
+                    const Icon(Icons.date_range)
+                  else
+                    const Icon(Icons.edit),
                 ],
               ),
             ),

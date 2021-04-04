@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:test/test.dart';
+
+// Project imports:
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/categories.dart';
 
@@ -10,7 +13,7 @@ void main() {
         id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
 
-    double newValue = 9.99;
+    const double newValue = 9.99;
     subcatTest.available = newValue;
     expect(myBudget.subcategories[0].available, newValue);
   });
@@ -64,11 +67,11 @@ void main() {
     myBudget.updateSubCategory(subcatTest);
 
     // Check that the modification were made in the subcategory
-    SubCategory myBudgetSubcat = myBudget.subcategories[0];
+    final SubCategory myBudgetSubcat = myBudget.subcategories[0];
     expect(myBudgetSubcat.hasSameValues(subcatTest), true);
 
     //Check that the modifications were made in the MainCategory
-    MainCategory myBudgetCat = myBudget.maincategories[0];
+    final MainCategory myBudgetCat = myBudget.maincategories[0];
     expect(myBudgetCat.available, subcatTest.available);
   });
 
@@ -84,7 +87,7 @@ void main() {
     myBudget.updateMaincategory(newCat);
 
     // Check that the modification were made in the maincategory
-    MainCategory budgetCat = myBudget.maincategories[0];
+    final MainCategory budgetCat = myBudget.maincategories[0];
     expect(budgetCat.hasSameValues(newCat), true);
   });
 
@@ -146,7 +149,7 @@ void main() {
     allcategoriesTest.addAll(
         [catTest1, subcatTest_1_1, subcatTest_1_2, catTest2, subcatTest_2_1]);
 
-    List<dynamic> allcategories = myBudget.allcategories;
+    final List<dynamic> allcategories = myBudget.allcategories;
     for (int i = 0; i < allcategories.length; i++) {
       expect(allcategories[i].hasSameValues(allcategoriesTest[i]), true);
     }
@@ -172,7 +175,7 @@ void main() {
     final Budget myBudget = Budget([catTest1, catTest2],
         [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
 
-    double totalBudgetedTest = catTest1.budgeted + catTest2.budgeted;
+    final double totalBudgetedTest = catTest1.budgeted + catTest2.budgeted;
 
     expect(myBudget.totalBudgeted, totalBudgetedTest);
   });
@@ -213,8 +216,8 @@ void main() {
   test('verify that updateSubCategoryName updates the names of the subcategory',
       () {
     //!Arrange
-    int tSubcatId = 3;
-    String tNewName = "Name changed";
+    const int tSubcatId = 3;
+    const String tNewName = "Name changed";
     final SubCategory subcatTest = SubCategory(
       id: tSubcatId,
       parentId: 1,
@@ -229,7 +232,8 @@ void main() {
     myBudget.updateSubCategoryName(id: tSubcatId, newName: tNewName);
 
     //!Assert
-    SubCategory subcat = myBudget.subcategories.singleWhere((subcat)  => subcat.id == tSubcatId);
+    final SubCategory subcat =
+        myBudget.subcategories.singleWhere((subcat) => subcat.id == tSubcatId);
     expect(subcat.name, tNewName);
   });
 }

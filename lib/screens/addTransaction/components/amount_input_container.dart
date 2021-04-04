@@ -1,6 +1,11 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+// Package imports:
+import 'package:intl/intl.dart';
+
+// Project imports:
 import '../../../models/constants.dart';
 import 'CurrencyInputFormatter.dart';
 
@@ -15,42 +20,42 @@ class AmountInputContainer extends StatelessWidget {
   /// The currency format is handled by [CurrencyInputFormatter].
   /// [onTap()] resets the value to a chosen default value.
 
-  AmountInputContainer({
+  const AmountInputContainer({
     Key key,
     @required this.state,
   }) : super(key: key);
 
   final state; //_AddTransactionPageController
 
-  final TextStyle _positiveAmountTextStyle =
-      TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle =
-      TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
-
   @override
   Widget build(BuildContext context) {
+    const TextStyle _positiveAmountTextStyle =
+        TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
+    const TextStyle _negativeAmountTextStyle =
+        TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
+
     return Container(
         alignment: Alignment.centerRight,
-        padding: EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             hintText: "",
             helperText: "",
             enabledBorder: InputBorder.none,
           ),
           keyboardType: TextInputType.number,
-          controller: state.amountController,
+          controller: state.amountController as TextEditingController,
           inputFormatters: [
-            LengthLimitingTextInputFormatter(state.amountLength),
-            CurrencyInputFormatter(
-                state.currencyNumberFormat, state.isPositive),
+            LengthLimitingTextInputFormatter(state.amountLength as int),
+            CurrencyInputFormatter(state.currencyNumberFormat as NumberFormat,
+                state.isPositive as bool),
           ],
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
-          style: state.isPositive
+          style: state.isPositive as bool
               ? _positiveAmountTextStyle
               : _negativeAmountTextStyle,
-          validator: (value) => state.handleAmountValidate(value),
+          validator: (value) => state.handleAmountValidate(value) as String,
           // onSaved: state.han dleAmountOnSave(),
           onTap: () => state.handleAmountOnTap(),
         ));

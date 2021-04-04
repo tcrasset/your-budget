@@ -1,19 +1,22 @@
+// Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:your_budget/models/categories.dart';
+
+// Project imports:
 import 'package:your_budget/models/budget_value_list.dart';
+import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}
 
-main() {
+void main() {
   Queries mockQueries;
   BudgetValue tBudgetValue;
   BudgetValueList budgetValuesList;
-  int testId_1 = 25;
-  int tSubcatId = 10;
-  int tMonth = 1;
-  int tYear = 2021;
+  const int testId_1 = 25;
+  const int tSubcatId = 10;
+  const int tMonth = 1;
+  const int tYear = 2021;
   setUp(() async {
     mockQueries = MockQueries();
     tBudgetValue = BudgetValue(
@@ -47,7 +50,7 @@ main() {
       'when removeBySubcatId() is called, remove all budgetvalues by subcategory id',
       () {
     //!Arrange
-    List<BudgetValue> toRemove = budgetValuesList.budgetvalues
+    final List<BudgetValue> toRemove = budgetValuesList.budgetvalues
         .where((bv) => bv.subcategoryId == tSubcatId)
         .toList();
     //!Act
@@ -60,11 +63,11 @@ main() {
   test(
       'when getByBudget() is called, return the budgetvalue corresponding' +
           'to the subcategory at the current month and year', () {
-    int tYear = 2022;
-    int tMonth = 12;
-    int tSubcatId = 12;
-    DateTime tDate = DateTime(tYear, tMonth);
-    BudgetValue otherBudgetValue = tBudgetValue.copyWith(
+    const int tYear = 2022;
+    const int tMonth = 12;
+    const int tSubcatId = 12;
+    final DateTime tDate = DateTime(tYear, tMonth);
+    final BudgetValue otherBudgetValue = tBudgetValue.copyWith(
       subcategoryId: tSubcatId,
       month: tMonth,
       year: tYear,
@@ -72,7 +75,8 @@ main() {
     //!Arrange
     budgetValuesList.add(otherBudgetValue);
     //!Act
-    BudgetValue budgetvalues = budgetValuesList.getByBudget(tDate, tSubcatId);
+    final BudgetValue budgetvalues =
+        budgetValuesList.getByBudget(tDate, tSubcatId);
 
     //!Assert
     expect(budgetvalues, otherBudgetValue);
@@ -82,13 +86,13 @@ main() {
       'when getAllBySubcatId() is called, return a list of all the transactions' +
           'with the same subcategory id', () {
     //!Arrange
-    int tSubcatIdOther = 2;
-    BudgetValue otherBudgetValue = tBudgetValue.copyWith(
+    const int tSubcatIdOther = 2;
+    final BudgetValue otherBudgetValue = tBudgetValue.copyWith(
       subcategoryId: tSubcatIdOther,
     );
     budgetValuesList.add(otherBudgetValue);
     //!Act
-    List<BudgetValue> budgetvalues =
+    final List<BudgetValue> budgetvalues =
         budgetValuesList.getAllBySubcatId(tSubcatIdOther);
 
     //!Assert
@@ -99,9 +103,9 @@ main() {
       'verify that updateBudgetValue() update the available and budgeted fields',
       () {
     //!Arrange
-    double tBudgeted = 56.54;
-    double tAvailable = 87.21;
-    DateTime tDate = DateTime(tYear, tMonth);
+    const double tBudgeted = 56.54;
+    const double tAvailable = 87.21;
+    final DateTime tDate = DateTime(tYear, tMonth);
     //!Act
 
     budgetValuesList.updateBudgetValue(
@@ -113,7 +117,8 @@ main() {
     //!Assert
     verify(mockQueries.updateBudgetValue(argThat(isA<BudgetValue>())));
 
-    BudgetValue budgetValue = budgetValuesList.getByBudget(tDate, tSubcatId);
+    final BudgetValue budgetValue =
+        budgetValuesList.getByBudget(tDate, tSubcatId);
     expect(budgetValue.budgeted, tBudgeted);
     expect(budgetValue.available, tAvailable);
   });

@@ -1,6 +1,10 @@
+// Dart imports:
 import 'dart:collection';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/money_transaction.dart';
@@ -11,7 +15,7 @@ class TransactionList extends StatefulWidget {
   final AppState appState;
   final bool isEditable;
 
-  TransactionList(this.account, this.appState, this.isEditable);
+  const TransactionList(this.account, this.appState, this.isEditable);
 
   @override
   _TransactionListState createState() => _TransactionListState();
@@ -28,11 +32,10 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    List<MoneyTransaction> transactionsOfAccount = _getMoneyTransactions(
-        widget.appState.transactions, this.widget.account.id);
+    final List<MoneyTransaction> transactionsOfAccount =
+        _getMoneyTransactions(widget.appState.transactions, widget.account.id);
 
-    return Container(
-        child: Scrollbar(
+    return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
       child: ListView.separated(
@@ -40,14 +43,14 @@ class _TransactionListState extends State<TransactionList> {
         shrinkWrap: true,
         itemCount: transactionsOfAccount.length,
         separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 1, color: Colors.black12),
+            const Divider(height: 1, color: Colors.black12),
         itemBuilder: (BuildContext context, int index) {
           return Card(
               child: TransactionRow(transactionsOfAccount[index],
                   widget.appState.allCategories, widget.isEditable));
         },
       ),
-    ));
+    );
   }
 }
 
@@ -55,22 +58,22 @@ List<MoneyTransaction> _getMoneyTransactions(
     UnmodifiableListView<MoneyTransaction> transactions, int currentAccountId) {
   /// Here, [currentAccountId] is the outgoingAccount.
 
-  List<MoneyTransaction> transactionsOfAccount = [];
-  for (var transaction in transactions) {
-    bool isAccountPayee = transaction.payeeID < 0;
+  final List<MoneyTransaction> transactionsOfAccount = [];
+  for (final transaction in transactions) {
+    final bool isAccountPayee = transaction.payeeID < 0;
 
-    bool currentAccountIsPayeeAccount =
+    final bool currentAccountIsPayeeAccount =
         -transaction.payeeID == currentAccountId;
-    bool currentAccountIsStandardAccount =
+    final bool currentAccountIsStandardAccount =
         transaction.accountID == currentAccountId;
 
     if ((currentAccountIsStandardAccount && !isAccountPayee) ||
         (currentAccountIsPayeeAccount && isAccountPayee)) {
       transactionsOfAccount.add(transaction);
-    } else if ((currentAccountIsStandardAccount && isAccountPayee)) {
+    } else if (currentAccountIsStandardAccount && isAccountPayee) {
       // The transaction is reversed.i.e. removes money from outAccount(accountId)
       // into inAccount(payeeId)
-      MoneyTransaction negativeAmountTransaction = transaction.copyWith();
+      final MoneyTransaction negativeAmountTransaction = transaction.copyWith();
       negativeAmountTransaction.amount *= -1;
       transactionsOfAccount.add(negativeAmountTransaction);
     }

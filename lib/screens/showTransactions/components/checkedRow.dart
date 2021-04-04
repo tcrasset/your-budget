@@ -1,7 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
-import 'package:provider/provider.dart';
 
 class CheckedRow extends StatefulWidget {
   final String subcategoryName;
@@ -38,7 +43,7 @@ class _CheckedRowState extends State<CheckedRow> {
   bool isChecked = false;
 
   void handleCheckboxOnChanged(bool value) {
-    ShowTransactionsState showTransactionsState =
+    final ShowTransactionsState showTransactionsState =
         Provider.of<ShowTransactionsState>(context, listen: false);
     showTransactionsState.updateIsSelected(widget.transactionId);
     setState(() {
@@ -48,7 +53,7 @@ class _CheckedRowState extends State<CheckedRow> {
 
   @override
   void initState() {
-    ShowTransactionsState showTransactionsState =
+    final ShowTransactionsState showTransactionsState =
         Provider.of<ShowTransactionsState>(context, listen: false);
 
     showTransactionsState.setTransaction(widget.transactionId);
@@ -58,8 +63,8 @@ class _CheckedRowState extends State<CheckedRow> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.symmetric(vertical: 10),
-        margin: EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 10),
         height: 50,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -75,7 +80,7 @@ class _CheckedRowState extends State<CheckedRow> {
                     textAlign: TextAlign.right,
                     style: widget.dateStyle,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -88,7 +93,7 @@ class _CheckedRowState extends State<CheckedRow> {
                       softWrap: false,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text("${widget.amount} €", style: widget.amountStyle),

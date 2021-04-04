@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../components/rowContainer.dart';
 import '../../../models/account.dart';
 
@@ -30,7 +32,7 @@ class SubcategoryField extends StatelessWidget {
             Text(
                 state.payee is Account
                     ? "No subcategory needed"
-                    : state.subcategoryFieldName,
+                    : state.subcategoryFieldName as String,
                 style: (state.subcategoryFieldName ==
                             state.defaultSubcategoryFieldName ||
                         state.payee is Account)

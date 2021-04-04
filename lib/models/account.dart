@@ -1,5 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
 
+// Project imports:
 import 'package:your_budget/models/constants.dart';
 
 class AccountModel {
@@ -11,7 +13,6 @@ class AccountModel {
     @required this.balance,
   });
 }
-
 
 /// Class representing the physical account where the money is stored.
 class Account {
@@ -31,15 +32,15 @@ class Account {
   /// Constructor building an [Account] from a [json] representation taken
   /// from a database.
   Account.fromJson(Map<String, dynamic> json) {
-    this.id = json[DatabaseConstants.ACCOUNT_ID];
-    this.name = json[DatabaseConstants.ACCOUNT_NAME];
-    this.balance = json[DatabaseConstants.ACCOUNT_BALANCE];
+    id = json[DatabaseConstants.ACCOUNT_ID] as int;
+    name = json[DatabaseConstants.ACCOUNT_NAME] as String;
+    balance = json[DatabaseConstants.ACCOUNT_BALANCE] as double;
   }
 
   bool hasSameValues(Account account) {
-    return account.id == this.id &&
-        account.name == this.name &&
-        account.balance == this.balance;
+    return account.id == id &&
+        account.name == name &&
+        account.balance == balance;
   }
 
   @override

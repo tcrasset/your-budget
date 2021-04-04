@@ -1,0 +1,14 @@
+include: package:lint/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.gr.dart"
+    - "**/*.freezed.dart"
+
+linter:
+  rules:
+    prefer_const_literals_to_create_immutables: false
+    sort_unnamed_constructors_first: false
+    constant_identifier_names: false
+    file_names: false

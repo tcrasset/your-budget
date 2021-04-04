@@ -1,5 +1,7 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 
+// Project imports:
 import '../../../components/rowContainer.dart';
 
 class AccountField extends StatelessWidget {
@@ -21,7 +23,7 @@ class AccountField extends StatelessWidget {
         onTap: () => state.handleOnTapAccount(),
         child: rowContainer(
             "Account",
-            Text(state.accountFieldName,
+            Text(state.accountFieldName as String,
                 style: (state.accountFieldName == state.defaultAccountFieldName)
                     ? defaultChildTextStyle
                     : selectedChildTextStyle)));

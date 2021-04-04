@@ -1,18 +1,23 @@
+// Dart imports:
 import 'dart:async';
 
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+// Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
+// Project imports:
 import '../../appState.dart';
 import '../../components/widgetViewClasses.dart';
+import '../../models/account.dart';
 import '../../models/categories.dart';
 import '../../models/constants.dart';
-import '../../models/payee.dart';
-import '../../models/account.dart';
 import '../../models/money_transaction.dart';
+import '../../models/payee.dart';
 import '../../models/utils.dart';
 import 'components/CurrencyInputFormatter.dart';
 import 'components/account_field.dart';
@@ -37,7 +42,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController memoController = new TextEditingController();
+  final TextEditingController memoController = TextEditingController();
 
   /// Default names will have a different style than selected ones
   final String defaultPayeeFieldName = "Select payee";
@@ -124,25 +129,25 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [Payee] object, it pushes to the route selecting
   /// a [Payee], whose value is stored in [payee] and whose
   /// name is stored in [payeeFieldName].
-  handleOnTapPayee() async {
-    List payeesAndAccounts = [];
+  Future<void> handleOnTapPayee() async {
+    final List payeesAndAccounts = [];
     payeesAndAccounts.addAll(appState.payees);
     payeesAndAccounts.addAll(appState.accounts);
 
-    var returnElement = await Navigator.push(
+    final returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) =>
               SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     );
-    print(returnElement);
+    // print(returnElement);
     if (returnElement != null) _setPayee(returnElement);
   }
 
   void _setPayee(returnElement) {
     setState(() {
       payee = returnElement;
-      payeeFieldName = returnElement.name;
+      payeeFieldName = returnElement.name as String;
     });
   }
 
@@ -150,8 +155,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [Account] object, it pushes to the route selecting
   /// a  [Account], whose value is stored in [_account] and whose
   /// name is stored in [accountFieldName].
-  handleOnTapAccount() async {
-    var returnElement = await Navigator.push(
+  Future<void> handleOnTapAccount() async {
+    final Account returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
           builder: (context) => SelectValuePage(
@@ -161,7 +166,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (returnElement != null) _setAccount(returnElement);
   }
 
-  void _setAccount(returnElement) {
+  void _setAccount(Account returnElement) {
     setState(() {
       _account = returnElement;
       accountFieldName = returnElement.name;
@@ -172,8 +177,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// to the [SubCategory] object, it pushes to the route selecting
   /// a [SubCategory], whose value is stored in [_subcategory] and whose
   /// name is stored in [subcategoryFieldName].
-  handleOnTapCategory() async {
-    var returnElement = await Navigator.push(
+  Future<void> handleOnTapCategory() async {
+    final returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) {
@@ -188,21 +193,21 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (returnElement != null) _setSubcategory(returnElement);
   }
 
-  void _setSubcategory(returnElement) {
+  void _setSubcategory(dynamic returnElement) {
     setState(() {
       _subcategory = returnElement;
       subcategoryFieldName = returnElement is SubCategory
           ? returnElement.name
-          : returnElement.data;
+          : returnElement.data as String;
     });
   }
 
   List _combineSubcategoriesAndToBeBudgeted() {
-    List subcatAndToBeBudgeted = [];
+    final List subcatAndToBeBudgeted = [];
     subcategories.forEach((subcat) {
       subcatAndToBeBudgeted.add(subcat);
     });
-    subcatAndToBeBudgeted.add(Text("To be budgeted"));
+    subcatAndToBeBudgeted.add(const Text("To be budgeted"));
     return subcatAndToBeBudgeted;
   }
 
@@ -211,21 +216,24 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// Defaults to the current day-year-month.
   /// The [DateTime] gets stored in [_date], and the string
   /// value of that date is saved in [dateFieldName].
-  Future<Null> handleOnTapDate(BuildContext context) async {
-    DateTime picked = await _pickDate(context);
+  Future<void> handleOnTapDate(BuildContext context) async {
+    final DateTime picked = await _pickDate(context);
     _setDate(picked);
   }
 
   void _setDate(DateTime picked) {
-    if (picked != null && picked != _date) picked = addExactEntryTime(picked);
+    DateTime pickedDate = picked;
+    if (picked != null && picked != _date) {
+      pickedDate = addExactEntryTime(picked);
+    }
     setState(() {
-      _date = picked;
-      dateFieldName = getDateString(picked);
+      _date = pickedDate;
+      dateFieldName = getDateString(pickedDate);
     });
   }
 
   Future<DateTime> _pickDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
+    final DateTime picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(_date),
         firstDate: appState.startingBudgetDate,
@@ -239,17 +247,17 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   /// with the information entered, add the transaction and
   /// reset the whole [AddTransactionPage] to the default values
   /// and display a notification.
-  void addMoneyTransaction(BuildContext context) async {
+  Future<void> addMoneyTransaction(BuildContext context) async {
     _formKey.currentState.save();
     if (_formKey.currentState.validate()) {
-      bool isNegativeTransactionsIntoToBeBudgeted =
+      final bool isNegativeTransactionsIntoToBeBudgeted =
           !isPositive && subcategoryFieldName == "To be budgeted";
-      bool isPositiveTranasctionsIntoSubcategory = isPositive &&
-          !(payee is Account) &&
+      final bool isPositiveTranasctionsIntoSubcategory = isPositive &&
+          (payee is! Account) &&
           subcategoryFieldName != "To be budgeted";
 
       if (isNegativeTransactionsIntoToBeBudgeted) {
-        SnackBar snackbar = SnackBar(
+        const SnackBar snackbar = SnackBar(
           content: Text(
             "Can't have negative transaction on to be budgeted",
             style: TextStyle(color: Colors.white),
@@ -258,7 +266,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         );
         Scaffold.of(context).showSnackBar(snackbar);
       } else if (isPositiveTranasctionsIntoSubcategory) {
-        SnackBar snackbar = SnackBar(
+        const SnackBar snackbar = SnackBar(
           content: Text(
             "Positive transactions should go into to be budgeted",
             style: TextStyle(color: Colors.white),
@@ -281,7 +289,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         );
 
         resetToDefaultTransaction();
-        SnackBar snackbar = SnackBar(
+        const SnackBar snackbar = SnackBar(
           content: Text(
             "Transaction added",
             style: TextStyle(color: Colors.white),
@@ -311,21 +319,22 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   int _selectPayeeId() {
-    int payeeId = payee is Payee ? payee.id : -payee.id;
-    return payeeId;
+    return (payee is Payee ? payee.id : -payee.id) as int;
   }
 
-  _selectSubcatId() {
-    bool subcategoryIsToBeBudgeted = subcategoryFieldName == "To be budgeted";
-    if (payee is Payee && !subcategoryIsToBeBudgeted)
-      return _subcategory.id;
-    else if (payee is Account && !subcategoryIsToBeBudgeted)
+  int _selectSubcatId() {
+    final bool subcategoryIsToBeBudgeted =
+        subcategoryFieldName == "To be budgeted";
+    if (payee is Payee && !subcategoryIsToBeBudgeted) {
+      return _subcategory.id as int;
+    } else if (payee is Account && !subcategoryIsToBeBudgeted) {
       return Constants.UNASSIGNED_SUBCAT_ID;
-    else if (subcategoryIsToBeBudgeted) //
+    } else if (subcategoryIsToBeBudgeted) {
       return Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
+    }
   }
 
-  handleAmountOnSave() {
+  void handleAmountOnSave() {
     _amount = formatCurrencyToDouble(amountController.text, isPositive);
   }
 
@@ -333,11 +342,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     setState(() {
       isPositive = !isPositive;
 
-      bool positiveWithMinusSign =
+      final bool positiveWithMinusSign =
           isPositive && amountController.text[0] == '-';
-      if (positiveWithMinusSign)
+      if (positiveWithMinusSign) {
         _removeMinusSign();
-      else if (!isPositive) _addMinusSign();
+      } else if (!isPositive) _addMinusSign();
 
       _updateAmountLength();
       _setOffsetToLastDigit();
@@ -349,31 +358,31 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   void _addMinusSign() {
-    amountController.text = "-" + amountController.text;
+    amountController.text = "-${amountController.text}";
   }
 
   void _removeMinusSign() {
     amountController.text = amountController.text.substring(1);
   }
 
-  handleAmountValidate(String value) {
+  String handleAmountValidate(String value) {
     if (formatCurrencyToDouble(amountController.text, isPositive) == 0) {
       return "Value must be different than 0";
     }
     return null;
   }
 
-  handleAmountOnTap() {
+  void handleAmountOnTap() {
     _setAmountToZero();
     _setOffsetToLastDigit();
   }
 
   void _setAmountToZero() {
-    String zero = currencyNumberFormat.format(0).trim();
-    amountController.text = isPositive ? zero : "-" + zero;
+    final String zero = currencyNumberFormat.format(0).trim();
+    amountController.text = isPositive ? zero : "-$zero";
   }
 
-  _setOffsetToLastDigit() {
+  void _setOffsetToLastDigit() {
     amountController.selection =
         TextSelection.collapsed(offset: amountController.text.length - 2);
   }
@@ -384,22 +393,22 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
 class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
-  _AddTransactionPageView(_AddTransactionPageController state) : super(state);
-
-  final TextStyle defaultChildTextStyle = TextStyle(
-      color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-  final TextStyle selectedChildTextStyle =
-      TextStyle(color: Colors.black, fontSize: 16.0);
+  const _AddTransactionPageView(_AddTransactionPageController state)
+      : super(state);
 
   Widget _myBuildMethod(BuildContext context) {
+    const TextStyle defaultChildTextStyle = TextStyle(
+        color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+    const TextStyle selectedChildTextStyle =
+        TextStyle(color: Colors.black, fontSize: 16.0);
+
     //Populate the list of container with the number controllers and
     //the custom listTiles
 
     // Build the layout (ListView, error container, Button)
     return SingleChildScrollView(
       child: Column(children: [
-        Container(
-            child: Column(
+        Column(
           children: [
             Row(
               children: [
@@ -423,11 +432,11 @@ class _AddTransactionPageView
                 state: state, selectedChildTextStyle: selectedChildTextStyle),
             MemoField(state: state),
           ],
-        )),
+        ),
         // TODO: Error message
         FloatingActionButton(
-          child: Text("Enter"),
           onPressed: () => state.addMoneyTransaction(context),
+          child: const Text("Enter"),
         )
       ]),
     );
@@ -437,18 +446,18 @@ class _AddTransactionPageView
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("New transaction"),
-          leading: Icon(Constants.ADD_TRANSACTION_ICON),
+          title: const Text("New transaction"),
+          leading: const Icon(Constants.ADD_TRANSACTION_ICON),
           actions: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 10.0),
+            const Padding(
+              padding: EdgeInsets.only(right: 10.0),
               child: Icon(FontAwesomeIcons.bars),
             ),
           ],
         ),
         body: Consumer<AppState>(builder: (context, appState, child) {
           if (appState.allCategories.isEmpty) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {

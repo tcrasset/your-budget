@@ -1,13 +1,17 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:your_budget/models/Budget.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/payee.dart';
-import 'package:your_budget/models/account.dart';
+
 abstract class AppStateRepository {
   Future<void> loadStateFromDatabase();
 
-  Future<void> addAccount({@required String accountName, @required  double balance});
+  Future<void> addAccount(
+      {@required String accountName, @required double balance});
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
@@ -19,7 +23,8 @@ abstract class AppStateRepository {
   /// ,to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory({@required String subcategoryName, @required  int maincategoryId});
+  void addSubcategory(
+      {@required String subcategoryName, @required int maincategoryId});
 
   /// Add the [transaction] to the [_transactions] list, persist it to
   /// the database and add the transaction amount to the corresponding subcategory.
@@ -43,9 +48,8 @@ abstract class AppStateRepository {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  void updateSubcategoryValues(SubCategory modifiedSubcategory, DateTime dateMofidied);
-
-  BudgetValue _getBudgetValue(SubCategory modifiedSubcategory);
+  void updateSubcategoryValues(
+      SubCategory modifiedSubcategory, DateTime dateMofidied);
 
   void removeSubcategory(int subcategoryId);
 
@@ -65,18 +69,7 @@ abstract class AppStateRepository {
 
   Future<List<Budget>> createAllMonthlyBudgets();
 
-  Budget _getBudgetByDate(DateTime date);
-
   void deleteTransaction(int transactionId);
 
   void removeCategory(int categoryId);
-
-  void _deleteCorrespondingBudgetValues(int subcategoryId);
-
-  Future<List<Budget>> _incrementMaxBudgetAndUpdateBudgets(
-      List<Budget> budgets);
-
-  Future<bool> _checkIfNeedToIncrementMax();
-
-  Future<int> _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate();
 }

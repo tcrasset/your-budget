@@ -1,4 +1,7 @@
+// Package imports:
 import 'package:meta/meta.dart';
+
+// Project imports:
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/creator.dart';
@@ -23,7 +26,7 @@ class BudgetValueCreator implements Creator<BudgetValue> {
 
   @override
   Future<BudgetValue> create() async {
-    BudgetValueModel budgetValueModel = BudgetValueModel(
+    final BudgetValueModel budgetValueModel = BudgetValueModel(
       subcategoryId: subcategoryId,
       budgeted: budgeted,
       available: available,
@@ -31,7 +34,7 @@ class BudgetValueCreator implements Creator<BudgetValue> {
       year: year,
     );
 
-    int id = await queryContext.addBudgetValue(budgetValueModel);
+    final int id = await queryContext.addBudgetValue(budgetValueModel);
     return BudgetValue(
       id: id,
       subcategoryId: subcategoryId,
@@ -40,7 +43,5 @@ class BudgetValueCreator implements Creator<BudgetValue> {
       month: month,
       year: year,
     );
-    // TODO: implement create
-    throw UnimplementedError();
   }
 }

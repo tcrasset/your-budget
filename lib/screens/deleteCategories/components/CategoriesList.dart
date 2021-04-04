@@ -1,5 +1,10 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:provider/provider.dart';
+
+// Project imports:
 import 'package:your_budget/appState.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
@@ -20,30 +25,29 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   Widget build(BuildContext context) {
-    List categories = Provider.of<AppState>(context).allCategories;
-    return Container(
-      child: Scrollbar(
-        isAlwaysShown: true,
+    final List<Category> categories =
+        Provider.of<AppState>(context).allCategories;
+    return Scrollbar(
+      isAlwaysShown: true,
+      controller: _scrollController,
+      child: ListView.separated(
         controller: _scrollController,
-        child: new ListView.separated(
-          controller: _scrollController,
-          shrinkWrap: true,
-          itemCount: categories.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              Divider(height: 1, color: Colors.black12),
-          itemBuilder: (BuildContext context, int index) {
-            var type = categories[index].runtimeType;
-            return Card(
-              child: CheckedRow(
-                  categories[index].name,
-                  categories[index].id,
-                  type,
-                  type == MainCategory
-                      ? Constants.CATEGORY_TEXT_STYLE
-                      : Constants.SUBCATEGORY_TEXT_STYLE),
-            );
-          },
-        ),
+        shrinkWrap: true,
+        itemCount: categories.length,
+        separatorBuilder: (BuildContext context, int index) =>
+            const Divider(height: 1, color: Colors.black12),
+        itemBuilder: (BuildContext context, int index) {
+          final type = categories[index].runtimeType;
+          return Card(
+            child: CheckedRow(
+                categories[index].name,
+                categories[index].id,
+                type,
+                type == MainCategory
+                    ? Constants.CATEGORY_TEXT_STYLE
+                    : Constants.SUBCATEGORY_TEXT_STYLE),
+          );
+        },
       ),
     );
   }
