@@ -55,9 +55,9 @@ class _ShowTransactionPageView
 
   @override
   Widget build(BuildContext context) {
-    AppState appState = Provider.of<AppState>(context, listen: true);
+    final AppState appState = Provider.of<AppState>(context, listen: true);
 
-    if (appState.accounts.isEmpty) return EmptyTransactionList();
+    if (appState.accounts.isEmpty) return const EmptyTransactionList();
 
     return FutureBuilder<Account>(
       future: state.accountFuture,
@@ -72,7 +72,7 @@ class _ShowTransactionPageView
             ),
           );
         } else {
-          return EmptyTransactionList();
+          return const EmptyTransactionList();
         }
       },
     );
@@ -95,7 +95,7 @@ class AtLeastOneTransactionList extends StatelessWidget {
       return Column(children: [
         Text(
           account.name,
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         Expanded(child: TransactionList(account, appState, isEditable)),
       ]);
@@ -110,7 +110,7 @@ class EmptyTransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         "No transactions logged. Please choose an account.",
         style: TextStyle(
@@ -123,11 +123,11 @@ class EmptyTransactionList extends StatelessWidget {
 AppBar getAppbar(String title, Function() handleModifyTransactions) {
   return AppBar(
       title: Text(title),
-      leading: Icon(Constants.ALLTRANSACTION_ICON),
+      leading: const Icon(Constants.ALLTRANSACTION_ICON),
       backgroundColor: Constants.PRIMARY_COLOR,
       actions: <Widget>[
         IconButton(
-          icon: Icon(FontAwesomeIcons.checkSquare),
+          icon: const Icon(FontAwesomeIcons.checkSquare),
           onPressed: handleModifyTransactions,
         ),
       ]);
@@ -137,8 +137,8 @@ class AccountButtons extends StatelessWidget {
   final String accountName;
 
   const AccountButtons({Key key, this.accountName}) : super(key: key);
-  void handleButtonOnPressed(BuildContext context) async {
-    AppState appState = Provider.of<AppState>(context, listen: false);
+  Future<void> handleButtonOnPressed(BuildContext context) async {
+    final AppState appState = Provider.of<AppState>(context, listen: false);
     return null;
   }
 
@@ -147,17 +147,16 @@ class AccountButtons extends StatelessWidget {
     return Consumer<AppState>(builder: (_, appState, __) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconButton(
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
               onPressed: () => handleButtonOnPressed(context)),
           Text(
             accountName,
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
           ),
           IconButton(
-              icon: Icon(Icons.arrow_forward),
+              icon: const Icon(Icons.arrow_forward),
               onPressed: () => handleButtonOnPressed(context))
         ],
       );
