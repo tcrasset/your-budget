@@ -7,9 +7,9 @@ import 'package:jiffy/jiffy.dart';
 import 'package:mockito/mockito.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/budget.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';

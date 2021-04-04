@@ -7,7 +7,7 @@ import 'package:intl/intl.dart';
 
 // Project imports:
 import '../../../models/constants.dart';
-import 'CurrencyInputFormatter.dart';
+import 'currency_input_formatter.dart';
 
 class AmountInputContainer extends StatelessWidget {
   // Create number controller

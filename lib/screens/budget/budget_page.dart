@@ -7,13 +7,13 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/about/aboutScreen.dart';
-import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:your_budget/screens/budget/components/buttonDial.dart';
-import 'package:your_budget/screens/budget/components/categoriesList.dart';
-import 'package:your_budget/screens/budget/components/dateButtons.dart';
-import 'package:your_budget/screens/budget/components/toBeBudgeted.dart';
-import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
+import 'package:your_budget/screens/about/about_screen.dart';
+import 'package:your_budget/screens/budget/budget_page_state.dart';
+import 'package:your_budget/screens/budget/components/button_dial.dart';
+import 'package:your_budget/screens/budget/components/categories_list.dart';
+import 'package:your_budget/screens/budget/components/date_button.dart';
+import 'package:your_budget/screens/budget/components/to_be_budgeted.dart';
+import 'package:your_budget/screens/modifyCategories/modify_categories.dart';
 
 class BudgetPage extends StatefulWidget {
   final String title;

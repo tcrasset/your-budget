@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../appState.dart';
+import '../../appstate.dart';
 import '../../components/widgetViewClasses.dart';
 import '../../models/account.dart';
 import '../../models/categories.dart';
@@ -19,15 +19,15 @@ import '../../models/constants.dart';
 import '../../models/money_transaction.dart';
 import '../../models/payee.dart';
 import '../../models/utils.dart';
-import 'components/CurrencyInputFormatter.dart';
 import 'components/account_field.dart';
 import 'components/amount_input_container.dart';
 import 'components/amount_switch.dart';
+import 'components/currency_input_formatter.dart';
 import 'components/date_field.dart';
 import 'components/memo_field.dart';
 import 'components/payee_field.dart';
 import 'components/subcategory_field.dart';
-import 'selectValue.dart';
+import 'select_value.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override

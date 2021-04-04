@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/components/addDialog.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/components/add_dialog.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/payee.dart';
 

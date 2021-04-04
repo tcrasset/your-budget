@@ -5,10 +5,10 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
+import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/money_transaction.dart';
-import 'package:your_budget/screens/showTransactions/components/transactionRow.dart';
+import 'package:your_budget/screens/showTransactions/components/transaction_row.dart';
 
 class TransactionList extends StatefulWidget {
   final Account account;

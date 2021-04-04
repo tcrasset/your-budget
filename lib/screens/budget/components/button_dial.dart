@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:your_budget/screens/budget/components/customButton.dart';
+import 'package:your_budget/screens/budget/budget_page_state.dart';
+import 'package:your_budget/screens/budget/components/custom_button.dart';
 
 class ButtonDial extends StatelessWidget {
   final double height;

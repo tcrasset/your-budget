@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
+import 'package:your_budget/screens/deleteCategories/delete_categories_state.dart';
 
 class CheckedRow extends StatefulWidget {
   final String categoryName;

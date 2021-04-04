@@ -6,9 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/screens/modifyCategories/ModifyCategories.dart';
-import '../../../appState.dart';
-import '../../../components/addDialog.dart';
+import 'package:your_budget/screens/modifyCategories/modify_categories.dart';
+import '../../../appstate.dart';
+import '../../../components/add_dialog.dart';
 import '../../../models/categories.dart';
 import '../../../models/constants.dart';
 

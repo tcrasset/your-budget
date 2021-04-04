@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../components/rowContainer.dart';
+import '../../../components/row_container.dart';
 import '../../../models/account.dart';
 
 class SubcategoryField extends StatelessWidget {

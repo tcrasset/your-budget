@@ -11,4 +11,3 @@ linter:
     prefer_const_literals_to_create_immutables: false
     sort_unnamed_constructors_first: false
     constant_identifier_names: false
-    file_names: false

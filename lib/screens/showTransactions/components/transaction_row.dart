@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
+import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/payee.dart';
-import 'package:your_budget/screens/showTransactions/components/UncheckedRow.dart';
-import 'package:your_budget/screens/showTransactions/components/checkedRow.dart';
+import 'package:your_budget/screens/showTransactions/components/checked_row.dart';
+import 'package:your_budget/screens/showTransactions/components/unchecked_row.dart';
 
 class TransactionRow extends StatefulWidget {
   final MoneyTransaction moneyTransaction;

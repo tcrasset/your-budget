@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 // Project imports:
-import 'package:your_budget/appState_repository.dart';
-import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/appstate_repository.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/account_creator.dart';
 import 'package:your_budget/models/account_list.dart';
+import 'package:your_budget/models/budget.dart';
 import 'package:your_budget/models/budget_list.dart';
 import 'package:your_budget/models/budget_value_creator.dart';
 import 'package:your_budget/models/budget_value_list.dart';

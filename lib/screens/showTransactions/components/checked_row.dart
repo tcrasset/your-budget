@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
+import 'package:your_budget/screens/showTransactions/show_transaction_page_state.dart';
 
 class CheckedRow extends StatefulWidget {
   final String subcategoryName;

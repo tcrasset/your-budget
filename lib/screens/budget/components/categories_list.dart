@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
+import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/screens/budget/components/MainCategoryRow.dart';
-import 'package:your_budget/screens/budget/components/SubCategoryRow.dart';
+import 'package:your_budget/screens/budget/components/maincategory_row.dart';
+import 'package:your_budget/screens/budget/components/subcategory_row.dart';
 
 class CategoriesList extends StatefulWidget {
   @override

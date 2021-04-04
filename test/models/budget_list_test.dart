@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 // Project imports:
-import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/models/budget.dart';
 import 'package:your_budget/models/budget_list.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/queries.dart';

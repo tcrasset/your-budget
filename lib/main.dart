@@ -7,16 +7,16 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
+import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/screens/addAccount/addAccount.dart';
-import 'package:your_budget/screens/addTransaction/addTransaction.dart';
-import 'package:your_budget/screens/budget/budgetPage.dart';
-import 'package:your_budget/screens/budget/budgetPageState.dart';
-import 'package:your_budget/screens/deleteCategories/DeleteCategoriesState.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsPage.dart';
-import 'package:your_budget/screens/showTransactions/showTransactionsState.dart';
-import 'package:your_budget/waitingscreen.dart';
+import 'package:your_budget/screens/addAccount/add_account.dart';
+import 'package:your_budget/screens/addTransaction/add_transaction.dart';
+import 'package:your_budget/screens/budget/budget_page.dart';
+import 'package:your_budget/screens/budget/budget_page_state.dart';
+import 'package:your_budget/screens/deleteCategories/delete_categories_state.dart';
+import 'package:your_budget/screens/showTransactions/show_transaction_page.dart';
+import 'package:your_budget/screens/showTransactions/show_transaction_page_state.dart';
+import 'package:your_budget/waiting_screen.dart';
 import 'injection_container.dart' as injections;
 
 Future<void> main() async {

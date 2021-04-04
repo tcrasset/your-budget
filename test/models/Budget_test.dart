@@ -2,7 +2,7 @@
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:your_budget/models/Budget.dart';
+import 'package:your_budget/models/budget.dart';
 import 'package:your_budget/models/categories.dart';
 
 void main() {

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
-import 'package:your_budget/screens/budget/budgetPageState.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/screens/budget/budget_page_state.dart';
 
 class DateButtons extends StatelessWidget {
   void handleButtonOnPressed(

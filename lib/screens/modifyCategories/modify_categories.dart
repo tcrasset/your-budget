@@ -6,12 +6,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/appState.dart';
+import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/screens/deleteCategories/DeleteCategories.dart';
-import 'package:your_budget/screens/modifyCategories/components/modifyMainCategoryRow.dart';
-import 'package:your_budget/screens/modifyCategories/components/modifySubCategoryRow.dart';
-import '../../components/addDialog.dart';
+import 'package:your_budget/screens/deleteCategories/delete_categories.dart';
+import 'package:your_budget/screens/modifyCategories/components/modify_maincategory_row.dart';
+import 'package:your_budget/screens/modifyCategories/components/modify_subcategory_row.dart';
+import '../../components/add_dialog.dart';
 import '../../components/widgetViewClasses.dart';
 
 class ModifyCategories extends StatefulWidget {
