@@ -42,7 +42,7 @@ class _ShowTransactionPageController extends State<ShowTransactionPage> {
   Widget build(BuildContext context) => _ShowTransactionPageView(this);
 
   void handleModifyTransactions() async {
-    Account account = await accountFuture;
+    final Account account = await accountFuture;
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
   }
@@ -57,7 +57,14 @@ class _ShowTransactionPageView
   Widget build(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context, listen: true);
 
-    if (appState.accounts.isEmpty) return const EmptyTransactionList();
+    final Widget emptyAccountList = Column(
+      children: [
+        const AccountButtons(accountText: "No accounts."),
+        const EmptyTransactionList(),
+      ],
+    );
+
+    if (appState.accounts.isEmpty) return emptyAccountList;
 
     return FutureBuilder<Account>(
       future: state.accountFuture,
@@ -66,13 +73,19 @@ class _ShowTransactionPageView
           final Account account = snapshot.data;
           return Scaffold(
             appBar: getAppbar(widget.title, state.handleModifyTransactions),
-            body: AtLeastOneTransactionList(
-              account: account,
-              isEditable: state.isEditable,
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AccountButtons(accountText: account.name),
+                AtLeastOneTransactionList(
+                  account: account,
+                  isEditable: state.isEditable,
+                ),
+              ],
             ),
           );
         } else {
-          return const EmptyTransactionList();
+          return emptyAccountList;
         }
       },
     );
@@ -92,13 +105,7 @@ class AtLeastOneTransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<AppState>(builder: (_, appState, __) {
-      return Column(children: [
-        Text(
-          account.name,
-          style: const TextStyle(fontSize: 20),
-        ),
-        Expanded(child: TransactionList(account, appState, isEditable)),
-      ]);
+      return Expanded(child: TransactionList(account, appState, isEditable));
     });
   }
 }
@@ -134,31 +141,35 @@ AppBar getAppbar(String title, Function() handleModifyTransactions) {
 }
 
 class AccountButtons extends StatelessWidget {
-  final String accountName;
+  final String accountText;
 
-  const AccountButtons({Key key, this.accountName}) : super(key: key);
+  const AccountButtons({Key key, this.accountText}) : super(key: key);
+
   Future<void> handleButtonOnPressed(BuildContext context) async {
     final AppState appState = Provider.of<AppState>(context, listen: false);
-    return null;
+    debugPrint((await appState.nextMostRecentAccount).toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer<AppState>(builder: (_, appState, __) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => handleButtonOnPressed(context)),
-          Text(
-            accountName,
-            style: const TextStyle(fontSize: 20),
-          ),
-          IconButton(
-              icon: const Icon(Icons.arrow_forward),
-              onPressed: () => handleButtonOnPressed(context))
-        ],
+      return SizedBox(
+        height: 50,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => handleButtonOnPressed(context)),
+            Text(
+              accountText,
+              style: const TextStyle(fontSize: 20),
+            ),
+            IconButton(
+                icon: const Icon(Icons.arrow_forward),
+                onPressed: () => handleButtonOnPressed(context))
+          ],
+        ),
       );
     });
   }

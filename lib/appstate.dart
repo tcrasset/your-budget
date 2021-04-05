@@ -72,6 +72,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<BudgetValue> get budgetValues =>
       UnmodifiableListView(budgetValueList.budgetvalues);
   Future<Account> get mostRecentAccount => accountList.getMostRecentAccount();
+  Future<Account> get nextMostRecentAccount async {
+    final Account account = await accountList.cycleNextAccount();
+    notifyListeners();
+    return account;
+  }
 
   AppState({@required this.queryContext});
 

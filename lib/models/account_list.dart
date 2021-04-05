@@ -21,7 +21,7 @@ class AccountList implements ObjectList<Account> {
     return _mostRecentAccount ?? _accounts[0];
   }
 
-  void setMostRecentAccount(int id) {
+  Future<void> setMostRecentAccount(int id) async {
     queryContext.updateMostRecentAccountUsed(id);
     _mostRecentAccount = _getById(id);
     _mostRecentAccountIndex = accounts.indexOf(_mostRecentAccount);
@@ -58,9 +58,10 @@ class AccountList implements ObjectList<Account> {
     setMostRecentAccount(id);
   }
 
-  void cycleNextAccount() {
-    int nextIndex = (_mostRecentAccountIndex + 1) % _accounts.length;
-    int nextAccountId = _accounts[nextIndex].id;
+  Future<Account> cycleNextAccount() async {
+    final int nextIndex = (_mostRecentAccountIndex + 1) % _accounts.length;
+    final int nextAccountId = _accounts[nextIndex].id;
     setMostRecentAccount(nextAccountId);
+    return _getById(nextAccountId);
   }
 }
