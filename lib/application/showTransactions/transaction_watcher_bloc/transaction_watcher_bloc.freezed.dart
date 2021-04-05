@@ -20,9 +20,9 @@ class _$TransactionWatcherEventTearOff {
 
 // ignore: unused_element
   _TransactionsReceived transactionsReceived(
-      List<MoneyTransaction> transactions) {
+      Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) {
     return _TransactionsReceived(
-      transactions,
+      failureOrTransactions,
     );
   }
 }
@@ -36,12 +36,15 @@ mixin _$TransactionWatcherEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchTransactionsStarted(),
-    @required Result transactionsReceived(List<MoneyTransaction> transactions),
+    @required
+        Result transactionsReceived(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(List<MoneyTransaction> transactions),
+    Result transactionsReceived(
+        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -115,7 +118,9 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchTransactionsStarted(),
-    @required Result transactionsReceived(List<MoneyTransaction> transactions),
+    @required
+        Result transactionsReceived(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
   }) {
     assert(watchTransactionsStarted != null);
     assert(transactionsReceived != null);
@@ -126,7 +131,8 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(List<MoneyTransaction> transactions),
+    Result transactionsReceived(
+        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -171,7 +177,8 @@ abstract class _$TransactionsReceivedCopyWith<$Res> {
   factory _$TransactionsReceivedCopyWith(_TransactionsReceived value,
           $Res Function(_TransactionsReceived) then) =
       __$TransactionsReceivedCopyWithImpl<$Res>;
-  $Res call({List<MoneyTransaction> transactions});
+  $Res call(
+      {Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions});
 }
 
 /// @nodoc
@@ -187,41 +194,43 @@ class __$TransactionsReceivedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object transactions = freezed,
+    Object failureOrTransactions = freezed,
   }) {
     return _then(_TransactionsReceived(
-      transactions == freezed
-          ? _value.transactions
-          : transactions as List<MoneyTransaction>,
+      failureOrTransactions == freezed
+          ? _value.failureOrTransactions
+          : failureOrTransactions
+              as Either<ValueFailure, List<MoneyTransaction>>,
     ));
   }
 }
 
 /// @nodoc
 class _$_TransactionsReceived implements _TransactionsReceived {
-  const _$_TransactionsReceived(this.transactions)
-      : assert(transactions != null);
+  const _$_TransactionsReceived(this.failureOrTransactions)
+      : assert(failureOrTransactions != null);
 
   @override
-  final List<MoneyTransaction> transactions;
+  final Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions;
 
   @override
   String toString() {
-    return 'TransactionWatcherEvent.transactionsReceived(transactions: $transactions)';
+    return 'TransactionWatcherEvent.transactionsReceived(failureOrTransactions: $failureOrTransactions)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _TransactionsReceived &&
-            (identical(other.transactions, transactions) ||
-                const DeepCollectionEquality()
-                    .equals(other.transactions, transactions)));
+            (identical(other.failureOrTransactions, failureOrTransactions) ||
+                const DeepCollectionEquality().equals(
+                    other.failureOrTransactions, failureOrTransactions)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(transactions);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failureOrTransactions);
 
   @override
   _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith =>
@@ -232,23 +241,26 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchTransactionsStarted(),
-    @required Result transactionsReceived(List<MoneyTransaction> transactions),
+    @required
+        Result transactionsReceived(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
   }) {
     assert(watchTransactionsStarted != null);
     assert(transactionsReceived != null);
-    return transactionsReceived(transactions);
+    return transactionsReceived(failureOrTransactions);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(List<MoneyTransaction> transactions),
+    Result transactionsReceived(
+        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (transactionsReceived != null) {
-      return transactionsReceived(transactions);
+      return transactionsReceived(failureOrTransactions);
     }
     return orElse();
   }
@@ -280,10 +292,11 @@ class _$_TransactionsReceived implements _TransactionsReceived {
 }
 
 abstract class _TransactionsReceived implements TransactionWatcherEvent {
-  const factory _TransactionsReceived(List<MoneyTransaction> transactions) =
+  const factory _TransactionsReceived(
+          Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) =
       _$_TransactionsReceived;
 
-  List<MoneyTransaction> get transactions;
+  Either<ValueFailure, List<MoneyTransaction>> get failureOrTransactions;
   _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith;
 }
 

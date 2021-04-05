@@ -5,5 +5,6 @@ abstract class TransactionWatcherEvent with _$TransactionWatcherEvent {
   const factory TransactionWatcherEvent.watchTransactionsStarted() =
       _TransactionWatchStarted;
   const factory TransactionWatcherEvent.transactionsReceived(
-      List<MoneyTransaction> transactions) = _TransactionsReceived;
+          Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) =
+      _TransactionsReceived;
 }

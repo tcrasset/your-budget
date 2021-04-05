@@ -10,5 +10,6 @@ abstract class ITransactionRepository {
   Future<Either<ValueFailure, Unit>> update(MoneyTransaction plant);
   Future<Either<ValueFailure, Unit>> delete(MoneyTransaction plant);
   Future<Either<ValueFailure, List<MoneyTransaction>>> getAllTransactions();
-  Either<ValueFailure, Stream<List<MoneyTransaction>>> watchAllTransactions();
+  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>
+      watchAllTransactions();
 }

@@ -91,30 +91,10 @@ class SQFliteTransactionRepository implements ITransactionRepository {
     }
   }
 
-  // Plant _snapshotToPlant(
-  //   RecordSnapshot<String, Map<String, dynamic>> snapshot,
-  // ) {
-  //   final PlantDTO plantDto = PlantDTO.fromJson(snapshot.value);
-  //   return plantDto.toDomain();
-  // }
-
-  /// Listen for changes on any plant
+  /// Listen for changes on any transaction
   @override
-  Either<ValueFailure, Stream<List<MoneyTransaction>>> watchAllTransactions() {
-    // try {
-    //   // Get a stream of snapshots from the dataase
-    //   final snapshotStream = _plantStore
-    //       .query(finder: Finder(sortOrders: [SortOrder("lastWatered")]))
-    //       .onSnapshots(database);
-
-    //   // Transfrom stream from list of snapshots to plants
-    //   final Stream<List<Plant>> plantListStream = snapshotStream.map(
-    //     (snapshots) => snapshots.map(_snapshotToPlant).toList(),
-    //   );
-
-    //   return right(plantListStream);
-    // } on DatabaseException catch (e) {
-    //   return left(ValueFailure.unexpected(message: e.message));
-    // }
+  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>
+      watchAllTransactions() {
+    return getAllTransactions().asStream();
   }
 }

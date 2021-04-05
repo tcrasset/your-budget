@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -31,22 +32,17 @@ class TransactionWatcherBloc
         yield const TransactionWatcherState.loading();
         await _transactionStreamSubscription?.cancel();
 
-        final failureOrTransactions =
-            transactionRepository.watchAllTransactions().fold(
-          (f) => f,
-          (stream) {
-            _transactionStreamSubscription = stream.listen((transactions) {
-              add(TransactionWatcherEvent.transactionsReceived(transactions));
-            });
-          },
-        );
-
-        if (failureOrTransactions is ValueFailure) {
-          yield TransactionWatcherState.loadFailure(failureOrTransactions);
-        }
+        transactionRepository.watchAllTransactions().listen(
+              (failureOrTransactions) => add(
+                  TransactionWatcherEvent.transactionsReceived(
+                      failureOrTransactions)),
+            );
       },
       transactionsReceived: (e) async* {
-        yield TransactionWatcherState.loadSuccess(e.transactions);
+        yield e.failureOrTransactions.fold(
+          (f) => TransactionWatcherState.loadFailure(f),
+          (transactions) => TransactionWatcherState.loadSuccess(transactions),
+        );
       },
     );
   }
