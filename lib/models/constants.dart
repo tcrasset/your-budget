@@ -63,7 +63,7 @@ class DatabaseConstants {
   static const String MONEYTRANSACTION_ID = 'id';
   static const String MONEYTRANSACTION_AMOUNT = 'amount';
   static const String MONEYTRANSACTION_MEMO = 'memo';
-  static const String MONEYTRANSACTION_DATE = 'date';
+  static const String MONEYTRANSACTION_DATE = 'dateInMillisecondsSinceEpoch';
 
   /// Field names of the [budgetValueTable]
   static const BUDGET_VALUE_ID = 'id';
@@ -85,12 +85,12 @@ class DatabaseConstants {
   static const String GOAL_MONTH = "month";
 
   /// Field names of the foreign keys
-  static const String CAT_ID_OUTSIDE = 'cat_id';
-  static const String SUBCAT_ID_OUTSIDE = 'subcat_id';
-  static const String PAYEE_ID_OUTSIDE = 'payee_id';
-  static const String ACCOUNT_ID_OUTSIDE = 'account_id';
-  static const String BUDGET_VALUE_OUTSIDE = 'budgetvalues_id';
-  static const String GOAL_ID_OUTSIDE = 'goal_id';
+  static const String CAT_ID_OUTSIDE = 'catID';
+  static const String SUBCAT_ID_OUTSIDE = 'subcatID';
+  static const String PAYEE_ID_OUTSIDE = 'payeeID';
+  static const String ACCOUNT_ID_OUTSIDE = 'accountID';
+  static const String BUDGET_VALUE_OUTSIDE = 'budgetvalueID';
+  static const String GOAL_ID_OUTSIDE = 'goalID';
 
   /// Constants
   static const String STARTING_BUDGET_DATE = "STARTING_BUDGET_DATE";
