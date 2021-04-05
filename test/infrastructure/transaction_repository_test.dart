@@ -89,4 +89,42 @@ void main() {
       whereArgs: [transactionDTO.id],
     ));
   });
+
+  // test('verify that getAllTransactions create the correct raw query', () async {
+  //   //!Arrange
+  //   const sql = """
+  //       SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+  //       ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
+  //       """;
+
+  //   //!Act
+  //   await repository.getAllTransactions();
+
+  //   //!Assert
+  //   verify(mockDatabase.rawQuery(sql));
+  // });
+
+  // test('verify that getAllTransactions returns the correct ones', () async {
+  //   //!Arrange
+  //   final MoneyTransaction tTransaction1 = transaction.copyWith(amount: 55);
+  //   final MoneyTransaction tTransaction2 = transaction.copyWith(amount: 44);
+  //   final List<MoneyTransaction> tTransactionList = [tTransaction1, tTransaction2];
+  //   final List<Map<String, dynamic>> tRawTransactions = [
+  //     MoneyTransactionDTO.fromDomain(tTransaction1).toJson(),
+  //     MoneyTransactionDTO.fromDomain(tTransaction2).toJson(),
+  //   ];
+
+  //   when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawTransactions);
+  //   //!Act
+  //   final transactions = await repository.getAllTransactions();
+  //   //!Assert
+
+  //   transactions.fold(
+  //     (failure) => /*throw TestFailure(failure.toString())*/ null,
+  //     (transactions) {
+  //       expect(transactions[0].amount, tTransactionList[0].amount);
+  //       expect(transactions[1].amount, tTransactionList[1].amount);
+  //     },
+  //   );
+  // });
 }

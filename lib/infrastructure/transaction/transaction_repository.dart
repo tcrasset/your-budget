@@ -71,18 +71,24 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   @override
   Future<Either<ValueFailure, List<MoneyTransaction>>>
       getAllTransactions() async {
-    // try {
-    //   final recordSnapshots = await _plantStore.find(
-    //     database,
-    //     finder: Finder(sortOrders: [SortOrder("lastWatered")]),
-    //   );
+    try {
+      final sql = """
+        SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+        ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
+        """;
+      final data = await database.rawQuery(sql);
 
-    //   final List<Plant> plants = recordSnapshots.map(_snapshotToPlant).toList();
+      final List<MoneyTransaction> transactions = [];
+      for (final rawTransaction in data) {
+        final MoneyTransactionDTO transactionDTO =
+            MoneyTransactionDTO.fromJson(rawTransaction);
+        transactions.add(transactionDTO.toDomain());
+      }
 
-    //   return right(plants);
-    // } on DatabaseException catch (e) {
-    //   return left(ValueFailure.unexpected(message: e.message));
-    // }
+      return right(transactions);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
   }
 
   // Plant _snapshotToPlant(
