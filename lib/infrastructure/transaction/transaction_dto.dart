@@ -20,7 +20,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
     @required int accountID,
     @required double amount,
     @required String memo,
-    @required DateTime date,
+    @required int dateInMillisecondsSinceEpoch,
   }) = _MoneyTransactionDTO;
 
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {
@@ -31,7 +31,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       accountID: transaction.accountID,
       amount: transaction.amount,
       memo: transaction.memo,
-      date: transaction.date,
+      dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
     );
   }
 
@@ -43,7 +43,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       accountID: accountID,
       amount: amount,
       memo: memo,
-      date: date,
+      date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
     );
   }
 
