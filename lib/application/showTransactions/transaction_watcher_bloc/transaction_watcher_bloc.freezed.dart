@@ -315,9 +315,9 @@ class _$TransactionWatcherStateTearOff {
   }
 
 // ignore: unused_element
-  _TransactionLoadSuccess loadSuccess(List<MoneyTransaction> plants) {
+  _TransactionLoadSuccess loadSuccess(List<MoneyTransaction> transactions) {
     return _TransactionLoadSuccess(
-      plants,
+      transactions,
     );
   }
 
@@ -339,14 +339,14 @@ mixin _$TransactionWatcherState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<MoneyTransaction> plants),
+    @required Result loadSuccess(List<MoneyTransaction> transactions),
     @required Result loadFailure(ValueFailure<dynamic> plantFailure),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<MoneyTransaction> plants),
+    Result loadSuccess(List<MoneyTransaction> transactions),
     Result loadFailure(ValueFailure<dynamic> plantFailure),
     @required Result orElse(),
   });
@@ -423,7 +423,7 @@ class _$_Initial implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<MoneyTransaction> plants),
+    @required Result loadSuccess(List<MoneyTransaction> transactions),
     @required Result loadFailure(ValueFailure<dynamic> plantFailure),
   }) {
     assert(initial != null);
@@ -438,7 +438,7 @@ class _$_Initial implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<MoneyTransaction> plants),
+    Result loadSuccess(List<MoneyTransaction> transactions),
     Result loadFailure(ValueFailure<dynamic> plantFailure),
     @required Result orElse(),
   }) {
@@ -524,7 +524,7 @@ class _$_Loading implements _Loading {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<MoneyTransaction> plants),
+    @required Result loadSuccess(List<MoneyTransaction> transactions),
     @required Result loadFailure(ValueFailure<dynamic> plantFailure),
   }) {
     assert(initial != null);
@@ -539,7 +539,7 @@ class _$_Loading implements _Loading {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<MoneyTransaction> plants),
+    Result loadSuccess(List<MoneyTransaction> transactions),
     Result loadFailure(ValueFailure<dynamic> plantFailure),
     @required Result orElse(),
   }) {
@@ -591,7 +591,7 @@ abstract class _$TransactionLoadSuccessCopyWith<$Res> {
   factory _$TransactionLoadSuccessCopyWith(_TransactionLoadSuccess value,
           $Res Function(_TransactionLoadSuccess) then) =
       __$TransactionLoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<MoneyTransaction> plants});
+  $Res call({List<MoneyTransaction> transactions});
 }
 
 /// @nodoc
@@ -607,37 +607,41 @@ class __$TransactionLoadSuccessCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object plants = freezed,
+    Object transactions = freezed,
   }) {
     return _then(_TransactionLoadSuccess(
-      plants == freezed ? _value.plants : plants as List<MoneyTransaction>,
+      transactions == freezed
+          ? _value.transactions
+          : transactions as List<MoneyTransaction>,
     ));
   }
 }
 
 /// @nodoc
 class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
-  const _$_TransactionLoadSuccess(this.plants) : assert(plants != null);
+  const _$_TransactionLoadSuccess(this.transactions)
+      : assert(transactions != null);
 
   @override
-  final List<MoneyTransaction> plants;
+  final List<MoneyTransaction> transactions;
 
   @override
   String toString() {
-    return 'TransactionWatcherState.loadSuccess(plants: $plants)';
+    return 'TransactionWatcherState.loadSuccess(transactions: $transactions)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _TransactionLoadSuccess &&
-            (identical(other.plants, plants) ||
-                const DeepCollectionEquality().equals(other.plants, plants)));
+            (identical(other.transactions, transactions) ||
+                const DeepCollectionEquality()
+                    .equals(other.transactions, transactions)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(plants);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(transactions);
 
   @override
   _$TransactionLoadSuccessCopyWith<_TransactionLoadSuccess> get copyWith =>
@@ -649,14 +653,14 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<MoneyTransaction> plants),
+    @required Result loadSuccess(List<MoneyTransaction> transactions),
     @required Result loadFailure(ValueFailure<dynamic> plantFailure),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(loadSuccess != null);
     assert(loadFailure != null);
-    return loadSuccess(plants);
+    return loadSuccess(transactions);
   }
 
   @override
@@ -664,13 +668,13 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<MoneyTransaction> plants),
+    Result loadSuccess(List<MoneyTransaction> transactions),
     Result loadFailure(ValueFailure<dynamic> plantFailure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loadSuccess != null) {
-      return loadSuccess(plants);
+      return loadSuccess(transactions);
     }
     return orElse();
   }
@@ -708,10 +712,10 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
 }
 
 abstract class _TransactionLoadSuccess implements TransactionWatcherState {
-  const factory _TransactionLoadSuccess(List<MoneyTransaction> plants) =
+  const factory _TransactionLoadSuccess(List<MoneyTransaction> transactions) =
       _$_TransactionLoadSuccess;
 
-  List<MoneyTransaction> get plants;
+  List<MoneyTransaction> get transactions;
   _$TransactionLoadSuccessCopyWith<_TransactionLoadSuccess> get copyWith;
 }
 
@@ -794,7 +798,7 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<MoneyTransaction> plants),
+    @required Result loadSuccess(List<MoneyTransaction> transactions),
     @required Result loadFailure(ValueFailure<dynamic> plantFailure),
   }) {
     assert(initial != null);
@@ -809,7 +813,7 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<MoneyTransaction> plants),
+    Result loadSuccess(List<MoneyTransaction> transactions),
     Result loadFailure(ValueFailure<dynamic> plantFailure),
     @required Result orElse(),
   }) {

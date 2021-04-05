@@ -2,61 +2,111 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flushbar/flushbar_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 import '../../../appstate.dart';
-import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
 import '../../../models/money_transaction.dart';
 import '../core/transactions/transaction_list.dart';
 import '../modifyTransactions/modify_transactions.dart';
 
-class ShowTransactionPage extends StatefulWidget {
+class ShowTransactionPage extends StatelessWidget {
   final String title;
-
   const ShowTransactionPage({Key key, this.title}) : super(key: key);
 
   @override
-  _ShowTransactionPageController createState() =>
-      _ShowTransactionPageController();
-}
-
-class _ShowTransactionPageController extends State<ShowTransactionPage> {
-  String filter;
-  Future<Account> accountFuture;
-  bool isEditable;
-  List<MoneyTransaction> moneyTransactionList;
-
-  @override
-  void initState() {
-    final AppState appState = Provider.of<AppState>(context, listen: false);
-    accountFuture = appState.mostRecentAccount;
-    isEditable = false;
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) => _ShowTransactionPageView(this);
-
-  void handleModifyTransactions() async {
-    final Account account = await accountFuture;
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<TransactionWatcherBloc>(
+        create: (context) => TransactionWatcherBloc(
+            transactionRepository: GetIt.instance<ITransactionRepository>())
+          ..add(const TransactionWatcherEvent.watchTransactionsStarted()),
+      ),
+    ], child: TransactionScaffold(title: title));
   }
 }
 
-class _ShowTransactionPageView
-    extends WidgetView<ShowTransactionPage, _ShowTransactionPageController> {
-  const _ShowTransactionPageView(_ShowTransactionPageController state)
-      : super(state);
+class TransactionScaffold extends StatelessWidget {
+  final String title;
+  const TransactionScaffold({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final AppState appState = Provider.of<AppState>(context, listen: true);
+    bool isLoading;
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
+            listener: (context, state) {
+              isLoading = state.maybeMap(
+                initial: (_) => true,
+                loading: (_) => true,
+                orElse: () => false,
+              );
 
+              final String errorMessage = state.maybeMap(
+                orElse: () => null,
+                loadFailure: (_) =>
+                    "Failed to load the transactions. Please contact support.",
+              );
+
+              if (errorMessage != null) {
+                FlushbarHelper.createError(message: errorMessage).show(context);
+              }
+            },
+          )
+        ],
+        child: Scaffold(
+          appBar: getAppbar(title, () => null),
+          body: Stack(
+            children: [
+              OptionalTransactionList(),
+              InProgressOverlay(
+                showOverlay: isLoading ?? false,
+                textDisplayed: "Loading",
+              )
+            ],
+          ),
+        ));
+
+    // return FutureBuilder<Account>(
+    //   future: state.accountFuture,
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasData) {
+    //       final Account account = snapshot.data;
+    //       return Scaffold(
+    //         appBar: getAppbar(widget.title, state.handleModifyTransactions),
+    //         body: Column(
+    //           mainAxisSize: MainAxisSize.min,
+    //           children: [
+    //             AccountButtons(accountText: account.name),
+    //             AtLeastOneTransactionList(
+    //               account: account,
+    //               isEditable: state.isEditable,
+    //             ),
+    //           ],
+    //         ),
+    //       );
+    //     } else {
+    //       return emptyAccountList;
+    //     }
+    //   },
+    // );
+  }
+}
+
+class OptionalTransactionList extends StatelessWidget {
+  @override
+  @override
+  Widget build(BuildContext context) {
     final Widget emptyAccountList = Column(
       children: [
         const AccountButtons(accountText: "No accounts."),
@@ -64,29 +114,22 @@ class _ShowTransactionPageView
       ],
     );
 
-    if (appState.accounts.isEmpty) return emptyAccountList;
-
-    return FutureBuilder<Account>(
-      future: state.accountFuture,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final Account account = snapshot.data;
-          return Scaffold(
-            appBar: getAppbar(widget.title, state.handleModifyTransactions),
-            body: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AccountButtons(accountText: account.name),
-                AtLeastOneTransactionList(
-                  account: account,
-                  isEditable: state.isEditable,
-                ),
-              ],
-            ),
-          );
-        } else {
-          return emptyAccountList;
-        }
+    return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
+      builder: (context, state) {
+        return state.maybeMap(
+          loadSuccess: (newState) {
+            final transactions = newState.transactions;
+            return ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: transactions.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text('Amount: ${transactions[index]} €'),
+                  );
+                });
+          },
+          orElse: () => const EmptyTransactionList(),
+        );
       },
     );
   }

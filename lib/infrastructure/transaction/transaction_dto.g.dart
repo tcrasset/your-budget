@@ -8,13 +8,14 @@ part of 'transaction_dto.dart';
 
 _$_MoneyTransactionDTO _$_$_MoneyTransactionDTOFromJson(
     Map<String, dynamic> json) {
+  print(json);
   return _$_MoneyTransactionDTO(
     subcatID: json['subcatID'] as int,
     payeeID: json['payeeID'] as int,
     accountID: json['accountID'] as int,
     amount: (json['amount'] as num)?.toDouble(),
     memo: json['memo'] as String,
-    date: json['date'] == null ? null : DateTime.parse(json['date'] as String),
+    dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
   );
 }
 
@@ -26,5 +27,5 @@ Map<String, dynamic> _$_$_MoneyTransactionDTOToJson(
       'accountID': instance.accountID,
       'amount': instance.amount,
       'memo': instance.memo,
-      'date': instance.date?.toIso8601String(),
+      'dateInMillisecondsSinceEpoch': instance.dateInMillisecondsSinceEpoch,
     };

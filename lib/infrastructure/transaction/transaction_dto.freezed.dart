@@ -24,7 +24,7 @@ class _$MoneyTransactionDTOTearOff {
       @required int accountID,
       @required double amount,
       @required String memo,
-      @required DateTime date}) {
+      @required int dateInMillisecondsSinceEpoch}) {
     return _MoneyTransactionDTO(
       id: id,
       subcatID: subcatID,
@@ -32,7 +32,7 @@ class _$MoneyTransactionDTOTearOff {
       accountID: accountID,
       amount: amount,
       memo: memo,
-      date: date,
+      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch,
     );
   }
 
@@ -55,7 +55,7 @@ mixin _$MoneyTransactionDTO {
   int get accountID;
   double get amount;
   String get memo;
-  DateTime get date;
+  int get dateInMillisecondsSinceEpoch;
 
   Map<String, dynamic> toJson();
   $MoneyTransactionDTOCopyWith<MoneyTransactionDTO> get copyWith;
@@ -73,7 +73,7 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
       int accountID,
       double amount,
       String memo,
-      DateTime date});
+      int dateInMillisecondsSinceEpoch});
 }
 
 /// @nodoc
@@ -93,7 +93,7 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object accountID = freezed,
     Object amount = freezed,
     Object memo = freezed,
-    Object date = freezed,
+    Object dateInMillisecondsSinceEpoch = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as int,
@@ -102,7 +102,9 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
       accountID: accountID == freezed ? _value.accountID : accountID as int,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
-      date: date == freezed ? _value.date : date as DateTime,
+      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
+          ? _value.dateInMillisecondsSinceEpoch
+          : dateInMillisecondsSinceEpoch as int,
     ));
   }
 }
@@ -121,7 +123,7 @@ abstract class _$MoneyTransactionDTOCopyWith<$Res>
       int accountID,
       double amount,
       String memo,
-      DateTime date});
+      int dateInMillisecondsSinceEpoch});
 }
 
 /// @nodoc
@@ -143,7 +145,7 @@ class __$MoneyTransactionDTOCopyWithImpl<$Res>
     Object accountID = freezed,
     Object amount = freezed,
     Object memo = freezed,
-    Object date = freezed,
+    Object dateInMillisecondsSinceEpoch = freezed,
   }) {
     return _then(_MoneyTransactionDTO(
       id: id == freezed ? _value.id : id as int,
@@ -152,7 +154,9 @@ class __$MoneyTransactionDTOCopyWithImpl<$Res>
       accountID: accountID == freezed ? _value.accountID : accountID as int,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
-      date: date == freezed ? _value.date : date as DateTime,
+      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
+          ? _value.dateInMillisecondsSinceEpoch
+          : dateInMillisecondsSinceEpoch as int,
     ));
   }
 }
@@ -168,13 +172,13 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
       @required this.accountID,
       @required this.amount,
       @required this.memo,
-      @required this.date})
+      @required this.dateInMillisecondsSinceEpoch})
       : assert(subcatID != null),
         assert(payeeID != null),
         assert(accountID != null),
         assert(amount != null),
         assert(memo != null),
-        assert(date != null),
+        assert(dateInMillisecondsSinceEpoch != null),
         super._();
 
   factory _$_MoneyTransactionDTO.fromJson(Map<String, dynamic> json) =>
@@ -194,11 +198,11 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
   @override
   final String memo;
   @override
-  final DateTime date;
+  final int dateInMillisecondsSinceEpoch;
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, memo: $memo, date: $date)';
+    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
   }
 
   @override
@@ -220,8 +224,11 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.memo, memo) ||
                 const DeepCollectionEquality().equals(other.memo, memo)) &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)));
+            (identical(other.dateInMillisecondsSinceEpoch,
+                    dateInMillisecondsSinceEpoch) ||
+                const DeepCollectionEquality().equals(
+                    other.dateInMillisecondsSinceEpoch,
+                    dateInMillisecondsSinceEpoch)));
   }
 
   @override
@@ -233,7 +240,7 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
       const DeepCollectionEquality().hash(accountID) ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(memo) ^
-      const DeepCollectionEquality().hash(date);
+      const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch);
 
   @override
   _$MoneyTransactionDTOCopyWith<_MoneyTransactionDTO> get copyWith =>
@@ -255,7 +262,7 @@ abstract class _MoneyTransactionDTO extends MoneyTransactionDTO {
       @required int accountID,
       @required double amount,
       @required String memo,
-      @required DateTime date}) = _$_MoneyTransactionDTO;
+      @required int dateInMillisecondsSinceEpoch}) = _$_MoneyTransactionDTO;
 
   factory _MoneyTransactionDTO.fromJson(Map<String, dynamic> json) =
       _$_MoneyTransactionDTO.fromJson;
@@ -274,7 +281,7 @@ abstract class _MoneyTransactionDTO extends MoneyTransactionDTO {
   @override
   String get memo;
   @override
-  DateTime get date;
+  int get dateInMillisecondsSinceEpoch;
   @override
   _$MoneyTransactionDTOCopyWith<_MoneyTransactionDTO> get copyWith;
 }
