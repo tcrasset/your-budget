@@ -8,7 +8,6 @@ part of 'transaction_dto.dart';
 
 _$_MoneyTransactionDTO _$_$_MoneyTransactionDTOFromJson(
     Map<String, dynamic> json) {
-  print(json);
   return _$_MoneyTransactionDTO(
     subcatID: json['subcatID'] as int,
     payeeID: json['payeeID'] as int,

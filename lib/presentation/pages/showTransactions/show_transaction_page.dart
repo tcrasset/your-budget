@@ -76,30 +76,6 @@ class TransactionScaffold extends StatelessWidget {
             ],
           ),
         ));
-
-    // return FutureBuilder<Account>(
-    //   future: state.accountFuture,
-    //   builder: (context, snapshot) {
-    //     if (snapshot.hasData) {
-    //       final Account account = snapshot.data;
-    //       return Scaffold(
-    //         appBar: getAppbar(widget.title, state.handleModifyTransactions),
-    //         body: Column(
-    //           mainAxisSize: MainAxisSize.min,
-    //           children: [
-    //             AccountButtons(accountText: account.name),
-    //             AtLeastOneTransactionList(
-    //               account: account,
-    //               isEditable: state.isEditable,
-    //             ),
-    //           ],
-    //         ),
-    //       );
-    //     } else {
-    //       return emptyAccountList;
-    //     }
-    //   },
-    // );
   }
 }
 
@@ -131,7 +107,7 @@ class OptionalTransactionList extends StatelessWidget {
               ),
             );
           },
-          orElse: () => const EmptyTransactionList(),
+          orElse: () => emptyAccountList,
         );
       },
     );
@@ -212,32 +188,34 @@ class AccountButtons extends StatelessWidget {
 
   const AccountButtons({Key key, this.accountText}) : super(key: key);
 
-  Future<void> handleButtonOnPressed(BuildContext context) async {
-    final AppState appState = Provider.of<AppState>(context, listen: false);
-    debugPrint((await appState.nextMostRecentAccount).toString());
+  Future<void> handleButtonOnPressed(
+      {@required BuildContext context, @required bool increment}) async {
+    context.read<TransactionWatcherBloc>().add(
+          TransactionWatcherEvent.cycleAccount(increment: increment),
+        );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppState>(builder: (_, appState, __) {
-      return SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => handleButtonOnPressed(context)),
-            Text(
-              accountText,
-              style: const TextStyle(fontSize: 20),
-            ),
-            IconButton(
-                icon: const Icon(Icons.arrow_forward),
-                onPressed: () => handleButtonOnPressed(context))
-          ],
-        ),
-      );
-    });
+    return SizedBox(
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () =>
+                  handleButtonOnPressed(context: context, increment: false)),
+          Text(
+            accountText,
+            style: const TextStyle(fontSize: 20),
+          ),
+          IconButton(
+              icon: const Icon(Icons.arrow_forward),
+              onPressed: () =>
+                  handleButtonOnPressed(context: context, increment: true))
+        ],
+      ),
+    );
   }
 }

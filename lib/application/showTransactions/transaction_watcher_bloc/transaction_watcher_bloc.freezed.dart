@@ -25,6 +25,13 @@ class _$TransactionWatcherEventTearOff {
       failureOrTransactions,
     );
   }
+
+// ignore: unused_element
+  _CycleAccount cycleAccount({@required bool increment}) {
+    return _CycleAccount(
+      increment: increment,
+    );
+  }
 }
 
 /// @nodoc
@@ -39,23 +46,27 @@ mixin _$TransactionWatcherEvent {
     @required
         Result transactionsReceived(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    @required Result cycleAccount(bool increment),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
     Result transactionsReceived(
         Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result cycleAccount(bool increment),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result watchTransactionsStarted(_TransactionWatchStarted value),
     @required Result transactionsReceived(_TransactionsReceived value),
+    @required Result cycleAccount(_CycleAccount value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result watchTransactionsStarted(_TransactionWatchStarted value),
     Result transactionsReceived(_TransactionsReceived value),
+    Result cycleAccount(_CycleAccount value),
     @required Result orElse(),
   });
 }
@@ -121,9 +132,11 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
     @required
         Result transactionsReceived(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    @required Result cycleAccount(bool increment),
   }) {
     assert(watchTransactionsStarted != null);
     assert(transactionsReceived != null);
+    assert(cycleAccount != null);
     return watchTransactionsStarted();
   }
 
@@ -133,6 +146,7 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
     Result watchTransactionsStarted(),
     Result transactionsReceived(
         Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result cycleAccount(bool increment),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -147,9 +161,11 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   Result map<Result extends Object>({
     @required Result watchTransactionsStarted(_TransactionWatchStarted value),
     @required Result transactionsReceived(_TransactionsReceived value),
+    @required Result cycleAccount(_CycleAccount value),
   }) {
     assert(watchTransactionsStarted != null);
     assert(transactionsReceived != null);
+    assert(cycleAccount != null);
     return watchTransactionsStarted(this);
   }
 
@@ -158,6 +174,7 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   Result maybeMap<Result extends Object>({
     Result watchTransactionsStarted(_TransactionWatchStarted value),
     Result transactionsReceived(_TransactionsReceived value),
+    Result cycleAccount(_CycleAccount value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -244,9 +261,11 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     @required
         Result transactionsReceived(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    @required Result cycleAccount(bool increment),
   }) {
     assert(watchTransactionsStarted != null);
     assert(transactionsReceived != null);
+    assert(cycleAccount != null);
     return transactionsReceived(failureOrTransactions);
   }
 
@@ -256,6 +275,7 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     Result watchTransactionsStarted(),
     Result transactionsReceived(
         Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result cycleAccount(bool increment),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -270,9 +290,11 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   Result map<Result extends Object>({
     @required Result watchTransactionsStarted(_TransactionWatchStarted value),
     @required Result transactionsReceived(_TransactionsReceived value),
+    @required Result cycleAccount(_CycleAccount value),
   }) {
     assert(watchTransactionsStarted != null);
     assert(transactionsReceived != null);
+    assert(cycleAccount != null);
     return transactionsReceived(this);
   }
 
@@ -281,6 +303,7 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   Result maybeMap<Result extends Object>({
     Result watchTransactionsStarted(_TransactionWatchStarted value),
     Result transactionsReceived(_TransactionsReceived value),
+    Result cycleAccount(_CycleAccount value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -298,6 +321,131 @@ abstract class _TransactionsReceived implements TransactionWatcherEvent {
 
   Either<ValueFailure, List<MoneyTransaction>> get failureOrTransactions;
   _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith;
+}
+
+/// @nodoc
+abstract class _$CycleAccountCopyWith<$Res> {
+  factory _$CycleAccountCopyWith(
+          _CycleAccount value, $Res Function(_CycleAccount) then) =
+      __$CycleAccountCopyWithImpl<$Res>;
+  $Res call({bool increment});
+}
+
+/// @nodoc
+class __$CycleAccountCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    implements _$CycleAccountCopyWith<$Res> {
+  __$CycleAccountCopyWithImpl(
+      _CycleAccount _value, $Res Function(_CycleAccount) _then)
+      : super(_value, (v) => _then(v as _CycleAccount));
+
+  @override
+  _CycleAccount get _value => super._value as _CycleAccount;
+
+  @override
+  $Res call({
+    Object increment = freezed,
+  }) {
+    return _then(_CycleAccount(
+      increment: increment == freezed ? _value.increment : increment as bool,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_CycleAccount implements _CycleAccount {
+  const _$_CycleAccount({@required this.increment}) : assert(increment != null);
+
+  @override
+  final bool increment;
+
+  @override
+  String toString() {
+    return 'TransactionWatcherEvent.cycleAccount(increment: $increment)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _CycleAccount &&
+            (identical(other.increment, increment) ||
+                const DeepCollectionEquality()
+                    .equals(other.increment, increment)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(increment);
+
+  @override
+  _$CycleAccountCopyWith<_CycleAccount> get copyWith =>
+      __$CycleAccountCopyWithImpl<_CycleAccount>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result watchTransactionsStarted(),
+    @required
+        Result transactionsReceived(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    @required Result cycleAccount(bool increment),
+  }) {
+    assert(watchTransactionsStarted != null);
+    assert(transactionsReceived != null);
+    assert(cycleAccount != null);
+    return cycleAccount(increment);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result watchTransactionsStarted(),
+    Result transactionsReceived(
+        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result cycleAccount(bool increment),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (cycleAccount != null) {
+      return cycleAccount(increment);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result watchTransactionsStarted(_TransactionWatchStarted value),
+    @required Result transactionsReceived(_TransactionsReceived value),
+    @required Result cycleAccount(_CycleAccount value),
+  }) {
+    assert(watchTransactionsStarted != null);
+    assert(transactionsReceived != null);
+    assert(cycleAccount != null);
+    return cycleAccount(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result watchTransactionsStarted(_TransactionWatchStarted value),
+    Result transactionsReceived(_TransactionsReceived value),
+    Result cycleAccount(_CycleAccount value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (cycleAccount != null) {
+      return cycleAccount(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CycleAccount implements TransactionWatcherEvent {
+  const factory _CycleAccount({@required bool increment}) = _$_CycleAccount;
+
+  bool get increment;
+  _$CycleAccountCopyWith<_CycleAccount> get copyWith;
 }
 
 /// @nodoc

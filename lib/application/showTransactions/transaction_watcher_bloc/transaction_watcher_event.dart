@@ -7,4 +7,7 @@ abstract class TransactionWatcherEvent with _$TransactionWatcherEvent {
   const factory TransactionWatcherEvent.transactionsReceived(
           Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) =
       _TransactionsReceived;
+
+  const factory TransactionWatcherEvent.cycleAccount(
+      {@required bool increment}) = _CycleAccount;
 }

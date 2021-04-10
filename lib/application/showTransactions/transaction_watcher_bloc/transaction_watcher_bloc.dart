@@ -22,6 +22,7 @@ class TransactionWatcherBloc
       : super(const TransactionWatcherState.initial());
 
   StreamSubscription<List<MoneyTransaction>> _transactionStreamSubscription;
+  int currentAccountIndex = 0;
 
   @override
   Stream<TransactionWatcherState> mapEventToState(
@@ -43,6 +44,11 @@ class TransactionWatcherBloc
           (f) => TransactionWatcherState.loadFailure(f),
           (transactions) => TransactionWatcherState.loadSuccess(transactions),
         );
+      },
+      cycleAccount: (e) async* {
+        yield const TransactionWatcherState.loading();
+        currentAccountIndex += e.increment ? 1 : -1;
+        yield state;
       },
     );
   }
