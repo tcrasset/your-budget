@@ -2,51 +2,63 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
+import 'package:your_budget/domain/account/i_account_repository.dart';
 import '../../../appstate.dart';
-import '../../../models/account.dart';
 import '../../../models/utils.dart';
 import 'components/account_balance.dart';
 import 'components/account_name.dart';
 import 'components/account_row.dart';
 
-class AddAccountPage extends StatefulWidget {
+class AddAccountPage extends StatelessWidget {
   final String title;
 
   const AddAccountPage({Key key, this.title}) : super(key: key);
   @override
-  _AddAccountPageState createState() => _AddAccountPageState();
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<AccountWatcherBloc>(
+        create: (context) =>
+            AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
+              ..add(const AccountWatcherEvent.watchAccountsStarted()),
+      ),
+    ], child: AddAccountPageScaffold());
+  }
 }
 
-class _AddAccountPageState extends State<AddAccountPage> {
-  final _accountFormKey = GlobalKey<FormState>(); //FormCheck
-  double accountBalance;
-  String accountName;
+class AddAccountPageScaffold extends StatelessWidget {
+  // final _accountFormKey = GlobalKey<FormState>(); //FormCheck
+  // double accountBalance;
+  // String accountName;
 
-  String handleAccountBalanceValidate(String amount) {
-    if (amount.isEmpty) {
-      return 'Please enter an account balance';
-    } else if (!isNumeric(amount)) {
-      return 'Insert a valid number';
-    }
-    return null;
-  }
+  // String handleAccountBalanceValidate(String amount) {
+  //   if (amount.isEmpty) {
+  //     return 'Please enter an account balance';
+  //   } else if (!isNumeric(amount)) {
+  //     return 'Insert a valid number';
+  //   }
+  //   return null;
+  // }
 
-  void handleAccountBalanceSave(String balance) {
-    accountBalance = double.parse(balance);
-  }
+  // void handleAccountBalanceSave(String balance) {
+  //   accountBalance = double.parse(balance);
+  // }
 
-  Future<void> handleAddAccount(BuildContext context) async {
-    if (_accountFormKey.currentState.validate()) {
-      _accountFormKey.currentState.save();
-      final AppState appState = Provider.of<AppState>(context, listen: false);
-      // If form is valid, add subcategory to the database and add it to the state
-      appState.addAccount(accountName: accountName, balance: accountBalance);
-      _accountFormKey.currentState.reset();
-    }
-  }
+  // Future<void> handleAddAccount(BuildContext context) async {
+  //   if (_accountFormKey.currentState.validate()) {
+  //     _accountFormKey.currentState.save();
+  //     final AppState appState = Provider.of<AppState>(context, listen: false);
+  //     // If form is valid, add subcategory to the database and add it to the state
+  //     appState.addAccount(accountName: accountName, balance: accountBalance);
+  //     _accountFormKey.currentState.reset();
+  //   }
+  // }
 
   final TextStyle _textBoxStyle = const TextStyle(fontSize: 25);
 
@@ -60,51 +72,61 @@ class _AddAccountPageState extends State<AddAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Add a new account"),
+      appBar: AppBar(
+        title: const Text("Add a new account"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Form(
+                child: Column(
+              children: <Widget>[
+                AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+                AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    key: const Key('addAccountButton'),
+                    color: Theme.of(context).accentColor,
+                    onPressed: () => null,
+                    child: const Text(
+                      'Add account',
+                    ),
+                  ),
+                ),
+              ],
+            )),
+            SizedBox(height: 200, child: AccountList()),
+          ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              Form(
-                  key: _accountFormKey,
-                  child: Column(
-                    children: <Widget>[
-                      AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
-                      AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: RaisedButton(
-                          key: const Key('addAccountButton'),
-                          color: Theme.of(context).accentColor,
-                          onPressed: () => handleAddAccount(context),
-                          child: const Text(
-                            'Add account',
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-              Consumer<AppState>(builder: (_, appState, __) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(children: _buildAccountRows(appState)),
-                );
-              })
-            ],
-          ),
-        ));
+      ),
+    );
   }
+}
 
-  List<Widget> _buildAccountRows(AppState appState) {
-    final List<Widget> rows = [];
-    for (final Account account in appState.accounts) {
-      final row = AccountRow(
-        account: account,
-      );
-      rows.add(row);
-    }
+class AccountList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
+      builder: (context, state) {
+        return state.maybeMap(
+          loadSuccess: (newState) {
+            final accounts = newState.accounts;
 
-    return rows;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: accounts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return AccountRow(account: accounts[index]);
+                  }),
+            );
+          },
+          orElse: () => Container(),
+        );
+      },
+    );
   }
 }
