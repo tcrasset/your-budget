@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
@@ -8,8 +7,10 @@ import 'package:provider/provider.dart';
 // Project imports:
 import '../../../appstate.dart';
 import '../../../models/account.dart';
-import '../../../models/constants.dart';
 import '../../../models/utils.dart';
+import 'components/account_balance.dart';
+import 'components/account_name.dart';
+import 'components/account_row.dart';
 
 class AddAccountPage extends StatefulWidget {
   final String title;
@@ -24,13 +25,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
   double accountBalance;
   String accountName;
 
-  String handleAccountNameValidate(String name) {
-    if (name.isEmpty) {
-      return 'Please enter an account name';
-    }
-    return null;
-  }
-
   String handleAccountBalanceValidate(String amount) {
     if (amount.isEmpty) {
       return 'Please enter an account balance';
@@ -44,10 +38,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
     accountBalance = double.parse(balance);
   }
 
-  void handleAccountNameSave(String name) {
-    accountName = name;
-  }
-
   Future<void> handleAddAccount(BuildContext context) async {
     if (_accountFormKey.currentState.validate()) {
       _accountFormKey.currentState.save();
@@ -59,11 +49,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   final TextStyle _textBoxStyle = const TextStyle(fontSize: 25);
-  final TextStyle _accountNameStyle = const TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
-  final TextStyle _positiveAmountTextStyle =
-      const TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle =
-      const TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
   final InputDecoration _textBoxDecoration = InputDecoration(
     fillColor: Colors.white,
@@ -85,55 +70,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
                   key: _accountFormKey,
                   child: Column(
                     children: <Widget>[
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          "Add an account",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      // SizedBox(
-                      //   height: 8,
-                      // ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 20),
-                        // height: 70,
-                        child: Center(
-                          child: TextFormField(
-                            key: const Key('accountNameTextField'),
-                            decoration: _textBoxDecoration,
-                            style: _textBoxStyle,
-                            textAlign: TextAlign.center,
-                            validator: handleAccountNameValidate,
-                            onSaved: handleAccountNameSave,
-                            textInputAction: TextInputAction.next,
-                          ),
-                        ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0),
-                        child: Text(
-                          "with a starting balance of",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Center(
-                            child: TextFormField(
-                              key: const Key('accountBalanceTextField'),
-                              decoration: _textBoxDecoration,
-                              style: _textBoxStyle,
-                              textAlign: TextAlign.center,
-                              validator: handleAccountBalanceValidate,
-                              onSaved: handleAccountBalanceSave,
-                              keyboardType: TextInputType.number,
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(RegExp("[0-9-.]"))
-                              ],
-                              textInputAction: TextInputAction.done,
-                            ),
-                          )),
+                      AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+                      AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: RaisedButton(
@@ -161,28 +99,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
   List<Widget> _buildAccountRows(AppState appState) {
     final List<Widget> rows = [];
     for (final Account account in appState.accounts) {
-      final row = Container(
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
-          Expanded(
-            child: Text(
-              account.name,
-              style: _accountNameStyle,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-              softWrap: false,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            account.balance.toStringAsFixed(2) + " €",
-            style: account.balance.isNegative ? _negativeAmountTextStyle : _positiveAmountTextStyle,
-            overflow: TextOverflow.fade,
-            maxLines: 1,
-            softWrap: false,
-          )
-        ]),
+      final row = AccountRow(
+        account: account,
       );
       rows.add(row);
     }

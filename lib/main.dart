@@ -48,7 +48,7 @@ class HomeScreenState extends State<HomeScreen> {
   final List<Widget> _tabs = [
     ChangeNotifierProvider(
         create: (_) => BudgetPageState(), child: const BudgetPage(title: 'Bugdet Page')),
-    const AddAccountRoute(title: 'Accounts'),
+    const AddAccountPage(title: 'Accounts'),
     AddTransactionPage(),
     const ShowTransactionPage(title: "Transactions")
   ];
