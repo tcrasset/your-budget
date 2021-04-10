@@ -2,9 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:your_budget/models/money_transaction.dart';
-
-// Project imports:
+import '../../models/money_transaction.dart';
 
 part 'transaction_dto.freezed.dart';
 part 'transaction_dto.g.dart';

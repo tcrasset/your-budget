@@ -12,19 +12,14 @@ Container rowContainer(String name, Widget childWidget) {
               child: Text(name,
                   textAlign: TextAlign.left,
                   style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0)),
+                      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
             ),
             Expanded(
               flex: 2,
               child: Row(
                 children: <Widget>[
                   Expanded(child: childWidget),
-                  if (name == "Date")
-                    const Icon(Icons.date_range)
-                  else
-                    const Icon(Icons.edit),
+                  if (name == "Date") const Icon(Icons.date_range) else const Icon(Icons.edit),
                 ],
               ),
             ),

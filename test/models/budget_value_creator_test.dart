@@ -45,14 +45,11 @@ void main() {
     expect(creator.queryContext, mockQueries);
   });
 
-  test(
-      'verify that create() creates a BudgetValue and makes a call to the database',
-      () async {
+  test('verify that create() creates a BudgetValue and makes a call to the database', () async {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())))
-        .thenAnswer((_) async => tId);
+    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>()))).thenAnswer((_) async => tId);
 
     //!Act
     final BudgetValue budgetValue = await creator.create();

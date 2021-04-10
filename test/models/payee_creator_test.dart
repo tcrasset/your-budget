@@ -28,13 +28,11 @@ void main() {
     expect(creator.queryContext, mockQueries);
   });
 
-  test('verify that create() creates a Payee and makes a call to the database',
-      () async {
+  test('verify that create() creates a Payee and makes a call to the database', () async {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addPayee(argThat(isA<PayeeModel>())))
-        .thenAnswer((_) async => tId);
+    when(mockQueries.addPayee(argThat(isA<PayeeModel>()))).thenAnswer((_) async => tId);
 
     //!Act
     final Payee payee = await creator.create();

@@ -16,23 +16,18 @@ class AccountCreator implements Creator<Account> {
 
   int id;
 
-  AccountCreator(
-      {@required this.queryContext,
-      @required this.name,
-      @required this.balance});
+  AccountCreator({@required this.queryContext, @required this.name, @required this.balance});
 
   @override
   Future<Account> create() async {
-    final AccountModel accountModel =
-        AccountModel(name: name, balance: balance);
+    final AccountModel accountModel = AccountModel(name: name, balance: balance);
     id = await queryContext.addAccount(accountModel);
     final Account account = Account(id: id, balance: balance, name: name);
     return account;
   }
 
   Future<MoneyTransaction> getStartingMoneyTransaction() async {
-    final Creator<MoneyTransaction> moneyTransactionCreator =
-        MoneyTransactionCreator(
+    final Creator<MoneyTransaction> moneyTransactionCreator = MoneyTransactionCreator(
       queryContext: queryContext,
       subcatId: Constants.UNASSIGNED_SUBCAT_ID,
       payeeId: Constants.UNASSIGNED_PAYEE_ID,

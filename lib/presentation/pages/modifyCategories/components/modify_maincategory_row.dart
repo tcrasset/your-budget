@@ -27,8 +27,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
         nameValidator: validateCategoryName);
     if (subcategoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.addSubcategory(
-          subcategoryName: subcategoryName, maincategoryId: cat.id);
+      appState.addSubcategory(subcategoryName: subcategoryName, maincategoryId: cat.id);
     }
   }
 
@@ -63,8 +62,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
                     child: Text(cat.name,
                         style: TextStyle(
                             fontSize: Constants.CATEGORY_TEXT_STYLE.fontSize,
-                            fontWeight:
-                                Constants.CATEGORY_TEXT_STYLE.fontWeight,
+                            fontWeight: Constants.CATEGORY_TEXT_STYLE.fontWeight,
                             color: Constants.SECONDARY_COLOR)),
                   ),
                 ),

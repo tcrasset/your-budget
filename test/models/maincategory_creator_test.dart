@@ -32,14 +32,11 @@ void main() {
     expect(creator.queryContext, mockQueries);
   });
 
-  test(
-      'verify that create() creates a MainCategory and makes a call to the database',
-      () async {
+  test('verify that create() creates a MainCategory and makes a call to the database', () async {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addCategory(argThat(isA<MainCategoryModel>())))
-        .thenAnswer((_) async => tId);
+    when(mockQueries.addCategory(argThat(isA<MainCategoryModel>()))).thenAnswer((_) async => tId);
 
     //!Act
     final MainCategory maincategory = await creator.create();

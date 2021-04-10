@@ -9,8 +9,7 @@ import 'package:your_budget/models/constants.dart';
 ///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
 ///and the current date
 DateTime getMaxBudgetDate() {
-  return Jiffy(getDateFromMonthStart(DateTime.now()))
-      .add(months: Constants.MAX_NB_MONTHS_AHEAD);
+  return Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
 }
 
 DateTime getLastDayOfMonth(DateTime datetime) {
@@ -58,8 +57,7 @@ bool isSameMonth(DateTime date1, DateTime date2) {
 
 DateTime addExactEntryTime(DateTime date) {
   final DateTime now = DateTime.now();
-  return DateTime(
-      date.year, date.month, date.day, now.hour, now.minute, now.second);
+  return DateTime(date.year, date.month, date.day, now.hour, now.minute, now.second);
 }
 
 /// Returns whether [s] is a string representation of a number or not.

@@ -43,14 +43,11 @@ void main() {
     expect(creator.queryContext, mockQueries);
   });
 
-  test(
-      'verify that create() creates a SubCategory and makes a call to the database',
-      () async {
+  test('verify that create() creates a SubCategory and makes a call to the database', () async {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())))
-        .thenAnswer((_) async => tId);
+    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>()))).thenAnswer((_) async => tId);
 
     //!Act
     final SubCategory subcategory = await creator.create();

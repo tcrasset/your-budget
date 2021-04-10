@@ -61,15 +61,13 @@ class FakeDatabase {
 
   Future<void> setup() async {
     //! Starting Budget Date
-    when(mockQueries.getStartingBudgetDateConstant())
-        .thenAnswer((_) async => startingBudgetDate);
+    when(mockQueries.getStartingBudgetDateConstant()).thenAnswer((_) async => startingBudgetDate);
 
     //! MainCategories
     when(mockQueries.getCategories()).thenAnswer((_) async => maincategories);
 
     //! MoneyTransactions
-    when(mockQueries.getMoneyTransactions())
-        .thenAnswer((_) async => moneyTransactions);
+    when(mockQueries.getMoneyTransactions()).thenAnswer((_) async => moneyTransactions);
 
     //! Payees
     when(mockQueries.getPayees()).thenAnswer((_) async => payees);
@@ -88,24 +86,21 @@ class FakeDatabase {
         .thenAnswer((_) async => accounts.isNotEmpty ? accounts[0].id : null);
 
     //! Max Budget Date Constant
-    when(mockQueries.getMaxBudgetDateConstant())
-        .thenAnswer((_) async => getMaxBudgetDate());
+    when(mockQueries.getMaxBudgetDateConstant()).thenAnswer((_) async => getMaxBudgetDate());
 
     //! Subcategories joined with BudgetValues
-    when(mockQueries.getSubCategoriesJoined(
-            argThat(isA<int>()), argThat(isA<int>())))
+    when(mockQueries.getSubCategoriesJoined(argThat(isA<int>()), argThat(isA<int>())))
         .thenAnswer((invocation) async {
       final int year = invocation.positionalArguments[0] as int;
       final int month = invocation.positionalArguments[1] as int;
 
-      final List<BudgetValue> budgetValuesOfMonth = budgetValues
-          .where((bv) => bv.year == year && bv.month == month)
-          .toList();
+      final List<BudgetValue> budgetValuesOfMonth =
+          budgetValues.where((bv) => bv.year == year && bv.month == month).toList();
       final List<SubCategory> joinedSubcategories = [];
 
       for (final SubCategory subcat in subCategories) {
-        final BudgetValue budgetValue = budgetValuesOfMonth
-            .singleWhere((bv) => bv.subcategoryId == subcat.id);
+        final BudgetValue budgetValue =
+            budgetValuesOfMonth.singleWhere((bv) => bv.subcategoryId == subcat.id);
         final SubCategory subcatJoined = subcat.copy();
         subcatJoined.budgeted = budgetValue.budgeted;
         subcatJoined.available = budgetValue.available;
@@ -158,18 +153,14 @@ class FakeDatabase {
 
     for (int i = 0; i < subcategoryNames.length; i++) {
       final SubCategory subcat = SubCategory(
-          id: i + 1,
-          parentId: 1,
-          name: subcategoryNames[i],
-          budgeted: 0.0,
-          available: 0.0);
+          id: i + 1, parentId: 1, name: subcategoryNames[i], budgeted: 0.0, available: 0.0);
       subcategories.add(subcat);
     }
     return subcategories;
   }
 
-  List<Budget> _buildBudgets(List<MainCategory> maincategories,
-      List<SubCategory> subcategories, List<BudgetValue> budgetvalues) {
+  List<Budget> _buildBudgets(List<MainCategory> maincategories, List<SubCategory> subcategories,
+      List<BudgetValue> budgetvalues) {
     //TODO: Implement getSubcategoriesJoined()
 
     DateTime currentDate = startingBudgetDate;
@@ -194,8 +185,8 @@ class FakeDatabase {
         mergedSubcategories.add(mergedSubcat);
       }
 
-      final Budget budget = Budget(maincategories, mergedSubcategories,
-          currentDate.month, currentDate.year);
+      final Budget budget =
+          Budget(maincategories, mergedSubcategories, currentDate.month, currentDate.year);
       budgets.add(budget);
       currentDate = Jiffy(currentDate).add(months: 1);
     } while (currentDate.isBefore(Jiffy(maxBudgetDate).add(months: 1)));

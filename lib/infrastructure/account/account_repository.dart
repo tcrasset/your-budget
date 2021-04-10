@@ -9,9 +9,9 @@ import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
-import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/models/constants.dart';
+import '../../domain/account/i_account_repository.dart';
+import '../../domain/core/value_failure.dart';
+import '../../models/constants.dart';
 
 class SQFliteAccountRepository implements IAccountRepository {
   final Database database;

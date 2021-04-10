@@ -7,10 +7,10 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'package:your_budget/models/money_transaction.dart';
+import '../../../domain/account/i_account_repository.dart';
+import '../../../domain/core/value_failure.dart';
+import '../../../domain/transaction/i_transaction_repository.dart';
+import '../../../models/money_transaction.dart';
 
 part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';

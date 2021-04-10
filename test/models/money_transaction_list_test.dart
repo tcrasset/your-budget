@@ -38,9 +38,7 @@ main() {
     transactionList = MoneyTransactionList(mockQueries, [tMoneyTransaction]);
   });
 
-  test(
-      'when creating a MoneyTransactionList, ensure the transactions are passed in',
-      () {
+  test('when creating a MoneyTransactionList, ensure the transactions are passed in', () {
     //!Arrange
     //!Act
     //!Assert
@@ -52,8 +50,7 @@ main() {
     //!Act
     transactionList.add(tMoneyTransaction2);
     //!Assert
-    expect(
-        transactionList.transactions, [tMoneyTransaction, tMoneyTransaction2]);
+    expect(transactionList.transactions, [tMoneyTransaction, tMoneyTransaction2]);
   });
 
   test('when remove() is called, remove a transaction by id', () {
@@ -81,8 +78,7 @@ main() {
     //!Arrange
     transactionList.add(tMoneyTransaction);
     //!Act
-    List<MoneyTransaction> moneyTransactions =
-        transactionList.getAllBySubcatId(tSubcatId);
+    List<MoneyTransaction> moneyTransactions = transactionList.getAllBySubcatId(tSubcatId);
 
     //!Assert
     expect(moneyTransactions, [tMoneyTransaction, tMoneyTransaction]);
@@ -90,21 +86,18 @@ main() {
 
   test(
       'when getToBeBudgetedTransactions() is called, return a list of transactions' +
-          'that have subcategory id [Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION]',
-      () {
+          'that have subcategory id [Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION]', () {
     //!Arrange
-    MoneyTransaction toBeBudgetedTransaction = tMoneyTransaction.copyWith(
-        subcatID: Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
+    MoneyTransaction toBeBudgetedTransaction =
+        tMoneyTransaction.copyWith(subcatID: Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
 
     transactionList.add(toBeBudgetedTransaction);
     transactionList.add(toBeBudgetedTransaction);
     transactionList.add(toBeBudgetedTransaction);
     //!Act
-    List<MoneyTransaction> transactions =
-        transactionList.getToBeBudgetedTransactions();
+    List<MoneyTransaction> transactions = transactionList.getToBeBudgetedTransactions();
     //!Assert
     expect(transactions.length, 3);
-    expect(transactions[0].subcatID,
-        Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
+    expect(transactions[0].subcatID, Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
   });
 }

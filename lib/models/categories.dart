@@ -15,10 +15,7 @@ abstract class Category {
   double available;
 
   Category(
-      {@required this.id,
-      @required this.name,
-      @required this.budgeted,
-      @required this.available});
+      {@required this.id, @required this.name, @required this.budgeted, @required this.available});
 }
 
 /// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
@@ -43,8 +40,7 @@ class SubCategory extends Category {
             id: json[DatabaseConstants.SUBCAT_ID] as int, //
             name: json[DatabaseConstants.SUBCAT_NAME] as String,
             budgeted: json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double,
-            available:
-                json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double);
+            available: json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double);
 
   @override
   String toString() {
@@ -54,22 +50,13 @@ class SubCategory extends Category {
 
   /// Creates a copy of this with zero money budgeted.
   SubCategory blank() {
-    return SubCategory(
-        id: id,
-        parentId: parentId,
-        name: name,
-        budgeted: 0.0,
-        available: available);
+    return SubCategory(id: id, parentId: parentId, name: name, budgeted: 0.0, available: available);
   }
 
   /// Creates an exact copy of this.
   SubCategory copy() {
     return SubCategory(
-        id: id,
-        parentId: parentId,
-        name: name,
-        budgeted: budgeted,
-        available: available);
+        id: id, parentId: parentId, name: name, budgeted: budgeted, available: available);
   }
 
   SubCategory copyWith({

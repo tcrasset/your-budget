@@ -35,8 +35,7 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
         date: date,
         memo: memo);
 
-    final int id =
-        await queryContext.addMoneyTransaction(moneyTransactionModel);
+    final int id = await queryContext.addMoneyTransaction(moneyTransactionModel);
 
     return MoneyTransaction(
         id: id,

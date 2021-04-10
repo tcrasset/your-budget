@@ -20,10 +20,8 @@ void main() {
     mockQueries = MockQueries();
     tAccountName = "Test account";
     tAccountBalance = 100.00;
-    creator = AccountCreator(
-        queryContext: mockQueries,
-        name: tAccountName,
-        balance: tAccountBalance);
+    creator =
+        AccountCreator(queryContext: mockQueries, name: tAccountName, balance: tAccountBalance);
   });
   test(
       'when the constructor is called, assign the account name' +
@@ -43,8 +41,7 @@ void main() {
           ' and verify that the call to the database was made', () async {
     //!Arrange
     const int tId = 25;
-    when(mockQueries.addAccount(argThat(isA<AccountModel>())))
-        .thenAnswer((_) async => tId);
+    when(mockQueries.addAccount(argThat(isA<AccountModel>()))).thenAnswer((_) async => tId);
     //!Act
     final Account account = await creator.create();
 
@@ -62,8 +59,7 @@ void main() {
     await creator.create();
 
     //!Act
-    final MoneyTransaction moneyTransaction =
-        await creator.getStartingMoneyTransaction();
+    final MoneyTransaction moneyTransaction = await creator.getStartingMoneyTransaction();
 
     //!Assert
     expect(moneyTransaction.subcatID, Constants.UNASSIGNED_SUBCAT_ID);

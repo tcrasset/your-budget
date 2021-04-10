@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:your_budget/models/utils.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
+import '../../../../models/utils.dart';
 import '../../../../models/utils.dart';
 import '../../modifyTransactions/modify_transaction_state.dart';
 
@@ -22,17 +22,8 @@ class CheckedRow extends StatefulWidget {
   final String payeeName;
   final int transactionId;
 
-  const CheckedRow(
-      this.subcategoryName,
-      this.memo,
-      this.memoStyle,
-      this.amount,
-      this.amountStyle,
-      this.date,
-      this.dateStyle,
-      this.payeeName,
-      this.subcategoryStyle,
-      this.transactionId,
+  const CheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
+      this.date, this.dateStyle, this.payeeName, this.subcategoryStyle, this.transactionId,
       {Key key})
       : super(key: key);
 

@@ -23,14 +23,11 @@ class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   }
 
   MoneyTransaction getById(int id) {
-    return _transactions.singleWhere((transaction) => transaction.id == id,
-        orElse: () => null);
+    return _transactions.singleWhere((transaction) => transaction.id == id, orElse: () => null);
   }
 
   List<MoneyTransaction> getAllBySubcatId(int subcatId) {
-    return _transactions
-        .where((transaction) => transaction.subcatID == subcatId)
-        .toList();
+    return _transactions.where((transaction) => transaction.subcatID == subcatId).toList();
   }
 
   List<MoneyTransaction> getToBeBudgetedTransactions() {

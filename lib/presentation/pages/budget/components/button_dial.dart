@@ -26,36 +26,26 @@ class ButtonDial extends StatelessWidget {
       // width: MediaQuery.of(context).size.width + 60,
 
       child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * 0.20),
+        margin: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.20),
         color: Constants.PRIMARY_COLOR,
         // color: Constants.PRIMARY_COLOR,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton(
-                  "7", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton(
-                  "4", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton(
-                  "1", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("7", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("4", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("1", buttonHeight, buttonWidth, Colors.white, buttonPressed),
             ]),
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton(
-                  "8", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton(
-                  "5", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton(
-                  "2", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("8", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("5", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("2", buttonHeight, buttonWidth, Colors.white, buttonPressed),
             ]),
             Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton(
-                  "9", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton(
-                  "6", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton(
-                  "3", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("9", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("6", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              CustomButton("3", buttonHeight, buttonWidth, Colors.white, buttonPressed),
             ]),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -80,8 +70,7 @@ class ButtonDial extends StatelessWidget {
                       Icons.done,
                       color: Constants.SECONDARY_COLOR,
                     )),
-                CustomButton("0", buttonHeight, buttonWidth, Colors.white,
-                    buttonPressed),
+                CustomButton("0", buttonHeight, buttonWidth, Colors.white, buttonPressed),
               ],
             ),
           ],
@@ -92,8 +81,7 @@ class ButtonDial extends StatelessWidget {
 }
 
 void buttonPressed(BuildContext context, String buttonText) {
-  final BudgetPageState buttonDialState =
-      Provider.of<BudgetPageState>(context, listen: false);
+  final BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
   if (isNumeric(buttonText)) {
     buttonDialState.addDigit(buttonText);
   } else if (buttonText == "Done") {

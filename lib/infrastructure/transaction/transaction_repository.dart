@@ -9,11 +9,11 @@ import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
-import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
-import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/money_transaction.dart';
+import '../../domain/core/value_failure.dart';
+import '../../domain/transaction/i_transaction_repository.dart';
+import '../../models/constants.dart';
+import '../../models/money_transaction.dart';
+import 'transaction_dto.dart';
 
 class SQFliteTransactionRepository implements ITransactionRepository {
   final Database database;

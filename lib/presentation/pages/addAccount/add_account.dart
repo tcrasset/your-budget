@@ -63,11 +63,9 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
   Widget build(BuildContext context) => _AddAccountRouteView(this);
 }
 
-class _AddAccountRouteView
-    extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
+class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
   final TextStyle _textBoxStyle = const TextStyle(fontSize: 25);
-  final TextStyle _accountNameStyle =
-      const TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
+  final TextStyle _accountNameStyle = const TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
   final TextStyle _positiveAmountTextStyle =
       const TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
   final TextStyle _negativeAmountTextStyle =
@@ -139,8 +137,7 @@ class _AddAccountRouteView
                               onSaved: state.handleAccountBalanceSave,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                    RegExp("[0-9-.]"))
+                                FilteringTextInputFormatter.allow(RegExp("[0-9-.]"))
                               ],
                               textInputAction: TextInputAction.done,
                             ),
@@ -173,31 +170,27 @@ class _AddAccountRouteView
     final List<Widget> rows = [];
     for (final Account account in appState.accounts) {
       final row = Container(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  account.name,
-                  style: _accountNameStyle,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  softWrap: false,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Text(
-                account.balance.toStringAsFixed(2) + " €",
-                style: account.balance.isNegative
-                    ? _negativeAmountTextStyle
-                    : _positiveAmountTextStyle,
-                overflow: TextOverflow.fade,
-                maxLines: 1,
-                softWrap: false,
-              )
-            ]),
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: <Widget>[
+          Expanded(
+            child: Text(
+              account.name,
+              style: _accountNameStyle,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              softWrap: false,
+            ),
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+          Text(
+            account.balance.toStringAsFixed(2) + " €",
+            style: account.balance.isNegative ? _negativeAmountTextStyle : _positiveAmountTextStyle,
+            overflow: TextOverflow.fade,
+            maxLines: 1,
+            softWrap: false,
+          )
+        ]),
       );
       rows.add(row);
     }

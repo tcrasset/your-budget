@@ -78,8 +78,7 @@ class DeleteCategoriesState extends ChangeNotifier {
     ///
     /// It verifies that the "Essentials" is not selected for deletion.
     /// If that is the case, the deletion process is aborted.
-    final bool triedToDeleteEssentials =
-        _unallowDeletionOfEssentialMainCategory(context);
+    final bool triedToDeleteEssentials = _unallowDeletionOfEssentialMainCategory(context);
     if (triedToDeleteEssentials) {
       return false;
     } else {
@@ -150,9 +149,8 @@ class DeleteCategoriesState extends ChangeNotifier {
     for (final int categoryId in _getSelectedCategories()) {
       // Getting subcategories which are children of the MainCategory that
       // we're going to delete.
-      final List<SubCategory> toUnselect = appState.subcategories
-          .where((subcat) => subcat.parentId == categoryId)
-          .toList();
+      final List<SubCategory> toUnselect =
+          appState.subcategories.where((subcat) => subcat.parentId == categoryId).toList();
 
       // Unselect categories by setting them to false
       for (final subcat in toUnselect) {

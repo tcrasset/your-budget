@@ -9,11 +9,9 @@ import '../../../../appstate.dart';
 import '../budget_page_state.dart';
 
 class DateButtons extends StatelessWidget {
-  void handleButtonOnPressed(
-      BuildContext context, AppState appState, bool increment) {
+  void handleButtonOnPressed(BuildContext context, AppState appState, bool increment) {
     increment ? appState.incrementMonth() : appState.decrementMonth();
-    final BudgetPageState buttonDialState =
-        Provider.of<BudgetPageState>(context, listen: false);
+    final BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context, listen: false);
     buttonDialState.toggleButtonDial(-1);
   }
 
@@ -27,8 +25,7 @@ class DateButtons extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => handleButtonOnPressed(context, appState, false)),
-          Text(
-              "${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
+          Text("${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
               style: const TextStyle(fontSize: 20)),
           IconButton(
               icon: const Icon(Icons.arrow_forward),

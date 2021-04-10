@@ -37,13 +37,11 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
   Widget build(BuildContext context) => _ModifyCategoriesView(this);
 
   void handleDeleteCategory(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const DeleteCategories()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const DeleteCategories()));
   }
 }
 
-class _ModifyCategoriesView
-    extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
+class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
   const _ModifyCategoriesView(_ModifyCategoriesController state) : super(state);
 
   @override

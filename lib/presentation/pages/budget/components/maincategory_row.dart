@@ -39,11 +39,9 @@ class MainCategoryRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const Text('Budgeted',
-                        textAlign: TextAlign.right,
-                        style: Constants.CATEGORY_TEXT_STYLE),
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
                     Text(cat.budgeted.toStringAsFixed(2),
-                        textAlign: TextAlign.right,
-                        style: Constants.CATEGORY_TEXT_STYLE)
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
                   ],
                 ),
               ),
@@ -53,11 +51,9 @@ class MainCategoryRow extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     const Text('Available',
-                        textAlign: TextAlign.right,
-                        style: Constants.CATEGORY_TEXT_STYLE),
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
                     Text(cat.available.toStringAsFixed(2),
-                        textAlign: TextAlign.right,
-                        style: Constants.CATEGORY_TEXT_STYLE)
+                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
                   ],
                 ),
               ),

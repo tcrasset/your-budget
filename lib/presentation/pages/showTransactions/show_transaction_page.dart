@@ -9,16 +9,17 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
+import '../../../application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import '../../../appstate.dart';
+import '../../../domain/account/i_account_repository.dart';
+import '../../../domain/transaction/i_transaction_repository.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
 import '../../../models/money_transaction.dart';
+import '../core/progress_overlay.dart';
 import '../core/transactions/transaction_list.dart';
-import '../modifyTransactions/modify_transactions.dart';
+
+// import '../modifyTransactions/modify_transactions.dart';
 
 class ShowTransactionPage extends StatelessWidget {
   final String title;
@@ -56,8 +57,7 @@ class TransactionScaffold extends StatelessWidget {
 
               final String errorMessage = state.maybeMap(
                 orElse: () => null,
-                loadFailure: (_) =>
-                    "Failed to load the transactions. Please contact support.",
+                loadFailure: (_) => "Failed to load the transactions. Please contact support.",
               );
 
               if (errorMessage != null) {
@@ -103,8 +103,7 @@ class OptionalTransactionList extends StatelessWidget {
                   const AccountButtons(
                     accountText: "My account",
                   ),
-                  Expanded(
-                      child: TransactionListView(transactions: transactions)),
+                  Expanded(child: TransactionListView(transactions: transactions)),
                 ],
               ),
             );
@@ -165,8 +164,7 @@ class EmptyTransactionList extends StatelessWidget {
     return const Center(
       child: Text(
         "No transactions logged. Please choose an account.",
-        style: TextStyle(
-            color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+        style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
       ),
     );
   }
@@ -206,16 +204,14 @@ class AccountButtons extends StatelessWidget {
         children: [
           IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () =>
-                  handleButtonOnPressed(context: context, increment: false)),
+              onPressed: () => handleButtonOnPressed(context: context, increment: false)),
           Text(
             accountText,
             style: const TextStyle(fontSize: 20),
           ),
           IconButton(
               icon: const Icon(Icons.arrow_forward),
-              onPressed: () =>
-                  handleButtonOnPressed(context: context, increment: true))
+              onPressed: () => handleButtonOnPressed(context: context, increment: true))
         ],
       ),
     );

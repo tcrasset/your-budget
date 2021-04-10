@@ -9,8 +9,8 @@ import '../../../../appstate.dart';
 import '../../../../models/constants.dart';
 
 class ToBeBudgeted extends StatelessWidget {
-  final TextStyle _textStyle = const TextStyle(
-      color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25.0);
+  final TextStyle _textStyle =
+      const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25.0);
 
   final TextStyle _positiveAmountTextStyle =
       const TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);

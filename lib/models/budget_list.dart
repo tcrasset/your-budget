@@ -22,8 +22,7 @@ class BudgetList implements ObjectList<Budget> {
   }
 
   Budget getByDate(DateTime date) {
-    return _budgets.singleWhere((budget) => isSameMonth(budget.date, date),
-        orElse: () => null);
+    return _budgets.singleWhere((budget) => isSameMonth(budget.date, date), orElse: () => null);
   }
 
   void addMaincategory(MainCategory maincat) {

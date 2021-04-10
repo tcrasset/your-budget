@@ -33,9 +33,7 @@ void main() {
     expect(getDateYMD(testDatetime), expectedDatetime);
   });
 
-  test(
-      'getDateFromMonthStart() returns datetime with starting on first of month',
-      () {
+  test('getDateFromMonthStart() returns datetime with starting on first of month', () {
     const int year = 1996;
     const int month = 6;
     const int day = 3;
@@ -44,8 +42,7 @@ void main() {
     expect(getDateFromMonthStart(testDatetime), expectedDatetime);
   });
 
-  test('getMonthDifference() returns difference in months between datetimes',
-      () {
+  test('getMonthDifference() returns difference in months between datetimes', () {
     final DateTime date_1 = DateTime(1996, 6, 3);
     final DateTime date_2 = DateTime(1998, 3, 13);
     expect(getMonthDifference(date_1, date_2), -21);

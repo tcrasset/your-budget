@@ -46,8 +46,8 @@ class _TransactionListState extends State<TransactionList> {
             const Divider(height: 1, color: Colors.black12),
         itemBuilder: (BuildContext context, int index) {
           return Card(
-              child: TransactionRow(transactionsOfAccount[index],
-                  widget.appState.allCategories, widget.isEditable));
+              child: TransactionRow(
+                  transactionsOfAccount[index], widget.appState.allCategories, widget.isEditable));
         },
       ),
     );
@@ -62,10 +62,8 @@ List<MoneyTransaction> _getMoneyTransactions(
   for (final transaction in transactions) {
     final bool isAccountPayee = transaction.payeeID < 0;
 
-    final bool currentAccountIsPayeeAccount =
-        -transaction.payeeID == currentAccountId;
-    final bool currentAccountIsStandardAccount =
-        transaction.accountID == currentAccountId;
+    final bool currentAccountIsPayeeAccount = -transaction.payeeID == currentAccountId;
+    final bool currentAccountIsStandardAccount = transaction.accountID == currentAccountId;
 
     if ((currentAccountIsStandardAccount && !isAccountPayee) ||
         (currentAccountIsPayeeAccount && isAccountPayee)) {

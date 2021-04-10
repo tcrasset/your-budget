@@ -31,10 +31,8 @@ class MyBudget extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider<AppState>.value(value: GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
-      ChangeNotifierProvider<ModifyTransactionsState>(
-          create: (_) => ModifyTransactionsState()),
-      ChangeNotifierProvider<DeleteCategoriesState>(
-          create: (_) => DeleteCategoriesState()),
+      ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
+      ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
     ], child: HomeScreen());
   }
 }
@@ -49,8 +47,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _tabs = [
     ChangeNotifierProvider(
-        create: (_) => BudgetPageState(),
-        child: const BudgetPage(title: 'Bugdet Page')),
+        create: (_) => BudgetPageState(), child: const BudgetPage(title: 'Bugdet Page')),
     const AddAccountRoute(title: 'Accounts'),
     AddTransactionPage(),
     const ShowTransactionPage(title: "Transactions")
@@ -90,11 +87,9 @@ class HomeScreenState extends State<HomeScreen> {
                 label: "Accounts",
               ),
               const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
-                  label: "Add transaction"),
+                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON), label: "Add transaction"),
               const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ALLTRANSACTION_ICON),
-                  label: "Transactions"),
+                  icon: FaIcon(Constants.ALLTRANSACTION_ICON), label: "Transactions"),
             ],
           ),
         ),

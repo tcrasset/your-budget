@@ -30,8 +30,7 @@ void main() {
     budgetValuesList = BudgetValueList(mockQueries, [tBudgetValue]);
   });
 
-  test('when creating a BudgetValueList, ensure the budgetvalues are passed in',
-      () {
+  test('when creating a BudgetValueList, ensure the budgetvalues are passed in', () {
     //!Arrange
     //!Act
     //!Assert
@@ -46,13 +45,10 @@ void main() {
     expect(budgetValuesList.budgetvalues, [tBudgetValue, tBudgetValue]);
   });
 
-  test(
-      'when removeBySubcatId() is called, remove all budgetvalues by subcategory id',
-      () {
+  test('when removeBySubcatId() is called, remove all budgetvalues by subcategory id', () {
     //!Arrange
-    final List<BudgetValue> toRemove = budgetValuesList.budgetvalues
-        .where((bv) => bv.subcategoryId == tSubcatId)
-        .toList();
+    final List<BudgetValue> toRemove =
+        budgetValuesList.budgetvalues.where((bv) => bv.subcategoryId == tSubcatId).toList();
     //!Act
     budgetValuesList.removeBySubcatId(tSubcatId);
     //!Assert
@@ -75,8 +71,7 @@ void main() {
     //!Arrange
     budgetValuesList.add(otherBudgetValue);
     //!Act
-    final BudgetValue budgetvalues =
-        budgetValuesList.getByBudget(tDate, tSubcatId);
+    final BudgetValue budgetvalues = budgetValuesList.getByBudget(tDate, tSubcatId);
 
     //!Assert
     expect(budgetvalues, otherBudgetValue);
@@ -92,16 +87,13 @@ void main() {
     );
     budgetValuesList.add(otherBudgetValue);
     //!Act
-    final List<BudgetValue> budgetvalues =
-        budgetValuesList.getAllBySubcatId(tSubcatIdOther);
+    final List<BudgetValue> budgetvalues = budgetValuesList.getAllBySubcatId(tSubcatIdOther);
 
     //!Assert
     expect(budgetvalues, [otherBudgetValue]);
   });
 
-  test(
-      'verify that updateBudgetValue() update the available and budgeted fields',
-      () {
+  test('verify that updateBudgetValue() update the available and budgeted fields', () {
     //!Arrange
     const double tBudgeted = 56.54;
     const double tAvailable = 87.21;
@@ -109,16 +101,12 @@ void main() {
     //!Act
 
     budgetValuesList.updateBudgetValue(
-        subcatId: tSubcatId,
-        date: tDate,
-        newBudgeted: tBudgeted,
-        newAvailable: tAvailable);
+        subcatId: tSubcatId, date: tDate, newBudgeted: tBudgeted, newAvailable: tAvailable);
 
     //!Assert
     verify(mockQueries.updateBudgetValue(argThat(isA<BudgetValue>())));
 
-    final BudgetValue budgetValue =
-        budgetValuesList.getByBudget(tDate, tSubcatId);
+    final BudgetValue budgetValue = budgetValuesList.getByBudget(tDate, tSubcatId);
     expect(budgetValue.budgeted, tBudgeted);
     expect(budgetValue.available, tAvailable);
   });

@@ -32,23 +32,20 @@ class _BudgetPageState extends State<BudgetPage> {
 
   Future<void> handlePopUpMenuButtonSelected(String selectedItem) async {
     if (selectedItem == "About") {
-      await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => AboutPage()));
+      await Navigator.push(context, MaterialPageRoute(builder: (context) => AboutPage()));
     }
   }
 
   void handleModifyCategories() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ModifyCategories()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => ModifyCategories()));
   }
 
   @override
   Widget build(BuildContext context) {
-    final BudgetPageState buttonDialState =
-        Provider.of<BudgetPageState>(context);
+    final BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context);
     final ButtonDial buttonDial = buttonDialState.showButtonDial
-        ? ButtonDial(MediaQuery.of(context).size.height * 0.3,
-            MediaQuery.of(context).size.width * 0.6)
+        ? ButtonDial(
+            MediaQuery.of(context).size.height * 0.3, MediaQuery.of(context).size.width * 0.6)
         : null;
 
     print("Budget page build");

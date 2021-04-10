@@ -29,8 +29,7 @@ void main() {
 
   test('when add() is called, add an Account', () {
     //!Arrange
-    final Account tAccount2 =
-        Account(id: 100, name: "Test account 2", balance: 200.00);
+    final Account tAccount2 = Account(id: 100, name: "Test account 2", balance: 200.00);
 
     //!Act
     accountList.add(tAccount2);
@@ -38,9 +37,7 @@ void main() {
     expect(accountList.accounts, [tAccount, tAccount2]);
   });
 
-  test(
-      'verify that creditAccount() adds the specified amout to the given account',
-      () {
+  test('verify that creditAccount() adds the specified amout to the given account', () {
     //!Arrange
     const double tAmount = 50.00;
     final double previousBalance = tAccount.balance;
@@ -50,14 +47,11 @@ void main() {
     verify(mockQueries.updateAccount(argThat(isA<Account>())));
     verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
 
-    final Account account =
-        accountList.accounts.singleWhere((account) => account.id == tId);
+    final Account account = accountList.accounts.singleWhere((account) => account.id == tId);
     expect(account.balance, previousBalance + tAmount);
   });
 
-  test(
-      'verify that debitAccount() removes the a specified amout to the given account',
-      () {
+  test('verify that debitAccount() removes the a specified amout to the given account', () {
     //!Arrange
     const double tAmount = 50.00;
     final double previousBalance = tAccount.balance;
@@ -67,8 +61,7 @@ void main() {
     verify(mockQueries.updateAccount(argThat(isA<Account>())));
     verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
 
-    final Account account =
-        accountList.accounts.singleWhere((account) => account.id == tId);
+    final Account account = accountList.accounts.singleWhere((account) => account.id == tId);
     expect(account.balance, previousBalance - tAmount);
   });
 
@@ -83,12 +76,10 @@ void main() {
     verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
   });
 
-  test(
-      'when mostRecentAccount getter is called, return the most recently' +
-          ' used account.', () async {
+  test('when mostRecentAccount getter is called, return the most recently' + ' used account.',
+      () async {
     //!Arrange
-    when(mockQueries.getMostRecentAccountUsed())
-        .thenAnswer((_) async => tAccount.id);
+    when(mockQueries.getMostRecentAccountUsed()).thenAnswer((_) async => tAccount.id);
     //!Act
     Account mostRecent = await accountList.getMostRecentAccount();
     //!Assert
@@ -108,10 +99,8 @@ void main() {
       'verify that cycleNextAccount() cycles through all accounts and sets' +
           'mostRecentAccount appropriately', () async {
     //!Arrange
-    final Account tAccount2 =
-        Account(id: 100, name: "Test account 2", balance: 200.00);
-    final Account tAccount3 =
-        Account(id: 300, name: "Test account 3", balance: 300.00);
+    final Account tAccount2 = Account(id: 100, name: "Test account 2", balance: 200.00);
+    final Account tAccount3 = Account(id: 300, name: "Test account 3", balance: 300.00);
     accountList.add(tAccount2);
     accountList.add(tAccount3);
 

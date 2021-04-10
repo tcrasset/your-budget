@@ -16,8 +16,7 @@ class WaitingScreen extends StatelessWidget {
             color: Constants.PRIMARY_COLOR,
             child: const Center(
                 child: CircularProgressIndicator(
-              valueColor:
-                  AlwaysStoppedAnimation<Color>(Constants.SECONDARY_COLOR),
+              valueColor: AlwaysStoppedAnimation<Color>(Constants.SECONDARY_COLOR),
             ))),
       ),
     );

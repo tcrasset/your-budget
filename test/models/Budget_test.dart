@@ -9,8 +9,8 @@ void main() {
   test('Modifying subcategory outisde Budget changes it inside too', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
-    final SubCategory subcatTest = SubCategory(
-        id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest =
+        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
 
     const double newValue = 9.99;
@@ -20,8 +20,8 @@ void main() {
   test('Budget.addSubcategory() adds a SubCategory to the Budget', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
-    final SubCategory subcatTest = SubCategory(
-        id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest =
+        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
 
     // Construct the myBudget without subcategory
     final Budget myBudget = Budget([catTest], [], 6, 1996);
@@ -49,13 +49,11 @@ void main() {
     expect(myBudget.maincategories, [catTest]);
   });
 
-  test(
-      'Budget.updateSubCategory() modifies the subcategory in the Budget correctly',
-      () {
+  test('Budget.updateSubCategory() modifies the subcategory in the Budget correctly', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
-    final SubCategory subcatTest = SubCategory(
-        id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest =
+        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
 
     // Construct the Budget
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
@@ -91,20 +89,17 @@ void main() {
     expect(budgetCat.hasSameValues(newCat), true);
   });
 
-  test(
-      'Budget.makeSubcategoryChangeBySubcatId() modifies the subcategory correctly',
-      () {
+  test('Budget.makeSubcategoryChangeBySubcatId() modifies the subcategory correctly', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
-    final SubCategory subcatTest = SubCategory(
-        id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest =
+        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
 
     // Construct the Budget
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
 
     //Modify the name
-    myBudget.makeSubcategoryChangeBySubcatId(
-        subcatTest.id, subcatTest.parentId, "name", "Changed");
+    myBudget.makeSubcategoryChangeBySubcatId(subcatTest.id, subcatTest.parentId, "name", "Changed");
     expect(myBudget.subcategories[0].name, "Changed");
     expect(myBudget.maincategories[0].subcategories[0].name, "Changed");
 
@@ -129,25 +124,24 @@ void main() {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest1 = MainCategory(id: 1, name: "Test2");
     final MainCategory catTest2 = MainCategory(id: 2, name: "Test2");
-    final SubCategory subcatTest_1_1 = SubCategory(
-        id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
-    final SubCategory subcatTest_1_2 = SubCategory(
-        id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
-    final SubCategory subcatTest_2_1 = SubCategory(
-        id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_1_1 =
+        SubCategory(id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_1_2 =
+        SubCategory(id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_2_1 =
+        SubCategory(id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
 
     // Add the subcategories to their corresponding maincategory
     catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
     catTest2.addSubcategory(subcatTest_2_1);
 
     // Construct Budget
-    final Budget myBudget = Budget([catTest1, catTest2],
-        [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
+    final Budget myBudget =
+        Budget([catTest1, catTest2], [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
 
     // Construct true version of allcategories
     final List<dynamic> allcategoriesTest = [];
-    allcategoriesTest.addAll(
-        [catTest1, subcatTest_1_1, subcatTest_1_2, catTest2, subcatTest_2_1]);
+    allcategoriesTest.addAll([catTest1, subcatTest_1_1, subcatTest_1_2, catTest2, subcatTest_2_1]);
 
     final List<dynamic> allcategories = myBudget.allcategories;
     for (int i = 0; i < allcategories.length; i++) {
@@ -155,50 +149,48 @@ void main() {
     }
   });
 
-  test('Budget.totalBudgeted sums the budgeted value from every maincategory',
-      () {
+  test('Budget.totalBudgeted sums the budgeted value from every maincategory', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest1 = MainCategory(id: 1, name: "Test2");
     final MainCategory catTest2 = MainCategory(id: 2, name: "Test2");
-    final SubCategory subcatTest_1_1 = SubCategory(
-        id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
-    final SubCategory subcatTest_1_2 = SubCategory(
-        id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
-    final SubCategory subcatTest_2_1 = SubCategory(
-        id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_1_1 =
+        SubCategory(id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_1_2 =
+        SubCategory(id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_2_1 =
+        SubCategory(id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
 
     // Add the subcategories to their corresponding maincategory
     catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
     catTest2.addSubcategory(subcatTest_2_1);
 
     // Construct Budget
-    final Budget myBudget = Budget([catTest1, catTest2],
-        [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
+    final Budget myBudget =
+        Budget([catTest1, catTest2], [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
 
     final double totalBudgetedTest = catTest1.budgeted + catTest2.budgeted;
 
     expect(myBudget.totalBudgeted, totalBudgetedTest);
   });
 
-  test('Budget.removeSubcategory() removes the subcategory and updates values',
-      () {
+  test('Budget.removeSubcategory() removes the subcategory and updates values', () {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest1 = MainCategory(id: 1, name: "Test2");
     final MainCategory catTest2 = MainCategory(id: 2, name: "Test2");
-    final SubCategory subcatTest_1_1 = SubCategory(
-        id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
-    final SubCategory subcatTest_1_2 = SubCategory(
-        id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
-    final SubCategory subcatTest_2_1 = SubCategory(
-        id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_1_1 =
+        SubCategory(id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_1_2 =
+        SubCategory(id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+    final SubCategory subcatTest_2_1 =
+        SubCategory(id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
 
     // Add the subcategories to their corresponding maincategory
     catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
     catTest2.addSubcategory(subcatTest_2_1);
 
     // Construct Budget
-    final Budget myBudget = Budget([catTest1, catTest2],
-        [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
+    final Budget myBudget =
+        Budget([catTest1, catTest2], [subcatTest_1_1, subcatTest_1_2, subcatTest_2_1], 6, 1996);
 
     // Remove subcategory
     myBudget.removeSubcategory(subcatTest_1_2.id, subcatTest_1_2.parentId);
@@ -213,8 +205,7 @@ void main() {
     expect(myBudget.totalBudgeted, 66.52 + 66.52);
   });
 
-  test('verify that updateSubCategoryName updates the names of the subcategory',
-      () {
+  test('verify that updateSubCategoryName updates the names of the subcategory', () {
     //!Arrange
     const int tSubcatId = 3;
     const String tNewName = "Name changed";

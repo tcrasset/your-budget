@@ -43,8 +43,8 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
     appState = Provider.of(context, listen: false);
 
-    _budgetedController = MoneyMaskedTextController(
-        decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: '€');
+    _budgetedController =
+        MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: '€');
   }
 
   @override
@@ -57,8 +57,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
   Widget build(BuildContext context) => _SubcategoryRowView(this);
 }
 
-class _SubcategoryRowView
-    extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
+class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
   const _SubcategoryRowView(_SubcategoryRowController state) : super(state);
 
   Color setColor(double availableAmount) {
@@ -80,9 +79,7 @@ class _SubcategoryRowView
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 10),
-        color: state.buttonDialState.isSelected(widget.subcat.id)
-            ? Colors.grey[200]
-            : Colors.white,
+        color: state.buttonDialState.isSelected(widget.subcat.id) ? Colors.grey[200] : Colors.white,
         child: Row(
           children: <Widget>[
             Expanded(
@@ -114,8 +111,7 @@ class _SubcategoryRowView
                   ),
                   child: Text("${widget.subcat.available.toStringAsFixed(2)} €",
                       textAlign: TextAlign.right,
-                      style:
-                          const TextStyle(fontSize: 18, color: Colors.white)),
+                      style: const TextStyle(fontSize: 18, color: Colors.white)),
                 ),
               ),
             )

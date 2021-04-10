@@ -52,8 +52,8 @@ class MoneyTransaction {
     accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE] as int;
     amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT] as double;
     memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO] as String;
-    date = DateTime.fromMillisecondsSinceEpoch(
-        json[DatabaseConstants.MONEYTRANSACTION_DATE] as int);
+    date =
+        DateTime.fromMillisecondsSinceEpoch(json[DatabaseConstants.MONEYTRANSACTION_DATE] as int);
   }
 
   @override

@@ -31,8 +31,7 @@ import 'select_value.dart';
 
 class AddTransactionPage extends StatefulWidget {
   @override
-  _AddTransactionPageController createState() =>
-      _AddTransactionPageController();
+  _AddTransactionPageController createState() => _AddTransactionPageController();
 }
 
 class _AddTransactionPageController extends State<AddTransactionPage> {
@@ -92,8 +91,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     subcategoryFieldName = defaultSubcategoryFieldName;
     dateFieldName = getDateString(_date);
 
-    amountController =
-        TextEditingController(text: currencyNumberFormat.format(0).trim());
+    amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
 
   /// Resets all the field to their default value
@@ -111,8 +109,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       accountFieldName = defaultAccountFieldName;
       subcategoryFieldName = defaultSubcategoryFieldName;
       dateFieldName = getDateString(_date);
-      amountController =
-          TextEditingController(text: currencyNumberFormat.format(0).trim());
+      amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       memoController.clear();
       _setOffsetToLastDigit();
     });
@@ -137,8 +134,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     final returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) =>
-              SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
+          builder: (context) => SelectValuePage(title: "Payees", listEntries: payeesAndAccounts)),
     );
     // print(returnElement);
     if (returnElement != null) _setPayee(returnElement);
@@ -159,8 +155,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     final Account returnElement = await Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => SelectValuePage(
-              title: "Accounts", listEntries: appState.accounts)),
+          builder: (context) => SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
     );
 
     if (returnElement != null) _setAccount(returnElement);
@@ -196,9 +191,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   void _setSubcategory(dynamic returnElement) {
     setState(() {
       _subcategory = returnElement;
-      subcategoryFieldName = returnElement is SubCategory
-          ? returnElement.name
-          : returnElement.data as String;
+      subcategoryFieldName =
+          returnElement is SubCategory ? returnElement.name : returnElement.data as String;
     });
   }
 
@@ -252,9 +246,8 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     if (_formKey.currentState.validate()) {
       final bool isNegativeTransactionsIntoToBeBudgeted =
           !isPositive && subcategoryFieldName == "To be budgeted";
-      final bool isPositiveTranasctionsIntoSubcategory = isPositive &&
-          (payee is! Account) &&
-          subcategoryFieldName != "To be budgeted";
+      final bool isPositiveTranasctionsIntoSubcategory =
+          isPositive && (payee is! Account) && subcategoryFieldName != "To be budgeted";
 
       if (isNegativeTransactionsIntoToBeBudgeted) {
         const SnackBar snackbar = SnackBar(
@@ -308,8 +301,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     print("Amount : $_amount");
     print("Payee : $payeeFieldName");
     print("Account : $accountFieldName");
-    print(
-        "Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
+    print("Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
     print("Date: $dateFieldName");
     print("Memo : ${memoController.text}");
 
@@ -323,8 +315,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   int _selectSubcatId() {
-    final bool subcategoryIsToBeBudgeted =
-        subcategoryFieldName == "To be budgeted";
+    final bool subcategoryIsToBeBudgeted = subcategoryFieldName == "To be budgeted";
     if (payee is Payee && !subcategoryIsToBeBudgeted) {
       return _subcategory.id as int;
     } else if (payee is Account && !subcategoryIsToBeBudgeted) {
@@ -342,8 +333,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     setState(() {
       isPositive = !isPositive;
 
-      final bool positiveWithMinusSign =
-          isPositive && amountController.text[0] == '-';
+      final bool positiveWithMinusSign = isPositive && amountController.text[0] == '-';
       if (positiveWithMinusSign) {
         _removeMinusSign();
       } else if (!isPositive) _addMinusSign();
@@ -383,8 +373,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   void _setOffsetToLastDigit() {
-    amountController.selection =
-        TextSelection.collapsed(offset: amountController.text.length - 2);
+    amountController.selection = TextSelection.collapsed(offset: amountController.text.length - 2);
   }
 
   @override
@@ -393,14 +382,12 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
 class _AddTransactionPageView
     extends WidgetView<AddTransactionPage, _AddTransactionPageController> {
-  const _AddTransactionPageView(_AddTransactionPageController state)
-      : super(state);
+  const _AddTransactionPageView(_AddTransactionPageController state) : super(state);
 
   Widget _myBuildMethod(BuildContext context) {
-    const TextStyle defaultChildTextStyle = TextStyle(
-        color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-    const TextStyle selectedChildTextStyle =
-        TextStyle(color: Colors.black, fontSize: 16.0);
+    const TextStyle defaultChildTextStyle =
+        TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+    const TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
 
     //Populate the list of container with the number controllers and
     //the custom listTiles
@@ -428,8 +415,7 @@ class _AddTransactionPageView
                 state: state,
                 defaultChildTextStyle: defaultChildTextStyle,
                 selectedChildTextStyle: selectedChildTextStyle),
-            DateField(
-                state: state, selectedChildTextStyle: selectedChildTextStyle),
+            DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
             MemoField(state: state),
           ],
         ),

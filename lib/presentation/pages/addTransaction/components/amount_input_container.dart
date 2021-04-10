@@ -47,14 +47,12 @@ class AmountInputContainer extends StatelessWidget {
           controller: state.amountController as TextEditingController,
           inputFormatters: [
             LengthLimitingTextInputFormatter(state.amountLength as int),
-            CurrencyInputFormatter(state.currencyNumberFormat as NumberFormat,
-                state.isPositive as bool),
+            CurrencyInputFormatter(
+                state.currencyNumberFormat as NumberFormat, state.isPositive as bool),
           ],
           textInputAction: TextInputAction.done,
           textAlign: TextAlign.right,
-          style: state.isPositive as bool
-              ? _positiveAmountTextStyle
-              : _negativeAmountTextStyle,
+          style: state.isPositive as bool ? _positiveAmountTextStyle : _negativeAmountTextStyle,
           validator: (value) => state.handleAmountValidate(value) as String,
           // onSaved: state.han dleAmountOnSave(),
           onTap: () => state.handleAmountOnTap(),

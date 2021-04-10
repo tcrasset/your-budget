@@ -68,8 +68,7 @@ void main() {
     const double balance = 999.99;
     const int accountId = 1;
     const int moneyTransactionId = 1;
-    final Account tAccount =
-        Account(id: accountId, name: accountName, balance: balance);
+    final Account tAccount = Account(id: accountId, name: accountName, balance: balance);
     final MoneyTransaction tMoneyTransaction = MoneyTransaction(
         id: moneyTransactionId,
         accountID: accountId,
@@ -81,8 +80,7 @@ void main() {
 
     when(mockQueries.getFirstTransactionOfAccount(accountId))
         .thenAnswer((_) async => tMoneyTransaction);
-    when(mockQueries.addAccount(argThat(isA<AccountModel>())))
-        .thenAnswer((_) async => accountId);
+    when(mockQueries.addAccount(argThat(isA<AccountModel>()))).thenAnswer((_) async => accountId);
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => moneyTransactionId);
 
@@ -91,20 +89,18 @@ void main() {
 
     //!Assert
     verify(mockQueries.addAccount(argThat(isA<AccountModel>())));
-    verify(
-        mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
+    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
 
     // Verify that we call computeToBeBudgeted() once (we only added a single account)
     verify(mockQueries.getFirstTransactionOfAccount(argThat(isA<int>())));
     // Compare accounts
-    final Account account =
-        appState.accounts.singleWhere((acc) => acc.id == accountId);
+    final Account account = appState.accounts.singleWhere((acc) => acc.id == accountId);
     final bool accountResult = tAccount.hasSameValues(account);
     expect(accountResult, true);
 
     // Compare transactions (without data comparison)
-    final MoneyTransaction transaction = appState.transactions
-        .singleWhere((transaction) => transaction.id == tMoneyTransaction.id);
+    final MoneyTransaction transaction =
+        appState.transactions.singleWhere((transaction) => transaction.id == tMoneyTransaction.id);
 
     expect(transaction.id, tMoneyTransaction.id);
     expect(transaction.subcatID, tMoneyTransaction.subcatID);
@@ -113,14 +109,11 @@ void main() {
     expect(transaction.amount, tMoneyTransaction.amount);
   });
 
-  test(
-      'when addCategory() is called, add category to the database and to each budget',
-      () {
+  test('when addCategory() is called, add category to the database and to each budget', () {
     //!Arrange
     const String tCategoryName = "Essentials";
     const int tCategoryId = 1;
-    final MainCategory tCategory =
-        MainCategory(id: tCategoryId, name: tCategoryName);
+    final MainCategory tCategory = MainCategory(id: tCategoryId, name: tCategoryName);
 
     when(mockQueries.addCategory(argThat(isA<MainCategoryModel>())))
         .thenAnswer((_) async => tCategoryId);
@@ -131,23 +124,19 @@ void main() {
     //!Assert
     verify(mockQueries.addCategory(argThat(isA<MainCategoryModel>())));
     for (final Budget budget in appState.budgets) {
-      final MainCategory cat =
-          budget.maincategories.singleWhere((cat) => cat.id == tCategoryId);
+      final MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == tCategoryId);
       expect(cat.id, tCategory.id);
       expect(cat.name, tCategory.name);
     }
   });
 
-  test(
-      'when addPayee() is called then add a payee to the state and the database',
-      () async {
+  test('when addPayee() is called then add a payee to the state and the database', () async {
     //!Arrange
     const String tPayeeName = "Savings";
     const int tPayeeId = 1;
     final Payee tPayee = Payee(id: tPayeeId, name: tPayeeName);
 
-    when(mockQueries.addPayee(argThat(isA<PayeeModel>())))
-        .thenAnswer((_) async => tPayeeId);
+    when(mockQueries.addPayee(argThat(isA<PayeeModel>()))).thenAnswer((_) async => tPayeeId);
 
     //!Act
     await appState.addPayee(payeeName: tPayeeName);
@@ -155,8 +144,7 @@ void main() {
     //!Assert
     verify(mockQueries.addPayee(argThat(isA<PayeeModel>())));
 
-    final Payee payee =
-        appState.payees.singleWhere((payee) => payee.id == tPayeeId);
+    final Payee payee = appState.payees.singleWhere((payee) => payee.id == tPayeeId);
     final bool result = tPayee.hasSameValues(payee);
 
     expect(result, true);
@@ -188,8 +176,8 @@ void main() {
 
     // Verify that the subcategory was added to every budget
     for (final Budget budget in appState.budgets) {
-      final SubCategory subcat = budget.subcategories
-          .singleWhere((subcat) => subcat.id == tSubcategoryId);
+      final SubCategory subcat =
+          budget.subcategories.singleWhere((subcat) => subcat.id == tSubcategoryId);
       final bool result = subcat.hasSameValues(tSubcategory);
       expect(result, true);
     }
@@ -242,8 +230,7 @@ void main() {
       nbCalls++;
     } while (previousDate.isBefore(maxBudgetDate));
 
-    verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())))
-        .called(nbCalls);
+    verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>()))).called(nbCalls);
 
     // Check that there are no transactions after that date
     previousDate = Jiffy(previousDate).add(months: 1);
@@ -287,8 +274,7 @@ void main() {
         memo: tMemo);
 
     //!Assert
-    verify(
-        mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
+    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
     verify(mockQueries.updateMostRecentAccountUsed(tAccountId));
 
     final MoneyTransaction transaction =
@@ -320,18 +306,15 @@ void main() {
         .thenAnswer((_) async => tTransactionId);
 
     final double previousToBeBudgeted = appState.toBeBudgeted;
-    final Account account =
-        appState.accounts.singleWhere((account) => account.id == tAccountId);
+    final Account account = appState.accounts.singleWhere((account) => account.id == tAccountId);
     final double previousAccountBalance = account.balance;
 
     /// Saving the [toBeBudgetedInputFromMoneyTransactions] of every
     /// [budget] before adding the transaction
-    final HashMap<DateTime, double> inputFromMoneyTranasctionsBefore =
-        HashMap<DateTime, double>();
+    final HashMap<DateTime, double> inputFromMoneyTranasctionsBefore = HashMap<DateTime, double>();
     for (final budget in appState.budgets) {
       final DateTime budgetDate = DateTime(budget.year, budget.month);
-      inputFromMoneyTranasctionsBefore[budgetDate] =
-          budget.toBeBudgetedInputFromMoneyTransactions;
+      inputFromMoneyTranasctionsBefore[budgetDate] = budget.toBeBudgetedInputFromMoneyTransactions;
     }
 
     //!Act
@@ -346,8 +329,7 @@ void main() {
     //!Assert
     // Verify that the account was updated
     final double afterAccountBalance = account.balance;
-    final double accountBalanceDifference =
-        afterAccountBalance - previousAccountBalance;
+    final double accountBalanceDifference = afterAccountBalance - previousAccountBalance;
     expect(accountBalanceDifference, tAmount);
     verify(mockQueries.updateAccount(account));
 
@@ -372,8 +354,7 @@ void main() {
           ', then update both accounts', () async {
     const int tTransactionId = 111;
     const int tSubcatId = Constants.UNASSIGNED_SUBCAT_ID;
-    const int tPayeeId =
-        -FakeDatabase.TEST_ACCOUNT_ID_2; //Negative account id as payee id
+    const int tPayeeId = -FakeDatabase.TEST_ACCOUNT_ID_2; //Negative account id as payee id
     const int tAccountId = FakeDatabase.TEST_ACCOUNT_ID_1;
     const double tAmount = 1000.00;
     const String tMemo = "Test Passed";
@@ -383,10 +364,8 @@ void main() {
         .thenAnswer((_) async => tTransactionId);
 
     // Get previous account balances
-    final Account outAccount =
-        appState.accounts.singleWhere((account) => account.id == tAccountId);
-    final Account inAccount =
-        appState.accounts.singleWhere((account) => account.id == -tPayeeId);
+    final Account outAccount = appState.accounts.singleWhere((account) => account.id == tAccountId);
+    final Account inAccount = appState.accounts.singleWhere((account) => account.id == -tPayeeId);
     final double outAccountPreviousBalance = outAccount.balance;
     final double inAccountPreviousBalance = inAccount.balance;
 
@@ -423,8 +402,7 @@ void main() {
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => tTransactionId);
 
-    final Account account =
-        appState.accounts.singleWhere((account) => account.id == tAccountId);
+    final Account account = appState.accounts.singleWhere((account) => account.id == tAccountId);
     final double previousAccountBalance = account.balance;
 
     //!Act
@@ -451,10 +429,8 @@ void main() {
     //!Arrange
     const int subcatIdToRemove = FakeDatabase.TEST_SUBCATEGORY_ID;
 
-    final int nbBudgetValuesToRemove = appState.budgetValues
-        .where((bv) => bv.subcategoryId == subcatIdToRemove)
-        .toList()
-        .length;
+    final int nbBudgetValuesToRemove =
+        appState.budgetValues.where((bv) => bv.subcategoryId == subcatIdToRemove).toList().length;
 
     //!Act
     appState.removeSubcategory(subcatIdToRemove);
@@ -462,9 +438,8 @@ void main() {
     //!Assert
     // Verify that the subcategory was removed from every budget
     for (final budget in appState.budgets) {
-      final SubCategory subcat = budget.subcategories.singleWhere(
-          (subcat) => subcat.id == subcatIdToRemove,
-          orElse: () => null);
+      final SubCategory subcat = budget.subcategories
+          .singleWhere((subcat) => subcat.id == subcatIdToRemove, orElse: () => null);
       expect(subcat, null);
     }
     verify(mockQueries.deleteSubcategory(subcatIdToRemove));
@@ -490,8 +465,7 @@ void main() {
 
     //!Assert
     for (final budget in appState.budgets) {
-      final MainCategory cat =
-          budget.maincategories.singleWhere((cat) => cat.id == catId);
+      final MainCategory cat = budget.maincategories.singleWhere((cat) => cat.id == catId);
       expect(cat.name, tCat.name);
     }
 
@@ -561,8 +535,7 @@ void main() {
       'when decrementMonth() is called, and we are already at startingBudgetDate' +
           ', dont decrement', () async {
     //!Arrange
-    final DateTime startingBudgetDate =
-        await mockQueries.getStartingBudgetDateConstant();
+    final DateTime startingBudgetDate = await mockQueries.getStartingBudgetDateConstant();
     appState.currentBudgetDate = startingBudgetDate;
 
     //!Act
@@ -575,13 +548,11 @@ void main() {
 
   test(
       'when removeCategory() is called, remove a category and its SubCategories from ' +
-          'the database and from the state, and call computeToBeBudgeted()',
-      () {
+          'the database and from the state, and call computeToBeBudgeted()', () {
     //!Arrange
     const int catIdToBeRemoved = FakeDatabase.TEST_CATEGORY_ID;
-    final List<SubCategory> subcategoriesToBeDeleted = appState.subcategories
-        .where((subcat) => subcat.parentId == catIdToBeRemoved)
-        .toList();
+    final List<SubCategory> subcategoriesToBeDeleted =
+        appState.subcategories.where((subcat) => subcat.parentId == catIdToBeRemoved).toList();
 
     //!Act
     appState.removeCategory(catIdToBeRemoved);
@@ -644,15 +615,14 @@ void main() {
     //!Assert
 
     // Verify that we updated the current budget
-    final SubCategory subcat = appState.currentBudget.subcategories
-        .singleWhere((subcat) => subcat.id == tSubcat.id);
+    final SubCategory subcat =
+        appState.currentBudget.subcategories.singleWhere((subcat) => subcat.id == tSubcat.id);
     expect(subcat.budgeted, tBudgeted);
     expect(subcat.available, tAvailable);
 
     // Verify that we update the budget and available amount of the budgetvalue
     // for that subcategory for the month it belongs to
-    final BudgetValue correspondingBudgetValue =
-        appState.budgetValues.singleWhere(
+    final BudgetValue correspondingBudgetValue = appState.budgetValues.singleWhere(
       (budgetValue) =>
           (budgetValue.subcategoryId == tSubcat.id) &&
           (budgetValue.year == appState.currentBudgetDate.year) &&
@@ -681,8 +651,7 @@ void main() {
 
     while (date.isBefore(maxBudgetDate)) {
       // Verify that the available value in each BudgetValue was updated correctly
-      final BudgetValue correspondingBudgetValue =
-          appState.budgetValues.singleWhere(
+      final BudgetValue correspondingBudgetValue = appState.budgetValues.singleWhere(
         (budgetValue) =>
             (budgetValue.subcategoryId == tSubcat.id) &&
             (budgetValue.year == date.year) &&
@@ -695,8 +664,8 @@ void main() {
       verify(mockQueries.updateBudgetValue(correspondingBudgetValue));
 
       // Verify that we modify the subcategory in each budget
-      final Budget budget = appState.budgets.singleWhere((budget) =>
-          (budget.year == date.year) && (budget.month == date.month));
+      final Budget budget = appState.budgets
+          .singleWhere((budget) => (budget.year == date.year) && (budget.month == date.month));
       final SubCategory subcat =
           budget.subcategories.singleWhere((subcat) => subcat.id == tSubcat.id);
       expect(subcat.available, correspondingBudgetValue.available);
@@ -720,8 +689,8 @@ void main() {
     //!Assert
 
     verify(mockQueries.deleteTransaction(tTransaction.id));
-    final MoneyTransaction shouldBeNullTransaction = appState.transactions
-        .singleWhere((tr) => tr.id == tTransaction.id, orElse: () => null);
+    final MoneyTransaction shouldBeNullTransaction =
+        appState.transactions.singleWhere((tr) => tr.id == tTransaction.id, orElse: () => null);
     expect(shouldBeNullTransaction, null);
   });
 
@@ -739,13 +708,12 @@ void main() {
       memo: "",
     );
 
-    final Account account = appState.accounts
-        .singleWhere((acc) => acc.id == tTransaction.accountID);
-    final Budget budget = appState.budgets
-        .singleWhere((budget) => isSameMonth(budget.date, tTransaction.date));
+    final Account account =
+        appState.accounts.singleWhere((acc) => acc.id == tTransaction.accountID);
+    final Budget budget =
+        appState.budgets.singleWhere((budget) => isSameMonth(budget.date, tTransaction.date));
 
-    final double previousBudgetToBeBudgeted =
-        budget.toBeBudgetedInputFromMoneyTransactions;
+    final double previousBudgetToBeBudgeted = budget.toBeBudgetedInputFromMoneyTransactions;
     final double previousAccountBalance = account.balance;
 
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
@@ -766,13 +734,11 @@ void main() {
 
     //!Assert
     //Verify that the balance was the same as before (add and remove)
-    expect(account.balance.toStringAsFixed(2),
-        previousAccountBalance.toStringAsFixed(2));
+    expect(account.balance.toStringAsFixed(2), previousAccountBalance.toStringAsFixed(2));
     verify(mockQueries.updateAccount(account));
 
     //Verify that the to be budgeted field in bduget is the same (add and remove)
-    expect(budget.toBeBudgetedInputFromMoneyTransactions,
-        previousBudgetToBeBudgeted);
+    expect(budget.toBeBudgetedInputFromMoneyTransactions, previousBudgetToBeBudgeted);
 
     verify(mockQueries.getFirstTransactionOfAccount(any));
   });
@@ -784,8 +750,7 @@ void main() {
     final MoneyTransaction tTransaction = MoneyTransaction(
       id: 875,
       accountID: FakeDatabase.TEST_ACCOUNT_ID_1,
-      payeeID:
-          -FakeDatabase.TEST_ACCOUNT_ID_2, //Negative account id as payee id
+      payeeID: -FakeDatabase.TEST_ACCOUNT_ID_2, //Negative account id as payee id
       subcatID: Constants.UNASSIGNED_SUBCAT_ID,
       amount: 875.42,
       date: DateTime.now(),
@@ -796,10 +761,10 @@ void main() {
         .thenAnswer((_) async => tTransaction.id);
 
     // Get previous account balances
-    final Account outAccount = appState.accounts
-        .singleWhere((account) => account.id == tTransaction.accountID);
-    final Account inAccount = appState.accounts
-        .singleWhere((account) => account.id == -tTransaction.payeeID);
+    final Account outAccount =
+        appState.accounts.singleWhere((account) => account.id == tTransaction.accountID);
+    final Account inAccount =
+        appState.accounts.singleWhere((account) => account.id == -tTransaction.payeeID);
 
     final double outAccountPreviousBalance = outAccount.balance;
     final double inAccountPreviousBalance = inAccount.balance;
@@ -819,10 +784,8 @@ void main() {
     appState.deleteTransaction(tTransaction.id);
     //!Assert
     // Verify that accounts get updated (add and remove)
-    expect(outAccount.balance.toStringAsFixed(2),
-        outAccountPreviousBalance.toStringAsFixed(2));
-    expect(inAccount.balance.toStringAsFixed(2),
-        inAccountPreviousBalance.toStringAsFixed(2));
+    expect(outAccount.balance.toStringAsFixed(2), outAccountPreviousBalance.toStringAsFixed(2));
+    expect(inAccount.balance.toStringAsFixed(2), inAccountPreviousBalance.toStringAsFixed(2));
     verify(mockQueries.updateAccount(outAccount));
     verify(mockQueries.updateAccount(inAccount));
   });
@@ -845,8 +808,8 @@ void main() {
     when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
         .thenAnswer((_) async => tTransaction.id);
 
-    final Account account = appState.accounts
-        .singleWhere((account) => account.id == tTransaction.accountID);
+    final Account account =
+        appState.accounts.singleWhere((account) => account.id == tTransaction.accountID);
     final double previousAccountBalance = account.balance;
 
     //!Act
@@ -865,8 +828,7 @@ void main() {
 
     //!Assert
     verify(mockQueries.updateAccount(account));
-    expect(account.balance.toStringAsFixed(2),
-        previousAccountBalance.toStringAsFixed(2));
+    expect(account.balance.toStringAsFixed(2), previousAccountBalance.toStringAsFixed(2));
 
     // Verify that it updates the budget values of every month after
     final int nbMonths = getMonthDifference(tDate, getMaxBudgetDate()).abs();
@@ -878,22 +840,19 @@ void main() {
 
   test(
       'when computeToBeBudgeted() isaccount called, sum up the balance of every account' +
-          'then remove the budgeted amounts and add the input money from transacctions',
-      () async {
+          'then remove the budgeted amounts and add the input money from transacctions', () async {
     //!Arrange
     final DateTime tCurrentBudgetDate = DateTime(2021, 7);
     final double tToBeBudgeted =
         _testComputeToBeBudgeted(fakeDatabase, appState, tCurrentBudgetDate);
 
-    when(mockQueries
-            .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1))
-        .thenAnswer((_) async => fakeDatabase.moneyTransactions.singleWhere(
-            (mt) => mt.accountID == FakeDatabase.TEST_ACCOUNT_ID_1));
+    when(mockQueries.getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1)).thenAnswer(
+        (_) async => fakeDatabase.moneyTransactions
+            .singleWhere((mt) => mt.accountID == FakeDatabase.TEST_ACCOUNT_ID_1));
 
-    when(mockQueries
-            .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2))
-        .thenAnswer((_) async => fakeDatabase.moneyTransactions.singleWhere(
-            (mt) => mt.accountID == FakeDatabase.TEST_ACCOUNT_ID_2));
+    when(mockQueries.getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2)).thenAnswer(
+        (_) async => fakeDatabase.moneyTransactions
+            .singleWhere((mt) => mt.accountID == FakeDatabase.TEST_ACCOUNT_ID_2));
 
     //!Act
     appState.currentBudgetDate = tCurrentBudgetDate;
@@ -901,10 +860,8 @@ void main() {
 
     //!Assert
     expect(appState.toBeBudgeted, tToBeBudgeted);
-    verify(mockQueries
-        .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1));
-    verify(mockQueries
-        .getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2));
+    verify(mockQueries.getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_1));
+    verify(mockQueries.getFirstTransactionOfAccount(FakeDatabase.TEST_ACCOUNT_ID_2));
   });
 
   test(
@@ -918,8 +875,7 @@ void main() {
         _testLastMonthBudgeted(tSubcatId, tCurrentBudgetDate, appState);
     //!Act
     appState.currentBudgetDate = tCurrentBudgetDate;
-    final double lastMonthBudgeted =
-        appState.computeLastMonthBudgeted(tSubcatId);
+    final double lastMonthBudgeted = appState.computeLastMonthBudgeted(tSubcatId);
 
     //!Assert
     expect(lastMonthBudgeted, tLastMonthBudgeted);
@@ -931,8 +887,7 @@ void main() {
     //TODO: Implement test for createMonthlyBudgets
     //!Arrange
     final DateTime currentDate = fakeDatabase.startingBudgetDate;
-    final DateTime storedMaxBudgetDate =
-        await mockQueries.getMaxBudgetDateConstant();
+    final DateTime storedMaxBudgetDate = await mockQueries.getMaxBudgetDateConstant();
     //!Act
 
     //!Assert
@@ -952,8 +907,8 @@ double _testComputeToBeBudgeted(
 
   do {
     prevDate = nextDate;
-    final Budget budget = appState.budgets.singleWhere((budget) =>
-        budget.year == prevDate.year && budget.month == prevDate.month);
+    final Budget budget = appState.budgets
+        .singleWhere((budget) => budget.year == prevDate.year && budget.month == prevDate.month);
     tToBeBudgeted -= budget.totalBudgeted;
     tToBeBudgeted += budget.toBeBudgetedInputFromMoneyTransactions;
     //Go to next month
@@ -962,20 +917,17 @@ double _testComputeToBeBudgeted(
   return tToBeBudgeted;
 }
 
-double _testLastMonthBudgeted(
-    int subcatId, DateTime tCurrentBudgetDate, AppState appState) {
+double _testLastMonthBudgeted(int subcatId, DateTime tCurrentBudgetDate, AppState appState) {
   final DateTime lastMonthDate = Jiffy(tCurrentBudgetDate).subtract(months: 1);
   final Budget lastMonthBudget = appState.budgets.singleWhere(
-      (budget) =>
-          budget.year == lastMonthDate.year &&
-          budget.month == lastMonthDate.month,
+      (budget) => budget.year == lastMonthDate.year && budget.month == lastMonthDate.month,
       orElse: () => null);
 
   if (lastMonthBudget == null) {
     return 0.00;
   }
 
-  final SubCategory lastMonthSubcat = lastMonthBudget.subcategories
-      .singleWhere((subcat) => subcat.id == subcatId);
+  final SubCategory lastMonthSubcat =
+      lastMonthBudget.subcategories.singleWhere((subcat) => subcat.id == subcatId);
   return lastMonthSubcat.budgeted;
 }

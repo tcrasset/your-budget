@@ -28,14 +28,14 @@ class TransactionRow extends StatefulWidget {
 class _TransactionRowState extends State<TransactionRow> {
   @override
   Widget build(BuildContext context) {
-    const TextStyle memoStyle = TextStyle(
-        fontSize: 16, fontStyle: FontStyle.italic, color: Colors.grey);
+    const TextStyle memoStyle =
+        TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Colors.grey);
 
-    const TextStyle dateStyle = TextStyle(
-        fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
+    const TextStyle dateStyle =
+        TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
 
-    const TextStyle subcategoryStyle = TextStyle(
-        fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
+    const TextStyle subcategoryStyle =
+        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
 
     String subcategoryName = "";
     String payeeName;
@@ -90,20 +90,16 @@ class _TransactionRowState extends State<TransactionRow> {
     }
     // Transaction into subcategories
     final correspondingSubcategory = widget.categories.singleWhere(
-        (cat) =>
-            cat is SubCategory && cat.id == widget.moneyTransaction.subcatID,
+        (cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID,
         orElse: () => null);
-    return correspondingSubcategory != null
-        ? correspondingSubcategory.name
-        : "";
+    return correspondingSubcategory != null ? correspondingSubcategory.name : "";
   }
 
   String _setPayeeName(AppState appState) {
     if (appState.payees.isNotEmpty) {
       // orElse is for starting balance
-      final Payee payee = appState.payees.singleWhere(
-          (payee) => payee.id == widget.moneyTransaction.payeeID,
-          orElse: () => null);
+      final Payee payee = appState.payees
+          .singleWhere((payee) => payee.id == widget.moneyTransaction.payeeID, orElse: () => null);
 
       return payee != null ? payee.name : "";
     }

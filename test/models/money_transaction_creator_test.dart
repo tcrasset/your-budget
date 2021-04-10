@@ -36,8 +36,7 @@ void main() {
         date: tDate);
   });
 
-  test('when the constructor is called, verify that the arguments are saved',
-      () {
+  test('when the constructor is called, verify that the arguments are saved', () {
     //!Arrange
 
     //!Act
@@ -62,8 +61,7 @@ void main() {
     final MoneyTransaction moneyTransaction = await creator.create();
 
     //!Assert
-    verify(
-        mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
+    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
     expect(moneyTransaction.id, tId);
     expect(moneyTransaction.payeeID, tPayeeId);
     expect(moneyTransaction.accountID, tAccountId);
