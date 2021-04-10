@@ -41,8 +41,7 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
             );
       },
       transactionsReceived: (e) async* {
-        final failureOrTransaction = e.failureOrTransactions;
-        yield failureOrTransaction.fold(
+        yield e.failureOrTransactions.fold(
           (f) => TransactionWatcherState.loadFailure(f),
           (transactions) => TransactionWatcherState.loadSuccess(transactions),
         );

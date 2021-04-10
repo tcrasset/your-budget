@@ -51,8 +51,7 @@ mixin _$TransactionWatcherEvent {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(
-        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result transactionsReceived(Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     Result cycleAccount(bool increment),
     @required Result orElse(),
   });
@@ -73,8 +72,8 @@ mixin _$TransactionWatcherEvent {
 
 /// @nodoc
 abstract class $TransactionWatcherEventCopyWith<$Res> {
-  factory $TransactionWatcherEventCopyWith(TransactionWatcherEvent value,
-          $Res Function(TransactionWatcherEvent) then) =
+  factory $TransactionWatcherEventCopyWith(
+          TransactionWatcherEvent value, $Res Function(TransactionWatcherEvent) then) =
       _$TransactionWatcherEventCopyWithImpl<$Res>;
 }
 
@@ -90,8 +89,8 @@ class _$TransactionWatcherEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$TransactionWatchStartedCopyWith<$Res> {
-  factory _$TransactionWatchStartedCopyWith(_TransactionWatchStarted value,
-          $Res Function(_TransactionWatchStarted) then) =
+  factory _$TransactionWatchStartedCopyWith(
+          _TransactionWatchStarted value, $Res Function(_TransactionWatchStarted) then) =
       __$TransactionWatchStartedCopyWithImpl<$Res>;
 }
 
@@ -99,13 +98,12 @@ abstract class _$TransactionWatchStartedCopyWith<$Res> {
 class __$TransactionWatchStartedCopyWithImpl<$Res>
     extends _$TransactionWatcherEventCopyWithImpl<$Res>
     implements _$TransactionWatchStartedCopyWith<$Res> {
-  __$TransactionWatchStartedCopyWithImpl(_TransactionWatchStarted _value,
-      $Res Function(_TransactionWatchStarted) _then)
+  __$TransactionWatchStartedCopyWithImpl(
+      _TransactionWatchStarted _value, $Res Function(_TransactionWatchStarted) _then)
       : super(_value, (v) => _then(v as _TransactionWatchStarted));
 
   @override
-  _TransactionWatchStarted get _value =>
-      super._value as _TransactionWatchStarted;
+  _TransactionWatchStarted get _value => super._value as _TransactionWatchStarted;
 }
 
 /// @nodoc
@@ -144,8 +142,7 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(
-        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result transactionsReceived(Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     Result cycleAccount(bool increment),
     @required Result orElse(),
   }) {
@@ -191,16 +188,14 @@ abstract class _TransactionWatchStarted implements TransactionWatcherEvent {
 
 /// @nodoc
 abstract class _$TransactionsReceivedCopyWith<$Res> {
-  factory _$TransactionsReceivedCopyWith(_TransactionsReceived value,
-          $Res Function(_TransactionsReceived) then) =
+  factory _$TransactionsReceivedCopyWith(
+          _TransactionsReceived value, $Res Function(_TransactionsReceived) then) =
       __$TransactionsReceivedCopyWithImpl<$Res>;
-  $Res call(
-      {Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions});
+  $Res call({Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions});
 }
 
 /// @nodoc
-class __$TransactionsReceivedCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+class __$TransactionsReceivedCopyWithImpl<$Res> extends _$TransactionWatcherEventCopyWithImpl<$Res>
     implements _$TransactionsReceivedCopyWith<$Res> {
   __$TransactionsReceivedCopyWithImpl(
       _TransactionsReceived _value, $Res Function(_TransactionsReceived) _then)
@@ -216,16 +211,14 @@ class __$TransactionsReceivedCopyWithImpl<$Res>
     return _then(_TransactionsReceived(
       failureOrTransactions == freezed
           ? _value.failureOrTransactions
-          : failureOrTransactions
-              as Either<ValueFailure, List<MoneyTransaction>>,
+          : failureOrTransactions as Either<ValueFailure, List<MoneyTransaction>>,
     ));
   }
 }
 
 /// @nodoc
 class _$_TransactionsReceived implements _TransactionsReceived {
-  const _$_TransactionsReceived(this.failureOrTransactions)
-      : assert(failureOrTransactions != null);
+  const _$_TransactionsReceived(this.failureOrTransactions) : assert(failureOrTransactions != null);
 
   @override
   final Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions;
@@ -240,19 +233,17 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     return identical(this, other) ||
         (other is _TransactionsReceived &&
             (identical(other.failureOrTransactions, failureOrTransactions) ||
-                const DeepCollectionEquality().equals(
-                    other.failureOrTransactions, failureOrTransactions)));
+                const DeepCollectionEquality()
+                    .equals(other.failureOrTransactions, failureOrTransactions)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrTransactions);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failureOrTransactions);
 
   @override
   _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith =>
-      __$TransactionsReceivedCopyWithImpl<_TransactionsReceived>(
-          this, _$identity);
+      __$TransactionsReceivedCopyWithImpl<_TransactionsReceived>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -273,8 +264,7 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(
-        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result transactionsReceived(Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     Result cycleAccount(bool increment),
     @required Result orElse(),
   }) {
@@ -316,8 +306,7 @@ class _$_TransactionsReceived implements _TransactionsReceived {
 
 abstract class _TransactionsReceived implements TransactionWatcherEvent {
   const factory _TransactionsReceived(
-          Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) =
-      _$_TransactionsReceived;
+      Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) = _$_TransactionsReceived;
 
   Either<ValueFailure, List<MoneyTransaction>> get failureOrTransactions;
   _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith;
@@ -325,18 +314,15 @@ abstract class _TransactionsReceived implements TransactionWatcherEvent {
 
 /// @nodoc
 abstract class _$CycleAccountCopyWith<$Res> {
-  factory _$CycleAccountCopyWith(
-          _CycleAccount value, $Res Function(_CycleAccount) then) =
+  factory _$CycleAccountCopyWith(_CycleAccount value, $Res Function(_CycleAccount) then) =
       __$CycleAccountCopyWithImpl<$Res>;
   $Res call({bool increment});
 }
 
 /// @nodoc
-class __$CycleAccountCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+class __$CycleAccountCopyWithImpl<$Res> extends _$TransactionWatcherEventCopyWithImpl<$Res>
     implements _$CycleAccountCopyWith<$Res> {
-  __$CycleAccountCopyWithImpl(
-      _CycleAccount _value, $Res Function(_CycleAccount) _then)
+  __$CycleAccountCopyWithImpl(_CycleAccount _value, $Res Function(_CycleAccount) _then)
       : super(_value, (v) => _then(v as _CycleAccount));
 
   @override
@@ -369,13 +355,11 @@ class _$_CycleAccount implements _CycleAccount {
     return identical(this, other) ||
         (other is _CycleAccount &&
             (identical(other.increment, increment) ||
-                const DeepCollectionEquality()
-                    .equals(other.increment, increment)));
+                const DeepCollectionEquality().equals(other.increment, increment)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(increment);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(increment);
 
   @override
   _$CycleAccountCopyWith<_CycleAccount> get copyWith =>
@@ -400,8 +384,7 @@ class _$_CycleAccount implements _CycleAccount {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchTransactionsStarted(),
-    Result transactionsReceived(
-        Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
+    Result transactionsReceived(Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions),
     Result cycleAccount(bool increment),
     @required Result orElse(),
   }) {
@@ -470,9 +453,9 @@ class _$TransactionWatcherStateTearOff {
   }
 
 // ignore: unused_element
-  _TransactionLoadFailure loadFailure(ValueFailure<dynamic> plantFailure) {
+  _TransactionLoadFailure loadFailure(ValueFailure<dynamic> transactionFailure) {
     return _TransactionLoadFailure(
-      plantFailure,
+      transactionFailure,
     );
   }
 }
@@ -488,14 +471,14 @@ mixin _$TransactionWatcherState {
     @required Result initial(),
     @required Result loading(),
     @required Result loadSuccess(List<MoneyTransaction> transactions),
-    @required Result loadFailure(ValueFailure<dynamic> plantFailure),
+    @required Result loadFailure(ValueFailure<dynamic> transactionFailure),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
     Result loadSuccess(List<MoneyTransaction> transactions),
-    Result loadFailure(ValueFailure<dynamic> plantFailure),
+    Result loadFailure(ValueFailure<dynamic> transactionFailure),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -517,8 +500,8 @@ mixin _$TransactionWatcherState {
 
 /// @nodoc
 abstract class $TransactionWatcherStateCopyWith<$Res> {
-  factory $TransactionWatcherStateCopyWith(TransactionWatcherState value,
-          $Res Function(TransactionWatcherState) then) =
+  factory $TransactionWatcherStateCopyWith(
+          TransactionWatcherState value, $Res Function(TransactionWatcherState) then) =
       _$TransactionWatcherStateCopyWithImpl<$Res>;
 }
 
@@ -539,8 +522,7 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
-    extends _$TransactionWatcherStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res> extends _$TransactionWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -572,7 +554,7 @@ class _$_Initial implements _Initial {
     @required Result initial(),
     @required Result loading(),
     @required Result loadSuccess(List<MoneyTransaction> transactions),
-    @required Result loadFailure(ValueFailure<dynamic> plantFailure),
+    @required Result loadFailure(ValueFailure<dynamic> transactionFailure),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -587,7 +569,7 @@ class _$_Initial implements _Initial {
     Result initial(),
     Result loading(),
     Result loadSuccess(List<MoneyTransaction> transactions),
-    Result loadFailure(ValueFailure<dynamic> plantFailure),
+    Result loadFailure(ValueFailure<dynamic> transactionFailure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -640,8 +622,7 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
-    extends _$TransactionWatcherStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res> extends _$TransactionWatcherStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -673,7 +654,7 @@ class _$_Loading implements _Loading {
     @required Result initial(),
     @required Result loading(),
     @required Result loadSuccess(List<MoneyTransaction> transactions),
-    @required Result loadFailure(ValueFailure<dynamic> plantFailure),
+    @required Result loadFailure(ValueFailure<dynamic> transactionFailure),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -688,7 +669,7 @@ class _$_Loading implements _Loading {
     Result initial(),
     Result loading(),
     Result loadSuccess(List<MoneyTransaction> transactions),
-    Result loadFailure(ValueFailure<dynamic> plantFailure),
+    Result loadFailure(ValueFailure<dynamic> transactionFailure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -736,8 +717,8 @@ abstract class _Loading implements TransactionWatcherState {
 
 /// @nodoc
 abstract class _$TransactionLoadSuccessCopyWith<$Res> {
-  factory _$TransactionLoadSuccessCopyWith(_TransactionLoadSuccess value,
-          $Res Function(_TransactionLoadSuccess) then) =
+  factory _$TransactionLoadSuccessCopyWith(
+          _TransactionLoadSuccess value, $Res Function(_TransactionLoadSuccess) then) =
       __$TransactionLoadSuccessCopyWithImpl<$Res>;
   $Res call({List<MoneyTransaction> transactions});
 }
@@ -746,8 +727,8 @@ abstract class _$TransactionLoadSuccessCopyWith<$Res> {
 class __$TransactionLoadSuccessCopyWithImpl<$Res>
     extends _$TransactionWatcherStateCopyWithImpl<$Res>
     implements _$TransactionLoadSuccessCopyWith<$Res> {
-  __$TransactionLoadSuccessCopyWithImpl(_TransactionLoadSuccess _value,
-      $Res Function(_TransactionLoadSuccess) _then)
+  __$TransactionLoadSuccessCopyWithImpl(
+      _TransactionLoadSuccess _value, $Res Function(_TransactionLoadSuccess) _then)
       : super(_value, (v) => _then(v as _TransactionLoadSuccess));
 
   @override
@@ -758,17 +739,14 @@ class __$TransactionLoadSuccessCopyWithImpl<$Res>
     Object transactions = freezed,
   }) {
     return _then(_TransactionLoadSuccess(
-      transactions == freezed
-          ? _value.transactions
-          : transactions as List<MoneyTransaction>,
+      transactions == freezed ? _value.transactions : transactions as List<MoneyTransaction>,
     ));
   }
 }
 
 /// @nodoc
 class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
-  const _$_TransactionLoadSuccess(this.transactions)
-      : assert(transactions != null);
+  const _$_TransactionLoadSuccess(this.transactions) : assert(transactions != null);
 
   @override
   final List<MoneyTransaction> transactions;
@@ -783,18 +761,15 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
     return identical(this, other) ||
         (other is _TransactionLoadSuccess &&
             (identical(other.transactions, transactions) ||
-                const DeepCollectionEquality()
-                    .equals(other.transactions, transactions)));
+                const DeepCollectionEquality().equals(other.transactions, transactions)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(transactions);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(transactions);
 
   @override
   _$TransactionLoadSuccessCopyWith<_TransactionLoadSuccess> get copyWith =>
-      __$TransactionLoadSuccessCopyWithImpl<_TransactionLoadSuccess>(
-          this, _$identity);
+      __$TransactionLoadSuccessCopyWithImpl<_TransactionLoadSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -802,7 +777,7 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
     @required Result initial(),
     @required Result loading(),
     @required Result loadSuccess(List<MoneyTransaction> transactions),
-    @required Result loadFailure(ValueFailure<dynamic> plantFailure),
+    @required Result loadFailure(ValueFailure<dynamic> transactionFailure),
   }) {
     assert(initial != null);
     assert(loading != null);
@@ -817,7 +792,7 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
     Result initial(),
     Result loading(),
     Result loadSuccess(List<MoneyTransaction> transactions),
-    Result loadFailure(ValueFailure<dynamic> plantFailure),
+    Result loadFailure(ValueFailure<dynamic> transactionFailure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -869,20 +844,20 @@ abstract class _TransactionLoadSuccess implements TransactionWatcherState {
 
 /// @nodoc
 abstract class _$TransactionLoadFailureCopyWith<$Res> {
-  factory _$TransactionLoadFailureCopyWith(_TransactionLoadFailure value,
-          $Res Function(_TransactionLoadFailure) then) =
+  factory _$TransactionLoadFailureCopyWith(
+          _TransactionLoadFailure value, $Res Function(_TransactionLoadFailure) then) =
       __$TransactionLoadFailureCopyWithImpl<$Res>;
-  $Res call({ValueFailure<dynamic> plantFailure});
+  $Res call({ValueFailure<dynamic> transactionFailure});
 
-  $ValueFailureCopyWith<dynamic, $Res> get plantFailure;
+  $ValueFailureCopyWith<dynamic, $Res> get transactionFailure;
 }
 
 /// @nodoc
 class __$TransactionLoadFailureCopyWithImpl<$Res>
     extends _$TransactionWatcherStateCopyWithImpl<$Res>
     implements _$TransactionLoadFailureCopyWith<$Res> {
-  __$TransactionLoadFailureCopyWithImpl(_TransactionLoadFailure _value,
-      $Res Function(_TransactionLoadFailure) _then)
+  __$TransactionLoadFailureCopyWithImpl(
+      _TransactionLoadFailure _value, $Res Function(_TransactionLoadFailure) _then)
       : super(_value, (v) => _then(v as _TransactionLoadFailure));
 
   @override
@@ -890,56 +865,54 @@ class __$TransactionLoadFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object plantFailure = freezed,
+    Object transactionFailure = freezed,
   }) {
     return _then(_TransactionLoadFailure(
-      plantFailure == freezed
-          ? _value.plantFailure
-          : plantFailure as ValueFailure<dynamic>,
+      transactionFailure == freezed
+          ? _value.transactionFailure
+          : transactionFailure as ValueFailure<dynamic>,
     ));
   }
 
   @override
-  $ValueFailureCopyWith<dynamic, $Res> get plantFailure {
-    if (_value.plantFailure == null) {
+  $ValueFailureCopyWith<dynamic, $Res> get transactionFailure {
+    if (_value.transactionFailure == null) {
       return null;
     }
-    return $ValueFailureCopyWith<dynamic, $Res>(_value.plantFailure, (value) {
-      return _then(_value.copyWith(plantFailure: value));
+    return $ValueFailureCopyWith<dynamic, $Res>(_value.transactionFailure, (value) {
+      return _then(_value.copyWith(transactionFailure: value));
     });
   }
 }
 
 /// @nodoc
 class _$_TransactionLoadFailure implements _TransactionLoadFailure {
-  const _$_TransactionLoadFailure(this.plantFailure)
-      : assert(plantFailure != null);
+  const _$_TransactionLoadFailure(this.transactionFailure) : assert(transactionFailure != null);
 
   @override
-  final ValueFailure<dynamic> plantFailure;
+  final ValueFailure<dynamic> transactionFailure;
 
   @override
   String toString() {
-    return 'TransactionWatcherState.loadFailure(plantFailure: $plantFailure)';
+    return 'TransactionWatcherState.loadFailure(transactionFailure: $transactionFailure)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _TransactionLoadFailure &&
-            (identical(other.plantFailure, plantFailure) ||
+            (identical(other.transactionFailure, transactionFailure) ||
                 const DeepCollectionEquality()
-                    .equals(other.plantFailure, plantFailure)));
+                    .equals(other.transactionFailure, transactionFailure)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(plantFailure);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(transactionFailure);
 
   @override
   _$TransactionLoadFailureCopyWith<_TransactionLoadFailure> get copyWith =>
-      __$TransactionLoadFailureCopyWithImpl<_TransactionLoadFailure>(
-          this, _$identity);
+      __$TransactionLoadFailureCopyWithImpl<_TransactionLoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -947,13 +920,13 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
     @required Result initial(),
     @required Result loading(),
     @required Result loadSuccess(List<MoneyTransaction> transactions),
-    @required Result loadFailure(ValueFailure<dynamic> plantFailure),
+    @required Result loadFailure(ValueFailure<dynamic> transactionFailure),
   }) {
     assert(initial != null);
     assert(loading != null);
     assert(loadSuccess != null);
     assert(loadFailure != null);
-    return loadFailure(plantFailure);
+    return loadFailure(transactionFailure);
   }
 
   @override
@@ -962,12 +935,12 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
     Result initial(),
     Result loading(),
     Result loadSuccess(List<MoneyTransaction> transactions),
-    Result loadFailure(ValueFailure<dynamic> plantFailure),
+    Result loadFailure(ValueFailure<dynamic> transactionFailure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loadFailure != null) {
-      return loadFailure(plantFailure);
+      return loadFailure(transactionFailure);
     }
     return orElse();
   }
@@ -1005,9 +978,9 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
 }
 
 abstract class _TransactionLoadFailure implements TransactionWatcherState {
-  const factory _TransactionLoadFailure(ValueFailure<dynamic> plantFailure) =
+  const factory _TransactionLoadFailure(ValueFailure<dynamic> transactionFailure) =
       _$_TransactionLoadFailure;
 
-  ValueFailure<dynamic> get plantFailure;
+  ValueFailure<dynamic> get transactionFailure;
   _$TransactionLoadFailureCopyWith<_TransactionLoadFailure> get copyWith;
 }

@@ -4,8 +4,8 @@ part of 'transaction_watcher_bloc.dart';
 abstract class TransactionWatcherState with _$TransactionWatcherState {
   const factory TransactionWatcherState.initial() = _Initial;
   const factory TransactionWatcherState.loading() = _Loading;
-  const factory TransactionWatcherState.loadSuccess(
-      List<MoneyTransaction> transactions) = _TransactionLoadSuccess;
-  const factory TransactionWatcherState.loadFailure(ValueFailure plantFailure) =
+  const factory TransactionWatcherState.loadSuccess(List<MoneyTransaction> transactions) =
+      _TransactionLoadSuccess;
+  const factory TransactionWatcherState.loadFailure(ValueFailure transactionFailure) =
       _TransactionLoadFailure;
 }
