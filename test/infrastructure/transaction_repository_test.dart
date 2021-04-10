@@ -90,41 +90,49 @@ void main() {
     ));
   });
 
-  // test('verify that getAllTransactions create the correct raw query', () async {
-  //   //!Arrange
-  //   const sql = """
-  //       SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
-  //       ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
-  //       """;
+  test('verify that getAllTransactions creates the correct raw query',
+      () async {
+    //!Arrange
+    const sql = """
+        SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+        ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
+        """;
 
-  //   //!Act
-  //   await repository.getAllTransactions();
+    //!Act
+    try {
+      await repository.getAllTransactions();
+    } catch (e) {
+      /* We are catching the error because mockDatabase.rawQuery returns nothing */
+    }
 
-  //   //!Assert
-  //   verify(mockDatabase.rawQuery(sql));
-  // });
+    //!Assert
+    verify(mockDatabase.rawQuery(sql));
+  });
 
-  // test('verify that getAllTransactions returns the correct ones', () async {
-  //   //!Arrange
-  //   final MoneyTransaction tTransaction1 = transaction.copyWith(amount: 55);
-  //   final MoneyTransaction tTransaction2 = transaction.copyWith(amount: 44);
-  //   final List<MoneyTransaction> tTransactionList = [tTransaction1, tTransaction2];
-  //   final List<Map<String, dynamic>> tRawTransactions = [
-  //     MoneyTransactionDTO.fromDomain(tTransaction1).toJson(),
-  //     MoneyTransactionDTO.fromDomain(tTransaction2).toJson(),
-  //   ];
+  test('verify that getAllTransactions returns the correct ones', () async {
+    //!Arrange
+    final MoneyTransaction tTransaction1 = transaction.copyWith(amount: 55);
+    final MoneyTransaction tTransaction2 = transaction.copyWith(amount: 44);
+    final List<MoneyTransaction> tTransactionList = [
+      tTransaction1,
+      tTransaction2
+    ];
+    final List<Map<String, dynamic>> tRawTransactions = [
+      MoneyTransactionDTO.fromDomain(tTransaction1).toJson(),
+      MoneyTransactionDTO.fromDomain(tTransaction2).toJson(),
+    ];
 
-  //   when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawTransactions);
-  //   //!Act
-  //   final transactions = await repository.getAllTransactions();
-  //   //!Assert
+    when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawTransactions);
+    //!Act
+    final transactions = await repository.getAllTransactions();
+    //!Assert
 
-  //   transactions.fold(
-  //     (failure) => /*throw TestFailure(failure.toString())*/ null,
-  //     (transactions) {
-  //       expect(transactions[0].amount, tTransactionList[0].amount);
-  //       expect(transactions[1].amount, tTransactionList[1].amount);
-  //     },
-  //   );
-  // });
+    transactions.fold(
+      (failure) => throw TestFailure(failure.toString()),
+      (transactions) {
+        expect(transactions[0].amount, tTransactionList[0].amount);
+        expect(transactions[1].amount, tTransactionList[1].amount);
+      },
+    );
+  });
 }

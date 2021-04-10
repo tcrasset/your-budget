@@ -105,7 +105,6 @@ class TransactionScaffold extends StatelessWidget {
 
 class OptionalTransactionList extends StatelessWidget {
   @override
-  @override
   Widget build(BuildContext context) {
     final Widget emptyAccountList = Column(
       children: [
@@ -119,19 +118,44 @@ class OptionalTransactionList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (newState) {
             final transactions = newState.transactions;
-            return ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: transactions.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text('Amount: ${transactions[index]} €'),
-                  );
-                });
+            return SizedBox(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const AccountButtons(
+                    accountText: "My account",
+                  ),
+                  Expanded(
+                      child: TransactionListView(transactions: transactions)),
+                ],
+              ),
+            );
           },
           orElse: () => const EmptyTransactionList(),
         );
       },
     );
+  }
+}
+
+class TransactionListView extends StatelessWidget {
+  const TransactionListView({
+    Key key,
+    @required this.transactions,
+  }) : super(key: key);
+
+  final List<MoneyTransaction> transactions;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: transactions.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text('Amount: ${transactions[index]} €'),
+          );
+        });
   }
 }
 
