@@ -9,9 +9,9 @@ import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
-import 'package:your_budget/models/account.dart';
 import '../../domain/account/i_account_repository.dart';
 import '../../domain/core/value_failure.dart';
+import '../../models/account.dart';
 import '../../models/constants.dart';
 import 'account_dto.dart';
 

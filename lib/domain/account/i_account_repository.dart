@@ -2,7 +2,7 @@
 import 'package:dartz/dartz.dart';
 
 // Project imports:
-import 'package:your_budget/models/account.dart';
+import '../../models/account.dart';
 import '../core/value_failure.dart';
 
 // import 'package:your_budget/models/account.dart';
