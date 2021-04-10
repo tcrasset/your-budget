@@ -16,13 +16,11 @@ part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';
 part 'transaction_watcher_bloc.freezed.dart';
 
-class TransactionWatcherBloc
-    extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
+class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
   final ITransactionRepository transactionRepository;
   final IAccountRepository accountRepository;
 
-  TransactionWatcherBloc(
-      {@required this.transactionRepository, @required this.accountRepository})
+  TransactionWatcherBloc({@required this.transactionRepository, @required this.accountRepository})
       : super(const TransactionWatcherState.initial());
 
   StreamSubscription<List<MoneyTransaction>> _transactionStreamSubscription;
@@ -38,9 +36,8 @@ class TransactionWatcherBloc
         await _transactionStreamSubscription?.cancel();
 
         transactionRepository.watchAccountTransactions(currentAccountID).listen(
-              (failureOrTransactions) => add(
-                  TransactionWatcherEvent.transactionsReceived(
-                      failureOrTransactions)),
+              (failureOrTransactions) =>
+                  add(TransactionWatcherEvent.transactionsReceived(failureOrTransactions)),
             );
       },
       transactionsReceived: (e) async* {
@@ -58,9 +55,8 @@ class TransactionWatcherBloc
             yield TransactionWatcherState.loadFailure(f);
           },
           (numberOfAccounts) {
-            currentAccountID =
-                (currentAccountID + (e.increment ? 1 : -1)) % numberOfAccounts +
-                    1; // +1 so that is never goes to 0
+            currentAccountID = (currentAccountID + (e.increment ? 1 : -1) - 1) % numberOfAccounts +
+                1; // -1 then +1 so that is never goes to 0
             add(const TransactionWatcherEvent.watchTransactionsStarted());
           },
         );
