@@ -17,7 +17,6 @@ import 'models/budget_list.dart';
 import 'models/budget_value_creator.dart';
 import 'models/budget_value_list.dart';
 import 'models/categories.dart';
-import 'models/categories.dart';
 import 'models/categories_model.dart';
 import 'models/constants.dart';
 import 'models/goal.dart';
@@ -73,6 +72,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   UnmodifiableListView<BudgetValue> get budgetValues =>
       UnmodifiableListView(budgetValueList.budgetvalues);
   Future<Account> get mostRecentAccount => accountList.getMostRecentAccount();
+  Future<Account> get nextMostRecentAccount async {
+    final Account account = await accountList.cycleNextAccount();
+    notifyListeners();
+    return account;
+  }
 
   AppState({@required this.queryContext});
 

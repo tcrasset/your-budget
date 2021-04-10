@@ -2,126 +2,222 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flushbar/flushbar_helper.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 import '../../../appstate.dart';
-import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
 import '../../../models/money_transaction.dart';
-import 'components/select_account.dart';
-import 'components/transaction_list.dart';
-import 'modify_transactions.dart';
+import '../core/transactions/transaction_list.dart';
+import '../modifyTransactions/modify_transactions.dart';
 
-class ShowTransactionPage extends StatefulWidget {
+class ShowTransactionPage extends StatelessWidget {
   final String title;
-
   const ShowTransactionPage({Key key, this.title}) : super(key: key);
 
   @override
-  _ShowTransactionPageController createState() =>
-      _ShowTransactionPageController();
-}
-
-class _ShowTransactionPageController extends State<ShowTransactionPage> {
-  final TextEditingController controller = TextEditingController();
-  String filter;
-  Account account;
-  bool isEditable;
-  List<MoneyTransaction> moneyTransactionList;
-
-  @override
-  void initState() {
-    final AppState appState = Provider.of<AppState>(context, listen: false);
-    if (appState.accounts.isNotEmpty) {
-      account = appState.accounts[0];
-    }
-    isEditable = false;
-    super.initState();
-  }
-
-  void handleOnAccountChanged(Account newAccount) {
-    setState(() {
-      account = newAccount;
-    });
-  }
-
-  Future<void> handlePopUpMenuButtonSelected(String selectedItem) async {
-    if (selectedItem == "Select account") {
-      final Account result = await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const SelectAccountPage()));
-
-      if (result != null) handleOnAccountChanged(result);
-    }
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) => _ShowTransactionPageView(this);
-
-  void handleModifyTransactions() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => ModifyTransactions(account)));
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(providers: [
+      BlocProvider<TransactionWatcherBloc>(
+        create: (context) => TransactionWatcherBloc(
+            transactionRepository: GetIt.instance<ITransactionRepository>(),
+            accountRepository: GetIt.instance<IAccountRepository>())
+          ..add(const TransactionWatcherEvent.watchTransactionsStarted()),
+      ),
+    ], child: TransactionScaffold(title: title));
   }
 }
 
-class _ShowTransactionPageView
-    extends WidgetView<ShowTransactionPage, _ShowTransactionPageController> {
-  const _ShowTransactionPageView(_ShowTransactionPageController state)
-      : super(state);
+class TransactionScaffold extends StatelessWidget {
+  final String title;
+  const TransactionScaffold({Key key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text(widget.title),
-          leading: const Icon(Constants.ALLTRANSACTION_ICON),
-          backgroundColor: Constants.PRIMARY_COLOR,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(FontAwesomeIcons.checkSquare),
-              onPressed: state.handleModifyTransactions,
-            ),
-            PopupMenuButton(
-              onSelected: state.handlePopUpMenuButtonSelected,
-              itemBuilder: (context) => [
-                const PopupMenuItem<String>(
-                  value: "Select account",
-                  child: Text("Select account"),
-                ),
-              ],
-            ),
-          ]),
-      body: Consumer<AppState>(builder: (context, appState, child) {
-        if (state.account == null || appState.transactions.isEmpty) {
-          return const Center(
-            child: Text(
-              "No transactions logged. Please choose an account.",
-              style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 15,
-                  fontStyle: FontStyle.italic),
-            ),
+    bool isLoading;
+    return MultiBlocListener(
+        listeners: [
+          BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
+            listener: (context, state) {
+              isLoading = state.maybeMap(
+                initial: (_) => true,
+                loading: (_) => true,
+                orElse: () => false,
+              );
+
+              final String errorMessage = state.maybeMap(
+                orElse: () => null,
+                loadFailure: (_) =>
+                    "Failed to load the transactions. Please contact support.",
+              );
+
+              if (errorMessage != null) {
+                FlushbarHelper.createError(message: errorMessage).show(context);
+              }
+            },
+          )
+        ],
+        child: Scaffold(
+          appBar: getAppbar(title, () => null),
+          body: Stack(
+            children: [
+              OptionalTransactionList(),
+              InProgressOverlay(
+                showOverlay: isLoading ?? false,
+                textDisplayed: "Loading",
+              )
+            ],
+          ),
+        ));
+  }
+}
+
+class OptionalTransactionList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final Widget emptyAccountList = Column(
+      children: [
+        const AccountButtons(accountText: "No accounts."),
+        const EmptyTransactionList(),
+      ],
+    );
+
+    return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
+      builder: (context, state) {
+        return state.maybeMap(
+          loadSuccess: (newState) {
+            final transactions = newState.transactions;
+            return SizedBox(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const AccountButtons(
+                    accountText: "My account",
+                  ),
+                  Expanded(
+                      child: TransactionListView(transactions: transactions)),
+                ],
+              ),
+            );
+          },
+          orElse: () => emptyAccountList,
+        );
+      },
+    );
+  }
+}
+
+class TransactionListView extends StatelessWidget {
+  const TransactionListView({
+    Key key,
+    @required this.transactions,
+  }) : super(key: key);
+
+  final List<MoneyTransaction> transactions;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        padding: const EdgeInsets.all(8),
+        itemCount: transactions.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            title: Text('Amount: ${transactions[index]} €'),
           );
-        } else {
-          return Column(children: [
-            Text(
-              state.account.name,
-              style: const TextStyle(fontSize: 20),
-            ),
-            Expanded(
-                child:
-                    TransactionList(state.account, appState, state.isEditable)),
-          ]);
-        }
-      }),
+        });
+  }
+}
+
+class AtLeastOneTransactionList extends StatelessWidget {
+  final bool isEditable;
+  final Account account;
+
+  const AtLeastOneTransactionList({
+    Key key,
+    @required this.account,
+    @required this.isEditable,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AppState>(builder: (_, appState, __) {
+      return Expanded(child: TransactionList(account, appState, isEditable));
+    });
+  }
+}
+
+class EmptyTransactionList extends StatelessWidget {
+  const EmptyTransactionList({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text(
+        "No transactions logged. Please choose an account.",
+        style: TextStyle(
+            color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+      ),
+    );
+  }
+}
+
+AppBar getAppbar(String title, Function() handleModifyTransactions) {
+  return AppBar(
+      title: Text(title),
+      leading: const Icon(Constants.ALLTRANSACTION_ICON),
+      backgroundColor: Constants.PRIMARY_COLOR,
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(FontAwesomeIcons.checkSquare),
+          onPressed: handleModifyTransactions,
+        ),
+      ]);
+}
+
+class AccountButtons extends StatelessWidget {
+  final String accountText;
+
+  const AccountButtons({Key key, this.accountText}) : super(key: key);
+
+  Future<void> handleButtonOnPressed(
+      {@required BuildContext context, @required bool increment}) async {
+    context.read<TransactionWatcherBloc>().add(
+          TransactionWatcherEvent.cycleAccount(increment: increment),
+        );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 50,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () =>
+                  handleButtonOnPressed(context: context, increment: false)),
+          Text(
+            accountText,
+            style: const TextStyle(fontSize: 20),
+          ),
+          IconButton(
+              icon: const Icon(Icons.arrow_forward),
+              onPressed: () =>
+                  handleButtonOnPressed(context: context, increment: true))
+        ],
+      ),
     );
   }
 }

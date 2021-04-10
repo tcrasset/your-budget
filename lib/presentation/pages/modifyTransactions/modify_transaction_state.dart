@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import '../../../appstate.dart';
 
-class ShowTransactionsState extends ChangeNotifier {
+class ModifyTransactionsState extends ChangeNotifier {
   final Map<int, bool> _isSelectedMap = HashMap();
   int nbSelected = 0;
 

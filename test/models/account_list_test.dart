@@ -48,6 +48,7 @@ void main() {
     accountList.creditAccount(id: tId, amount: tAmount);
     //!Assert
     verify(mockQueries.updateAccount(argThat(isA<Account>())));
+    verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
 
     final Account account =
         accountList.accounts.singleWhere((account) => account.id == tId);
@@ -64,6 +65,7 @@ void main() {
     accountList.debitAccount(id: tId, amount: tAmount);
     //!Assert
     verify(mockQueries.updateAccount(argThat(isA<Account>())));
+    verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
 
     final Account account =
         accountList.accounts.singleWhere((account) => account.id == tId);
@@ -100,5 +102,28 @@ void main() {
     // On second call, check that it was cached
     mostRecent = await accountList.getMostRecentAccount();
     verifyNever(mockQueries.getMostRecentAccountUsed());
+  });
+
+  test(
+      'verify that cycleNextAccount() cycles through all accounts and sets' +
+          'mostRecentAccount appropriately', () async {
+    //!Arrange
+    final Account tAccount2 =
+        Account(id: 100, name: "Test account 2", balance: 200.00);
+    final Account tAccount3 =
+        Account(id: 300, name: "Test account 3", balance: 300.00);
+    accountList.add(tAccount2);
+    accountList.add(tAccount3);
+
+    accountList.setMostRecentAccount(tAccount.id);
+    //!Act
+    accountList.cycleNextAccount();
+    expect(await accountList.getMostRecentAccount(), tAccount2);
+    accountList.cycleNextAccount();
+    expect(await accountList.getMostRecentAccount(), tAccount3);
+    accountList.cycleNextAccount();
+    expect(await accountList.getMostRecentAccount(), tAccount);
+
+    //!Assert
   });
 }

@@ -10,8 +10,8 @@ import '../../../components/delete_dialog.dart';
 import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
-import 'components/transaction_list.dart';
-import 'show_transaction_page_state.dart';
+import '../core/transactions/transaction_list.dart';
+import 'modify_transaction_state.dart';
 
 class ModifyTransactions extends StatefulWidget {
   final Account account;
@@ -31,8 +31,8 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
     final String result =
         await showDeleteDialog(context, 'Delete selected transactions?');
     if (result == "Delete") {
-      final ShowTransactionsState showTransactionsState =
-          Provider.of<ShowTransactionsState>(context, listen: false);
+      final ModifyTransactionsState showTransactionsState =
+          Provider.of<ModifyTransactionsState>(context, listen: false);
       showTransactionsState.deleteTransactions(context);
       Navigator.pop(context);
     }
@@ -50,7 +50,7 @@ class _ModifyTransactionsView
       appBar: AppBar(
         title: const Text("Modify transactions"),
       ),
-      body: Consumer2<AppState, ShowTransactionsState>(
+      body: Consumer2<AppState, ModifyTransactionsState>(
           builder: (_, appState, showTransactionsState, __) {
         return TransactionList(widget.account, appState, true);
       }),
