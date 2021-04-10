@@ -20,13 +20,10 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   SQFliteTransactionRepository({@required this.database});
 
   @override
-  Future<Either<ValueFailure, Unit>> create(
-      MoneyTransaction transaction) async {
+  Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
     try {
-      final MoneyTransactionDTO transactionDTO =
-          MoneyTransactionDTO.fromDomain(transaction);
-      await database.insert(
-          DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
+      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
+      await database.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
       return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -34,11 +31,9 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> delete(
-      MoneyTransaction transaction) async {
+  Future<Either<ValueFailure, Unit>> delete(MoneyTransaction transaction) async {
     try {
-      final MoneyTransactionDTO transactionDTO =
-          MoneyTransactionDTO.fromDomain(transaction);
+      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
@@ -51,11 +46,9 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> update(
-      MoneyTransaction transaction) async {
+  Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction) async {
     try {
-      final MoneyTransactionDTO transactionDTO =
-          MoneyTransactionDTO.fromDomain(transaction);
+      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database.update(
         DatabaseConstants.moneyTransactionTable,
         transactionDTO.toJson(),
@@ -69,38 +62,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<Either<ValueFailure, List<MoneyTransaction>>>
-      getAllTransactions() async {
-    try {
-      final sql = """
-        SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
-        ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
-        """;
-      final data = await database.rawQuery(sql);
-
-      final List<MoneyTransaction> transactions = [];
-      for (final rawTransaction in data) {
-        final MoneyTransactionDTO transactionDTO =
-            MoneyTransactionDTO.fromJson(rawTransaction);
-        transactions.add(transactionDTO.toDomain());
-      }
-
-      return right(transactions);
-    } on DatabaseException catch (e) {
-      return left(ValueFailure.unexpected(message: e.toString()));
-    }
-  }
-
-  /// Listen for changes on any transaction
-  @override
-  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>
-      watchAllTransactions() {
-    return getAllTransactions().asStream();
-  }
-
-  @override
-  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(
-      int accountID) async {
+  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(int accountID) async {
     try {
       final sql = """
         SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
@@ -112,8 +74,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
       final data = await database.rawQuery(sql, args);
       final List<MoneyTransaction> transactions = [];
       for (final rawTransaction in data) {
-        final MoneyTransactionDTO transactionDTO =
-            MoneyTransactionDTO.fromJson(rawTransaction);
+        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromJson(rawTransaction);
         transactions.add(transactionDTO.toDomain());
       }
 
@@ -124,8 +85,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>
-      watchAccountTransactions(int accountID) {
+  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
+      int accountID) {
     return getAccountTransactions(accountID).asStream();
   }
 }
