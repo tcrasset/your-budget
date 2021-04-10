@@ -7,20 +7,19 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import '../../../appstate.dart';
-import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
 import '../../../models/utils.dart';
 
-class AddAccountRoute extends StatefulWidget {
+class AddAccountPage extends StatefulWidget {
   final String title;
 
-  const AddAccountRoute({Key key, this.title}) : super(key: key);
+  const AddAccountPage({Key key, this.title}) : super(key: key);
   @override
-  _AddAccountRouteController createState() => _AddAccountRouteController();
+  _AddAccountPageState createState() => _AddAccountPageState();
 }
 
-class _AddAccountRouteController extends State<AddAccountRoute> {
+class _AddAccountPageState extends State<AddAccountPage> {
   final _accountFormKey = GlobalKey<FormState>(); //FormCheck
   double accountBalance;
   String accountName;
@@ -59,11 +58,6 @@ class _AddAccountRouteController extends State<AddAccountRoute> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) => _AddAccountRouteView(this);
-}
-
-class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteController> {
   final TextStyle _textBoxStyle = const TextStyle(fontSize: 25);
   final TextStyle _accountNameStyle = const TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
   final TextStyle _positiveAmountTextStyle =
@@ -78,8 +72,6 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
     ),
   );
 
-  _AddAccountRouteView(_AddAccountRouteController state) : super(state);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,7 +82,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
           child: Column(
             children: <Widget>[
               Form(
-                  key: state._accountFormKey,
+                  key: _accountFormKey,
                   child: Column(
                     children: <Widget>[
                       const Padding(
@@ -112,8 +104,8 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                             decoration: _textBoxDecoration,
                             style: _textBoxStyle,
                             textAlign: TextAlign.center,
-                            validator: state.handleAccountNameValidate,
-                            onSaved: state.handleAccountNameSave,
+                            validator: handleAccountNameValidate,
+                            onSaved: handleAccountNameSave,
                             textInputAction: TextInputAction.next,
                           ),
                         ),
@@ -133,8 +125,8 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                               decoration: _textBoxDecoration,
                               style: _textBoxStyle,
                               textAlign: TextAlign.center,
-                              validator: state.handleAccountBalanceValidate,
-                              onSaved: state.handleAccountBalanceSave,
+                              validator: handleAccountBalanceValidate,
+                              onSaved: handleAccountBalanceSave,
                               keyboardType: TextInputType.number,
                               inputFormatters: [
                                 FilteringTextInputFormatter.allow(RegExp("[0-9-.]"))
@@ -147,7 +139,7 @@ class _AddAccountRouteView extends WidgetView<AddAccountRoute, _AddAccountRouteC
                         child: RaisedButton(
                           key: const Key('addAccountButton'),
                           color: Theme.of(context).accentColor,
-                          onPressed: () => state.handleAddAccount(context),
+                          onPressed: () => handleAddAccount(context),
                           child: const Text(
                             'Add account',
                           ),
