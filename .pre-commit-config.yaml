@@ -21,4 +21,5 @@ repos:
     - id: flutter-format
       name: flutter-format
       language: system
-      entry: bash -c "flutter format --line-length=100 *.dart"
+      files: \.dart$
+      entry: bash -c "flutter format --line-length=100 $(git diff --name-only --cached | grep *.dart)"
