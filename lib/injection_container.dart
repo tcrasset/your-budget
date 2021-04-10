@@ -3,9 +3,11 @@ import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_repository.dart';
 import 'appstate.dart';
+import 'infrastructure/account/account_repository.dart';
 import 'models/database_provider.dart';
 import 'models/queries.dart';
 import 'models/sql_queries.dart';
@@ -20,6 +22,8 @@ Future<void> init() async {
       () => SQLQueryClass(database: sl<Database>()));
   sl.registerSingleton<ITransactionRepository>(
       SQFliteTransactionRepository(database: sl<Database>()));
+  sl.registerSingleton<IAccountRepository>(
+      SQFliteAccountRepository(database: sl<Database>()));
 
   final AppState appState = AppState(queryContext: sl());
   await appState.loadStateFromDatabase();

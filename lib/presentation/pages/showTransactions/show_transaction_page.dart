@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 import '../../../appstate.dart';
@@ -28,7 +29,8 @@ class ShowTransactionPage extends StatelessWidget {
     return MultiBlocProvider(providers: [
       BlocProvider<TransactionWatcherBloc>(
         create: (context) => TransactionWatcherBloc(
-            transactionRepository: GetIt.instance<ITransactionRepository>())
+            transactionRepository: GetIt.instance<ITransactionRepository>(),
+            accountRepository: GetIt.instance<IAccountRepository>())
           ..add(const TransactionWatcherEvent.watchTransactionsStarted()),
       ),
     ], child: TransactionScaffold(title: title));

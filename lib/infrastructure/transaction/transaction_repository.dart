@@ -97,4 +97,35 @@ class SQFliteTransactionRepository implements ITransactionRepository {
       watchAllTransactions() {
     return getAllTransactions().asStream();
   }
+
+  @override
+  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(
+      int accountID) async {
+    try {
+      final sql = """
+        SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+        WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == ?
+        ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
+        """;
+
+      final args = [accountID];
+      final data = await database.rawQuery(sql, args);
+      final List<MoneyTransaction> transactions = [];
+      for (final rawTransaction in data) {
+        final MoneyTransactionDTO transactionDTO =
+            MoneyTransactionDTO.fromJson(rawTransaction);
+        transactions.add(transactionDTO.toDomain());
+      }
+
+      return right(transactions);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
+  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>
+      watchAccountTransactions(int accountID) {
+    return getAccountTransactions(accountID).asStream();
+  }
 }
