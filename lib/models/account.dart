@@ -45,4 +45,16 @@ class Account {
   String toString() {
     return super.toString() + """ {id: $id, name: $name, balance: $balance}""";
   }
+
+  Account copyWith({
+    int id,
+    String name,
+    double balance,
+  }) {
+    return Account(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      balance: balance ?? this.balance,
+    );
+  }
 }

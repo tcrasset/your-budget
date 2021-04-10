@@ -43,4 +43,30 @@ class SQFliteAccountRepository implements IAccountRepository {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<ValueFailure, List<Account>>> getAllAccounts() async {
+    try {
+      final sql = """
+        SELECT * FROM ${DatabaseConstants.accountTable}
+        ORDER BY ${DatabaseConstants.ACCOUNT_BALANCE} DESC;
+        """;
+
+      final data = await database.rawQuery(sql);
+      final List<Account> accounts = [];
+      for (final rawAccount in data) {
+        final AccountDTO accountDTO = AccountDTO.fromJson(rawAccount);
+        accounts.add(accountDTO.toDomain());
+      }
+
+      return right(accounts);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
+  Stream<Either<ValueFailure<dynamic>, List<Account>>> watchAllAccounts() {
+    return getAllAccounts().asStream();
+  }
 }
