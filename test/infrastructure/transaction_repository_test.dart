@@ -53,18 +53,15 @@ void main() {
     //!Assert
   });
 
-  test('verify that db.insert is called when creating MoneyTransaction',
-      () async {
+  test('verify that db.insert is called when creating MoneyTransaction', () async {
     //!Arrange
     //!Act
     await repository.create(transaction);
     //!Assert
-    verify(mockDatabase.insert(
-        DatabaseConstants.moneyTransactionTable, transactionDTO.toJson()));
+    verify(mockDatabase.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson()));
   });
 
-  test('verify that db.update is called when updating MoneyTransaction',
-      () async {
+  test('verify that db.update is called when updating MoneyTransaction', () async {
     //!Arrange
     //!Act
     await repository.update(transaction);
@@ -77,8 +74,7 @@ void main() {
     ));
   });
 
-  test('verify that db.delete is called when deleting MoneyTransaction',
-      () async {
+  test('verify that db.delete is called when deleting MoneyTransaction', () async {
     //!Arrange
     //!Act
     await repository.delete(transaction);
@@ -90,41 +86,39 @@ void main() {
     ));
   });
 
-  test('verify that getAllTransactions creates the correct raw query',
-      () async {
+  test('verify that getAccountTransactions creates the correct raw query', () async {
     //!Arrange
+    const int id = 1;
     const sql = """
         SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+        WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == ?
         ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
     //!Act
     try {
-      await repository.getAllTransactions();
+      await repository.getAccountTransactions(id);
     } catch (e) {
       /* We are catching the error because mockDatabase.rawQuery returns nothing */
     }
 
     //!Assert
-    verify(mockDatabase.rawQuery(sql));
+    verify(mockDatabase.rawQuery(sql, [id]));
   });
 
-  test('verify that getAllTransactions returns the correct ones', () async {
+  test('verify that getAccountTransactions returns the correct ones', () async {
     //!Arrange
     final MoneyTransaction tTransaction1 = transaction.copyWith(amount: 55);
     final MoneyTransaction tTransaction2 = transaction.copyWith(amount: 44);
-    final List<MoneyTransaction> tTransactionList = [
-      tTransaction1,
-      tTransaction2
-    ];
+    final List<MoneyTransaction> tTransactionList = [tTransaction1, tTransaction2];
     final List<Map<String, dynamic>> tRawTransactions = [
       MoneyTransactionDTO.fromDomain(tTransaction1).toJson(),
       MoneyTransactionDTO.fromDomain(tTransaction2).toJson(),
     ];
 
-    when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawTransactions);
+    when(mockDatabase.rawQuery(any, [tAccountId])).thenAnswer((_) async => tRawTransactions);
     //!Act
-    final transactions = await repository.getAllTransactions();
+    final transactions = await repository.getAccountTransactions(tAccountId);
     //!Assert
 
     transactions.fold(
