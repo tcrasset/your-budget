@@ -13,5 +13,5 @@ abstract class IAccountRepository {
   //   Future<Either<ValueFailure, List<Account>>> getAllAccounts();
   // Stream<Either<ValueFailure<dynamic>, List<Account>>>
   //     watchAllAccounts();
-  Future<Either<ValueFailure, int>> count(int id);
+  Future<Either<ValueFailure, int>> count();
 }

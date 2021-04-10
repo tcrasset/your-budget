@@ -18,7 +18,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   SQFliteAccountRepository({@required this.database});
 
   @override
-  Future<Either<ValueFailure, int>> count(int id) async {
+  Future<Either<ValueFailure, int>> count() async {
     try {
       final sql = """
         SELECT COUNT(*) FROM ${DatabaseConstants.accountTable};
