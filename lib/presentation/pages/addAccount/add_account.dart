@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import '../../../appstate.dart';
@@ -28,6 +29,9 @@ class AddAccountPage extends StatelessWidget {
             AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
               ..add(const AccountWatcherEvent.watchAccountsStarted()),
       ),
+      BlocProvider<AccountCreatorBloc>(
+          create: (_) => AccountCreatorBloc(accountRepository: GetIt.instance<IAccountRepository>())
+            ..add(const AccountCreatorEvent.initialized())),
     ], child: AddAccountPageScaffold());
   }
 }
@@ -79,8 +83,39 @@ class AddAccountPageScaffold extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Form(
-                child: Column(
+            AddAccountForm(textBoxStyle: _textBoxStyle, textBoxDecoration: _textBoxDecoration),
+            SizedBox(height: 200, child: AccountList()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AddAccountForm extends StatelessWidget {
+  const AddAccountForm({
+    Key key,
+    @required TextStyle textBoxStyle,
+    @required InputDecoration textBoxDecoration,
+  })  : _textBoxStyle = textBoxStyle,
+        _textBoxDecoration = textBoxDecoration,
+        super(key: key);
+
+  final TextStyle _textBoxStyle;
+  final InputDecoration _textBoxDecoration;
+
+  Future<void> handleSubmitForm(BuildContext context) async {
+    context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.saved());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AccountCreatorBloc, AccountCreatorState>(
+      builder: (context, state) {
+        return Form(
+            autovalidateMode:
+                state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+            child: Column(
               children: <Widget>[
                 AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
                 AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
@@ -89,18 +124,15 @@ class AddAccountPageScaffold extends StatelessWidget {
                   child: RaisedButton(
                     key: const Key('addAccountButton'),
                     color: Theme.of(context).accentColor,
-                    onPressed: () => null,
+                    onPressed: () => handleSubmitForm(context),
                     child: const Text(
                       'Add account',
                     ),
                   ),
                 ),
               ],
-            )),
-            SizedBox(height: 200, child: AccountList()),
-          ],
-        ),
-      ),
+            ));
+      },
     );
   }
 }
