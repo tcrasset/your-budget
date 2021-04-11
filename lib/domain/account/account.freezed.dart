@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'new_account.dart';
+part of 'account.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -10,8 +10,8 @@ part of 'new_account.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-class _$NewAccountTearOff {
-  const _$NewAccountTearOff();
+class _$AccountTearOff {
+  const _$AccountTearOff();
 
 // ignore: unused_element
   _NewAccount call(
@@ -26,32 +26,31 @@ class _$NewAccountTearOff {
 
 /// @nodoc
 // ignore: unused_element
-const $NewAccount = _$NewAccountTearOff();
+const $Account = _$AccountTearOff();
 
 /// @nodoc
-mixin _$NewAccount {
+mixin _$Account {
   UniqueId get id;
   Name get name;
   Amount get balance;
 
-  $NewAccountCopyWith<NewAccount> get copyWith;
+  $AccountCopyWith<Account> get copyWith;
 }
 
 /// @nodoc
-abstract class $NewAccountCopyWith<$Res> {
-  factory $NewAccountCopyWith(
-          NewAccount value, $Res Function(NewAccount) then) =
-      _$NewAccountCopyWithImpl<$Res>;
+abstract class $AccountCopyWith<$Res> {
+  factory $AccountCopyWith(Account value, $Res Function(Account) then) =
+      _$AccountCopyWithImpl<$Res>;
   $Res call({UniqueId id, Name name, Amount balance});
 }
 
 /// @nodoc
-class _$NewAccountCopyWithImpl<$Res> implements $NewAccountCopyWith<$Res> {
-  _$NewAccountCopyWithImpl(this._value, this._then);
+class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
+  _$AccountCopyWithImpl(this._value, this._then);
 
-  final NewAccount _value;
+  final Account _value;
   // ignore: unused_field
-  final $Res Function(NewAccount) _then;
+  final $Res Function(Account) _then;
 
   @override
   $Res call({
@@ -68,7 +67,7 @@ class _$NewAccountCopyWithImpl<$Res> implements $NewAccountCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$NewAccountCopyWith<$Res> implements $NewAccountCopyWith<$Res> {
+abstract class _$NewAccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
   factory _$NewAccountCopyWith(
           _NewAccount value, $Res Function(_NewAccount) then) =
       __$NewAccountCopyWithImpl<$Res>;
@@ -77,7 +76,7 @@ abstract class _$NewAccountCopyWith<$Res> implements $NewAccountCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$NewAccountCopyWithImpl<$Res> extends _$NewAccountCopyWithImpl<$Res>
+class __$NewAccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
     implements _$NewAccountCopyWith<$Res> {
   __$NewAccountCopyWithImpl(
       _NewAccount _value, $Res Function(_NewAccount) _then)
@@ -118,7 +117,7 @@ class _$_NewAccount extends _NewAccount {
 
   @override
   String toString() {
-    return 'NewAccount(id: $id, name: $name, balance: $balance)';
+    return 'Account(id: $id, name: $name, balance: $balance)';
   }
 
   @override
@@ -145,7 +144,7 @@ class _$_NewAccount extends _NewAccount {
       __$NewAccountCopyWithImpl<_NewAccount>(this, _$identity);
 }
 
-abstract class _NewAccount extends NewAccount {
+abstract class _NewAccount extends Account {
   const _NewAccount._() : super._();
   const factory _NewAccount(
       {@required UniqueId id,

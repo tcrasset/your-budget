@@ -557,7 +557,7 @@ class _$AccountCreatorStateTearOff {
 // ignore: unused_element
   _AccountCreatorState call(
       {@required
-          NewAccount account,
+          Account account,
       @required
           bool showErrorMessages,
       @required
@@ -582,7 +582,7 @@ const $AccountCreatorState = _$AccountCreatorStateTearOff();
 
 /// @nodoc
 mixin _$AccountCreatorState {
-  NewAccount get account;
+  Account get account;
   bool get showErrorMessages;
   bool get isSaving;
   bool get isEditing;
@@ -597,13 +597,13 @@ abstract class $AccountCreatorStateCopyWith<$Res> {
           AccountCreatorState value, $Res Function(AccountCreatorState) then) =
       _$AccountCreatorStateCopyWithImpl<$Res>;
   $Res call(
-      {NewAccount account,
+      {Account account,
       bool showErrorMessages,
       bool isSaving,
       bool isEditing,
       Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption});
 
-  $NewAccountCopyWith<$Res> get account;
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -624,7 +624,7 @@ class _$AccountCreatorStateCopyWithImpl<$Res>
     Object saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
-      account: account == freezed ? _value.account : account as NewAccount,
+      account: account == freezed ? _value.account : account as Account,
       showErrorMessages: showErrorMessages == freezed
           ? _value.showErrorMessages
           : showErrorMessages as bool,
@@ -637,11 +637,11 @@ class _$AccountCreatorStateCopyWithImpl<$Res>
   }
 
   @override
-  $NewAccountCopyWith<$Res> get account {
+  $AccountCopyWith<$Res> get account {
     if (_value.account == null) {
       return null;
     }
-    return $NewAccountCopyWith<$Res>(_value.account, (value) {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
       return _then(_value.copyWith(account: value));
     });
   }
@@ -655,14 +655,14 @@ abstract class _$AccountCreatorStateCopyWith<$Res>
       __$AccountCreatorStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {NewAccount account,
+      {Account account,
       bool showErrorMessages,
       bool isSaving,
       bool isEditing,
       Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption});
 
   @override
-  $NewAccountCopyWith<$Res> get account;
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -685,7 +685,7 @@ class __$AccountCreatorStateCopyWithImpl<$Res>
     Object saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_AccountCreatorState(
-      account: account == freezed ? _value.account : account as NewAccount,
+      account: account == freezed ? _value.account : account as Account,
       showErrorMessages: showErrorMessages == freezed
           ? _value.showErrorMessages
           : showErrorMessages as bool,
@@ -713,7 +713,7 @@ class _$_AccountCreatorState implements _AccountCreatorState {
         assert(saveFailureOrSuccessOption != null);
 
   @override
-  final NewAccount account;
+  final Account account;
   @override
   final bool showErrorMessages;
   @override
@@ -769,7 +769,7 @@ class _$_AccountCreatorState implements _AccountCreatorState {
 abstract class _AccountCreatorState implements AccountCreatorState {
   const factory _AccountCreatorState(
           {@required
-              NewAccount account,
+              Account account,
           @required
               bool showErrorMessages,
           @required
@@ -781,7 +781,7 @@ abstract class _AccountCreatorState implements AccountCreatorState {
       _$_AccountCreatorState;
 
   @override
-  NewAccount get account;
+  Account get account;
   @override
   bool get showErrorMessages;
   @override

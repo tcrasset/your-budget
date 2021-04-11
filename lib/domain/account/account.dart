@@ -11,19 +11,19 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
-part 'new_account.freezed.dart';
+part 'account.freezed.dart';
 
 @freezed
-abstract class NewAccount implements _$NewAccount {
-  const factory NewAccount({
+abstract class Account implements _$Account {
+  const factory Account({
     @required UniqueId id,
     @required Name name,
     @required Amount balance,
   }) = _NewAccount;
 
-  const NewAccount._();
+  const Account._();
 
-  factory NewAccount.empty() => NewAccount(
+  factory Account.empty() => Account(
         id: UniqueId(),
         name: Name(""),
         balance: Amount(""),

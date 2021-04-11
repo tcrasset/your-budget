@@ -2,15 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:your_budget/domain/account/new_account.dart';
-import 'package:your_budget/models/account.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/models/constants.dart';
+
+// import 'package:your_budget/models/account.dart';
 
 class AccountRow extends StatelessWidget {
   const AccountRow({
     @required this.account,
   });
-  final NewAccount account;
+  final Account account;
 
   @override
   Widget build(BuildContext context) {

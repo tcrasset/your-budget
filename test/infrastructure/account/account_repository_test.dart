@@ -5,13 +5,12 @@ import 'package:sqflite/sqflite.dart';
 import 'package:test/test.dart';
 
 // Project imports:
-import 'package:your_budget/domain/account/new_account.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/infrastructure/account/account_dto.dart';
 import 'package:your_budget/infrastructure/account/account_repository.dart';
-import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/constants.dart';
 
 class MockDatabase extends Mock implements Database {}
@@ -22,7 +21,7 @@ void main() {
   int tId;
   String tName;
   double tBalance;
-  NewAccount tAccount;
+  Account tAccount;
   AccountDTO accountDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
@@ -32,7 +31,7 @@ void main() {
     tBalance = 666.66;
     tName = "Test name";
 
-    tAccount = NewAccount(
+    tAccount = Account(
         id: UniqueId.fromUniqueString(tId.toString()),
         balance: Amount(tBalance.toString()),
         name: Name(tName));
@@ -80,9 +79,9 @@ void main() {
     const tId1 = "1";
     const tId2 = "2";
     // Create new accounts with different IDs
-    final NewAccount tAccount1 = tAccount.copyWith(id: UniqueId.fromUniqueString(tId1));
-    final NewAccount tAccount2 = tAccount.copyWith(id: UniqueId.fromUniqueString(tId2));
-    final List<NewAccount> tAccountList = [tAccount1, tAccount2];
+    final Account tAccount1 = tAccount.copyWith(id: UniqueId.fromUniqueString(tId1));
+    final Account tAccount2 = tAccount.copyWith(id: UniqueId.fromUniqueString(tId2));
+    final List<Account> tAccountList = [tAccount1, tAccount2];
 
     // Change the result to include the ID as part of the JSON (because @JsonKey(ignore))
     final tRawAccount1 = AccountDTO.fromDomain(tAccount1).toJson();

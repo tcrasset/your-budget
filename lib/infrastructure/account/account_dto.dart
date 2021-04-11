@@ -1,13 +1,11 @@
 // Package imports:
-import 'package:dartz/dartz_streaming.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:your_budget/domain/account/new_account.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
-import '../../models/account.dart';
 
 part 'account_dto.freezed.dart';
 part 'account_dto.g.dart';
@@ -22,7 +20,7 @@ abstract class AccountDTO implements _$AccountDTO {
     @required double balance,
   }) = _AccountDTO;
 
-  factory AccountDTO.fromDomain(NewAccount account) {
+  factory AccountDTO.fromDomain(Account account) {
     return AccountDTO(
       id: account.id.getOrCrash(), //Not used in database
       name: account.name.getOrCrash(),
@@ -30,8 +28,8 @@ abstract class AccountDTO implements _$AccountDTO {
     );
   }
 
-  NewAccount toDomain() {
-    return NewAccount(
+  Account toDomain() {
+    return Account(
       id: UniqueId.fromUniqueString(id),
       name: Name(name),
       balance: Amount(balance.toString()),

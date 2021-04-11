@@ -3,7 +3,7 @@ part of 'account_creator_bloc.dart';
 @freezed
 abstract class AccountCreatorState with _$AccountCreatorState {
   const factory AccountCreatorState({
-    @required NewAccount account,
+    @required Account account,
     @required bool showErrorMessages,
     @required bool isSaving,
     @required bool isEditing,
@@ -11,7 +11,7 @@ abstract class AccountCreatorState with _$AccountCreatorState {
   }) = _AccountCreatorState;
 
   factory AccountCreatorState.initial() => AccountCreatorState(
-        account: NewAccount.empty(),
+        account: Account.empty(),
         showErrorMessages: false,
         isSaving: false,
         isEditing: false,
