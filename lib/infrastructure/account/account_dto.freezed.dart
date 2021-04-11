@@ -18,7 +18,9 @@ class _$AccountDTOTearOff {
 
 // ignore: unused_element
   _AccountDTO call(
-      {@JsonKey(ignore: true) int id, @required String name, @required double balance}) {
+      {@JsonKey(ignore: true) String id,
+      @required String name,
+      @required double balance}) {
     return _AccountDTO(
       id: id,
       name: name,
@@ -39,7 +41,7 @@ const $AccountDTO = _$AccountDTOTearOff();
 /// @nodoc
 mixin _$AccountDTO {
   @JsonKey(ignore: true)
-  int get id;
+  String get id; //Do not use id in database
   String get name;
   double get balance;
 
@@ -49,9 +51,10 @@ mixin _$AccountDTO {
 
 /// @nodoc
 abstract class $AccountDTOCopyWith<$Res> {
-  factory $AccountDTOCopyWith(AccountDTO value, $Res Function(AccountDTO) then) =
+  factory $AccountDTOCopyWith(
+          AccountDTO value, $Res Function(AccountDTO) then) =
       _$AccountDTOCopyWithImpl<$Res>;
-  $Res call({@JsonKey(ignore: true) int id, String name, double balance});
+  $Res call({@JsonKey(ignore: true) String id, String name, double balance});
 }
 
 /// @nodoc
@@ -69,7 +72,7 @@ class _$AccountDTOCopyWithImpl<$Res> implements $AccountDTOCopyWith<$Res> {
     Object balance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as int,
+      id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
       balance: balance == freezed ? _value.balance : balance as double,
     ));
@@ -78,16 +81,18 @@ class _$AccountDTOCopyWithImpl<$Res> implements $AccountDTOCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$AccountDTOCopyWith<$Res> implements $AccountDTOCopyWith<$Res> {
-  factory _$AccountDTOCopyWith(_AccountDTO value, $Res Function(_AccountDTO) then) =
+  factory _$AccountDTOCopyWith(
+          _AccountDTO value, $Res Function(_AccountDTO) then) =
       __$AccountDTOCopyWithImpl<$Res>;
   @override
-  $Res call({@JsonKey(ignore: true) int id, String name, double balance});
+  $Res call({@JsonKey(ignore: true) String id, String name, double balance});
 }
 
 /// @nodoc
 class __$AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
     implements _$AccountDTOCopyWith<$Res> {
-  __$AccountDTOCopyWithImpl(_AccountDTO _value, $Res Function(_AccountDTO) _then)
+  __$AccountDTOCopyWithImpl(
+      _AccountDTO _value, $Res Function(_AccountDTO) _then)
       : super(_value, (v) => _then(v as _AccountDTO));
 
   @override
@@ -100,7 +105,7 @@ class __$AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
     Object balance = freezed,
   }) {
     return _then(_AccountDTO(
-      id: id == freezed ? _value.id : id as int,
+      id: id == freezed ? _value.id : id as String,
       name: name == freezed ? _value.name : name as String,
       balance: balance == freezed ? _value.balance : balance as double,
     ));
@@ -111,17 +116,21 @@ class __$AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_AccountDTO extends _AccountDTO {
-  const _$_AccountDTO({@JsonKey(ignore: true) this.id, @required this.name, @required this.balance})
+  const _$_AccountDTO(
+      {@JsonKey(ignore: true) this.id,
+      @required this.name,
+      @required this.balance})
       : assert(name != null),
         assert(balance != null),
         super._();
 
-  factory _$_AccountDTO.fromJson(Map<String, dynamic> json) => _$_$_AccountDTOFromJson(json);
+  factory _$_AccountDTO.fromJson(Map<String, dynamic> json) =>
+      _$_$_AccountDTOFromJson(json);
 
   @override
   @JsonKey(ignore: true)
-  final int id;
-  @override
+  final String id;
+  @override //Do not use id in database
   final String name;
   @override
   final double balance;
@@ -135,7 +144,8 @@ class _$_AccountDTO extends _AccountDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AccountDTO &&
-            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.balance, balance) ||
@@ -162,16 +172,17 @@ class _$_AccountDTO extends _AccountDTO {
 abstract class _AccountDTO extends AccountDTO {
   const _AccountDTO._() : super._();
   const factory _AccountDTO(
-      {@JsonKey(ignore: true) int id,
+      {@JsonKey(ignore: true) String id,
       @required String name,
       @required double balance}) = _$_AccountDTO;
 
-  factory _AccountDTO.fromJson(Map<String, dynamic> json) = _$_AccountDTO.fromJson;
+  factory _AccountDTO.fromJson(Map<String, dynamic> json) =
+      _$_AccountDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)
-  int get id;
-  @override
+  String get id;
+  @override //Do not use id in database
   String get name;
   @override
   double get balance;

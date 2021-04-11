@@ -20,7 +20,7 @@ class _$AccountWatcherEventTearOff {
 
 // ignore: unused_element
   _AccountsReceived accountsReceived(
-      Either<ValueFailure, List<Account>> failureOrAccounts) {
+      Either<ValueFailure, List<NewAccount>> failureOrAccounts) {
     return _AccountsReceived(
       failureOrAccounts,
     );
@@ -38,13 +38,13 @@ mixin _$AccountWatcherEvent {
     @required Result watchAccountsStarted(),
     @required
         Result accountsReceived(
-            Either<ValueFailure, List<Account>> failureOrAccounts),
+            Either<ValueFailure, List<NewAccount>> failureOrAccounts),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchAccountsStarted(),
     Result accountsReceived(
-        Either<ValueFailure, List<Account>> failureOrAccounts),
+        Either<ValueFailure, List<NewAccount>> failureOrAccounts),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -119,7 +119,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
     @required Result watchAccountsStarted(),
     @required
         Result accountsReceived(
-            Either<ValueFailure, List<Account>> failureOrAccounts),
+            Either<ValueFailure, List<NewAccount>> failureOrAccounts),
   }) {
     assert(watchAccountsStarted != null);
     assert(accountsReceived != null);
@@ -131,7 +131,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   Result maybeWhen<Result extends Object>({
     Result watchAccountsStarted(),
     Result accountsReceived(
-        Either<ValueFailure, List<Account>> failureOrAccounts),
+        Either<ValueFailure, List<NewAccount>> failureOrAccounts),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -176,7 +176,7 @@ abstract class _$AccountsReceivedCopyWith<$Res> {
   factory _$AccountsReceivedCopyWith(
           _AccountsReceived value, $Res Function(_AccountsReceived) then) =
       __$AccountsReceivedCopyWithImpl<$Res>;
-  $Res call({Either<ValueFailure, List<Account>> failureOrAccounts});
+  $Res call({Either<ValueFailure, List<NewAccount>> failureOrAccounts});
 }
 
 /// @nodoc
@@ -197,7 +197,7 @@ class __$AccountsReceivedCopyWithImpl<$Res>
     return _then(_AccountsReceived(
       failureOrAccounts == freezed
           ? _value.failureOrAccounts
-          : failureOrAccounts as Either<ValueFailure, List<Account>>,
+          : failureOrAccounts as Either<ValueFailure, List<NewAccount>>,
     ));
   }
 }
@@ -208,7 +208,7 @@ class _$_AccountsReceived implements _AccountsReceived {
       : assert(failureOrAccounts != null);
 
   @override
-  final Either<ValueFailure, List<Account>> failureOrAccounts;
+  final Either<ValueFailure, List<NewAccount>> failureOrAccounts;
 
   @override
   String toString() {
@@ -239,7 +239,7 @@ class _$_AccountsReceived implements _AccountsReceived {
     @required Result watchAccountsStarted(),
     @required
         Result accountsReceived(
-            Either<ValueFailure, List<Account>> failureOrAccounts),
+            Either<ValueFailure, List<NewAccount>> failureOrAccounts),
   }) {
     assert(watchAccountsStarted != null);
     assert(accountsReceived != null);
@@ -251,7 +251,7 @@ class _$_AccountsReceived implements _AccountsReceived {
   Result maybeWhen<Result extends Object>({
     Result watchAccountsStarted(),
     Result accountsReceived(
-        Either<ValueFailure, List<Account>> failureOrAccounts),
+        Either<ValueFailure, List<NewAccount>> failureOrAccounts),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -289,10 +289,10 @@ class _$_AccountsReceived implements _AccountsReceived {
 
 abstract class _AccountsReceived implements AccountWatcherEvent {
   const factory _AccountsReceived(
-          Either<ValueFailure, List<Account>> failureOrAccounts) =
+          Either<ValueFailure, List<NewAccount>> failureOrAccounts) =
       _$_AccountsReceived;
 
-  Either<ValueFailure, List<Account>> get failureOrAccounts;
+  Either<ValueFailure, List<NewAccount>> get failureOrAccounts;
   _$AccountsReceivedCopyWith<_AccountsReceived> get copyWith;
 }
 
@@ -311,7 +311,7 @@ class _$AccountWatcherStateTearOff {
   }
 
 // ignore: unused_element
-  _AccountLoadSuccess loadSuccess(List<Account> accounts) {
+  _AccountLoadSuccess loadSuccess(List<NewAccount> accounts) {
     return _AccountLoadSuccess(
       accounts,
     );
@@ -335,14 +335,14 @@ mixin _$AccountWatcherState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<Account> accounts),
+    @required Result loadSuccess(List<NewAccount> accounts),
     @required Result loadFailure(ValueFailure<dynamic> accountFailure),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<Account> accounts),
+    Result loadSuccess(List<NewAccount> accounts),
     Result loadFailure(ValueFailure<dynamic> accountFailure),
     @required Result orElse(),
   });
@@ -419,7 +419,7 @@ class _$_Initial implements _Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<Account> accounts),
+    @required Result loadSuccess(List<NewAccount> accounts),
     @required Result loadFailure(ValueFailure<dynamic> accountFailure),
   }) {
     assert(initial != null);
@@ -434,7 +434,7 @@ class _$_Initial implements _Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<Account> accounts),
+    Result loadSuccess(List<NewAccount> accounts),
     Result loadFailure(ValueFailure<dynamic> accountFailure),
     @required Result orElse(),
   }) {
@@ -520,7 +520,7 @@ class _$_Loading implements _Loading {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<Account> accounts),
+    @required Result loadSuccess(List<NewAccount> accounts),
     @required Result loadFailure(ValueFailure<dynamic> accountFailure),
   }) {
     assert(initial != null);
@@ -535,7 +535,7 @@ class _$_Loading implements _Loading {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<Account> accounts),
+    Result loadSuccess(List<NewAccount> accounts),
     Result loadFailure(ValueFailure<dynamic> accountFailure),
     @required Result orElse(),
   }) {
@@ -587,7 +587,7 @@ abstract class _$AccountLoadSuccessCopyWith<$Res> {
   factory _$AccountLoadSuccessCopyWith(
           _AccountLoadSuccess value, $Res Function(_AccountLoadSuccess) then) =
       __$AccountLoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<Account> accounts});
+  $Res call({List<NewAccount> accounts});
 }
 
 /// @nodoc
@@ -606,7 +606,7 @@ class __$AccountLoadSuccessCopyWithImpl<$Res>
     Object accounts = freezed,
   }) {
     return _then(_AccountLoadSuccess(
-      accounts == freezed ? _value.accounts : accounts as List<Account>,
+      accounts == freezed ? _value.accounts : accounts as List<NewAccount>,
     ));
   }
 }
@@ -616,7 +616,7 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
   const _$_AccountLoadSuccess(this.accounts) : assert(accounts != null);
 
   @override
-  final List<Account> accounts;
+  final List<NewAccount> accounts;
 
   @override
   String toString() {
@@ -645,7 +645,7 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<Account> accounts),
+    @required Result loadSuccess(List<NewAccount> accounts),
     @required Result loadFailure(ValueFailure<dynamic> accountFailure),
   }) {
     assert(initial != null);
@@ -660,7 +660,7 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<Account> accounts),
+    Result loadSuccess(List<NewAccount> accounts),
     Result loadFailure(ValueFailure<dynamic> accountFailure),
     @required Result orElse(),
   }) {
@@ -704,10 +704,10 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
 }
 
 abstract class _AccountLoadSuccess implements AccountWatcherState {
-  const factory _AccountLoadSuccess(List<Account> accounts) =
+  const factory _AccountLoadSuccess(List<NewAccount> accounts) =
       _$_AccountLoadSuccess;
 
-  List<Account> get accounts;
+  List<NewAccount> get accounts;
   _$AccountLoadSuccessCopyWith<_AccountLoadSuccess> get copyWith;
 }
 
@@ -790,7 +790,7 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loading(),
-    @required Result loadSuccess(List<Account> accounts),
+    @required Result loadSuccess(List<NewAccount> accounts),
     @required Result loadFailure(ValueFailure<dynamic> accountFailure),
   }) {
     assert(initial != null);
@@ -805,7 +805,7 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loading(),
-    Result loadSuccess(List<Account> accounts),
+    Result loadSuccess(List<NewAccount> accounts),
     Result loadFailure(ValueFailure<dynamic> accountFailure),
     @required Result orElse(),
   }) {

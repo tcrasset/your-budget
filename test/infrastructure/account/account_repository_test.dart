@@ -1,9 +1,14 @@
 // Package imports:
+import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:test/test.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/new_account.dart';
+import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/infrastructure/account/account_dto.dart';
 import 'package:your_budget/infrastructure/account/account_repository.dart';
 import 'package:your_budget/models/account.dart';
@@ -17,7 +22,7 @@ void main() {
   int tId;
   String tName;
   double tBalance;
-  Account tAccount;
+  NewAccount tAccount;
   AccountDTO accountDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
@@ -27,7 +32,10 @@ void main() {
     tBalance = 666.66;
     tName = "Test name";
 
-    tAccount = Account(id: tId, balance: tBalance, name: tName);
+    tAccount = NewAccount(
+        id: UniqueId.fromUniqueString(tId.toString()),
+        balance: Amount(tBalance.toString()),
+        name: Name(tName));
 
     accountDTO = AccountDTO.fromDomain(tAccount);
   });
@@ -68,25 +76,30 @@ void main() {
 
   test('verify that getAllAccounts returns the correct ones', () async {
     //!Arrange
-    final Account tAccount1 = tAccount.copyWith(balance: 55.0);
-    final Account tAccount2 = tAccount.copyWith(balance: 44.0);
-    final List<Account> tAccountList = [tAccount1, tAccount2];
-    final List<Map<String, dynamic>> tRawAccounts = [
-      AccountDTO.fromDomain(tAccount1).toJson(),
-      AccountDTO.fromDomain(tAccount2).toJson(),
-    ];
+
+    const tId1 = "1";
+    const tId2 = "2";
+    // Create new accounts with different IDs
+    final NewAccount tAccount1 = tAccount.copyWith(id: UniqueId.fromUniqueString(tId1));
+    final NewAccount tAccount2 = tAccount.copyWith(id: UniqueId.fromUniqueString(tId2));
+    final List<NewAccount> tAccountList = [tAccount1, tAccount2];
+
+    // Change the result to include the ID as part of the JSON (because @JsonKey(ignore))
+    final tRawAccount1 = AccountDTO.fromDomain(tAccount1).toJson();
+    final tRawAccount2 = AccountDTO.fromDomain(tAccount2).toJson();
+    tRawAccount1['id'] = tId1;
+    tRawAccount2['id'] = tId2;
+    final List<Map<String, dynamic>> tRawAccounts = [tRawAccount1, tRawAccount2];
 
     when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawAccounts);
+
     //!Act
     final accounts = await repository.getAllAccounts();
     //!Assert
 
     accounts.fold(
       (failure) => throw TestFailure(failure.toString()),
-      (accounts) {
-        expect(accounts[0].balance, tAccountList[0].balance);
-        expect(accounts[1].balance, tAccountList[1].balance);
-      },
+      (accounts) => expect(accounts, tAccountList),
     );
   });
 }

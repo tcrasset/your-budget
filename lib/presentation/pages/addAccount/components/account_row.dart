@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/new_account.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/constants.dart';
 
@@ -9,7 +10,7 @@ class AccountRow extends StatelessWidget {
   const AccountRow({
     @required this.account,
   });
-  final Account account;
+  final NewAccount account;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class AccountRow extends StatelessWidget {
       children: <Widget>[
         Expanded(
           child: Text(
-            account.name,
+            account.name.getOrCrash(),
             style: _accountNameStyle,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
@@ -34,8 +35,10 @@ class AccountRow extends StatelessWidget {
           width: 10,
         ),
         Text(
-          account.balance.toStringAsFixed(2) + " €",
-          style: account.balance.isNegative ? negativeAmountTextStyle : positiveAmountTextStyle,
+          account.balance.getOrCrash().toStringAsFixed(2) + " €",
+          style: account.balance.getOrCrash().isNegative
+              ? negativeAmountTextStyle
+              : positiveAmountTextStyle,
           overflow: TextOverflow.fade,
           maxLines: 1,
           softWrap: false,

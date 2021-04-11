@@ -9,9 +9,9 @@ import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/new_account.dart';
 import '../../domain/account/i_account_repository.dart';
 import '../../domain/core/value_failure.dart';
-import '../../models/account.dart';
 import '../../models/constants.dart';
 import 'account_dto.dart';
 
@@ -34,7 +34,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> create(Account account) async {
+  Future<Either<ValueFailure, Unit>> create(NewAccount account) async {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
       await database.insert(DatabaseConstants.accountTable, accountDTO.toJson());
@@ -45,7 +45,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
-  Future<Either<ValueFailure, List<Account>>> getAllAccounts() async {
+  Future<Either<ValueFailure, List<NewAccount>>> getAllAccounts() async {
     try {
       final sql = """
         SELECT * FROM ${DatabaseConstants.accountTable}
@@ -53,9 +53,9 @@ class SQFliteAccountRepository implements IAccountRepository {
         """;
 
       final data = await database.rawQuery(sql);
-      final List<Account> accounts = [];
+      final List<NewAccount> accounts = [];
       for (final rawAccount in data) {
-        final AccountDTO accountDTO = AccountDTO.fromJson(rawAccount);
+        final AccountDTO accountDTO = AccountDTO.fromSQL(rawAccount);
         accounts.add(accountDTO.toDomain());
       }
 
@@ -66,7 +66,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
-  Stream<Either<ValueFailure<dynamic>, List<Account>>> watchAllAccounts() {
+  Stream<Either<ValueFailure<dynamic>, List<NewAccount>>> watchAllAccounts() {
     return getAllAccounts().asStream();
   }
 }

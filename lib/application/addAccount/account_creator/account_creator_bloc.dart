@@ -55,10 +55,10 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
           // failureOrSuccess = state.isEditing
           //     ? await accountRepository.update(state.account)
           //     : await accountRepository.create(state.account);
-          // failureOrSuccess = await accountRepository.create(state.account);
+          failureOrSuccess = await accountRepository.create(state.account);
         }
-        failureOrSuccess = right(unit);
-        print("saved");
+
+        //TODO: Create starting transaction
         yield state.copyWith(
           isSaving: false,
           showErrorMessages: true,

@@ -23,5 +23,12 @@ class UniqueId extends ValueObject<String> {
     );
   }
 
+  factory UniqueId.fromUniqueInt(int id) {
+    assert(id != null);
+    return UniqueId._(
+      right(id.toString()),
+    );
+  }
+
   const UniqueId._(this.value);
 }

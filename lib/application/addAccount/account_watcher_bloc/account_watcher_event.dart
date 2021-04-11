@@ -4,5 +4,5 @@ part of 'account_watcher_bloc.dart';
 abstract class AccountWatcherEvent with _$AccountWatcherEvent {
   const factory AccountWatcherEvent.watchAccountsStarted() = _AccountWatchStarted;
   const factory AccountWatcherEvent.accountsReceived(
-      Either<ValueFailure, List<Account>> failureOrAccounts) = _AccountsReceived;
+      Either<ValueFailure, List<NewAccount>> failureOrAccounts) = _AccountsReceived;
 }
