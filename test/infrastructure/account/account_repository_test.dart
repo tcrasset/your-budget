@@ -101,4 +101,16 @@ void main() {
       (accounts) => expect(accounts, tAccountList),
     );
   });
+
+  test('verify that count() uses the correct query and calls the database', () async {
+    //!Arrange
+    const sql = """
+        SELECT COUNT(*) FROM ${DatabaseConstants.accountTable};
+        """;
+    //!Act
+    await repository.count();
+
+    //!Assert
+    verify(mockDatabase.rawQuery(sql));
+  });
 }

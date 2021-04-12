@@ -22,7 +22,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   @override
   Future<Either<ValueFailure, int>> count() async {
     try {
-      final sql = """
+      const sql = """
         SELECT COUNT(*) FROM ${DatabaseConstants.accountTable};
         """;
       final data = await database.rawQuery(sql);
@@ -47,7 +47,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   @override
   Future<Either<ValueFailure, List<Account>>> getAllAccounts() async {
     try {
-      final sql = """
+      const sql = """
         SELECT * FROM ${DatabaseConstants.accountTable}
         ORDER BY ${DatabaseConstants.ACCOUNT_BALANCE} DESC;
         """;
