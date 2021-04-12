@@ -14,9 +14,9 @@ class _$AccountTearOff {
   const _$AccountTearOff();
 
 // ignore: unused_element
-  _NewAccount call(
+  _Account call(
       {@required UniqueId id, @required Name name, @required Amount balance}) {
-    return _NewAccount(
+    return _Account(
       id: id,
       name: name,
       balance: balance,
@@ -67,23 +67,21 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$NewAccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
-  factory _$NewAccountCopyWith(
-          _NewAccount value, $Res Function(_NewAccount) then) =
-      __$NewAccountCopyWithImpl<$Res>;
+abstract class _$AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
+  factory _$AccountCopyWith(_Account value, $Res Function(_Account) then) =
+      __$AccountCopyWithImpl<$Res>;
   @override
   $Res call({UniqueId id, Name name, Amount balance});
 }
 
 /// @nodoc
-class __$NewAccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
-    implements _$NewAccountCopyWith<$Res> {
-  __$NewAccountCopyWithImpl(
-      _NewAccount _value, $Res Function(_NewAccount) _then)
-      : super(_value, (v) => _then(v as _NewAccount));
+class __$AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
+    implements _$AccountCopyWith<$Res> {
+  __$AccountCopyWithImpl(_Account _value, $Res Function(_Account) _then)
+      : super(_value, (v) => _then(v as _Account));
 
   @override
-  _NewAccount get _value => super._value as _NewAccount;
+  _Account get _value => super._value as _Account;
 
   @override
   $Res call({
@@ -91,7 +89,7 @@ class __$NewAccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
     Object name = freezed,
     Object balance = freezed,
   }) {
-    return _then(_NewAccount(
+    return _then(_Account(
       id: id == freezed ? _value.id : id as UniqueId,
       name: name == freezed ? _value.name : name as Name,
       balance: balance == freezed ? _value.balance : balance as Amount,
@@ -100,8 +98,8 @@ class __$NewAccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 }
 
 /// @nodoc
-class _$_NewAccount extends _NewAccount {
-  const _$_NewAccount(
+class _$_Account extends _Account {
+  const _$_Account(
       {@required this.id, @required this.name, @required this.balance})
       : assert(id != null),
         assert(name != null),
@@ -123,7 +121,7 @@ class _$_NewAccount extends _NewAccount {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _NewAccount &&
+        (other is _Account &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
@@ -140,16 +138,16 @@ class _$_NewAccount extends _NewAccount {
       const DeepCollectionEquality().hash(balance);
 
   @override
-  _$NewAccountCopyWith<_NewAccount> get copyWith =>
-      __$NewAccountCopyWithImpl<_NewAccount>(this, _$identity);
+  _$AccountCopyWith<_Account> get copyWith =>
+      __$AccountCopyWithImpl<_Account>(this, _$identity);
 }
 
-abstract class _NewAccount extends Account {
-  const _NewAccount._() : super._();
-  const factory _NewAccount(
+abstract class _Account extends Account {
+  const _Account._() : super._();
+  const factory _Account(
       {@required UniqueId id,
       @required Name name,
-      @required Amount balance}) = _$_NewAccount;
+      @required Amount balance}) = _$_Account;
 
   @override
   UniqueId get id;
@@ -158,5 +156,5 @@ abstract class _NewAccount extends Account {
   @override
   Amount get balance;
   @override
-  _$NewAccountCopyWith<_NewAccount> get copyWith;
+  _$AccountCopyWith<_Account> get copyWith;
 }

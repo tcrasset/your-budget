@@ -19,7 +19,7 @@ abstract class Account implements _$Account {
     @required UniqueId id,
     @required Name name,
     @required Amount balance,
-  }) = _NewAccount;
+  }) = _Account;
 
   const Account._();
 
