@@ -4,38 +4,20 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Project imports:
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/models/utils.dart';
 
-class AccountBalance extends StatefulWidget {
+class AccountBalance extends HookWidget {
   final TextStyle textStyle;
   final InputDecoration boxDecoration;
   const AccountBalance({
     @required this.textStyle,
     @required this.boxDecoration,
   });
-
-  @override
-  _AccountBalanceState createState() => _AccountBalanceState();
-}
-
-class _AccountBalanceState extends State<AccountBalance> {
-  TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
 
   void onBalanceChanged(BuildContext context, String value) {
     context.read<AccountCreatorBloc>().add(AccountCreatorEvent.balanceChanged(
@@ -71,8 +53,12 @@ class _AccountBalanceState extends State<AccountBalance> {
 
   @override
   Widget build(BuildContext context) {
+    final _controller = useTextEditingController();
+
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
+      listenWhen: (p, c) => getBalance(p) != getBalance(c),
       listener: (context, state) {
+        print(state.account.balance);
         _controller
           ..text = getBalance(state)
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
@@ -92,8 +78,8 @@ class _AccountBalanceState extends State<AccountBalance> {
                 child: Center(
                   child: TextFormField(
                     key: const Key('accountBalanceTextField'),
-                    decoration: widget.boxDecoration,
-                    style: widget.textStyle,
+                    decoration: boxDecoration,
+                    style: textStyle,
                     textAlign: TextAlign.center,
                     validator: (_) => validateBalance(context),
                     onChanged: (value) => onBalanceChanged(context, value),
