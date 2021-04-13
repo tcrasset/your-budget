@@ -31,7 +31,6 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
   ) async* {
     yield* event.map(
       initialized: (e) async* {
-        print("Initialized");
         yield state;
       },
       nameChanged: (e) async* {
@@ -65,7 +64,6 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
           ).create(state.account);
         }
 
-        //TODO: Create starting transaction
         yield state.copyWith(
           isSaving: false,
           showErrorMessages: true,
