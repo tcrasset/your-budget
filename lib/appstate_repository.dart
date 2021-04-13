@@ -10,8 +10,6 @@ import 'models/payee.dart';
 abstract class AppStateRepository {
   Future<void> loadStateFromDatabase();
 
-  Future<void> addAccount({@required String accountName, @required double balance});
-
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
   void addCategory({@required String categoryName});

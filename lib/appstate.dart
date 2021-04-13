@@ -10,7 +10,6 @@ import 'package:jiffy/jiffy.dart';
 // Project imports:
 import 'appstate_repository.dart';
 import 'models/account.dart';
-import 'models/account_creator.dart';
 import 'models/account_list.dart';
 import 'models/budget.dart';
 import 'models/budget_list.dart';
@@ -95,17 +94,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     await computeToBeBudgeted();
 
-    notifyListeners();
-  }
-
-  @override
-  Future<void> addAccount({@required String accountName, @required double balance}) async {
-    final AccountCreator creator =
-        AccountCreator(queryContext: queryContext, balance: balance, name: accountName);
-    accountList.add(await creator.create());
-    transactionList.add(await creator.getStartingMoneyTransaction());
-
-    await computeToBeBudgeted();
     notifyListeners();
   }
 

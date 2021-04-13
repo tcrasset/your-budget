@@ -60,55 +60,6 @@ void main() {
     verify(mockQueries.getGoals()).called(1);
   });
 
-  test(
-      'when addAccount() is called then add account and moneyTranasction to the state and database' +
-          'and call computeToBeBudgeted() once after.', () async {
-    //!Arrange
-    const String accountName = "Savings";
-    const double balance = 999.99;
-    const int accountId = 1;
-    const int moneyTransactionId = 1;
-    final Account tAccount = Account(id: accountId, name: accountName, balance: balance);
-    final MoneyTransaction tMoneyTransaction = MoneyTransaction(
-        id: moneyTransactionId,
-        accountID: accountId,
-        amount: balance,
-        date: DateTime.now(),
-        memo: "",
-        payeeID: Constants.UNASSIGNED_PAYEE_ID,
-        subcatID: Constants.UNASSIGNED_SUBCAT_ID);
-
-    when(mockQueries.getFirstTransactionOfAccount(accountId))
-        .thenAnswer((_) async => tMoneyTransaction);
-    when(mockQueries.addAccount(argThat(isA<AccountModel>()))).thenAnswer((_) async => accountId);
-    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
-        .thenAnswer((_) async => moneyTransactionId);
-
-    //!Act
-    await appState.addAccount(accountName: accountName, balance: balance);
-
-    //!Assert
-    verify(mockQueries.addAccount(argThat(isA<AccountModel>())));
-    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
-
-    // Verify that we call computeToBeBudgeted() once (we only added a single account)
-    verify(mockQueries.getFirstTransactionOfAccount(argThat(isA<int>())));
-    // Compare accounts
-    final Account account = appState.accounts.singleWhere((acc) => acc.id == accountId);
-    final bool accountResult = tAccount.hasSameValues(account);
-    expect(accountResult, true);
-
-    // Compare transactions (without data comparison)
-    final MoneyTransaction transaction =
-        appState.transactions.singleWhere((transaction) => transaction.id == tMoneyTransaction.id);
-
-    expect(transaction.id, tMoneyTransaction.id);
-    expect(transaction.subcatID, tMoneyTransaction.subcatID);
-    expect(transaction.payeeID, tMoneyTransaction.payeeID);
-    expect(transaction.accountID, tMoneyTransaction.accountID);
-    expect(transaction.amount, tMoneyTransaction.amount);
-  });
-
   test('when addCategory() is called, add category to the database and to each budget', () {
     //!Arrange
     const String tCategoryName = "Essentials";
