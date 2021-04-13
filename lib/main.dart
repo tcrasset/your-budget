@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'application/core/bloc_observer.dart';
 import 'appstate.dart';
 import 'injection_container.dart' as injections;
 import 'models/constants.dart';
@@ -20,6 +22,7 @@ import 'presentation/pages/showTransactions/show_transaction_page.dart';
 import 'waiting_screen.dart';
 
 Future<void> main() async {
+  Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
   runApp(MyBudget());
