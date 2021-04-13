@@ -2,7 +2,7 @@
 import 'package:dartz/dartz.dart';
 
 // Project imports:
-import '../../models/money_transaction.dart';
+import 'package:your_budget/domain/transaction/transaction.dart';
 import '../core/value_failure.dart';
 
 abstract class ITransactionRepository {

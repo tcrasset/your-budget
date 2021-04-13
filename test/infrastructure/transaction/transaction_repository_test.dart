@@ -4,10 +4,13 @@ import 'package:sqflite/sqflite.dart';
 import 'package:test/test.dart';
 
 // Project imports:
+import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
+import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/money_transaction.dart';
 
 class MockDatabase extends Mock implements Database {}
 
@@ -34,12 +37,12 @@ void main() {
     tMemo = "Test memo";
 
     transaction = MoneyTransaction(
-        id: 1,
-        subcatID: tSubcatId,
-        payeeID: tPayeeId,
-        accountID: tAccountId,
-        amount: tAmount,
-        memo: tMemo,
+        id: UniqueId.fromUniqueInt(1),
+        subcatID: UniqueId.fromUniqueInt(tSubcatId),
+        payeeID: UniqueId.fromUniqueInt(tPayeeId),
+        accountID: UniqueId.fromUniqueInt(tAccountId),
+        amount: Amount(tAmount.toString()),
+        memo: Name(tMemo),
         date: tDate);
 
     transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
@@ -108,8 +111,8 @@ void main() {
 
   test('verify that getAccountTransactions returns the correct ones', () async {
     //!Arrange
-    final MoneyTransaction tTransaction1 = transaction.copyWith(amount: 55);
-    final MoneyTransaction tTransaction2 = transaction.copyWith(amount: 44);
+    final MoneyTransaction tTransaction1 = transaction.copyWith(amount: Amount("55"));
+    final MoneyTransaction tTransaction2 = transaction.copyWith(amount: Amount("44"));
     final List<MoneyTransaction> tTransactionList = [tTransaction1, tTransaction2];
     final List<Map<String, dynamic>> tRawTransactions = [
       MoneyTransactionDTO.fromDomain(tTransaction1).toJson(),

@@ -9,10 +9,10 @@ import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
+import 'package:your_budget/domain/transaction/transaction.dart';
 import '../../domain/core/value_failure.dart';
 import '../../domain/transaction/i_transaction_repository.dart';
 import '../../models/constants.dart';
-import '../../models/money_transaction.dart';
 import 'transaction_dto.dart';
 
 class SQFliteTransactionRepository implements ITransactionRepository {
@@ -21,6 +21,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
 
   @override
   Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
+    // TODO: Create generic function for insert
     try {
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
@@ -74,7 +75,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
       final data = await database.rawQuery(sql, args);
       final List<MoneyTransaction> transactions = [];
       for (final rawTransaction in data) {
-        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromJson(rawTransaction);
+        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromSQL(rawTransaction);
         transactions.add(transactionDTO.toDomain());
       }
 

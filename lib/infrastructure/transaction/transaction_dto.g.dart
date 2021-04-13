@@ -6,21 +6,18 @@ part of 'transaction_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MoneyTransactionDTO _$_$_MoneyTransactionDTOFromJson(
-    Map<String, dynamic> json) {
-  return _$_MoneyTransactionDTO(
-    subcatID: json['subcatID'] as int,
-    payeeID: json['payeeID'] as int,
-    accountID: json['accountID'] as int,
+_$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
+  return _$_TransactionDTO(
+    subcatID: json['subcatID'] as String,
+    payeeID: json['payeeID'] as String,
+    accountID: json['accountID'] as String,
     amount: (json['amount'] as num)?.toDouble(),
     memo: json['memo'] as String,
     dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
   );
 }
 
-Map<String, dynamic> _$_$_MoneyTransactionDTOToJson(
-        _$_MoneyTransactionDTO instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) => <String, dynamic>{
       'subcatID': instance.subcatID,
       'payeeID': instance.payeeID,
       'accountID': instance.accountID,

@@ -110,9 +110,9 @@ class DatabaseProvider {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.moneyTransactionTable} (
                         ${DatabaseConstants.MONEYTRANSACTION_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
-                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} INTEGER NOT NULL,
-                        ${DatabaseConstants.PAYEE_ID_OUTSIDE} INTEGER NOT NULL,
-                        ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} TEXT NOT NULL,
+                        ${DatabaseConstants.PAYEE_ID_OUTSIDE} TEXT NOT NULL,
+                        ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} TEXT NOT NULL,
                         ${DatabaseConstants.MONEYTRANSACTION_AMOUNT} FLOAT NOT NULL,
                         ${DatabaseConstants.MONEYTRANSACTION_MEMO} TEXT,
                         ${DatabaseConstants.MONEYTRANSACTION_DATE} INTEGER NOT NULL,

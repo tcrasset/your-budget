@@ -9,13 +9,13 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:your_budget/domain/transaction/transaction.dart';
 import '../../../application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import '../../../appstate.dart';
 import '../../../domain/account/i_account_repository.dart';
 import '../../../domain/transaction/i_transaction_repository.dart';
 import '../../../models/account.dart';
 import '../../../models/constants.dart';
-import '../../../models/money_transaction.dart';
 import '../core/progress_overlay.dart';
 import '../core/transactions/transaction_list.dart';
 

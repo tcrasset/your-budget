@@ -9,7 +9,7 @@ part of 'transaction_dto.dart';
 
 T _$identity<T>(T value) => value;
 MoneyTransactionDTO _$MoneyTransactionDTOFromJson(Map<String, dynamic> json) {
-  return _MoneyTransactionDTO.fromJson(json);
+  return _TransactionDTO.fromJson(json);
 }
 
 /// @nodoc
@@ -17,15 +17,15 @@ class _$MoneyTransactionDTOTearOff {
   const _$MoneyTransactionDTOTearOff();
 
 // ignore: unused_element
-  _MoneyTransactionDTO call(
-      {@JsonKey(ignore: true) int id,
-      @required int subcatID,
-      @required int payeeID,
-      @required int accountID,
+  _TransactionDTO call(
+      {@JsonKey(ignore: true) String id,
+      @required String subcatID,
+      @required String payeeID,
+      @required String accountID,
       @required double amount,
       @required String memo,
       @required int dateInMillisecondsSinceEpoch}) {
-    return _MoneyTransactionDTO(
+    return _TransactionDTO(
       id: id,
       subcatID: subcatID,
       payeeID: payeeID,
@@ -49,10 +49,10 @@ const $MoneyTransactionDTO = _$MoneyTransactionDTOTearOff();
 /// @nodoc
 mixin _$MoneyTransactionDTO {
   @JsonKey(ignore: true)
-  int get id;
-  int get subcatID;
-  int get payeeID;
-  int get accountID;
+  String get id;
+  String get subcatID;
+  String get payeeID;
+  String get accountID;
   double get amount;
   String get memo;
   int get dateInMillisecondsSinceEpoch;
@@ -67,10 +67,10 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
           MoneyTransactionDTO value, $Res Function(MoneyTransactionDTO) then) =
       _$MoneyTransactionDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(ignore: true) int id,
-      int subcatID,
-      int payeeID,
-      int accountID,
+      {@JsonKey(ignore: true) String id,
+      String subcatID,
+      String payeeID,
+      String accountID,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -96,10 +96,10 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object dateInMillisecondsSinceEpoch = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as int,
-      subcatID: subcatID == freezed ? _value.subcatID : subcatID as int,
-      payeeID: payeeID == freezed ? _value.payeeID : payeeID as int,
-      accountID: accountID == freezed ? _value.accountID : accountID as int,
+      id: id == freezed ? _value.id : id as String,
+      subcatID: subcatID == freezed ? _value.subcatID : subcatID as String,
+      payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
+      accountID: accountID == freezed ? _value.accountID : accountID as String,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
@@ -110,32 +110,32 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$MoneyTransactionDTOCopyWith<$Res>
+abstract class _$TransactionDTOCopyWith<$Res>
     implements $MoneyTransactionDTOCopyWith<$Res> {
-  factory _$MoneyTransactionDTOCopyWith(_MoneyTransactionDTO value,
-          $Res Function(_MoneyTransactionDTO) then) =
-      __$MoneyTransactionDTOCopyWithImpl<$Res>;
+  factory _$TransactionDTOCopyWith(
+          _TransactionDTO value, $Res Function(_TransactionDTO) then) =
+      __$TransactionDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(ignore: true) int id,
-      int subcatID,
-      int payeeID,
-      int accountID,
+      {@JsonKey(ignore: true) String id,
+      String subcatID,
+      String payeeID,
+      String accountID,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
 }
 
 /// @nodoc
-class __$MoneyTransactionDTOCopyWithImpl<$Res>
+class __$TransactionDTOCopyWithImpl<$Res>
     extends _$MoneyTransactionDTOCopyWithImpl<$Res>
-    implements _$MoneyTransactionDTOCopyWith<$Res> {
-  __$MoneyTransactionDTOCopyWithImpl(
-      _MoneyTransactionDTO _value, $Res Function(_MoneyTransactionDTO) _then)
-      : super(_value, (v) => _then(v as _MoneyTransactionDTO));
+    implements _$TransactionDTOCopyWith<$Res> {
+  __$TransactionDTOCopyWithImpl(
+      _TransactionDTO _value, $Res Function(_TransactionDTO) _then)
+      : super(_value, (v) => _then(v as _TransactionDTO));
 
   @override
-  _MoneyTransactionDTO get _value => super._value as _MoneyTransactionDTO;
+  _TransactionDTO get _value => super._value as _TransactionDTO;
 
   @override
   $Res call({
@@ -147,11 +147,11 @@ class __$MoneyTransactionDTOCopyWithImpl<$Res>
     Object memo = freezed,
     Object dateInMillisecondsSinceEpoch = freezed,
   }) {
-    return _then(_MoneyTransactionDTO(
-      id: id == freezed ? _value.id : id as int,
-      subcatID: subcatID == freezed ? _value.subcatID : subcatID as int,
-      payeeID: payeeID == freezed ? _value.payeeID : payeeID as int,
-      accountID: accountID == freezed ? _value.accountID : accountID as int,
+    return _then(_TransactionDTO(
+      id: id == freezed ? _value.id : id as String,
+      subcatID: subcatID == freezed ? _value.subcatID : subcatID as String,
+      payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
+      accountID: accountID == freezed ? _value.accountID : accountID as String,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
@@ -164,8 +164,8 @@ class __$MoneyTransactionDTOCopyWithImpl<$Res>
 @JsonSerializable()
 
 /// @nodoc
-class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
-  const _$_MoneyTransactionDTO(
+class _$_TransactionDTO extends _TransactionDTO {
+  const _$_TransactionDTO(
       {@JsonKey(ignore: true) this.id,
       @required this.subcatID,
       @required this.payeeID,
@@ -181,18 +181,18 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
         assert(dateInMillisecondsSinceEpoch != null),
         super._();
 
-  factory _$_MoneyTransactionDTO.fromJson(Map<String, dynamic> json) =>
-      _$_$_MoneyTransactionDTOFromJson(json);
+  factory _$_TransactionDTO.fromJson(Map<String, dynamic> json) =>
+      _$_$_TransactionDTOFromJson(json);
 
   @override
   @JsonKey(ignore: true)
-  final int id;
+  final String id;
   @override
-  final int subcatID;
+  final String subcatID;
   @override
-  final int payeeID;
+  final String payeeID;
   @override
-  final int accountID;
+  final String accountID;
   @override
   final double amount;
   @override
@@ -208,7 +208,7 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _MoneyTransactionDTO &&
+        (other is _TransactionDTO &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.subcatID, subcatID) ||
@@ -243,39 +243,38 @@ class _$_MoneyTransactionDTO extends _MoneyTransactionDTO {
       const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch);
 
   @override
-  _$MoneyTransactionDTOCopyWith<_MoneyTransactionDTO> get copyWith =>
-      __$MoneyTransactionDTOCopyWithImpl<_MoneyTransactionDTO>(
-          this, _$identity);
+  _$TransactionDTOCopyWith<_TransactionDTO> get copyWith =>
+      __$TransactionDTOCopyWithImpl<_TransactionDTO>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_MoneyTransactionDTOToJson(this);
+    return _$_$_TransactionDTOToJson(this);
   }
 }
 
-abstract class _MoneyTransactionDTO extends MoneyTransactionDTO {
-  const _MoneyTransactionDTO._() : super._();
-  const factory _MoneyTransactionDTO(
-      {@JsonKey(ignore: true) int id,
-      @required int subcatID,
-      @required int payeeID,
-      @required int accountID,
+abstract class _TransactionDTO extends MoneyTransactionDTO {
+  const _TransactionDTO._() : super._();
+  const factory _TransactionDTO(
+      {@JsonKey(ignore: true) String id,
+      @required String subcatID,
+      @required String payeeID,
+      @required String accountID,
       @required double amount,
       @required String memo,
-      @required int dateInMillisecondsSinceEpoch}) = _$_MoneyTransactionDTO;
+      @required int dateInMillisecondsSinceEpoch}) = _$_TransactionDTO;
 
-  factory _MoneyTransactionDTO.fromJson(Map<String, dynamic> json) =
-      _$_MoneyTransactionDTO.fromJson;
+  factory _TransactionDTO.fromJson(Map<String, dynamic> json) =
+      _$_TransactionDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)
-  int get id;
+  String get id;
   @override
-  int get subcatID;
+  String get subcatID;
   @override
-  int get payeeID;
+  String get payeeID;
   @override
-  int get accountID;
+  String get accountID;
   @override
   double get amount;
   @override
@@ -283,5 +282,5 @@ abstract class _MoneyTransactionDTO extends MoneyTransactionDTO {
   @override
   int get dateInMillisecondsSinceEpoch;
   @override
-  _$MoneyTransactionDTOCopyWith<_MoneyTransactionDTO> get copyWith;
+  _$TransactionDTOCopyWith<_TransactionDTO> get copyWith;
 }

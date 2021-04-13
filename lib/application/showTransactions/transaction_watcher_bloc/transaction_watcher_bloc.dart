@@ -7,10 +7,10 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
+import 'package:your_budget/domain/transaction/transaction.dart';
 import '../../../domain/account/i_account_repository.dart';
 import '../../../domain/core/value_failure.dart';
 import '../../../domain/transaction/i_transaction_repository.dart';
-import '../../../models/money_transaction.dart';
 
 part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';
@@ -54,9 +54,12 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
             yield TransactionWatcherState.loadFailure(f);
           },
           (numberOfAccounts) {
-            currentAccountID = (currentAccountID + (e.increment ? 1 : -1) - 1) % numberOfAccounts +
-                1; // -1 then +1 so that is never goes to 0
-            add(const TransactionWatcherEvent.watchTransactionsStarted());
+            if (numberOfAccounts != 0) {
+              currentAccountID =
+                  (currentAccountID + (e.increment ? 1 : -1) - 1) % numberOfAccounts +
+                      1; // -1 then +1 so that is never goes to 0
+              add(const TransactionWatcherEvent.watchTransactionsStarted());
+            }
           },
         );
       },
