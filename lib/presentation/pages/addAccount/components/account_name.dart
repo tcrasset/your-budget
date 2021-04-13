@@ -89,7 +89,6 @@ class AccountName extends HookWidget {
 String getName(AccountCreatorState state) => state.account.name.value.fold(
       (_) => null,
       (v) {
-        debugPrint(v);
         return v;
       },
     );

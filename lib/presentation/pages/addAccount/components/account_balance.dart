@@ -58,7 +58,6 @@ class AccountBalance extends HookWidget {
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       listenWhen: (p, c) => getBalance(p) != getBalance(c),
       listener: (context, state) {
-        print(state.account.balance);
         _controller
           ..text = getBalance(state)
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
