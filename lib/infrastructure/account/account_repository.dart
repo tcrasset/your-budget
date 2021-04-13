@@ -34,11 +34,11 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> create(Account account) async {
+  Future<Either<ValueFailure, int>> create(Account account) async {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
-      await database.insert(DatabaseConstants.accountTable, accountDTO.toJson());
-      return right(unit);
+      final int id = await database.insert(DatabaseConstants.accountTable, accountDTO.toJson());
+      return right(id);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }

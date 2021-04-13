@@ -10,8 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
-import '../../../appstate.dart';
-import '../../../models/utils.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'components/account_balance.dart';
 import 'components/account_name.dart';
 import 'components/account_row.dart';
@@ -30,7 +29,9 @@ class AddAccountPage extends StatelessWidget {
               ..add(const AccountWatcherEvent.watchAccountsStarted()),
       ),
       BlocProvider<AccountCreatorBloc>(
-          create: (_) => AccountCreatorBloc(accountRepository: GetIt.instance<IAccountRepository>())
+          create: (_) => AccountCreatorBloc(
+              accountRepository: GetIt.instance<IAccountRepository>(),
+              transactionRepository: GetIt.instance<ITransactionRepository>())
             ..add(const AccountCreatorEvent.initialized())),
     ], child: AddAccountPageScaffold());
   }
