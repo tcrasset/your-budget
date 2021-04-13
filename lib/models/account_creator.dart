@@ -1,42 +1,59 @@
 // Package imports:
+import 'package:dartz/dartz.dart';
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'account.dart';
+import 'package:your_budget/domain/account/account.dart';
+import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/transaction.dart';
 import 'constants.dart';
-import 'creator.dart';
-import 'money_transaction.dart';
-import 'money_transaction_creator.dart';
-import 'queries.dart';
 
-class AccountCreator implements Creator<Account> {
-  final Queries queryContext;
-  final String name;
-  final double balance;
+class AccountCreator {
+  final IAccountRepository accountRepository;
+  final ITransactionRepository transactionRepository;
 
-  int id;
+  AccountCreator({
+    @required this.accountRepository,
+    @required this.transactionRepository,
+  });
 
-  AccountCreator({@required this.queryContext, @required this.name, @required this.balance});
+  Future<Either<ValueFailure, Unit>> create(Account account) async {
+    final Either<ValueFailure, int> failureOrInt = await accountRepository.create(account);
 
-  @override
-  Future<Account> create() async {
-    final AccountModel accountModel = AccountModel(name: name, balance: balance);
-    id = await queryContext.addAccount(accountModel);
-    final Account account = Account(id: id, balance: balance, name: name);
-    return account;
+    return failureOrInt.fold(
+      (f) {
+        return left(f); // Failure in account creation
+      },
+      (accountId) async {
+        final Either<ValueFailure, Unit> failureOrUnit =
+            await _createStartingMoneyTransaction(accountId, account.balance);
+
+        return failureOrUnit.fold(
+          (f) => left(f),
+          (_) => right(unit),
+        );
+      },
+    );
   }
 
-  Future<MoneyTransaction> getStartingMoneyTransaction() async {
-    final Creator<MoneyTransaction> moneyTransactionCreator = MoneyTransactionCreator(
-      queryContext: queryContext,
-      subcatId: Constants.UNASSIGNED_SUBCAT_ID,
-      payeeId: Constants.UNASSIGNED_PAYEE_ID,
-      accountId: id,
+  Future<Either<ValueFailure, Unit>> _createStartingMoneyTransaction(
+      int accountId, Amount balance) async {
+//Create starting money transaction
+    final MoneyTransaction transaction = MoneyTransaction(
+      id: UniqueId(),
+      subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
+      payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
+      accountID: UniqueId.fromUniqueInt(accountId),
       amount: balance,
-      memo: "Starting balance",
+      memo: Name("Starting balance"),
       date: DateTime.now(),
     );
 
-    return moneyTransactionCreator.create();
+    return transactionRepository.create(transaction);
   }
 }
