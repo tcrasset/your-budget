@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'components/account_balance.dart';
 import 'components/account_name.dart';
@@ -38,33 +40,6 @@ class AddAccountPage extends StatelessWidget {
 }
 
 class AddAccountPageScaffold extends StatelessWidget {
-  // final _accountFormKey = GlobalKey<FormState>(); //FormCheck
-  // double accountBalance;
-  // String accountName;
-
-  // String handleAccountBalanceValidate(String amount) {
-  //   if (amount.isEmpty) {
-  //     return 'Please enter an account balance';
-  //   } else if (!isNumeric(amount)) {
-  //     return 'Insert a valid number';
-  //   }
-  //   return null;
-  // }
-
-  // void handleAccountBalanceSave(String balance) {
-  //   accountBalance = double.parse(balance);
-  // }
-
-  // Future<void> handleAddAccount(BuildContext context) async {
-  //   if (_accountFormKey.currentState.validate()) {
-  //     _accountFormKey.currentState.save();
-  //     final AppState appState = Provider.of<AppState>(context, listen: false);
-  //     // If form is valid, add subcategory to the database and add it to the state
-  //     appState.addAccount(accountName: accountName, balance: accountBalance);
-  //     _accountFormKey.currentState.reset();
-  //   }
-  // }
-
   final TextStyle _textBoxStyle = const TextStyle(fontSize: 25);
 
   final InputDecoration _textBoxDecoration = InputDecoration(
@@ -109,9 +84,36 @@ class AddAccountForm extends StatelessWidget {
     context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.saved());
   }
 
+  Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
+    return FlushbarHelper.createError(
+      message: failure.maybeMap(
+        unexpected: (_) => 'Unexpected error occured, please contact support.',
+        uniqueName: (_) => 'You must chose an unique account name.',
+        orElse: () => null,
+      ),
+    ).show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AccountCreatorBloc, AccountCreatorState>(
+    return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
+      listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+      listener: (context, state) {
+        state.saveFailureOrSuccessOption.fold(
+          () /*None*/ {},
+          (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
+            (failure) => showErrorFlushbar(failure, context),
+            (_) /*Success*/ {
+              // Reload the whole page
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  PageRouteBuilder(pageBuilder: (_, __, ___) => const AddAccountPage()),
+                  (_) => false);
+            },
+          ),
+        );
+      },
+      buildWhen: (p, c) => p.isSaving != c.isSaving,
       builder: (context, state) {
         return Form(
             autovalidateMode:
