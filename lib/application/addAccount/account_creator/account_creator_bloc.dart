@@ -8,12 +8,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
+import 'package:your_budget/domain/account/account_creator.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'package:your_budget/models/account_creator.dart';
 
 part 'account_creator_event.dart';
 part 'account_creator_state.dart';

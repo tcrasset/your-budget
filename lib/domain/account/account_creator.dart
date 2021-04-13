@@ -11,7 +11,7 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
-import 'constants.dart';
+import 'package:your_budget/models/constants.dart';
 
 class AccountCreator {
   final IAccountRepository accountRepository;
