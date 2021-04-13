@@ -47,9 +47,9 @@ class MoneyTransaction {
   /// from a database.
   MoneyTransaction.fromJson(Map<String, dynamic> json) {
     id = json[DatabaseConstants.MONEYTRANSACTION_ID] as int;
-    subcatID = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int;
-    payeeID = json[DatabaseConstants.PAYEE_ID_OUTSIDE] as int;
-    accountID = json[DatabaseConstants.ACCOUNT_ID_OUTSIDE] as int;
+    subcatID = int.parse(json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as String);
+    payeeID = int.parse(json[DatabaseConstants.PAYEE_ID_OUTSIDE] as String);
+    accountID = int.parse(json[DatabaseConstants.ACCOUNT_ID_OUTSIDE] as String);
     amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT] as double;
     memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO] as String;
     date =
