@@ -15,4 +15,5 @@ abstract class ValueFailure<T> with _$ValueFailure<T> {
   const factory ValueFailure.invalidAmount({@required String failedValue}) = _InvalidAmount<T>;
 
   const factory ValueFailure.tooBigAmount({@required String failedValue}) = _TooLargeAmount<T>;
+  const factory ValueFailure.uniqueName({@required String failedValue}) = _UniqueName<T>;
 }

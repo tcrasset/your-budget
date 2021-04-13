@@ -40,6 +40,9 @@ class SQFliteAccountRepository implements IAccountRepository {
       final int id = await database.insert(DatabaseConstants.accountTable, accountDTO.toJson());
       return right(id);
     } on DatabaseException catch (e) {
+      if (e.isUniqueConstraintError()) {
+        return left(ValueFailure.uniqueName(failedValue: e.toString()));
+      }
       return left(ValueFailure.unexpected(message: e.toString()));
     }
   }

@@ -54,6 +54,13 @@ class _$ValueFailureTearOff {
       failedValue: failedValue,
     );
   }
+
+// ignore: unused_element
+  _UniqueName<T> uniqueName<T>({@required String failedValue}) {
+    return _UniqueName<T>(
+      failedValue: failedValue,
+    );
+  }
 }
 
 /// @nodoc
@@ -70,6 +77,7 @@ mixin _$ValueFailure<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -79,6 +87,7 @@ mixin _$ValueFailure<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -89,6 +98,7 @@ mixin _$ValueFailure<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -98,6 +108,7 @@ mixin _$ValueFailure<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   });
 }
@@ -189,6 +200,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -196,6 +208,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return invalidTransaction(failedValue);
   }
 
@@ -208,6 +221,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -226,6 +240,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -233,6 +248,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return invalidTransaction(this);
   }
 
@@ -245,6 +261,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -329,6 +346,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -336,6 +354,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return unexpected(message);
   }
 
@@ -348,6 +367,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -366,6 +386,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -373,6 +394,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return unexpected(this);
   }
 
@@ -385,6 +407,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -470,6 +493,7 @@ class _$_LongName<T> implements _LongName<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -477,6 +501,7 @@ class _$_LongName<T> implements _LongName<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return longName(failedValue);
   }
 
@@ -489,6 +514,7 @@ class _$_LongName<T> implements _LongName<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -507,6 +533,7 @@ class _$_LongName<T> implements _LongName<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -514,6 +541,7 @@ class _$_LongName<T> implements _LongName<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return longName(this);
   }
 
@@ -526,6 +554,7 @@ class _$_LongName<T> implements _LongName<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -612,6 +641,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -619,6 +649,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return emptyName(failedValue);
   }
 
@@ -631,6 +662,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -649,6 +681,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -656,6 +689,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return emptyName(this);
   }
 
@@ -668,6 +702,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -754,6 +789,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -761,6 +797,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return invalidAmount(failedValue);
   }
 
@@ -773,6 +810,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -791,6 +829,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -798,6 +837,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return invalidAmount(this);
   }
 
@@ -810,6 +850,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -897,6 +938,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     @required Result emptyName(String failedValue),
     @required Result invalidAmount(String failedValue),
     @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -904,6 +946,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return tooBigAmount(failedValue);
   }
 
@@ -916,6 +959,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     Result emptyName(String failedValue),
     Result invalidAmount(String failedValue),
     Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -934,6 +978,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     @required Result emptyName(_EmptyName<T> value),
     @required Result invalidAmount(_InvalidAmount<T> value),
     @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
   }) {
     assert(invalidTransaction != null);
     assert(unexpected != null);
@@ -941,6 +986,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     assert(emptyName != null);
     assert(invalidAmount != null);
     assert(tooBigAmount != null);
+    assert(uniqueName != null);
     return tooBigAmount(this);
   }
 
@@ -953,6 +999,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     Result emptyName(_EmptyName<T> value),
     Result invalidAmount(_InvalidAmount<T> value),
     Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -969,4 +1016,152 @@ abstract class _TooLargeAmount<T> implements ValueFailure<T> {
 
   String get failedValue;
   _$TooLargeAmountCopyWith<T, _TooLargeAmount<T>> get copyWith;
+}
+
+/// @nodoc
+abstract class _$UniqueNameCopyWith<T, $Res> {
+  factory _$UniqueNameCopyWith(
+          _UniqueName<T> value, $Res Function(_UniqueName<T>) then) =
+      __$UniqueNameCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+/// @nodoc
+class __$UniqueNameCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements _$UniqueNameCopyWith<T, $Res> {
+  __$UniqueNameCopyWithImpl(
+      _UniqueName<T> _value, $Res Function(_UniqueName<T>) _then)
+      : super(_value, (v) => _then(v as _UniqueName<T>));
+
+  @override
+  _UniqueName<T> get _value => super._value as _UniqueName<T>;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(_UniqueName<T>(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_UniqueName<T> implements _UniqueName<T> {
+  const _$_UniqueName({@required this.failedValue})
+      : assert(failedValue != null);
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'ValueFailure<$T>.uniqueName(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _UniqueName<T> &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @override
+  _$UniqueNameCopyWith<T, _UniqueName<T>> get copyWith =>
+      __$UniqueNameCopyWithImpl<T, _UniqueName<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result invalidTransaction(String failedValue),
+    @required Result unexpected(String message),
+    @required Result longName(String failedValue),
+    @required Result emptyName(String failedValue),
+    @required Result invalidAmount(String failedValue),
+    @required Result tooBigAmount(String failedValue),
+    @required Result uniqueName(String failedValue),
+  }) {
+    assert(invalidTransaction != null);
+    assert(unexpected != null);
+    assert(longName != null);
+    assert(emptyName != null);
+    assert(invalidAmount != null);
+    assert(tooBigAmount != null);
+    assert(uniqueName != null);
+    return uniqueName(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result invalidTransaction(String failedValue),
+    Result unexpected(String message),
+    Result longName(String failedValue),
+    Result emptyName(String failedValue),
+    Result invalidAmount(String failedValue),
+    Result tooBigAmount(String failedValue),
+    Result uniqueName(String failedValue),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (uniqueName != null) {
+      return uniqueName(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result invalidTransaction(InvalidTransaction<T> value),
+    @required Result unexpected(Unexpected<T> value),
+    @required Result longName(_LongName<T> value),
+    @required Result emptyName(_EmptyName<T> value),
+    @required Result invalidAmount(_InvalidAmount<T> value),
+    @required Result tooBigAmount(_TooLargeAmount<T> value),
+    @required Result uniqueName(_UniqueName<T> value),
+  }) {
+    assert(invalidTransaction != null);
+    assert(unexpected != null);
+    assert(longName != null);
+    assert(emptyName != null);
+    assert(invalidAmount != null);
+    assert(tooBigAmount != null);
+    assert(uniqueName != null);
+    return uniqueName(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result invalidTransaction(InvalidTransaction<T> value),
+    Result unexpected(Unexpected<T> value),
+    Result longName(_LongName<T> value),
+    Result emptyName(_EmptyName<T> value),
+    Result invalidAmount(_InvalidAmount<T> value),
+    Result tooBigAmount(_TooLargeAmount<T> value),
+    Result uniqueName(_UniqueName<T> value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (uniqueName != null) {
+      return uniqueName(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _UniqueName<T> implements ValueFailure<T> {
+  const factory _UniqueName({@required String failedValue}) = _$_UniqueName<T>;
+
+  String get failedValue;
+  _$UniqueNameCopyWith<T, _UniqueName<T>> get copyWith;
 }
