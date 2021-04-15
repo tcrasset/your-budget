@@ -5,8 +5,12 @@ import 'package:sqflite/sqflite.dart';
 // Project imports:
 import 'appstate.dart';
 import 'domain/account/i_account_repository.dart';
+import 'domain/payee/i_payee_repository.dart';
+import 'domain/subcategory/i_subcategory_repository.dart';
 import 'domain/transaction/i_transaction_repository.dart';
 import 'infrastructure/account/account_repository.dart';
+import 'infrastructure/payee/payee_repository.dart';
+import 'infrastructure/subcategory/subcategory_repository.dart';
 import 'infrastructure/transaction/transaction_repository.dart';
 import 'models/database_provider.dart';
 import 'models/queries.dart';
@@ -22,6 +26,9 @@ Future<void> init() async {
   sl.registerSingleton<ITransactionRepository>(
       SQFliteTransactionRepository(database: sl<Database>()));
   sl.registerSingleton<IAccountRepository>(SQFliteAccountRepository(database: sl<Database>()));
+  sl.registerSingleton<IPayeeRepository>(SQFlitePayeeRepository(database: sl<Database>()));
+  sl.registerSingleton<ISubcategoryRepository>(
+      SQFliteSubcategoryRepository(database: sl<Database>()));
 
   final AppState appState = AppState(queryContext: sl());
   await appState.loadStateFromDatabase();
