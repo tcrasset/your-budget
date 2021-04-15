@@ -20,7 +20,6 @@ import '../../../models/categories.dart';
 import '../../../models/constants.dart';
 import '../../../models/money_transaction.dart';
 import '../../../models/payee.dart';
-import '../../../models/utils.dart';
 import 'components/account_field.dart';
 import 'components/amount_input_container.dart';
 import 'components/amount_switch.dart';
@@ -47,7 +46,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// Default names will have a different style than selected ones
   final String defaultPayeeFieldName = "Select payee";
-  final String defaultAccountFieldName = "Select account";
   final String defaultSubcategoryFieldName = "Select subcategory";
 
   double _amount;
@@ -56,15 +54,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
 
   /// String values of the variables which are displayed.
   String payeeFieldName;
-  String accountFieldName;
   String subcategoryFieldName;
-  String dateFieldName;
 
   /// Values used for the transaction
   dynamic payee;
-  Account _account;
   var _subcategory;
-  DateTime _date;
 
   /// List of values to choose each value from, e.g. [payee]
   /// will be chosen from one of the [payees]
@@ -83,15 +77,11 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     subcategories = appState.subcategories;
     // Set initial values of the transaction
     payee = null;
-    _account = null;
     _subcategory = null;
-    _date = DateTime.now();
 
     // Set the default values for the UI
     payeeFieldName = defaultPayeeFieldName;
-    accountFieldName = defaultAccountFieldName;
     subcategoryFieldName = defaultSubcategoryFieldName;
-    dateFieldName = getDateString(_date);
 
     amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
   }
@@ -104,13 +94,9 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
       amountLength = 16;
 
       payee = null;
-      _account = null;
       _subcategory = null;
-      _date = DateTime.now();
       payeeFieldName = defaultPayeeFieldName;
-      accountFieldName = defaultAccountFieldName;
       subcategoryFieldName = defaultSubcategoryFieldName;
-      dateFieldName = getDateString(_date);
       amountController = TextEditingController(text: currencyNumberFormat.format(0).trim());
       memoController.clear();
       _setOffsetToLastDigit();
@@ -146,27 +132,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     setState(() {
       payee = returnElement;
       payeeFieldName = returnElement.name as String;
-    });
-  }
-
-  /// When tapping on the [SelectValuePage] widget pertaining
-  /// to the [Account] object, it pushes to the route selecting
-  /// a  [Account], whose value is stored in [_account] and whose
-  /// name is stored in [accountFieldName].
-  Future<void> handleOnTapAccount() async {
-    final Account returnElement = await Navigator.push(
-      context,
-      MaterialPageRoute(
-          builder: (context) => SelectValuePage(title: "Accounts", listEntries: appState.accounts)),
-    );
-
-    if (returnElement != null) _setAccount(returnElement);
-  }
-
-  void _setAccount(Account returnElement) {
-    setState(() {
-      _account = returnElement;
-      accountFieldName = returnElement.name;
     });
   }
 
@@ -239,7 +204,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
           backgroundColor: Colors.red,
         );
         Scaffold.of(context).showSnackBar(snackbar);
-      } else if (payee != null && _account != null) {
+      } else if (payee != null) {
         _amount = formatCurrencyToDouble(amountController.text, isPositive);
 
         _printTransactionInformation();
@@ -247,10 +212,10 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         appState.addTransaction(
           subcatId: _selectSubcatId(),
           payeeId: _selectPayeeId(),
-          accountId: _account.id,
+          accountId: 1,
           amount: _amount,
           memo: memoController.text,
-          date: _date,
+          date: DateTime.now(),
         );
 
         resetToDefaultTransaction();
@@ -272,9 +237,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     print("Form validated");
     print("Amount : $_amount");
     print("Payee : $payeeFieldName");
-    print("Account : $accountFieldName");
     print("Subcategory : ${payee is Payee ? 'No subcategory' : subcategoryFieldName}");
-    print("Date: $dateFieldName");
     print("Memo : ${memoController.text}");
 
     // Input as payee ID the opposite of the account ID when we select
@@ -381,8 +344,7 @@ class _AddTransactionPageView
                   state: state,
                   defaultChildTextStyle: defaultChildTextStyle,
                   selectedChildTextStyle: selectedChildTextStyle),
-              AccountField(
-                  state: state,
+              const AccountField(
                   defaultChildTextStyle: defaultChildTextStyle,
                   selectedChildTextStyle: selectedChildTextStyle),
               SubcategoryField(
