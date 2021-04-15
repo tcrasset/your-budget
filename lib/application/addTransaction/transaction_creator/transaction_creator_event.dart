@@ -9,6 +9,6 @@ abstract class TransactionCreatorEvent with _$TransactionCreatorEvent {
   const factory TransactionCreatorEvent.subcategoryChanged(SubCategory subcategory) =
       _SubcategoryChanged;
   const factory TransactionCreatorEvent.dateChanged(DateTime date) = _DateChanged;
-  const factory TransactionCreatorEvent.memoChanged(Name memo) = _MemoChanged;
+  const factory TransactionCreatorEvent.memoChanged(String memo) = _MemoChanged;
   const factory TransactionCreatorEvent.saved() = _Saved;
 }

@@ -25,6 +25,33 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
   Stream<TransactionCreatorState> mapEventToState(
     TransactionCreatorEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    yield* event.map(
+      dateChanged: (e) async* {
+        yield state;
+      },
+      initialized: (e) async* {
+        yield state;
+      },
+      memoChanged: (e) async* {
+        if (e != null) {
+          yield state.copyWith(
+            moneyTransaction: state.moneyTransaction.copyWith(memo: Name(e.memo)),
+            saveFailureOrSuccessOption: none(),
+          );
+        }
+      },
+      payeeChanged: (e) async* {
+        yield state;
+      },
+      saved: (e) async* {
+        yield state;
+      },
+      subcategoryChanged: (e) async* {
+        yield state;
+      },
+      accountChanged: (e) async* {
+        yield state;
+      },
+    );
   }
 }

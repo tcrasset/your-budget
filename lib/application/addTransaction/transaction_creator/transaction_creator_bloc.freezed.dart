@@ -47,7 +47,7 @@ class _$TransactionCreatorEventTearOff {
   }
 
 // ignore: unused_element
-  _MemoChanged memoChanged(Name memo) {
+  _MemoChanged memoChanged(String memo) {
     return _MemoChanged(
       memo,
     );
@@ -72,7 +72,7 @@ mixin _$TransactionCreatorEvent {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   });
   @optionalTypeArgs
@@ -82,7 +82,7 @@ mixin _$TransactionCreatorEvent {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   });
@@ -170,7 +170,7 @@ class _$_Initialized implements _Initialized {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -191,7 +191,7 @@ class _$_Initialized implements _Initialized {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {
@@ -324,7 +324,7 @@ class _$_PayeeChanged implements _PayeeChanged {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -345,7 +345,7 @@ class _$_PayeeChanged implements _PayeeChanged {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {
@@ -481,7 +481,7 @@ class _$_AccountChanged implements _AccountChanged {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -502,7 +502,7 @@ class _$_AccountChanged implements _AccountChanged {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {
@@ -627,7 +627,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -648,7 +648,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {
@@ -773,7 +773,7 @@ class _$_DateChanged implements _DateChanged {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -794,7 +794,7 @@ class _$_DateChanged implements _DateChanged {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {
@@ -858,7 +858,7 @@ abstract class _$MemoChangedCopyWith<$Res> {
   factory _$MemoChangedCopyWith(
           _MemoChanged value, $Res Function(_MemoChanged) then) =
       __$MemoChangedCopyWithImpl<$Res>;
-  $Res call({Name memo});
+  $Res call({String memo});
 }
 
 /// @nodoc
@@ -877,7 +877,7 @@ class __$MemoChangedCopyWithImpl<$Res>
     Object memo = freezed,
   }) {
     return _then(_MemoChanged(
-      memo == freezed ? _value.memo : memo as Name,
+      memo == freezed ? _value.memo : memo as String,
     ));
   }
 }
@@ -887,7 +887,7 @@ class _$_MemoChanged implements _MemoChanged {
   const _$_MemoChanged(this.memo) : assert(memo != null);
 
   @override
-  final Name memo;
+  final String memo;
 
   @override
   String toString() {
@@ -918,7 +918,7 @@ class _$_MemoChanged implements _MemoChanged {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -939,7 +939,7 @@ class _$_MemoChanged implements _MemoChanged {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {
@@ -992,9 +992,9 @@ class _$_MemoChanged implements _MemoChanged {
 }
 
 abstract class _MemoChanged implements TransactionCreatorEvent {
-  const factory _MemoChanged(Name memo) = _$_MemoChanged;
+  const factory _MemoChanged(String memo) = _$_MemoChanged;
 
-  Name get memo;
+  String get memo;
   _$MemoChangedCopyWith<_MemoChanged> get copyWith;
 }
 
@@ -1040,7 +1040,7 @@ class _$_Saved implements _Saved {
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(SubCategory subcategory),
     @required Result dateChanged(DateTime date),
-    @required Result memoChanged(Name memo),
+    @required Result memoChanged(String memo),
     @required Result saved(),
   }) {
     assert(initialized != null);
@@ -1061,7 +1061,7 @@ class _$_Saved implements _Saved {
     Result accountChanged(Account account),
     Result subcategoryChanged(SubCategory subcategory),
     Result dateChanged(DateTime date),
-    Result memoChanged(Name memo),
+    Result memoChanged(String memo),
     Result saved(),
     @required Result orElse(),
   }) {

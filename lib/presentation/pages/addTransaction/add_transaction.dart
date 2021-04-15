@@ -6,11 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import '../../../appstate.dart';
 import '../../../components/widgetViewClasses.dart';
 import '../../../models/account.dart';
@@ -393,38 +395,41 @@ class _AddTransactionPageView
     //the custom listTiles
 
     // Build the layout (ListView, error container, Button)
-    return SingleChildScrollView(
-      child: Column(children: [
-        Column(
-          children: [
-            Row(
-              children: [
-                // Expanded(child: AmountInputContainer(state: state)),
-                AmountSwitch(state: state),
-              ],
-            ),
-            PayeeField(
-                state: state,
-                defaultChildTextStyle: defaultChildTextStyle,
-                selectedChildTextStyle: selectedChildTextStyle),
-            AccountField(
-                state: state,
-                defaultChildTextStyle: defaultChildTextStyle,
-                selectedChildTextStyle: selectedChildTextStyle),
-            SubcategoryField(
-                state: state,
-                defaultChildTextStyle: defaultChildTextStyle,
-                selectedChildTextStyle: selectedChildTextStyle),
-            DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
-            MemoField(state: state),
-          ],
-        ),
-        // TODO: Error message
-        FloatingActionButton(
-          onPressed: () => state.addMoneyTransaction(context),
-          child: const Text("Enter"),
-        )
-      ]),
+    return BlocProvider(
+      create: (context) => TransactionCreatorBloc(),
+      child: SingleChildScrollView(
+        child: Column(children: [
+          Column(
+            children: [
+              Row(
+                children: [
+                  // Expanded(child: AmountInputContainer(state: state)),
+                  AmountSwitch(state: state),
+                ],
+              ),
+              PayeeField(
+                  state: state,
+                  defaultChildTextStyle: defaultChildTextStyle,
+                  selectedChildTextStyle: selectedChildTextStyle),
+              AccountField(
+                  state: state,
+                  defaultChildTextStyle: defaultChildTextStyle,
+                  selectedChildTextStyle: selectedChildTextStyle),
+              SubcategoryField(
+                  state: state,
+                  defaultChildTextStyle: defaultChildTextStyle,
+                  selectedChildTextStyle: selectedChildTextStyle),
+              DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
+              const MemoField(),
+            ],
+          ),
+          // TODO: Error message
+          FloatingActionButton(
+            onPressed: () => state.addMoneyTransaction(context),
+            child: const Text("Enter"),
+          )
+        ]),
+      ),
     );
   }
 
