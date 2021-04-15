@@ -20,21 +20,22 @@ class SubcategoryField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        // Subcategory gesture detectory leading to 'Categories' SelectValuePage
+      // Subcategory gesture detectory leading to 'Categories' SelectValuePage
 
-        /// [state.payee] accepts both an object of type [Payee] or [Account].
-        /// If it is of type Account, make the GestureDetector untappable,
-        /// set the default text style and change the text.
-        onTap: () => state.payee is Account ? null : state.handleOnTapCategory(),
-        child: rowContainer(
-            "Category",
-            Text(
-                state.payee is Account
-                    ? "No subcategory needed"
-                    : state.subcategoryFieldName as String,
-                style: (state.subcategoryFieldName == state.defaultSubcategoryFieldName ||
-                        state.payee is Account)
-                    ? defaultChildTextStyle
-                    : selectedChildTextStyle)));
+      /// [state.payee] accepts both an object of type [Payee] or [Account].
+      /// If it is of type Account, make the GestureDetector untappable,
+      /// set the default text style and change the text.
+      onTap: () => state.payee is Account ? null : state.handleOnTapCategory(),
+      child: RowContainer(
+        name: "Category",
+        childWidget: Text(
+          state.payee is Account ? "No subcategory needed" : state.subcategoryFieldName as String,
+          style: (state.subcategoryFieldName == state.defaultSubcategoryFieldName ||
+                  state.payee is Account)
+              ? defaultChildTextStyle
+              : selectedChildTextStyle,
+        ),
+      ),
+    );
   }
 }

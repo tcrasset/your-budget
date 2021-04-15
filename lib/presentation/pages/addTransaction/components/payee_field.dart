@@ -21,9 +21,9 @@ class PayeeField extends StatelessWidget {
     return GestureDetector(
         // Payees gesture detectory leading to 'Payees' SelectValuePage
         onTap: state.handleOnTapPayee as Function(),
-        child: rowContainer(
-            "Payee",
-            Text(state.payeeFieldName as String,
+        child: RowContainer(
+            name: "Payee",
+            childWidget: Text(state.payeeFieldName as String,
                 style: (state.payeeFieldName == state.defaultPayeeFieldName)
                     ? defaultChildTextStyle
                     : selectedChildTextStyle)));
