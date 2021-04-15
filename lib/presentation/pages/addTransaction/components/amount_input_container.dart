@@ -1,14 +1,11 @@
-// // Flutter imports:
 // import 'package:flutter/material.dart';
 // import 'package:flutter/services.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
 
-// // Package imports:
 // import 'package:intl/intl.dart';
 // import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 
-// // Project imports:
 // import '../../../../models/constants.dart';
 // import 'currency_input_formatter.dart';
 
