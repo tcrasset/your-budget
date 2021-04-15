@@ -207,36 +207,6 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
     return subcatAndToBeBudgeted;
   }
 
-  /// When tapping on the Date row, it opens the DataPicker
-  /// which allows one to choose the date as a [DateTime].
-  /// Defaults to the current day-year-month.
-  /// The [DateTime] gets stored in [_date], and the string
-  /// value of that date is saved in [dateFieldName].
-  Future<void> handleOnTapDate(BuildContext context) async {
-    final DateTime picked = await _pickDate(context);
-    _setDate(picked);
-  }
-
-  void _setDate(DateTime picked) {
-    DateTime pickedDate = picked;
-    if (picked != null && picked != _date) {
-      pickedDate = addExactEntryTime(picked);
-    }
-    setState(() {
-      _date = pickedDate;
-      dateFieldName = getDateString(pickedDate);
-    });
-  }
-
-  Future<DateTime> _pickDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: getDateYMD(_date),
-        firstDate: appState.startingBudgetDate,
-        lastDate: getLastDayOfMonth(getMaxBudgetDate()));
-    return picked;
-  }
-
   /// Check that all the necessary fields in the form
   /// specified by [_formKey] have been filled.
   /// If that is the case, create a new [MoneyTransaction]
@@ -419,7 +389,7 @@ class _AddTransactionPageView
                   state: state,
                   defaultChildTextStyle: defaultChildTextStyle,
                   selectedChildTextStyle: selectedChildTextStyle),
-              DateField(state: state, selectedChildTextStyle: selectedChildTextStyle),
+              const DateField(selectedChildTextStyle: selectedChildTextStyle),
               const MemoField(),
             ],
           ),

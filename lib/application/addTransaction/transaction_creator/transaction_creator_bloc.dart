@@ -26,11 +26,16 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     TransactionCreatorEvent event,
   ) async* {
     yield* event.map(
-      dateChanged: (e) async* {
-        yield state;
-      },
       initialized: (e) async* {
         yield state;
+      },
+      dateChanged: (e) async* {
+        if (e != null) {
+          yield state.copyWith(
+            moneyTransaction: state.moneyTransaction.copyWith(date: e.date),
+            saveFailureOrSuccessOption: none(),
+          );
+        }
       },
       memoChanged: (e) async* {
         if (e != null) {
