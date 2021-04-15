@@ -399,7 +399,7 @@ class _AddTransactionPageView
           children: [
             Row(
               children: [
-                Expanded(child: AmountInputContainer(state: state)),
+                // Expanded(child: AmountInputContainer(state: state)),
                 AmountSwitch(state: state),
               ],
             ),
