@@ -9,6 +9,7 @@ import '../../../appstate.dart';
 import '../../../components/add_dialog.dart';
 import '../../../models/categories.dart';
 import '../../../models/payee.dart';
+import 'components/search_field.dart';
 
 class SelectValuePage extends StatefulWidget {
   final List listEntries;
@@ -145,17 +146,7 @@ class SelectValuePageState extends State<SelectValuePage> {
       ),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 20.0),
-          ),
-          TextField(
-            decoration: const InputDecoration(
-              hintText: "Search something",
-              icon: Icon(Icons.search),
-            ),
-            controller: searchController,
-          ),
-
+          SearchField(searchController: searchController),
           // Add the "Create new payee" if we are on the payee page
           if (isPayee)
             ListTile(
