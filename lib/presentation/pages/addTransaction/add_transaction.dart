@@ -340,8 +340,7 @@ class _AddTransactionPageView
                   AmountSwitch(state: state),
                 ],
               ),
-              PayeeField(
-                  state: state,
+              const PayeeField(
                   defaultChildTextStyle: defaultChildTextStyle,
                   selectedChildTextStyle: selectedChildTextStyle),
               const AccountField(
