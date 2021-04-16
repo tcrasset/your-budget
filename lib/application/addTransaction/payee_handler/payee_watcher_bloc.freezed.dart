@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
 
-part of 'payee_handler_bloc.dart';
+part of 'payee_watcher_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -10,8 +10,8 @@ part of 'payee_handler_bloc.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-class _$PayeeHandlerEventTearOff {
-  const _$PayeeHandlerEventTearOff();
+class _$PayeeWatcherEventTearOff {
+  const _$PayeeWatcherEventTearOff();
 
 // ignore: unused_element
   _PayeeWatchStarted watchPayeesStarted() {
@@ -29,10 +29,10 @@ class _$PayeeHandlerEventTearOff {
 
 /// @nodoc
 // ignore: unused_element
-const $PayeeHandlerEvent = _$PayeeHandlerEventTearOff();
+const $PayeeWatcherEvent = _$PayeeWatcherEventTearOff();
 
 /// @nodoc
-mixin _$PayeeHandlerEvent {
+mixin _$PayeeWatcherEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchPayeesStarted(),
@@ -60,20 +60,20 @@ mixin _$PayeeHandlerEvent {
 }
 
 /// @nodoc
-abstract class $PayeeHandlerEventCopyWith<$Res> {
-  factory $PayeeHandlerEventCopyWith(
-          PayeeHandlerEvent value, $Res Function(PayeeHandlerEvent) then) =
-      _$PayeeHandlerEventCopyWithImpl<$Res>;
+abstract class $PayeeWatcherEventCopyWith<$Res> {
+  factory $PayeeWatcherEventCopyWith(
+          PayeeWatcherEvent value, $Res Function(PayeeWatcherEvent) then) =
+      _$PayeeWatcherEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$PayeeHandlerEventCopyWithImpl<$Res>
-    implements $PayeeHandlerEventCopyWith<$Res> {
-  _$PayeeHandlerEventCopyWithImpl(this._value, this._then);
+class _$PayeeWatcherEventCopyWithImpl<$Res>
+    implements $PayeeWatcherEventCopyWith<$Res> {
+  _$PayeeWatcherEventCopyWithImpl(this._value, this._then);
 
-  final PayeeHandlerEvent _value;
+  final PayeeWatcherEvent _value;
   // ignore: unused_field
-  final $Res Function(PayeeHandlerEvent) _then;
+  final $Res Function(PayeeWatcherEvent) _then;
 }
 
 /// @nodoc
@@ -85,7 +85,7 @@ abstract class _$PayeeWatchStartedCopyWith<$Res> {
 
 /// @nodoc
 class __$PayeeWatchStartedCopyWithImpl<$Res>
-    extends _$PayeeHandlerEventCopyWithImpl<$Res>
+    extends _$PayeeWatcherEventCopyWithImpl<$Res>
     implements _$PayeeWatchStartedCopyWith<$Res> {
   __$PayeeWatchStartedCopyWithImpl(
       _PayeeWatchStarted _value, $Res Function(_PayeeWatchStarted) _then)
@@ -101,7 +101,7 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
 
   @override
   String toString() {
-    return 'PayeeHandlerEvent.watchPayeesStarted()';
+    return 'PayeeWatcherEvent.watchPayeesStarted()';
   }
 
   @override
@@ -165,7 +165,7 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
   }
 }
 
-abstract class _PayeeWatchStarted implements PayeeHandlerEvent {
+abstract class _PayeeWatchStarted implements PayeeWatcherEvent {
   const factory _PayeeWatchStarted() = _$_PayeeWatchStarted;
 }
 
@@ -179,7 +179,7 @@ abstract class _$PayeesReceivedCopyWith<$Res> {
 
 /// @nodoc
 class __$PayeesReceivedCopyWithImpl<$Res>
-    extends _$PayeeHandlerEventCopyWithImpl<$Res>
+    extends _$PayeeWatcherEventCopyWithImpl<$Res>
     implements _$PayeesReceivedCopyWith<$Res> {
   __$PayeesReceivedCopyWithImpl(
       _PayeesReceived _value, $Res Function(_PayeesReceived) _then)
@@ -210,7 +210,7 @@ class _$_PayeesReceived implements _PayeesReceived {
 
   @override
   String toString() {
-    return 'PayeeHandlerEvent.payeesReceived(failureOrPayees: $failureOrPayees)';
+    return 'PayeeWatcherEvent.payeesReceived(failureOrPayees: $failureOrPayees)';
   }
 
   @override
@@ -284,7 +284,7 @@ class _$_PayeesReceived implements _PayeesReceived {
   }
 }
 
-abstract class _PayeesReceived implements PayeeHandlerEvent {
+abstract class _PayeesReceived implements PayeeWatcherEvent {
   const factory _PayeesReceived(
       Either<ValueFailure, List<Payee>> failureOrPayees) = _$_PayeesReceived;
 
@@ -293,8 +293,8 @@ abstract class _PayeesReceived implements PayeeHandlerEvent {
 }
 
 /// @nodoc
-class _$PayeeHandlerStateTearOff {
-  const _$PayeeHandlerStateTearOff();
+class _$PayeeWatcherStateTearOff {
+  const _$PayeeWatcherStateTearOff();
 
 // ignore: unused_element
   _Initial initial() {
@@ -323,10 +323,10 @@ class _$PayeeHandlerStateTearOff {
 
 /// @nodoc
 // ignore: unused_element
-const $PayeeHandlerState = _$PayeeHandlerStateTearOff();
+const $PayeeWatcherState = _$PayeeWatcherStateTearOff();
 
 /// @nodoc
-mixin _$PayeeHandlerState {
+mixin _$PayeeWatcherState {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initial(),
@@ -360,20 +360,20 @@ mixin _$PayeeHandlerState {
 }
 
 /// @nodoc
-abstract class $PayeeHandlerStateCopyWith<$Res> {
-  factory $PayeeHandlerStateCopyWith(
-          PayeeHandlerState value, $Res Function(PayeeHandlerState) then) =
-      _$PayeeHandlerStateCopyWithImpl<$Res>;
+abstract class $PayeeWatcherStateCopyWith<$Res> {
+  factory $PayeeWatcherStateCopyWith(
+          PayeeWatcherState value, $Res Function(PayeeWatcherState) then) =
+      _$PayeeWatcherStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$PayeeHandlerStateCopyWithImpl<$Res>
-    implements $PayeeHandlerStateCopyWith<$Res> {
-  _$PayeeHandlerStateCopyWithImpl(this._value, this._then);
+class _$PayeeWatcherStateCopyWithImpl<$Res>
+    implements $PayeeWatcherStateCopyWith<$Res> {
+  _$PayeeWatcherStateCopyWithImpl(this._value, this._then);
 
-  final PayeeHandlerState _value;
+  final PayeeWatcherState _value;
   // ignore: unused_field
-  final $Res Function(PayeeHandlerState) _then;
+  final $Res Function(PayeeWatcherState) _then;
 }
 
 /// @nodoc
@@ -383,7 +383,7 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$PayeeHandlerStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -398,7 +398,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'PayeeHandlerState.initial()';
+    return 'PayeeWatcherState.initial()';
   }
 
   @override
@@ -472,7 +472,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements PayeeHandlerState {
+abstract class _Initial implements PayeeWatcherState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -483,7 +483,7 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$PayeeHandlerStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -498,7 +498,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'PayeeHandlerState.loading()';
+    return 'PayeeWatcherState.loading()';
   }
 
   @override
@@ -572,7 +572,7 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements PayeeHandlerState {
+abstract class _Loading implements PayeeWatcherState {
   const factory _Loading() = _$_Loading;
 }
 
@@ -586,7 +586,7 @@ abstract class _$PayeeLoadSuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$PayeeLoadSuccessCopyWithImpl<$Res>
-    extends _$PayeeHandlerStateCopyWithImpl<$Res>
+    extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$PayeeLoadSuccessCopyWith<$Res> {
   __$PayeeLoadSuccessCopyWithImpl(
       _PayeeLoadSuccess _value, $Res Function(_PayeeLoadSuccess) _then)
@@ -614,7 +614,7 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
 
   @override
   String toString() {
-    return 'PayeeHandlerState.loadSuccess(payees: $payees)';
+    return 'PayeeWatcherState.loadSuccess(payees: $payees)';
   }
 
   @override
@@ -696,7 +696,7 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
   }
 }
 
-abstract class _PayeeLoadSuccess implements PayeeHandlerState {
+abstract class _PayeeLoadSuccess implements PayeeWatcherState {
   const factory _PayeeLoadSuccess(List<Payee> payees) = _$_PayeeLoadSuccess;
 
   List<Payee> get payees;
@@ -715,7 +715,7 @@ abstract class _$PayeeLoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$PayeeLoadFailureCopyWithImpl<$Res>
-    extends _$PayeeHandlerStateCopyWithImpl<$Res>
+    extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$PayeeLoadFailureCopyWith<$Res> {
   __$PayeeLoadFailureCopyWithImpl(
       _PayeeLoadFailure _value, $Res Function(_PayeeLoadFailure) _then)
@@ -755,7 +755,7 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
 
   @override
   String toString() {
-    return 'PayeeHandlerState.loadFailure(payeeFailure: $payeeFailure)';
+    return 'PayeeWatcherState.loadFailure(payeeFailure: $payeeFailure)';
   }
 
   @override
@@ -838,7 +838,7 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
   }
 }
 
-abstract class _PayeeLoadFailure implements PayeeHandlerState {
+abstract class _PayeeLoadFailure implements PayeeWatcherState {
   const factory _PayeeLoadFailure(ValueFailure<dynamic> payeeFailure) =
       _$_PayeeLoadFailure;
 

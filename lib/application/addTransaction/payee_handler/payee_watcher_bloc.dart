@@ -12,32 +12,32 @@ import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 
-part 'payee_handler_event.dart';
-part 'payee_handler_state.dart';
-part 'payee_handler_bloc.freezed.dart';
+part 'payee_watcher_event.dart';
+part 'payee_watcher_state.dart';
+part 'payee_watcher_bloc.freezed.dart';
 
-class PayeeHandlerBloc extends Bloc<PayeeHandlerEvent, PayeeHandlerState> {
+class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
   final IPayeeRepository payeeRepository;
 
-  PayeeHandlerBloc({@required this.payeeRepository}) : super(const PayeeHandlerState.initial());
+  PayeeWatcherBloc({@required this.payeeRepository}) : super(const PayeeWatcherState.initial());
 
   StreamSubscription<List<Payee>> _payeeStreamSubscription;
 
   @override
-  Stream<PayeeHandlerState> mapEventToState(
-    PayeeHandlerEvent event,
+  Stream<PayeeWatcherState> mapEventToState(
+    PayeeWatcherEvent event,
   ) async* {
     yield* event.map(watchPayeesStarted: (e) async* {
-      yield const PayeeHandlerState.loading();
+      yield const PayeeWatcherState.loading();
       await _payeeStreamSubscription?.cancel();
 
       payeeRepository.watchAllPayees().listen(
-            (failureOrPayees) => add(PayeeHandlerEvent.payeesReceived(failureOrPayees)),
+            (failureOrPayees) => add(PayeeWatcherEvent.payeesReceived(failureOrPayees)),
           );
     }, payeesReceived: (e) async* {
       yield e.failureOrPayees.fold(
-        (f) => PayeeHandlerState.loadFailure(f),
-        (payees) => PayeeHandlerState.loadSuccess(payees),
+        (f) => PayeeWatcherState.loadFailure(f),
+        (payees) => PayeeWatcherState.loadSuccess(payees),
       );
     });
   }
