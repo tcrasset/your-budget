@@ -7,11 +7,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
+import 'package:your_budget/application/addTransaction/payee_creator/payee_creator_bloc.dart';
 import 'package:your_budget/application/addTransaction/payee_handler/payee_watcher_bloc.dart';
+import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 import '../../../../components/row_container.dart';
+import 'add_payee_dialog.dart';
 
 class PayeeField extends StatelessWidget {
   const PayeeField({
@@ -23,11 +26,23 @@ class PayeeField extends StatelessWidget {
   final TextStyle defaultChildTextStyle;
   final TextStyle selectedChildTextStyle;
 
-  void handleOnTap(BuildContext context) {
-    Navigator.push(
+  Future<void> handleOnTap(BuildContext context) async {
+    final Payee payee = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => PayeeListScaffold()),
     );
+
+    context.watch<TransactionCreatorBloc>().add(TransactionCreatorEvent.payeeChanged(payee));
+  }
+
+  String getPayeeName(BuildContext context) {
+    return context
+        .watch<TransactionCreatorBloc>()
+        .state
+        .moneyTransaction
+        .payeeID
+        .value
+        .fold((_) => null, (v) => v);
   }
 
   @override
@@ -35,8 +50,8 @@ class PayeeField extends StatelessWidget {
     return GestureDetector(
         // Payees gesture detectory leading to 'Payees' SelectValuePage
         onTap: () => handleOnTap(context),
-        child:
-            RowContainer(name: "Payee", childWidget: Text("Test", style: defaultChildTextStyle)));
+        child: RowContainer(
+            name: "Payee", childWidget: Text(getPayeeName(context), style: defaultChildTextStyle)));
   }
 }
 
@@ -62,6 +77,7 @@ class PayeeListScaffold extends HookWidget {
               loadSuccess: (newState) => Column(
                 children: [
                   SearchField(searchController: searchController),
+                  AddPayeeField(searchController: searchController),
                   Expanded(child: PayeeList(searchController: searchController)),
                 ],
               ),
@@ -72,6 +88,26 @@ class PayeeListScaffold extends HookWidget {
           },
         ),
       ),
+    );
+  }
+}
+
+class AddPayeeField extends StatelessWidget {
+  const AddPayeeField({
+    Key key,
+    @required this.searchController,
+  }) : super(key: key);
+
+  final TextEditingController searchController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: const Text(
+        "Create new payee",
+        style: TextStyle(fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+      ),
+      onTap: () => addPayeeDialog(context: context, defaultValue: searchController.text),
     );
   }
 }
@@ -96,11 +132,11 @@ class PayeeList extends StatelessWidget {
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {
-                return ListTile(title: Text(name), onTap: () => handlePopContext(payee));
+                return ListTile(title: Text(name), onTap: () => Navigator.of(context).pop(payee));
               } else {
                 // The filter is not empty, we filter by name
                 if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
-                  return ListTile(title: Text(name), onTap: () => handlePopContext(payee));
+                  return ListTile(title: Text(name), onTap: () => Navigator.of(context).pop(payee));
                 }
               }
               return Container();
@@ -113,5 +149,3 @@ class PayeeList extends StatelessWidget {
     );
   }
 }
-
-handlePopContext(Payee item) {}
