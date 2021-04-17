@@ -330,39 +330,35 @@ class _AddTransactionPageView
     // Build the layout (ListView, error container, Button)
     return BlocProvider(
       create: (context) => TransactionCreatorBloc(),
-      child: BlocBuilder<TransactionCreatorBloc, TransactionCreatorState>(
-        builder: (context, state) {
-          return SingleChildScrollView(
-            child: Column(children: [
-              Column(
+      child: SingleChildScrollView(
+        child: Column(children: [
+          Column(
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      // Expanded(child: AmountInputContainer(state: state)),
-                      //AmountSwitch(state: state),
-                    ],
-                  ),
-                  const PayeeField(
-                      defaultChildTextStyle: defaultChildTextStyle,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  const AccountField(
-                      defaultChildTextStyle: defaultChildTextStyle,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  const SubcategoryField(
-                      defaultChildTextStyle: defaultChildTextStyle,
-                      selectedChildTextStyle: selectedChildTextStyle),
-                  const DateField(selectedChildTextStyle: selectedChildTextStyle),
-                  const MemoField(),
+                  // Expanded(child: AmountInputContainer(state: state)),
+                  //AmountSwitch(state: state),
                 ],
               ),
-              // TODO: Error message
-              FloatingActionButton(
-                onPressed: () => null /* state.addMoneyTransaction(context)*/,
-                child: const Text("Enter"),
-              )
-            ]),
-          );
-        },
+              const PayeeField(
+                  defaultChildTextStyle: defaultChildTextStyle,
+                  selectedChildTextStyle: selectedChildTextStyle),
+              const AccountField(
+                  defaultChildTextStyle: defaultChildTextStyle,
+                  selectedChildTextStyle: selectedChildTextStyle),
+              const SubcategoryField(
+                  defaultChildTextStyle: defaultChildTextStyle,
+                  selectedChildTextStyle: selectedChildTextStyle),
+              const DateField(selectedChildTextStyle: selectedChildTextStyle),
+              const MemoField(),
+            ],
+          ),
+          // TODO: Error message
+          FloatingActionButton(
+            onPressed: () => null /* state.addMoneyTransaction(context)*/,
+            child: const Text("Enter"),
+          )
+        ]),
       ),
     );
   }

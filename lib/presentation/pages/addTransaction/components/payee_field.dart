@@ -7,7 +7,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:your_budget/application/addTransaction/payee_creator/payee_creator_bloc.dart';
 import 'package:your_budget/application/addTransaction/payee_handler/payee_watcher_bloc.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
@@ -32,7 +31,7 @@ class PayeeField extends StatelessWidget {
       MaterialPageRoute(builder: (context) => PayeeListScaffold()),
     );
 
-    context.watch<TransactionCreatorBloc>().add(TransactionCreatorEvent.payeeChanged(payee));
+    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.payeeChanged(payee));
   }
 
   String getPayeeName(BuildContext context) {
@@ -48,10 +47,13 @@ class PayeeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        // Payees gesture detectory leading to 'Payees' SelectValuePage
-        onTap: () => handleOnTap(context),
-        child: RowContainer(
-            name: "Payee", childWidget: Text(getPayeeName(context), style: defaultChildTextStyle)));
+      // Payees gesture detectory leading to 'Payees' SelectValuePage
+      onTap: () => handleOnTap(context),
+      child: RowContainer(
+        name: "Payee",
+        childWidget: Text(getPayeeName(context), style: defaultChildTextStyle),
+      ),
+    );
   }
 }
 
