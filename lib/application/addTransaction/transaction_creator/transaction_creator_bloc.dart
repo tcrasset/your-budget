@@ -51,13 +51,16 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
           saveFailureOrSuccessOption: none(),
         );
       },
-      saved: (e) async* {
-        yield state;
-      },
       subcategoryChanged: (e) async* {
         yield state;
       },
       accountChanged: (e) async* {
+        yield state.copyWith(
+          moneyTransaction: state.moneyTransaction.copyWith(accountID: e.account.id),
+          saveFailureOrSuccessOption: none(),
+        );
+      },
+      saved: (e) async* {
         yield state;
       },
     );

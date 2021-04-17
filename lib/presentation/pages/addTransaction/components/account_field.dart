@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
+import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import '../../../../components/row_container.dart';
@@ -23,20 +24,35 @@ class AccountField extends StatelessWidget {
   final TextStyle defaultChildTextStyle;
   final TextStyle selectedChildTextStyle;
 
-  void handleOnTap(BuildContext context) {
-    Navigator.push(
+  Future<void> handleOnTap(BuildContext context) async {
+    final Account account = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AccountListScaffold()),
     );
+
+    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.accountChanged(account));
+  }
+
+  String getAccountName(BuildContext context) {
+    return context
+        .watch<TransactionCreatorBloc>()
+        .state
+        .moneyTransaction
+        .accountID
+        .value
+        .fold((_) => null, (v) => v);
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        // Accounts gesture detectory leading to 'Accounts' SelectValuePage
-        onTap: () => handleOnTap(context),
-        child:
-            RowContainer(name: "Account", childWidget: Text("Test", style: defaultChildTextStyle)));
+      // Payees gesture detectory leading to 'Payees' SelectValuePage
+      onTap: () => handleOnTap(context),
+      child: RowContainer(
+        name: "Account",
+        childWidget: Text(getAccountName(context), style: defaultChildTextStyle),
+      ),
+    );
   }
 }
 
@@ -80,6 +96,9 @@ class AccountList extends StatelessWidget {
   final TextEditingController searchController;
   const AccountList({@required this.searchController});
 
+  void _handlePopContext(BuildContext context, Account account) =>
+      Navigator.of(context).pop(account);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
@@ -96,11 +115,17 @@ class AccountList extends StatelessWidget {
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {
-                return ListTile(title: Text(name), onTap: () => handlePopContext(account));
+                return ListTile(
+                  title: Text(name),
+                  onTap: () => _handlePopContext(context, account),
+                );
               } else {
                 // The filter is not empty, we filter by name
                 if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
-                  return ListTile(title: Text(name), onTap: () => handlePopContext(account));
+                  return ListTile(
+                    title: Text(name),
+                    onTap: () => _handlePopContext(context, account),
+                  );
                 }
               }
               return Container();
@@ -113,5 +138,3 @@ class AccountList extends StatelessWidget {
     );
   }
 }
-
-handlePopContext(Account item) {}
