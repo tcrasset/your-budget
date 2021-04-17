@@ -31,11 +31,11 @@ void main() {
     tId = 99;
     tParentID = 888;
     tName = "Test name";
-    budgeted = 987.65;
-    available = 1.25;
+    budgeted = 0.00;
+    available = 0.00;
     tSubcategory = Subcategory(
       id: UniqueId.fromUniqueString(tId.toString()),
-      parentID: UniqueId.fromUniqueString(tParentID.toString()),
+      categoryID: UniqueId.fromUniqueString(tParentID.toString()),
       budgeted: Amount(budgeted.toString()),
       available: Amount(available.toString()),
       name: Name(tName),

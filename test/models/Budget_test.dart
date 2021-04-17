@@ -10,7 +10,7 @@ void main() {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
     final SubCategory subcatTest =
-        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
 
     const double newValue = 9.99;
@@ -21,7 +21,7 @@ void main() {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
     final SubCategory subcatTest =
-        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
 
     // Construct the myBudget without subcategory
     final Budget myBudget = Budget([catTest], [], 6, 1996);
@@ -53,7 +53,7 @@ void main() {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
     final SubCategory subcatTest =
-        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
 
     // Construct the Budget
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
@@ -93,7 +93,7 @@ void main() {
     // Create a category and a subcategory that should be linked to it
     final MainCategory catTest = MainCategory(id: 1, name: "Test");
     final SubCategory subcatTest =
-        SubCategory(id: 3, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
 
     // Construct the Budget
     final Budget myBudget = Budget([catTest], [subcatTest], 6, 1996);
@@ -125,11 +125,11 @@ void main() {
     final MainCategory catTest1 = MainCategory(id: 1, name: "Test2");
     final MainCategory catTest2 = MainCategory(id: 2, name: "Test2");
     final SubCategory subcatTest_1_1 =
-        SubCategory(id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 1, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final SubCategory subcatTest_1_2 =
-        SubCategory(id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 2, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final SubCategory subcatTest_2_1 =
-        SubCategory(id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "2", name: "Test", budgeted: 66.52, available: 78.8);
 
     // Add the subcategories to their corresponding maincategory
     catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
@@ -154,11 +154,11 @@ void main() {
     final MainCategory catTest1 = MainCategory(id: 1, name: "Test2");
     final MainCategory catTest2 = MainCategory(id: 2, name: "Test2");
     final SubCategory subcatTest_1_1 =
-        SubCategory(id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 1, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final SubCategory subcatTest_1_2 =
-        SubCategory(id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 2, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final SubCategory subcatTest_2_1 =
-        SubCategory(id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "2", name: "Test", budgeted: 66.52, available: 78.8);
 
     // Add the subcategories to their corresponding maincategory
     catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
@@ -178,11 +178,11 @@ void main() {
     final MainCategory catTest1 = MainCategory(id: 1, name: "Test2");
     final MainCategory catTest2 = MainCategory(id: 2, name: "Test2");
     final SubCategory subcatTest_1_1 =
-        SubCategory(id: 1, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 1, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final SubCategory subcatTest_1_2 =
-        SubCategory(id: 2, parentId: 1, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 2, parentId: "1", name: "Test", budgeted: 66.52, available: 78.8);
     final SubCategory subcatTest_2_1 =
-        SubCategory(id: 3, parentId: 2, name: "Test", budgeted: 66.52, available: 78.8);
+        SubCategory(id: 3, parentId: "2", name: "Test", budgeted: 66.52, available: 78.8);
 
     // Add the subcategories to their corresponding maincategory
     catTest1.addMultipleSubcategories([subcatTest_1_1, subcatTest_1_2]);
@@ -211,7 +211,7 @@ void main() {
     const String tNewName = "Name changed";
     final SubCategory subcatTest = SubCategory(
       id: tSubcatId,
-      parentId: 1,
+      parentId: "1",
       name: "Test",
       budgeted: 66.52,
       available: 78.8,

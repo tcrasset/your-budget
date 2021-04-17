@@ -55,7 +55,7 @@ class BudgetList implements ObjectList<Budget> {
     }
   }
 
-  void removeSubcategory(int subcatId, int catId) {
+  void removeSubcategory(int subcatId, String catId) {
     for (final Budget budget in _budgets) {
       budget.removeSubcategory(subcatId, catId);
     }

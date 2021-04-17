@@ -90,7 +90,7 @@ class DatabaseProvider {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.subcategoryTable} (
                         ${DatabaseConstants.SUBCAT_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
-                        ${DatabaseConstants.CAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.CAT_ID_OUTSIDE} TEXT NOT NULL,
                         ${DatabaseConstants.SUBCAT_NAME} TEXT NOT NULL
                     );''');
 
@@ -176,7 +176,8 @@ class DatabaseProvider {
     List<String> subcategoryNames = ["Rent", "Electricity", "Water", "Food", "Internet", "Phone"];
     List<int> subcategoryIds = [];
     for (int i = 0; i < subcategoryNames.length; i++) {
-      int subcategoryId = await db.rawInsert(CREATE_SUBCATEGORY, [categoryId, subcategoryNames[i]]);
+      int subcategoryId =
+          await db.rawInsert(CREATE_SUBCATEGORY, [categoryId.toString(), subcategoryNames[i]]);
       subcategoryIds.add(subcategoryId);
     }
 

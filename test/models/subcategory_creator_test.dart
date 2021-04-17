@@ -13,14 +13,14 @@ class MockQueries extends Mock implements Queries {}
 void main() {
   Queries mockQueries;
   String tName;
-  int tParentId;
+  String tParentId;
   double tBudgeted;
   double tAvailable;
   SubCategoryCreator creator;
   setUp(() async {
     mockQueries = MockQueries();
     tName = "Test subcategory";
-    tParentId = 20;
+    tParentId = "20";
     tBudgeted = 99.99;
     tAvailable = 50.00;
     creator = SubCategoryCreator(

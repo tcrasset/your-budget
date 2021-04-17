@@ -12,6 +12,7 @@ _$_PayeeDTO _$_$_PayeeDTOFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_PayeeDTOToJson(_$_PayeeDTO instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_PayeeDTOToJson(_$_PayeeDTO instance) =>
+    <String, dynamic>{
       'name': instance.name,
     };

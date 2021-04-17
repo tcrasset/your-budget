@@ -10,7 +10,7 @@ import 'queries.dart';
 class SubCategoryCreator implements Creator<SubCategory> {
   final Queries queryContext;
   final String name;
-  final int parentId;
+  final String parentId;
   final double budgeted;
   final double available;
 

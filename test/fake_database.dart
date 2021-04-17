@@ -153,7 +153,7 @@ class FakeDatabase {
 
     for (int i = 0; i < subcategoryNames.length; i++) {
       final SubCategory subcat = SubCategory(
-          id: i + 1, parentId: 1, name: subcategoryNames[i], budgeted: 0.0, available: 0.0);
+          id: i + 1, parentId: "1", name: subcategoryNames[i], budgeted: 0.0, available: 0.0);
       subcategories.add(subcat);
     }
     return subcategories;

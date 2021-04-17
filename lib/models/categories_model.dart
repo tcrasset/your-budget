@@ -2,7 +2,7 @@
 import 'package:meta/meta.dart';
 
 class SubCategoryModel {
-  final int parentId;
+  final String parentId;
   final String name;
   final double budgeted;
   final double available;

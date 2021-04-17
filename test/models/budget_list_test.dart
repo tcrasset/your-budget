@@ -27,7 +27,11 @@ void main() {
     tMainCatId = 5;
     tMainCategory = MainCategory(id: tMainCatId, name: "Test maincategory");
     tSubCategory = SubCategory(
-        id: 1, parentId: tMainCatId, name: "Test subcategory", budgeted: 100.0, available: 50.0);
+        id: 1,
+        parentId: tMainCatId.toString(),
+        name: "Test subcategory",
+        budgeted: 100.0,
+        available: 50.0);
     tBudget = Budget([tMainCategory], [tSubCategory], tMonth, tYear);
     budgetList = BudgetList(mockQueries, [tBudget]);
   });

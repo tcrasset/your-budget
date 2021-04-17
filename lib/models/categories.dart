@@ -20,12 +20,12 @@ abstract class Category {
 
 /// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
 class SubCategory extends Category {
-  final int parentId;
+  final String parentId;
 
   /// Default SubCategory constructor
   SubCategory(
       {@required int id,
-      @required int parentId,
+      @required String parentId,
       @required String name,
       @required double budgeted,
       @required double available})
@@ -35,7 +35,7 @@ class SubCategory extends Category {
   /// Constructor building a SubCategory from a [json] representation taken
   /// from a database
   SubCategory.fromJson(Map<String, dynamic> json)
-      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE] as int,
+      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE] as String,
         super(
             id: json[DatabaseConstants.SUBCAT_ID] as int, //
             name: json[DatabaseConstants.SUBCAT_NAME] as String,
@@ -61,7 +61,7 @@ class SubCategory extends Category {
 
   SubCategory copyWith({
     int id,
-    int parentId,
+    String parentId,
     String name,
     double budgeted,
     double available,

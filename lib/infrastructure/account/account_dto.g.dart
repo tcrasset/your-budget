@@ -13,7 +13,8 @@ _$_AccountDTO _$_$_AccountDTOFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_AccountDTOToJson(_$_AccountDTO instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_AccountDTOToJson(_$_AccountDTO instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'balance': instance.balance,
     };

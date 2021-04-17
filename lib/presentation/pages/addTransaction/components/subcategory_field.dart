@@ -9,6 +9,7 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/categories.dart';
 import '../../../../components/row_container.dart';
 import 'search_field.dart';
@@ -114,4 +115,4 @@ class SubcategoryList extends StatelessWidget {
   }
 }
 
-handlePopContext(SubCategory item) {}
+handlePopContext(Subcategory item) {}

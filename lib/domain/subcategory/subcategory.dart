@@ -20,7 +20,7 @@ part 'subcategory.freezed.dart';
 abstract class Subcategory implements _$Subcategory {
   const factory Subcategory({
     @required UniqueId id,
-    @required UniqueId parentID,
+    @required UniqueId categoryID,
     @required Name name,
     @required Amount budgeted,
     @required Amount available,
@@ -30,7 +30,7 @@ abstract class Subcategory implements _$Subcategory {
 
   factory Subcategory.empty() => Subcategory(
         id: UniqueId(),
-        parentID: UniqueId(),
+        categoryID: UniqueId(),
         name: Name(""),
         budgeted: Amount(""),
         available: Amount(""),

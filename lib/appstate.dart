@@ -123,7 +123,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// scratch
   @override
   Future<void> addSubcategory(
-      {@required String subcategoryName, @required int maincategoryId}) async {
+      {@required String subcategoryName, @required String maincategoryId}) async {
     DateTime newDate = startingBudgetDate;
     final DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime previousDate;

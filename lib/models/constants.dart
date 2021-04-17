@@ -84,7 +84,7 @@ class DatabaseConstants {
   static const String GOAL_MONTH = "month";
 
   /// Field names of the foreign keys
-  static const String CAT_ID_OUTSIDE = 'catID';
+  static const String CAT_ID_OUTSIDE = 'categoryID';
   static const String SUBCAT_ID_OUTSIDE = 'subcatID';
   static const String PAYEE_ID_OUTSIDE = 'payeeID';
   static const String ACCOUNT_ID_OUTSIDE = 'accountID';

@@ -107,7 +107,7 @@ void main() {
     //!Arrange
     const String tSubcategoryName = "Groceries";
     const int tSubcategoryId = 99;
-    const int tMaincategoryId = 1;
+    const String tMaincategoryId = "1";
     final SubCategory tSubcategory = SubCategory(
         id: tSubcategoryId,
         parentId: tMaincategoryId,
@@ -140,7 +140,7 @@ void main() {
           ' the maximal budget date', () async {
     //!Arrange
     const String tSubcategoryName = "Groceries";
-    const int tMaincategoryId = 1;
+    const String tMaincategoryId = "1";
     const int tSubcategoryId = 99;
     const int tBudgetId = 1001;
 

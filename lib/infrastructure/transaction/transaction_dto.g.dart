@@ -17,7 +17,8 @@ _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) =>
+    <String, dynamic>{
       'subcatID': instance.subcatID,
       'payeeID': instance.payeeID,
       'accountID': instance.accountID,

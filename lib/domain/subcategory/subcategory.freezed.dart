@@ -16,13 +16,13 @@ class _$SubcategoryTearOff {
 // ignore: unused_element
   _Subcategory call(
       {@required UniqueId id,
-      @required UniqueId parentID,
+      @required UniqueId categoryID,
       @required Name name,
       @required Amount budgeted,
       @required Amount available}) {
     return _Subcategory(
       id: id,
-      parentID: parentID,
+      categoryID: categoryID,
       name: name,
       budgeted: budgeted,
       available: available,
@@ -37,7 +37,7 @@ const $Subcategory = _$SubcategoryTearOff();
 /// @nodoc
 mixin _$Subcategory {
   UniqueId get id;
-  UniqueId get parentID;
+  UniqueId get categoryID;
   Name get name;
   Amount get budgeted;
   Amount get available;
@@ -52,7 +52,7 @@ abstract class $SubcategoryCopyWith<$Res> {
       _$SubcategoryCopyWithImpl<$Res>;
   $Res call(
       {UniqueId id,
-      UniqueId parentID,
+      UniqueId categoryID,
       Name name,
       Amount budgeted,
       Amount available});
@@ -69,14 +69,15 @@ class _$SubcategoryCopyWithImpl<$Res> implements $SubcategoryCopyWith<$Res> {
   @override
   $Res call({
     Object id = freezed,
-    Object parentID = freezed,
+    Object categoryID = freezed,
     Object name = freezed,
     Object budgeted = freezed,
     Object available = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
-      parentID: parentID == freezed ? _value.parentID : parentID as UniqueId,
+      categoryID:
+          categoryID == freezed ? _value.categoryID : categoryID as UniqueId,
       name: name == freezed ? _value.name : name as Name,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as Amount,
       available: available == freezed ? _value.available : available as Amount,
@@ -93,7 +94,7 @@ abstract class _$SubcategoryCopyWith<$Res>
   @override
   $Res call(
       {UniqueId id,
-      UniqueId parentID,
+      UniqueId categoryID,
       Name name,
       Amount budgeted,
       Amount available});
@@ -112,14 +113,15 @@ class __$SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
   @override
   $Res call({
     Object id = freezed,
-    Object parentID = freezed,
+    Object categoryID = freezed,
     Object name = freezed,
     Object budgeted = freezed,
     Object available = freezed,
   }) {
     return _then(_Subcategory(
       id: id == freezed ? _value.id : id as UniqueId,
-      parentID: parentID == freezed ? _value.parentID : parentID as UniqueId,
+      categoryID:
+          categoryID == freezed ? _value.categoryID : categoryID as UniqueId,
       name: name == freezed ? _value.name : name as Name,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as Amount,
       available: available == freezed ? _value.available : available as Amount,
@@ -131,12 +133,12 @@ class __$SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
 class _$_Subcategory extends _Subcategory {
   const _$_Subcategory(
       {@required this.id,
-      @required this.parentID,
+      @required this.categoryID,
       @required this.name,
       @required this.budgeted,
       @required this.available})
       : assert(id != null),
-        assert(parentID != null),
+        assert(categoryID != null),
         assert(name != null),
         assert(budgeted != null),
         assert(available != null),
@@ -145,7 +147,7 @@ class _$_Subcategory extends _Subcategory {
   @override
   final UniqueId id;
   @override
-  final UniqueId parentID;
+  final UniqueId categoryID;
   @override
   final Name name;
   @override
@@ -155,7 +157,7 @@ class _$_Subcategory extends _Subcategory {
 
   @override
   String toString() {
-    return 'Subcategory(id: $id, parentID: $parentID, name: $name, budgeted: $budgeted, available: $available)';
+    return 'Subcategory(id: $id, categoryID: $categoryID, name: $name, budgeted: $budgeted, available: $available)';
   }
 
   @override
@@ -164,9 +166,9 @@ class _$_Subcategory extends _Subcategory {
         (other is _Subcategory &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.parentID, parentID) ||
+            (identical(other.categoryID, categoryID) ||
                 const DeepCollectionEquality()
-                    .equals(other.parentID, parentID)) &&
+                    .equals(other.categoryID, categoryID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.budgeted, budgeted) ||
@@ -181,7 +183,7 @@ class _$_Subcategory extends _Subcategory {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(parentID) ^
+      const DeepCollectionEquality().hash(categoryID) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(budgeted) ^
       const DeepCollectionEquality().hash(available);
@@ -195,7 +197,7 @@ abstract class _Subcategory extends Subcategory {
   const _Subcategory._() : super._();
   const factory _Subcategory(
       {@required UniqueId id,
-      @required UniqueId parentID,
+      @required UniqueId categoryID,
       @required Name name,
       @required Amount budgeted,
       @required Amount available}) = _$_Subcategory;
@@ -203,7 +205,7 @@ abstract class _Subcategory extends Subcategory {
   @override
   UniqueId get id;
   @override
-  UniqueId get parentID;
+  UniqueId get categoryID;
   @override
   Name get name;
   @override

@@ -33,7 +33,7 @@ class Budget {
     for (final MainCategory cat in maincategories) {
       final MainCategory newCat = cat.copy();
       final List<SubCategory> correspondingSubcats =
-          subcategories.where((subcat) => subcat.parentId == cat.id).toList();
+          subcategories.where((subcat) => subcat.parentId == cat.id.toString()).toList();
       //TODO: Investigate why We make copies of maincategories, but not of subcategories.
       newCat.addMultipleSubcategories(correspondingSubcats);
       this.maincategories.add(newCat);
@@ -60,7 +60,8 @@ class Budget {
   void addSubcategory(SubCategory newSubcat) {
     final SubCategory subcat = newSubcat.copy();
     this.subcategories.add(subcat);
-    final MainCategory cat = maincategories.singleWhere((cat) => cat.id == newSubcat.parentId);
+    final MainCategory cat =
+        maincategories.singleWhere((cat) => cat.id.toString() == newSubcat.parentId);
     if (!_subcatAlreadyPresentIn(cat, newSubcat)) {
       cat.addSubcategory(subcat);
     }
@@ -88,7 +89,7 @@ class Budget {
 
     // Update the values inside the corresponding maincategory
     final MainCategory cat =
-        maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id);
+        maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat.id.toString());
 
     cat.updateFields();
     _updateTotalBudgeted();
@@ -107,7 +108,8 @@ class Budget {
   /// Replace the attribute [field] of the SubCategory specified by [subcatId] with [value].
   /// The parent of the SubCategory has to be specified with [categoryId] to be able to
   /// update it's values too.
-  void makeSubcategoryChangeBySubcatId(int subcatId, int categoryId, String field, String value) {
+  void makeSubcategoryChangeBySubcatId(
+      int subcatId, String categoryId, String field, String value) {
     final SubCategory oldSubcat = subcategories.singleWhere((subcat) => subcat.id == subcatId);
 
     switch (field) {
@@ -126,7 +128,7 @@ class Budget {
         throw Exception();
     }
 
-    final MainCategory cat = maincategories.singleWhere((cat) => cat.id == categoryId);
+    final MainCategory cat = maincategories.singleWhere((cat) => cat.id.toString() == categoryId);
     cat.updateFields();
     _updateTotalBudgeted();
   }
@@ -165,10 +167,10 @@ class Budget {
   }
 
   /// Deletes the [deletedSubcategory] from the current Budget.
-  void removeSubcategory(int subcatId, int catId) {
+  void removeSubcategory(int subcatId, String catId) {
     subcategories.removeWhere((subcat) => subcat.id == subcatId);
     final MainCategory cat =
-        maincategories.singleWhere((cat) => cat.id == catId, orElse: () => null);
+        maincategories.singleWhere((cat) => cat.id.toString() == catId, orElse: () => null);
     cat?.removeSubcategory(subcatId);
     _updateTotalBudgeted();
   }

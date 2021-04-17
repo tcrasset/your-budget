@@ -16,16 +16,16 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
 
   const factory SubcategoryDTO({
     @JsonKey(ignore: true) String id, //Do not use id in database
-    @required String parentID,
+    @required String categoryID,
     @required String name,
-    @required double budgeted,
-    @required double available,
+    @Default(0.00) double budgeted,
+    @Default(0.00) double available,
   }) = _SubcategoryDTO;
 
   factory SubcategoryDTO.fromDomain(Subcategory subcategory) {
     return SubcategoryDTO(
       id: subcategory.id.getOrCrash(), //Not used in database
-      parentID: subcategory.parentID.getOrCrash(),
+      categoryID: subcategory.categoryID.getOrCrash(),
       name: subcategory.name.getOrCrash(),
       budgeted: subcategory.budgeted.getOrCrash(),
       available: subcategory.available.getOrCrash(),
@@ -35,7 +35,7 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
   Subcategory toDomain() {
     return Subcategory(
       id: UniqueId.fromUniqueString(id),
-      parentID: UniqueId.fromUniqueString(parentID),
+      categoryID: UniqueId.fromUniqueString(categoryID),
       name: Name(name),
       budgeted: Amount(budgeted.toString()),
       available: Amount(available.toString()),
@@ -44,6 +44,8 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
 
   factory SubcategoryDTO.fromJson(Map<String, dynamic> json) => _$SubcategoryDTOFromJson(json);
   factory SubcategoryDTO.fromSQL(Map<String, dynamic> json) {
-    return SubcategoryDTO.fromJson(json).copyWith(id: json["id"].toString());
+    return SubcategoryDTO.fromJson(json).copyWith(
+      id: json["id"].toString(),
+    );
   }
 }

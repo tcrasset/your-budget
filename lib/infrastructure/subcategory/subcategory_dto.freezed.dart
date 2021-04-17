@@ -19,13 +19,13 @@ class _$SubcategoryDTOTearOff {
 // ignore: unused_element
   _SubcategoryDTO call(
       {@JsonKey(ignore: true) String id,
-      @required String parentID,
+      @required String categoryID,
       @required String name,
-      @required double budgeted,
-      @required double available}) {
+      double budgeted = 0.0,
+      double available = 0.0}) {
     return _SubcategoryDTO(
       id: id,
-      parentID: parentID,
+      categoryID: categoryID,
       name: name,
       budgeted: budgeted,
       available: available,
@@ -46,7 +46,7 @@ const $SubcategoryDTO = _$SubcategoryDTOTearOff();
 mixin _$SubcategoryDTO {
   @JsonKey(ignore: true)
   String get id; //Do not use id in database
-  String get parentID;
+  String get categoryID;
   String get name;
   double get budgeted;
   double get available;
@@ -62,7 +62,7 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
       _$SubcategoryDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(ignore: true) String id,
-      String parentID,
+      String categoryID,
       String name,
       double budgeted,
       double available});
@@ -80,14 +80,15 @@ class _$SubcategoryDTOCopyWithImpl<$Res>
   @override
   $Res call({
     Object id = freezed,
-    Object parentID = freezed,
+    Object categoryID = freezed,
     Object name = freezed,
     Object budgeted = freezed,
     Object available = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
-      parentID: parentID == freezed ? _value.parentID : parentID as String,
+      categoryID:
+          categoryID == freezed ? _value.categoryID : categoryID as String,
       name: name == freezed ? _value.name : name as String,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as double,
       available: available == freezed ? _value.available : available as double,
@@ -104,7 +105,7 @@ abstract class _$SubcategoryDTOCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(ignore: true) String id,
-      String parentID,
+      String categoryID,
       String name,
       double budgeted,
       double available});
@@ -124,14 +125,15 @@ class __$SubcategoryDTOCopyWithImpl<$Res>
   @override
   $Res call({
     Object id = freezed,
-    Object parentID = freezed,
+    Object categoryID = freezed,
     Object name = freezed,
     Object budgeted = freezed,
     Object available = freezed,
   }) {
     return _then(_SubcategoryDTO(
       id: id == freezed ? _value.id : id as String,
-      parentID: parentID == freezed ? _value.parentID : parentID as String,
+      categoryID:
+          categoryID == freezed ? _value.categoryID : categoryID as String,
       name: name == freezed ? _value.name : name as String,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as double,
       available: available == freezed ? _value.available : available as double,
@@ -145,11 +147,11 @@ class __$SubcategoryDTOCopyWithImpl<$Res>
 class _$_SubcategoryDTO extends _SubcategoryDTO {
   const _$_SubcategoryDTO(
       {@JsonKey(ignore: true) this.id,
-      @required this.parentID,
+      @required this.categoryID,
       @required this.name,
-      @required this.budgeted,
-      @required this.available})
-      : assert(parentID != null),
+      this.budgeted = 0.0,
+      this.available = 0.0})
+      : assert(categoryID != null),
         assert(name != null),
         assert(budgeted != null),
         assert(available != null),
@@ -162,17 +164,19 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   @JsonKey(ignore: true)
   final String id;
   @override //Do not use id in database
-  final String parentID;
+  final String categoryID;
   @override
   final String name;
+  @JsonKey(defaultValue: 0.0)
   @override
   final double budgeted;
+  @JsonKey(defaultValue: 0.0)
   @override
   final double available;
 
   @override
   String toString() {
-    return 'SubcategoryDTO(id: $id, parentID: $parentID, name: $name, budgeted: $budgeted, available: $available)';
+    return 'SubcategoryDTO(id: $id, categoryID: $categoryID, name: $name, budgeted: $budgeted, available: $available)';
   }
 
   @override
@@ -181,9 +185,9 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
         (other is _SubcategoryDTO &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.parentID, parentID) ||
+            (identical(other.categoryID, categoryID) ||
                 const DeepCollectionEquality()
-                    .equals(other.parentID, parentID)) &&
+                    .equals(other.categoryID, categoryID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.budgeted, budgeted) ||
@@ -198,7 +202,7 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(parentID) ^
+      const DeepCollectionEquality().hash(categoryID) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(budgeted) ^
       const DeepCollectionEquality().hash(available);
@@ -217,10 +221,10 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
   const _SubcategoryDTO._() : super._();
   const factory _SubcategoryDTO(
       {@JsonKey(ignore: true) String id,
-      @required String parentID,
+      @required String categoryID,
       @required String name,
-      @required double budgeted,
-      @required double available}) = _$_SubcategoryDTO;
+      double budgeted,
+      double available}) = _$_SubcategoryDTO;
 
   factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) =
       _$_SubcategoryDTO.fromJson;
@@ -229,7 +233,7 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
   @JsonKey(ignore: true)
   String get id;
   @override //Do not use id in database
-  String get parentID;
+  String get categoryID;
   @override
   String get name;
   @override
