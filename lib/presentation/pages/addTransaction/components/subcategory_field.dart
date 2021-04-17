@@ -30,9 +30,11 @@ class SubcategoryField extends StatelessWidget {
       MaterialPageRoute(builder: (context) => SubcategoryListScaffold()),
     );
 
-    context
-        .read<TransactionCreatorBloc>()
-        .add(TransactionCreatorEvent.subcategoryChanged(subcategory));
+    if (subcategory != null) {
+      context
+          .read<TransactionCreatorBloc>()
+          .add(TransactionCreatorEvent.subcategoryChanged(subcategory));
+    }
   }
 
   String getSubcategoryName(BuildContext context) {

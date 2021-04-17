@@ -29,8 +29,9 @@ class AccountField extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => AccountListScaffold()),
     );
-
-    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.accountChanged(account));
+    if (account != null) {
+      context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.accountChanged(account));
+    }
   }
 
   String getAccountName(BuildContext context) {

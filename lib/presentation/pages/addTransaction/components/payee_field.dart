@@ -30,8 +30,9 @@ class PayeeField extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => PayeeListScaffold()),
     );
-
-    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.payeeChanged(payee));
+    if (payee != null) {
+      context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.payeeChanged(payee));
+    }
   }
 
   String getPayeeName(BuildContext context) {
