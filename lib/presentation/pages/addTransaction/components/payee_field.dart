@@ -118,6 +118,8 @@ class PayeeList extends StatelessWidget {
   final TextEditingController searchController;
   const PayeeList({@required this.searchController});
 
+  void _handlePopContext(BuildContext context, Payee payee) => Navigator.of(context).pop(payee);
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PayeeWatcherBloc, PayeeWatcherState>(
@@ -134,11 +136,12 @@ class PayeeList extends StatelessWidget {
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {
-                return ListTile(title: Text(name), onTap: () => Navigator.of(context).pop(payee));
+                return ListTile(title: Text(name), onTap: () => _handlePopContext(context, payee));
               } else {
                 // The filter is not empty, we filter by name
                 if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
-                  return ListTile(title: Text(name), onTap: () => Navigator.of(context).pop(payee));
+                  return ListTile(
+                      title: Text(name), onTap: () => _handlePopContext(context, payee));
                 }
               }
               return Container();
