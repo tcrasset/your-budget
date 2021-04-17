@@ -23,4 +23,4 @@ repos:
       language: system
       files: \.dart$
       exclude: \*.freezed.dart
-      entry: bash -c "flutter format --line-length=100 $(git diff --name-only --cached | grep .dart | grep -v .freezed.dart)"
+      entry: bash -c "flutter format --line-length=100 $(git diff --name-only --cached | grep .dart | grep -v .freezed.dart | grep -v .g.dart)"
