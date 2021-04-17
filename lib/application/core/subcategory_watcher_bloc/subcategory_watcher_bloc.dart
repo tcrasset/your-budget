@@ -9,6 +9,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 // Project imports:
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/categories.dart';
 
 part 'subcategory_watcher_event.dart';
@@ -21,7 +22,7 @@ class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWa
   SubcategoryWatcherBloc({@required this.subcategoryRepository})
       : super(const SubcategoryWatcherState.initial());
 
-  StreamSubscription<List<SubCategory>> _subcategoryStreamSubscription;
+  StreamSubscription<List<Subcategory>> _subcategoryStreamSubscription;
 
   @override
   Stream<SubcategoryWatcherState> mapEventToState(

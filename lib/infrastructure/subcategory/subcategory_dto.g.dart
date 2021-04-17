@@ -15,7 +15,8 @@ _$_SubcategoryDTO _$_$_SubcategoryDTOFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_SubcategoryDTOToJson(_$_SubcategoryDTO instance) => <String, dynamic>{
+Map<String, dynamic> _$_$_SubcategoryDTOToJson(_$_SubcategoryDTO instance) =>
+    <String, dynamic>{
       'parentID': instance.parentID,
       'name': instance.name,
       'budgeted': instance.budgeted,
