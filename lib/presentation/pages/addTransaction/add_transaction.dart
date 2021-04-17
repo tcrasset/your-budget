@@ -330,36 +330,39 @@ class _AddTransactionPageView
     // Build the layout (ListView, error container, Button)
     return BlocProvider(
       create: (context) => TransactionCreatorBloc(),
-      child: SingleChildScrollView(
-        child: Column(children: [
-          Column(
-            children: [
-              Row(
+      child: BlocBuilder<TransactionCreatorBloc, TransactionCreatorState>(
+        builder: (context, state) {
+          return SingleChildScrollView(
+            child: Column(children: [
+              Column(
                 children: [
-                  // Expanded(child: AmountInputContainer(state: state)),
-                  AmountSwitch(state: state),
+                  Row(
+                    children: [
+                      // Expanded(child: AmountInputContainer(state: state)),
+                      //AmountSwitch(state: state),
+                    ],
+                  ),
+                  const PayeeField(
+                      defaultChildTextStyle: defaultChildTextStyle,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  const AccountField(
+                      defaultChildTextStyle: defaultChildTextStyle,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  const SubcategoryField(
+                      defaultChildTextStyle: defaultChildTextStyle,
+                      selectedChildTextStyle: selectedChildTextStyle),
+                  const DateField(selectedChildTextStyle: selectedChildTextStyle),
+                  const MemoField(),
                 ],
               ),
-              const PayeeField(
-                  defaultChildTextStyle: defaultChildTextStyle,
-                  selectedChildTextStyle: selectedChildTextStyle),
-              const AccountField(
-                  defaultChildTextStyle: defaultChildTextStyle,
-                  selectedChildTextStyle: selectedChildTextStyle),
-              SubcategoryField(
-                  state: state,
-                  defaultChildTextStyle: defaultChildTextStyle,
-                  selectedChildTextStyle: selectedChildTextStyle),
-              const DateField(selectedChildTextStyle: selectedChildTextStyle),
-              const MemoField(),
-            ],
-          ),
-          // TODO: Error message
-          FloatingActionButton(
-            onPressed: () => state.addMoneyTransaction(context),
-            child: const Text("Enter"),
-          )
-        ]),
+              // TODO: Error message
+              FloatingActionButton(
+                onPressed: () => null /* state.addMoneyTransaction(context)*/,
+                child: const Text("Enter"),
+              )
+            ]),
+          );
+        },
       ),
     );
   }
