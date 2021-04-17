@@ -34,11 +34,11 @@ class SQFlitePayeeRepository implements IPayeeRepository {
   }
 
   @override
-  Future<Either<ValueFailure, int>> create(Payee payee) async {
+  Future<Either<ValueFailure, Unit>> create(Payee payee) async {
     try {
       final PayeeDTO payeeDTO = PayeeDTO.fromDomain(payee);
-      final int id = await database.insert(DatabaseConstants.payeeTable, payeeDTO.toJson());
-      return right(id);
+      await database.insert(DatabaseConstants.payeeTable, payeeDTO.toJson());
+      return right(unit);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
         return left(ValueFailure.uniqueName(failedValue: e.toString()));

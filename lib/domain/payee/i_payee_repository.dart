@@ -8,7 +8,7 @@ import '../core/value_failure.dart';
 // import 'package:your_budget/models/payee.dart';
 
 abstract class IPayeeRepository {
-  Future<Either<ValueFailure, int>> create(Payee payee);
+  Future<Either<ValueFailure, Unit>> create(Payee payee);
   // Future<Either<ValueFailure, Unit>> update(NewPayee payee);
   // Future<Either<ValueFailure, Unit>> delete(NewPayee payee);
   Future<Either<ValueFailure, List<Payee>>> getAllPayees();
