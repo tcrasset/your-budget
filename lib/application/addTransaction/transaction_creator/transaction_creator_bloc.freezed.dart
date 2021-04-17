@@ -33,7 +33,7 @@ class _$TransactionCreatorEventTearOff {
   }
 
 // ignore: unused_element
-  _SubcategoryChanged subcategoryChanged(SubCategory subcategory) {
+  _SubcategoryChanged subcategoryChanged(Subcategory subcategory) {
     return _SubcategoryChanged(
       subcategory,
     );
@@ -70,7 +70,7 @@ mixin _$TransactionCreatorEvent {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -80,7 +80,7 @@ mixin _$TransactionCreatorEvent {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -168,7 +168,7 @@ class _$_Initialized implements _Initialized {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -189,7 +189,7 @@ class _$_Initialized implements _Initialized {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -322,7 +322,7 @@ class _$_PayeeChanged implements _PayeeChanged {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -343,7 +343,7 @@ class _$_PayeeChanged implements _PayeeChanged {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -479,7 +479,7 @@ class _$_AccountChanged implements _AccountChanged {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -500,7 +500,7 @@ class _$_AccountChanged implements _AccountChanged {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -566,7 +566,9 @@ abstract class _$SubcategoryChangedCopyWith<$Res> {
   factory _$SubcategoryChangedCopyWith(
           _SubcategoryChanged value, $Res Function(_SubcategoryChanged) then) =
       __$SubcategoryChangedCopyWithImpl<$Res>;
-  $Res call({SubCategory subcategory});
+  $Res call({Subcategory subcategory});
+
+  $SubcategoryCopyWith<$Res> get subcategory;
 }
 
 /// @nodoc
@@ -585,8 +587,18 @@ class __$SubcategoryChangedCopyWithImpl<$Res>
     Object subcategory = freezed,
   }) {
     return _then(_SubcategoryChanged(
-      subcategory == freezed ? _value.subcategory : subcategory as SubCategory,
+      subcategory == freezed ? _value.subcategory : subcategory as Subcategory,
     ));
+  }
+
+  @override
+  $SubcategoryCopyWith<$Res> get subcategory {
+    if (_value.subcategory == null) {
+      return null;
+    }
+    return $SubcategoryCopyWith<$Res>(_value.subcategory, (value) {
+      return _then(_value.copyWith(subcategory: value));
+    });
   }
 }
 
@@ -595,7 +607,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   const _$_SubcategoryChanged(this.subcategory) : assert(subcategory != null);
 
   @override
-  final SubCategory subcategory;
+  final Subcategory subcategory;
 
   @override
   String toString() {
@@ -625,7 +637,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -646,7 +658,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -701,10 +713,10 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
 }
 
 abstract class _SubcategoryChanged implements TransactionCreatorEvent {
-  const factory _SubcategoryChanged(SubCategory subcategory) =
+  const factory _SubcategoryChanged(Subcategory subcategory) =
       _$_SubcategoryChanged;
 
-  SubCategory get subcategory;
+  Subcategory get subcategory;
   _$SubcategoryChangedCopyWith<_SubcategoryChanged> get copyWith;
 }
 
@@ -771,7 +783,7 @@ class _$_DateChanged implements _DateChanged {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -792,7 +804,7 @@ class _$_DateChanged implements _DateChanged {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -916,7 +928,7 @@ class _$_MemoChanged implements _MemoChanged {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -937,7 +949,7 @@ class _$_MemoChanged implements _MemoChanged {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),
@@ -1038,7 +1050,7 @@ class _$_Saved implements _Saved {
     @required Result initialized(),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(SubCategory subcategory),
+    @required Result subcategoryChanged(Subcategory subcategory),
     @required Result dateChanged(DateTime date),
     @required Result memoChanged(String memo),
     @required Result saved(),
@@ -1059,7 +1071,7 @@ class _$_Saved implements _Saved {
     Result initialized(),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
-    Result subcategoryChanged(SubCategory subcategory),
+    Result subcategoryChanged(Subcategory subcategory),
     Result dateChanged(DateTime date),
     Result memoChanged(String memo),
     Result saved(),

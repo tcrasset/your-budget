@@ -11,6 +11,7 @@ import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/categories.dart';
 
@@ -52,7 +53,10 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
         );
       },
       subcategoryChanged: (e) async* {
-        yield state;
+        yield state.copyWith(
+          moneyTransaction: state.moneyTransaction.copyWith(subcatID: e.subcategory.id),
+          saveFailureOrSuccessOption: none(),
+        );
       },
       accountChanged: (e) async* {
         yield state.copyWith(

@@ -7,10 +7,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
+import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/models/categories.dart';
 import '../../../../components/row_container.dart';
 import 'search_field.dart';
 
@@ -24,11 +24,25 @@ class SubcategoryField extends StatelessWidget {
   final TextStyle defaultChildTextStyle;
   final TextStyle selectedChildTextStyle;
 
-  void handleOnTap(BuildContext context) {
-    Navigator.push(
+  Future<void> handleOnTap(BuildContext context) async {
+    final Subcategory subcategory = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SubcategoryListScaffold()),
     );
+
+    context
+        .read<TransactionCreatorBloc>()
+        .add(TransactionCreatorEvent.subcategoryChanged(subcategory));
+  }
+
+  String getSubcategoryName(BuildContext context) {
+    return context
+        .watch<TransactionCreatorBloc>()
+        .state
+        .moneyTransaction
+        .subcatID
+        .value
+        .fold((_) => null, (v) => v);
   }
 
   @override
@@ -37,7 +51,8 @@ class SubcategoryField extends StatelessWidget {
         // Subcategorys gesture detectory leading to 'Subcategorys' SelectValuePage
         onTap: () => handleOnTap(context),
         child: RowContainer(
-            name: "Subcategory", childWidget: Text("Test", style: defaultChildTextStyle)));
+            name: "Subcategory",
+            childWidget: Text(getSubcategoryName(context), style: defaultChildTextStyle)));
   }
 }
 
@@ -93,16 +108,18 @@ class SubcategoryList extends StatelessWidget {
                 const Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
               final subcategory = newState.subcategories[index];
-              // final name = subcategory.name.getOrCrash();
+              final name = subcategory.name.getOrCrash();
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {
-                return ListTile(title: Text("test"), onTap: () => handlePopContext(subcategory));
+                return ListTile(
+                    title: Text(name), onTap: () => handlePopContext(context, subcategory));
               } else {
-                // // The filter is not empty, we filter by name
-                // if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
-                //   return ListTile(title: Text("test"), onTap: () => handlePopContext(subcategory));
-                // }
+                // The filter is not empty, we filter by name
+                if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
+                  return ListTile(
+                      title: Text(name), onTap: () => handlePopContext(context, subcategory));
+                }
               }
               return Container();
               // There               });
@@ -115,4 +132,6 @@ class SubcategoryList extends StatelessWidget {
   }
 }
 
-handlePopContext(Subcategory item) {}
+void handlePopContext(BuildContext context, Subcategory subcategory) {
+  Navigator.of(context).pop(subcategory);
+}
