@@ -72,6 +72,7 @@ class AccountName extends HookWidget {
                   key: const Key('accountNameTextField'),
                   decoration: boxDecoration,
                   style: textStyle,
+                  controller: _controller,
                   textAlign: TextAlign.center,
                   validator: (_) => validateName(context),
                   onChanged: (value) => onNameChange(context, value),

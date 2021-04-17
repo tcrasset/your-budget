@@ -79,6 +79,7 @@ class AccountBalance extends HookWidget {
                     key: const Key('accountBalanceTextField'),
                     decoration: boxDecoration,
                     style: textStyle,
+                    controller: _controller,
                     textAlign: TextAlign.center,
                     validator: (_) => validateBalance(context),
                     onChanged: (value) => onBalanceChanged(context, value),
