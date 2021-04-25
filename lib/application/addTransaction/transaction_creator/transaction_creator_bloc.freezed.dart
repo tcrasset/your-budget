@@ -19,6 +19,13 @@ class _$TransactionCreatorEventTearOff {
   }
 
 // ignore: unused_element
+  _AmountChanged amountChanged(String amount) {
+    return _AmountChanged(
+      amount,
+    );
+  }
+
+// ignore: unused_element
   _PayeeChanged payeeChanged(Payee payee) {
     return _PayeeChanged(
       payee,
@@ -68,6 +75,7 @@ mixin _$TransactionCreatorEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -78,6 +86,7 @@ mixin _$TransactionCreatorEvent {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -89,6 +98,7 @@ mixin _$TransactionCreatorEvent {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -99,6 +109,7 @@ mixin _$TransactionCreatorEvent {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -166,6 +177,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -174,6 +186,7 @@ class _$_Initialized implements _Initialized {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -187,6 +200,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -206,6 +220,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -214,6 +229,7 @@ class _$_Initialized implements _Initialized {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -227,6 +243,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -245,6 +262,157 @@ class _$_Initialized implements _Initialized {
 
 abstract class _Initialized implements TransactionCreatorEvent {
   const factory _Initialized() = _$_Initialized;
+}
+
+/// @nodoc
+abstract class _$AmountChangedCopyWith<$Res> {
+  factory _$AmountChangedCopyWith(
+          _AmountChanged value, $Res Function(_AmountChanged) then) =
+      __$AmountChangedCopyWithImpl<$Res>;
+  $Res call({String amount});
+}
+
+/// @nodoc
+class __$AmountChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    implements _$AmountChangedCopyWith<$Res> {
+  __$AmountChangedCopyWithImpl(
+      _AmountChanged _value, $Res Function(_AmountChanged) _then)
+      : super(_value, (v) => _then(v as _AmountChanged));
+
+  @override
+  _AmountChanged get _value => super._value as _AmountChanged;
+
+  @override
+  $Res call({
+    Object amount = freezed,
+  }) {
+    return _then(_AmountChanged(
+      amount == freezed ? _value.amount : amount as String,
+    ));
+  }
+}
+
+/// @nodoc
+class _$_AmountChanged implements _AmountChanged {
+  const _$_AmountChanged(this.amount) : assert(amount != null);
+
+  @override
+  final String amount;
+
+  @override
+  String toString() {
+    return 'TransactionCreatorEvent.amountChanged(amount: $amount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _AmountChanged &&
+            (identical(other.amount, amount) ||
+                const DeepCollectionEquality().equals(other.amount, amount)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(amount);
+
+  @override
+  _$AmountChangedCopyWith<_AmountChanged> get copyWith =>
+      __$AmountChangedCopyWithImpl<_AmountChanged>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result initialized(),
+    @required Result amountChanged(String amount),
+    @required Result payeeChanged(Payee payee),
+    @required Result accountChanged(Account account),
+    @required Result subcategoryChanged(Subcategory subcategory),
+    @required Result dateChanged(DateTime date),
+    @required Result memoChanged(String memo),
+    @required Result saved(),
+  }) {
+    assert(initialized != null);
+    assert(amountChanged != null);
+    assert(payeeChanged != null);
+    assert(accountChanged != null);
+    assert(subcategoryChanged != null);
+    assert(dateChanged != null);
+    assert(memoChanged != null);
+    assert(saved != null);
+    return amountChanged(amount);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result initialized(),
+    Result amountChanged(String amount),
+    Result payeeChanged(Payee payee),
+    Result accountChanged(Account account),
+    Result subcategoryChanged(Subcategory subcategory),
+    Result dateChanged(DateTime date),
+    Result memoChanged(String memo),
+    Result saved(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (amountChanged != null) {
+      return amountChanged(amount);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
+    @required Result payeeChanged(_PayeeChanged value),
+    @required Result accountChanged(_AccountChanged value),
+    @required Result subcategoryChanged(_SubcategoryChanged value),
+    @required Result dateChanged(_DateChanged value),
+    @required Result memoChanged(_MemoChanged value),
+    @required Result saved(_Saved value),
+  }) {
+    assert(initialized != null);
+    assert(amountChanged != null);
+    assert(payeeChanged != null);
+    assert(accountChanged != null);
+    assert(subcategoryChanged != null);
+    assert(dateChanged != null);
+    assert(memoChanged != null);
+    assert(saved != null);
+    return amountChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
+    Result payeeChanged(_PayeeChanged value),
+    Result accountChanged(_AccountChanged value),
+    Result subcategoryChanged(_SubcategoryChanged value),
+    Result dateChanged(_DateChanged value),
+    Result memoChanged(_MemoChanged value),
+    Result saved(_Saved value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (amountChanged != null) {
+      return amountChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _AmountChanged implements TransactionCreatorEvent {
+  const factory _AmountChanged(String amount) = _$_AmountChanged;
+
+  String get amount;
+  _$AmountChangedCopyWith<_AmountChanged> get copyWith;
 }
 
 /// @nodoc
@@ -320,6 +488,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -328,6 +497,7 @@ class _$_PayeeChanged implements _PayeeChanged {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -341,6 +511,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -360,6 +531,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -368,6 +540,7 @@ class _$_PayeeChanged implements _PayeeChanged {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -381,6 +554,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -477,6 +651,7 @@ class _$_AccountChanged implements _AccountChanged {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -485,6 +660,7 @@ class _$_AccountChanged implements _AccountChanged {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -498,6 +674,7 @@ class _$_AccountChanged implements _AccountChanged {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -517,6 +694,7 @@ class _$_AccountChanged implements _AccountChanged {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -525,6 +703,7 @@ class _$_AccountChanged implements _AccountChanged {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -538,6 +717,7 @@ class _$_AccountChanged implements _AccountChanged {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -635,6 +815,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -643,6 +824,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -656,6 +838,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -675,6 +858,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -683,6 +867,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -696,6 +881,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -781,6 +967,7 @@ class _$_DateChanged implements _DateChanged {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -789,6 +976,7 @@ class _$_DateChanged implements _DateChanged {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -802,6 +990,7 @@ class _$_DateChanged implements _DateChanged {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -821,6 +1010,7 @@ class _$_DateChanged implements _DateChanged {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -829,6 +1019,7 @@ class _$_DateChanged implements _DateChanged {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -842,6 +1033,7 @@ class _$_DateChanged implements _DateChanged {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -926,6 +1118,7 @@ class _$_MemoChanged implements _MemoChanged {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -934,6 +1127,7 @@ class _$_MemoChanged implements _MemoChanged {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -947,6 +1141,7 @@ class _$_MemoChanged implements _MemoChanged {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -966,6 +1161,7 @@ class _$_MemoChanged implements _MemoChanged {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -974,6 +1170,7 @@ class _$_MemoChanged implements _MemoChanged {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -987,6 +1184,7 @@ class _$_MemoChanged implements _MemoChanged {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),
@@ -1048,6 +1246,7 @@ class _$_Saved implements _Saved {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result initialized(),
+    @required Result amountChanged(String amount),
     @required Result payeeChanged(Payee payee),
     @required Result accountChanged(Account account),
     @required Result subcategoryChanged(Subcategory subcategory),
@@ -1056,6 +1255,7 @@ class _$_Saved implements _Saved {
     @required Result saved(),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -1069,6 +1269,7 @@ class _$_Saved implements _Saved {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initialized(),
+    Result amountChanged(String amount),
     Result payeeChanged(Payee payee),
     Result accountChanged(Account account),
     Result subcategoryChanged(Subcategory subcategory),
@@ -1088,6 +1289,7 @@ class _$_Saved implements _Saved {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result initialized(_Initialized value),
+    @required Result amountChanged(_AmountChanged value),
     @required Result payeeChanged(_PayeeChanged value),
     @required Result accountChanged(_AccountChanged value),
     @required Result subcategoryChanged(_SubcategoryChanged value),
@@ -1096,6 +1298,7 @@ class _$_Saved implements _Saved {
     @required Result saved(_Saved value),
   }) {
     assert(initialized != null);
+    assert(amountChanged != null);
     assert(payeeChanged != null);
     assert(accountChanged != null);
     assert(subcategoryChanged != null);
@@ -1109,6 +1312,7 @@ class _$_Saved implements _Saved {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result initialized(_Initialized value),
+    Result amountChanged(_AmountChanged value),
     Result payeeChanged(_PayeeChanged value),
     Result accountChanged(_AccountChanged value),
     Result subcategoryChanged(_SubcategoryChanged value),

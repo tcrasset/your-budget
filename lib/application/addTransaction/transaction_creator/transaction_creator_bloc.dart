@@ -8,6 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
+import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
@@ -30,6 +31,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       initialized: (e) async* {
         yield state;
       },
+      amountChanged: (e) async* {},
       dateChanged: (e) async* {
         if (e != null) {
           yield state.copyWith(

@@ -4,6 +4,7 @@ part of 'transaction_creator_bloc.dart';
 abstract class TransactionCreatorEvent with _$TransactionCreatorEvent {
   const factory TransactionCreatorEvent.initialized() = _Initialized;
 
+  const factory TransactionCreatorEvent.amountChanged(String amount) = _AmountChanged;
   const factory TransactionCreatorEvent.payeeChanged(Payee payee) = _PayeeChanged;
   const factory TransactionCreatorEvent.accountChanged(Account account) = _AccountChanged;
   const factory TransactionCreatorEvent.subcategoryChanged(Subcategory subcategory) =
