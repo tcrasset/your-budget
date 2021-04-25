@@ -13,14 +13,13 @@ import 'package:your_budget/application/addTransaction/payee_creator/payee_creat
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/payee_field.dart';
 
 Future<String> addPayeeDialog({@required BuildContext context, String defaultValue}) {
   return showDialog(
     context: context,
-    builder: (context) {
-      return PayeeNameForm(defaultValue: defaultValue);
-    },
+    builder: (_) => PayeeNameForm(defaultValue: defaultValue),
   );
 }
 
@@ -48,10 +47,13 @@ class PayeeNameForm extends HookWidget {
               (failure) => showErrorFlushbar(failure, context),
               (_) /*Success*/ {
                 // Reload the whole page
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    PageRouteBuilder(pageBuilder: (_, __, ___) => PayeeListScaffold()),
-                    (_) => false);
+
+                // Navigator.pushAndRemoveUntil(
+                //     context,
+                //     PageRouteBuilder(pageBuilder: (_, __, ___) => AddTransactionPage()),
+                //     (_) => false);
+
+                Navigator.pop(context); //Temporary fix
               },
             ),
           );
