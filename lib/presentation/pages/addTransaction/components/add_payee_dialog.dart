@@ -10,16 +10,19 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/payee_creator/payee_creator_bloc.dart';
+import 'package:your_budget/application/addTransaction/payee_handler/payee_watcher_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
-import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import 'package:your_budget/presentation/pages/addTransaction/components/payee_field.dart';
 
 Future<String> addPayeeDialog({@required BuildContext context, String defaultValue}) {
   return showDialog(
     context: context,
-    builder: (_) => PayeeNameForm(defaultValue: defaultValue),
+    builder: (_) => // Provide the existing BLoC instance to the new route (the dialog)
+        BlocProvider<PayeeWatcherBloc>.value(
+      value: BlocProvider.of<PayeeWatcherBloc>(context), //
+      child: PayeeNameForm(defaultValue: defaultValue),
+    ),
   );
 }
 
@@ -46,14 +49,9 @@ class PayeeNameForm extends HookWidget {
             (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
               (failure) => showErrorFlushbar(failure, context),
               (_) /*Success*/ {
-                // Reload the whole page
-
-                // Navigator.pushAndRemoveUntil(
-                //     context,
-                //     PageRouteBuilder(pageBuilder: (_, __, ___) => AddTransactionPage()),
-                //     (_) => false);
-
+                // Pop context and refetch the payees
                 Navigator.pop(context); //Temporary fix
+                context.read<PayeeWatcherBloc>().add(const PayeeWatcherEvent.watchPayeesStarted());
               },
             ),
           );

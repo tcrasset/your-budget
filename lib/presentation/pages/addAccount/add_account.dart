@@ -103,13 +103,9 @@ class AddAccountForm extends StatelessWidget {
           () /*None*/ {},
           (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
             (failure) => showErrorFlushbar(failure, context),
-            (_) /*Success*/ {
-              // Reload the whole page
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  PageRouteBuilder(pageBuilder: (_, __, ___) => const AddAccountPage()),
-                  (_) => false);
-            },
+            (_) /*Success*/ => context
+                .read<AccountWatcherBloc>()
+                .add(const AccountWatcherEvent.watchAccountsStarted()),
           ),
         );
       },
