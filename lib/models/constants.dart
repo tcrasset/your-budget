@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
+// ignore: avoid_classes_with_only_static_members
 /// Class storing constants used throughout the project.
 class Constants {
   /// Common icons used throughout the project
@@ -28,6 +30,11 @@ class Constants {
   static const UNASSIGNED_SUBCAT_ID = 0;
   static const UNASSIGNED_PAYEE_ID = 0;
   static const TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION = 1048576;
+
+  static const String CURRENCY_SYMBOL = "€";
+  // ignore: non_constant_identifier_names
+  static NumberFormat CURRENCY_FORMAT =
+      NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: CURRENCY_SYMBOL);
 }
 
 class DatabaseConstants {

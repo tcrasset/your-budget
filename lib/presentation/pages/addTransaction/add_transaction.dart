@@ -205,7 +205,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
         );
         Scaffold.of(context).showSnackBar(snackbar);
       } else if (payee != null) {
-        _amount = formatCurrencyToDouble(amountController.text, isPositive);
+        _amount = CurrencyInputFormatter.formatCurrencyToDouble(amountController.text, isPositive);
 
         _printTransactionInformation();
 
@@ -261,7 +261,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   void handleAmountOnSave() {
-    _amount = formatCurrencyToDouble(amountController.text, isPositive);
+    _amount = CurrencyInputFormatter.formatCurrencyToDouble(amountController.text, isPositive);
   }
 
   void handleSwitchOnChanged() {
@@ -291,7 +291,7 @@ class _AddTransactionPageController extends State<AddTransactionPage> {
   }
 
   String handleAmountValidate(String value) {
-    if (formatCurrencyToDouble(amountController.text, isPositive) == 0) {
+    if (CurrencyInputFormatter.formatCurrencyToDouble(amountController.text, isPositive) == 0) {
       return "Value must be different than 0";
     }
     return null;
@@ -337,7 +337,6 @@ class _AddTransactionPageView
               Row(
                 children: [
                   const Expanded(child: AmountInputContainer()),
-                  //AmountSwitch(state: state),
                 ],
               ),
               const PayeeField(

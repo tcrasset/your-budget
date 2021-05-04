@@ -7,26 +7,6 @@ import 'package:intl/intl.dart';
 /// Given the [currencyText] String returned from [NumberFormat.format()],
 /// this method returns the double value of [currencyText], making sure
 /// it is positive when [isPositive] is true, and negative when not.
-double formatCurrencyToDouble(String currencyText, bool isPositive) {
-  String integers = "0";
-  String decimals = "0";
-  final String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
-  final int textLength = onlyNumbers.length;
-
-  if (textLength > 2) {
-    integers = onlyNumbers.substring(0, textLength - 2);
-    decimals = onlyNumbers.substring(textLength - 2, textLength);
-  } else if (textLength == 2) {
-    integers = "0";
-    decimals = onlyNumbers.substring(0, 2);
-  } else if (textLength == 1) {
-    integers = "0";
-    decimals = "0" + onlyNumbers;
-  }
-
-  final double number = double.parse(integers + "." + decimals);
-  return isPositive ? number : -number;
-}
 
 class CurrencyInputFormatter extends TextInputFormatter {
   final NumberFormat currencyFormatter;
@@ -34,10 +14,29 @@ class CurrencyInputFormatter extends TextInputFormatter {
 
   CurrencyInputFormatter(this.currencyFormatter, this.isPositive);
 
+  static double formatCurrencyToDouble(String currencyText, bool isPositive) {
+    String integers = "0";
+    String decimals = "0";
+    final String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
+    final int textLength = onlyNumbers.length;
+
+    if (textLength > 2) {
+      integers = onlyNumbers.substring(0, textLength - 2);
+      decimals = onlyNumbers.substring(textLength - 2, textLength);
+    } else if (textLength == 2) {
+      integers = "0";
+      decimals = onlyNumbers.substring(0, 2);
+    } else if (textLength == 1) {
+      integers = "0";
+      decimals = "0" + onlyNumbers;
+    }
+
+    final double number = double.parse("$integers.$decimals");
+    return isPositive ? number : -number;
+  }
+
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    print("newValue : ${newValue.text}");
-
     /// [newValue] is empty, return an empty String
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');

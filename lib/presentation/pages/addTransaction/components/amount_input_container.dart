@@ -29,7 +29,39 @@ class AmountInputContainer extends HookWidget {
     Key key,
   }) : super(key: key);
 
-  void onAmountChange(BuildContext context, String value) =>
+  static final _zero = Constants.CURRENCY_FORMAT.format(0);
+
+  void changeAmount(BuildContext context, String value) =>
+      _onAmountChange(context, _removeSymbol(value));
+
+  String validateAmount(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
+            (f) => _failAccountClosure(f),
+            (_) => null,
+          );
+
+  String getAmount(TransactionCreatorState state) {
+    final value = state.moneyTransaction.amount.value.fold(
+      (f) => null,
+      (v) => Constants.CURRENCY_FORMAT.format(v).trim(),
+    );
+    return value;
+  }
+
+  void toggleSwitch(
+      BuildContext context, TextEditingController controller, ValueNotifier<bool> isPositive) {
+    isPositive.value = !isPositive.value;
+    final String newAmount =
+        isPositive.value ? _removeMinusSign(controller) : _addMinusSign(controller);
+    _onAmountChange(context, _removeSymbol(newAmount));
+  }
+
+  String _addMinusSign(TextEditingController controller) => "-${controller.text}";
+  String _removeMinusSign(TextEditingController controller) => controller.text.replaceAll("-", "");
+  String _removeSymbol(String value) =>
+      value.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "");
+
+  void _onAmountChange(BuildContext context, String value) =>
       context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(
             value,
           ));
@@ -44,108 +76,63 @@ class AmountInputContainer extends HookWidget {
     return result is String ? result : null;
   }
 
-  String validateAmount(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
-            (f) => _failAccountClosure(f),
-            (_) => null,
-          );
-
-  String getAmount(TransactionCreatorState state) {
-    return state.moneyTransaction.amount.value.fold(
-      (_) => null,
-      (v) => v.toString(),
-    );
-  }
-
-  void _resetValue(NumberFormat currencyNumberFormat, TextEditingController controller) {
-    _setAmountToZero(currencyNumberFormat, controller);
-    _setOffsetToLastDigit(controller);
-  }
-
-  // void handleSwitchOnChanged() {
-  //   setState(() {
-  //     isPositive = !isPositive;
-
-  //     final bool positiveWithMinusSign = isPositive && amountController.text[0] == '-';
-  //     if (positiveWithMinusSign) {
-  //       _removeMinusSign();
-  //     } else if (!isPositive) _addMinusSign();
-
-  //     _updateAmountLength();
-  //     _setOffsetToLastDigit();
-  //   });
-  // }
-
-  // void _updateAmountLength() {
-  //   amountLength = isPositive ? 16 : 17;
-  // }
-
-  // void _addMinusSign() {
-  //   amountController.text = "-${amountController.text}";
-  // }
-
-  // void _removeMinusSign() {
-  //   amountController.text = amountController.text.substring(1);
-  // }
-
-  // String handleAmountValidate(String value) {
-  //   if (formatCurrencyToDouble(amountController.text, isPositive) == 0) {
-  //     return "Value must be different than 0";
-  //   }
-  //   return null;
-  // }
-
-  void _setAmountToZero(NumberFormat currencyNumberFormat, TextEditingController controller) {
-    final String zero = currencyNumberFormat.format(0).trim();
-    controller.text = zero;
-  }
-
-  void _setOffsetToLastDigit(TextEditingController controller) {
-    controller.selection = TextSelection.collapsed(offset: controller.text.length - 2);
-  }
-
   @override
   Widget build(BuildContext context) {
     const TextStyle _positiveAmountTextStyle =
         TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
     const TextStyle _negativeAmountTextStyle =
         TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
-    final NumberFormat currencyNumberFormat =
-        NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: '€');
-    const num defaultValue = 0.00;
-    final controller = useTextEditingController(text: currencyNumberFormat.format(defaultValue))
-      ..selection = TextSelection.collapsed(offset: defaultValue.toString().length);
-    _resetValue(currencyNumberFormat, controller);
+
+    final _controller = useTextEditingController(text: _zero);
+    final _isPositive = useState(true);
 
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
       listenWhen: (p, c) => getAmount(p) != getAmount(c),
       listener: (context, state) {
-        controller
+        // Every modification of the amount value (except initialization) gets passed through the bloc
+        // Thus, here is the only time where we have to cast from number to String
+        // and where we have to change the selection
+        _controller
           ..text = getAmount(state)
-          ..selection = TextSelection.collapsed(offset: controller.text.length);
+          ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
-        bool isPositive = true;
         return Container(
             alignment: Alignment.centerRight,
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: TextFormField(
-              decoration: const InputDecoration(
-                hintText: "",
-                helperText: "",
-                enabledBorder: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-              controller: controller,
-              inputFormatters: [
-                CurrencyInputFormatter(currencyNumberFormat, isPositive),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: "",
+                        helperText: "",
+                        enabledBorder: OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      controller: _controller,
+                      inputFormatters: [
+                        CurrencyInputFormatter(Constants.CURRENCY_FORMAT, _isPositive.value),
+                      ],
+                      textInputAction: TextInputAction.done,
+                      textAlign: TextAlign.right,
+                      style:
+                          _isPositive.value ? _positiveAmountTextStyle : _negativeAmountTextStyle,
+                      validator: (_) => validateAmount(context),
+                      onChanged: (value) => changeAmount(context, value),
+                      onTap: () => changeAmount(context, _zero)),
+                ),
+                Switch(
+                  value: _isPositive.value,
+                  onChanged: (_) => toggleSwitch(context, _controller, _isPositive),
+                  activeTrackColor: Constants.GREEN_COLOR,
+                  activeColor: Colors.grey[300],
+                  activeThumbImage: const AssetImage("assets/plus.png"),
+                  inactiveThumbImage: const AssetImage("assets/minus.png"),
+                  inactiveTrackColor: Constants.RED_COLOR,
+                  inactiveThumbColor: Colors.grey[300],
+                )
               ],
-              textInputAction: TextInputAction.done,
-              textAlign: TextAlign.right,
-              style: isPositive ? _positiveAmountTextStyle : _negativeAmountTextStyle,
-              validator: (_) => validateAmount(context),
-              onChanged: (value) => onAmountChange(context, value),
-              onTap: () => _resetValue(currencyNumberFormat, controller),
             ));
       },
     );

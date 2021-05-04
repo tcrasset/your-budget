@@ -61,7 +61,7 @@ class BudgetPageState extends ChangeNotifier {
 
   void addDigit(String digit) {
     budgetedText += digit;
-    final double amount = formatCurrencyToDouble(budgetedText, true);
+    final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
     budgetedController.updateValue(amount);
     print(budgetedText);
   }
@@ -69,7 +69,7 @@ class BudgetPageState extends ChangeNotifier {
   void removeDigit() {
     try {
       budgetedText = budgetedText.substring(0, budgetedText.length - 1);
-      final double amount = formatCurrencyToDouble(budgetedText, true);
+      final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
       budgetedController.updateValue(amount);
       print(budgetedText);
     } on RangeError {
