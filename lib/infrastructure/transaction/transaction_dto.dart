@@ -17,6 +17,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const factory MoneyTransactionDTO({
     @JsonKey(ignore: true) String id,
     @required String subcatID,
+    @required String subcatName,
     @required String payeeID,
     @required String accountID,
     @required double amount,
@@ -28,6 +29,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
     return MoneyTransactionDTO(
       id: transaction.id.getOrCrash(),
       subcatID: transaction.subcatID.getOrCrash(),
+      subcatName: transaction.subcatName.getOrCrash(),
       payeeID: transaction.payeeID.getOrCrash(),
       accountID: transaction.accountID.getOrCrash(),
       amount: transaction.amount.getOrCrash(),
@@ -40,6 +42,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
     return MoneyTransaction(
       id: UniqueId.fromUniqueString(id),
       subcatID: UniqueId.fromUniqueString(subcatID),
+      subcatName: Name(subcatName),
       payeeID: UniqueId.fromUniqueString(payeeID),
       accountID: UniqueId.fromUniqueString(accountID),
       amount: Amount(amount.toString()),

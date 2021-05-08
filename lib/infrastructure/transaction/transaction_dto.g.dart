@@ -9,6 +9,7 @@ part of 'transaction_dto.dart';
 _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
   return _$_TransactionDTO(
     subcatID: json['subcatID'] as String,
+    subcatName: json['subcatName'] as String,
     payeeID: json['payeeID'] as String,
     accountID: json['accountID'] as String,
     amount: (json['amount'] as num)?.toDouble(),
@@ -20,6 +21,7 @@ _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) =>
     <String, dynamic>{
       'subcatID': instance.subcatID,
+      'subcatName': instance.subcatName,
       'payeeID': instance.payeeID,
       'accountID': instance.accountID,
       'amount': instance.amount,

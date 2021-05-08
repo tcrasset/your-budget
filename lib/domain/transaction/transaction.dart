@@ -24,6 +24,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
   const factory MoneyTransaction({
     @required UniqueId id,
     @required UniqueId subcatID,
+    @required Name subcatName,
     @required UniqueId payeeID,
     @required UniqueId accountID,
     @required Amount amount,
@@ -36,6 +37,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
   factory MoneyTransaction.empty() => MoneyTransaction(
         id: UniqueId(),
         subcatID: UniqueId(),
+        subcatName: Name(""),
         payeeID: UniqueId(),
         accountID: UniqueId(),
         memo: Name(""),

@@ -20,6 +20,7 @@ class _$MoneyTransactionDTOTearOff {
   _TransactionDTO call(
       {@JsonKey(ignore: true) String id,
       @required String subcatID,
+      @required String subcatName,
       @required String payeeID,
       @required String accountID,
       @required double amount,
@@ -28,6 +29,7 @@ class _$MoneyTransactionDTOTearOff {
     return _TransactionDTO(
       id: id,
       subcatID: subcatID,
+      subcatName: subcatName,
       payeeID: payeeID,
       accountID: accountID,
       amount: amount,
@@ -51,6 +53,7 @@ mixin _$MoneyTransactionDTO {
   @JsonKey(ignore: true)
   String get id;
   String get subcatID;
+  String get subcatName;
   String get payeeID;
   String get accountID;
   double get amount;
@@ -69,6 +72,7 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(ignore: true) String id,
       String subcatID,
+      String subcatName,
       String payeeID,
       String accountID,
       double amount,
@@ -89,6 +93,7 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
   $Res call({
     Object id = freezed,
     Object subcatID = freezed,
+    Object subcatName = freezed,
     Object payeeID = freezed,
     Object accountID = freezed,
     Object amount = freezed,
@@ -98,6 +103,8 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
       subcatID: subcatID == freezed ? _value.subcatID : subcatID as String,
+      subcatName:
+          subcatName == freezed ? _value.subcatName : subcatName as String,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
       accountID: accountID == freezed ? _value.accountID : accountID as String,
       amount: amount == freezed ? _value.amount : amount as double,
@@ -119,6 +126,7 @@ abstract class _$TransactionDTOCopyWith<$Res>
   $Res call(
       {@JsonKey(ignore: true) String id,
       String subcatID,
+      String subcatName,
       String payeeID,
       String accountID,
       double amount,
@@ -141,6 +149,7 @@ class __$TransactionDTOCopyWithImpl<$Res>
   $Res call({
     Object id = freezed,
     Object subcatID = freezed,
+    Object subcatName = freezed,
     Object payeeID = freezed,
     Object accountID = freezed,
     Object amount = freezed,
@@ -150,6 +159,8 @@ class __$TransactionDTOCopyWithImpl<$Res>
     return _then(_TransactionDTO(
       id: id == freezed ? _value.id : id as String,
       subcatID: subcatID == freezed ? _value.subcatID : subcatID as String,
+      subcatName:
+          subcatName == freezed ? _value.subcatName : subcatName as String,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
       accountID: accountID == freezed ? _value.accountID : accountID as String,
       amount: amount == freezed ? _value.amount : amount as double,
@@ -168,12 +179,14 @@ class _$_TransactionDTO extends _TransactionDTO {
   const _$_TransactionDTO(
       {@JsonKey(ignore: true) this.id,
       @required this.subcatID,
+      @required this.subcatName,
       @required this.payeeID,
       @required this.accountID,
       @required this.amount,
       @required this.memo,
       @required this.dateInMillisecondsSinceEpoch})
       : assert(subcatID != null),
+        assert(subcatName != null),
         assert(payeeID != null),
         assert(accountID != null),
         assert(amount != null),
@@ -190,6 +203,8 @@ class _$_TransactionDTO extends _TransactionDTO {
   @override
   final String subcatID;
   @override
+  final String subcatName;
+  @override
   final String payeeID;
   @override
   final String accountID;
@@ -202,7 +217,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, payeeID: $payeeID, accountID: $accountID, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
+    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, accountID: $accountID, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
   }
 
   @override
@@ -214,6 +229,9 @@ class _$_TransactionDTO extends _TransactionDTO {
             (identical(other.subcatID, subcatID) ||
                 const DeepCollectionEquality()
                     .equals(other.subcatID, subcatID)) &&
+            (identical(other.subcatName, subcatName) ||
+                const DeepCollectionEquality()
+                    .equals(other.subcatName, subcatName)) &&
             (identical(other.payeeID, payeeID) ||
                 const DeepCollectionEquality()
                     .equals(other.payeeID, payeeID)) &&
@@ -236,6 +254,7 @@ class _$_TransactionDTO extends _TransactionDTO {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(subcatID) ^
+      const DeepCollectionEquality().hash(subcatName) ^
       const DeepCollectionEquality().hash(payeeID) ^
       const DeepCollectionEquality().hash(accountID) ^
       const DeepCollectionEquality().hash(amount) ^
@@ -257,6 +276,7 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   const factory _TransactionDTO(
       {@JsonKey(ignore: true) String id,
       @required String subcatID,
+      @required String subcatName,
       @required String payeeID,
       @required String accountID,
       @required double amount,
@@ -271,6 +291,8 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   String get id;
   @override
   String get subcatID;
+  @override
+  String get subcatName;
   @override
   String get payeeID;
   @override

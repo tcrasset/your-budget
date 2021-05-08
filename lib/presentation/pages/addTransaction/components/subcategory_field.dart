@@ -38,9 +38,9 @@ class SubcategoryField extends StatelessWidget {
         .watch<TransactionCreatorBloc>()
         .state
         .moneyTransaction
-        .subcatID
+        .subcatName
         .value
-        .fold((_) => null, (v) => v);
+        .fold((_) => "Select subcategory", (v) => v);
   }
 
   @override

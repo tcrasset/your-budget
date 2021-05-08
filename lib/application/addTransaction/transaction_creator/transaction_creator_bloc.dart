@@ -69,7 +69,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       },
       subcategoryChanged: (e) async* {
         yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(subcatID: e.subcategory.id),
+          moneyTransaction: state.moneyTransaction.copyWith(subcatName: e.subcategory.name),
           saveFailureOrSuccessOption: none(),
         );
       },
@@ -83,7 +83,6 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
         Either<ValueFailure, Unit> failureOrSuccess;
         yield state.copyWith(isSaving: true);
 
-        debugPrint(state.moneyTransaction.failureOption.toString());
         if (state.moneyTransaction.failureOption.isNone()) {
           failureOrSuccess = await transactionRepository.create(state.moneyTransaction);
         }
