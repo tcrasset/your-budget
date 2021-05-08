@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
-import '../../../appstate.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import '../../../models/constants.dart';
 import 'components/account_field.dart';
 import 'components/amount_input_container.dart';
@@ -27,50 +28,48 @@ class AddTransactionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("New transaction"),
-        leading: const Icon(Constants.ADD_TRANSACTION_ICON),
-        actions: <Widget>[
-          const Padding(
-            padding: EdgeInsets.only(right: 10.0),
-            child: Icon(FontAwesomeIcons.bars),
+        appBar: AppBar(
+          title: const Text("New transaction"),
+          leading: const Icon(Constants.ADD_TRANSACTION_ICON),
+          actions: <Widget>[
+            const Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Icon(FontAwesomeIcons.bars),
+            ),
+          ],
+        ),
+        body: Form(
+          child: BlocProvider(
+            create: (context) => TransactionCreatorBloc(
+              transactionRepository: GetIt.instance<ITransactionRepository>(),
+            )..add(const TransactionCreatorEvent.initialized()),
+            child: BlocBuilder<TransactionCreatorBloc, TransactionCreatorState>(
+              builder: (context, state) {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          const AmountInputContainer(),
+                          const PayeeField(),
+                          const AccountField(),
+                          const SubcategoryField(),
+                          const DateField(),
+                          const MemoField(),
+                        ],
+                      ),
+                      FloatingActionButton(
+                        onPressed: () => context
+                            .read<TransactionCreatorBloc>()
+                            .add(const TransactionCreatorEvent.saved()),
+                        child: const Text("Enter"),
+                      )
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
-        ],
-      ),
-      body: Consumer<AppState>(
-        builder: (context, appState, child) {
-          if (appState.allCategories.isEmpty) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return Form(
-                child: BlocProvider(
-              create: (context) => TransactionCreatorBloc(),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        const AmountInputContainer(),
-                        const PayeeField(),
-                        const AccountField(),
-                        const SubcategoryField(),
-                        const DateField(),
-                        const MemoField(),
-                      ],
-                    ),
-                    FloatingActionButton(
-                      onPressed: () => null /* state.addMoneyTransaction(context)*/,
-                      child: const Text("Enter"),
-                    )
-                  ],
-                ),
-              ),
-            ));
-          }
-        },
-      ),
-    );
+        ));
   }
 }

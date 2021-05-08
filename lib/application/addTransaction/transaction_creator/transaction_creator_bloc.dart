@@ -1,6 +1,9 @@
 // Dart imports:
 import 'dart:async';
 
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
@@ -13,15 +16,18 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
-import 'package:your_budget/models/categories.dart';
 
 part 'transaction_creator_event.dart';
 part 'transaction_creator_state.dart';
 part 'transaction_creator_bloc.freezed.dart';
 
 class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCreatorState> {
-  TransactionCreatorBloc() : super(TransactionCreatorState.initial());
+  final ITransactionRepository transactionRepository;
+  TransactionCreatorBloc({
+    @required this.transactionRepository,
+  }) : super(TransactionCreatorState.initial());
 
   @override
   Stream<TransactionCreatorState> mapEventToState(
@@ -74,7 +80,19 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
         );
       },
       saved: (e) async* {
-        yield state;
+        Either<ValueFailure, Unit> failureOrSuccess;
+        yield state.copyWith(isSaving: true);
+
+        debugPrint(state.moneyTransaction.failureOption.toString());
+        if (state.moneyTransaction.failureOption.isNone()) {
+          failureOrSuccess = await transactionRepository.create(state.moneyTransaction);
+        }
+
+        yield state.copyWith(
+          isSaving: false,
+          showErrorMessages: true,
+          saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+        );
       },
     );
   }
