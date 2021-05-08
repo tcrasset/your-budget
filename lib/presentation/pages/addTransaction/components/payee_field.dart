@@ -11,6 +11,7 @@ import 'package:your_budget/application/addTransaction/payee_handler/payee_watch
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 import '../../../../components/row_container.dart';
 import 'add_payee_dialog.dart';
@@ -18,12 +19,7 @@ import 'add_payee_dialog.dart';
 class PayeeField extends StatelessWidget {
   const PayeeField({
     Key key,
-    @required this.defaultChildTextStyle,
-    @required this.selectedChildTextStyle,
   }) : super(key: key);
-
-  final TextStyle defaultChildTextStyle;
-  final TextStyle selectedChildTextStyle;
 
   Future<void> handleOnTap(BuildContext context) async {
     final Payee payee = await Navigator.push(
@@ -52,7 +48,7 @@ class PayeeField extends StatelessWidget {
       onTap: () => handleOnTap(context),
       child: RowContainer(
         name: "Payee",
-        childWidget: Text(getPayeeName(context), style: defaultChildTextStyle),
+        childWidget: Text(getPayeeName(context), style: AddTransactionStyles.unselected),
       ),
     );
   }

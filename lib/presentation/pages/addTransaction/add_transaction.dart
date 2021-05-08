@@ -19,12 +19,15 @@ import 'components/memo_field.dart';
 import 'components/payee_field.dart';
 import 'components/subcategory_field.dart';
 
+class AddTransactionStyles {
+  static const TextStyle unselected =
+      TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+  static const TextStyle selected = TextStyle(color: Colors.black, fontSize: 16.0);
+}
+
 class AddTransactionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    const TextStyle defaultChildTextStyle =
-        TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-    const TextStyle selectedChildTextStyle = TextStyle(color: Colors.black, fontSize: 16.0);
     return Scaffold(
       appBar: AppBar(
         title: const Text("New transaction"),
@@ -51,25 +54,14 @@ class AddTransactionPage extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Row(
-                          children: [
-                            const Expanded(child: AmountInputContainer()),
-                          ],
-                        ),
-                        const PayeeField(
-                            defaultChildTextStyle: defaultChildTextStyle,
-                            selectedChildTextStyle: selectedChildTextStyle),
-                        const AccountField(
-                            defaultChildTextStyle: defaultChildTextStyle,
-                            selectedChildTextStyle: selectedChildTextStyle),
-                        const SubcategoryField(
-                            defaultChildTextStyle: defaultChildTextStyle,
-                            selectedChildTextStyle: selectedChildTextStyle),
-                        const DateField(selectedChildTextStyle: selectedChildTextStyle),
+                        const AmountInputContainer(),
+                        const PayeeField(),
+                        const AccountField(),
+                        const SubcategoryField(),
+                        const DateField(),
                         const MemoField(),
                       ],
                     ),
-                    // TODO: Error message
                     FloatingActionButton(
                       onPressed: () => null /* state.addMoneyTransaction(context)*/,
                       child: const Text("Enter"),

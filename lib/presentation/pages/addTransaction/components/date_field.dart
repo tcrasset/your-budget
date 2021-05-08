@@ -7,15 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 import '../../../../components/row_container.dart';
 
 class DateField extends StatelessWidget {
   const DateField({
     Key key,
-    @required this.selectedChildTextStyle,
   }) : super(key: key);
-
-  final TextStyle selectedChildTextStyle;
 
   /// When tapping on the Date row, it opens the DataPicker
   /// which allows one to choose the date as a [DateTime].
@@ -49,7 +47,7 @@ class DateField extends StatelessWidget {
                 name: "Date",
                 childWidget: Text(
                   state.moneyTransaction.date.toString(),
-                  style: selectedChildTextStyle,
+                  style: AddTransactionStyles.selected,
                 )));
       },
     );

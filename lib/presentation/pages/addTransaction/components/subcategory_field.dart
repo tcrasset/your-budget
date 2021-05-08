@@ -11,18 +11,14 @@ import 'package:your_budget/application/addTransaction/transaction_creator/trans
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 import '../../../../components/row_container.dart';
 import 'search_field.dart';
 
 class SubcategoryField extends StatelessWidget {
   const SubcategoryField({
     Key key,
-    @required this.defaultChildTextStyle,
-    @required this.selectedChildTextStyle,
   }) : super(key: key);
-
-  final TextStyle defaultChildTextStyle;
-  final TextStyle selectedChildTextStyle;
 
   Future<void> handleOnTap(BuildContext context) async {
     final Subcategory subcategory = await Navigator.push(
@@ -54,7 +50,8 @@ class SubcategoryField extends StatelessWidget {
         onTap: () => handleOnTap(context),
         child: RowContainer(
             name: "Subcategory",
-            childWidget: Text(getSubcategoryName(context), style: defaultChildTextStyle)));
+            childWidget:
+                Text(getSubcategoryName(context), style: AddTransactionStyles.unselected)));
   }
 }
 

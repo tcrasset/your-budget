@@ -11,18 +11,14 @@ import 'package:your_budget/application/addAccount/account_watcher_bloc/account_
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 import '../../../../components/row_container.dart';
 import 'search_field.dart';
 
 class AccountField extends StatelessWidget {
   const AccountField({
     Key key,
-    @required this.defaultChildTextStyle,
-    @required this.selectedChildTextStyle,
   }) : super(key: key);
-
-  final TextStyle defaultChildTextStyle;
-  final TextStyle selectedChildTextStyle;
 
   Future<void> handleOnTap(BuildContext context) async {
     final Account account = await Navigator.push(
@@ -51,7 +47,7 @@ class AccountField extends StatelessWidget {
       onTap: () => handleOnTap(context),
       child: RowContainer(
         name: "Account",
-        childWidget: Text(getAccountName(context), style: defaultChildTextStyle),
+        childWidget: Text(getAccountName(context), style: AddTransactionStyles.unselected),
       ),
     );
   }
