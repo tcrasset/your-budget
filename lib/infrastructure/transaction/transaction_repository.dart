@@ -66,13 +66,29 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(int accountID) async {
     try {
       final sql = """
-        SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+        SELECT
+          ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_ID},
+          ${DatabaseConstants.PAYEE_ID_OUTSIDE},
+          ${DatabaseConstants.ACCOUNT_ID_OUTSIDE},
+          ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+          ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
+          ${DatabaseConstants.MONEYTRANSACTION_MEMO},
+          ${DatabaseConstants.MONEYTRANSACTION_DATE},
+          ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_NAME} as accountName,
+          ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_NAME} as payeeName,
+          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_NAME} as subcatName
+
+        FROM ${DatabaseConstants.moneyTransactionTable}
+        JOIN ${DatabaseConstants.accountTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.ACCOUNT_ID_OUTSIDE} = ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_ID}
+        JOIN ${DatabaseConstants.payeeTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.PAYEE_ID_OUTSIDE} = ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_ID}
+        JOIN ${DatabaseConstants.subcategoryTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID}
         WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == ?
         ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
       final args = [accountID];
       final data = await database.rawQuery(sql, args);
+      debugPrint(data.toString());
       final List<MoneyTransaction> transactions = [];
       for (final rawTransaction in data) {
         final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromSQL(rawTransaction);
