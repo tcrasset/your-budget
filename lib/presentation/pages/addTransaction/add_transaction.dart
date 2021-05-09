@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import '../../../models/constants.dart';
 import 'components/account_field.dart';
@@ -25,9 +27,21 @@ class AddTransactionStyles {
 }
 
 class AddTransactionPage extends StatelessWidget {
+  Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
+    return FlushbarHelper.createError(
+      message: failure.maybeMap(
+        orElse: () => null,
+      ),
+    ).show(context);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      create: (context) => TransactionCreatorBloc(
+        transactionRepository: GetIt.instance<ITransactionRepository>(),
+      )..add(const TransactionCreatorEvent.initialized()),
+      child: Scaffold(
         appBar: AppBar(
           title: const Text("New transaction"),
           leading: const Icon(Constants.ADD_TRANSACTION_ICON),
@@ -38,14 +52,23 @@ class AddTransactionPage extends StatelessWidget {
             ),
           ],
         ),
-        body: Form(
-          child: BlocProvider(
-            create: (context) => TransactionCreatorBloc(
-              transactionRepository: GetIt.instance<ITransactionRepository>(),
-            )..add(const TransactionCreatorEvent.initialized()),
-            child: BlocBuilder<TransactionCreatorBloc, TransactionCreatorState>(
-              builder: (context, state) {
-                return SingleChildScrollView(
+        body: BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
+          listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+          listener: (context, state) {
+            state.saveFailureOrSuccessOption.fold(
+              () /*None*/ {},
+              (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
+                (failure) => showErrorFlushbar(failure, context),
+                (_) /*Success*/ {},
+              ),
+            );
+          },
+          buildWhen: (p, c) => p.isSaving != c.isSaving,
+          builder: (context, state) {
+            return Form(
+                autovalidateMode:
+                    state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
                       Column(
@@ -66,10 +89,10 @@ class AddTransactionPage extends StatelessWidget {
                       )
                     ],
                   ),
-                );
-              },
-            ),
-          ),
-        ));
+                ));
+          },
+        ),
+      ),
+    );
   }
 }
