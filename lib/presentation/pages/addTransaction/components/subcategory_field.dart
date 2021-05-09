@@ -15,7 +15,7 @@ import 'package:your_budget/presentation/pages/addTransaction/add_transaction.da
 import '../../../../components/row_container.dart';
 import 'search_field.dart';
 
-class SubcategoryField extends StatelessWidget {
+class SubcategoryField extends HookWidget {
   const SubcategoryField({
     Key key,
   }) : super(key: key);
@@ -45,19 +45,31 @@ class SubcategoryField extends StatelessWidget {
         .fold((_) => "Select subcategory", (v) => v);
   }
 
+  String validateSubcategory(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.subcatName.value.fold(
+            (f) => f.maybeMap(orElse: () => null),
+            (_) => null,
+          );
+
   @override
   Widget build(BuildContext context) {
-    final String subcategoryName = getSubcategoryName(context);
-
+    final TextEditingController controller = useTextEditingController();
+    controller.text = getSubcategoryName(context);
     return GestureDetector(
-      // Subcategorys gesture detectory leading to 'Subcategorys' SelectValuePage
+      // Payees gesture detectory leading to 'Payees' SelectValuePage
       onTap: () => handleOnTap(context),
       child: RowContainer(
-        name: "Subcategory",
-        childWidget: Text(subcategoryName,
-            style: subcategoryName == _DEFAULT_SUBCATEGORY
-                ? AddTransactionStyles.unselected
-                : AddTransactionStyles.selected),
+        name: "Payee",
+        childWidget: TextFormField(
+          decoration: const InputDecoration.collapsed(hintText: ""),
+          style: controller.text == _DEFAULT_SUBCATEGORY
+              ? AddTransactionStyles.unselected
+              : AddTransactionStyles.selected,
+          enabled: false,
+          readOnly: true,
+          validator: (_) => validateSubcategory(context),
+          controller: controller,
+        ),
       ),
     );
   }

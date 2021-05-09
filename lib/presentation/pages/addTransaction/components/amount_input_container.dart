@@ -105,7 +105,6 @@ class AmountInputContainer extends HookWidget {
                   child: TextFormField(
                       decoration: const InputDecoration(
                         hintText: "",
-                        helperText: "",
                         enabledBorder: OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.number,

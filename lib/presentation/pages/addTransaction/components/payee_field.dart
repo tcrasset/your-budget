@@ -16,7 +16,7 @@ import 'package:your_budget/presentation/pages/addTransaction/components/search_
 import '../../../../components/row_container.dart';
 import 'add_payee_dialog.dart';
 
-class PayeeField extends StatelessWidget {
+class PayeeField extends HookWidget {
   const PayeeField({
     Key key,
   }) : super(key: key);
@@ -43,18 +43,31 @@ class PayeeField extends StatelessWidget {
         .fold((_) => "Select payee", (v) => v);
   }
 
+  String validatePayee(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
+            (f) => f.maybeMap(orElse: () => null),
+            (_) => null,
+          );
+
   @override
   Widget build(BuildContext context) {
-    final String payeeName = getPayeeName(context);
+    final TextEditingController controller = useTextEditingController();
+    controller.text = getPayeeName(context);
     return GestureDetector(
       // Payees gesture detectory leading to 'Payees' SelectValuePage
       onTap: () => handleOnTap(context),
       child: RowContainer(
         name: "Payee",
-        childWidget: Text(payeeName,
-            style: payeeName == _DEFAULT_PAYEE
-                ? AddTransactionStyles.unselected
-                : AddTransactionStyles.selected),
+        childWidget: TextFormField(
+          decoration: const InputDecoration.collapsed(hintText: ""),
+          style: controller.text == _DEFAULT_PAYEE
+              ? AddTransactionStyles.unselected
+              : AddTransactionStyles.selected,
+          enabled: false,
+          readOnly: true,
+          validator: (_) => validatePayee(context),
+          controller: controller,
+        ),
       ),
     );
   }

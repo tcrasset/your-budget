@@ -15,7 +15,7 @@ import 'package:your_budget/presentation/pages/addTransaction/add_transaction.da
 import '../../../../components/row_container.dart';
 import 'search_field.dart';
 
-class AccountField extends StatelessWidget {
+class AccountField extends HookWidget {
   const AccountField({
     Key key,
   }) : super(key: key);
@@ -42,18 +42,30 @@ class AccountField extends StatelessWidget {
         .fold((_) => "Select account", (v) => v);
   }
 
-  @override
+  String validateAccount(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.accountName.value.fold(
+            (f) => f.maybeMap(orElse: () => null),
+            (_) => null,
+          );
+
   Widget build(BuildContext context) {
-    final String accountName = getAccountName(context);
+    final TextEditingController controller = useTextEditingController();
+    controller.text = getAccountName(context);
     return GestureDetector(
       // Payees gesture detectory leading to 'Payees' SelectValuePage
       onTap: () => handleOnTap(context),
       child: RowContainer(
-        name: "Account",
-        childWidget: Text(accountName,
-            style: accountName == _DEFAULT_ACCOUNT
-                ? AddTransactionStyles.unselected
-                : AddTransactionStyles.selected),
+        name: "Payee",
+        childWidget: TextFormField(
+          decoration: const InputDecoration.collapsed(hintText: ""),
+          style: controller.text == _DEFAULT_ACCOUNT
+              ? AddTransactionStyles.unselected
+              : AddTransactionStyles.selected,
+          enabled: false,
+          readOnly: true,
+          validator: (_) => validateAccount(context),
+          controller: controller,
+        ),
       ),
     );
   }
