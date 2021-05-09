@@ -35,9 +35,9 @@ class AccountField extends StatelessWidget {
         .watch<TransactionCreatorBloc>()
         .state
         .moneyTransaction
-        .accountID
+        .accountName
         .value
-        .fold((_) => null, (v) => v);
+        .fold((_) => "Select account", (v) => v);
   }
 
   @override

@@ -22,7 +22,9 @@ class _$MoneyTransactionDTOTearOff {
       @required String subcatID,
       @required String subcatName,
       @required String payeeID,
+      @required String payeeName,
       @required String accountID,
+      @required String accountName,
       @required double amount,
       @required String memo,
       @required int dateInMillisecondsSinceEpoch}) {
@@ -31,7 +33,9 @@ class _$MoneyTransactionDTOTearOff {
       subcatID: subcatID,
       subcatName: subcatName,
       payeeID: payeeID,
+      payeeName: payeeName,
       accountID: accountID,
+      accountName: accountName,
       amount: amount,
       memo: memo,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch,
@@ -55,7 +59,9 @@ mixin _$MoneyTransactionDTO {
   String get subcatID;
   String get subcatName;
   String get payeeID;
+  String get payeeName;
   String get accountID;
+  String get accountName;
   double get amount;
   String get memo;
   int get dateInMillisecondsSinceEpoch;
@@ -74,7 +80,9 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
       String subcatID,
       String subcatName,
       String payeeID,
+      String payeeName,
       String accountID,
+      String accountName,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -95,7 +103,9 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object subcatID = freezed,
     Object subcatName = freezed,
     Object payeeID = freezed,
+    Object payeeName = freezed,
     Object accountID = freezed,
+    Object accountName = freezed,
     Object amount = freezed,
     Object memo = freezed,
     Object dateInMillisecondsSinceEpoch = freezed,
@@ -106,7 +116,10 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
       subcatName:
           subcatName == freezed ? _value.subcatName : subcatName as String,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
+      payeeName: payeeName == freezed ? _value.payeeName : payeeName as String,
       accountID: accountID == freezed ? _value.accountID : accountID as String,
+      accountName:
+          accountName == freezed ? _value.accountName : accountName as String,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
@@ -128,7 +141,9 @@ abstract class _$TransactionDTOCopyWith<$Res>
       String subcatID,
       String subcatName,
       String payeeID,
+      String payeeName,
       String accountID,
+      String accountName,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -151,7 +166,9 @@ class __$TransactionDTOCopyWithImpl<$Res>
     Object subcatID = freezed,
     Object subcatName = freezed,
     Object payeeID = freezed,
+    Object payeeName = freezed,
     Object accountID = freezed,
+    Object accountName = freezed,
     Object amount = freezed,
     Object memo = freezed,
     Object dateInMillisecondsSinceEpoch = freezed,
@@ -162,7 +179,10 @@ class __$TransactionDTOCopyWithImpl<$Res>
       subcatName:
           subcatName == freezed ? _value.subcatName : subcatName as String,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
+      payeeName: payeeName == freezed ? _value.payeeName : payeeName as String,
       accountID: accountID == freezed ? _value.accountID : accountID as String,
+      accountName:
+          accountName == freezed ? _value.accountName : accountName as String,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
@@ -181,14 +201,18 @@ class _$_TransactionDTO extends _TransactionDTO {
       @required this.subcatID,
       @required this.subcatName,
       @required this.payeeID,
+      @required this.payeeName,
       @required this.accountID,
+      @required this.accountName,
       @required this.amount,
       @required this.memo,
       @required this.dateInMillisecondsSinceEpoch})
       : assert(subcatID != null),
         assert(subcatName != null),
         assert(payeeID != null),
+        assert(payeeName != null),
         assert(accountID != null),
+        assert(accountName != null),
         assert(amount != null),
         assert(memo != null),
         assert(dateInMillisecondsSinceEpoch != null),
@@ -207,7 +231,11 @@ class _$_TransactionDTO extends _TransactionDTO {
   @override
   final String payeeID;
   @override
+  final String payeeName;
+  @override
   final String accountID;
+  @override
+  final String accountName;
   @override
   final double amount;
   @override
@@ -217,7 +245,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, accountID: $accountID, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
+    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
   }
 
   @override
@@ -235,9 +263,15 @@ class _$_TransactionDTO extends _TransactionDTO {
             (identical(other.payeeID, payeeID) ||
                 const DeepCollectionEquality()
                     .equals(other.payeeID, payeeID)) &&
+            (identical(other.payeeName, payeeName) ||
+                const DeepCollectionEquality()
+                    .equals(other.payeeName, payeeName)) &&
             (identical(other.accountID, accountID) ||
                 const DeepCollectionEquality()
                     .equals(other.accountID, accountID)) &&
+            (identical(other.accountName, accountName) ||
+                const DeepCollectionEquality()
+                    .equals(other.accountName, accountName)) &&
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.memo, memo) ||
@@ -256,7 +290,9 @@ class _$_TransactionDTO extends _TransactionDTO {
       const DeepCollectionEquality().hash(subcatID) ^
       const DeepCollectionEquality().hash(subcatName) ^
       const DeepCollectionEquality().hash(payeeID) ^
+      const DeepCollectionEquality().hash(payeeName) ^
       const DeepCollectionEquality().hash(accountID) ^
+      const DeepCollectionEquality().hash(accountName) ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(memo) ^
       const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch);
@@ -278,7 +314,9 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       @required String subcatID,
       @required String subcatName,
       @required String payeeID,
+      @required String payeeName,
       @required String accountID,
+      @required String accountName,
       @required double amount,
       @required String memo,
       @required int dateInMillisecondsSinceEpoch}) = _$_TransactionDTO;
@@ -296,7 +334,11 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @override
   String get payeeID;
   @override
+  String get payeeName;
+  @override
   String get accountID;
+  @override
+  String get accountName;
   @override
   double get amount;
   @override

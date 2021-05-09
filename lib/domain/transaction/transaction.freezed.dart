@@ -19,7 +19,9 @@ class _$MoneyTransactionTearOff {
       @required UniqueId subcatID,
       @required Name subcatName,
       @required UniqueId payeeID,
+      @required Name payeeName,
       @required UniqueId accountID,
+      @required Name accountName,
       @required Amount amount,
       @required Name memo,
       @required DateTime date}) {
@@ -28,7 +30,9 @@ class _$MoneyTransactionTearOff {
       subcatID: subcatID,
       subcatName: subcatName,
       payeeID: payeeID,
+      payeeName: payeeName,
       accountID: accountID,
+      accountName: accountName,
       amount: amount,
       memo: memo,
       date: date,
@@ -46,7 +50,9 @@ mixin _$MoneyTransaction {
   UniqueId get subcatID;
   Name get subcatName;
   UniqueId get payeeID;
+  Name get payeeName;
   UniqueId get accountID;
+  Name get accountName;
   Amount get amount;
   Name get memo;
   DateTime get date;
@@ -64,7 +70,9 @@ abstract class $MoneyTransactionCopyWith<$Res> {
       UniqueId subcatID,
       Name subcatName,
       UniqueId payeeID,
+      Name payeeName,
       UniqueId accountID,
+      Name accountName,
       Amount amount,
       Name memo,
       DateTime date});
@@ -85,7 +93,9 @@ class _$MoneyTransactionCopyWithImpl<$Res>
     Object subcatID = freezed,
     Object subcatName = freezed,
     Object payeeID = freezed,
+    Object payeeName = freezed,
     Object accountID = freezed,
+    Object accountName = freezed,
     Object amount = freezed,
     Object memo = freezed,
     Object date = freezed,
@@ -96,8 +106,11 @@ class _$MoneyTransactionCopyWithImpl<$Res>
       subcatName:
           subcatName == freezed ? _value.subcatName : subcatName as Name,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as UniqueId,
+      payeeName: payeeName == freezed ? _value.payeeName : payeeName as Name,
       accountID:
           accountID == freezed ? _value.accountID : accountID as UniqueId,
+      accountName:
+          accountName == freezed ? _value.accountName : accountName as Name,
       amount: amount == freezed ? _value.amount : amount as Amount,
       memo: memo == freezed ? _value.memo : memo as Name,
       date: date == freezed ? _value.date : date as DateTime,
@@ -117,7 +130,9 @@ abstract class _$MoneyTransactionCopyWith<$Res>
       UniqueId subcatID,
       Name subcatName,
       UniqueId payeeID,
+      Name payeeName,
       UniqueId accountID,
+      Name accountName,
       Amount amount,
       Name memo,
       DateTime date});
@@ -140,7 +155,9 @@ class __$MoneyTransactionCopyWithImpl<$Res>
     Object subcatID = freezed,
     Object subcatName = freezed,
     Object payeeID = freezed,
+    Object payeeName = freezed,
     Object accountID = freezed,
+    Object accountName = freezed,
     Object amount = freezed,
     Object memo = freezed,
     Object date = freezed,
@@ -151,8 +168,11 @@ class __$MoneyTransactionCopyWithImpl<$Res>
       subcatName:
           subcatName == freezed ? _value.subcatName : subcatName as Name,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as UniqueId,
+      payeeName: payeeName == freezed ? _value.payeeName : payeeName as Name,
       accountID:
           accountID == freezed ? _value.accountID : accountID as UniqueId,
+      accountName:
+          accountName == freezed ? _value.accountName : accountName as Name,
       amount: amount == freezed ? _value.amount : amount as Amount,
       memo: memo == freezed ? _value.memo : memo as Name,
       date: date == freezed ? _value.date : date as DateTime,
@@ -167,7 +187,9 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       @required this.subcatID,
       @required this.subcatName,
       @required this.payeeID,
+      @required this.payeeName,
       @required this.accountID,
+      @required this.accountName,
       @required this.amount,
       @required this.memo,
       @required this.date})
@@ -175,7 +197,9 @@ class _$_MoneyTransaction extends _MoneyTransaction {
         assert(subcatID != null),
         assert(subcatName != null),
         assert(payeeID != null),
+        assert(payeeName != null),
         assert(accountID != null),
+        assert(accountName != null),
         assert(amount != null),
         assert(memo != null),
         assert(date != null),
@@ -190,7 +214,11 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   @override
   final UniqueId payeeID;
   @override
+  final Name payeeName;
+  @override
   final UniqueId accountID;
+  @override
+  final Name accountName;
   @override
   final Amount amount;
   @override
@@ -200,7 +228,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
 
   @override
   String toString() {
-    return 'MoneyTransaction(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, accountID: $accountID, amount: $amount, memo: $memo, date: $date)';
+    return 'MoneyTransaction(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, amount: $amount, memo: $memo, date: $date)';
   }
 
   @override
@@ -218,9 +246,15 @@ class _$_MoneyTransaction extends _MoneyTransaction {
             (identical(other.payeeID, payeeID) ||
                 const DeepCollectionEquality()
                     .equals(other.payeeID, payeeID)) &&
+            (identical(other.payeeName, payeeName) ||
+                const DeepCollectionEquality()
+                    .equals(other.payeeName, payeeName)) &&
             (identical(other.accountID, accountID) ||
                 const DeepCollectionEquality()
                     .equals(other.accountID, accountID)) &&
+            (identical(other.accountName, accountName) ||
+                const DeepCollectionEquality()
+                    .equals(other.accountName, accountName)) &&
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.memo, memo) ||
@@ -236,7 +270,9 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       const DeepCollectionEquality().hash(subcatID) ^
       const DeepCollectionEquality().hash(subcatName) ^
       const DeepCollectionEquality().hash(payeeID) ^
+      const DeepCollectionEquality().hash(payeeName) ^
       const DeepCollectionEquality().hash(accountID) ^
+      const DeepCollectionEquality().hash(accountName) ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(memo) ^
       const DeepCollectionEquality().hash(date);
@@ -253,7 +289,9 @@ abstract class _MoneyTransaction extends MoneyTransaction {
       @required UniqueId subcatID,
       @required Name subcatName,
       @required UniqueId payeeID,
+      @required Name payeeName,
       @required UniqueId accountID,
+      @required Name accountName,
       @required Amount amount,
       @required Name memo,
       @required DateTime date}) = _$_MoneyTransaction;
@@ -267,7 +305,11 @@ abstract class _MoneyTransaction extends MoneyTransaction {
   @override
   UniqueId get payeeID;
   @override
+  Name get payeeName;
+  @override
   UniqueId get accountID;
+  @override
+  Name get accountName;
   @override
   Amount get amount;
   @override

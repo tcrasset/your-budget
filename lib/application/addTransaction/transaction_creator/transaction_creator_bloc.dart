@@ -63,7 +63,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       },
       payeeChanged: (e) async* {
         yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(payeeID: e.payee.id),
+          moneyTransaction: state.moneyTransaction.copyWith(payeeName: e.payee.name),
           saveFailureOrSuccessOption: none(),
         );
       },
@@ -75,7 +75,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       },
       accountChanged: (e) async* {
         yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(accountID: e.account.id),
+          moneyTransaction: state.moneyTransaction.copyWith(accountName: e.account.name),
           saveFailureOrSuccessOption: none(),
         );
       },

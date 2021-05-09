@@ -32,13 +32,14 @@ class PayeeField extends StatelessWidget {
   }
 
   String getPayeeName(BuildContext context) {
+    //TODO: Handle errors
     return context
         .watch<TransactionCreatorBloc>()
         .state
         .moneyTransaction
-        .payeeID
+        .payeeName
         .value
-        .fold((_) => null, (v) => v);
+        .fold((_) => "Select payee", (v) => v);
   }
 
   @override
