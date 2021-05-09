@@ -20,6 +20,8 @@ class SubcategoryField extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  static const String _DEFAULT_SUBCATEGORY = "Select subcategory";
+
   Future<void> handleOnTap(BuildContext context) async {
     final Subcategory subcategory = await Navigator.push(
       context,
@@ -45,13 +47,19 @@ class SubcategoryField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String subcategoryName = getSubcategoryName(context);
+
     return GestureDetector(
-        // Subcategorys gesture detectory leading to 'Subcategorys' SelectValuePage
-        onTap: () => handleOnTap(context),
-        child: RowContainer(
-            name: "Subcategory",
-            childWidget:
-                Text(getSubcategoryName(context), style: AddTransactionStyles.unselected)));
+      // Subcategorys gesture detectory leading to 'Subcategorys' SelectValuePage
+      onTap: () => handleOnTap(context),
+      child: RowContainer(
+        name: "Subcategory",
+        childWidget: Text(subcategoryName,
+            style: subcategoryName == _DEFAULT_SUBCATEGORY
+                ? AddTransactionStyles.unselected
+                : AddTransactionStyles.selected),
+      ),
+    );
   }
 }
 

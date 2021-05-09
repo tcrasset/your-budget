@@ -21,6 +21,7 @@ class PayeeField extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  static const String _DEFAULT_PAYEE = "Select payee";
   Future<void> handleOnTap(BuildContext context) async {
     final Payee payee = await Navigator.push(
       context,
@@ -44,12 +45,16 @@ class PayeeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String payeeName = getPayeeName(context);
     return GestureDetector(
       // Payees gesture detectory leading to 'Payees' SelectValuePage
       onTap: () => handleOnTap(context),
       child: RowContainer(
         name: "Payee",
-        childWidget: Text(getPayeeName(context), style: AddTransactionStyles.unselected),
+        childWidget: Text(payeeName,
+            style: payeeName == _DEFAULT_PAYEE
+                ? AddTransactionStyles.unselected
+                : AddTransactionStyles.selected),
       ),
     );
   }

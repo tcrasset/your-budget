@@ -20,6 +20,8 @@ class AccountField extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
+  static const String _DEFAULT_ACCOUNT = "Select account";
+
   Future<void> handleOnTap(BuildContext context) async {
     final Account account = await Navigator.push(
       context,
@@ -42,12 +44,16 @@ class AccountField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String accountName = getAccountName(context);
     return GestureDetector(
       // Payees gesture detectory leading to 'Payees' SelectValuePage
       onTap: () => handleOnTap(context),
       child: RowContainer(
         name: "Account",
-        childWidget: Text(getAccountName(context), style: AddTransactionStyles.unselected),
+        childWidget: Text(accountName,
+            style: accountName == _DEFAULT_ACCOUNT
+                ? AddTransactionStyles.unselected
+                : AddTransactionStyles.selected),
       ),
     );
   }
