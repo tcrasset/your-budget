@@ -11,11 +11,10 @@ import 'package:your_budget/application/addAccount/account_watcher_bloc/account_
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import '../../../../components/row_container.dart';
+import 'add_transaction_field.dart';
 import 'search_field.dart';
 
-class AccountField extends HookWidget {
+class AccountField extends StatelessWidget {
   const AccountField({
     Key key,
   }) : super(key: key);
@@ -39,7 +38,7 @@ class AccountField extends HookWidget {
         .moneyTransaction
         .accountName
         .value
-        .fold((_) => "Select account", (v) => v);
+        .fold((_) => _DEFAULT_ACCOUNT, (v) => v);
   }
 
   String validateAccount(BuildContext context) =>
@@ -48,27 +47,14 @@ class AccountField extends HookWidget {
             (_) => null,
           );
 
-  Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
-    controller.text = getAccountName(context);
-    return GestureDetector(
-      // Payees gesture detectory leading to 'Payees' SelectValuePage
-      onTap: () => handleOnTap(context),
-      child: RowContainer(
-        name: "Payee",
-        childWidget: TextFormField(
-          decoration: const InputDecoration.collapsed(hintText: ""),
-          style: controller.text == _DEFAULT_ACCOUNT
-              ? AddTransactionStyles.unselected
-              : AddTransactionStyles.selected,
-          enabled: false,
-          readOnly: true,
-          validator: (_) => validateAccount(context),
-          controller: controller,
-        ),
-      ),
-    );
-  }
+  @override
+  Widget build(BuildContext context) => AddTransactionField(
+        name: "Account",
+        defaultValue: _DEFAULT_ACCOUNT,
+        nameGetter: getAccountName,
+        onTap: handleOnTap,
+        validator: validateAccount,
+      );
 }
 
 class AccountListScaffold extends HookWidget {

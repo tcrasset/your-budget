@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import '../../../../components/row_container.dart';
+import 'add_transaction_field.dart';
 
 class DateField extends StatelessWidget {
   const DateField({

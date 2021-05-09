@@ -11,11 +11,10 @@ import 'package:your_budget/application/addTransaction/transaction_creator/trans
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import '../../../../components/row_container.dart';
+import 'add_transaction_field.dart';
 import 'search_field.dart';
 
-class SubcategoryField extends HookWidget {
+class SubcategoryField extends StatelessWidget {
   const SubcategoryField({
     Key key,
   }) : super(key: key);
@@ -42,7 +41,7 @@ class SubcategoryField extends HookWidget {
         .moneyTransaction
         .subcatName
         .value
-        .fold((_) => "Select subcategory", (v) => v);
+        .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
   }
 
   String validateSubcategory(BuildContext context) =>
@@ -52,27 +51,13 @@ class SubcategoryField extends HookWidget {
           );
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
-    controller.text = getSubcategoryName(context);
-    return GestureDetector(
-      // Payees gesture detectory leading to 'Payees' SelectValuePage
-      onTap: () => handleOnTap(context),
-      child: RowContainer(
-        name: "Payee",
-        childWidget: TextFormField(
-          decoration: const InputDecoration.collapsed(hintText: ""),
-          style: controller.text == _DEFAULT_SUBCATEGORY
-              ? AddTransactionStyles.unselected
-              : AddTransactionStyles.selected,
-          enabled: false,
-          readOnly: true,
-          validator: (_) => validateSubcategory(context),
-          controller: controller,
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => AddTransactionField(
+        name: "Subcategory",
+        defaultValue: _DEFAULT_SUBCATEGORY,
+        nameGetter: getSubcategoryName,
+        onTap: handleOnTap,
+        validator: validateSubcategory,
+      );
 }
 
 class SubcategoryListScaffold extends HookWidget {

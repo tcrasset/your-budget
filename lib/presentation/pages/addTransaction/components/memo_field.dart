@@ -8,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
-import '../../../../components/row_container.dart';
+import 'add_transaction_field.dart';
 
 class MemoField extends HookWidget {
   const MemoField({Key key}) : super(key: key);

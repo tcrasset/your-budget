@@ -13,15 +13,16 @@ import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
-import '../../../../components/row_container.dart';
 import 'add_payee_dialog.dart';
+import 'add_transaction_field.dart';
 
-class PayeeField extends HookWidget {
+class PayeeField extends StatelessWidget {
   const PayeeField({
     Key key,
   }) : super(key: key);
 
   static const String _DEFAULT_PAYEE = "Select payee";
+
   Future<void> handleOnTap(BuildContext context) async {
     final Payee payee = await Navigator.push(
       context,
@@ -40,7 +41,7 @@ class PayeeField extends HookWidget {
         .moneyTransaction
         .payeeName
         .value
-        .fold((_) => "Select payee", (v) => v);
+        .fold((_) => _DEFAULT_PAYEE, (v) => v);
   }
 
   String validatePayee(BuildContext context) =>
@@ -50,27 +51,14 @@ class PayeeField extends HookWidget {
           );
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
-    controller.text = getPayeeName(context);
-    return GestureDetector(
-      // Payees gesture detectory leading to 'Payees' SelectValuePage
-      onTap: () => handleOnTap(context),
-      child: RowContainer(
+  @override
+  Widget build(BuildContext context) => AddTransactionField(
         name: "Payee",
-        childWidget: TextFormField(
-          decoration: const InputDecoration.collapsed(hintText: ""),
-          style: controller.text == _DEFAULT_PAYEE
-              ? AddTransactionStyles.unselected
-              : AddTransactionStyles.selected,
-          enabled: false,
-          readOnly: true,
-          validator: (_) => validatePayee(context),
-          controller: controller,
-        ),
-      ),
-    );
-  }
+        defaultValue: _DEFAULT_PAYEE,
+        nameGetter: getPayeeName,
+        onTap: handleOnTap,
+        validator: validatePayee,
+      );
 }
 
 class PayeeListScaffold extends HookWidget {
