@@ -39,7 +39,8 @@ class PayeeField extends StatelessWidget {
         .watch<TransactionCreatorBloc>()
         .state
         .moneyTransaction
-        .payeeName
+        .payee
+        .name
         .value
         .fold((_) => _DEFAULT_PAYEE, (v) => v);
   }

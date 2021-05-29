@@ -20,15 +20,24 @@ _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) =>
-    <String, dynamic>{
-      'subcatID': instance.subcatID,
-      'subcatName': instance.subcatName,
-      'payeeID': instance.payeeID,
-      'payeeName': instance.payeeName,
-      'accountID': instance.accountID,
-      'accountName': instance.accountName,
-      'amount': instance.amount,
-      'memo': instance.memo,
-      'dateInMillisecondsSinceEpoch': instance.dateInMillisecondsSinceEpoch,
-    };
+Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) {
+  final val = <String, dynamic>{
+    'subcatID': instance.subcatID,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('subcatName', instance.subcatName);
+  val['payeeID'] = instance.payeeID;
+  writeNotNull('payeeName', instance.payeeName);
+  val['accountID'] = instance.accountID;
+  writeNotNull('accountName', instance.accountName);
+  val['amount'] = instance.amount;
+  val['memo'] = instance.memo;
+  val['dateInMillisecondsSinceEpoch'] = instance.dateInMillisecondsSinceEpoch;
+  return val;
+}

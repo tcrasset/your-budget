@@ -24,6 +24,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
     // TODO: Create generic function for insert
     try {
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
+      debugPrint(transactionDTO.toString());
+      debugPrint(transactionDTO.toJson().toString());
       await database.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
       return right(unit);
     } on DatabaseException catch (e) {

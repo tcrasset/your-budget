@@ -11,6 +11,7 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/payee/payee.dart';
 
 part 'transaction.freezed.dart';
 
@@ -27,6 +28,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
     @required Name subcatName,
     @required UniqueId payeeID,
     @required Name payeeName,
+    @required Payee payee,
     @required UniqueId accountID,
     @required Name accountName,
     @required Amount amount,
@@ -42,6 +44,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
         subcatName: Name(""),
         payeeID: UniqueId(),
         payeeName: Name(""),
+        payee: Payee(id: UniqueId(), name: Name("")),
         accountID: UniqueId(),
         accountName: Name(""),
         memo: Name(""),

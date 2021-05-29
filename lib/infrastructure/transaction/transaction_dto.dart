@@ -1,11 +1,20 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
+import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/infrastructure/account/account_dto.dart';
+import 'package:your_budget/infrastructure/payee/payee_dto.dart';
+import 'package:your_budget/infrastructure/subcategory/subcategory_dto.dart';
 
 part 'transaction_dto.freezed.dart';
 part 'transaction_dto.g.dart';
@@ -17,11 +26,11 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const factory MoneyTransactionDTO({
     @JsonKey(ignore: true) String id,
     @required String subcatID,
-    @required String subcatName,
     @required String payeeID,
-    @required String payeeName,
     @required String accountID,
-    @required String accountName,
+    @JsonKey(toJson: null, includeIfNull: false) String subcatName,
+    @JsonKey(toJson: null, includeIfNull: false) String payeeName,
+    @JsonKey(toJson: null, includeIfNull: false) String accountName,
     @required double amount,
     @required String memo,
     @required int dateInMillisecondsSinceEpoch,
@@ -32,8 +41,8 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       id: transaction.id.getOrCrash(),
       subcatID: transaction.subcatID.getOrCrash(),
       subcatName: transaction.subcatName.getOrCrash(),
-      payeeID: transaction.payeeID.getOrCrash(),
-      payeeName: transaction.payeeName.getOrCrash(),
+      payeeID: transaction.payee.id.getOrCrash(),
+      payeeName: transaction.payee.name.getOrCrash(),
       accountID: transaction.accountID.getOrCrash(),
       accountName: transaction.accountName.getOrCrash(),
       amount: transaction.amount.getOrCrash(),
@@ -49,6 +58,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       subcatName: Name(subcatName),
       payeeID: UniqueId.fromUniqueString(payeeID),
       payeeName: Name(payeeName),
+      payee: Payee(id: UniqueId.fromUniqueString(payeeID), name: Name(payeeName)),
       accountID: UniqueId.fromUniqueString(accountID),
       accountName: Name(accountName),
       amount: Amount(amount.toString()),

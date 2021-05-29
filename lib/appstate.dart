@@ -78,23 +78,23 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   @override
   Future<void> loadStateFromDatabase() async {
-    startingBudgetDate = await queryContext.getStartingBudgetDateConstant();
+    // startingBudgetDate = await queryContext.getStartingBudgetDateConstant();
 
-    transactionList = MoneyTransactionList(queryContext, await queryContext.getMoneyTransactions());
-    budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
+    // //transactionList = MoneyTransactionList(queryContext, await queryContext.getMoneyTransactions());
+    // budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
 
-    budgetValueList = BudgetValueList(queryContext, await queryContext.getBudgetValues());
-    _goals = await queryContext.getGoals();
+    // budgetValueList = BudgetValueList(queryContext, await queryContext.getBudgetValues());
+    // _goals = await queryContext.getGoals();
 
-    currentBudgetDate = getDateFromMonthStart(DateTime.now());
-    currentBudget = budgetList.getByDate(currentBudgetDate);
+    // currentBudgetDate = getDateFromMonthStart(DateTime.now());
+    // currentBudget = budgetList.getByDate(currentBudgetDate);
 
-    payeeList = PayeeList(queryContext, await queryContext.getPayees());
-    accountList = AccountList(queryContext, await queryContext.getAccounts());
+    // payeeList = PayeeList(queryContext, await queryContext.getPayees());
+    // accountList = AccountList(queryContext, await queryContext.getAccounts());
 
-    await computeToBeBudgeted();
+    // await computeToBeBudgeted();
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
@@ -353,11 +353,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     toBeBudgeted = 0;
 
     // Sum up starting total for every account
-    for (final Account account in accounts) {
-      final MoneyTransaction firstTransaction =
-          await queryContext.getFirstTransactionOfAccount(account.id);
-      toBeBudgeted += firstTransaction.amount;
-    }
+    // for (final Account account in accounts) {
+    //   final MoneyTransaction firstTransaction =
+    //       await queryContext.getFirstTransactionOfAccount(account.id);
+    //   toBeBudgeted += firstTransaction.amount;
+    // }
 
     // Remove total budgeted of each month
     DateTime prevDate = startingBudgetDate;

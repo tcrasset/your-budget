@@ -47,7 +47,9 @@ class AccountCreator {
     final MoneyTransaction transaction = MoneyTransaction(
       id: UniqueId(),
       subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
+      subcatName: Name(""),
       payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
+      payeeName: Name(""),
       accountID: UniqueId.fromUniqueInt(accountId),
       amount: balance,
       memo: Name("Starting balance"),

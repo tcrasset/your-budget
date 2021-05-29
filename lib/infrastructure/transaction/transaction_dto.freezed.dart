@@ -20,11 +20,11 @@ class _$MoneyTransactionDTOTearOff {
   _TransactionDTO call(
       {@JsonKey(ignore: true) String id,
       @required String subcatID,
-      @required String subcatName,
+      @JsonKey(toJson: null, includeIfNull: false) String subcatName,
       @required String payeeID,
-      @required String payeeName,
+      @JsonKey(toJson: null, includeIfNull: false) String payeeName,
       @required String accountID,
-      @required String accountName,
+      @JsonKey(toJson: null, includeIfNull: false) String accountName,
       @required double amount,
       @required String memo,
       @required int dateInMillisecondsSinceEpoch}) {
@@ -57,10 +57,13 @@ mixin _$MoneyTransactionDTO {
   @JsonKey(ignore: true)
   String get id;
   String get subcatID;
+  @JsonKey(toJson: null, includeIfNull: false)
   String get subcatName;
   String get payeeID;
+  @JsonKey(toJson: null, includeIfNull: false)
   String get payeeName;
   String get accountID;
+  @JsonKey(toJson: null, includeIfNull: false)
   String get accountName;
   double get amount;
   String get memo;
@@ -78,11 +81,11 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(ignore: true) String id,
       String subcatID,
-      String subcatName,
+      @JsonKey(toJson: null, includeIfNull: false) String subcatName,
       String payeeID,
-      String payeeName,
+      @JsonKey(toJson: null, includeIfNull: false) String payeeName,
       String accountID,
-      String accountName,
+      @JsonKey(toJson: null, includeIfNull: false) String accountName,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -139,11 +142,11 @@ abstract class _$TransactionDTOCopyWith<$Res>
   $Res call(
       {@JsonKey(ignore: true) String id,
       String subcatID,
-      String subcatName,
+      @JsonKey(toJson: null, includeIfNull: false) String subcatName,
       String payeeID,
-      String payeeName,
+      @JsonKey(toJson: null, includeIfNull: false) String payeeName,
       String accountID,
-      String accountName,
+      @JsonKey(toJson: null, includeIfNull: false) String accountName,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -199,20 +202,17 @@ class _$_TransactionDTO extends _TransactionDTO {
   const _$_TransactionDTO(
       {@JsonKey(ignore: true) this.id,
       @required this.subcatID,
-      @required this.subcatName,
+      @JsonKey(toJson: null, includeIfNull: false) this.subcatName,
       @required this.payeeID,
-      @required this.payeeName,
+      @JsonKey(toJson: null, includeIfNull: false) this.payeeName,
       @required this.accountID,
-      @required this.accountName,
+      @JsonKey(toJson: null, includeIfNull: false) this.accountName,
       @required this.amount,
       @required this.memo,
       @required this.dateInMillisecondsSinceEpoch})
       : assert(subcatID != null),
-        assert(subcatName != null),
         assert(payeeID != null),
-        assert(payeeName != null),
         assert(accountID != null),
-        assert(accountName != null),
         assert(amount != null),
         assert(memo != null),
         assert(dateInMillisecondsSinceEpoch != null),
@@ -227,14 +227,17 @@ class _$_TransactionDTO extends _TransactionDTO {
   @override
   final String subcatID;
   @override
+  @JsonKey(toJson: null, includeIfNull: false)
   final String subcatName;
   @override
   final String payeeID;
   @override
+  @JsonKey(toJson: null, includeIfNull: false)
   final String payeeName;
   @override
   final String accountID;
   @override
+  @JsonKey(toJson: null, includeIfNull: false)
   final String accountName;
   @override
   final double amount;
@@ -312,11 +315,11 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   const factory _TransactionDTO(
       {@JsonKey(ignore: true) String id,
       @required String subcatID,
-      @required String subcatName,
+      @JsonKey(toJson: null, includeIfNull: false) String subcatName,
       @required String payeeID,
-      @required String payeeName,
+      @JsonKey(toJson: null, includeIfNull: false) String payeeName,
       @required String accountID,
-      @required String accountName,
+      @JsonKey(toJson: null, includeIfNull: false) String accountName,
       @required double amount,
       @required String memo,
       @required int dateInMillisecondsSinceEpoch}) = _$_TransactionDTO;
@@ -330,14 +333,17 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @override
   String get subcatID;
   @override
+  @JsonKey(toJson: null, includeIfNull: false)
   String get subcatName;
   @override
   String get payeeID;
   @override
+  @JsonKey(toJson: null, includeIfNull: false)
   String get payeeName;
   @override
   String get accountID;
   @override
+  @JsonKey(toJson: null, includeIfNull: false)
   String get accountName;
   @override
   double get amount;
