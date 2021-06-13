@@ -27,26 +27,26 @@ class FakeDatabase {
   static const TEST_SUBCATEGORY_ID = 5;
   static const TEST_CATEGORY_ID = 1;
 
-  final Queries mockQueries;
+  final Queries? mockQueries;
   final startingBudgetDate = DateTime.now();
 
-  List<SubCategory> subCategories;
-  List<MainCategory> maincategories;
-  List<Payee> payees;
-  List<Account> accounts;
-  List<MoneyTransaction> moneyTransactions;
-  List<BudgetValue> budgetValues;
-  List<Budget> budgets;
-  List<Goal> goals;
+  late List<SubCategory> subCategories;
+  List<MainCategory>? maincategories;
+  List<Payee>? payees;
+  List<Account>? accounts;
+  List<MoneyTransaction>? moneyTransactions;
+  List<BudgetValue>? budgetValues;
+  List<Budget>? budgets;
+  List<Goal>? goals;
 
-  FakeDatabase({@required this.mockQueries}) {
+  FakeDatabase({required this.mockQueries}) {
     subCategories = _buildSubcategories();
     maincategories = _buildMaincategories();
     payees = _buildPayees();
     accounts = _buildAccounts();
     moneyTransactions = _buildMoneyTransactions();
     budgetValues = _buildBudgetValues();
-    budgets = _buildBudgets(maincategories, subCategories, budgetValues);
+    budgets = _buildBudgets(maincategories!, subCategories, budgetValues);
     goals = _buildGoals();
   }
 
@@ -61,41 +61,41 @@ class FakeDatabase {
 
   Future<void> setup() async {
     //! Starting Budget Date
-    when(mockQueries.getStartingBudgetDateConstant()).thenAnswer((_) async => startingBudgetDate);
+    when(mockQueries!.getStartingBudgetDateConstant()).thenAnswer((_) async => startingBudgetDate);
 
     //! MainCategories
-    when(mockQueries.getCategories()).thenAnswer((_) async => maincategories);
+    when(mockQueries!.getCategories()).thenAnswer(((_) async => maincategories!) as Future<List<MainCategory>> Function(Invocation));
 
     //! MoneyTransactions
-    when(mockQueries.getMoneyTransactions()).thenAnswer((_) async => moneyTransactions);
+    when(mockQueries!.getMoneyTransactions()).thenAnswer(((_) async => moneyTransactions!) as Future<List<MoneyTransaction>> Function(Invocation));
 
     //! Payees
-    when(mockQueries.getPayees()).thenAnswer((_) async => payees);
+    when(mockQueries!.getPayees()).thenAnswer(((_) async => payees!) as Future<List<Payee>> Function(Invocation));
 
     //! Accounts
-    when(mockQueries.getAccounts()).thenAnswer((_) async => accounts);
+    when(mockQueries!.getAccounts()).thenAnswer(((_) async => accounts!) as Future<List<Account>> Function(Invocation));
 
     //! BudgetValues
-    when(mockQueries.getBudgetValues()).thenAnswer((_) async => budgetValues);
+    when(mockQueries!.getBudgetValues()).thenAnswer(((_) async => budgetValues!) as Future<List<BudgetValue>> Function(Invocation));
 
     //! Goals
-    when(mockQueries.getGoals()).thenAnswer((_) async => goals);
+    when(mockQueries!.getGoals()).thenAnswer(((_) async => goals!) as Future<List<Goal>> Function(Invocation));
 
     //! Most recent account used
-    when(mockQueries.getMostRecentAccountUsed())
-        .thenAnswer((_) async => accounts.isNotEmpty ? accounts[0].id : null);
+    when(mockQueries!.getMostRecentAccountUsed())
+        .thenAnswer(((_) async => accounts!.isNotEmpty ? accounts![0].id : null) as Future<int> Function(Invocation));
 
     //! Max Budget Date Constant
-    when(mockQueries.getMaxBudgetDateConstant()).thenAnswer((_) async => getMaxBudgetDate());
+    when(mockQueries!.getMaxBudgetDateConstant()).thenAnswer((_) async => getMaxBudgetDate());
 
     //! Subcategories joined with BudgetValues
-    when(mockQueries.getSubCategoriesJoined(argThat(isA<int>()), argThat(isA<int>())))
+    when(mockQueries!.getSubCategoriesJoined(argThat(isA<int>())!, argThat(isA<int>())!))
         .thenAnswer((invocation) async {
-      final int year = invocation.positionalArguments[0] as int;
-      final int month = invocation.positionalArguments[1] as int;
+      final int? year = invocation.positionalArguments[0] as int?;
+      final int? month = invocation.positionalArguments[1] as int?;
 
       final List<BudgetValue> budgetValuesOfMonth =
-          budgetValues.where((bv) => bv.year == year && bv.month == month).toList();
+          budgetValues!.where((bv) => bv.year == year && bv.month == month).toList();
       final List<SubCategory> joinedSubcategories = [];
 
       for (final SubCategory subcat in subCategories) {
@@ -110,8 +110,8 @@ class FakeDatabase {
     });
 
     //! First transaction of account
-    when(mockQueries.getFirstTransactionOfAccount(any))
-        .thenAnswer((_) async => moneyTransactions[0]);
+    when(mockQueries!.getFirstTransactionOfAccount(any!))
+        .thenAnswer((_) async => moneyTransactions![0]);
 
     // //! Add account
     // AccountModel aModel;
@@ -160,7 +160,7 @@ class FakeDatabase {
   }
 
   List<Budget> _buildBudgets(List<MainCategory> maincategories, List<SubCategory> subcategories,
-      List<BudgetValue> budgetvalues) {
+      List<BudgetValue>? budgetvalues) {
     //TODO: Implement getSubcategoriesJoined()
 
     DateTime currentDate = startingBudgetDate;
@@ -170,7 +170,7 @@ class FakeDatabase {
     do {
       final List<SubCategory> mergedSubcategories = [];
       for (final SubCategory subcat in subcategories) {
-        final BudgetValue budgetvalue = budgetvalues.singleWhere((bv) =>
+        final BudgetValue budgetvalue = budgetvalues!.singleWhere((bv) =>
             bv.subcategoryId == subcat.id &&
             bv.month == currentDate.month &&
             bv.year == currentDate.year);

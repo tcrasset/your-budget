@@ -16,23 +16,23 @@ import '../budget_page_state.dart';
 
 class SubcategoryRow extends StatefulWidget {
   final SubCategory subcat;
-  const SubcategoryRow({Key key, @required this.subcat}) : super(key: key);
+  const SubcategoryRow({Key? key, required this.subcat}) : super(key: key);
 
   @override
   _SubcategoryRowController createState() => _SubcategoryRowController();
 }
 
 class _SubcategoryRowController extends State<SubcategoryRow> {
-  AppState appState;
-  MoneyMaskedTextController _budgetedController;
-  BudgetPageState buttonDialState;
+  AppState? appState;
+  MoneyMaskedTextController? _budgetedController;
+  late BudgetPageState buttonDialState;
 
   void handleOnTap() {
-    if (!buttonDialState.isSelected(widget.subcat.id)) {
+    if (!buttonDialState.isSelected(widget.subcat.id!)) {
       buttonDialState.budgetedController = _budgetedController;
     }
-    buttonDialState.toggleButtonDial(widget.subcat.id);
-    buttonDialState.updateIsSelected(widget.subcat.id);
+    buttonDialState.toggleButtonDial(widget.subcat.id!);
+    buttonDialState.updateIsSelected(widget.subcat.id!);
   }
 
   @override
@@ -49,7 +49,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
   @override
   void dispose() {
-    _budgetedController.dispose();
+    _budgetedController!.dispose();
     super.dispose();
   }
 
@@ -60,7 +60,7 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowController> {
   const _SubcategoryRowView(_SubcategoryRowController state) : super(state);
 
-  Color setColor(double availableAmount) {
+  Color? setColor(double availableAmount) {
     if (availableAmount > 0) {
       return Constants.GREEN_COLOR;
     } else if (availableAmount == 0) {
@@ -72,19 +72,19 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
 
   @override
   Widget build(BuildContext context) {
-    state._budgetedController.updateValue(widget.subcat.budgeted);
+    state._budgetedController!.updateValue(widget.subcat.budgeted!);
 
     return GestureDetector(
       onTap: state.handleOnTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 10),
-        color: state.buttonDialState.isSelected(widget.subcat.id) ? Colors.grey[200] : Colors.white,
+        color: state.buttonDialState.isSelected(widget.subcat.id!) ? Colors.grey[200] : Colors.white,
         child: Row(
           children: <Widget>[
             Expanded(
                 child: Text(
-              widget.subcat.name,
+              widget.subcat.name!,
               style: Constants.SUBCATEGORY_TEXT_STYLE,
             )),
             Expanded(
@@ -104,12 +104,12 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: setColor(widget.subcat.available),
+                    color: setColor(widget.subcat.available!),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(9.0),
                     ),
                   ),
-                  child: Text("${widget.subcat.available.toStringAsFixed(2)} €",
+                  child: Text("${widget.subcat.available!.toStringAsFixed(2)} €",
                       textAlign: TextAlign.right,
                       style: const TextStyle(fontSize: 18, color: Colors.white)),
                 ),

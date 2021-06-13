@@ -24,7 +24,7 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
     final AppState appState = Provider.of<AppState>(context, listen: false);
     const String hintText = "Add new category";
 
-    final String categoryName = await addDialog(
+    final String? categoryName = await addDialog(
         context: context,
         title: hintText,
         hintText: hintText,
@@ -48,7 +48,7 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
   Widget build(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
 
-    final List<Category> categories = appState.allCategories;
+    final List<Category?> categories = appState.allCategories;
     if (categories.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
@@ -68,7 +68,7 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
             final item = categories[index];
             return (item is MainCategory)
                 ? ModifyMainCategoryRow(cat: item)
-                : ModifySubcategoryRow(subcat: item as SubCategory);
+                : ModifySubcategoryRow(subcat: item as SubCategory?);
           },
         ),
       );
@@ -77,7 +77,7 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
   }
 }
 
-String validateCategoryName(String name) {
+String? validateCategoryName(String name) {
   if (name == null || name.isEmpty) return "Name can't be empty.";
   return null;
 }

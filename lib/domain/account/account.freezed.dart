@@ -14,8 +14,7 @@ class _$AccountTearOff {
   const _$AccountTearOff();
 
 // ignore: unused_element
-  _Account call(
-      {@required UniqueId id, @required Name name, @required Amount balance}) {
+  _Account call({@required UniqueId id, @required Name name, @required Amount balance}) {
     return _Account(
       id: id,
       name: name,
@@ -99,8 +98,7 @@ class __$AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Account extends _Account {
-  const _$_Account(
-      {@required this.id, @required this.name, @required this.balance})
+  const _$_Account({@required this.id, @required this.name, @required this.balance})
       : assert(id != null),
         assert(name != null),
         assert(balance != null),
@@ -122,8 +120,7 @@ class _$_Account extends _Account {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Account &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.balance, balance) ||
@@ -138,16 +135,13 @@ class _$_Account extends _Account {
       const DeepCollectionEquality().hash(balance);
 
   @override
-  _$AccountCopyWith<_Account> get copyWith =>
-      __$AccountCopyWithImpl<_Account>(this, _$identity);
+  _$AccountCopyWith<_Account> get copyWith => __$AccountCopyWithImpl<_Account>(this, _$identity);
 }
 
 abstract class _Account extends Account {
   const _Account._() : super._();
-  const factory _Account(
-      {@required UniqueId id,
-      @required Name name,
-      @required Amount balance}) = _$_Account;
+  const factory _Account({@required UniqueId id, @required Name name, @required Amount balance}) =
+      _$_Account;
 
   @override
   UniqueId get id;

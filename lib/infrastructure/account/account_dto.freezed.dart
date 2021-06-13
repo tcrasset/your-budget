@@ -18,9 +18,7 @@ class _$AccountDTOTearOff {
 
 // ignore: unused_element
   _AccountDTO call(
-      {@JsonKey(ignore: true) String id,
-      @required String name,
-      @required double balance}) {
+      {@JsonKey(ignore: true) String id, @required String name, @required double balance}) {
     return _AccountDTO(
       id: id,
       name: name,
@@ -51,8 +49,7 @@ mixin _$AccountDTO {
 
 /// @nodoc
 abstract class $AccountDTOCopyWith<$Res> {
-  factory $AccountDTOCopyWith(
-          AccountDTO value, $Res Function(AccountDTO) then) =
+  factory $AccountDTOCopyWith(AccountDTO value, $Res Function(AccountDTO) then) =
       _$AccountDTOCopyWithImpl<$Res>;
   $Res call({@JsonKey(ignore: true) String id, String name, double balance});
 }
@@ -81,8 +78,7 @@ class _$AccountDTOCopyWithImpl<$Res> implements $AccountDTOCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$AccountDTOCopyWith<$Res> implements $AccountDTOCopyWith<$Res> {
-  factory _$AccountDTOCopyWith(
-          _AccountDTO value, $Res Function(_AccountDTO) then) =
+  factory _$AccountDTOCopyWith(_AccountDTO value, $Res Function(_AccountDTO) then) =
       __$AccountDTOCopyWithImpl<$Res>;
   @override
   $Res call({@JsonKey(ignore: true) String id, String name, double balance});
@@ -91,8 +87,7 @@ abstract class _$AccountDTOCopyWith<$Res> implements $AccountDTOCopyWith<$Res> {
 /// @nodoc
 class __$AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
     implements _$AccountDTOCopyWith<$Res> {
-  __$AccountDTOCopyWithImpl(
-      _AccountDTO _value, $Res Function(_AccountDTO) _then)
+  __$AccountDTOCopyWithImpl(_AccountDTO _value, $Res Function(_AccountDTO) _then)
       : super(_value, (v) => _then(v as _AccountDTO));
 
   @override
@@ -116,16 +111,12 @@ class __$AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_AccountDTO extends _AccountDTO {
-  const _$_AccountDTO(
-      {@JsonKey(ignore: true) this.id,
-      @required this.name,
-      @required this.balance})
+  const _$_AccountDTO({@JsonKey(ignore: true) this.id, @required this.name, @required this.balance})
       : assert(name != null),
         assert(balance != null),
         super._();
 
-  factory _$_AccountDTO.fromJson(Map<String, dynamic> json) =>
-      _$_$_AccountDTOFromJson(json);
+  factory _$_AccountDTO.fromJson(Map<String, dynamic> json) => _$_$_AccountDTOFromJson(json);
 
   @override
   @JsonKey(ignore: true)
@@ -144,8 +135,7 @@ class _$_AccountDTO extends _AccountDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AccountDTO &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.balance, balance) ||
@@ -176,8 +166,7 @@ abstract class _AccountDTO extends AccountDTO {
       @required String name,
       @required double balance}) = _$_AccountDTO;
 
-  factory _AccountDTO.fromJson(Map<String, dynamic> json) =
-      _$_AccountDTO.fromJson;
+  factory _AccountDTO.fromJson(Map<String, dynamic> json) = _$_AccountDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)

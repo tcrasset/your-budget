@@ -19,16 +19,16 @@ import '../../models/constants.dart';
 // import 'package:your_budget/domain/subcategory/subcategory.dart';
 
 class SQFliteSubcategoryRepository implements ISubcategoryRepository {
-  final Database database;
-  SQFliteSubcategoryRepository({@required this.database});
+  final Database? database;
+  SQFliteSubcategoryRepository({required this.database});
 
   @override
-  Future<Either<ValueFailure, int>> count() async {
+  Future<Either<ValueFailure, int?>> count() async {
     try {
       const sql = """
         SELECT COUNT(*) FROM ${DatabaseConstants.subcategoryTable};
         """;
-      final data = await database.rawQuery(sql);
+      final data = await database!.rawQuery(sql);
 
       return right(Sqflite.firstIntValue(data));
     } on DatabaseException catch (e) {
@@ -41,7 +41,7 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
     try {
       final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
       final int id =
-          await database.insert(DatabaseConstants.subcategoryTable, subcategoryDTO.toJson());
+          await database!.insert(DatabaseConstants.subcategoryTable, subcategoryDTO.toJson());
       return right(id);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
@@ -56,7 +56,7 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
     try {
       const sql = """SELECT * FROM ${DatabaseConstants.subcategoryTable};""";
 
-      final data = await database.rawQuery(sql);
+      final data = await database!.rawQuery(sql);
       final List<Subcategory> subcategories = [];
       for (final rawSubcategory in data) {
         final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromSQL(rawSubcategory);

@@ -32,7 +32,7 @@ class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<AppState>.value(value: GetIt.instance<AppState>()),
+      ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
       ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
       ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),

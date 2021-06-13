@@ -64,7 +64,7 @@ DateTime addExactEntryTime(DateTime date) {
 
 /// Returns whether [s] is a string representation of a number or not.
 /// If [s] is null, returns false.
-bool isNumeric(String s) {
+bool isNumeric(String? s) {
   if (s == null) {
     return false;
   }

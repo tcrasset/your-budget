@@ -19,10 +19,10 @@ part 'subcategory_watcher_bloc.freezed.dart';
 class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWatcherState> {
   final ISubcategoryRepository subcategoryRepository;
 
-  SubcategoryWatcherBloc({@required this.subcategoryRepository})
+  SubcategoryWatcherBloc({required this.subcategoryRepository})
       : super(const SubcategoryWatcherState.initial());
 
-  StreamSubscription<List<Subcategory>> _subcategoryStreamSubscription;
+  StreamSubscription<List<Subcategory>>? _subcategoryStreamSubscription;
 
   @override
   Stream<SubcategoryWatcherState> mapEventToState(

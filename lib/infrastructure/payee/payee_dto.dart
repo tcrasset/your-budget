@@ -14,8 +14,8 @@ abstract class PayeeDTO implements _$PayeeDTO {
   const PayeeDTO._();
 
   const factory PayeeDTO({
-    @JsonKey(ignore: true) String id, //Do not use id in database
-    @required String name,
+    @JsonKey(ignore: true) required String id, //Do not use id in database
+    required String name,
   }) = _PayeeDTO;
 
   factory PayeeDTO.fromDomain(Payee payee) {
@@ -27,7 +27,7 @@ abstract class PayeeDTO implements _$PayeeDTO {
 
   Payee toDomain() {
     return Payee(
-      id: UniqueId.fromUniqueString(id),
+      id: UniqueId.fromUniqueString(id!),
       name: Name(name),
     );
   }

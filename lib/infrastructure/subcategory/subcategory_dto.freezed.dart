@@ -57,8 +57,7 @@ mixin _$SubcategoryDTO {
 
 /// @nodoc
 abstract class $SubcategoryDTOCopyWith<$Res> {
-  factory $SubcategoryDTOCopyWith(
-          SubcategoryDTO value, $Res Function(SubcategoryDTO) then) =
+  factory $SubcategoryDTOCopyWith(SubcategoryDTO value, $Res Function(SubcategoryDTO) then) =
       _$SubcategoryDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(ignore: true) String id,
@@ -69,8 +68,7 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SubcategoryDTOCopyWithImpl<$Res>
-    implements $SubcategoryDTOCopyWith<$Res> {
+class _$SubcategoryDTOCopyWithImpl<$Res> implements $SubcategoryDTOCopyWith<$Res> {
   _$SubcategoryDTOCopyWithImpl(this._value, this._then);
 
   final SubcategoryDTO _value;
@@ -87,8 +85,7 @@ class _$SubcategoryDTOCopyWithImpl<$Res>
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
-      categoryID:
-          categoryID == freezed ? _value.categoryID : categoryID as String,
+      categoryID: categoryID == freezed ? _value.categoryID : categoryID as String,
       name: name == freezed ? _value.name : name as String,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as double,
       available: available == freezed ? _value.available : available as double,
@@ -97,10 +94,8 @@ class _$SubcategoryDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$SubcategoryDTOCopyWith<$Res>
-    implements $SubcategoryDTOCopyWith<$Res> {
-  factory _$SubcategoryDTOCopyWith(
-          _SubcategoryDTO value, $Res Function(_SubcategoryDTO) then) =
+abstract class _$SubcategoryDTOCopyWith<$Res> implements $SubcategoryDTOCopyWith<$Res> {
+  factory _$SubcategoryDTOCopyWith(_SubcategoryDTO value, $Res Function(_SubcategoryDTO) then) =
       __$SubcategoryDTOCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -112,11 +107,9 @@ abstract class _$SubcategoryDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SubcategoryDTOCopyWithImpl<$Res>
-    extends _$SubcategoryDTOCopyWithImpl<$Res>
+class __$SubcategoryDTOCopyWithImpl<$Res> extends _$SubcategoryDTOCopyWithImpl<$Res>
     implements _$SubcategoryDTOCopyWith<$Res> {
-  __$SubcategoryDTOCopyWithImpl(
-      _SubcategoryDTO _value, $Res Function(_SubcategoryDTO) _then)
+  __$SubcategoryDTOCopyWithImpl(_SubcategoryDTO _value, $Res Function(_SubcategoryDTO) _then)
       : super(_value, (v) => _then(v as _SubcategoryDTO));
 
   @override
@@ -132,8 +125,7 @@ class __$SubcategoryDTOCopyWithImpl<$Res>
   }) {
     return _then(_SubcategoryDTO(
       id: id == freezed ? _value.id : id as String,
-      categoryID:
-          categoryID == freezed ? _value.categoryID : categoryID as String,
+      categoryID: categoryID == freezed ? _value.categoryID : categoryID as String,
       name: name == freezed ? _value.name : name as String,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as double,
       available: available == freezed ? _value.available : available as double,
@@ -183,19 +175,15 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _SubcategoryDTO &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.categoryID, categoryID) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryID, categoryID)) &&
+                const DeepCollectionEquality().equals(other.categoryID, categoryID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.budgeted, budgeted) ||
-                const DeepCollectionEquality()
-                    .equals(other.budgeted, budgeted)) &&
+                const DeepCollectionEquality().equals(other.budgeted, budgeted)) &&
             (identical(other.available, available) ||
-                const DeepCollectionEquality()
-                    .equals(other.available, available)));
+                const DeepCollectionEquality().equals(other.available, available)));
   }
 
   @override
@@ -226,8 +214,7 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
       double budgeted,
       double available}) = _$_SubcategoryDTO;
 
-  factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) =
-      _$_SubcategoryDTO.fromJson;
+  factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) = _$_SubcategoryDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)

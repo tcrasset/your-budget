@@ -26,7 +26,7 @@ part 'transaction_creator_bloc.freezed.dart';
 class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCreatorState> {
   final ITransactionRepository transactionRepository;
   TransactionCreatorBloc({
-    @required this.transactionRepository,
+    required this.transactionRepository,
   }) : super(TransactionCreatorState.initial());
 
   @override
@@ -80,7 +80,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
         );
       },
       saved: (e) async* {
-        Either<ValueFailure, Unit> failureOrSuccess;
+        Either<ValueFailure, Unit>? failureOrSuccess;
         yield state.copyWith(isSaving: true);
 
         if (state.moneyTransaction.failureOption.isNone()) {

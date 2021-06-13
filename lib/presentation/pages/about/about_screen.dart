@@ -42,21 +42,21 @@ class _AboutPageView extends WidgetView<AboutPage, _AboutPageController> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Text("App name : "),
-                    Text(snapshot.data.appName),
+                    Text(snapshot.data!.appName),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Text("Version : "),
-                    Text(snapshot.data.version),
+                    Text(snapshot.data!.version),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     const Text("Build number : "),
-                    Text(snapshot.data.buildNumber),
+                    Text(snapshot.data!.buildNumber),
                   ],
                 ),
               ],

@@ -108,8 +108,7 @@ class _$_PayeeDTO extends _PayeeDTO {
       : assert(name != null),
         super._();
 
-  factory _$_PayeeDTO.fromJson(Map<String, dynamic> json) =>
-      _$_$_PayeeDTOFromJson(json);
+  factory _$_PayeeDTO.fromJson(Map<String, dynamic> json) => _$_$_PayeeDTOFromJson(json);
 
   @override
   @JsonKey(ignore: true)
@@ -126,8 +125,7 @@ class _$_PayeeDTO extends _PayeeDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _PayeeDTO &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -150,8 +148,7 @@ class _$_PayeeDTO extends _PayeeDTO {
 
 abstract class _PayeeDTO extends PayeeDTO {
   const _PayeeDTO._() : super._();
-  const factory _PayeeDTO(
-      {@JsonKey(ignore: true) String id, @required String name}) = _$_PayeeDTO;
+  const factory _PayeeDTO({@JsonKey(ignore: true) String id, @required String name}) = _$_PayeeDTO;
 
   factory _PayeeDTO.fromJson(Map<String, dynamic> json) = _$_PayeeDTO.fromJson;
 

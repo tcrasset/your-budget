@@ -89,10 +89,10 @@ abstract class Queries {
   Future<int> addGoal(GoalModel goalModel);
 
   /// Deletes the [category] of id [categoryId] from the database.
-  Future<void> deleteCategory(int categoryId);
+  Future<void> deleteCategory(int? categoryId);
 
   /// Deletes the [SubCategory] of id [subcategoryID] from the database.
-  Future<void> deleteSubcategory(int subcategoryID);
+  Future<void> deleteSubcategory(int? subcategoryID);
 
   /// Deletes the [account] of id [account.id] from the database.
   Future<void> deleteAccount(Account account);
@@ -101,10 +101,10 @@ abstract class Queries {
   Future<void> deletePayee(Payee payee);
 
   /// Deletes the [moneytransaction] of id [moneytransaction.id] from the database.
-  Future<void> deleteTransaction(int moneytransactionId);
+  Future<void> deleteTransaction(int? moneytransactionId);
 
   /// Deletes the [budgetValue] of id [budgetValue.id] from the database.
-  Future<void> deleteBudgetValue(int budgetValueId);
+  Future<void> deleteBudgetValue(int? budgetValueId);
 
   /// Update category with id [category.id] in the database.
   ///
@@ -112,7 +112,7 @@ abstract class Queries {
   Future<void> updateCategory(MainCategory category);
 
   /// Update subcategory name of [subcategory.id] in the database.
-  Future<void> updateSubcategoryName(int id, String newName);
+  Future<void> updateSubcategoryName(int? id, String newName);
 
   /// Update account with id [account.id] in the database.
   ///
@@ -130,7 +130,7 @@ abstract class Queries {
   ///
   /// Fields that can be updated are [budgetValue.budgeted]
   /// and [budgetValue.available]
-  Future<void> updateBudgetValue(BudgetValue budgetValue);
+  Future<void> updateBudgetValue(BudgetValue? budgetValue);
 
   Future<DateTime> getStartingBudgetDateConstant();
 
@@ -138,7 +138,7 @@ abstract class Queries {
 
   Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate);
 
-  Future<void> updateMostRecentAccountUsed(int accountId);
+  Future<void> updateMostRecentAccountUsed(int? accountId);
 
   Future<int> getMostRecentAccountUsed();
 }

@@ -15,9 +15,9 @@ abstract class AccountDTO implements _$AccountDTO {
   const AccountDTO._();
 
   const factory AccountDTO({
-    @JsonKey(ignore: true) String id, //Do not use id in database
-    @required String name,
-    @required double balance,
+    @JsonKey(ignore: true) required String id, //Do not use id in database
+    required String name,
+    required double balance,
   }) = _AccountDTO;
 
   factory AccountDTO.fromDomain(Account account) {
@@ -30,7 +30,7 @@ abstract class AccountDTO implements _$AccountDTO {
 
   Account toDomain() {
     return Account(
-      id: UniqueId.fromUniqueString(id),
+      id: UniqueId.fromUniqueString(id!),
       name: Name(name),
       balance: Amount(balance.toString()),
     );

@@ -13,7 +13,7 @@ import 'components/categories_list.dart';
 import 'delete_categories_state.dart';
 
 class DeleteCategories extends StatefulWidget {
-  const DeleteCategories({Key key}) : super(key: key);
+  const DeleteCategories({Key? key}) : super(key: key);
 
   @override
   _DeleteCategoriesController createState() => _DeleteCategoriesController();
@@ -36,7 +36,7 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
   }
 
   Future<void> handleDeleteCategories(BuildContext context) async {
-    final String result = await showDeleteDialog(context, 'Delete selected categories?');
+    final String? result = await showDeleteDialog(context, 'Delete selected categories?');
     if (result == "Delete") {
       final DeleteCategoriesState showTransactionsState =
           Provider.of<DeleteCategoriesState>(context, listen: false);

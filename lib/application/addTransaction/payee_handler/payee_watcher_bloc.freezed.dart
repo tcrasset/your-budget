@@ -19,8 +19,7 @@ class _$PayeeWatcherEventTearOff {
   }
 
 // ignore: unused_element
-  _PayeesReceived payeesReceived(
-      Either<ValueFailure, List<Payee>> failureOrPayees) {
+  _PayeesReceived payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees) {
     return _PayeesReceived(
       failureOrPayees,
     );
@@ -36,9 +35,7 @@ mixin _$PayeeWatcherEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchPayeesStarted(),
-    @required
-        Result payeesReceived(
-            Either<ValueFailure, List<Payee>> failureOrPayees),
+    @required Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -67,8 +64,7 @@ abstract class $PayeeWatcherEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeWatcherEventCopyWithImpl<$Res>
-    implements $PayeeWatcherEventCopyWith<$Res> {
+class _$PayeeWatcherEventCopyWithImpl<$Res> implements $PayeeWatcherEventCopyWith<$Res> {
   _$PayeeWatcherEventCopyWithImpl(this._value, this._then);
 
   final PayeeWatcherEvent _value;
@@ -84,8 +80,7 @@ abstract class _$PayeeWatchStartedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeWatchStartedCopyWithImpl<$Res>
-    extends _$PayeeWatcherEventCopyWithImpl<$Res>
+class __$PayeeWatchStartedCopyWithImpl<$Res> extends _$PayeeWatcherEventCopyWithImpl<$Res>
     implements _$PayeeWatchStartedCopyWith<$Res> {
   __$PayeeWatchStartedCopyWithImpl(
       _PayeeWatchStarted _value, $Res Function(_PayeeWatchStarted) _then)
@@ -116,9 +111,7 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchPayeesStarted(),
-    @required
-        Result payeesReceived(
-            Either<ValueFailure, List<Payee>> failureOrPayees),
+    @required Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
   }) {
     assert(watchPayeesStarted != null);
     assert(payeesReceived != null);
@@ -171,18 +164,15 @@ abstract class _PayeeWatchStarted implements PayeeWatcherEvent {
 
 /// @nodoc
 abstract class _$PayeesReceivedCopyWith<$Res> {
-  factory _$PayeesReceivedCopyWith(
-          _PayeesReceived value, $Res Function(_PayeesReceived) then) =
+  factory _$PayeesReceivedCopyWith(_PayeesReceived value, $Res Function(_PayeesReceived) then) =
       __$PayeesReceivedCopyWithImpl<$Res>;
   $Res call({Either<ValueFailure, List<Payee>> failureOrPayees});
 }
 
 /// @nodoc
-class __$PayeesReceivedCopyWithImpl<$Res>
-    extends _$PayeeWatcherEventCopyWithImpl<$Res>
+class __$PayeesReceivedCopyWithImpl<$Res> extends _$PayeeWatcherEventCopyWithImpl<$Res>
     implements _$PayeesReceivedCopyWith<$Res> {
-  __$PayeesReceivedCopyWithImpl(
-      _PayeesReceived _value, $Res Function(_PayeesReceived) _then)
+  __$PayeesReceivedCopyWithImpl(_PayeesReceived _value, $Res Function(_PayeesReceived) _then)
       : super(_value, (v) => _then(v as _PayeesReceived));
 
   @override
@@ -202,8 +192,7 @@ class __$PayeesReceivedCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_PayeesReceived implements _PayeesReceived {
-  const _$_PayeesReceived(this.failureOrPayees)
-      : assert(failureOrPayees != null);
+  const _$_PayeesReceived(this.failureOrPayees) : assert(failureOrPayees != null);
 
   @override
   final Either<ValueFailure, List<Payee>> failureOrPayees;
@@ -218,14 +207,11 @@ class _$_PayeesReceived implements _PayeesReceived {
     return identical(this, other) ||
         (other is _PayeesReceived &&
             (identical(other.failureOrPayees, failureOrPayees) ||
-                const DeepCollectionEquality()
-                    .equals(other.failureOrPayees, failureOrPayees)));
+                const DeepCollectionEquality().equals(other.failureOrPayees, failureOrPayees)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrPayees);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failureOrPayees);
 
   @override
   _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith =>
@@ -235,9 +221,7 @@ class _$_PayeesReceived implements _PayeesReceived {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchPayeesStarted(),
-    @required
-        Result payeesReceived(
-            Either<ValueFailure, List<Payee>> failureOrPayees),
+    @required Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
   }) {
     assert(watchPayeesStarted != null);
     assert(payeesReceived != null);
@@ -285,8 +269,8 @@ class _$_PayeesReceived implements _PayeesReceived {
 }
 
 abstract class _PayeesReceived implements PayeeWatcherEvent {
-  const factory _PayeesReceived(
-      Either<ValueFailure, List<Payee>> failureOrPayees) = _$_PayeesReceived;
+  const factory _PayeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees) =
+      _$_PayeesReceived;
 
   Either<ValueFailure, List<Payee>> get failureOrPayees;
   _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith;
@@ -367,8 +351,7 @@ abstract class $PayeeWatcherStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeWatcherStateCopyWithImpl<$Res>
-    implements $PayeeWatcherStateCopyWith<$Res> {
+class _$PayeeWatcherStateCopyWithImpl<$Res> implements $PayeeWatcherStateCopyWith<$Res> {
   _$PayeeWatcherStateCopyWithImpl(this._value, this._then);
 
   final PayeeWatcherState _value;
@@ -585,11 +568,9 @@ abstract class _$PayeeLoadSuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeLoadSuccessCopyWithImpl<$Res>
-    extends _$PayeeWatcherStateCopyWithImpl<$Res>
+class __$PayeeLoadSuccessCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$PayeeLoadSuccessCopyWith<$Res> {
-  __$PayeeLoadSuccessCopyWithImpl(
-      _PayeeLoadSuccess _value, $Res Function(_PayeeLoadSuccess) _then)
+  __$PayeeLoadSuccessCopyWithImpl(_PayeeLoadSuccess _value, $Res Function(_PayeeLoadSuccess) _then)
       : super(_value, (v) => _then(v as _PayeeLoadSuccess));
 
   @override
@@ -626,8 +607,7 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payees);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(payees);
 
   @override
   _$PayeeLoadSuccessCopyWith<_PayeeLoadSuccess> get copyWith =>
@@ -714,11 +694,9 @@ abstract class _$PayeeLoadFailureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeLoadFailureCopyWithImpl<$Res>
-    extends _$PayeeWatcherStateCopyWithImpl<$Res>
+class __$PayeeLoadFailureCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$PayeeLoadFailureCopyWith<$Res> {
-  __$PayeeLoadFailureCopyWithImpl(
-      _PayeeLoadFailure _value, $Res Function(_PayeeLoadFailure) _then)
+  __$PayeeLoadFailureCopyWithImpl(_PayeeLoadFailure _value, $Res Function(_PayeeLoadFailure) _then)
       : super(_value, (v) => _then(v as _PayeeLoadFailure));
 
   @override
@@ -729,9 +707,7 @@ class __$PayeeLoadFailureCopyWithImpl<$Res>
     Object payeeFailure = freezed,
   }) {
     return _then(_PayeeLoadFailure(
-      payeeFailure == freezed
-          ? _value.payeeFailure
-          : payeeFailure as ValueFailure<dynamic>,
+      payeeFailure == freezed ? _value.payeeFailure : payeeFailure as ValueFailure<dynamic>,
     ));
   }
 
@@ -763,13 +739,11 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
     return identical(this, other) ||
         (other is _PayeeLoadFailure &&
             (identical(other.payeeFailure, payeeFailure) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeFailure, payeeFailure)));
+                const DeepCollectionEquality().equals(other.payeeFailure, payeeFailure)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payeeFailure);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(payeeFailure);
 
   @override
   _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith =>
@@ -839,8 +813,7 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
 }
 
 abstract class _PayeeLoadFailure implements PayeeWatcherState {
-  const factory _PayeeLoadFailure(ValueFailure<dynamic> payeeFailure) =
-      _$_PayeeLoadFailure;
+  const factory _PayeeLoadFailure(ValueFailure<dynamic> payeeFailure) = _$_PayeeLoadFailure;
 
   ValueFailure<dynamic> get payeeFailure;
   _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith;

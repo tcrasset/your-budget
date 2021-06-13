@@ -23,7 +23,7 @@ class Amount extends ValueObject<double> {
 Either<ValueFailure<String>, double> _validateAmount(String input) {
   final bool isNegative = input.contains("-");
   final String absoluteInput = input.replaceAll("-", "");
-  num tryParsedAmount;
+  num? tryParsedAmount;
   double amount;
 
   try {
@@ -31,7 +31,7 @@ Either<ValueFailure<String>, double> _validateAmount(String input) {
   } on FormatException catch (e) {
     print(e);
   } finally {
-    amount = double.tryParse(tryParsedAmount?.toString() ?? absoluteInput);
+    amount = double.tryParse(tryParsedAmount?.toString() ?? absoluteInput)!;
     if (isNegative) amount = -amount;
   }
 

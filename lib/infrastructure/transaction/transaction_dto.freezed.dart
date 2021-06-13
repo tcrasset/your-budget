@@ -89,8 +89,7 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyTransactionDTOCopyWithImpl<$Res>
-    implements $MoneyTransactionDTOCopyWith<$Res> {
+class _$MoneyTransactionDTOCopyWithImpl<$Res> implements $MoneyTransactionDTOCopyWith<$Res> {
   _$MoneyTransactionDTOCopyWithImpl(this._value, this._then);
 
   final MoneyTransactionDTO _value;
@@ -113,13 +112,11 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
       subcatID: subcatID == freezed ? _value.subcatID : subcatID as String,
-      subcatName:
-          subcatName == freezed ? _value.subcatName : subcatName as String,
+      subcatName: subcatName == freezed ? _value.subcatName : subcatName as String,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
       payeeName: payeeName == freezed ? _value.payeeName : payeeName as String,
       accountID: accountID == freezed ? _value.accountID : accountID as String,
-      accountName:
-          accountName == freezed ? _value.accountName : accountName as String,
+      accountName: accountName == freezed ? _value.accountName : accountName as String,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
@@ -130,10 +127,8 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$TransactionDTOCopyWith<$Res>
-    implements $MoneyTransactionDTOCopyWith<$Res> {
-  factory _$TransactionDTOCopyWith(
-          _TransactionDTO value, $Res Function(_TransactionDTO) then) =
+abstract class _$TransactionDTOCopyWith<$Res> implements $MoneyTransactionDTOCopyWith<$Res> {
+  factory _$TransactionDTOCopyWith(_TransactionDTO value, $Res Function(_TransactionDTO) then) =
       __$TransactionDTOCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -150,11 +145,9 @@ abstract class _$TransactionDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TransactionDTOCopyWithImpl<$Res>
-    extends _$MoneyTransactionDTOCopyWithImpl<$Res>
+class __$TransactionDTOCopyWithImpl<$Res> extends _$MoneyTransactionDTOCopyWithImpl<$Res>
     implements _$TransactionDTOCopyWith<$Res> {
-  __$TransactionDTOCopyWithImpl(
-      _TransactionDTO _value, $Res Function(_TransactionDTO) _then)
+  __$TransactionDTOCopyWithImpl(_TransactionDTO _value, $Res Function(_TransactionDTO) _then)
       : super(_value, (v) => _then(v as _TransactionDTO));
 
   @override
@@ -176,13 +169,11 @@ class __$TransactionDTOCopyWithImpl<$Res>
     return _then(_TransactionDTO(
       id: id == freezed ? _value.id : id as String,
       subcatID: subcatID == freezed ? _value.subcatID : subcatID as String,
-      subcatName:
-          subcatName == freezed ? _value.subcatName : subcatName as String,
+      subcatName: subcatName == freezed ? _value.subcatName : subcatName as String,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as String,
       payeeName: payeeName == freezed ? _value.payeeName : payeeName as String,
       accountID: accountID == freezed ? _value.accountID : accountID as String,
-      accountName:
-          accountName == freezed ? _value.accountName : accountName as String,
+      accountName: accountName == freezed ? _value.accountName : accountName as String,
       amount: amount == freezed ? _value.amount : amount as double,
       memo: memo == freezed ? _value.memo : memo as String,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
@@ -252,35 +243,26 @@ class _$_TransactionDTO extends _TransactionDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _TransactionDTO &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.subcatID, subcatID) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatID, subcatID)) &&
+                const DeepCollectionEquality().equals(other.subcatID, subcatID)) &&
             (identical(other.subcatName, subcatName) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatName, subcatName)) &&
+                const DeepCollectionEquality().equals(other.subcatName, subcatName)) &&
             (identical(other.payeeID, payeeID) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeID, payeeID)) &&
+                const DeepCollectionEquality().equals(other.payeeID, payeeID)) &&
             (identical(other.payeeName, payeeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeName, payeeName)) &&
+                const DeepCollectionEquality().equals(other.payeeName, payeeName)) &&
             (identical(other.accountID, accountID) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountID, accountID)) &&
+                const DeepCollectionEquality().equals(other.accountID, accountID)) &&
             (identical(other.accountName, accountName) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountName, accountName)) &&
+                const DeepCollectionEquality().equals(other.accountName, accountName)) &&
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.memo, memo) ||
                 const DeepCollectionEquality().equals(other.memo, memo)) &&
-            (identical(other.dateInMillisecondsSinceEpoch,
-                    dateInMillisecondsSinceEpoch) ||
-                const DeepCollectionEquality().equals(
-                    other.dateInMillisecondsSinceEpoch,
-                    dateInMillisecondsSinceEpoch)));
+            (identical(other.dateInMillisecondsSinceEpoch, dateInMillisecondsSinceEpoch) ||
+                const DeepCollectionEquality()
+                    .equals(other.dateInMillisecondsSinceEpoch, dateInMillisecondsSinceEpoch)));
   }
 
   @override
@@ -321,8 +303,7 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       @required String memo,
       @required int dateInMillisecondsSinceEpoch}) = _$_TransactionDTO;
 
-  factory _TransactionDTO.fromJson(Map<String, dynamic> json) =
-      _$_TransactionDTO.fromJson;
+  factory _TransactionDTO.fromJson(Map<String, dynamic> json) = _$_TransactionDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)

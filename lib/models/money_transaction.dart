@@ -12,46 +12,46 @@ import 'constants.dart';
 
 class MoneyTransaction {
   /// Unique id of this.
-  int id;
+  int? id;
 
   /// Id of the SubCategory that this is operating on.
-  int subcatID;
+  int? subcatID;
 
   /// Id of the entity where the money comes from/goes to.
-  int payeeID;
+  int? payeeID;
 
   /// Id of the account where the money is input/output.
-  int accountID;
+  int? accountID;
 
   /// Monetary value that is exchanged.
-  double amount;
+  double? amount;
 
   /// Description of this.
-  String memo;
+  String? memo;
 
   /// Date of this.
   DateTime date;
 
   /// Default constructor of [MoneyTransaction].
   MoneyTransaction({
-    @required this.id,
-    @required this.subcatID,
-    @required this.payeeID,
-    @required this.accountID,
-    @required this.amount,
-    @required this.memo,
-    @required this.date,
+    required this.id,
+    required this.subcatID,
+    required this.payeeID,
+    required this.accountID,
+    required this.amount,
+    required this.memo,
+    required this.date,
   });
 
   /// Constructor building a [MoneyTransaction] from a [json] representation taken
   /// from a database.
   MoneyTransaction.fromJson(Map<String, dynamic> json) {
-    id = json[DatabaseConstants.MONEYTRANSACTION_ID] as int;
+    id = json[DatabaseConstants.MONEYTRANSACTION_ID] as int?;
     subcatID = int.parse(json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as String);
     payeeID = int.parse(json[DatabaseConstants.PAYEE_ID_OUTSIDE] as String);
     accountID = int.parse(json[DatabaseConstants.ACCOUNT_ID_OUTSIDE] as String);
-    amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT] as double;
-    memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO] as String;
+    amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT] as double?;
+    memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO] as String?;
     date =
         DateTime.fromMillisecondsSinceEpoch(json[DatabaseConstants.MONEYTRANSACTION_DATE] as int);
   }
@@ -63,13 +63,13 @@ class MoneyTransaction {
   }
 
   MoneyTransaction copyWith({
-    int id,
-    int subcatID,
-    int payeeID,
-    int accountID,
-    double amount,
-    String memo,
-    DateTime date,
+    int? id,
+    int? subcatID,
+    int? payeeID,
+    int? accountID,
+    double? amount,
+    String? memo,
+    DateTime? date,
   }) {
     return MoneyTransaction(
       id: id ?? this.id,
@@ -84,19 +84,19 @@ class MoneyTransaction {
 }
 
 class MoneyTransactionModel {
-  final int subcatID;
-  final int payeeID;
-  final int accountID;
-  final double amount;
-  final String memo;
-  final DateTime date;
+  final int? subcatID;
+  final int? payeeID;
+  final int? accountID;
+  final double? amount;
+  final String? memo;
+  final DateTime? date;
 
   MoneyTransactionModel({
-    @required this.subcatID,
-    @required this.payeeID,
-    @required this.accountID,
-    @required this.amount,
-    @required this.memo,
-    @required this.date,
+    required this.subcatID,
+    required this.payeeID,
+    required this.accountID,
+    required this.amount,
+    required this.memo,
+    required this.date,
   });
 }

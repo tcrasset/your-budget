@@ -11,14 +11,14 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  int tMonth;
-  int tYear;
-  int tMainCatId;
-  MainCategory tMainCategory;
-  SubCategory tSubCategory;
-  Budget tBudget;
-  BudgetList budgetList;
+  Queries? mockQueries;
+  int? tMonth;
+  int? tYear;
+  int? tMainCatId;
+  MainCategory? tMainCategory;
+  SubCategory? tSubCategory;
+  Budget? tBudget;
+  late BudgetList budgetList;
 
   setUp(() async {
     mockQueries = MockQueries();
@@ -59,7 +59,7 @@ void main() {
   test('when getByDate() is called, return a Budget with the specified date', () {
     //!Arrange
     //!Act
-    final Budget testBudget = budgetList.getByDate(DateTime(tYear, tMonth));
+    final Budget? testBudget = budgetList.getByDate(DateTime(tYear!, tMonth!));
 
     //!Assert
     expect(testBudget, tBudget);
@@ -78,8 +78,8 @@ void main() {
     tOtherBudgetList.addMaincategory(tMainCategory);
 
     //!Assert
-    for (final Budget budget in tOtherBudgetList.budgets) {
-      expect(budget.maincategories, [tMainCategory]);
+    for (final Budget? budget in tOtherBudgetList.budgets) {
+      expect(budget!.maincategories, [tMainCategory]);
     }
   });
 
@@ -96,8 +96,8 @@ void main() {
     tOtherBudgetList.addSubcategory(tSubCategory);
 
     //!Assert
-    for (final Budget budget in tOtherBudgetList.budgets) {
-      bool result = budget.subcategories[0].hasSameValues(tSubCategory);
+    for (final Budget? budget in tOtherBudgetList.budgets) {
+      bool result = budget!.subcategories[0]!.hasSameValues(tSubCategory!);
       expect(result, true);
     }
   });
@@ -106,14 +106,14 @@ void main() {
       'when updateSubcategory() is called, then update the corresponding subcategory' +
           ' in every budget', () {
     //!Arrange
-    final SubCategory tOtherSubcategory = tSubCategory.copyWith(name: "Name change");
+    final SubCategory tOtherSubcategory = tSubCategory!.copyWith(name: "Name change");
     //!Act
     budgetList.updateSubcategory(tOtherSubcategory);
 
     //!Assert
-    for (final Budget budget in budgetList.budgets) {
+    for (final Budget? budget in budgetList.budgets) {
       final SubCategory subcat =
-          budget.subcategories.singleWhere((subcat) => subcat.id == tOtherSubcategory.id);
+          budget!.subcategories.singleWhere((subcat) => subcat!.id == tOtherSubcategory.id)!;
       final bool result = subcat.hasSameValues(tOtherSubcategory);
       expect(result, true);
     }
@@ -129,12 +129,12 @@ void main() {
     budgetList.add(tOtherBudget);
 
     //!Act
-    budgetList.updateSubcategoryName(id: tSubCategory.id, newName: tNewName);
+    budgetList.updateSubcategoryName(id: tSubCategory!.id, newName: tNewName);
 
     //!Assert
-    for (final Budget budget in budgetList.budgets) {
+    for (final Budget? budget in budgetList.budgets) {
       final SubCategory subcat =
-          budget.subcategories.singleWhere((subcat) => subcat.id == tSubCategory.id);
+          budget!.subcategories.singleWhere((subcat) => subcat!.id == tSubCategory!.id)!;
       expect(subcat.name, tNewName);
     }
   });
@@ -143,14 +143,14 @@ void main() {
       'when updateMaincategory() is called, then update the corresponding maincategory' +
           ' in every budget', () {
     //!Arrange
-    final MainCategory tOtherMainCategory = tMainCategory.copyWith(name: "Name change");
+    final MainCategory tOtherMainCategory = tMainCategory!.copyWith(name: "Name change");
     //!Act
     budgetList.updateMaincategory(tOtherMainCategory);
 
     //!Assert
-    for (final Budget budget in budgetList.budgets) {
+    for (final Budget? budget in budgetList.budgets) {
       final MainCategory maincat =
-          budget.maincategories.singleWhere((maincat) => maincat.id == tOtherMainCategory.id);
+          budget!.maincategories.singleWhere((maincat) => maincat!.id == tOtherMainCategory.id)!;
       expect(maincat.name, tOtherMainCategory.name);
       expect(maincat.id, tOtherMainCategory.id);
     }
@@ -160,8 +160,8 @@ void main() {
       'when computeAvgBugdetedPerSubcategory() is called, compute the average' +
           ' amount budgeted per subcategory', () {
     //!Arrange
-    final Budget tOtherBudget = Budget([], [tSubCategory], tMonth + 1, tYear);
-    final Budget tOtherBudget2 = Budget([], [tSubCategory], tMonth + 2, tYear);
+    final Budget tOtherBudget = Budget([], [tSubCategory], tMonth! + 1, tYear);
+    final Budget tOtherBudget2 = Budget([], [tSubCategory], tMonth! + 2, tYear);
 
     budgetList.add(tOtherBudget);
     budgetList.add(tOtherBudget2);
@@ -169,7 +169,7 @@ void main() {
     const double tAverage = 100.0;
 
     //!Act
-    final double average = budgetList.computeAvgBugdetedPerSubcategory(tSubCategory.id);
+    final double average = budgetList.computeAvgBugdetedPerSubcategory(tSubCategory!.id);
     //!Assert
     expect(average, tAverage);
   });
@@ -179,16 +179,16 @@ void main() {
           'budgets where the given subcategory was not budgeted (==0.00)', () {
     //!Arrange
     //Seting budgeted amount to 0
-    final SubCategory tOtherSubcat = tSubCategory.copyWith(budgeted: 0.00);
-    final Budget tOtherBudget = Budget([], [tOtherSubcat], tMonth + 1, tYear);
-    final Budget tOtherBudget2 = Budget([], [tOtherSubcat], tMonth + 2, tYear);
+    final SubCategory tOtherSubcat = tSubCategory!.copyWith(budgeted: 0.00);
+    final Budget tOtherBudget = Budget([], [tOtherSubcat], tMonth! + 1, tYear);
+    final Budget tOtherBudget2 = Budget([], [tOtherSubcat], tMonth! + 2, tYear);
 
     budgetList.add(tOtherBudget);
     budgetList.add(tOtherBudget2);
 
     const double tAverage = 100.0;
     //!Act
-    final double average = budgetList.computeAvgBugdetedPerSubcategory(tSubCategory.id);
+    final double average = budgetList.computeAvgBugdetedPerSubcategory(tSubCategory!.id);
     //!Assert
     expect(average, tAverage);
   });
@@ -196,18 +196,18 @@ void main() {
   test('verify that removeSubcategory() removes the specified subcategory ', () {
     //!Arrange
     //Check not empty
-    for (final Budget budget in budgetList.budgets) {
-      expect(budget.subcategories.isNotEmpty, true);
+    for (final Budget? budget in budgetList.budgets) {
+      expect(budget!.subcategories.isNotEmpty, true);
     }
 
     //!Act
 
-    budgetList.removeSubcategory(tSubCategory.id, tSubCategory.parentId);
+    budgetList.removeSubcategory(tSubCategory!.id, tSubCategory!.parentId);
     //!Assert
     //Check empty
 
-    for (final Budget budget in budgetList.budgets) {
-      expect(budget.subcategories.isEmpty, true);
+    for (final Budget? budget in budgetList.budgets) {
+      expect(budget!.subcategories.isEmpty, true);
     }
   });
 
@@ -215,8 +215,8 @@ void main() {
       () {
     //!Arrange
     //Check not empty
-    for (final Budget budget in budgetList.budgets) {
-      expect(budget.maincategories.isNotEmpty, true);
+    for (final Budget? budget in budgetList.budgets) {
+      expect(budget!.maincategories.isNotEmpty, true);
     }
 
     //!Act
@@ -225,8 +225,8 @@ void main() {
     //!Assert
     //Check empty
 
-    for (final Budget budget in budgetList.budgets) {
-      expect(budget.maincategories.isEmpty, true);
+    for (final Budget? budget in budgetList.budgets) {
+      expect(budget!.maincategories.isEmpty, true);
     }
   });
 }

@@ -18,8 +18,8 @@ class AccountCreator {
   final ITransactionRepository transactionRepository;
 
   AccountCreator({
-    @required this.accountRepository,
-    @required this.transactionRepository,
+    required this.accountRepository,
+    required this.transactionRepository,
   });
 
   Future<Either<ValueFailure, Unit>> create(Account account) async {

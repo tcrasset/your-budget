@@ -12,7 +12,7 @@ import 'add_transaction_field.dart';
 
 class DateField extends StatelessWidget {
   const DateField({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   /// When tapping on the Date row, it opens the DataPicker
@@ -20,14 +20,14 @@ class DateField extends StatelessWidget {
   /// Defaults to the current day-year-month.
   Future<void> handleOnTapDate(BuildContext context) async {
     final previousDate = context.read<TransactionCreatorBloc>().state.moneyTransaction.date;
-    final DateTime picked = await _pickDate(context, previousDate);
+    final DateTime? picked = await _pickDate(context, previousDate);
     if (picked != null && picked != previousDate) {
       context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.dateChanged(picked));
     }
   }
 
-  Future<DateTime> _pickDate(BuildContext context, DateTime previousDate) async {
-    final DateTime picked = await showDatePicker(
+  Future<DateTime?> _pickDate(BuildContext context, DateTime previousDate) async {
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: getDateYMD(previousDate),
         firstDate: DateTime(2020),

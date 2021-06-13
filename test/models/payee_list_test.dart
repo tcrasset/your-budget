@@ -10,9 +10,9 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  Payee tPayee;
-  Payee tPayee2;
+  Queries? mockQueries;
+  Payee? tPayee;
+  Payee? tPayee2;
 
   setUp(() async {
     mockQueries = MockQueries();

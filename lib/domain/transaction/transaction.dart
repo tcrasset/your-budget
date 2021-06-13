@@ -22,16 +22,16 @@ part 'transaction.freezed.dart';
 @freezed
 abstract class MoneyTransaction implements _$MoneyTransaction {
   const factory MoneyTransaction({
-    @required UniqueId id,
-    @required UniqueId subcatID,
-    @required Name subcatName,
-    @required UniqueId payeeID,
-    @required Name payeeName,
-    @required UniqueId accountID,
-    @required Name accountName,
-    @required Amount amount,
-    @required Name memo,
-    @required DateTime date,
+    required UniqueId id,
+    required UniqueId subcatID,
+    required Name subcatName,
+    required UniqueId payeeID,
+    required Name payeeName,
+    required UniqueId accountID,
+    required Name accountName,
+    required Amount amount,
+    required Name memo,
+    required DateTime date,
   }) = _MoneyTransaction;
 
   const MoneyTransaction._();

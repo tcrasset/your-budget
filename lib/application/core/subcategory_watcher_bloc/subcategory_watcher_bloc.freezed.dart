@@ -43,8 +43,7 @@ mixin _$SubcategoryWatcherEvent {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchSubcategoriesStarted(),
-    Result subcategoriesReceived(
-        Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
+    Result subcategoriesReceived(Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -62,8 +61,8 @@ mixin _$SubcategoryWatcherEvent {
 
 /// @nodoc
 abstract class $SubcategoryWatcherEventCopyWith<$Res> {
-  factory $SubcategoryWatcherEventCopyWith(SubcategoryWatcherEvent value,
-          $Res Function(SubcategoryWatcherEvent) then) =
+  factory $SubcategoryWatcherEventCopyWith(
+          SubcategoryWatcherEvent value, $Res Function(SubcategoryWatcherEvent) then) =
       _$SubcategoryWatcherEventCopyWithImpl<$Res>;
 }
 
@@ -79,8 +78,8 @@ class _$SubcategoryWatcherEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$SubcategoryWatchStartedCopyWith<$Res> {
-  factory _$SubcategoryWatchStartedCopyWith(_SubcategoryWatchStarted value,
-          $Res Function(_SubcategoryWatchStarted) then) =
+  factory _$SubcategoryWatchStartedCopyWith(
+          _SubcategoryWatchStarted value, $Res Function(_SubcategoryWatchStarted) then) =
       __$SubcategoryWatchStartedCopyWithImpl<$Res>;
 }
 
@@ -88,13 +87,12 @@ abstract class _$SubcategoryWatchStartedCopyWith<$Res> {
 class __$SubcategoryWatchStartedCopyWithImpl<$Res>
     extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements _$SubcategoryWatchStartedCopyWith<$Res> {
-  __$SubcategoryWatchStartedCopyWithImpl(_SubcategoryWatchStarted _value,
-      $Res Function(_SubcategoryWatchStarted) _then)
+  __$SubcategoryWatchStartedCopyWithImpl(
+      _SubcategoryWatchStarted _value, $Res Function(_SubcategoryWatchStarted) _then)
       : super(_value, (v) => _then(v as _SubcategoryWatchStarted));
 
   @override
-  _SubcategoryWatchStarted get _value =>
-      super._value as _SubcategoryWatchStarted;
+  _SubcategoryWatchStarted get _value => super._value as _SubcategoryWatchStarted;
 }
 
 /// @nodoc
@@ -131,8 +129,7 @@ class _$_SubcategoryWatchStarted implements _SubcategoryWatchStarted {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchSubcategoriesStarted(),
-    Result subcategoriesReceived(
-        Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
+    Result subcategoriesReceived(Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -174,18 +171,17 @@ abstract class _SubcategoryWatchStarted implements SubcategoryWatcherEvent {
 
 /// @nodoc
 abstract class _$SubcategoriesReceivedCopyWith<$Res> {
-  factory _$SubcategoriesReceivedCopyWith(_SubcategoriesReceived value,
-          $Res Function(_SubcategoriesReceived) then) =
+  factory _$SubcategoriesReceivedCopyWith(
+          _SubcategoriesReceived value, $Res Function(_SubcategoriesReceived) then) =
       __$SubcategoriesReceivedCopyWithImpl<$Res>;
   $Res call({Either<ValueFailure, List<Subcategory>> failureOrSubcategories});
 }
 
 /// @nodoc
-class __$SubcategoriesReceivedCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
+class __$SubcategoriesReceivedCopyWithImpl<$Res> extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements _$SubcategoriesReceivedCopyWith<$Res> {
-  __$SubcategoriesReceivedCopyWithImpl(_SubcategoriesReceived _value,
-      $Res Function(_SubcategoriesReceived) _then)
+  __$SubcategoriesReceivedCopyWithImpl(
+      _SubcategoriesReceived _value, $Res Function(_SubcategoriesReceived) _then)
       : super(_value, (v) => _then(v as _SubcategoriesReceived));
 
   @override
@@ -221,19 +217,17 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
     return identical(this, other) ||
         (other is _SubcategoriesReceived &&
             (identical(other.failureOrSubcategories, failureOrSubcategories) ||
-                const DeepCollectionEquality().equals(
-                    other.failureOrSubcategories, failureOrSubcategories)));
+                const DeepCollectionEquality()
+                    .equals(other.failureOrSubcategories, failureOrSubcategories)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrSubcategories);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failureOrSubcategories);
 
   @override
   _$SubcategoriesReceivedCopyWith<_SubcategoriesReceived> get copyWith =>
-      __$SubcategoriesReceivedCopyWithImpl<_SubcategoriesReceived>(
-          this, _$identity);
+      __$SubcategoriesReceivedCopyWithImpl<_SubcategoriesReceived>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -252,8 +246,7 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchSubcategoriesStarted(),
-    Result subcategoriesReceived(
-        Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
+    Result subcategoriesReceived(Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -291,8 +284,7 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
 
 abstract class _SubcategoriesReceived implements SubcategoryWatcherEvent {
   const factory _SubcategoriesReceived(
-          Either<ValueFailure, List<Subcategory>> failureOrSubcategories) =
-      _$_SubcategoriesReceived;
+      Either<ValueFailure, List<Subcategory>> failureOrSubcategories) = _$_SubcategoriesReceived;
 
   Either<ValueFailure, List<Subcategory>> get failureOrSubcategories;
   _$SubcategoriesReceivedCopyWith<_SubcategoriesReceived> get copyWith;
@@ -320,8 +312,7 @@ class _$SubcategoryWatcherStateTearOff {
   }
 
 // ignore: unused_element
-  _SubcategoryLoadFailure loadFailure(
-      ValueFailure<dynamic> subcategoryFailure) {
+  _SubcategoryLoadFailure loadFailure(ValueFailure<dynamic> subcategoryFailure) {
     return _SubcategoryLoadFailure(
       subcategoryFailure,
     );
@@ -368,8 +359,8 @@ mixin _$SubcategoryWatcherState {
 
 /// @nodoc
 abstract class $SubcategoryWatcherStateCopyWith<$Res> {
-  factory $SubcategoryWatcherStateCopyWith(SubcategoryWatcherState value,
-          $Res Function(SubcategoryWatcherState) then) =
+  factory $SubcategoryWatcherStateCopyWith(
+          SubcategoryWatcherState value, $Res Function(SubcategoryWatcherState) then) =
       _$SubcategoryWatcherStateCopyWithImpl<$Res>;
 }
 
@@ -390,8 +381,7 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res> extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -491,8 +481,7 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res> extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -587,8 +576,8 @@ abstract class _Loading implements SubcategoryWatcherState {
 
 /// @nodoc
 abstract class _$SubcategoryLoadSuccessCopyWith<$Res> {
-  factory _$SubcategoryLoadSuccessCopyWith(_SubcategoryLoadSuccess value,
-          $Res Function(_SubcategoryLoadSuccess) then) =
+  factory _$SubcategoryLoadSuccessCopyWith(
+          _SubcategoryLoadSuccess value, $Res Function(_SubcategoryLoadSuccess) then) =
       __$SubcategoryLoadSuccessCopyWithImpl<$Res>;
   $Res call({List<Subcategory> subcategories});
 }
@@ -597,8 +586,8 @@ abstract class _$SubcategoryLoadSuccessCopyWith<$Res> {
 class __$SubcategoryLoadSuccessCopyWithImpl<$Res>
     extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$SubcategoryLoadSuccessCopyWith<$Res> {
-  __$SubcategoryLoadSuccessCopyWithImpl(_SubcategoryLoadSuccess _value,
-      $Res Function(_SubcategoryLoadSuccess) _then)
+  __$SubcategoryLoadSuccessCopyWithImpl(
+      _SubcategoryLoadSuccess _value, $Res Function(_SubcategoryLoadSuccess) _then)
       : super(_value, (v) => _then(v as _SubcategoryLoadSuccess));
 
   @override
@@ -609,17 +598,14 @@ class __$SubcategoryLoadSuccessCopyWithImpl<$Res>
     Object subcategories = freezed,
   }) {
     return _then(_SubcategoryLoadSuccess(
-      subcategories == freezed
-          ? _value.subcategories
-          : subcategories as List<Subcategory>,
+      subcategories == freezed ? _value.subcategories : subcategories as List<Subcategory>,
     ));
   }
 }
 
 /// @nodoc
 class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
-  const _$_SubcategoryLoadSuccess(this.subcategories)
-      : assert(subcategories != null);
+  const _$_SubcategoryLoadSuccess(this.subcategories) : assert(subcategories != null);
 
   @override
   final List<Subcategory> subcategories;
@@ -634,18 +620,15 @@ class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
     return identical(this, other) ||
         (other is _SubcategoryLoadSuccess &&
             (identical(other.subcategories, subcategories) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcategories, subcategories)));
+                const DeepCollectionEquality().equals(other.subcategories, subcategories)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategories);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategories);
 
   @override
   _$SubcategoryLoadSuccessCopyWith<_SubcategoryLoadSuccess> get copyWith =>
-      __$SubcategoryLoadSuccessCopyWithImpl<_SubcategoryLoadSuccess>(
-          this, _$identity);
+      __$SubcategoryLoadSuccessCopyWithImpl<_SubcategoryLoadSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -720,8 +703,8 @@ abstract class _SubcategoryLoadSuccess implements SubcategoryWatcherState {
 
 /// @nodoc
 abstract class _$SubcategoryLoadFailureCopyWith<$Res> {
-  factory _$SubcategoryLoadFailureCopyWith(_SubcategoryLoadFailure value,
-          $Res Function(_SubcategoryLoadFailure) then) =
+  factory _$SubcategoryLoadFailureCopyWith(
+          _SubcategoryLoadFailure value, $Res Function(_SubcategoryLoadFailure) then) =
       __$SubcategoryLoadFailureCopyWithImpl<$Res>;
   $Res call({ValueFailure<dynamic> subcategoryFailure});
 
@@ -732,8 +715,8 @@ abstract class _$SubcategoryLoadFailureCopyWith<$Res> {
 class __$SubcategoryLoadFailureCopyWithImpl<$Res>
     extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$SubcategoryLoadFailureCopyWith<$Res> {
-  __$SubcategoryLoadFailureCopyWithImpl(_SubcategoryLoadFailure _value,
-      $Res Function(_SubcategoryLoadFailure) _then)
+  __$SubcategoryLoadFailureCopyWithImpl(
+      _SubcategoryLoadFailure _value, $Res Function(_SubcategoryLoadFailure) _then)
       : super(_value, (v) => _then(v as _SubcategoryLoadFailure));
 
   @override
@@ -755,8 +738,7 @@ class __$SubcategoryLoadFailureCopyWithImpl<$Res>
     if (_value.subcategoryFailure == null) {
       return null;
     }
-    return $ValueFailureCopyWith<dynamic, $Res>(_value.subcategoryFailure,
-        (value) {
+    return $ValueFailureCopyWith<dynamic, $Res>(_value.subcategoryFailure, (value) {
       return _then(_value.copyWith(subcategoryFailure: value));
     });
   }
@@ -764,8 +746,7 @@ class __$SubcategoryLoadFailureCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
-  const _$_SubcategoryLoadFailure(this.subcategoryFailure)
-      : assert(subcategoryFailure != null);
+  const _$_SubcategoryLoadFailure(this.subcategoryFailure) : assert(subcategoryFailure != null);
 
   @override
   final ValueFailure<dynamic> subcategoryFailure;
@@ -786,13 +767,11 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(subcategoryFailure);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategoryFailure);
 
   @override
   _$SubcategoryLoadFailureCopyWith<_SubcategoryLoadFailure> get copyWith =>
-      __$SubcategoryLoadFailureCopyWithImpl<_SubcategoryLoadFailure>(
-          this, _$identity);
+      __$SubcategoryLoadFailureCopyWithImpl<_SubcategoryLoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -858,8 +837,8 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
 }
 
 abstract class _SubcategoryLoadFailure implements SubcategoryWatcherState {
-  const factory _SubcategoryLoadFailure(
-      ValueFailure<dynamic> subcategoryFailure) = _$_SubcategoryLoadFailure;
+  const factory _SubcategoryLoadFailure(ValueFailure<dynamic> subcategoryFailure) =
+      _$_SubcategoryLoadFailure;
 
   ValueFailure<dynamic> get subcategoryFailure;
   _$SubcategoryLoadFailureCopyWith<_SubcategoryLoadFailure> get copyWith;

@@ -15,11 +15,11 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
   const SubcategoryDTO._();
 
   const factory SubcategoryDTO({
-    @JsonKey(ignore: true) String id, //Do not use id in database
-    @required String categoryID,
-    @required String name,
-    @Default(0.00) double budgeted,
-    @Default(0.00) double available,
+    @JsonKey(ignore: true) required String id, //Do not use id in database
+    required String categoryID,
+    required String name,
+    @Default(0.00) required double budgeted,
+    @Default(0.00) required double available,
   }) = _SubcategoryDTO;
 
   factory SubcategoryDTO.fromDomain(Subcategory subcategory) {
@@ -34,7 +34,7 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
 
   Subcategory toDomain() {
     return Subcategory(
-      id: UniqueId.fromUniqueString(id),
+      id: UniqueId.fromUniqueString(id!),
       categoryID: UniqueId.fromUniqueString(categoryID),
       name: Name(name),
       budgeted: Amount(budgeted.toString()),

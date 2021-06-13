@@ -13,5 +13,5 @@ abstract class IPayeeRepository {
   // Future<Either<ValueFailure, Unit>> delete(NewPayee payee);
   Future<Either<ValueFailure, List<Payee>>> getAllPayees();
   Stream<Either<ValueFailure<dynamic>, List<Payee>>> watchAllPayees();
-  Future<Either<ValueFailure, int>> count();
+  Future<Either<ValueFailure, int?>> count();
 }

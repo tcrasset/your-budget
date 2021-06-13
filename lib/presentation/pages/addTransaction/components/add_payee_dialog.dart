@@ -15,22 +15,22 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 
-Future<String> addPayeeDialog({@required BuildContext context, String defaultValue}) {
+Future<String?> addPayeeDialog({required BuildContext context, String? defaultValue}) {
   return showDialog(
     context: context,
     builder: (_) => // Provide the existing BLoC instance to the new route (the dialog)
         BlocProvider<PayeeWatcherBloc>.value(
       value: BlocProvider.of<PayeeWatcherBloc>(context), //
-      child: PayeeNameForm(defaultValue: defaultValue),
+      child: PayeeNameForm(defaultValue: defaultValue!),
     ),
   );
 }
 
 class PayeeNameForm extends HookWidget {
-  final String defaultValue;
+  final String/*!*/ defaultValue;
   const PayeeNameForm({
-    Key key,
-    @required this.defaultValue,
+    Key? key,
+    required this.defaultValue,
   }) : super(key: key);
 
   @override
@@ -90,7 +90,7 @@ class PayeeNameForm extends HookWidget {
 
 bool _nameIsValid(String defaultValue) => defaultValue != null && defaultValue.trim() != "";
 
-Name _getDefaultName(String defaultValue) {
+Name? _getDefaultName(String defaultValue) {
   if (_nameIsValid(defaultValue)) {
     return Name(defaultValue);
   }
@@ -106,7 +106,7 @@ void onNameChange(BuildContext context, String value) {
       ));
 }
 
-String _failNameClosure(dynamic f) {
+String? _failNameClosure(dynamic f) {
   final result = f.maybeMap(
     longName: (_) => "Must be smaller than ${Name.maxLength}",
     emptyName: (_) => "Must not be empty",
@@ -116,7 +116,7 @@ String _failNameClosure(dynamic f) {
   return result is String ? result : null;
 }
 
-String validateName(BuildContext context) {
+String? validateName(BuildContext context) {
   return context.read<PayeeCreatorBloc>().state.payee.name.value.fold(
         (f) => _failNameClosure(f),
         (_) => null,
@@ -128,7 +128,7 @@ Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
     message: failure.maybeMap(
       unexpected: (_) => 'Unexpected error occured, please contact support.',
       uniqueName: (_) => 'You must chose an unique account name.',
-      orElse: () => null,
+      orElse: (() => null) as String Function(),
     ),
   ).show(context);
 }

@@ -19,9 +19,9 @@ part 'payee_watcher_bloc.freezed.dart';
 class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
   final IPayeeRepository payeeRepository;
 
-  PayeeWatcherBloc({@required this.payeeRepository}) : super(const PayeeWatcherState.initial());
+  PayeeWatcherBloc({required this.payeeRepository}) : super(const PayeeWatcherState.initial());
 
-  StreamSubscription<List<Payee>> _payeeStreamSubscription;
+  StreamSubscription<List<Payee>>? _payeeStreamSubscription;
 
   @override
   Stream<PayeeWatcherState> mapEventToState(

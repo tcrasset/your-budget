@@ -9,7 +9,7 @@ import 'package:your_budget/models/constants.dart';
 
 class AccountRow extends StatelessWidget {
   const AccountRow({
-    @required this.account,
+    required this.account,
   });
   final Account account;
 

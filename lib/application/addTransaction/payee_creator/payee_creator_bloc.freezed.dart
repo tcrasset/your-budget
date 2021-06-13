@@ -75,8 +75,7 @@ abstract class $PayeeCreatorEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeCreatorEventCopyWithImpl<$Res>
-    implements $PayeeCreatorEventCopyWith<$Res> {
+class _$PayeeCreatorEventCopyWithImpl<$Res> implements $PayeeCreatorEventCopyWith<$Res> {
   _$PayeeCreatorEventCopyWithImpl(this._value, this._then);
 
   final PayeeCreatorEvent _value;
@@ -86,18 +85,15 @@ class _$PayeeCreatorEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(
-          _Initialized value, $Res Function(_Initialized) then) =
+  factory _$InitializedCopyWith(_Initialized value, $Res Function(_Initialized) then) =
       __$InitializedCopyWithImpl<$Res>;
   $Res call({Option<Name> initialNameOption});
 }
 
 /// @nodoc
-class __$InitializedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res>
+class __$InitializedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$Res>
     implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(
-      _Initialized _value, $Res Function(_Initialized) _then)
+  __$InitializedCopyWithImpl(_Initialized _value, $Res Function(_Initialized) _then)
       : super(_value, (v) => _then(v as _Initialized));
 
   @override
@@ -108,17 +104,14 @@ class __$InitializedCopyWithImpl<$Res>
     Object initialNameOption = freezed,
   }) {
     return _then(_Initialized(
-      initialNameOption == freezed
-          ? _value.initialNameOption
-          : initialNameOption as Option<Name>,
+      initialNameOption == freezed ? _value.initialNameOption : initialNameOption as Option<Name>,
     ));
   }
 }
 
 /// @nodoc
 class _$_Initialized implements _Initialized {
-  const _$_Initialized(this.initialNameOption)
-      : assert(initialNameOption != null);
+  const _$_Initialized(this.initialNameOption) : assert(initialNameOption != null);
 
   @override
   final Option<Name> initialNameOption;
@@ -133,14 +126,11 @@ class _$_Initialized implements _Initialized {
     return identical(this, other) ||
         (other is _Initialized &&
             (identical(other.initialNameOption, initialNameOption) ||
-                const DeepCollectionEquality()
-                    .equals(other.initialNameOption, initialNameOption)));
+                const DeepCollectionEquality().equals(other.initialNameOption, initialNameOption)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(initialNameOption);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(initialNameOption);
 
   @override
   _$InitializedCopyWith<_Initialized> get copyWith =>
@@ -212,18 +202,15 @@ abstract class _Initialized implements PayeeCreatorEvent {
 
 /// @nodoc
 abstract class _$NameChangedCopyWith<$Res> {
-  factory _$NameChangedCopyWith(
-          _NameChanged value, $Res Function(_NameChanged) then) =
+  factory _$NameChangedCopyWith(_NameChanged value, $Res Function(_NameChanged) then) =
       __$NameChangedCopyWithImpl<$Res>;
   $Res call({String name});
 }
 
 /// @nodoc
-class __$NameChangedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res>
+class __$NameChangedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$Res>
     implements _$NameChangedCopyWith<$Res> {
-  __$NameChangedCopyWithImpl(
-      _NameChanged _value, $Res Function(_NameChanged) _then)
+  __$NameChangedCopyWithImpl(_NameChanged _value, $Res Function(_NameChanged) _then)
       : super(_value, (v) => _then(v as _NameChanged));
 
   @override
@@ -260,8 +247,7 @@ class _$_NameChanged implements _NameChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
   @override
   _$NameChangedCopyWith<_NameChanged> get copyWith =>
@@ -333,8 +319,7 @@ abstract class _NameChanged implements PayeeCreatorEvent {
 
 /// @nodoc
 abstract class _$SavedCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) =
-      __$SavedCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) = __$SavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -431,16 +416,11 @@ class _$PayeeCreatorStateTearOff {
 
 // ignore: unused_element
   _PayeeCreatorState call(
-      {@required
-          Payee payee,
-      @required
-          bool showErrorMessages,
-      @required
-          bool isSaving,
-      @required
-          bool isEditing,
-      @required
-          Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
+      {@required Payee payee,
+      @required bool showErrorMessages,
+      @required bool isSaving,
+      @required bool isEditing,
+      @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
     return _PayeeCreatorState(
       payee: payee,
       showErrorMessages: showErrorMessages,
@@ -482,8 +462,7 @@ abstract class $PayeeCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeCreatorStateCopyWithImpl<$Res>
-    implements $PayeeCreatorStateCopyWith<$Res> {
+class _$PayeeCreatorStateCopyWithImpl<$Res> implements $PayeeCreatorStateCopyWith<$Res> {
   _$PayeeCreatorStateCopyWithImpl(this._value, this._then);
 
   final PayeeCreatorState _value;
@@ -500,9 +479,8 @@ class _$PayeeCreatorStateCopyWithImpl<$Res>
   }) {
     return _then(_value.copyWith(
       payee: payee == freezed ? _value.payee : payee as Payee,
-      showErrorMessages: showErrorMessages == freezed
-          ? _value.showErrorMessages
-          : showErrorMessages as bool,
+      showErrorMessages:
+          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
       isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
       isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
@@ -523,8 +501,7 @@ class _$PayeeCreatorStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$PayeeCreatorStateCopyWith<$Res>
-    implements $PayeeCreatorStateCopyWith<$Res> {
+abstract class _$PayeeCreatorStateCopyWith<$Res> implements $PayeeCreatorStateCopyWith<$Res> {
   factory _$PayeeCreatorStateCopyWith(
           _PayeeCreatorState value, $Res Function(_PayeeCreatorState) then) =
       __$PayeeCreatorStateCopyWithImpl<$Res>;
@@ -541,8 +518,7 @@ abstract class _$PayeeCreatorStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PayeeCreatorStateCopyWithImpl<$Res>
-    extends _$PayeeCreatorStateCopyWithImpl<$Res>
+class __$PayeeCreatorStateCopyWithImpl<$Res> extends _$PayeeCreatorStateCopyWithImpl<$Res>
     implements _$PayeeCreatorStateCopyWith<$Res> {
   __$PayeeCreatorStateCopyWithImpl(
       _PayeeCreatorState _value, $Res Function(_PayeeCreatorState) _then)
@@ -561,9 +537,8 @@ class __$PayeeCreatorStateCopyWithImpl<$Res>
   }) {
     return _then(_PayeeCreatorState(
       payee: payee == freezed ? _value.payee : payee as Payee,
-      showErrorMessages: showErrorMessages == freezed
-          ? _value.showErrorMessages
-          : showErrorMessages as bool,
+      showErrorMessages:
+          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
       isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
       isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
@@ -613,16 +588,12 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
                 const DeepCollectionEquality()
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.isSaving, isSaving) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSaving, isSaving)) &&
+                const DeepCollectionEquality().equals(other.isSaving, isSaving)) &&
             (identical(other.isEditing, isEditing) ||
+                const DeepCollectionEquality().equals(other.isEditing, isEditing)) &&
+            (identical(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality()
-                    .equals(other.isEditing, isEditing)) &&
-            (identical(other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption) ||
-                const DeepCollectionEquality().equals(
-                    other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption)));
+                    .equals(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption)));
   }
 
   @override
@@ -641,16 +612,11 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
 
 abstract class _PayeeCreatorState implements PayeeCreatorState {
   const factory _PayeeCreatorState(
-          {@required
-              Payee payee,
-          @required
-              bool showErrorMessages,
-          @required
-              bool isSaving,
-          @required
-              bool isEditing,
-          @required
-              Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
+          {@required Payee payee,
+          @required bool showErrorMessages,
+          @required bool isSaving,
+          @required bool isEditing,
+          @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
       _$_PayeeCreatorState;
 
   @override

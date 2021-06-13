@@ -19,8 +19,7 @@ class _$AccountWatcherEventTearOff {
   }
 
 // ignore: unused_element
-  _AccountsReceived accountsReceived(
-      Either<ValueFailure, List<Account>> failureOrAccounts) {
+  _AccountsReceived accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts) {
     return _AccountsReceived(
       failureOrAccounts,
     );
@@ -36,15 +35,12 @@ mixin _$AccountWatcherEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchAccountsStarted(),
-    @required
-        Result accountsReceived(
-            Either<ValueFailure, List<Account>> failureOrAccounts),
+    @required Result accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchAccountsStarted(),
-    Result accountsReceived(
-        Either<ValueFailure, List<Account>> failureOrAccounts),
+    Result accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -68,8 +64,7 @@ abstract class $AccountWatcherEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountWatcherEventCopyWithImpl<$Res>
-    implements $AccountWatcherEventCopyWith<$Res> {
+class _$AccountWatcherEventCopyWithImpl<$Res> implements $AccountWatcherEventCopyWith<$Res> {
   _$AccountWatcherEventCopyWithImpl(this._value, this._then);
 
   final AccountWatcherEvent _value;
@@ -79,14 +74,13 @@ class _$AccountWatcherEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$AccountWatchStartedCopyWith<$Res> {
-  factory _$AccountWatchStartedCopyWith(_AccountWatchStarted value,
-          $Res Function(_AccountWatchStarted) then) =
+  factory _$AccountWatchStartedCopyWith(
+          _AccountWatchStarted value, $Res Function(_AccountWatchStarted) then) =
       __$AccountWatchStartedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$AccountWatchStartedCopyWithImpl<$Res>
-    extends _$AccountWatcherEventCopyWithImpl<$Res>
+class __$AccountWatchStartedCopyWithImpl<$Res> extends _$AccountWatcherEventCopyWithImpl<$Res>
     implements _$AccountWatchStartedCopyWith<$Res> {
   __$AccountWatchStartedCopyWithImpl(
       _AccountWatchStarted _value, $Res Function(_AccountWatchStarted) _then)
@@ -117,9 +111,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchAccountsStarted(),
-    @required
-        Result accountsReceived(
-            Either<ValueFailure, List<Account>> failureOrAccounts),
+    @required Result accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts),
   }) {
     assert(watchAccountsStarted != null);
     assert(accountsReceived != null);
@@ -130,8 +122,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchAccountsStarted(),
-    Result accountsReceived(
-        Either<ValueFailure, List<Account>> failureOrAccounts),
+    Result accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -180,11 +171,9 @@ abstract class _$AccountsReceivedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$AccountsReceivedCopyWithImpl<$Res>
-    extends _$AccountWatcherEventCopyWithImpl<$Res>
+class __$AccountsReceivedCopyWithImpl<$Res> extends _$AccountWatcherEventCopyWithImpl<$Res>
     implements _$AccountsReceivedCopyWith<$Res> {
-  __$AccountsReceivedCopyWithImpl(
-      _AccountsReceived _value, $Res Function(_AccountsReceived) _then)
+  __$AccountsReceivedCopyWithImpl(_AccountsReceived _value, $Res Function(_AccountsReceived) _then)
       : super(_value, (v) => _then(v as _AccountsReceived));
 
   @override
@@ -204,8 +193,7 @@ class __$AccountsReceivedCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_AccountsReceived implements _AccountsReceived {
-  const _$_AccountsReceived(this.failureOrAccounts)
-      : assert(failureOrAccounts != null);
+  const _$_AccountsReceived(this.failureOrAccounts) : assert(failureOrAccounts != null);
 
   @override
   final Either<ValueFailure, List<Account>> failureOrAccounts;
@@ -220,14 +208,11 @@ class _$_AccountsReceived implements _AccountsReceived {
     return identical(this, other) ||
         (other is _AccountsReceived &&
             (identical(other.failureOrAccounts, failureOrAccounts) ||
-                const DeepCollectionEquality()
-                    .equals(other.failureOrAccounts, failureOrAccounts)));
+                const DeepCollectionEquality().equals(other.failureOrAccounts, failureOrAccounts)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrAccounts);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failureOrAccounts);
 
   @override
   _$AccountsReceivedCopyWith<_AccountsReceived> get copyWith =>
@@ -237,9 +222,7 @@ class _$_AccountsReceived implements _AccountsReceived {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result watchAccountsStarted(),
-    @required
-        Result accountsReceived(
-            Either<ValueFailure, List<Account>> failureOrAccounts),
+    @required Result accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts),
   }) {
     assert(watchAccountsStarted != null);
     assert(accountsReceived != null);
@@ -250,8 +233,7 @@ class _$_AccountsReceived implements _AccountsReceived {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result watchAccountsStarted(),
-    Result accountsReceived(
-        Either<ValueFailure, List<Account>> failureOrAccounts),
+    Result accountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -288,8 +270,7 @@ class _$_AccountsReceived implements _AccountsReceived {
 }
 
 abstract class _AccountsReceived implements AccountWatcherEvent {
-  const factory _AccountsReceived(
-          Either<ValueFailure, List<Account>> failureOrAccounts) =
+  const factory _AccountsReceived(Either<ValueFailure, List<Account>> failureOrAccounts) =
       _$_AccountsReceived;
 
   Either<ValueFailure, List<Account>> get failureOrAccounts;
@@ -371,8 +352,7 @@ abstract class $AccountWatcherStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountWatcherStateCopyWithImpl<$Res>
-    implements $AccountWatcherStateCopyWith<$Res> {
+class _$AccountWatcherStateCopyWithImpl<$Res> implements $AccountWatcherStateCopyWith<$Res> {
   _$AccountWatcherStateCopyWithImpl(this._value, this._then);
 
   final AccountWatcherState _value;
@@ -387,8 +367,7 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res> extends _$AccountWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -488,8 +467,7 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res> extends _$AccountWatcherStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -591,8 +569,7 @@ abstract class _$AccountLoadSuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$AccountLoadSuccessCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+class __$AccountLoadSuccessCopyWithImpl<$Res> extends _$AccountWatcherStateCopyWithImpl<$Res>
     implements _$AccountLoadSuccessCopyWith<$Res> {
   __$AccountLoadSuccessCopyWithImpl(
       _AccountLoadSuccess _value, $Res Function(_AccountLoadSuccess) _then)
@@ -628,13 +605,11 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
     return identical(this, other) ||
         (other is _AccountLoadSuccess &&
             (identical(other.accounts, accounts) ||
-                const DeepCollectionEquality()
-                    .equals(other.accounts, accounts)));
+                const DeepCollectionEquality().equals(other.accounts, accounts)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(accounts);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(accounts);
 
   @override
   _$AccountLoadSuccessCopyWith<_AccountLoadSuccess> get copyWith =>
@@ -704,8 +679,7 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
 }
 
 abstract class _AccountLoadSuccess implements AccountWatcherState {
-  const factory _AccountLoadSuccess(List<Account> accounts) =
-      _$_AccountLoadSuccess;
+  const factory _AccountLoadSuccess(List<Account> accounts) = _$_AccountLoadSuccess;
 
   List<Account> get accounts;
   _$AccountLoadSuccessCopyWith<_AccountLoadSuccess> get copyWith;
@@ -722,8 +696,7 @@ abstract class _$AccountLoadFailureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$AccountLoadFailureCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+class __$AccountLoadFailureCopyWithImpl<$Res> extends _$AccountWatcherStateCopyWithImpl<$Res>
     implements _$AccountLoadFailureCopyWith<$Res> {
   __$AccountLoadFailureCopyWithImpl(
       _AccountLoadFailure _value, $Res Function(_AccountLoadFailure) _then)
@@ -737,9 +710,7 @@ class __$AccountLoadFailureCopyWithImpl<$Res>
     Object accountFailure = freezed,
   }) {
     return _then(_AccountLoadFailure(
-      accountFailure == freezed
-          ? _value.accountFailure
-          : accountFailure as ValueFailure<dynamic>,
+      accountFailure == freezed ? _value.accountFailure : accountFailure as ValueFailure<dynamic>,
     ));
   }
 
@@ -756,8 +727,7 @@ class __$AccountLoadFailureCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_AccountLoadFailure implements _AccountLoadFailure {
-  const _$_AccountLoadFailure(this.accountFailure)
-      : assert(accountFailure != null);
+  const _$_AccountLoadFailure(this.accountFailure) : assert(accountFailure != null);
 
   @override
   final ValueFailure<dynamic> accountFailure;
@@ -772,14 +742,11 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
     return identical(this, other) ||
         (other is _AccountLoadFailure &&
             (identical(other.accountFailure, accountFailure) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountFailure, accountFailure)));
+                const DeepCollectionEquality().equals(other.accountFailure, accountFailure)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(accountFailure);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(accountFailure);
 
   @override
   _$AccountLoadFailureCopyWith<_AccountLoadFailure> get copyWith =>
@@ -849,8 +816,7 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
 }
 
 abstract class _AccountLoadFailure implements AccountWatcherState {
-  const factory _AccountLoadFailure(ValueFailure<dynamic> accountFailure) =
-      _$_AccountLoadFailure;
+  const factory _AccountLoadFailure(ValueFailure<dynamic> accountFailure) = _$_AccountLoadFailure;
 
   ValueFailure<dynamic> get accountFailure;
   _$AccountLoadFailureCopyWith<_AccountLoadFailure> get copyWith;

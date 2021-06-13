@@ -12,9 +12,9 @@ class MockQueries extends Mock implements Queries {}
 
 main() {
   Queries mockQueries;
-  MoneyTransaction tMoneyTransaction;
-  MoneyTransaction tMoneyTransaction2;
-  MoneyTransactionList transactionList;
+  MoneyTransaction? tMoneyTransaction;
+  MoneyTransaction? tMoneyTransaction2;
+  late MoneyTransactionList transactionList;
   int testId_1 = 25;
   int tSubcatId = 10;
   setUp(() async {
@@ -66,7 +66,7 @@ main() {
     //!Arrange
 
     //!Act
-    MoneyTransaction moneyTransaction = transactionList.getById(testId_1);
+    MoneyTransaction? moneyTransaction = transactionList.getById(testId_1);
 
     //!Assert
     expect(moneyTransaction, tMoneyTransaction);
@@ -78,7 +78,7 @@ main() {
     //!Arrange
     transactionList.add(tMoneyTransaction);
     //!Act
-    List<MoneyTransaction> moneyTransactions = transactionList.getAllBySubcatId(tSubcatId);
+    List<MoneyTransaction?> moneyTransactions = transactionList.getAllBySubcatId(tSubcatId);
 
     //!Assert
     expect(moneyTransactions, [tMoneyTransaction, tMoneyTransaction]);
@@ -89,15 +89,15 @@ main() {
           'that have subcategory id [Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION]', () {
     //!Arrange
     MoneyTransaction toBeBudgetedTransaction =
-        tMoneyTransaction.copyWith(subcatID: Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
+        tMoneyTransaction!.copyWith(subcatID: Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
 
     transactionList.add(toBeBudgetedTransaction);
     transactionList.add(toBeBudgetedTransaction);
     transactionList.add(toBeBudgetedTransaction);
     //!Act
-    List<MoneyTransaction> transactions = transactionList.getToBeBudgetedTransactions();
+    List<MoneyTransaction?> transactions = transactionList.getToBeBudgetedTransactions();
     //!Assert
     expect(transactions.length, 3);
-    expect(transactions[0].subcatID, Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
+    expect(transactions[0]!.subcatID, Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION);
   });
 }

@@ -36,8 +36,7 @@ mixin _$Payee {
 
 /// @nodoc
 abstract class $PayeeCopyWith<$Res> {
-  factory $PayeeCopyWith(Payee value, $Res Function(Payee) then) =
-      _$PayeeCopyWithImpl<$Res>;
+  factory $PayeeCopyWith(Payee value, $Res Function(Payee) then) = _$PayeeCopyWithImpl<$Res>;
   $Res call({UniqueId id, Name name});
 }
 
@@ -63,8 +62,7 @@ class _$PayeeCopyWithImpl<$Res> implements $PayeeCopyWith<$Res> {
 
 /// @nodoc
 abstract class _$PayeeCopyWith<$Res> implements $PayeeCopyWith<$Res> {
-  factory _$PayeeCopyWith(_Payee value, $Res Function(_Payee) then) =
-      __$PayeeCopyWithImpl<$Res>;
+  factory _$PayeeCopyWith(_Payee value, $Res Function(_Payee) then) = __$PayeeCopyWithImpl<$Res>;
   @override
   $Res call({UniqueId id, Name name});
 }
@@ -111,8 +109,7 @@ class _$_Payee extends _Payee {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Payee &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -124,8 +121,7 @@ class _$_Payee extends _Payee {
       const DeepCollectionEquality().hash(name);
 
   @override
-  _$PayeeCopyWith<_Payee> get copyWith =>
-      __$PayeeCopyWithImpl<_Payee>(this, _$identity);
+  _$PayeeCopyWith<_Payee> get copyWith => __$PayeeCopyWithImpl<_Payee>(this, _$identity);
 }
 
 abstract class _Payee extends Payee {

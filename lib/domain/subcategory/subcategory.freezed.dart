@@ -47,15 +47,9 @@ mixin _$Subcategory {
 
 /// @nodoc
 abstract class $SubcategoryCopyWith<$Res> {
-  factory $SubcategoryCopyWith(
-          Subcategory value, $Res Function(Subcategory) then) =
+  factory $SubcategoryCopyWith(Subcategory value, $Res Function(Subcategory) then) =
       _$SubcategoryCopyWithImpl<$Res>;
-  $Res call(
-      {UniqueId id,
-      UniqueId categoryID,
-      Name name,
-      Amount budgeted,
-      Amount available});
+  $Res call({UniqueId id, UniqueId categoryID, Name name, Amount budgeted, Amount available});
 }
 
 /// @nodoc
@@ -76,8 +70,7 @@ class _$SubcategoryCopyWithImpl<$Res> implements $SubcategoryCopyWith<$Res> {
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
-      categoryID:
-          categoryID == freezed ? _value.categoryID : categoryID as UniqueId,
+      categoryID: categoryID == freezed ? _value.categoryID : categoryID as UniqueId,
       name: name == freezed ? _value.name : name as Name,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as Amount,
       available: available == freezed ? _value.available : available as Amount,
@@ -86,25 +79,17 @@ class _$SubcategoryCopyWithImpl<$Res> implements $SubcategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$SubcategoryCopyWith<$Res>
-    implements $SubcategoryCopyWith<$Res> {
-  factory _$SubcategoryCopyWith(
-          _Subcategory value, $Res Function(_Subcategory) then) =
+abstract class _$SubcategoryCopyWith<$Res> implements $SubcategoryCopyWith<$Res> {
+  factory _$SubcategoryCopyWith(_Subcategory value, $Res Function(_Subcategory) then) =
       __$SubcategoryCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {UniqueId id,
-      UniqueId categoryID,
-      Name name,
-      Amount budgeted,
-      Amount available});
+  $Res call({UniqueId id, UniqueId categoryID, Name name, Amount budgeted, Amount available});
 }
 
 /// @nodoc
 class __$SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
     implements _$SubcategoryCopyWith<$Res> {
-  __$SubcategoryCopyWithImpl(
-      _Subcategory _value, $Res Function(_Subcategory) _then)
+  __$SubcategoryCopyWithImpl(_Subcategory _value, $Res Function(_Subcategory) _then)
       : super(_value, (v) => _then(v as _Subcategory));
 
   @override
@@ -120,8 +105,7 @@ class __$SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
   }) {
     return _then(_Subcategory(
       id: id == freezed ? _value.id : id as UniqueId,
-      categoryID:
-          categoryID == freezed ? _value.categoryID : categoryID as UniqueId,
+      categoryID: categoryID == freezed ? _value.categoryID : categoryID as UniqueId,
       name: name == freezed ? _value.name : name as Name,
       budgeted: budgeted == freezed ? _value.budgeted : budgeted as Amount,
       available: available == freezed ? _value.available : available as Amount,
@@ -164,19 +148,15 @@ class _$_Subcategory extends _Subcategory {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Subcategory &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.categoryID, categoryID) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryID, categoryID)) &&
+                const DeepCollectionEquality().equals(other.categoryID, categoryID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.budgeted, budgeted) ||
-                const DeepCollectionEquality()
-                    .equals(other.budgeted, budgeted)) &&
+                const DeepCollectionEquality().equals(other.budgeted, budgeted)) &&
             (identical(other.available, available) ||
-                const DeepCollectionEquality()
-                    .equals(other.available, available)));
+                const DeepCollectionEquality().equals(other.available, available)));
   }
 
   @override

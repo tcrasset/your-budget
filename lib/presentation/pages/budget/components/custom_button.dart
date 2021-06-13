@@ -7,7 +7,7 @@ class CustomButton extends StatelessWidget {
   final double buttonWidth;
   final Color buttonColor;
   final Function handleOnPressed;
-  final Widget child;
+  final Widget? child;
   const CustomButton(
       this.buttonText, this.buttonHeight, this.buttonWidth, this.buttonColor, this.handleOnPressed,
       [this.child]);

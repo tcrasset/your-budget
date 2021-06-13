@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'models/constants.dart';
 
 class WaitingScreen extends StatelessWidget {
-  const WaitingScreen({Key key}) : super(key: key);
+  const WaitingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -122,8 +122,8 @@ mixin _$TransactionCreatorEvent {
 
 /// @nodoc
 abstract class $TransactionCreatorEventCopyWith<$Res> {
-  factory $TransactionCreatorEventCopyWith(TransactionCreatorEvent value,
-          $Res Function(TransactionCreatorEvent) then) =
+  factory $TransactionCreatorEventCopyWith(
+          TransactionCreatorEvent value, $Res Function(TransactionCreatorEvent) then) =
       _$TransactionCreatorEventCopyWithImpl<$Res>;
 }
 
@@ -139,17 +139,14 @@ class _$TransactionCreatorEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(
-          _Initialized value, $Res Function(_Initialized) then) =
+  factory _$InitializedCopyWith(_Initialized value, $Res Function(_Initialized) then) =
       __$InitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitializedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$InitializedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(
-      _Initialized _value, $Res Function(_Initialized) _then)
+  __$InitializedCopyWithImpl(_Initialized _value, $Res Function(_Initialized) _then)
       : super(_value, (v) => _then(v as _Initialized));
 
   @override
@@ -266,18 +263,15 @@ abstract class _Initialized implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$AmountChangedCopyWith<$Res> {
-  factory _$AmountChangedCopyWith(
-          _AmountChanged value, $Res Function(_AmountChanged) then) =
+  factory _$AmountChangedCopyWith(_AmountChanged value, $Res Function(_AmountChanged) then) =
       __$AmountChangedCopyWithImpl<$Res>;
   $Res call({String amount});
 }
 
 /// @nodoc
-class __$AmountChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$AmountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$AmountChangedCopyWith<$Res> {
-  __$AmountChangedCopyWithImpl(
-      _AmountChanged _value, $Res Function(_AmountChanged) _then)
+  __$AmountChangedCopyWithImpl(_AmountChanged _value, $Res Function(_AmountChanged) _then)
       : super(_value, (v) => _then(v as _AmountChanged));
 
   @override
@@ -314,8 +308,7 @@ class _$_AmountChanged implements _AmountChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(amount);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(amount);
 
   @override
   _$AmountChangedCopyWith<_AmountChanged> get copyWith =>
@@ -417,8 +410,7 @@ abstract class _AmountChanged implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$PayeeChangedCopyWith<$Res> {
-  factory _$PayeeChangedCopyWith(
-          _PayeeChanged value, $Res Function(_PayeeChanged) then) =
+  factory _$PayeeChangedCopyWith(_PayeeChanged value, $Res Function(_PayeeChanged) then) =
       __$PayeeChangedCopyWithImpl<$Res>;
   $Res call({Payee payee});
 
@@ -426,11 +418,9 @@ abstract class _$PayeeChangedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$PayeeChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$PayeeChangedCopyWith<$Res> {
-  __$PayeeChangedCopyWithImpl(
-      _PayeeChanged _value, $Res Function(_PayeeChanged) _then)
+  __$PayeeChangedCopyWithImpl(_PayeeChanged _value, $Res Function(_PayeeChanged) _then)
       : super(_value, (v) => _then(v as _PayeeChanged));
 
   @override
@@ -477,8 +467,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payee);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(payee);
 
   @override
   _$PayeeChangedCopyWith<_PayeeChanged> get copyWith =>
@@ -580,8 +569,7 @@ abstract class _PayeeChanged implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$AccountChangedCopyWith<$Res> {
-  factory _$AccountChangedCopyWith(
-          _AccountChanged value, $Res Function(_AccountChanged) then) =
+  factory _$AccountChangedCopyWith(_AccountChanged value, $Res Function(_AccountChanged) then) =
       __$AccountChangedCopyWithImpl<$Res>;
   $Res call({Account account});
 
@@ -589,11 +577,9 @@ abstract class _$AccountChangedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$AccountChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$AccountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$AccountChangedCopyWith<$Res> {
-  __$AccountChangedCopyWithImpl(
-      _AccountChanged _value, $Res Function(_AccountChanged) _then)
+  __$AccountChangedCopyWithImpl(_AccountChanged _value, $Res Function(_AccountChanged) _then)
       : super(_value, (v) => _then(v as _AccountChanged));
 
   @override
@@ -640,8 +626,7 @@ class _$_AccountChanged implements _AccountChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(account);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(account);
 
   @override
   _$AccountChangedCopyWith<_AccountChanged> get copyWith =>
@@ -752,8 +737,7 @@ abstract class _$SubcategoryChangedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$SubcategoryChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$SubcategoryChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$SubcategoryChangedCopyWith<$Res> {
   __$SubcategoryChangedCopyWithImpl(
       _SubcategoryChanged _value, $Res Function(_SubcategoryChanged) _then)
@@ -799,13 +783,11 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     return identical(this, other) ||
         (other is _SubcategoryChanged &&
             (identical(other.subcategory, subcategory) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcategory, subcategory)));
+                const DeepCollectionEquality().equals(other.subcategory, subcategory)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategory);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategory);
 
   @override
   _$SubcategoryChangedCopyWith<_SubcategoryChanged> get copyWith =>
@@ -899,8 +881,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
 }
 
 abstract class _SubcategoryChanged implements TransactionCreatorEvent {
-  const factory _SubcategoryChanged(Subcategory subcategory) =
-      _$_SubcategoryChanged;
+  const factory _SubcategoryChanged(Subcategory subcategory) = _$_SubcategoryChanged;
 
   Subcategory get subcategory;
   _$SubcategoryChangedCopyWith<_SubcategoryChanged> get copyWith;
@@ -908,18 +889,15 @@ abstract class _SubcategoryChanged implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$DateChangedCopyWith<$Res> {
-  factory _$DateChangedCopyWith(
-          _DateChanged value, $Res Function(_DateChanged) then) =
+  factory _$DateChangedCopyWith(_DateChanged value, $Res Function(_DateChanged) then) =
       __$DateChangedCopyWithImpl<$Res>;
   $Res call({DateTime date});
 }
 
 /// @nodoc
-class __$DateChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$DateChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$DateChangedCopyWith<$Res> {
-  __$DateChangedCopyWithImpl(
-      _DateChanged _value, $Res Function(_DateChanged) _then)
+  __$DateChangedCopyWithImpl(_DateChanged _value, $Res Function(_DateChanged) _then)
       : super(_value, (v) => _then(v as _DateChanged));
 
   @override
@@ -956,8 +934,7 @@ class _$_DateChanged implements _DateChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(date);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(date);
 
   @override
   _$DateChangedCopyWith<_DateChanged> get copyWith =>
@@ -1059,18 +1036,15 @@ abstract class _DateChanged implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$MemoChangedCopyWith<$Res> {
-  factory _$MemoChangedCopyWith(
-          _MemoChanged value, $Res Function(_MemoChanged) then) =
+  factory _$MemoChangedCopyWith(_MemoChanged value, $Res Function(_MemoChanged) then) =
       __$MemoChangedCopyWithImpl<$Res>;
   $Res call({String memo});
 }
 
 /// @nodoc
-class __$MemoChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$MemoChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$MemoChangedCopyWith<$Res> {
-  __$MemoChangedCopyWithImpl(
-      _MemoChanged _value, $Res Function(_MemoChanged) _then)
+  __$MemoChangedCopyWithImpl(_MemoChanged _value, $Res Function(_MemoChanged) _then)
       : super(_value, (v) => _then(v as _MemoChanged));
 
   @override
@@ -1107,8 +1081,7 @@ class _$_MemoChanged implements _MemoChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(memo);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(memo);
 
   @override
   _$MemoChangedCopyWith<_MemoChanged> get copyWith =>
@@ -1210,13 +1183,11 @@ abstract class _MemoChanged implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$SavedCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) =
-      __$SavedCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) = __$SavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SavedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$SavedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$SavedCopyWith<$Res> {
   __$SavedCopyWithImpl(_Saved _value, $Res Function(_Saved) _then)
       : super(_value, (v) => _then(v as _Saved));
@@ -1339,16 +1310,11 @@ class _$TransactionCreatorStateTearOff {
 
 // ignore: unused_element
   _TransactionCreatorState call(
-      {@required
-          MoneyTransaction moneyTransaction,
-      @required
-          bool showErrorMessages,
-      @required
-          bool isSaving,
-      @required
-          bool isEditing,
-      @required
-          Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
+      {@required MoneyTransaction moneyTransaction,
+      @required bool showErrorMessages,
+      @required bool isSaving,
+      @required bool isEditing,
+      @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
     return _TransactionCreatorState(
       moneyTransaction: moneyTransaction,
       showErrorMessages: showErrorMessages,
@@ -1376,8 +1342,8 @@ mixin _$TransactionCreatorState {
 
 /// @nodoc
 abstract class $TransactionCreatorStateCopyWith<$Res> {
-  factory $TransactionCreatorStateCopyWith(TransactionCreatorState value,
-          $Res Function(TransactionCreatorState) then) =
+  factory $TransactionCreatorStateCopyWith(
+          TransactionCreatorState value, $Res Function(TransactionCreatorState) then) =
       _$TransactionCreatorStateCopyWithImpl<$Res>;
   $Res call(
       {MoneyTransaction moneyTransaction,
@@ -1410,9 +1376,8 @@ class _$TransactionCreatorStateCopyWithImpl<$Res>
       moneyTransaction: moneyTransaction == freezed
           ? _value.moneyTransaction
           : moneyTransaction as MoneyTransaction,
-      showErrorMessages: showErrorMessages == freezed
-          ? _value.showErrorMessages
-          : showErrorMessages as bool,
+      showErrorMessages:
+          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
       isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
       isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
@@ -1435,8 +1400,8 @@ class _$TransactionCreatorStateCopyWithImpl<$Res>
 /// @nodoc
 abstract class _$TransactionCreatorStateCopyWith<$Res>
     implements $TransactionCreatorStateCopyWith<$Res> {
-  factory _$TransactionCreatorStateCopyWith(_TransactionCreatorState value,
-          $Res Function(_TransactionCreatorState) then) =
+  factory _$TransactionCreatorStateCopyWith(
+          _TransactionCreatorState value, $Res Function(_TransactionCreatorState) then) =
       __$TransactionCreatorStateCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -1454,13 +1419,12 @@ abstract class _$TransactionCreatorStateCopyWith<$Res>
 class __$TransactionCreatorStateCopyWithImpl<$Res>
     extends _$TransactionCreatorStateCopyWithImpl<$Res>
     implements _$TransactionCreatorStateCopyWith<$Res> {
-  __$TransactionCreatorStateCopyWithImpl(_TransactionCreatorState _value,
-      $Res Function(_TransactionCreatorState) _then)
+  __$TransactionCreatorStateCopyWithImpl(
+      _TransactionCreatorState _value, $Res Function(_TransactionCreatorState) _then)
       : super(_value, (v) => _then(v as _TransactionCreatorState));
 
   @override
-  _TransactionCreatorState get _value =>
-      super._value as _TransactionCreatorState;
+  _TransactionCreatorState get _value => super._value as _TransactionCreatorState;
 
   @override
   $Res call({
@@ -1474,9 +1438,8 @@ class __$TransactionCreatorStateCopyWithImpl<$Res>
       moneyTransaction: moneyTransaction == freezed
           ? _value.moneyTransaction
           : moneyTransaction as MoneyTransaction,
-      showErrorMessages: showErrorMessages == freezed
-          ? _value.showErrorMessages
-          : showErrorMessages as bool,
+      showErrorMessages:
+          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
       isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
       isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
@@ -1521,22 +1484,17 @@ class _$_TransactionCreatorState implements _TransactionCreatorState {
     return identical(this, other) ||
         (other is _TransactionCreatorState &&
             (identical(other.moneyTransaction, moneyTransaction) ||
-                const DeepCollectionEquality()
-                    .equals(other.moneyTransaction, moneyTransaction)) &&
+                const DeepCollectionEquality().equals(other.moneyTransaction, moneyTransaction)) &&
             (identical(other.showErrorMessages, showErrorMessages) ||
                 const DeepCollectionEquality()
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.isSaving, isSaving) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSaving, isSaving)) &&
+                const DeepCollectionEquality().equals(other.isSaving, isSaving)) &&
             (identical(other.isEditing, isEditing) ||
+                const DeepCollectionEquality().equals(other.isEditing, isEditing)) &&
+            (identical(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality()
-                    .equals(other.isEditing, isEditing)) &&
-            (identical(other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption) ||
-                const DeepCollectionEquality().equals(
-                    other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption)));
+                    .equals(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption)));
   }
 
   @override
@@ -1550,22 +1508,16 @@ class _$_TransactionCreatorState implements _TransactionCreatorState {
 
   @override
   _$TransactionCreatorStateCopyWith<_TransactionCreatorState> get copyWith =>
-      __$TransactionCreatorStateCopyWithImpl<_TransactionCreatorState>(
-          this, _$identity);
+      __$TransactionCreatorStateCopyWithImpl<_TransactionCreatorState>(this, _$identity);
 }
 
 abstract class _TransactionCreatorState implements TransactionCreatorState {
   const factory _TransactionCreatorState(
-          {@required
-              MoneyTransaction moneyTransaction,
-          @required
-              bool showErrorMessages,
-          @required
-              bool isSaving,
-          @required
-              bool isEditing,
-          @required
-              Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
+          {@required MoneyTransaction moneyTransaction,
+          @required bool showErrorMessages,
+          @required bool isSaving,
+          @required bool isEditing,
+          @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
       _$_TransactionCreatorState;
 
   @override

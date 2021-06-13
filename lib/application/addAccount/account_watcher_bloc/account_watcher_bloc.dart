@@ -18,10 +18,10 @@ part 'account_watcher_bloc.freezed.dart';
 class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> {
   final IAccountRepository accountRepository;
 
-  AccountWatcherBloc({@required this.accountRepository})
+  AccountWatcherBloc({required this.accountRepository})
       : super(const AccountWatcherState.initial());
 
-  StreamSubscription<List<Account>> _accountStreamSubscription;
+  StreamSubscription<List<Account>>? _accountStreamSubscription;
 
   @override
   Stream<AccountWatcherState> mapEventToState(

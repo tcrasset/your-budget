@@ -25,7 +25,7 @@ class DateButtons extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: () => handleButtonOnPressed(context, appState, false)),
-          Text("${appState.currentBudget.monthAsString} ${appState.currentBudget.year}",
+          Text("${appState.currentBudget!.monthAsString} ${appState.currentBudget!.year}",
               style: const TextStyle(fontSize: 20)),
           IconButton(
               icon: const Icon(Icons.arrow_forward),

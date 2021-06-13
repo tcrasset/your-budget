@@ -115,14 +115,12 @@ mixin _$ValueFailure<T> {
 
 /// @nodoc
 abstract class $ValueFailureCopyWith<T, $Res> {
-  factory $ValueFailureCopyWith(
-          ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
+  factory $ValueFailureCopyWith(ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
       _$ValueFailureCopyWithImpl<T, $Res>;
 }
 
 /// @nodoc
-class _$ValueFailureCopyWithImpl<T, $Res>
-    implements $ValueFailureCopyWith<T, $Res> {
+class _$ValueFailureCopyWithImpl<T, $Res> implements $ValueFailureCopyWith<T, $Res> {
   _$ValueFailureCopyWithImpl(this._value, this._then);
 
   final ValueFailure<T> _value;
@@ -132,15 +130,14 @@ class _$ValueFailureCopyWithImpl<T, $Res>
 
 /// @nodoc
 abstract class $InvalidTransactionCopyWith<T, $Res> {
-  factory $InvalidTransactionCopyWith(InvalidTransaction<T> value,
-          $Res Function(InvalidTransaction<T>) then) =
+  factory $InvalidTransactionCopyWith(
+          InvalidTransaction<T> value, $Res Function(InvalidTransaction<T>) then) =
       _$InvalidTransactionCopyWithImpl<T, $Res>;
   $Res call({String failedValue});
 }
 
 /// @nodoc
-class _$InvalidTransactionCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class _$InvalidTransactionCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements $InvalidTransactionCopyWith<T, $Res> {
   _$InvalidTransactionCopyWithImpl(
       InvalidTransaction<T> _value, $Res Function(InvalidTransaction<T>) _then)
@@ -154,16 +151,14 @@ class _$InvalidTransactionCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(InvalidTransaction<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+      failedValue: failedValue == freezed ? _value.failedValue : failedValue as String,
     ));
   }
 }
 
 /// @nodoc
 class _$InvalidTransaction<T> implements InvalidTransaction<T> {
-  const _$InvalidTransaction({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$InvalidTransaction({@required this.failedValue}) : assert(failedValue != null);
 
   @override
   final String failedValue;
@@ -178,18 +173,15 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     return identical(this, other) ||
         (other is InvalidTransaction<T> &&
             (identical(other.failedValue, failedValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                const DeepCollectionEquality().equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
   $InvalidTransactionCopyWith<T, InvalidTransaction<T>> get copyWith =>
-      _$InvalidTransactionCopyWithImpl<T, InvalidTransaction<T>>(
-          this, _$identity);
+      _$InvalidTransactionCopyWithImpl<T, InvalidTransaction<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -273,8 +265,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
 }
 
 abstract class InvalidTransaction<T> implements ValueFailure<T> {
-  const factory InvalidTransaction({@required String failedValue}) =
-      _$InvalidTransaction<T>;
+  const factory InvalidTransaction({@required String failedValue}) = _$InvalidTransaction<T>;
 
   String get failedValue;
   $InvalidTransactionCopyWith<T, InvalidTransaction<T>> get copyWith;
@@ -282,18 +273,15 @@ abstract class InvalidTransaction<T> implements ValueFailure<T> {
 
 /// @nodoc
 abstract class $UnexpectedCopyWith<T, $Res> {
-  factory $UnexpectedCopyWith(
-          Unexpected<T> value, $Res Function(Unexpected<T>) then) =
+  factory $UnexpectedCopyWith(Unexpected<T> value, $Res Function(Unexpected<T>) then) =
       _$UnexpectedCopyWithImpl<T, $Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class _$UnexpectedCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class _$UnexpectedCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements $UnexpectedCopyWith<T, $Res> {
-  _$UnexpectedCopyWithImpl(
-      Unexpected<T> _value, $Res Function(Unexpected<T>) _then)
+  _$UnexpectedCopyWithImpl(Unexpected<T> _value, $Res Function(Unexpected<T>) _then)
       : super(_value, (v) => _then(v as Unexpected<T>));
 
   @override
@@ -330,8 +318,7 @@ class _$Unexpected<T> implements Unexpected<T> {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
   @override
   $UnexpectedCopyWith<T, Unexpected<T>> get copyWith =>
@@ -427,18 +414,15 @@ abstract class Unexpected<T> implements ValueFailure<T> {
 
 /// @nodoc
 abstract class _$LongNameCopyWith<T, $Res> {
-  factory _$LongNameCopyWith(
-          _LongName<T> value, $Res Function(_LongName<T>) then) =
+  factory _$LongNameCopyWith(_LongName<T> value, $Res Function(_LongName<T>) then) =
       __$LongNameCopyWithImpl<T, $Res>;
   $Res call({String failedValue});
 }
 
 /// @nodoc
-class __$LongNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class __$LongNameCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements _$LongNameCopyWith<T, $Res> {
-  __$LongNameCopyWithImpl(
-      _LongName<T> _value, $Res Function(_LongName<T>) _then)
+  __$LongNameCopyWithImpl(_LongName<T> _value, $Res Function(_LongName<T>) _then)
       : super(_value, (v) => _then(v as _LongName<T>));
 
   @override
@@ -449,8 +433,7 @@ class __$LongNameCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(_LongName<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+      failedValue: failedValue == freezed ? _value.failedValue : failedValue as String,
     ));
   }
 }
@@ -472,13 +455,11 @@ class _$_LongName<T> implements _LongName<T> {
     return identical(this, other) ||
         (other is _LongName<T> &&
             (identical(other.failedValue, failedValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                const DeepCollectionEquality().equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
   _$LongNameCopyWith<T, _LongName<T>> get copyWith =>
@@ -574,18 +555,15 @@ abstract class _LongName<T> implements ValueFailure<T> {
 
 /// @nodoc
 abstract class _$EmptyNameCopyWith<T, $Res> {
-  factory _$EmptyNameCopyWith(
-          _EmptyName<T> value, $Res Function(_EmptyName<T>) then) =
+  factory _$EmptyNameCopyWith(_EmptyName<T> value, $Res Function(_EmptyName<T>) then) =
       __$EmptyNameCopyWithImpl<T, $Res>;
   $Res call({String failedValue});
 }
 
 /// @nodoc
-class __$EmptyNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class __$EmptyNameCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements _$EmptyNameCopyWith<T, $Res> {
-  __$EmptyNameCopyWithImpl(
-      _EmptyName<T> _value, $Res Function(_EmptyName<T>) _then)
+  __$EmptyNameCopyWithImpl(_EmptyName<T> _value, $Res Function(_EmptyName<T>) _then)
       : super(_value, (v) => _then(v as _EmptyName<T>));
 
   @override
@@ -596,16 +574,14 @@ class __$EmptyNameCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(_EmptyName<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+      failedValue: failedValue == freezed ? _value.failedValue : failedValue as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_EmptyName<T> implements _EmptyName<T> {
-  const _$_EmptyName({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$_EmptyName({@required this.failedValue}) : assert(failedValue != null);
 
   @override
   final String failedValue;
@@ -620,13 +596,11 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     return identical(this, other) ||
         (other is _EmptyName<T> &&
             (identical(other.failedValue, failedValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                const DeepCollectionEquality().equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
   _$EmptyNameCopyWith<T, _EmptyName<T>> get copyWith =>
@@ -722,18 +696,15 @@ abstract class _EmptyName<T> implements ValueFailure<T> {
 
 /// @nodoc
 abstract class _$InvalidAmountCopyWith<T, $Res> {
-  factory _$InvalidAmountCopyWith(
-          _InvalidAmount<T> value, $Res Function(_InvalidAmount<T>) then) =
+  factory _$InvalidAmountCopyWith(_InvalidAmount<T> value, $Res Function(_InvalidAmount<T>) then) =
       __$InvalidAmountCopyWithImpl<T, $Res>;
   $Res call({String failedValue});
 }
 
 /// @nodoc
-class __$InvalidAmountCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class __$InvalidAmountCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements _$InvalidAmountCopyWith<T, $Res> {
-  __$InvalidAmountCopyWithImpl(
-      _InvalidAmount<T> _value, $Res Function(_InvalidAmount<T>) _then)
+  __$InvalidAmountCopyWithImpl(_InvalidAmount<T> _value, $Res Function(_InvalidAmount<T>) _then)
       : super(_value, (v) => _then(v as _InvalidAmount<T>));
 
   @override
@@ -744,16 +715,14 @@ class __$InvalidAmountCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(_InvalidAmount<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+      failedValue: failedValue == freezed ? _value.failedValue : failedValue as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_InvalidAmount<T> implements _InvalidAmount<T> {
-  const _$_InvalidAmount({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$_InvalidAmount({@required this.failedValue}) : assert(failedValue != null);
 
   @override
   final String failedValue;
@@ -768,13 +737,11 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     return identical(this, other) ||
         (other is _InvalidAmount<T> &&
             (identical(other.failedValue, failedValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                const DeepCollectionEquality().equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
   _$InvalidAmountCopyWith<T, _InvalidAmount<T>> get copyWith =>
@@ -862,8 +829,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
 }
 
 abstract class _InvalidAmount<T> implements ValueFailure<T> {
-  const factory _InvalidAmount({@required String failedValue}) =
-      _$_InvalidAmount<T>;
+  const factory _InvalidAmount({@required String failedValue}) = _$_InvalidAmount<T>;
 
   String get failedValue;
   _$InvalidAmountCopyWith<T, _InvalidAmount<T>> get copyWith;
@@ -878,11 +844,9 @@ abstract class _$TooLargeAmountCopyWith<T, $Res> {
 }
 
 /// @nodoc
-class __$TooLargeAmountCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class __$TooLargeAmountCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements _$TooLargeAmountCopyWith<T, $Res> {
-  __$TooLargeAmountCopyWithImpl(
-      _TooLargeAmount<T> _value, $Res Function(_TooLargeAmount<T>) _then)
+  __$TooLargeAmountCopyWithImpl(_TooLargeAmount<T> _value, $Res Function(_TooLargeAmount<T>) _then)
       : super(_value, (v) => _then(v as _TooLargeAmount<T>));
 
   @override
@@ -893,16 +857,14 @@ class __$TooLargeAmountCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(_TooLargeAmount<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+      failedValue: failedValue == freezed ? _value.failedValue : failedValue as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
-  const _$_TooLargeAmount({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$_TooLargeAmount({@required this.failedValue}) : assert(failedValue != null);
 
   @override
   final String failedValue;
@@ -917,13 +879,11 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     return identical(this, other) ||
         (other is _TooLargeAmount<T> &&
             (identical(other.failedValue, failedValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                const DeepCollectionEquality().equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
   _$TooLargeAmountCopyWith<T, _TooLargeAmount<T>> get copyWith =>
@@ -1011,8 +971,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
 }
 
 abstract class _TooLargeAmount<T> implements ValueFailure<T> {
-  const factory _TooLargeAmount({@required String failedValue}) =
-      _$_TooLargeAmount<T>;
+  const factory _TooLargeAmount({@required String failedValue}) = _$_TooLargeAmount<T>;
 
   String get failedValue;
   _$TooLargeAmountCopyWith<T, _TooLargeAmount<T>> get copyWith;
@@ -1020,18 +979,15 @@ abstract class _TooLargeAmount<T> implements ValueFailure<T> {
 
 /// @nodoc
 abstract class _$UniqueNameCopyWith<T, $Res> {
-  factory _$UniqueNameCopyWith(
-          _UniqueName<T> value, $Res Function(_UniqueName<T>) then) =
+  factory _$UniqueNameCopyWith(_UniqueName<T> value, $Res Function(_UniqueName<T>) then) =
       __$UniqueNameCopyWithImpl<T, $Res>;
   $Res call({String failedValue});
 }
 
 /// @nodoc
-class __$UniqueNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+class __$UniqueNameCopyWithImpl<T, $Res> extends _$ValueFailureCopyWithImpl<T, $Res>
     implements _$UniqueNameCopyWith<T, $Res> {
-  __$UniqueNameCopyWithImpl(
-      _UniqueName<T> _value, $Res Function(_UniqueName<T>) _then)
+  __$UniqueNameCopyWithImpl(_UniqueName<T> _value, $Res Function(_UniqueName<T>) _then)
       : super(_value, (v) => _then(v as _UniqueName<T>));
 
   @override
@@ -1042,16 +998,14 @@ class __$UniqueNameCopyWithImpl<T, $Res>
     Object failedValue = freezed,
   }) {
     return _then(_UniqueName<T>(
-      failedValue:
-          failedValue == freezed ? _value.failedValue : failedValue as String,
+      failedValue: failedValue == freezed ? _value.failedValue : failedValue as String,
     ));
   }
 }
 
 /// @nodoc
 class _$_UniqueName<T> implements _UniqueName<T> {
-  const _$_UniqueName({@required this.failedValue})
-      : assert(failedValue != null);
+  const _$_UniqueName({@required this.failedValue}) : assert(failedValue != null);
 
   @override
   final String failedValue;
@@ -1066,13 +1020,11 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     return identical(this, other) ||
         (other is _UniqueName<T> &&
             (identical(other.failedValue, failedValue) ||
-                const DeepCollectionEquality()
-                    .equals(other.failedValue, failedValue)));
+                const DeepCollectionEquality().equals(other.failedValue, failedValue)));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
   _$UniqueNameCopyWith<T, _UniqueName<T>> get copyWith =>

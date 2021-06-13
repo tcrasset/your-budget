@@ -10,21 +10,21 @@ import '../../../../models/utils.dart';
 import '../../modifyTransactions/modify_transaction_state.dart';
 
 class CheckedRow extends StatefulWidget {
-  final String subcategoryName;
+  final String/*!*/ subcategoryName;
   final TextStyle subcategoryStyle;
 
-  final String memo;
+  final String/*!*/ memo;
   final TextStyle memoStyle;
   final double amount;
   final TextStyle amountStyle;
-  final DateTime date;
+  final DateTime/*!*/ date;
   final TextStyle dateStyle;
   final String payeeName;
   final int transactionId;
 
   const CheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
       this.date, this.dateStyle, this.payeeName, this.subcategoryStyle, this.transactionId,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -62,7 +62,7 @@ class _CheckedRowState extends State<CheckedRow> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             if (widget.memo != "Starting balance")
-              Checkbox(value: isChecked, onChanged: handleCheckboxOnChanged),
+              Checkbox(value: isChecked, onChanged: handleCheckboxOnChanged as void Function(bool?)?),
             Expanded(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

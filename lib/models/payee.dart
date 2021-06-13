@@ -9,19 +9,19 @@ import 'constants.dart';
 /// It is defined using an unique [id] and a [name].
 class Payee {
   /// Unique id of this.
-  int id;
+  int? id;
 
   /// Name of this.
-  String name;
+  String? name;
 
   /// Default constructor of [Payee]
-  Payee({@required this.id, @required this.name});
+  Payee({required this.id, required this.name});
 
   /// Constructor building a [Payee] from a [json] representation taken
   /// from a database.
   Payee.fromJson(Map<String, dynamic> json) {
-    id = json[DatabaseConstants.PAYEE_ID] as int;
-    name = json[DatabaseConstants.PAYEE_NAME] as String;
+    id = json[DatabaseConstants.PAYEE_ID] as int?;
+    name = json[DatabaseConstants.PAYEE_NAME] as String?;
   }
 
   @override
@@ -38,6 +38,6 @@ class PayeeModel {
   final String name;
 
   PayeeModel({
-    @required this.name,
+    required this.name,
   });
 }

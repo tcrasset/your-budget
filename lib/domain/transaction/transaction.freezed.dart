@@ -62,8 +62,7 @@ mixin _$MoneyTransaction {
 
 /// @nodoc
 abstract class $MoneyTransactionCopyWith<$Res> {
-  factory $MoneyTransactionCopyWith(
-          MoneyTransaction value, $Res Function(MoneyTransaction) then) =
+  factory $MoneyTransactionCopyWith(MoneyTransaction value, $Res Function(MoneyTransaction) then) =
       _$MoneyTransactionCopyWithImpl<$Res>;
   $Res call(
       {UniqueId id,
@@ -79,8 +78,7 @@ abstract class $MoneyTransactionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyTransactionCopyWithImpl<$Res>
-    implements $MoneyTransactionCopyWith<$Res> {
+class _$MoneyTransactionCopyWithImpl<$Res> implements $MoneyTransactionCopyWith<$Res> {
   _$MoneyTransactionCopyWithImpl(this._value, this._then);
 
   final MoneyTransaction _value;
@@ -103,14 +101,11 @@ class _$MoneyTransactionCopyWithImpl<$Res>
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as UniqueId,
       subcatID: subcatID == freezed ? _value.subcatID : subcatID as UniqueId,
-      subcatName:
-          subcatName == freezed ? _value.subcatName : subcatName as Name,
+      subcatName: subcatName == freezed ? _value.subcatName : subcatName as Name,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as UniqueId,
       payeeName: payeeName == freezed ? _value.payeeName : payeeName as Name,
-      accountID:
-          accountID == freezed ? _value.accountID : accountID as UniqueId,
-      accountName:
-          accountName == freezed ? _value.accountName : accountName as Name,
+      accountID: accountID == freezed ? _value.accountID : accountID as UniqueId,
+      accountName: accountName == freezed ? _value.accountName : accountName as Name,
       amount: amount == freezed ? _value.amount : amount as Amount,
       memo: memo == freezed ? _value.memo : memo as Name,
       date: date == freezed ? _value.date : date as DateTime,
@@ -119,8 +114,7 @@ class _$MoneyTransactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$MoneyTransactionCopyWith<$Res>
-    implements $MoneyTransactionCopyWith<$Res> {
+abstract class _$MoneyTransactionCopyWith<$Res> implements $MoneyTransactionCopyWith<$Res> {
   factory _$MoneyTransactionCopyWith(
           _MoneyTransaction value, $Res Function(_MoneyTransaction) then) =
       __$MoneyTransactionCopyWithImpl<$Res>;
@@ -139,11 +133,9 @@ abstract class _$MoneyTransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MoneyTransactionCopyWithImpl<$Res>
-    extends _$MoneyTransactionCopyWithImpl<$Res>
+class __$MoneyTransactionCopyWithImpl<$Res> extends _$MoneyTransactionCopyWithImpl<$Res>
     implements _$MoneyTransactionCopyWith<$Res> {
-  __$MoneyTransactionCopyWithImpl(
-      _MoneyTransaction _value, $Res Function(_MoneyTransaction) _then)
+  __$MoneyTransactionCopyWithImpl(_MoneyTransaction _value, $Res Function(_MoneyTransaction) _then)
       : super(_value, (v) => _then(v as _MoneyTransaction));
 
   @override
@@ -165,14 +157,11 @@ class __$MoneyTransactionCopyWithImpl<$Res>
     return _then(_MoneyTransaction(
       id: id == freezed ? _value.id : id as UniqueId,
       subcatID: subcatID == freezed ? _value.subcatID : subcatID as UniqueId,
-      subcatName:
-          subcatName == freezed ? _value.subcatName : subcatName as Name,
+      subcatName: subcatName == freezed ? _value.subcatName : subcatName as Name,
       payeeID: payeeID == freezed ? _value.payeeID : payeeID as UniqueId,
       payeeName: payeeName == freezed ? _value.payeeName : payeeName as Name,
-      accountID:
-          accountID == freezed ? _value.accountID : accountID as UniqueId,
-      accountName:
-          accountName == freezed ? _value.accountName : accountName as Name,
+      accountID: accountID == freezed ? _value.accountID : accountID as UniqueId,
+      accountName: accountName == freezed ? _value.accountName : accountName as Name,
       amount: amount == freezed ? _value.amount : amount as Amount,
       memo: memo == freezed ? _value.memo : memo as Name,
       date: date == freezed ? _value.date : date as DateTime,
@@ -235,26 +224,19 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _MoneyTransaction &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.subcatID, subcatID) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatID, subcatID)) &&
+                const DeepCollectionEquality().equals(other.subcatID, subcatID)) &&
             (identical(other.subcatName, subcatName) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatName, subcatName)) &&
+                const DeepCollectionEquality().equals(other.subcatName, subcatName)) &&
             (identical(other.payeeID, payeeID) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeID, payeeID)) &&
+                const DeepCollectionEquality().equals(other.payeeID, payeeID)) &&
             (identical(other.payeeName, payeeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeName, payeeName)) &&
+                const DeepCollectionEquality().equals(other.payeeName, payeeName)) &&
             (identical(other.accountID, accountID) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountID, accountID)) &&
+                const DeepCollectionEquality().equals(other.accountID, accountID)) &&
             (identical(other.accountName, accountName) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountName, accountName)) &&
+                const DeepCollectionEquality().equals(other.accountName, accountName)) &&
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.memo, memo) ||

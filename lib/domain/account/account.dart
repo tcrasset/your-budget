@@ -16,9 +16,9 @@ part 'account.freezed.dart';
 @freezed
 abstract class Account implements _$Account {
   const factory Account({
-    @required UniqueId id,
-    @required Name name,
-    @required Amount balance,
+    required UniqueId id,
+    required Name name,
+    required Amount balance,
   }) = _Account;
 
   const Account._();

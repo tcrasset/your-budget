@@ -10,9 +10,9 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  String tName;
-  PayeeCreator creator;
+  late Queries mockQueries;
+  late String tName;
+  late PayeeCreator creator;
   setUp(() async {
     mockQueries = MockQueries();
     tName = "Test payee";
@@ -32,13 +32,13 @@ void main() {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addPayee(argThat(isA<PayeeModel>()))).thenAnswer((_) async => tId);
+    when(mockQueries.addPayee(argThat(isA<PayeeModel>())!)).thenAnswer((_) async => tId);
 
     //!Act
     final Payee payee = await creator.create();
 
     //!Assert
-    verify(mockQueries.addPayee(argThat(isA<PayeeModel>())));
+    verify(mockQueries.addPayee(argThat(isA<PayeeModel>())!));
     expect(payee.name, tName);
     expect(payee.id, tId);
   });

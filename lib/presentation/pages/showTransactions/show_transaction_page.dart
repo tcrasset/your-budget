@@ -22,8 +22,8 @@ import '../core/transactions/transaction_list.dart';
 // import '../modifyTransactions/modify_transactions.dart';
 
 class ShowTransactionPage extends StatelessWidget {
-  final String title;
-  const ShowTransactionPage({Key key, this.title}) : super(key: key);
+  final String? title;
+  const ShowTransactionPage({Key? key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +39,12 @@ class ShowTransactionPage extends StatelessWidget {
 }
 
 class TransactionScaffold extends StatelessWidget {
-  final String title;
-  const TransactionScaffold({Key key, this.title}) : super(key: key);
+  final String? title;
+  const TransactionScaffold({Key? key, this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isLoading;
+    bool? isLoading;
     return MultiBlocListener(
         listeners: [
           BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
@@ -55,7 +55,7 @@ class TransactionScaffold extends StatelessWidget {
                 orElse: () => false,
               );
 
-              final String errorMessage = state.maybeMap(
+              final String? errorMessage = state.maybeMap(
                 orElse: () => null,
                 loadFailure: (_) => "Failed to load the transactions. Please contact support.",
               );
@@ -67,7 +67,7 @@ class TransactionScaffold extends StatelessWidget {
           )
         ],
         child: Scaffold(
-          appBar: getAppbar(title, () => null),
+          appBar: getAppbar(title!, () => null),
           body: Stack(
             children: [
               OptionalTransactionList(),
@@ -117,8 +117,8 @@ class OptionalTransactionList extends StatelessWidget {
 
 class TransactionListView extends StatelessWidget {
   const TransactionListView({
-    Key key,
-    @required this.transactions,
+    Key? key,
+    required this.transactions,
   }) : super(key: key);
 
   final List<MoneyTransaction> transactions;
@@ -141,9 +141,9 @@ class AtLeastOneTransactionList extends StatelessWidget {
   final Account account;
 
   const AtLeastOneTransactionList({
-    Key key,
-    @required this.account,
-    @required this.isEditable,
+    Key? key,
+    required this.account,
+    required this.isEditable,
   }) : super(key: key);
 
   @override
@@ -156,7 +156,7 @@ class AtLeastOneTransactionList extends StatelessWidget {
 
 class EmptyTransactionList extends StatelessWidget {
   const EmptyTransactionList({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -184,12 +184,12 @@ AppBar getAppbar(String title, Function() handleModifyTransactions) {
 }
 
 class AccountButtons extends StatelessWidget {
-  final String accountText;
+  final String? accountText;
 
-  const AccountButtons({Key key, this.accountText}) : super(key: key);
+  const AccountButtons({Key? key, this.accountText}) : super(key: key);
 
   Future<void> handleButtonOnPressed(
-      {@required BuildContext context, @required bool increment}) async {
+      {required BuildContext context, required bool increment}) async {
     context.read<TransactionWatcherBloc>().add(
           TransactionWatcherEvent.cycleAccount(increment: increment),
         );
@@ -206,7 +206,7 @@ class AccountButtons extends StatelessWidget {
               icon: const Icon(Icons.arrow_back),
               onPressed: () => handleButtonOnPressed(context: context, increment: false)),
           Text(
-            accountText,
+            accountText!,
             style: const TextStyle(fontSize: 20),
           ),
           IconButton(

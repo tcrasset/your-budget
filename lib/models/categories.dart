@@ -9,38 +9,38 @@ import 'constants.dart';
 /// the value [budgeted] is the money budgeted for the month and
 /// the value [available] is the money left to be spent for the month.
 abstract class Category {
-  int id;
-  String name;
-  double budgeted;
-  double available;
+  int? id;
+  String? name;
+  double? budgeted;
+  double? available;
 
   Category(
-      {@required this.id, @required this.name, @required this.budgeted, @required this.available});
+      {required this.id, required this.name, required this.budgeted, required this.available});
 }
 
 /// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
 class SubCategory extends Category {
-  final String parentId;
+  final String? parentId;
 
   /// Default SubCategory constructor
   SubCategory(
-      {@required int id,
-      @required String parentId,
-      @required String name,
-      @required double budgeted,
-      @required double available})
+      {required int? id,
+      required String? parentId,
+      required String? name,
+      required double? budgeted,
+      required double? available})
       : parentId = parentId,
         super(id: id, name: name, budgeted: budgeted, available: available);
 
   /// Constructor building a SubCategory from a [json] representation taken
   /// from a database
   SubCategory.fromJson(Map<String, dynamic> json)
-      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE] as String,
+      : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE] as String?,
         super(
-            id: json[DatabaseConstants.SUBCAT_ID] as int, //
-            name: json[DatabaseConstants.SUBCAT_NAME] as String,
-            budgeted: json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double,
-            available: json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double);
+            id: json[DatabaseConstants.SUBCAT_ID] as int?, //
+            name: json[DatabaseConstants.SUBCAT_NAME] as String?,
+            budgeted: json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double?,
+            available: json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double?);
 
   @override
   String toString() {
@@ -60,11 +60,11 @@ class SubCategory extends Category {
   }
 
   SubCategory copyWith({
-    int id,
-    String parentId,
-    String name,
-    double budgeted,
-    double available,
+    int? id,
+    String? parentId,
+    String? name,
+    double? budgeted,
+    double? available,
   }) {
     return SubCategory(
       id: id ?? this.id,
@@ -96,26 +96,26 @@ class SubCategory extends Category {
 
 /// Budgeting [Category] that is a parent of one or multiple [SubCategory]'s
 class MainCategory extends Category {
-  List<SubCategory> _subcategories = [];
+  List<SubCategory?> _subcategories = [];
 
   /// Default [MainCategory] constructor, which sets the budgeted and available values to 0.00
-  MainCategory({@required int id, @required String name})
+  MainCategory({required int? id, required String? name})
       : super(id: id, name: name, budgeted: 0.00, available: 0.00);
 
   /// Constructor building a MainCategory from a [json] representation taken
   /// from a database
   MainCategory.fromJson(Map<String, dynamic> json)
       : super(
-            id: json[DatabaseConstants.CATEGORY_ID] as int, //
-            name: json[DatabaseConstants.CATEGORY_NAME] as String,
+            id: json[DatabaseConstants.CATEGORY_ID] as int?, //
+            name: json[DatabaseConstants.CATEGORY_NAME] as String?,
             budgeted: 0.00,
             available: 0.00);
 
-  List<SubCategory> get subcategories {
+  List<SubCategory?> get subcategories {
     return _subcategories;
   }
 
-  set subcategories(List<SubCategory> subcategories) {
+  set subcategories(List<SubCategory?> subcategories) {
     _subcategories = subcategories;
   }
 
@@ -126,11 +126,11 @@ class MainCategory extends Category {
   void updateFields() {
     double budgeted = 0;
     double available = 0;
-    _subcategories.forEach((SubCategory cat) {
-      budgeted += cat.budgeted;
+    _subcategories.forEach((SubCategory? cat) {
+      budgeted += cat!.budgeted!;
     });
-    _subcategories.forEach((SubCategory cat) {
-      available += cat.available;
+    _subcategories.forEach((SubCategory? cat) {
+      available += cat!.available!;
     });
 
     this.budgeted = budgeted;
@@ -142,7 +142,7 @@ class MainCategory extends Category {
     return MainCategory(id: id, name: name);
   }
 
-  MainCategory copyWith({int id, String name}) {
+  MainCategory copyWith({int? id, String? name}) {
     return MainCategory(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -154,13 +154,13 @@ class MainCategory extends Category {
     bool subcategoriesAreEqual = true;
 
     //TODO: Just changed this.subcategories to _subcategorie. Check if that introduced some bugs
-    for (final SubCategory thissubcat in _subcategories) {
+    for (final SubCategory? thissubcat in _subcategories) {
       // If the subcategory lists don't have the same order, we would
       // still like the equality to hold.
       // Therefore, we find the corresponding subcategory in [mainCategory].
       int correspondingIndex = 0;
-      for (final SubCategory argsubcat in mainCategory.subcategories) {
-        if (thissubcat.hasSameValues(argsubcat)) {
+      for (final SubCategory? argsubcat in mainCategory.subcategories) {
+        if (thissubcat!.hasSameValues(argsubcat!)) {
           break;
         }
         correspondingIndex++;
@@ -188,7 +188,7 @@ class MainCategory extends Category {
   }
 
   /// Adds multiple [subcategories] as a new subcategories to the list [_subcategories].
-  void addMultipleSubcategories(List<SubCategory> subcategories) {
+  void addMultipleSubcategories(List<SubCategory?> subcategories) {
     subcategories.forEach((sub) {
       _subcategories.add(sub);
     });
@@ -196,8 +196,8 @@ class MainCategory extends Category {
   }
 
   /// Removes the subcategory specified by [subcategoryId] from the list [_subcategories].
-  void removeSubcategory(int subcategoryId) {
-    subcategories.removeWhere((subcat) => subcat.id == subcategoryId);
+  void removeSubcategory(int? subcategoryId) {
+    subcategories.removeWhere((subcat) => subcat!.id == subcategoryId);
     updateFields();
   }
 
@@ -211,30 +211,30 @@ class MainCategory extends Category {
 /// Class representing the values tied to a SubCategory, represented by [subcategoryId], for a
 /// particular month set by [month] and [year].
 class BudgetValue {
-  int id;
-  int subcategoryId;
-  double budgeted;
-  double available;
-  int month;
-  int year;
+  int? id;
+  int? subcategoryId;
+  double? budgeted;
+  double? available;
+  int? month;
+  int? year;
 
   BudgetValue(
-      {@required this.id,
-      @required this.subcategoryId,
-      @required this.budgeted,
-      @required this.available,
-      @required this.year,
-      @required this.month});
+      {required this.id,
+      required this.subcategoryId,
+      required this.budgeted,
+      required this.available,
+      required this.year,
+      required this.month});
 
   /// Constructor building a BudgetValue from a [json] representation taken
   /// from a database.
   BudgetValue.fromJson(Map<String, dynamic> json)
-      : id = json[DatabaseConstants.BUDGET_VALUE_ID] as int, //
-        subcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int,
-        budgeted = json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double,
-        available = json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double,
-        year = json[DatabaseConstants.BUDGET_VALUE_YEAR] as int,
-        month = json[DatabaseConstants.BUDGET_VALUE_MONTH] as int;
+      : id = json[DatabaseConstants.BUDGET_VALUE_ID] as int?, //
+        subcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int?,
+        budgeted = json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double?,
+        available = json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double?,
+        year = json[DatabaseConstants.BUDGET_VALUE_YEAR] as int?,
+        month = json[DatabaseConstants.BUDGET_VALUE_MONTH] as int?;
 
   @override
   String toString() {
@@ -252,12 +252,12 @@ class BudgetValue {
   }
 
   BudgetValue copyWith({
-    int id,
-    int subcategoryId,
-    double budgeted,
-    double available,
-    int month,
-    int year,
+    int? id,
+    int? subcategoryId,
+    double? budgeted,
+    double? available,
+    int? month,
+    int? year,
   }) {
     return BudgetValue(
       id: id ?? this.id,

@@ -16,9 +16,9 @@ import 'components/date_button.dart';
 import 'components/to_be_budgeted.dart';
 
 class BudgetPage extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  const BudgetPage({Key key, this.title}) : super(key: key);
+  const BudgetPage({Key? key, this.title}) : super(key: key);
 
   @override
   _BudgetPageState createState() => _BudgetPageState();
@@ -43,7 +43,7 @@ class _BudgetPageState extends State<BudgetPage> {
   @override
   Widget build(BuildContext context) {
     final BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context);
-    final ButtonDial buttonDial = buttonDialState.showButtonDial
+    final ButtonDial? buttonDial = buttonDialState.showButtonDial
         ? ButtonDial(
             MediaQuery.of(context).size.height * 0.3, MediaQuery.of(context).size.width * 0.6)
         : null;
@@ -51,7 +51,7 @@ class _BudgetPageState extends State<BudgetPage> {
     print("Budget page build");
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(widget.title!),
           backgroundColor: Constants.PRIMARY_COLOR,
           leading: const Icon(Constants.BUDGET_ICON),
           actions: <Widget>[

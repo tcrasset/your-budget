@@ -32,7 +32,7 @@ class _TransactionListState extends State<TransactionList> {
 
   @override
   Widget build(BuildContext context) {
-    final List<MoneyTransaction> transactionsOfAccount =
+    final List<MoneyTransaction?> transactionsOfAccount =
         _getMoneyTransactions(widget.appState.transactions, widget.account.id);
 
     return Scrollbar(
@@ -47,22 +47,22 @@ class _TransactionListState extends State<TransactionList> {
         itemBuilder: (BuildContext context, int index) {
           return Card(
               child: TransactionRow(
-                  transactionsOfAccount[index], widget.appState.allCategories, widget.isEditable));
+                  transactionsOfAccount[index]!, widget.appState.allCategories, widget.isEditable));
         },
       ),
     );
   }
 }
 
-List<MoneyTransaction> _getMoneyTransactions(
-    UnmodifiableListView<MoneyTransaction> transactions, int currentAccountId) {
+List<MoneyTransaction?> _getMoneyTransactions(
+    UnmodifiableListView<MoneyTransaction?> transactions, int currentAccountId) {
   /// Here, [currentAccountId] is the outgoingAccount.
 
-  final List<MoneyTransaction> transactionsOfAccount = [];
+  final List<MoneyTransaction?> transactionsOfAccount = [];
   for (final transaction in transactions) {
-    final bool isAccountPayee = transaction.payeeID < 0;
+    final bool isAccountPayee = transaction!.payeeID! < 0;
 
-    final bool currentAccountIsPayeeAccount = -transaction.payeeID == currentAccountId;
+    final bool currentAccountIsPayeeAccount = -transaction.payeeID! == currentAccountId;
     final bool currentAccountIsStandardAccount = transaction.accountID == currentAccountId;
 
     if ((currentAccountIsStandardAccount && !isAccountPayee) ||
@@ -76,6 +76,6 @@ List<MoneyTransaction> _getMoneyTransactions(
       transactionsOfAccount.add(negativeAmountTransaction);
     }
   }
-  transactionsOfAccount.sort((a, b) => a.date.compareTo(b.date));
+  transactionsOfAccount.sort((a, b) => a!.date.compareTo(b!.date));
   return transactionsOfAccount.reversed.toList();
 }

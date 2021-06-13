@@ -84,8 +84,7 @@ abstract class $AccountCreatorEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountCreatorEventCopyWithImpl<$Res>
-    implements $AccountCreatorEventCopyWith<$Res> {
+class _$AccountCreatorEventCopyWithImpl<$Res> implements $AccountCreatorEventCopyWith<$Res> {
   _$AccountCreatorEventCopyWithImpl(this._value, this._then);
 
   final AccountCreatorEvent _value;
@@ -95,17 +94,14 @@ class _$AccountCreatorEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(
-          _Initialized value, $Res Function(_Initialized) then) =
+  factory _$InitializedCopyWith(_Initialized value, $Res Function(_Initialized) then) =
       __$InitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitializedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+class __$InitializedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
     implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(
-      _Initialized _value, $Res Function(_Initialized) _then)
+  __$InitializedCopyWithImpl(_Initialized _value, $Res Function(_Initialized) _then)
       : super(_value, (v) => _then(v as _Initialized));
 
   @override
@@ -198,18 +194,15 @@ abstract class _Initialized implements AccountCreatorEvent {
 
 /// @nodoc
 abstract class _$NameChangedCopyWith<$Res> {
-  factory _$NameChangedCopyWith(
-          _NameChanged value, $Res Function(_NameChanged) then) =
+  factory _$NameChangedCopyWith(_NameChanged value, $Res Function(_NameChanged) then) =
       __$NameChangedCopyWithImpl<$Res>;
   $Res call({String name});
 }
 
 /// @nodoc
-class __$NameChangedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+class __$NameChangedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
     implements _$NameChangedCopyWith<$Res> {
-  __$NameChangedCopyWithImpl(
-      _NameChanged _value, $Res Function(_NameChanged) _then)
+  __$NameChangedCopyWithImpl(_NameChanged _value, $Res Function(_NameChanged) _then)
       : super(_value, (v) => _then(v as _NameChanged));
 
   @override
@@ -246,8 +239,7 @@ class _$_NameChanged implements _NameChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
   @override
   _$NameChangedCopyWith<_NameChanged> get copyWith =>
@@ -325,18 +317,15 @@ abstract class _NameChanged implements AccountCreatorEvent {
 
 /// @nodoc
 abstract class _$BalanceChangedCopyWith<$Res> {
-  factory _$BalanceChangedCopyWith(
-          _BalanceChanged value, $Res Function(_BalanceChanged) then) =
+  factory _$BalanceChangedCopyWith(_BalanceChanged value, $Res Function(_BalanceChanged) then) =
       __$BalanceChangedCopyWithImpl<$Res>;
   $Res call({String balance});
 }
 
 /// @nodoc
-class __$BalanceChangedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+class __$BalanceChangedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
     implements _$BalanceChangedCopyWith<$Res> {
-  __$BalanceChangedCopyWithImpl(
-      _BalanceChanged _value, $Res Function(_BalanceChanged) _then)
+  __$BalanceChangedCopyWithImpl(_BalanceChanged _value, $Res Function(_BalanceChanged) _then)
       : super(_value, (v) => _then(v as _BalanceChanged));
 
   @override
@@ -373,8 +362,7 @@ class _$_BalanceChanged implements _BalanceChanged {
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(balance);
+  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(balance);
 
   @override
   _$BalanceChangedCopyWith<_BalanceChanged> get copyWith =>
@@ -452,8 +440,7 @@ abstract class _BalanceChanged implements AccountCreatorEvent {
 
 /// @nodoc
 abstract class _$SavedCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) =
-      __$SavedCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) = __$SavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -556,16 +543,11 @@ class _$AccountCreatorStateTearOff {
 
 // ignore: unused_element
   _AccountCreatorState call(
-      {@required
-          Account account,
-      @required
-          bool showErrorMessages,
-      @required
-          bool isSaving,
-      @required
-          bool isEditing,
-      @required
-          Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
+      {@required Account account,
+      @required bool showErrorMessages,
+      @required bool isSaving,
+      @required bool isEditing,
+      @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
     return _AccountCreatorState(
       account: account,
       showErrorMessages: showErrorMessages,
@@ -607,8 +589,7 @@ abstract class $AccountCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountCreatorStateCopyWithImpl<$Res>
-    implements $AccountCreatorStateCopyWith<$Res> {
+class _$AccountCreatorStateCopyWithImpl<$Res> implements $AccountCreatorStateCopyWith<$Res> {
   _$AccountCreatorStateCopyWithImpl(this._value, this._then);
 
   final AccountCreatorState _value;
@@ -625,9 +606,8 @@ class _$AccountCreatorStateCopyWithImpl<$Res>
   }) {
     return _then(_value.copyWith(
       account: account == freezed ? _value.account : account as Account,
-      showErrorMessages: showErrorMessages == freezed
-          ? _value.showErrorMessages
-          : showErrorMessages as bool,
+      showErrorMessages:
+          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
       isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
       isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
@@ -648,10 +628,9 @@ class _$AccountCreatorStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$AccountCreatorStateCopyWith<$Res>
-    implements $AccountCreatorStateCopyWith<$Res> {
-  factory _$AccountCreatorStateCopyWith(_AccountCreatorState value,
-          $Res Function(_AccountCreatorState) then) =
+abstract class _$AccountCreatorStateCopyWith<$Res> implements $AccountCreatorStateCopyWith<$Res> {
+  factory _$AccountCreatorStateCopyWith(
+          _AccountCreatorState value, $Res Function(_AccountCreatorState) then) =
       __$AccountCreatorStateCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -666,8 +645,7 @@ abstract class _$AccountCreatorStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AccountCreatorStateCopyWithImpl<$Res>
-    extends _$AccountCreatorStateCopyWithImpl<$Res>
+class __$AccountCreatorStateCopyWithImpl<$Res> extends _$AccountCreatorStateCopyWithImpl<$Res>
     implements _$AccountCreatorStateCopyWith<$Res> {
   __$AccountCreatorStateCopyWithImpl(
       _AccountCreatorState _value, $Res Function(_AccountCreatorState) _then)
@@ -686,9 +664,8 @@ class __$AccountCreatorStateCopyWithImpl<$Res>
   }) {
     return _then(_AccountCreatorState(
       account: account == freezed ? _value.account : account as Account,
-      showErrorMessages: showErrorMessages == freezed
-          ? _value.showErrorMessages
-          : showErrorMessages as bool,
+      showErrorMessages:
+          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
       isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
       isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
@@ -733,22 +710,17 @@ class _$_AccountCreatorState implements _AccountCreatorState {
     return identical(this, other) ||
         (other is _AccountCreatorState &&
             (identical(other.account, account) ||
-                const DeepCollectionEquality()
-                    .equals(other.account, account)) &&
+                const DeepCollectionEquality().equals(other.account, account)) &&
             (identical(other.showErrorMessages, showErrorMessages) ||
                 const DeepCollectionEquality()
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.isSaving, isSaving) ||
-                const DeepCollectionEquality()
-                    .equals(other.isSaving, isSaving)) &&
+                const DeepCollectionEquality().equals(other.isSaving, isSaving)) &&
             (identical(other.isEditing, isEditing) ||
+                const DeepCollectionEquality().equals(other.isEditing, isEditing)) &&
+            (identical(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality()
-                    .equals(other.isEditing, isEditing)) &&
-            (identical(other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption) ||
-                const DeepCollectionEquality().equals(
-                    other.saveFailureOrSuccessOption,
-                    saveFailureOrSuccessOption)));
+                    .equals(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption)));
   }
 
   @override
@@ -762,22 +734,16 @@ class _$_AccountCreatorState implements _AccountCreatorState {
 
   @override
   _$AccountCreatorStateCopyWith<_AccountCreatorState> get copyWith =>
-      __$AccountCreatorStateCopyWithImpl<_AccountCreatorState>(
-          this, _$identity);
+      __$AccountCreatorStateCopyWithImpl<_AccountCreatorState>(this, _$identity);
 }
 
 abstract class _AccountCreatorState implements AccountCreatorState {
   const factory _AccountCreatorState(
-          {@required
-              Account account,
-          @required
-              bool showErrorMessages,
-          @required
-              bool isSaving,
-          @required
-              bool isEditing,
-          @required
-              Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
+          {@required Account account,
+          @required bool showErrorMessages,
+          @required bool isSaving,
+          @required bool isEditing,
+          @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
       _$_AccountCreatorState;
 
   @override

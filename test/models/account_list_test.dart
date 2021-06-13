@@ -10,9 +10,9 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  Account tAccount;
-  AccountList accountList;
+  Queries? mockQueries;
+  Account? tAccount;
+  late AccountList accountList;
   const int tId = 99;
   setUp(() async {
     mockQueries = MockQueries();
@@ -40,28 +40,28 @@ void main() {
   test('verify that creditAccount() adds the specified amout to the given account', () {
     //!Arrange
     const double tAmount = 50.00;
-    final double previousBalance = tAccount.balance;
+    final double previousBalance = tAccount!.balance;
     //!Act
     accountList.creditAccount(id: tId, amount: tAmount);
     //!Assert
-    verify(mockQueries.updateAccount(argThat(isA<Account>())));
-    verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
+    verify(mockQueries!.updateAccount(argThat(isA<Account>())!));
+    verify(mockQueries!.updateMostRecentAccountUsed(tAccount!.id));
 
-    final Account account = accountList.accounts.singleWhere((account) => account.id == tId);
+    final Account account = accountList.accounts.singleWhere((account) => account!.id == tId)!;
     expect(account.balance, previousBalance + tAmount);
   });
 
   test('verify that debitAccount() removes the a specified amout to the given account', () {
     //!Arrange
     const double tAmount = 50.00;
-    final double previousBalance = tAccount.balance;
+    final double previousBalance = tAccount!.balance;
     //!Act
     accountList.debitAccount(id: tId, amount: tAmount);
     //!Assert
-    verify(mockQueries.updateAccount(argThat(isA<Account>())));
-    verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
+    verify(mockQueries!.updateAccount(argThat(isA<Account>())!));
+    verify(mockQueries!.updateMostRecentAccountUsed(tAccount!.id));
 
-    final Account account = accountList.accounts.singleWhere((account) => account.id == tId);
+    final Account account = accountList.accounts.singleWhere((account) => account!.id == tId)!;
     expect(account.balance, previousBalance - tAmount);
   });
 
@@ -71,28 +71,28 @@ void main() {
     //!Arrange
 
     //!Act
-    accountList.setMostRecentAccount(tAccount.id);
+    accountList.setMostRecentAccount(tAccount!.id);
     //!Assert
-    verify(mockQueries.updateMostRecentAccountUsed(tAccount.id));
+    verify(mockQueries!.updateMostRecentAccountUsed(tAccount!.id));
   });
 
   test('when mostRecentAccount getter is called, return the most recently' + ' used account.',
       () async {
     //!Arrange
-    when(mockQueries.getMostRecentAccountUsed()).thenAnswer((_) async => tAccount.id);
+    when(mockQueries!.getMostRecentAccountUsed()).thenAnswer((_) async => tAccount!.id);
     //!Act
-    Account mostRecent = await accountList.getMostRecentAccount();
+    Account? mostRecent = await accountList.getMostRecentAccount();
     //!Assert
 
     // On first call, check that it gets it from the database
-    verify(mockQueries.getMostRecentAccountUsed());
+    verify(mockQueries!.getMostRecentAccountUsed());
 
     expect(mostRecent, tAccount);
 
     clearInteractions(mockQueries);
     // On second call, check that it was cached
     mostRecent = await accountList.getMostRecentAccount();
-    verifyNever(mockQueries.getMostRecentAccountUsed());
+    verifyNever(mockQueries!.getMostRecentAccountUsed());
   });
 
   test(
@@ -104,7 +104,7 @@ void main() {
     accountList.add(tAccount2);
     accountList.add(tAccount3);
 
-    accountList.setMostRecentAccount(tAccount.id);
+    accountList.setMostRecentAccount(tAccount!.id);
     //!Act
     accountList.cycleNextAccount();
     expect(await accountList.getMostRecentAccount(), tAccount2);

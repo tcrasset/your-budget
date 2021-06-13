@@ -20,10 +20,10 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
   final ITransactionRepository transactionRepository;
   final IAccountRepository accountRepository;
 
-  TransactionWatcherBloc({@required this.transactionRepository, @required this.accountRepository})
+  TransactionWatcherBloc({required this.transactionRepository, required this.accountRepository})
       : super(const TransactionWatcherState.initial());
 
-  StreamSubscription<List<MoneyTransaction>> _transactionStreamSubscription;
+  StreamSubscription<List<MoneyTransaction>>? _transactionStreamSubscription;
   int currentAccountID = 1; // First ID in database is at 1
 
   @override
@@ -56,7 +56,7 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
           (numberOfAccounts) {
             if (numberOfAccounts != 0) {
               currentAccountID =
-                  (currentAccountID + (e.increment ? 1 : -1) - 1) % numberOfAccounts +
+                  (currentAccountID + (e.increment ? 1 : -1) - 1) % numberOfAccounts! +
                       1; // -1 then +1 so that is never goes to 0
               add(const TransactionWatcherEvent.watchTransactionsStarted());
             }

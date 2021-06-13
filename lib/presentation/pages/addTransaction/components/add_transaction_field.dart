@@ -15,11 +15,11 @@ class AddTransactionField extends HookWidget {
   final Future<void> Function(BuildContext) onTap;
 
   const AddTransactionField({
-    @required this.name,
-    @required this.defaultValue,
-    @required this.validator,
-    @required this.nameGetter,
-    @required this.onTap,
+    required this.name,
+    required this.defaultValue,
+    required this.validator,
+    required this.nameGetter,
+    required this.onTap,
   });
 
   @override
@@ -50,9 +50,9 @@ class RowContainer extends StatelessWidget {
 
   final Widget childWidget;
   const RowContainer({
-    Key key,
-    @required this.name,
-    @required this.childWidget,
+    Key? key,
+    required this.name,
+    required this.childWidget,
   }) : super(key: key);
 
   @override

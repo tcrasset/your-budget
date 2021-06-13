@@ -6,9 +6,9 @@ class InProgressOverlay extends StatelessWidget {
   final String textDisplayed;
 
   const InProgressOverlay({
-    Key key,
-    @required this.showOverlay,
-    @required this.textDisplayed,
+    Key? key,
+    required this.showOverlay,
+    required this.textDisplayed,
   }) : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class InProgressOverlay extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 textDisplayed,
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       color: Colors.white,
                       fontSize: 16,
                     ),

@@ -25,7 +25,7 @@ class AmountInputContainer extends HookWidget {
   /// [onTap()] resets the value to a chosen default value.
 
   const AmountInputContainer({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static final _zero = Constants.CURRENCY_FORMAT.format(0);
@@ -33,13 +33,13 @@ class AmountInputContainer extends HookWidget {
   void changeAmount(BuildContext context, String value) =>
       _onAmountChange(context, _removeSymbol(value));
 
-  String validateAmount(BuildContext context) =>
+  String? validateAmount(BuildContext context) =>
       context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
             (f) => _failAccountClosure(f),
             (_) => null,
           );
 
-  String getAmount(TransactionCreatorState state) {
+  String? getAmount(TransactionCreatorState state) {
     final value = state.moneyTransaction.amount.value.fold(
       (f) => null,
       (v) => Constants.CURRENCY_FORMAT.format(v).trim(),
@@ -48,10 +48,10 @@ class AmountInputContainer extends HookWidget {
   }
 
   void toggleSwitch(
-      BuildContext context, TextEditingController controller, ValueNotifier<bool> isPositive) {
+      BuildContext context, TextEditingController? controller, ValueNotifier<bool> isPositive) {
     isPositive.value = !isPositive.value;
     final String newAmount =
-        isPositive.value ? _removeMinusSign(controller) : _addMinusSign(controller);
+        isPositive.value ? _removeMinusSign(controller!) : _addMinusSign(controller!);
     _onAmountChange(context, _removeSymbol(newAmount));
   }
 
@@ -65,7 +65,7 @@ class AmountInputContainer extends HookWidget {
             value,
           ));
 
-  String _failAccountClosure(ValueFailure f) {
+  String? _failAccountClosure(ValueFailure f) {
     final result = f.maybeMap(
       tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
       invalidAmount: (_) => "Amount is invalid. Use only numerical characters.",
@@ -82,7 +82,7 @@ class AmountInputContainer extends HookWidget {
     const TextStyle _negativeAmountTextStyle =
         TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
-    final _controller = useTextEditingController(text: _zero);
+    final TextEditingController? _controller = useTextEditingController(text: _zero);
     final _isPositive = useState(true);
 
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
@@ -92,8 +92,8 @@ class AmountInputContainer extends HookWidget {
         // Thus, here is the only time where we have to cast from number to String
         // and where we have to change the selection
         _controller
-          ..text = getAmount(state)
-          ..selection = TextSelection.collapsed(offset: _controller.text.length);
+          ..text = getAmount(state)!
+          ..selection = TextSelection.collapsed(offset: _controller!.text.length);
       },
       builder: (context, state) {
         return Container(

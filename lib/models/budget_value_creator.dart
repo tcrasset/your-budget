@@ -8,20 +8,20 @@ import 'creator.dart';
 import 'queries.dart';
 
 class BudgetValueCreator implements Creator<BudgetValue> {
-  final Queries queryContext;
-  final int subcategoryId;
+  final Queries? queryContext;
+  final int? subcategoryId;
   final double budgeted;
   final double available;
-  final int month;
-  final int year;
+  final int? month;
+  final int? year;
 
   BudgetValueCreator({
-    @required this.queryContext,
-    @required this.subcategoryId,
-    @required this.budgeted,
-    @required this.available,
-    @required this.month,
-    @required this.year,
+    required this.queryContext,
+    required this.subcategoryId,
+    required this.budgeted,
+    required this.available,
+    required this.month,
+    required this.year,
   });
 
   @override
@@ -34,7 +34,7 @@ class BudgetValueCreator implements Creator<BudgetValue> {
       year: year,
     );
 
-    final int id = await queryContext.addBudgetValue(budgetValueModel);
+    final int id = await queryContext!.addBudgetValue(budgetValueModel);
     return BudgetValue(
       id: id,
       subcategoryId: subcategoryId,

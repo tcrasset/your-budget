@@ -11,13 +11,13 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  int tSubcategoryId;
-  double tBudgeted;
-  double tAvailable;
-  int tMonth;
-  int tYear;
-  BudgetValueCreator creator;
+  late Queries mockQueries;
+  late int tSubcategoryId;
+  late double tBudgeted;
+  late double tAvailable;
+  int? tMonth;
+  int? tYear;
+  late BudgetValueCreator creator;
   setUp(() async {
     mockQueries = MockQueries();
     tSubcategoryId = 20;
@@ -49,13 +49,13 @@ void main() {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>()))).thenAnswer((_) async => tId);
+    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())!)).thenAnswer((_) async => tId);
 
     //!Act
     final BudgetValue budgetValue = await creator.create();
 
     //!Assert
-    verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())));
+    verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())!));
     expect(budgetValue.subcategoryId, tSubcategoryId);
     expect(budgetValue.budgeted, tBudgeted);
     expect(budgetValue.available, tAvailable);

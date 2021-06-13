@@ -19,11 +19,11 @@ part 'subcategory.freezed.dart';
 @freezed
 abstract class Subcategory implements _$Subcategory {
   const factory Subcategory({
-    @required UniqueId id,
-    @required UniqueId categoryID,
-    @required Name name,
-    @required Amount budgeted,
-    @required Amount available,
+    required UniqueId id,
+    required UniqueId categoryID,
+    required Name name,
+    required Amount budgeted,
+    required Amount available,
   }) = _Subcategory;
 
   const Subcategory._();

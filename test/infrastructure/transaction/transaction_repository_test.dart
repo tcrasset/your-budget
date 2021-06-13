@@ -15,16 +15,16 @@ import 'package:your_budget/models/constants.dart';
 class MockDatabase extends Mock implements Database {}
 
 void main() {
-  Database mockDatabase;
-  SQFliteTransactionRepository repository;
+  late Database mockDatabase;
+  late SQFliteTransactionRepository repository;
   int tPayeeId;
-  int tAccountId;
+  late int tAccountId;
   int tSubcatId;
   double tAmount;
   DateTime tDate;
   String tMemo;
-  MoneyTransaction transaction;
-  MoneyTransactionDTO transactionDTO;
+  late MoneyTransaction transaction;
+  late MoneyTransactionDTO transactionDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
     repository = SQFliteTransactionRepository(database: mockDatabase);
@@ -119,7 +119,7 @@ void main() {
       MoneyTransactionDTO.fromDomain(tTransaction2).toJson(),
     ];
 
-    when(mockDatabase.rawQuery(any, [tAccountId])).thenAnswer((_) async => tRawTransactions);
+    when(mockDatabase.rawQuery(any!, [tAccountId])).thenAnswer((_) async => tRawTransactions);
     //!Act
     final transactions = await repository.getAccountTransactions(tAccountId);
     //!Assert

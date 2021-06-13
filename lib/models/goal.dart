@@ -10,22 +10,22 @@ const List<String> goalTypeNames = ["Target amount", "Target amount by date", "M
 /// Depending on the [goalType], the goal end date is specified using [month] and [year].
 class Goal {
   /// Unique id of this.
-  int id;
+  int? id;
 
   /// Type of goal.
-  GoalType goalType;
+  GoalType? goalType;
 
   /// Month of the goal end date, if the [goalType] needs it.
-  int month;
+  int? month;
 
   /// Year of the goal end date, if the [goalType] needs it.
-  int year;
+  int? year;
 
   ///Identifier of the [SubCategory] that is targeted by this.
-  int correspondingSubcategoryId;
+  int? correspondingSubcategoryId;
 
   ///Target amount that is tried to be reached.
-  double amount;
+  double? amount;
 
   //TODO: Check for correct values depending on [goalType]
 
@@ -36,12 +36,12 @@ class Goal {
   /// Constructor building a [Goal] from a [json] representation taken
   /// from a database.
   Goal.fromJson(Map<String, dynamic> json) {
-    id = json[DatabaseConstants.GOAL_ID] as int;
-    correspondingSubcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int;
+    id = json[DatabaseConstants.GOAL_ID] as int?;
+    correspondingSubcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int?;
     goalType = GoalType.values[json[DatabaseConstants.GOAL_TYPE] as int];
-    amount = json[DatabaseConstants.GOAL_AMOUNT] as double;
-    year = json[DatabaseConstants.GOAL_YEAR] as int;
-    month = json[DatabaseConstants.GOAL_MONTH] as int;
+    amount = json[DatabaseConstants.GOAL_AMOUNT] as double?;
+    year = json[DatabaseConstants.GOAL_YEAR] as int?;
+    month = json[DatabaseConstants.GOAL_MONTH] as int?;
   }
 
   @override

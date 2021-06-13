@@ -15,16 +15,16 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const MoneyTransactionDTO._();
 
   const factory MoneyTransactionDTO({
-    @JsonKey(ignore: true) String id,
-    @required String subcatID,
-    @required String subcatName,
-    @required String payeeID,
-    @required String payeeName,
-    @required String accountID,
-    @required String accountName,
-    @required double amount,
-    @required String memo,
-    @required int dateInMillisecondsSinceEpoch,
+    @JsonKey(ignore: true) String? id,
+    required String subcatID,
+    required String subcatName,
+    required String payeeID,
+    required String payeeName,
+    required String accountID,
+    required String accountName,
+    required double amount,
+    required String memo,
+    required int dateInMillisecondsSinceEpoch,
   }) = _TransactionDTO;
 
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {
@@ -44,7 +44,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
 
   MoneyTransaction toDomain() {
     return MoneyTransaction(
-      id: UniqueId.fromUniqueString(id),
+      id: UniqueId.fromUniqueString(id!),
       subcatID: UniqueId.fromUniqueString(subcatID),
       subcatName: Name(subcatName),
       payeeID: UniqueId.fromUniqueString(payeeID),
