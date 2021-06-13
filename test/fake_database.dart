@@ -188,8 +188,8 @@ class FakeDatabase {
       final Budget budget =
           Budget(maincategories, mergedSubcategories, currentDate.month, currentDate.year);
       budgets.add(budget);
-      currentDate = Jiffy(currentDate).add(months: 1);
-    } while (currentDate.isBefore(Jiffy(maxBudgetDate).add(months: 1)));
+      currentDate = Jiffy(currentDate).add(months: 1).dateTime;
+    } while (currentDate.isBefore(Jiffy(maxBudgetDate).add(months: 1).dateTime));
 
     return budgets;
   }
@@ -243,7 +243,7 @@ class FakeDatabase {
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      final DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
+      final DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
       for (int subcatId = 1; subcatId <= subcategoryNames.length; subcatId++) {
         final BudgetValue budgetValue = BudgetValue(
           id: id,

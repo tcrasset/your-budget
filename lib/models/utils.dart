@@ -9,7 +9,9 @@ import 'package:your_budget/models/constants.dart';
 ///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
 ///and the current date
 DateTime getMaxBudgetDate() {
-  return Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
+  return Jiffy(getDateFromMonthStart(DateTime.now()))
+      .add(months: Constants.MAX_NB_MONTHS_AHEAD)
+      .dateTime;
 }
 
 DateTime getLastDayOfMonth(DateTime datetime) {

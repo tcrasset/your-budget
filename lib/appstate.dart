@@ -155,7 +155,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       );
 
       budgetValueList.add(await creator.create());
-      newDate = Jiffy(previousDate).add(months: 1);
+      newDate = Jiffy(previousDate).add(months: 1).dateTime;
     } while (previousDate.isBefore(maxBudgetDate));
 
     notifyListeners();
@@ -289,7 +289,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       SubCategory modifiedSubcategory, DateTime dateMofidied) {
     double lastMonthAvailable = modifiedSubcategory.available;
     final DateTime maxBudgetDate = getMaxBudgetDate();
-    DateTime date = Jiffy(dateMofidied).add(months: 1);
+    DateTime date = Jiffy(dateMofidied).add(months: 1).dateTime;
 
     ///TODO: THink about removing BudgetValue from appState and only storing it in Budgets
 
@@ -309,7 +309,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           "available",
           budgetValue.available.toString());
 
-      date = Jiffy(date).add(months: 1);
+      date = Jiffy(date).add(months: 1).dateTime;
     }
   }
 
@@ -369,14 +369,14 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       toBeBudgeted -= budget.totalBudgeted;
       toBeBudgeted += budget.toBeBudgetedInputFromMoneyTransactions;
       //Go to next month
-      nextDate = Jiffy(nextDate).add(months: 1);
+      nextDate = Jiffy(nextDate).add(months: 1).dateTime;
     } while (currentBudgetDate.isAfter(prevDate));
   }
 
   @override
   Future<void> incrementMonth() async {
     if (currentBudgetDate.isBefore(getMaxBudgetDate())) {
-      currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
+      currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1).dateTime;
       currentBudget = budgetList.getByDate(currentBudgetDate);
       await computeToBeBudgeted();
       notifyListeners();
@@ -386,7 +386,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   @override
   Future<void> decrementMonth() async {
     if (currentBudgetDate.isAfter(startingBudgetDate)) {
-      currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
+      currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1).dateTime;
       currentBudget = budgetList.getByDate(currentBudgetDate);
       await computeToBeBudgeted();
       notifyListeners();
@@ -400,7 +400,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   @override
   double computeLastMonthBudgeted(int subcategoryId) {
-    final DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1);
+    final DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1).dateTime;
     final Budget lastMonthBudget = budgetList.getByDate(lastMonthDate);
 
     if (lastMonthBudget == null) {
@@ -441,8 +441,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       budgets.add(budget);
 
       //Go to next month
-      currentDate = Jiffy(currentDate).add(months: 1);
-    } while (currentDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1)));
+      currentDate = Jiffy(currentDate).add(months: 1).dateTime;
+    } while (currentDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1).dateTime));
 
     if (await _checkIfNeedToIncrementMax()) {
       budgets = await _incrementMaxBudgetAndUpdateBudgets(budgets);
@@ -536,7 +536,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     });
 
     do {
-      newDate = Jiffy(previousDate).add(months: 1);
+      newDate = Jiffy(previousDate).add(months: 1).dateTime;
 
       currentMaxBudget = budgets.singleWhere(
         (budget) => budget.year == previousDate.year && budget.month == previousDate.month,

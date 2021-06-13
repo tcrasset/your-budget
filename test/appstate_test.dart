@@ -177,14 +177,14 @@ void main() {
           orElse: () => null);
       final bool result = tBudgetValue.hasSameValues(budgetValue);
       expect(result, true);
-      newDate = Jiffy(previousDate).add(months: 1);
+      newDate = Jiffy(previousDate).add(months: 1).dateTime;
       nbCalls++;
     } while (previousDate.isBefore(maxBudgetDate));
 
     verify(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>()))).called(nbCalls);
 
     // Check that there are no transactions after that date
-    previousDate = Jiffy(previousDate).add(months: 1);
+    previousDate = Jiffy(previousDate).add(months: 1).dateTime;
     final BudgetValue budgetValue = budgetValues.singleWhere(
         (bv) => isSameMonth(DateTime(bv.year, bv.month), previousDate),
         orElse: () => null);
@@ -597,7 +597,7 @@ void main() {
     //!Assert
 
     final DateTime maxBudgetDate = getMaxBudgetDate();
-    DateTime date = Jiffy(tDate).add(months: 1);
+    DateTime date = Jiffy(tDate).add(months: 1).dateTime;
     double lastMonthAvailable = tSubcat.available;
 
     while (date.isBefore(maxBudgetDate)) {
@@ -621,7 +621,7 @@ void main() {
           budget.subcategories.singleWhere((subcat) => subcat.id == tSubcat.id);
       expect(subcat.available, correspondingBudgetValue.available);
 
-      date = Jiffy(date).add(months: 1);
+      date = Jiffy(date).add(months: 1).dateTime;
     }
 
     //Verify that we call computeToBeBudgeted() after
@@ -863,13 +863,13 @@ double _testComputeToBeBudgeted(
     tToBeBudgeted -= budget.totalBudgeted;
     tToBeBudgeted += budget.toBeBudgetedInputFromMoneyTransactions;
     //Go to next month
-    nextDate = Jiffy(nextDate).add(months: 1);
+    nextDate = Jiffy(nextDate).add(months: 1).dateTime;
   } while (tCurrentBudgetDate.isAfter(prevDate));
   return tToBeBudgeted;
 }
 
 double _testLastMonthBudgeted(int subcatId, DateTime tCurrentBudgetDate, AppState appState) {
-  final DateTime lastMonthDate = Jiffy(tCurrentBudgetDate).subtract(months: 1);
+  final DateTime lastMonthDate = Jiffy(tCurrentBudgetDate).subtract(months: 1).dateTime;
   final Budget lastMonthBudget = appState.budgets.singleWhere(
       (budget) => budget.year == lastMonthDate.year && budget.month == lastMonthDate.month,
       orElse: () => null);
