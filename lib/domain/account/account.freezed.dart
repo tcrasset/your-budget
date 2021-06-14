@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'account.dart';
 
@@ -9,12 +9,15 @@ part of 'account.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$AccountTearOff {
   const _$AccountTearOff();
 
-// ignore: unused_element
-  _Account call({@required UniqueId id, @required Name name, @required Amount balance}) {
+  _Account call(
+      {required UniqueId id, required Name name, required Amount balance}) {
     return _Account(
       id: id,
       name: name,
@@ -24,16 +27,16 @@ class _$AccountTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Account = _$AccountTearOff();
 
 /// @nodoc
 mixin _$Account {
-  UniqueId get id;
-  Name get name;
-  Amount get balance;
+  UniqueId get id => throw _privateConstructorUsedError;
+  Name get name => throw _privateConstructorUsedError;
+  Amount get balance => throw _privateConstructorUsedError;
 
-  $AccountCopyWith<Account> get copyWith;
+  @JsonKey(ignore: true)
+  $AccountCopyWith<Account> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -53,14 +56,23 @@ class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object balance = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as UniqueId,
-      name: name == freezed ? _value.name : name as Name,
-      balance: balance == freezed ? _value.balance : balance as Amount,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as UniqueId,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as Name,
+      balance: balance == freezed
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as Amount,
     ));
   }
 }
@@ -84,25 +96,33 @@ class __$AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object balance = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_Account(
-      id: id == freezed ? _value.id : id as UniqueId,
-      name: name == freezed ? _value.name : name as Name,
-      balance: balance == freezed ? _value.balance : balance as Amount,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as UniqueId,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as Name,
+      balance: balance == freezed
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as Amount,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_Account extends _Account {
-  const _$_Account({@required this.id, @required this.name, @required this.balance})
-      : assert(id != null),
-        assert(name != null),
-        assert(balance != null),
-        super._();
+  const _$_Account(
+      {required this.id, required this.name, required this.balance})
+      : super._();
 
   @override
   final UniqueId id;
@@ -120,7 +140,8 @@ class _$_Account extends _Account {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Account &&
-            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.balance, balance) ||
@@ -134,21 +155,27 @@ class _$_Account extends _Account {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(balance);
 
+  @JsonKey(ignore: true)
   @override
-  _$AccountCopyWith<_Account> get copyWith => __$AccountCopyWithImpl<_Account>(this, _$identity);
+  _$AccountCopyWith<_Account> get copyWith =>
+      __$AccountCopyWithImpl<_Account>(this, _$identity);
 }
 
 abstract class _Account extends Account {
+  const factory _Account(
+      {required UniqueId id,
+      required Name name,
+      required Amount balance}) = _$_Account;
   const _Account._() : super._();
-  const factory _Account({@required UniqueId id, @required Name name, @required Amount balance}) =
-      _$_Account;
 
   @override
-  UniqueId get id;
+  UniqueId get id => throw _privateConstructorUsedError;
   @override
-  Name get name;
+  Name get name => throw _privateConstructorUsedError;
   @override
-  Amount get balance;
+  Amount get balance => throw _privateConstructorUsedError;
   @override
-  _$AccountCopyWith<_Account> get copyWith;
+  @JsonKey(ignore: true)
+  _$AccountCopyWith<_Account> get copyWith =>
+      throw _privateConstructorUsedError;
 }

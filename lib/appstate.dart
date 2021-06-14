@@ -80,7 +80,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Future<void> loadStateFromDatabase() async {
     startingBudgetDate = await queryContext!.getStartingBudgetDateConstant();
 
-    transactionList = MoneyTransactionList(queryContext, await queryContext!.getMoneyTransactions());
+    transactionList =
+        MoneyTransactionList(queryContext, await queryContext!.getMoneyTransactions());
     budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
 
     budgetValueList = BudgetValueList(queryContext, await queryContext!.getBudgetValues());
@@ -167,12 +168,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// subcategory.
   @override
   Future<void> addTransaction({
-    required int? subcatId,
-    required int? payeeId,
-    required int? accountId,
-    required double? amount,
-    required String? memo,
-    required DateTime? date,
+    required int subcatId,
+    required int payeeId,
+    required int accountId,
+    required double amount,
+    required String memo,
+    required DateTime date,
   }) async {
     // Add transaction to the state, to the database and update the count
 
@@ -211,7 +212,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     accountList.creditAccount(id: transaction.accountID, amount: transaction.amount!);
 
     final Budget budget =
-        budgetList.getByDate(DateTime(transaction.date.year, transaction.date.month))!;
+        budgetList.getByDate(DateTime(transaction.date!.year, transaction.date!.month))!;
     final SubCategory oldSubcat =
         budget.subcategories.singleWhere((subcat) => subcat!.id == transaction.subcatID)!;
 
@@ -355,7 +356,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     // Sum up starting total for every account
     for (final Account? account in accounts) {
       final MoneyTransaction firstTransaction =
-          await queryContext!.getFirstTransactionOfAccount(account!.id);
+          await queryContext!.getFirstTransactionOfAccount(account!.id!);
       toBeBudgeted += firstTransaction.amount!;
     }
 
@@ -434,7 +435,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           Budget(maincategories, subcategories, currentDate.month, currentDate.year);
 
       final double positiveAmountTransferedIntoToBeBudgeted = toBeBudgetedTransactions
-          .where((transaction) => isSameMonth(transaction!.date, currentDate))
+          .where((transaction) => isSameMonth(transaction!.date!, currentDate))
           .fold(0, (total, transaction) => total + transaction!.amount!);
 
       budget.toBeBudgetedInputFromMoneyTransactions += positiveAmountTransferedIntoToBeBudgeted;
@@ -478,7 +479,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     accountList.debitAccount(id: transaction.accountID, amount: transaction.amount!);
 
     final Budget budget =
-        budgetList.getByDate(DateTime(transaction.date.year, transaction.date.month))!;
+        budgetList.getByDate(DateTime(transaction.date!.year, transaction.date!.month))!;
     final SubCategory oldSubcat =
         budget.subcategories.singleWhere((subcat) => subcat!.id == transaction.subcatID)!;
 

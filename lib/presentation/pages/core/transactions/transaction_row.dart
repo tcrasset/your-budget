@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:collection/collection.dart' show IterableExtension;
+import 'package:collection/collection.dart' show IterableExtension, UnmodifiableListView;
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -17,7 +17,7 @@ import 'unchecked_row.dart';
 
 class TransactionRow extends StatefulWidget {
   final MoneyTransaction moneyTransaction;
-  final List<Category> categories;
+  final UnmodifiableListView<Category> categories;
   final bool isEditable;
 
   const TransactionRow(this.moneyTransaction, this.categories, this.isEditable);
@@ -58,7 +58,7 @@ class _TransactionRowState extends State<TransactionRow> {
             memoStyle,
             widget.moneyTransaction.amount!,
             amountStyle,
-            widget.moneyTransaction.date,
+            widget.moneyTransaction.date!,
             dateStyle,
             payeeName!,
             subcategoryStyle,
@@ -69,7 +69,7 @@ class _TransactionRowState extends State<TransactionRow> {
             memoStyle,
             widget.moneyTransaction.amount,
             amountStyle,
-            widget.moneyTransaction.date,
+            widget.moneyTransaction.date!,
             dateStyle,
             payeeName,
             subcategoryStyle);

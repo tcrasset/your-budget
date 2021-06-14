@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'subcategory_dto.dart';
 
@@ -8,6 +8,10 @@ part of 'subcategory_dto.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 SubcategoryDTO _$SubcategoryDTOFromJson(Map<String, dynamic> json) {
   return _SubcategoryDTO.fromJson(json);
 }
@@ -16,13 +20,12 @@ SubcategoryDTO _$SubcategoryDTOFromJson(Map<String, dynamic> json) {
 class _$SubcategoryDTOTearOff {
   const _$SubcategoryDTOTearOff();
 
-// ignore: unused_element
   _SubcategoryDTO call(
-      {@JsonKey(ignore: true) String id,
-      @required String categoryID,
-      @required String name,
-      double budgeted = 0.0,
-      double available = 0.0}) {
+      {@JsonKey(ignore: true) required String id,
+      required String categoryID,
+      required String name,
+      required double budgeted = 0.00,
+      required double available = 0.00}) {
     return _SubcategoryDTO(
       id: id,
       categoryID: categoryID,
@@ -32,32 +35,34 @@ class _$SubcategoryDTOTearOff {
     );
   }
 
-// ignore: unused_element
   SubcategoryDTO fromJson(Map<String, Object> json) {
     return SubcategoryDTO.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $SubcategoryDTO = _$SubcategoryDTOTearOff();
 
 /// @nodoc
 mixin _$SubcategoryDTO {
   @JsonKey(ignore: true)
-  String get id; //Do not use id in database
-  String get categoryID;
-  String get name;
-  double get budgeted;
-  double get available;
+  String get id =>
+      throw _privateConstructorUsedError; //Do not use id in database
+  String get categoryID => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  double get budgeted => throw _privateConstructorUsedError;
+  double get available => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $SubcategoryDTOCopyWith<SubcategoryDTO> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $SubcategoryDTOCopyWith<SubcategoryDTO> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $SubcategoryDTOCopyWith<$Res> {
-  factory $SubcategoryDTOCopyWith(SubcategoryDTO value, $Res Function(SubcategoryDTO) then) =
+  factory $SubcategoryDTOCopyWith(
+          SubcategoryDTO value, $Res Function(SubcategoryDTO) then) =
       _$SubcategoryDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(ignore: true) String id,
@@ -68,7 +73,8 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SubcategoryDTOCopyWithImpl<$Res> implements $SubcategoryDTOCopyWith<$Res> {
+class _$SubcategoryDTOCopyWithImpl<$Res>
+    implements $SubcategoryDTOCopyWith<$Res> {
   _$SubcategoryDTOCopyWithImpl(this._value, this._then);
 
   final SubcategoryDTO _value;
@@ -77,25 +83,42 @@ class _$SubcategoryDTOCopyWithImpl<$Res> implements $SubcategoryDTOCopyWith<$Res
 
   @override
   $Res call({
-    Object id = freezed,
-    Object categoryID = freezed,
-    Object name = freezed,
-    Object budgeted = freezed,
-    Object available = freezed,
+    Object? id = freezed,
+    Object? categoryID = freezed,
+    Object? name = freezed,
+    Object? budgeted = freezed,
+    Object? available = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      categoryID: categoryID == freezed ? _value.categoryID : categoryID as String,
-      name: name == freezed ? _value.name : name as String,
-      budgeted: budgeted == freezed ? _value.budgeted : budgeted as double,
-      available: available == freezed ? _value.available : available as double,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryID: categoryID == freezed
+          ? _value.categoryID
+          : categoryID // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      budgeted: budgeted == freezed
+          ? _value.budgeted
+          : budgeted // ignore: cast_nullable_to_non_nullable
+              as double,
+      available: available == freezed
+          ? _value.available
+          : available // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
-abstract class _$SubcategoryDTOCopyWith<$Res> implements $SubcategoryDTOCopyWith<$Res> {
-  factory _$SubcategoryDTOCopyWith(_SubcategoryDTO value, $Res Function(_SubcategoryDTO) then) =
+abstract class _$SubcategoryDTOCopyWith<$Res>
+    implements $SubcategoryDTOCopyWith<$Res> {
+  factory _$SubcategoryDTOCopyWith(
+          _SubcategoryDTO value, $Res Function(_SubcategoryDTO) then) =
       __$SubcategoryDTOCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -107,9 +130,11 @@ abstract class _$SubcategoryDTOCopyWith<$Res> implements $SubcategoryDTOCopyWith
 }
 
 /// @nodoc
-class __$SubcategoryDTOCopyWithImpl<$Res> extends _$SubcategoryDTOCopyWithImpl<$Res>
+class __$SubcategoryDTOCopyWithImpl<$Res>
+    extends _$SubcategoryDTOCopyWithImpl<$Res>
     implements _$SubcategoryDTOCopyWith<$Res> {
-  __$SubcategoryDTOCopyWithImpl(_SubcategoryDTO _value, $Res Function(_SubcategoryDTO) _then)
+  __$SubcategoryDTOCopyWithImpl(
+      _SubcategoryDTO _value, $Res Function(_SubcategoryDTO) _then)
       : super(_value, (v) => _then(v as _SubcategoryDTO));
 
   @override
@@ -117,37 +142,47 @@ class __$SubcategoryDTOCopyWithImpl<$Res> extends _$SubcategoryDTOCopyWithImpl<$
 
   @override
   $Res call({
-    Object id = freezed,
-    Object categoryID = freezed,
-    Object name = freezed,
-    Object budgeted = freezed,
-    Object available = freezed,
+    Object? id = freezed,
+    Object? categoryID = freezed,
+    Object? name = freezed,
+    Object? budgeted = freezed,
+    Object? available = freezed,
   }) {
     return _then(_SubcategoryDTO(
-      id: id == freezed ? _value.id : id as String,
-      categoryID: categoryID == freezed ? _value.categoryID : categoryID as String,
-      name: name == freezed ? _value.name : name as String,
-      budgeted: budgeted == freezed ? _value.budgeted : budgeted as double,
-      available: available == freezed ? _value.available : available as double,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      categoryID: categoryID == freezed
+          ? _value.categoryID
+          : categoryID // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      budgeted: budgeted == freezed
+          ? _value.budgeted
+          : budgeted // ignore: cast_nullable_to_non_nullable
+              as double,
+      available: available == freezed
+          ? _value.available
+          : available // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_SubcategoryDTO extends _SubcategoryDTO {
   const _$_SubcategoryDTO(
-      {@JsonKey(ignore: true) this.id,
-      @required this.categoryID,
-      @required this.name,
-      this.budgeted = 0.0,
-      this.available = 0.0})
-      : assert(categoryID != null),
-        assert(name != null),
-        assert(budgeted != null),
-        assert(available != null),
-        super._();
+      {@JsonKey(ignore: true) required this.id,
+      required this.categoryID,
+      required this.name,
+      required this.budgeted = 0.00,
+      required this.available = 0.00})
+      : super._();
 
   factory _$_SubcategoryDTO.fromJson(Map<String, dynamic> json) =>
       _$_$_SubcategoryDTOFromJson(json);
@@ -159,10 +194,10 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   final String categoryID;
   @override
   final String name;
-  @JsonKey(defaultValue: 0.0)
+  @JsonKey(defaultValue: 0.00)
   @override
   final double budgeted;
-  @JsonKey(defaultValue: 0.0)
+  @JsonKey(defaultValue: 0.00)
   @override
   final double available;
 
@@ -175,15 +210,19 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _SubcategoryDTO &&
-            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.categoryID, categoryID) ||
-                const DeepCollectionEquality().equals(other.categoryID, categoryID)) &&
+                const DeepCollectionEquality()
+                    .equals(other.categoryID, categoryID)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.budgeted, budgeted) ||
-                const DeepCollectionEquality().equals(other.budgeted, budgeted)) &&
+                const DeepCollectionEquality()
+                    .equals(other.budgeted, budgeted)) &&
             (identical(other.available, available) ||
-                const DeepCollectionEquality().equals(other.available, available)));
+                const DeepCollectionEquality()
+                    .equals(other.available, available)));
   }
 
   @override
@@ -195,6 +234,7 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
       const DeepCollectionEquality().hash(budgeted) ^
       const DeepCollectionEquality().hash(available);
 
+  @JsonKey(ignore: true)
   @override
   _$SubcategoryDTOCopyWith<_SubcategoryDTO> get copyWith =>
       __$SubcategoryDTOCopyWithImpl<_SubcategoryDTO>(this, _$identity);
@@ -206,27 +246,30 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
 }
 
 abstract class _SubcategoryDTO extends SubcategoryDTO {
-  const _SubcategoryDTO._() : super._();
   const factory _SubcategoryDTO(
-      {@JsonKey(ignore: true) String id,
-      @required String categoryID,
-      @required String name,
-      double budgeted,
-      double available}) = _$_SubcategoryDTO;
+      {@JsonKey(ignore: true) required String id,
+      required String categoryID,
+      required String name,
+      required double budgeted,
+      required double available}) = _$_SubcategoryDTO;
+  const _SubcategoryDTO._() : super._();
 
-  factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) = _$_SubcategoryDTO.fromJson;
+  factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) =
+      _$_SubcategoryDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
-  String get categoryID;
+  String get categoryID => throw _privateConstructorUsedError;
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  double get budgeted;
+  double get budgeted => throw _privateConstructorUsedError;
   @override
-  double get available;
+  double get available => throw _privateConstructorUsedError;
   @override
-  _$SubcategoryDTOCopyWith<_SubcategoryDTO> get copyWith;
+  @JsonKey(ignore: true)
+  _$SubcategoryDTOCopyWith<_SubcategoryDTO> get copyWith =>
+      throw _privateConstructorUsedError;
 }

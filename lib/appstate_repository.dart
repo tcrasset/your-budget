@@ -27,12 +27,12 @@ abstract class AppStateRepository {
   /// Finally, update the fields of the [MainCategory] which contains the
   /// subcategory.
   Future<void> addTransaction({
-    int? subcatId,
-    int? payeeId,
-    int? accountId,
-    double? amount,
-    String? memo,
-    DateTime? date,
+    required int subcatId,
+    required int payeeId,
+    required int accountId,
+    required double amount,
+    required String memo,
+    required DateTime date,
   });
 
   Future<void> addGoal({

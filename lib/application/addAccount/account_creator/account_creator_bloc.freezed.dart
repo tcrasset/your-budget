@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'account_creator_bloc.dart';
 
@@ -9,71 +9,73 @@ part of 'account_creator_bloc.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$AccountCreatorEventTearOff {
   const _$AccountCreatorEventTearOff();
 
-// ignore: unused_element
   _Initialized initialized() {
     return const _Initialized();
   }
 
-// ignore: unused_element
   _NameChanged nameChanged(String name) {
     return _NameChanged(
       name,
     );
   }
 
-// ignore: unused_element
   _BalanceChanged balanceChanged(String balance) {
     return _BalanceChanged(
       balance,
     );
   }
 
-// ignore: unused_element
   _Saved saved() {
     return const _Saved();
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $AccountCreatorEvent = _$AccountCreatorEventTearOff();
 
 /// @nodoc
 mixin _$AccountCreatorEvent {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result nameChanged(String name),
-    @required Result balanceChanged(String balance),
-    @required Result saved(),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String balance) balanceChanged,
+    required TResult Function() saved,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result nameChanged(String name),
-    Result balanceChanged(String balance),
-    Result saved(),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String balance)? balanceChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result balanceChanged(_BalanceChanged value),
-    @required Result saved(_Saved value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_BalanceChanged value) balanceChanged,
+    required TResult Function(_Saved value) saved,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result balanceChanged(_BalanceChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_BalanceChanged value)? balanceChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -84,7 +86,8 @@ abstract class $AccountCreatorEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountCreatorEventCopyWithImpl<$Res> implements $AccountCreatorEventCopyWith<$Res> {
+class _$AccountCreatorEventCopyWithImpl<$Res>
+    implements $AccountCreatorEventCopyWith<$Res> {
   _$AccountCreatorEventCopyWithImpl(this._value, this._then);
 
   final AccountCreatorEvent _value;
@@ -94,14 +97,17 @@ class _$AccountCreatorEventCopyWithImpl<$Res> implements $AccountCreatorEventCop
 
 /// @nodoc
 abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(_Initialized value, $Res Function(_Initialized) then) =
+  factory _$InitializedCopyWith(
+          _Initialized value, $Res Function(_Initialized) then) =
       __$InitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitializedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
+class __$InitializedCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res>
     implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(_Initialized _value, $Res Function(_Initialized) _then)
+  __$InitializedCopyWithImpl(
+      _Initialized _value, $Res Function(_Initialized) _then)
       : super(_value, (v) => _then(v as _Initialized));
 
   @override
@@ -109,6 +115,7 @@ class __$InitializedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl
 }
 
 /// @nodoc
+
 class _$_Initialized implements _Initialized {
   const _$_Initialized();
 
@@ -127,29 +134,24 @@ class _$_Initialized implements _Initialized {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result nameChanged(String name),
-    @required Result balanceChanged(String balance),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String balance) balanceChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return initialized();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result nameChanged(String name),
-    Result balanceChanged(String balance),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String balance)? balanceChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initialized != null) {
       return initialized();
     }
@@ -158,29 +160,24 @@ class _$_Initialized implements _Initialized {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result balanceChanged(_BalanceChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_BalanceChanged value) balanceChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return initialized(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result balanceChanged(_BalanceChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_BalanceChanged value)? balanceChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initialized != null) {
       return initialized(this);
     }
@@ -194,15 +191,18 @@ abstract class _Initialized implements AccountCreatorEvent {
 
 /// @nodoc
 abstract class _$NameChangedCopyWith<$Res> {
-  factory _$NameChangedCopyWith(_NameChanged value, $Res Function(_NameChanged) then) =
+  factory _$NameChangedCopyWith(
+          _NameChanged value, $Res Function(_NameChanged) then) =
       __$NameChangedCopyWithImpl<$Res>;
   $Res call({String name});
 }
 
 /// @nodoc
-class __$NameChangedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
+class __$NameChangedCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res>
     implements _$NameChangedCopyWith<$Res> {
-  __$NameChangedCopyWithImpl(_NameChanged _value, $Res Function(_NameChanged) _then)
+  __$NameChangedCopyWithImpl(
+      _NameChanged _value, $Res Function(_NameChanged) _then)
       : super(_value, (v) => _then(v as _NameChanged));
 
   @override
@@ -210,17 +210,21 @@ class __$NameChangedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl
 
   @override
   $Res call({
-    Object name = freezed,
+    Object? name = freezed,
   }) {
     return _then(_NameChanged(
-      name == freezed ? _value.name : name as String,
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_NameChanged implements _NameChanged {
-  const _$_NameChanged(this.name) : assert(name != null);
+  const _$_NameChanged(this.name);
 
   @override
   final String name;
@@ -239,37 +243,34 @@ class _$_NameChanged implements _NameChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
+  @JsonKey(ignore: true)
   @override
   _$NameChangedCopyWith<_NameChanged> get copyWith =>
       __$NameChangedCopyWithImpl<_NameChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result nameChanged(String name),
-    @required Result balanceChanged(String balance),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String balance) balanceChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return nameChanged(name);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result nameChanged(String name),
-    Result balanceChanged(String balance),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String balance)? balanceChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (nameChanged != null) {
       return nameChanged(name);
     }
@@ -278,29 +279,24 @@ class _$_NameChanged implements _NameChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result balanceChanged(_BalanceChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_BalanceChanged value) balanceChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return nameChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result balanceChanged(_BalanceChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_BalanceChanged value)? balanceChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (nameChanged != null) {
       return nameChanged(this);
     }
@@ -311,21 +307,26 @@ class _$_NameChanged implements _NameChanged {
 abstract class _NameChanged implements AccountCreatorEvent {
   const factory _NameChanged(String name) = _$_NameChanged;
 
-  String get name;
-  _$NameChangedCopyWith<_NameChanged> get copyWith;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$NameChangedCopyWith<_NameChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$BalanceChangedCopyWith<$Res> {
-  factory _$BalanceChangedCopyWith(_BalanceChanged value, $Res Function(_BalanceChanged) then) =
+  factory _$BalanceChangedCopyWith(
+          _BalanceChanged value, $Res Function(_BalanceChanged) then) =
       __$BalanceChangedCopyWithImpl<$Res>;
   $Res call({String balance});
 }
 
 /// @nodoc
-class __$BalanceChangedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
+class __$BalanceChangedCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res>
     implements _$BalanceChangedCopyWith<$Res> {
-  __$BalanceChangedCopyWithImpl(_BalanceChanged _value, $Res Function(_BalanceChanged) _then)
+  __$BalanceChangedCopyWithImpl(
+      _BalanceChanged _value, $Res Function(_BalanceChanged) _then)
       : super(_value, (v) => _then(v as _BalanceChanged));
 
   @override
@@ -333,17 +334,21 @@ class __$BalanceChangedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithI
 
   @override
   $Res call({
-    Object balance = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_BalanceChanged(
-      balance == freezed ? _value.balance : balance as String,
+      balance == freezed
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_BalanceChanged implements _BalanceChanged {
-  const _$_BalanceChanged(this.balance) : assert(balance != null);
+  const _$_BalanceChanged(this.balance);
 
   @override
   final String balance;
@@ -362,37 +367,34 @@ class _$_BalanceChanged implements _BalanceChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(balance);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(balance);
 
+  @JsonKey(ignore: true)
   @override
   _$BalanceChangedCopyWith<_BalanceChanged> get copyWith =>
       __$BalanceChangedCopyWithImpl<_BalanceChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result nameChanged(String name),
-    @required Result balanceChanged(String balance),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String balance) balanceChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return balanceChanged(balance);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result nameChanged(String name),
-    Result balanceChanged(String balance),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String balance)? balanceChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (balanceChanged != null) {
       return balanceChanged(balance);
     }
@@ -401,29 +403,24 @@ class _$_BalanceChanged implements _BalanceChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result balanceChanged(_BalanceChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_BalanceChanged value) balanceChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return balanceChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result balanceChanged(_BalanceChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_BalanceChanged value)? balanceChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (balanceChanged != null) {
       return balanceChanged(this);
     }
@@ -434,13 +431,16 @@ class _$_BalanceChanged implements _BalanceChanged {
 abstract class _BalanceChanged implements AccountCreatorEvent {
   const factory _BalanceChanged(String balance) = _$_BalanceChanged;
 
-  String get balance;
-  _$BalanceChangedCopyWith<_BalanceChanged> get copyWith;
+  String get balance => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$BalanceChangedCopyWith<_BalanceChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$SavedCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) = __$SavedCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) =
+      __$SavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -454,6 +454,7 @@ class __$SavedCopyWithImpl<$Res> extends _$AccountCreatorEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Saved implements _Saved {
   const _$_Saved();
 
@@ -472,29 +473,24 @@ class _$_Saved implements _Saved {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result nameChanged(String name),
-    @required Result balanceChanged(String balance),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function(String balance) balanceChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return saved();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result nameChanged(String name),
-    Result balanceChanged(String balance),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function(String balance)? balanceChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (saved != null) {
       return saved();
     }
@@ -503,29 +499,24 @@ class _$_Saved implements _Saved {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result balanceChanged(_BalanceChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_BalanceChanged value) balanceChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(balanceChanged != null);
-    assert(saved != null);
     return saved(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result balanceChanged(_BalanceChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_BalanceChanged value)? balanceChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (saved != null) {
       return saved(this);
     }
@@ -541,13 +532,12 @@ abstract class _Saved implements AccountCreatorEvent {
 class _$AccountCreatorStateTearOff {
   const _$AccountCreatorStateTearOff();
 
-// ignore: unused_element
   _AccountCreatorState call(
-      {@required Account account,
-      @required bool showErrorMessages,
-      @required bool isSaving,
-      @required bool isEditing,
-      @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
+      {required Account account,
+      required bool showErrorMessages,
+      required bool isSaving,
+      required bool isEditing,
+      required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
     return _AccountCreatorState(
       account: account,
       showErrorMessages: showErrorMessages,
@@ -559,18 +549,21 @@ class _$AccountCreatorStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $AccountCreatorState = _$AccountCreatorStateTearOff();
 
 /// @nodoc
 mixin _$AccountCreatorState {
-  Account get account;
-  bool get showErrorMessages;
-  bool get isSaving;
-  bool get isEditing;
-  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
+/*required*/
+  Account get account => throw _privateConstructorUsedError; /*required*/
+  bool get showErrorMessages => throw _privateConstructorUsedError; /*required*/
+  bool get isSaving => throw _privateConstructorUsedError; /*required*/
+  bool get isEditing => throw _privateConstructorUsedError; /*required*/
+  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
 
-  $AccountCreatorStateCopyWith<AccountCreatorState> get copyWith;
+  @JsonKey(ignore: true)
+  $AccountCreatorStateCopyWith<AccountCreatorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -589,7 +582,8 @@ abstract class $AccountCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountCreatorStateCopyWithImpl<$Res> implements $AccountCreatorStateCopyWith<$Res> {
+class _$AccountCreatorStateCopyWithImpl<$Res>
+    implements $AccountCreatorStateCopyWith<$Res> {
   _$AccountCreatorStateCopyWithImpl(this._value, this._then);
 
   final AccountCreatorState _value;
@@ -598,29 +592,38 @@ class _$AccountCreatorStateCopyWithImpl<$Res> implements $AccountCreatorStateCop
 
   @override
   $Res call({
-    Object account = freezed,
-    Object showErrorMessages = freezed,
-    Object isSaving = freezed,
-    Object isEditing = freezed,
-    Object saveFailureOrSuccessOption = freezed,
+    Object? account = freezed,
+    Object? showErrorMessages = freezed,
+    Object? isSaving = freezed,
+    Object? isEditing = freezed,
+    Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
-      account: account == freezed ? _value.account : account as Account,
-      showErrorMessages:
-          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
-      isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
-      isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
+      account: account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: isSaving == freezed
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEditing: isEditing == freezed
+          ? _value.isEditing
+          : isEditing // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
-          : saveFailureOrSuccessOption as Option<Either<ValueFailure, Unit>>,
+          : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ValueFailure, Unit>>,
     ));
   }
 
   @override
   $AccountCopyWith<$Res> get account {
-    if (_value.account == null) {
-      return null;
-    }
     return $AccountCopyWith<$Res>(_value.account, (value) {
       return _then(_value.copyWith(account: value));
     });
@@ -628,9 +631,10 @@ class _$AccountCreatorStateCopyWithImpl<$Res> implements $AccountCreatorStateCop
 }
 
 /// @nodoc
-abstract class _$AccountCreatorStateCopyWith<$Res> implements $AccountCreatorStateCopyWith<$Res> {
-  factory _$AccountCreatorStateCopyWith(
-          _AccountCreatorState value, $Res Function(_AccountCreatorState) then) =
+abstract class _$AccountCreatorStateCopyWith<$Res>
+    implements $AccountCreatorStateCopyWith<$Res> {
+  factory _$AccountCreatorStateCopyWith(_AccountCreatorState value,
+          $Res Function(_AccountCreatorState) then) =
       __$AccountCreatorStateCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -645,7 +649,8 @@ abstract class _$AccountCreatorStateCopyWith<$Res> implements $AccountCreatorSta
 }
 
 /// @nodoc
-class __$AccountCreatorStateCopyWithImpl<$Res> extends _$AccountCreatorStateCopyWithImpl<$Res>
+class __$AccountCreatorStateCopyWithImpl<$Res>
+    extends _$AccountCreatorStateCopyWithImpl<$Res>
     implements _$AccountCreatorStateCopyWith<$Res> {
   __$AccountCreatorStateCopyWithImpl(
       _AccountCreatorState _value, $Res Function(_AccountCreatorState) _then)
@@ -656,48 +661,56 @@ class __$AccountCreatorStateCopyWithImpl<$Res> extends _$AccountCreatorStateCopy
 
   @override
   $Res call({
-    Object account = freezed,
-    Object showErrorMessages = freezed,
-    Object isSaving = freezed,
-    Object isEditing = freezed,
-    Object saveFailureOrSuccessOption = freezed,
+    Object? account = freezed,
+    Object? showErrorMessages = freezed,
+    Object? isSaving = freezed,
+    Object? isEditing = freezed,
+    Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_AccountCreatorState(
-      account: account == freezed ? _value.account : account as Account,
-      showErrorMessages:
-          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
-      isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
-      isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
+      account: account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: isSaving == freezed
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEditing: isEditing == freezed
+          ? _value.isEditing
+          : isEditing // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
-          : saveFailureOrSuccessOption as Option<Either<ValueFailure, Unit>>,
+          : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ValueFailure, Unit>>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_AccountCreatorState implements _AccountCreatorState {
   const _$_AccountCreatorState(
-      {@required this.account,
-      @required this.showErrorMessages,
-      @required this.isSaving,
-      @required this.isEditing,
-      @required this.saveFailureOrSuccessOption})
-      : assert(account != null),
-        assert(showErrorMessages != null),
-        assert(isSaving != null),
-        assert(isEditing != null),
-        assert(saveFailureOrSuccessOption != null);
+      {required this.account,
+      required this.showErrorMessages,
+      required this.isSaving,
+      required this.isEditing,
+      required this.saveFailureOrSuccessOption});
 
-  @override
+  @override /*required*/
   final Account account;
-  @override
+  @override /*required*/
   final bool showErrorMessages;
-  @override
+  @override /*required*/
   final bool isSaving;
-  @override
+  @override /*required*/
   final bool isEditing;
-  @override
+  @override /*required*/
   final Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption;
 
   @override
@@ -710,17 +723,22 @@ class _$_AccountCreatorState implements _AccountCreatorState {
     return identical(this, other) ||
         (other is _AccountCreatorState &&
             (identical(other.account, account) ||
-                const DeepCollectionEquality().equals(other.account, account)) &&
+                const DeepCollectionEquality()
+                    .equals(other.account, account)) &&
             (identical(other.showErrorMessages, showErrorMessages) ||
                 const DeepCollectionEquality()
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.isSaving, isSaving) ||
-                const DeepCollectionEquality().equals(other.isSaving, isSaving)) &&
-            (identical(other.isEditing, isEditing) ||
-                const DeepCollectionEquality().equals(other.isEditing, isEditing)) &&
-            (identical(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality()
-                    .equals(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption)));
+                    .equals(other.isSaving, isSaving)) &&
+            (identical(other.isEditing, isEditing) ||
+                const DeepCollectionEquality()
+                    .equals(other.isEditing, isEditing)) &&
+            (identical(other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption) ||
+                const DeepCollectionEquality().equals(
+                    other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption)));
   }
 
   @override
@@ -732,30 +750,35 @@ class _$_AccountCreatorState implements _AccountCreatorState {
       const DeepCollectionEquality().hash(isEditing) ^
       const DeepCollectionEquality().hash(saveFailureOrSuccessOption);
 
+  @JsonKey(ignore: true)
   @override
   _$AccountCreatorStateCopyWith<_AccountCreatorState> get copyWith =>
-      __$AccountCreatorStateCopyWithImpl<_AccountCreatorState>(this, _$identity);
+      __$AccountCreatorStateCopyWithImpl<_AccountCreatorState>(
+          this, _$identity);
 }
 
 abstract class _AccountCreatorState implements AccountCreatorState {
   const factory _AccountCreatorState(
-          {@required Account account,
-          @required bool showErrorMessages,
-          @required bool isSaving,
-          @required bool isEditing,
-          @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
-      _$_AccountCreatorState;
+      {required Account account,
+      required bool showErrorMessages,
+      required bool isSaving,
+      required bool isEditing,
+      required Option<Either<ValueFailure, Unit>>
+          saveFailureOrSuccessOption}) = _$_AccountCreatorState;
 
+  @override /*required*/
+  Account get account => throw _privateConstructorUsedError;
+  @override /*required*/
+  bool get showErrorMessages => throw _privateConstructorUsedError;
+  @override /*required*/
+  bool get isSaving => throw _privateConstructorUsedError;
+  @override /*required*/
+  bool get isEditing => throw _privateConstructorUsedError;
+  @override /*required*/
+  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
   @override
-  Account get account;
-  @override
-  bool get showErrorMessages;
-  @override
-  bool get isSaving;
-  @override
-  bool get isEditing;
-  @override
-  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
-  @override
-  _$AccountCreatorStateCopyWith<_AccountCreatorState> get copyWith;
+  @JsonKey(ignore: true)
+  _$AccountCreatorStateCopyWith<_AccountCreatorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -30,7 +30,7 @@ abstract class AccountDTO implements _$AccountDTO {
 
   Account toDomain() {
     return Account(
-      id: UniqueId.fromUniqueString(id!),
+      id: UniqueId.fromUniqueString(id),
       name: Name(name),
       balance: Amount(balance.toString()),
     );

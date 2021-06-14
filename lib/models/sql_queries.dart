@@ -95,7 +95,7 @@ class SQLQueryClass implements Queries {
     ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;''';
     final data = await database!.rawQuery(sql);
 
-    List<MoneyTransaction> transactions = List();
+    final List<MoneyTransaction> transactions = [];
     for (final node in data) {
       final transaction = MoneyTransaction.fromJson(node);
       transactions.add(transaction);

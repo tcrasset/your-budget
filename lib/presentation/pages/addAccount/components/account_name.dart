@@ -42,14 +42,14 @@ class AccountName extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController? _controller = useTextEditingController();
+    final TextEditingController _controller = useTextEditingController();
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       listenWhen: (p, c) => getName(p) != getName(c),
       listener: (context, state) {
         _controller
           ..text = getName(state)!
-          ..selection = TextSelection.collapsed(offset: _controller!.text.length);
+          ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
         return Column(

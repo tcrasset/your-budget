@@ -30,7 +30,7 @@ class MoneyTransaction {
   String? memo;
 
   /// Date of this.
-  DateTime date;
+  DateTime? date;
 
   /// Default constructor of [MoneyTransaction].
   MoneyTransaction({

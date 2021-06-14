@@ -14,7 +14,7 @@ _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
     payeeName: json['payeeName'] as String,
     accountID: json['accountID'] as String,
     accountName: json['accountName'] as String,
-    amount: (json['amount'] as num)?.toDouble(),
+    amount: (json['amount'] as num).toDouble(),
     memo: json['memo'] as String,
     dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
   );

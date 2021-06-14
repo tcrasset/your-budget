@@ -82,7 +82,7 @@ class AmountInputContainer extends HookWidget {
     const TextStyle _negativeAmountTextStyle =
         TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
-    final TextEditingController? _controller = useTextEditingController(text: _zero);
+    final TextEditingController _controller = useTextEditingController(text: _zero);
     final _isPositive = useState(true);
 
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
@@ -93,7 +93,7 @@ class AmountInputContainer extends HookWidget {
         // and where we have to change the selection
         _controller
           ..text = getAmount(state)!
-          ..selection = TextSelection.collapsed(offset: _controller!.text.length);
+          ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
         return Container(

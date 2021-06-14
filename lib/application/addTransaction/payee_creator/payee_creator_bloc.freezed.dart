@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'payee_creator_bloc.dart';
 
@@ -9,62 +9,65 @@ part of 'payee_creator_bloc.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$PayeeCreatorEventTearOff {
   const _$PayeeCreatorEventTearOff();
 
-// ignore: unused_element
   _Initialized initialized(Option<Name> initialNameOption) {
     return _Initialized(
       initialNameOption,
     );
   }
 
-// ignore: unused_element
   _NameChanged nameChanged(String name) {
     return _NameChanged(
       name,
     );
   }
 
-// ignore: unused_element
   _Saved saved() {
     return const _Saved();
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $PayeeCreatorEvent = _$PayeeCreatorEventTearOff();
 
 /// @nodoc
 mixin _$PayeeCreatorEvent {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(Option<Name> initialNameOption),
-    @required Result nameChanged(String name),
-    @required Result saved(),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function() saved,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(Option<Name> initialNameOption),
-    Result nameChanged(String name),
-    Result saved(),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result saved(_Saved value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_Saved value) saved,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -75,7 +78,8 @@ abstract class $PayeeCreatorEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeCreatorEventCopyWithImpl<$Res> implements $PayeeCreatorEventCopyWith<$Res> {
+class _$PayeeCreatorEventCopyWithImpl<$Res>
+    implements $PayeeCreatorEventCopyWith<$Res> {
   _$PayeeCreatorEventCopyWithImpl(this._value, this._then);
 
   final PayeeCreatorEvent _value;
@@ -85,15 +89,18 @@ class _$PayeeCreatorEventCopyWithImpl<$Res> implements $PayeeCreatorEventCopyWit
 
 /// @nodoc
 abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(_Initialized value, $Res Function(_Initialized) then) =
+  factory _$InitializedCopyWith(
+          _Initialized value, $Res Function(_Initialized) then) =
       __$InitializedCopyWithImpl<$Res>;
   $Res call({Option<Name> initialNameOption});
 }
 
 /// @nodoc
-class __$InitializedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$Res>
+class __$InitializedCopyWithImpl<$Res>
+    extends _$PayeeCreatorEventCopyWithImpl<$Res>
     implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(_Initialized _value, $Res Function(_Initialized) _then)
+  __$InitializedCopyWithImpl(
+      _Initialized _value, $Res Function(_Initialized) _then)
       : super(_value, (v) => _then(v as _Initialized));
 
   @override
@@ -101,17 +108,21 @@ class __$InitializedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$
 
   @override
   $Res call({
-    Object initialNameOption = freezed,
+    Object? initialNameOption = freezed,
   }) {
     return _then(_Initialized(
-      initialNameOption == freezed ? _value.initialNameOption : initialNameOption as Option<Name>,
+      initialNameOption == freezed
+          ? _value.initialNameOption
+          : initialNameOption // ignore: cast_nullable_to_non_nullable
+              as Option<Name>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_Initialized implements _Initialized {
-  const _$_Initialized(this.initialNameOption) : assert(initialNameOption != null);
+  const _$_Initialized(this.initialNameOption);
 
   @override
   final Option<Name> initialNameOption;
@@ -126,38 +137,38 @@ class _$_Initialized implements _Initialized {
     return identical(this, other) ||
         (other is _Initialized &&
             (identical(other.initialNameOption, initialNameOption) ||
-                const DeepCollectionEquality().equals(other.initialNameOption, initialNameOption)));
+                const DeepCollectionEquality()
+                    .equals(other.initialNameOption, initialNameOption)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(initialNameOption);
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(initialNameOption);
 
+  @JsonKey(ignore: true)
   @override
   _$InitializedCopyWith<_Initialized> get copyWith =>
       __$InitializedCopyWithImpl<_Initialized>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(Option<Name> initialNameOption),
-    @required Result nameChanged(String name),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(saved != null);
     return initialized(initialNameOption);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(Option<Name> initialNameOption),
-    Result nameChanged(String name),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initialized != null) {
       return initialized(initialNameOption);
     }
@@ -166,26 +177,22 @@ class _$_Initialized implements _Initialized {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(saved != null);
     return initialized(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initialized != null) {
       return initialized(this);
     }
@@ -196,21 +203,26 @@ class _$_Initialized implements _Initialized {
 abstract class _Initialized implements PayeeCreatorEvent {
   const factory _Initialized(Option<Name> initialNameOption) = _$_Initialized;
 
-  Option<Name> get initialNameOption;
-  _$InitializedCopyWith<_Initialized> get copyWith;
+  Option<Name> get initialNameOption => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$InitializedCopyWith<_Initialized> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$NameChangedCopyWith<$Res> {
-  factory _$NameChangedCopyWith(_NameChanged value, $Res Function(_NameChanged) then) =
+  factory _$NameChangedCopyWith(
+          _NameChanged value, $Res Function(_NameChanged) then) =
       __$NameChangedCopyWithImpl<$Res>;
   $Res call({String name});
 }
 
 /// @nodoc
-class __$NameChangedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$Res>
+class __$NameChangedCopyWithImpl<$Res>
+    extends _$PayeeCreatorEventCopyWithImpl<$Res>
     implements _$NameChangedCopyWith<$Res> {
-  __$NameChangedCopyWithImpl(_NameChanged _value, $Res Function(_NameChanged) _then)
+  __$NameChangedCopyWithImpl(
+      _NameChanged _value, $Res Function(_NameChanged) _then)
       : super(_value, (v) => _then(v as _NameChanged));
 
   @override
@@ -218,17 +230,21 @@ class __$NameChangedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$
 
   @override
   $Res call({
-    Object name = freezed,
+    Object? name = freezed,
   }) {
     return _then(_NameChanged(
-      name == freezed ? _value.name : name as String,
+      name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_NameChanged implements _NameChanged {
-  const _$_NameChanged(this.name) : assert(name != null);
+  const _$_NameChanged(this.name);
 
   @override
   final String name;
@@ -247,34 +263,32 @@ class _$_NameChanged implements _NameChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(name);
 
+  @JsonKey(ignore: true)
   @override
   _$NameChangedCopyWith<_NameChanged> get copyWith =>
       __$NameChangedCopyWithImpl<_NameChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(Option<Name> initialNameOption),
-    @required Result nameChanged(String name),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(saved != null);
     return nameChanged(name);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(Option<Name> initialNameOption),
-    Result nameChanged(String name),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (nameChanged != null) {
       return nameChanged(name);
     }
@@ -283,26 +297,22 @@ class _$_NameChanged implements _NameChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(saved != null);
     return nameChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (nameChanged != null) {
       return nameChanged(this);
     }
@@ -313,13 +323,16 @@ class _$_NameChanged implements _NameChanged {
 abstract class _NameChanged implements PayeeCreatorEvent {
   const factory _NameChanged(String name) = _$_NameChanged;
 
-  String get name;
-  _$NameChangedCopyWith<_NameChanged> get copyWith;
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$NameChangedCopyWith<_NameChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$SavedCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) = __$SavedCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) =
+      __$SavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -333,6 +346,7 @@ class __$SavedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Saved implements _Saved {
   const _$_Saved();
 
@@ -351,26 +365,22 @@ class _$_Saved implements _Saved {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(Option<Name> initialNameOption),
-    @required Result nameChanged(String name),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function(String name) nameChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(saved != null);
     return saved();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(Option<Name> initialNameOption),
-    Result nameChanged(String name),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function(String name)? nameChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (saved != null) {
       return saved();
     }
@@ -379,26 +389,22 @@ class _$_Saved implements _Saved {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result nameChanged(_NameChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(nameChanged != null);
-    assert(saved != null);
     return saved(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result nameChanged(_NameChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (saved != null) {
       return saved(this);
     }
@@ -414,13 +420,12 @@ abstract class _Saved implements PayeeCreatorEvent {
 class _$PayeeCreatorStateTearOff {
   const _$PayeeCreatorStateTearOff();
 
-// ignore: unused_element
   _PayeeCreatorState call(
-      {@required Payee payee,
-      @required bool showErrorMessages,
-      @required bool isSaving,
-      @required bool isEditing,
-      @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
+      {required Payee payee,
+      required bool showErrorMessages,
+      required bool isSaving,
+      required bool isEditing,
+      required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
     return _PayeeCreatorState(
       payee: payee,
       showErrorMessages: showErrorMessages,
@@ -432,18 +437,20 @@ class _$PayeeCreatorStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $PayeeCreatorState = _$PayeeCreatorStateTearOff();
 
 /// @nodoc
 mixin _$PayeeCreatorState {
-  Payee get payee;
-  bool get showErrorMessages;
-  bool get isSaving;
-  bool get isEditing;
-  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
+  Payee get payee => throw _privateConstructorUsedError;
+  bool get showErrorMessages => throw _privateConstructorUsedError;
+  bool get isSaving => throw _privateConstructorUsedError;
+  bool get isEditing => throw _privateConstructorUsedError;
+  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
 
-  $PayeeCreatorStateCopyWith<PayeeCreatorState> get copyWith;
+  @JsonKey(ignore: true)
+  $PayeeCreatorStateCopyWith<PayeeCreatorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -462,7 +469,8 @@ abstract class $PayeeCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeCreatorStateCopyWithImpl<$Res> implements $PayeeCreatorStateCopyWith<$Res> {
+class _$PayeeCreatorStateCopyWithImpl<$Res>
+    implements $PayeeCreatorStateCopyWith<$Res> {
   _$PayeeCreatorStateCopyWithImpl(this._value, this._then);
 
   final PayeeCreatorState _value;
@@ -471,29 +479,38 @@ class _$PayeeCreatorStateCopyWithImpl<$Res> implements $PayeeCreatorStateCopyWit
 
   @override
   $Res call({
-    Object payee = freezed,
-    Object showErrorMessages = freezed,
-    Object isSaving = freezed,
-    Object isEditing = freezed,
-    Object saveFailureOrSuccessOption = freezed,
+    Object? payee = freezed,
+    Object? showErrorMessages = freezed,
+    Object? isSaving = freezed,
+    Object? isEditing = freezed,
+    Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
-      payee: payee == freezed ? _value.payee : payee as Payee,
-      showErrorMessages:
-          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
-      isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
-      isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
+      payee: payee == freezed
+          ? _value.payee
+          : payee // ignore: cast_nullable_to_non_nullable
+              as Payee,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: isSaving == freezed
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEditing: isEditing == freezed
+          ? _value.isEditing
+          : isEditing // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
-          : saveFailureOrSuccessOption as Option<Either<ValueFailure, Unit>>,
+          : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ValueFailure, Unit>>,
     ));
   }
 
   @override
   $PayeeCopyWith<$Res> get payee {
-    if (_value.payee == null) {
-      return null;
-    }
     return $PayeeCopyWith<$Res>(_value.payee, (value) {
       return _then(_value.copyWith(payee: value));
     });
@@ -501,7 +518,8 @@ class _$PayeeCreatorStateCopyWithImpl<$Res> implements $PayeeCreatorStateCopyWit
 }
 
 /// @nodoc
-abstract class _$PayeeCreatorStateCopyWith<$Res> implements $PayeeCreatorStateCopyWith<$Res> {
+abstract class _$PayeeCreatorStateCopyWith<$Res>
+    implements $PayeeCreatorStateCopyWith<$Res> {
   factory _$PayeeCreatorStateCopyWith(
           _PayeeCreatorState value, $Res Function(_PayeeCreatorState) then) =
       __$PayeeCreatorStateCopyWithImpl<$Res>;
@@ -518,7 +536,8 @@ abstract class _$PayeeCreatorStateCopyWith<$Res> implements $PayeeCreatorStateCo
 }
 
 /// @nodoc
-class __$PayeeCreatorStateCopyWithImpl<$Res> extends _$PayeeCreatorStateCopyWithImpl<$Res>
+class __$PayeeCreatorStateCopyWithImpl<$Res>
+    extends _$PayeeCreatorStateCopyWithImpl<$Res>
     implements _$PayeeCreatorStateCopyWith<$Res> {
   __$PayeeCreatorStateCopyWithImpl(
       _PayeeCreatorState _value, $Res Function(_PayeeCreatorState) _then)
@@ -529,38 +548,46 @@ class __$PayeeCreatorStateCopyWithImpl<$Res> extends _$PayeeCreatorStateCopyWith
 
   @override
   $Res call({
-    Object payee = freezed,
-    Object showErrorMessages = freezed,
-    Object isSaving = freezed,
-    Object isEditing = freezed,
-    Object saveFailureOrSuccessOption = freezed,
+    Object? payee = freezed,
+    Object? showErrorMessages = freezed,
+    Object? isSaving = freezed,
+    Object? isEditing = freezed,
+    Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_PayeeCreatorState(
-      payee: payee == freezed ? _value.payee : payee as Payee,
-      showErrorMessages:
-          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
-      isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
-      isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
+      payee: payee == freezed
+          ? _value.payee
+          : payee // ignore: cast_nullable_to_non_nullable
+              as Payee,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: isSaving == freezed
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEditing: isEditing == freezed
+          ? _value.isEditing
+          : isEditing // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
-          : saveFailureOrSuccessOption as Option<Either<ValueFailure, Unit>>,
+          : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ValueFailure, Unit>>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_PayeeCreatorState implements _PayeeCreatorState {
   const _$_PayeeCreatorState(
-      {@required this.payee,
-      @required this.showErrorMessages,
-      @required this.isSaving,
-      @required this.isEditing,
-      @required this.saveFailureOrSuccessOption})
-      : assert(payee != null),
-        assert(showErrorMessages != null),
-        assert(isSaving != null),
-        assert(isEditing != null),
-        assert(saveFailureOrSuccessOption != null);
+      {required this.payee,
+      required this.showErrorMessages,
+      required this.isSaving,
+      required this.isEditing,
+      required this.saveFailureOrSuccessOption});
 
   @override
   final Payee payee;
@@ -588,12 +615,16 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
                 const DeepCollectionEquality()
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.isSaving, isSaving) ||
-                const DeepCollectionEquality().equals(other.isSaving, isSaving)) &&
-            (identical(other.isEditing, isEditing) ||
-                const DeepCollectionEquality().equals(other.isEditing, isEditing)) &&
-            (identical(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality()
-                    .equals(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption)));
+                    .equals(other.isSaving, isSaving)) &&
+            (identical(other.isEditing, isEditing) ||
+                const DeepCollectionEquality()
+                    .equals(other.isEditing, isEditing)) &&
+            (identical(other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption) ||
+                const DeepCollectionEquality().equals(
+                    other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption)));
   }
 
   @override
@@ -605,6 +636,7 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
       const DeepCollectionEquality().hash(isEditing) ^
       const DeepCollectionEquality().hash(saveFailureOrSuccessOption);
 
+  @JsonKey(ignore: true)
   @override
   _$PayeeCreatorStateCopyWith<_PayeeCreatorState> get copyWith =>
       __$PayeeCreatorStateCopyWithImpl<_PayeeCreatorState>(this, _$identity);
@@ -612,23 +644,26 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
 
 abstract class _PayeeCreatorState implements PayeeCreatorState {
   const factory _PayeeCreatorState(
-          {@required Payee payee,
-          @required bool showErrorMessages,
-          @required bool isSaving,
-          @required bool isEditing,
-          @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
-      _$_PayeeCreatorState;
+      {required Payee payee,
+      required bool showErrorMessages,
+      required bool isSaving,
+      required bool isEditing,
+      required Option<Either<ValueFailure, Unit>>
+          saveFailureOrSuccessOption}) = _$_PayeeCreatorState;
 
   @override
-  Payee get payee;
+  Payee get payee => throw _privateConstructorUsedError;
   @override
-  bool get showErrorMessages;
+  bool get showErrorMessages => throw _privateConstructorUsedError;
   @override
-  bool get isSaving;
+  bool get isSaving => throw _privateConstructorUsedError;
   @override
-  bool get isEditing;
+  bool get isEditing => throw _privateConstructorUsedError;
   @override
-  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
+  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
   @override
-  _$PayeeCreatorStateCopyWith<_PayeeCreatorState> get copyWith;
+  @JsonKey(ignore: true)
+  _$PayeeCreatorStateCopyWith<_PayeeCreatorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

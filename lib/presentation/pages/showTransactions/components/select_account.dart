@@ -33,7 +33,7 @@ class SelectAccountPage extends StatelessWidget {
               return GestureDetector(
                 onTap: () => handleOnTap(index),
                 child: ListTile(
-                  title: Text(accounts[index]!.name),
+                  title: Text(accounts[index]!.name!),
                 ),
               );
             }));

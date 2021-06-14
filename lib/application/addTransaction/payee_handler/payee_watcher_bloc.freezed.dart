@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'payee_watcher_bloc.dart';
 
@@ -9,17 +9,19 @@ part of 'payee_watcher_bloc.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$PayeeWatcherEventTearOff {
   const _$PayeeWatcherEventTearOff();
 
-// ignore: unused_element
   _PayeeWatchStarted watchPayeesStarted() {
     return const _PayeeWatchStarted();
   }
 
-// ignore: unused_element
-  _PayeesReceived payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees) {
+  _PayeesReceived payeesReceived(
+      Either<ValueFailure, List<Payee>> failureOrPayees) {
     return _PayeesReceived(
       failureOrPayees,
     );
@@ -27,33 +29,38 @@ class _$PayeeWatcherEventTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $PayeeWatcherEvent = _$PayeeWatcherEventTearOff();
 
 /// @nodoc
 mixin _$PayeeWatcherEvent {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result watchPayeesStarted(),
-    @required Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchPayeesStarted,
+    required TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)
+        payeesReceived,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result watchPayeesStarted(),
-    Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchPayeesStarted,
+    TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)?
+        payeesReceived,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result watchPayeesStarted(_PayeeWatchStarted value),
-    @required Result payeesReceived(_PayeesReceived value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PayeeWatchStarted value) watchPayeesStarted,
+    required TResult Function(_PayeesReceived value) payeesReceived,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result watchPayeesStarted(_PayeeWatchStarted value),
-    Result payeesReceived(_PayeesReceived value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
+    TResult Function(_PayeesReceived value)? payeesReceived,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -64,7 +71,8 @@ abstract class $PayeeWatcherEventCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeWatcherEventCopyWithImpl<$Res> implements $PayeeWatcherEventCopyWith<$Res> {
+class _$PayeeWatcherEventCopyWithImpl<$Res>
+    implements $PayeeWatcherEventCopyWith<$Res> {
   _$PayeeWatcherEventCopyWithImpl(this._value, this._then);
 
   final PayeeWatcherEvent _value;
@@ -80,7 +88,8 @@ abstract class _$PayeeWatchStartedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeWatchStartedCopyWithImpl<$Res> extends _$PayeeWatcherEventCopyWithImpl<$Res>
+class __$PayeeWatchStartedCopyWithImpl<$Res>
+    extends _$PayeeWatcherEventCopyWithImpl<$Res>
     implements _$PayeeWatchStartedCopyWith<$Res> {
   __$PayeeWatchStartedCopyWithImpl(
       _PayeeWatchStarted _value, $Res Function(_PayeeWatchStarted) _then)
@@ -91,6 +100,7 @@ class __$PayeeWatchStartedCopyWithImpl<$Res> extends _$PayeeWatcherEventCopyWith
 }
 
 /// @nodoc
+
 class _$_PayeeWatchStarted implements _PayeeWatchStarted {
   const _$_PayeeWatchStarted();
 
@@ -109,23 +119,22 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result watchPayeesStarted(),
-    @required Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchPayeesStarted,
+    required TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)
+        payeesReceived,
   }) {
-    assert(watchPayeesStarted != null);
-    assert(payeesReceived != null);
     return watchPayeesStarted();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result watchPayeesStarted(),
-    Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchPayeesStarted,
+    TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)?
+        payeesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (watchPayeesStarted != null) {
       return watchPayeesStarted();
     }
@@ -134,23 +143,20 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result watchPayeesStarted(_PayeeWatchStarted value),
-    @required Result payeesReceived(_PayeesReceived value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PayeeWatchStarted value) watchPayeesStarted,
+    required TResult Function(_PayeesReceived value) payeesReceived,
   }) {
-    assert(watchPayeesStarted != null);
-    assert(payeesReceived != null);
     return watchPayeesStarted(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result watchPayeesStarted(_PayeeWatchStarted value),
-    Result payeesReceived(_PayeesReceived value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
+    TResult Function(_PayeesReceived value)? payeesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (watchPayeesStarted != null) {
       return watchPayeesStarted(this);
     }
@@ -164,15 +170,18 @@ abstract class _PayeeWatchStarted implements PayeeWatcherEvent {
 
 /// @nodoc
 abstract class _$PayeesReceivedCopyWith<$Res> {
-  factory _$PayeesReceivedCopyWith(_PayeesReceived value, $Res Function(_PayeesReceived) then) =
+  factory _$PayeesReceivedCopyWith(
+          _PayeesReceived value, $Res Function(_PayeesReceived) then) =
       __$PayeesReceivedCopyWithImpl<$Res>;
   $Res call({Either<ValueFailure, List<Payee>> failureOrPayees});
 }
 
 /// @nodoc
-class __$PayeesReceivedCopyWithImpl<$Res> extends _$PayeeWatcherEventCopyWithImpl<$Res>
+class __$PayeesReceivedCopyWithImpl<$Res>
+    extends _$PayeeWatcherEventCopyWithImpl<$Res>
     implements _$PayeesReceivedCopyWith<$Res> {
-  __$PayeesReceivedCopyWithImpl(_PayeesReceived _value, $Res Function(_PayeesReceived) _then)
+  __$PayeesReceivedCopyWithImpl(
+      _PayeesReceived _value, $Res Function(_PayeesReceived) _then)
       : super(_value, (v) => _then(v as _PayeesReceived));
 
   @override
@@ -180,19 +189,21 @@ class __$PayeesReceivedCopyWithImpl<$Res> extends _$PayeeWatcherEventCopyWithImp
 
   @override
   $Res call({
-    Object failureOrPayees = freezed,
+    Object? failureOrPayees = freezed,
   }) {
     return _then(_PayeesReceived(
       failureOrPayees == freezed
           ? _value.failureOrPayees
-          : failureOrPayees as Either<ValueFailure, List<Payee>>,
+          : failureOrPayees // ignore: cast_nullable_to_non_nullable
+              as Either<ValueFailure, List<Payee>>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_PayeesReceived implements _PayeesReceived {
-  const _$_PayeesReceived(this.failureOrPayees) : assert(failureOrPayees != null);
+  const _$_PayeesReceived(this.failureOrPayees);
 
   @override
   final Either<ValueFailure, List<Payee>> failureOrPayees;
@@ -207,35 +218,38 @@ class _$_PayeesReceived implements _PayeesReceived {
     return identical(this, other) ||
         (other is _PayeesReceived &&
             (identical(other.failureOrPayees, failureOrPayees) ||
-                const DeepCollectionEquality().equals(other.failureOrPayees, failureOrPayees)));
+                const DeepCollectionEquality()
+                    .equals(other.failureOrPayees, failureOrPayees)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(failureOrPayees);
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failureOrPayees);
 
+  @JsonKey(ignore: true)
   @override
   _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith =>
       __$PayeesReceivedCopyWithImpl<_PayeesReceived>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result watchPayeesStarted(),
-    @required Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchPayeesStarted,
+    required TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)
+        payeesReceived,
   }) {
-    assert(watchPayeesStarted != null);
-    assert(payeesReceived != null);
     return payeesReceived(failureOrPayees);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result watchPayeesStarted(),
-    Result payeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchPayeesStarted,
+    TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)?
+        payeesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (payeesReceived != null) {
       return payeesReceived(failureOrPayees);
     }
@@ -244,23 +258,20 @@ class _$_PayeesReceived implements _PayeesReceived {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result watchPayeesStarted(_PayeeWatchStarted value),
-    @required Result payeesReceived(_PayeesReceived value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_PayeeWatchStarted value) watchPayeesStarted,
+    required TResult Function(_PayeesReceived value) payeesReceived,
   }) {
-    assert(watchPayeesStarted != null);
-    assert(payeesReceived != null);
     return payeesReceived(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result watchPayeesStarted(_PayeeWatchStarted value),
-    Result payeesReceived(_PayeesReceived value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
+    TResult Function(_PayeesReceived value)? payeesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (payeesReceived != null) {
       return payeesReceived(this);
     }
@@ -269,35 +280,34 @@ class _$_PayeesReceived implements _PayeesReceived {
 }
 
 abstract class _PayeesReceived implements PayeeWatcherEvent {
-  const factory _PayeesReceived(Either<ValueFailure, List<Payee>> failureOrPayees) =
-      _$_PayeesReceived;
+  const factory _PayeesReceived(
+      Either<ValueFailure, List<Payee>> failureOrPayees) = _$_PayeesReceived;
 
-  Either<ValueFailure, List<Payee>> get failureOrPayees;
-  _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith;
+  Either<ValueFailure, List<Payee>> get failureOrPayees =>
+      throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$PayeeWatcherStateTearOff {
   const _$PayeeWatcherStateTearOff();
 
-// ignore: unused_element
   _Initial initial() {
     return const _Initial();
   }
 
-// ignore: unused_element
   _Loading loading() {
     return const _Loading();
   }
 
-// ignore: unused_element
   _PayeeLoadSuccess loadSuccess(List<Payee> payees) {
     return _PayeeLoadSuccess(
       payees,
     );
   }
 
-// ignore: unused_element
   _PayeeLoadFailure loadFailure(ValueFailure<dynamic> payeeFailure) {
     return _PayeeLoadFailure(
       payeeFailure,
@@ -306,41 +316,44 @@ class _$PayeeWatcherStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $PayeeWatcherState = _$PayeeWatcherStateTearOff();
 
 /// @nodoc
 mixin _$PayeeWatcherState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Payee> payees),
-    @required Result loadFailure(ValueFailure<dynamic> payeeFailure),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Payee> payees) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Payee> payees),
-    Result loadFailure(ValueFailure<dynamic> payeeFailure),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_PayeeLoadSuccess value),
-    @required Result loadFailure(_PayeeLoadFailure value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_PayeeLoadSuccess value) loadSuccess,
+    required TResult Function(_PayeeLoadFailure value) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_PayeeLoadSuccess value),
-    Result loadFailure(_PayeeLoadFailure value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -351,7 +364,8 @@ abstract class $PayeeWatcherStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeWatcherStateCopyWithImpl<$Res> implements $PayeeWatcherStateCopyWith<$Res> {
+class _$PayeeWatcherStateCopyWithImpl<$Res>
+    implements $PayeeWatcherStateCopyWith<$Res> {
   _$PayeeWatcherStateCopyWithImpl(this._value, this._then);
 
   final PayeeWatcherState _value;
@@ -376,6 +390,7 @@ class __$InitialCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Initial implements _Initial {
   const _$_Initial();
 
@@ -394,29 +409,24 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Payee> payees),
-    @required Result loadFailure(ValueFailure<dynamic> payeeFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Payee> payees) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Payee> payees),
-    Result loadFailure(ValueFailure<dynamic> payeeFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -425,29 +435,24 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_PayeeLoadSuccess value),
-    @required Result loadFailure(_PayeeLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_PayeeLoadSuccess value) loadSuccess,
+    required TResult Function(_PayeeLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_PayeeLoadSuccess value),
-    Result loadFailure(_PayeeLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -476,6 +481,7 @@ class __$LoadingCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$_Loading implements _Loading {
   const _$_Loading();
 
@@ -494,29 +500,24 @@ class _$_Loading implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Payee> payees),
-    @required Result loadFailure(ValueFailure<dynamic> payeeFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Payee> payees) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Payee> payees),
-    Result loadFailure(ValueFailure<dynamic> payeeFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -525,29 +526,24 @@ class _$_Loading implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_PayeeLoadSuccess value),
-    @required Result loadFailure(_PayeeLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_PayeeLoadSuccess value) loadSuccess,
+    required TResult Function(_PayeeLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_PayeeLoadSuccess value),
-    Result loadFailure(_PayeeLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -568,9 +564,11 @@ abstract class _$PayeeLoadSuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeLoadSuccessCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
+class __$PayeeLoadSuccessCopyWithImpl<$Res>
+    extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$PayeeLoadSuccessCopyWith<$Res> {
-  __$PayeeLoadSuccessCopyWithImpl(_PayeeLoadSuccess _value, $Res Function(_PayeeLoadSuccess) _then)
+  __$PayeeLoadSuccessCopyWithImpl(
+      _PayeeLoadSuccess _value, $Res Function(_PayeeLoadSuccess) _then)
       : super(_value, (v) => _then(v as _PayeeLoadSuccess));
 
   @override
@@ -578,17 +576,21 @@ class __$PayeeLoadSuccessCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithI
 
   @override
   $Res call({
-    Object payees = freezed,
+    Object? payees = freezed,
   }) {
     return _then(_PayeeLoadSuccess(
-      payees == freezed ? _value.payees : payees as List<Payee>,
+      payees == freezed
+          ? _value.payees
+          : payees // ignore: cast_nullable_to_non_nullable
+              as List<Payee>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
-  const _$_PayeeLoadSuccess(this.payees) : assert(payees != null);
+  const _$_PayeeLoadSuccess(this.payees);
 
   @override
   final List<Payee> payees;
@@ -607,37 +609,34 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(payees);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payees);
 
+  @JsonKey(ignore: true)
   @override
   _$PayeeLoadSuccessCopyWith<_PayeeLoadSuccess> get copyWith =>
       __$PayeeLoadSuccessCopyWithImpl<_PayeeLoadSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Payee> payees),
-    @required Result loadFailure(ValueFailure<dynamic> payeeFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Payee> payees) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadSuccess(payees);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Payee> payees),
-    Result loadFailure(ValueFailure<dynamic> payeeFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadSuccess != null) {
       return loadSuccess(payees);
     }
@@ -646,29 +645,24 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_PayeeLoadSuccess value),
-    @required Result loadFailure(_PayeeLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_PayeeLoadSuccess value) loadSuccess,
+    required TResult Function(_PayeeLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadSuccess(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_PayeeLoadSuccess value),
-    Result loadFailure(_PayeeLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadSuccess != null) {
       return loadSuccess(this);
     }
@@ -679,8 +673,10 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
 abstract class _PayeeLoadSuccess implements PayeeWatcherState {
   const factory _PayeeLoadSuccess(List<Payee> payees) = _$_PayeeLoadSuccess;
 
-  List<Payee> get payees;
-  _$PayeeLoadSuccessCopyWith<_PayeeLoadSuccess> get copyWith;
+  List<Payee> get payees => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PayeeLoadSuccessCopyWith<_PayeeLoadSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -694,9 +690,11 @@ abstract class _$PayeeLoadFailureCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeLoadFailureCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
+class __$PayeeLoadFailureCopyWithImpl<$Res>
+    extends _$PayeeWatcherStateCopyWithImpl<$Res>
     implements _$PayeeLoadFailureCopyWith<$Res> {
-  __$PayeeLoadFailureCopyWithImpl(_PayeeLoadFailure _value, $Res Function(_PayeeLoadFailure) _then)
+  __$PayeeLoadFailureCopyWithImpl(
+      _PayeeLoadFailure _value, $Res Function(_PayeeLoadFailure) _then)
       : super(_value, (v) => _then(v as _PayeeLoadFailure));
 
   @override
@@ -704,18 +702,18 @@ class __$PayeeLoadFailureCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithI
 
   @override
   $Res call({
-    Object payeeFailure = freezed,
+    Object? payeeFailure = freezed,
   }) {
     return _then(_PayeeLoadFailure(
-      payeeFailure == freezed ? _value.payeeFailure : payeeFailure as ValueFailure<dynamic>,
+      payeeFailure == freezed
+          ? _value.payeeFailure
+          : payeeFailure // ignore: cast_nullable_to_non_nullable
+              as ValueFailure<dynamic>,
     ));
   }
 
   @override
   $ValueFailureCopyWith<dynamic, $Res> get payeeFailure {
-    if (_value.payeeFailure == null) {
-      return null;
-    }
     return $ValueFailureCopyWith<dynamic, $Res>(_value.payeeFailure, (value) {
       return _then(_value.copyWith(payeeFailure: value));
     });
@@ -723,8 +721,9 @@ class __$PayeeLoadFailureCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithI
 }
 
 /// @nodoc
+
 class _$_PayeeLoadFailure implements _PayeeLoadFailure {
-  const _$_PayeeLoadFailure(this.payeeFailure) : assert(payeeFailure != null);
+  const _$_PayeeLoadFailure(this.payeeFailure);
 
   @override
   final ValueFailure<dynamic> payeeFailure;
@@ -739,41 +738,39 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
     return identical(this, other) ||
         (other is _PayeeLoadFailure &&
             (identical(other.payeeFailure, payeeFailure) ||
-                const DeepCollectionEquality().equals(other.payeeFailure, payeeFailure)));
+                const DeepCollectionEquality()
+                    .equals(other.payeeFailure, payeeFailure)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(payeeFailure);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payeeFailure);
 
+  @JsonKey(ignore: true)
   @override
   _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith =>
       __$PayeeLoadFailureCopyWithImpl<_PayeeLoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Payee> payees),
-    @required Result loadFailure(ValueFailure<dynamic> payeeFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Payee> payees) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadFailure(payeeFailure);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Payee> payees),
-    Result loadFailure(ValueFailure<dynamic> payeeFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadFailure != null) {
       return loadFailure(payeeFailure);
     }
@@ -782,29 +779,24 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_PayeeLoadSuccess value),
-    @required Result loadFailure(_PayeeLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_PayeeLoadSuccess value) loadSuccess,
+    required TResult Function(_PayeeLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadFailure(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_PayeeLoadSuccess value),
-    Result loadFailure(_PayeeLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadFailure != null) {
       return loadFailure(this);
     }
@@ -813,8 +805,11 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
 }
 
 abstract class _PayeeLoadFailure implements PayeeWatcherState {
-  const factory _PayeeLoadFailure(ValueFailure<dynamic> payeeFailure) = _$_PayeeLoadFailure;
+  const factory _PayeeLoadFailure(ValueFailure<dynamic> payeeFailure) =
+      _$_PayeeLoadFailure;
 
-  ValueFailure<dynamic> get payeeFailure;
-  _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith;
+  ValueFailure<dynamic> get payeeFailure => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith =>
+      throw _privateConstructorUsedError;
 }

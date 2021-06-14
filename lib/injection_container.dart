@@ -20,7 +20,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   final DatabaseProvider dbProvider = DatabaseProvider();
-  final Database database = await (dbProvider.open() as FutureOr<Database>);
+  final Database database = await (dbProvider.open() as Future<Database>);
   sl.registerSingleton<Database>(database);
   sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
   sl.registerSingleton<ITransactionRepository>(

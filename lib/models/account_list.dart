@@ -45,21 +45,21 @@ class AccountList implements ObjectList<Account> {
 
   void creditAccount({required int? id, required double amount}) {
     final Account account = _getById(id)!;
-    account.balance += amount;
+    account.balance = account.balance! + amount;
     queryContext!.updateAccount(account);
     setMostRecentAccount(id);
   }
 
   void debitAccount({required int? id, required double amount}) {
     final Account account = _getById(id)!;
-    account.balance -= amount;
+    account.balance = account.balance! - amount;
     queryContext!.updateAccount(account);
     setMostRecentAccount(id);
   }
 
   Future<Account?> cycleNextAccount() async {
     final int nextIndex = (_mostRecentAccountIndex + 1) % _accounts.length;
-    final int nextAccountId = _accounts[nextIndex]!.id;
+    final int? nextAccountId = _accounts[nextIndex]!.id;
     setMostRecentAccount(nextAccountId);
     return _getById(nextAccountId);
   }

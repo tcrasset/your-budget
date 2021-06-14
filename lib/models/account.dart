@@ -17,13 +17,13 @@ class AccountModel {
 /// Class representing the physical account where the money is stored.
 class Account {
   /// Unique id of this.
-  int id;
+  int? id;
 
   /// Name given to this.
-  String name;
+  String? name;
 
   /// Balance of this.
-  double balance;
+  double? balance;
 
   /// Default constructor for [Account] with an unique [id], a [name] and the
   /// current [balance].

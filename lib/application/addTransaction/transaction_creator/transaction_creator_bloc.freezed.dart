@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'transaction_creator_bloc.dart';
 
@@ -9,121 +9,119 @@ part of 'transaction_creator_bloc.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$TransactionCreatorEventTearOff {
   const _$TransactionCreatorEventTearOff();
 
-// ignore: unused_element
   _Initialized initialized() {
     return const _Initialized();
   }
 
-// ignore: unused_element
   _AmountChanged amountChanged(String amount) {
     return _AmountChanged(
       amount,
     );
   }
 
-// ignore: unused_element
   _PayeeChanged payeeChanged(Payee payee) {
     return _PayeeChanged(
       payee,
     );
   }
 
-// ignore: unused_element
   _AccountChanged accountChanged(Account account) {
     return _AccountChanged(
       account,
     );
   }
 
-// ignore: unused_element
   _SubcategoryChanged subcategoryChanged(Subcategory subcategory) {
     return _SubcategoryChanged(
       subcategory,
     );
   }
 
-// ignore: unused_element
   _DateChanged dateChanged(DateTime date) {
     return _DateChanged(
       date,
     );
   }
 
-// ignore: unused_element
   _MemoChanged memoChanged(String memo) {
     return _MemoChanged(
       memo,
     );
   }
 
-// ignore: unused_element
   _Saved saved() {
     return const _Saved();
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $TransactionCreatorEvent = _$TransactionCreatorEventTearOff();
 
 /// @nodoc
 mixin _$TransactionCreatorEvent {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TransactionCreatorEventCopyWith<$Res> {
-  factory $TransactionCreatorEventCopyWith(
-          TransactionCreatorEvent value, $Res Function(TransactionCreatorEvent) then) =
+  factory $TransactionCreatorEventCopyWith(TransactionCreatorEvent value,
+          $Res Function(TransactionCreatorEvent) then) =
       _$TransactionCreatorEventCopyWithImpl<$Res>;
 }
 
@@ -139,14 +137,17 @@ class _$TransactionCreatorEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$InitializedCopyWith<$Res> {
-  factory _$InitializedCopyWith(_Initialized value, $Res Function(_Initialized) then) =
+  factory _$InitializedCopyWith(
+          _Initialized value, $Res Function(_Initialized) then) =
       __$InitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitializedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$InitializedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$InitializedCopyWith<$Res> {
-  __$InitializedCopyWithImpl(_Initialized _value, $Res Function(_Initialized) _then)
+  __$InitializedCopyWithImpl(
+      _Initialized _value, $Res Function(_Initialized) _then)
       : super(_value, (v) => _then(v as _Initialized));
 
   @override
@@ -154,6 +155,7 @@ class __$InitializedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWith
 }
 
 /// @nodoc
+
 class _$_Initialized implements _Initialized {
   const _$_Initialized();
 
@@ -172,41 +174,32 @@ class _$_Initialized implements _Initialized {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return initialized();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initialized != null) {
       return initialized();
     }
@@ -215,41 +208,32 @@ class _$_Initialized implements _Initialized {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return initialized(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initialized != null) {
       return initialized(this);
     }
@@ -263,15 +247,18 @@ abstract class _Initialized implements TransactionCreatorEvent {
 
 /// @nodoc
 abstract class _$AmountChangedCopyWith<$Res> {
-  factory _$AmountChangedCopyWith(_AmountChanged value, $Res Function(_AmountChanged) then) =
+  factory _$AmountChangedCopyWith(
+          _AmountChanged value, $Res Function(_AmountChanged) then) =
       __$AmountChangedCopyWithImpl<$Res>;
   $Res call({String amount});
 }
 
 /// @nodoc
-class __$AmountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$AmountChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$AmountChangedCopyWith<$Res> {
-  __$AmountChangedCopyWithImpl(_AmountChanged _value, $Res Function(_AmountChanged) _then)
+  __$AmountChangedCopyWithImpl(
+      _AmountChanged _value, $Res Function(_AmountChanged) _then)
       : super(_value, (v) => _then(v as _AmountChanged));
 
   @override
@@ -279,17 +266,21 @@ class __$AmountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWi
 
   @override
   $Res call({
-    Object amount = freezed,
+    Object? amount = freezed,
   }) {
     return _then(_AmountChanged(
-      amount == freezed ? _value.amount : amount as String,
+      amount == freezed
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_AmountChanged implements _AmountChanged {
-  const _$_AmountChanged(this.amount) : assert(amount != null);
+  const _$_AmountChanged(this.amount);
 
   @override
   final String amount;
@@ -308,49 +299,42 @@ class _$_AmountChanged implements _AmountChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(amount);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(amount);
 
+  @JsonKey(ignore: true)
   @override
   _$AmountChangedCopyWith<_AmountChanged> get copyWith =>
       __$AmountChangedCopyWithImpl<_AmountChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return amountChanged(amount);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (amountChanged != null) {
       return amountChanged(amount);
     }
@@ -359,41 +343,32 @@ class _$_AmountChanged implements _AmountChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return amountChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (amountChanged != null) {
       return amountChanged(this);
     }
@@ -404,13 +379,16 @@ class _$_AmountChanged implements _AmountChanged {
 abstract class _AmountChanged implements TransactionCreatorEvent {
   const factory _AmountChanged(String amount) = _$_AmountChanged;
 
-  String get amount;
-  _$AmountChangedCopyWith<_AmountChanged> get copyWith;
+  String get amount => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$AmountChangedCopyWith<_AmountChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$PayeeChangedCopyWith<$Res> {
-  factory _$PayeeChangedCopyWith(_PayeeChanged value, $Res Function(_PayeeChanged) then) =
+  factory _$PayeeChangedCopyWith(
+          _PayeeChanged value, $Res Function(_PayeeChanged) then) =
       __$PayeeChangedCopyWithImpl<$Res>;
   $Res call({Payee payee});
 
@@ -418,9 +396,11 @@ abstract class _$PayeeChangedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$PayeeChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$PayeeChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$PayeeChangedCopyWith<$Res> {
-  __$PayeeChangedCopyWithImpl(_PayeeChanged _value, $Res Function(_PayeeChanged) _then)
+  __$PayeeChangedCopyWithImpl(
+      _PayeeChanged _value, $Res Function(_PayeeChanged) _then)
       : super(_value, (v) => _then(v as _PayeeChanged));
 
   @override
@@ -428,18 +408,18 @@ class __$PayeeChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWit
 
   @override
   $Res call({
-    Object payee = freezed,
+    Object? payee = freezed,
   }) {
     return _then(_PayeeChanged(
-      payee == freezed ? _value.payee : payee as Payee,
+      payee == freezed
+          ? _value.payee
+          : payee // ignore: cast_nullable_to_non_nullable
+              as Payee,
     ));
   }
 
   @override
   $PayeeCopyWith<$Res> get payee {
-    if (_value.payee == null) {
-      return null;
-    }
     return $PayeeCopyWith<$Res>(_value.payee, (value) {
       return _then(_value.copyWith(payee: value));
     });
@@ -447,8 +427,9 @@ class __$PayeeChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWit
 }
 
 /// @nodoc
+
 class _$_PayeeChanged implements _PayeeChanged {
-  const _$_PayeeChanged(this.payee) : assert(payee != null);
+  const _$_PayeeChanged(this.payee);
 
   @override
   final Payee payee;
@@ -467,49 +448,42 @@ class _$_PayeeChanged implements _PayeeChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(payee);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payee);
 
+  @JsonKey(ignore: true)
   @override
   _$PayeeChangedCopyWith<_PayeeChanged> get copyWith =>
       __$PayeeChangedCopyWithImpl<_PayeeChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return payeeChanged(payee);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (payeeChanged != null) {
       return payeeChanged(payee);
     }
@@ -518,41 +492,32 @@ class _$_PayeeChanged implements _PayeeChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return payeeChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (payeeChanged != null) {
       return payeeChanged(this);
     }
@@ -563,13 +528,16 @@ class _$_PayeeChanged implements _PayeeChanged {
 abstract class _PayeeChanged implements TransactionCreatorEvent {
   const factory _PayeeChanged(Payee payee) = _$_PayeeChanged;
 
-  Payee get payee;
-  _$PayeeChangedCopyWith<_PayeeChanged> get copyWith;
+  Payee get payee => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$PayeeChangedCopyWith<_PayeeChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$AccountChangedCopyWith<$Res> {
-  factory _$AccountChangedCopyWith(_AccountChanged value, $Res Function(_AccountChanged) then) =
+  factory _$AccountChangedCopyWith(
+          _AccountChanged value, $Res Function(_AccountChanged) then) =
       __$AccountChangedCopyWithImpl<$Res>;
   $Res call({Account account});
 
@@ -577,9 +545,11 @@ abstract class _$AccountChangedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$AccountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$AccountChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$AccountChangedCopyWith<$Res> {
-  __$AccountChangedCopyWithImpl(_AccountChanged _value, $Res Function(_AccountChanged) _then)
+  __$AccountChangedCopyWithImpl(
+      _AccountChanged _value, $Res Function(_AccountChanged) _then)
       : super(_value, (v) => _then(v as _AccountChanged));
 
   @override
@@ -587,18 +557,18 @@ class __$AccountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyW
 
   @override
   $Res call({
-    Object account = freezed,
+    Object? account = freezed,
   }) {
     return _then(_AccountChanged(
-      account == freezed ? _value.account : account as Account,
+      account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
     ));
   }
 
   @override
   $AccountCopyWith<$Res> get account {
-    if (_value.account == null) {
-      return null;
-    }
     return $AccountCopyWith<$Res>(_value.account, (value) {
       return _then(_value.copyWith(account: value));
     });
@@ -606,8 +576,9 @@ class __$AccountChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyW
 }
 
 /// @nodoc
+
 class _$_AccountChanged implements _AccountChanged {
-  const _$_AccountChanged(this.account) : assert(account != null);
+  const _$_AccountChanged(this.account);
 
   @override
   final Account account;
@@ -626,49 +597,42 @@ class _$_AccountChanged implements _AccountChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(account);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(account);
 
+  @JsonKey(ignore: true)
   @override
   _$AccountChangedCopyWith<_AccountChanged> get copyWith =>
       __$AccountChangedCopyWithImpl<_AccountChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return accountChanged(account);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (accountChanged != null) {
       return accountChanged(account);
     }
@@ -677,41 +641,32 @@ class _$_AccountChanged implements _AccountChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return accountChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (accountChanged != null) {
       return accountChanged(this);
     }
@@ -722,8 +677,10 @@ class _$_AccountChanged implements _AccountChanged {
 abstract class _AccountChanged implements TransactionCreatorEvent {
   const factory _AccountChanged(Account account) = _$_AccountChanged;
 
-  Account get account;
-  _$AccountChangedCopyWith<_AccountChanged> get copyWith;
+  Account get account => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$AccountChangedCopyWith<_AccountChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -737,7 +694,8 @@ abstract class _$SubcategoryChangedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$SubcategoryChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$SubcategoryChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$SubcategoryChangedCopyWith<$Res> {
   __$SubcategoryChangedCopyWithImpl(
       _SubcategoryChanged _value, $Res Function(_SubcategoryChanged) _then)
@@ -748,18 +706,18 @@ class __$SubcategoryChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventC
 
   @override
   $Res call({
-    Object subcategory = freezed,
+    Object? subcategory = freezed,
   }) {
     return _then(_SubcategoryChanged(
-      subcategory == freezed ? _value.subcategory : subcategory as Subcategory,
+      subcategory == freezed
+          ? _value.subcategory
+          : subcategory // ignore: cast_nullable_to_non_nullable
+              as Subcategory,
     ));
   }
 
   @override
   $SubcategoryCopyWith<$Res> get subcategory {
-    if (_value.subcategory == null) {
-      return null;
-    }
     return $SubcategoryCopyWith<$Res>(_value.subcategory, (value) {
       return _then(_value.copyWith(subcategory: value));
     });
@@ -767,8 +725,9 @@ class __$SubcategoryChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventC
 }
 
 /// @nodoc
+
 class _$_SubcategoryChanged implements _SubcategoryChanged {
-  const _$_SubcategoryChanged(this.subcategory) : assert(subcategory != null);
+  const _$_SubcategoryChanged(this.subcategory);
 
   @override
   final Subcategory subcategory;
@@ -783,53 +742,47 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     return identical(this, other) ||
         (other is _SubcategoryChanged &&
             (identical(other.subcategory, subcategory) ||
-                const DeepCollectionEquality().equals(other.subcategory, subcategory)));
+                const DeepCollectionEquality()
+                    .equals(other.subcategory, subcategory)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategory);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategory);
 
+  @JsonKey(ignore: true)
   @override
   _$SubcategoryChangedCopyWith<_SubcategoryChanged> get copyWith =>
       __$SubcategoryChangedCopyWithImpl<_SubcategoryChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return subcategoryChanged(subcategory);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (subcategoryChanged != null) {
       return subcategoryChanged(subcategory);
     }
@@ -838,41 +791,32 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return subcategoryChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (subcategoryChanged != null) {
       return subcategoryChanged(this);
     }
@@ -881,23 +825,29 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
 }
 
 abstract class _SubcategoryChanged implements TransactionCreatorEvent {
-  const factory _SubcategoryChanged(Subcategory subcategory) = _$_SubcategoryChanged;
+  const factory _SubcategoryChanged(Subcategory subcategory) =
+      _$_SubcategoryChanged;
 
-  Subcategory get subcategory;
-  _$SubcategoryChangedCopyWith<_SubcategoryChanged> get copyWith;
+  Subcategory get subcategory => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SubcategoryChangedCopyWith<_SubcategoryChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$DateChangedCopyWith<$Res> {
-  factory _$DateChangedCopyWith(_DateChanged value, $Res Function(_DateChanged) then) =
+  factory _$DateChangedCopyWith(
+          _DateChanged value, $Res Function(_DateChanged) then) =
       __$DateChangedCopyWithImpl<$Res>;
   $Res call({DateTime date});
 }
 
 /// @nodoc
-class __$DateChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$DateChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$DateChangedCopyWith<$Res> {
-  __$DateChangedCopyWithImpl(_DateChanged _value, $Res Function(_DateChanged) _then)
+  __$DateChangedCopyWithImpl(
+      _DateChanged _value, $Res Function(_DateChanged) _then)
       : super(_value, (v) => _then(v as _DateChanged));
 
   @override
@@ -905,17 +855,21 @@ class __$DateChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWith
 
   @override
   $Res call({
-    Object date = freezed,
+    Object? date = freezed,
   }) {
     return _then(_DateChanged(
-      date == freezed ? _value.date : date as DateTime,
+      date == freezed
+          ? _value.date
+          : date // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_DateChanged implements _DateChanged {
-  const _$_DateChanged(this.date) : assert(date != null);
+  const _$_DateChanged(this.date);
 
   @override
   final DateTime date;
@@ -934,49 +888,42 @@ class _$_DateChanged implements _DateChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(date);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(date);
 
+  @JsonKey(ignore: true)
   @override
   _$DateChangedCopyWith<_DateChanged> get copyWith =>
       __$DateChangedCopyWithImpl<_DateChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return dateChanged(date);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (dateChanged != null) {
       return dateChanged(date);
     }
@@ -985,41 +932,32 @@ class _$_DateChanged implements _DateChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return dateChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (dateChanged != null) {
       return dateChanged(this);
     }
@@ -1030,21 +968,26 @@ class _$_DateChanged implements _DateChanged {
 abstract class _DateChanged implements TransactionCreatorEvent {
   const factory _DateChanged(DateTime date) = _$_DateChanged;
 
-  DateTime get date;
-  _$DateChangedCopyWith<_DateChanged> get copyWith;
+  DateTime get date => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$DateChangedCopyWith<_DateChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$MemoChangedCopyWith<$Res> {
-  factory _$MemoChangedCopyWith(_MemoChanged value, $Res Function(_MemoChanged) then) =
+  factory _$MemoChangedCopyWith(
+          _MemoChanged value, $Res Function(_MemoChanged) then) =
       __$MemoChangedCopyWithImpl<$Res>;
   $Res call({String memo});
 }
 
 /// @nodoc
-class __$MemoChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$MemoChangedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$MemoChangedCopyWith<$Res> {
-  __$MemoChangedCopyWithImpl(_MemoChanged _value, $Res Function(_MemoChanged) _then)
+  __$MemoChangedCopyWithImpl(
+      _MemoChanged _value, $Res Function(_MemoChanged) _then)
       : super(_value, (v) => _then(v as _MemoChanged));
 
   @override
@@ -1052,17 +995,21 @@ class __$MemoChangedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWith
 
   @override
   $Res call({
-    Object memo = freezed,
+    Object? memo = freezed,
   }) {
     return _then(_MemoChanged(
-      memo == freezed ? _value.memo : memo as String,
+      memo == freezed
+          ? _value.memo
+          : memo // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_MemoChanged implements _MemoChanged {
-  const _$_MemoChanged(this.memo) : assert(memo != null);
+  const _$_MemoChanged(this.memo);
 
   @override
   final String memo;
@@ -1081,49 +1028,42 @@ class _$_MemoChanged implements _MemoChanged {
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(memo);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(memo);
 
+  @JsonKey(ignore: true)
   @override
   _$MemoChangedCopyWith<_MemoChanged> get copyWith =>
       __$MemoChangedCopyWithImpl<_MemoChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return memoChanged(memo);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (memoChanged != null) {
       return memoChanged(memo);
     }
@@ -1132,41 +1072,32 @@ class _$_MemoChanged implements _MemoChanged {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return memoChanged(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (memoChanged != null) {
       return memoChanged(this);
     }
@@ -1177,17 +1108,21 @@ class _$_MemoChanged implements _MemoChanged {
 abstract class _MemoChanged implements TransactionCreatorEvent {
   const factory _MemoChanged(String memo) = _$_MemoChanged;
 
-  String get memo;
-  _$MemoChangedCopyWith<_MemoChanged> get copyWith;
+  String get memo => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$MemoChangedCopyWith<_MemoChanged> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$SavedCopyWith<$Res> {
-  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) = __$SavedCopyWithImpl<$Res>;
+  factory _$SavedCopyWith(_Saved value, $Res Function(_Saved) then) =
+      __$SavedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$SavedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$Res>
+class __$SavedCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res>
     implements _$SavedCopyWith<$Res> {
   __$SavedCopyWithImpl(_Saved _value, $Res Function(_Saved) _then)
       : super(_value, (v) => _then(v as _Saved));
@@ -1197,6 +1132,7 @@ class __$SavedCopyWithImpl<$Res> extends _$TransactionCreatorEventCopyWithImpl<$
 }
 
 /// @nodoc
+
 class _$_Saved implements _Saved {
   const _$_Saved();
 
@@ -1215,41 +1151,32 @@ class _$_Saved implements _Saved {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initialized(),
-    @required Result amountChanged(String amount),
-    @required Result payeeChanged(Payee payee),
-    @required Result accountChanged(Account account),
-    @required Result subcategoryChanged(Subcategory subcategory),
-    @required Result dateChanged(DateTime date),
-    @required Result memoChanged(String memo),
-    @required Result saved(),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialized,
+    required TResult Function(String amount) amountChanged,
+    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Account account) accountChanged,
+    required TResult Function(Subcategory subcategory) subcategoryChanged,
+    required TResult Function(DateTime date) dateChanged,
+    required TResult Function(String memo) memoChanged,
+    required TResult Function() saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return saved();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initialized(),
-    Result amountChanged(String amount),
-    Result payeeChanged(Payee payee),
-    Result accountChanged(Account account),
-    Result subcategoryChanged(Subcategory subcategory),
-    Result dateChanged(DateTime date),
-    Result memoChanged(String memo),
-    Result saved(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialized,
+    TResult Function(String amount)? amountChanged,
+    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Account account)? accountChanged,
+    TResult Function(Subcategory subcategory)? subcategoryChanged,
+    TResult Function(DateTime date)? dateChanged,
+    TResult Function(String memo)? memoChanged,
+    TResult Function()? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (saved != null) {
       return saved();
     }
@@ -1258,41 +1185,32 @@ class _$_Saved implements _Saved {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initialized(_Initialized value),
-    @required Result amountChanged(_AmountChanged value),
-    @required Result payeeChanged(_PayeeChanged value),
-    @required Result accountChanged(_AccountChanged value),
-    @required Result subcategoryChanged(_SubcategoryChanged value),
-    @required Result dateChanged(_DateChanged value),
-    @required Result memoChanged(_MemoChanged value),
-    @required Result saved(_Saved value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initialized value) initialized,
+    required TResult Function(_AmountChanged value) amountChanged,
+    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_AccountChanged value) accountChanged,
+    required TResult Function(_SubcategoryChanged value) subcategoryChanged,
+    required TResult Function(_DateChanged value) dateChanged,
+    required TResult Function(_MemoChanged value) memoChanged,
+    required TResult Function(_Saved value) saved,
   }) {
-    assert(initialized != null);
-    assert(amountChanged != null);
-    assert(payeeChanged != null);
-    assert(accountChanged != null);
-    assert(subcategoryChanged != null);
-    assert(dateChanged != null);
-    assert(memoChanged != null);
-    assert(saved != null);
     return saved(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initialized(_Initialized value),
-    Result amountChanged(_AmountChanged value),
-    Result payeeChanged(_PayeeChanged value),
-    Result accountChanged(_AccountChanged value),
-    Result subcategoryChanged(_SubcategoryChanged value),
-    Result dateChanged(_DateChanged value),
-    Result memoChanged(_MemoChanged value),
-    Result saved(_Saved value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_AmountChanged value)? amountChanged,
+    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_AccountChanged value)? accountChanged,
+    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult Function(_DateChanged value)? dateChanged,
+    TResult Function(_MemoChanged value)? memoChanged,
+    TResult Function(_Saved value)? saved,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (saved != null) {
       return saved(this);
     }
@@ -1308,13 +1226,12 @@ abstract class _Saved implements TransactionCreatorEvent {
 class _$TransactionCreatorStateTearOff {
   const _$TransactionCreatorStateTearOff();
 
-// ignore: unused_element
   _TransactionCreatorState call(
-      {@required MoneyTransaction moneyTransaction,
-      @required bool showErrorMessages,
-      @required bool isSaving,
-      @required bool isEditing,
-      @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
+      {required MoneyTransaction moneyTransaction,
+      required bool showErrorMessages,
+      required bool isSaving,
+      required bool isEditing,
+      required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) {
     return _TransactionCreatorState(
       moneyTransaction: moneyTransaction,
       showErrorMessages: showErrorMessages,
@@ -1326,24 +1243,26 @@ class _$TransactionCreatorStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $TransactionCreatorState = _$TransactionCreatorStateTearOff();
 
 /// @nodoc
 mixin _$TransactionCreatorState {
-  MoneyTransaction get moneyTransaction;
-  bool get showErrorMessages;
-  bool get isSaving;
-  bool get isEditing;
-  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
+  MoneyTransaction get moneyTransaction => throw _privateConstructorUsedError;
+  bool get showErrorMessages => throw _privateConstructorUsedError;
+  bool get isSaving => throw _privateConstructorUsedError;
+  bool get isEditing => throw _privateConstructorUsedError;
+  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
 
-  $TransactionCreatorStateCopyWith<TransactionCreatorState> get copyWith;
+  @JsonKey(ignore: true)
+  $TransactionCreatorStateCopyWith<TransactionCreatorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $TransactionCreatorStateCopyWith<$Res> {
-  factory $TransactionCreatorStateCopyWith(
-          TransactionCreatorState value, $Res Function(TransactionCreatorState) then) =
+  factory $TransactionCreatorStateCopyWith(TransactionCreatorState value,
+          $Res Function(TransactionCreatorState) then) =
       _$TransactionCreatorStateCopyWithImpl<$Res>;
   $Res call(
       {MoneyTransaction moneyTransaction,
@@ -1366,31 +1285,38 @@ class _$TransactionCreatorStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object moneyTransaction = freezed,
-    Object showErrorMessages = freezed,
-    Object isSaving = freezed,
-    Object isEditing = freezed,
-    Object saveFailureOrSuccessOption = freezed,
+    Object? moneyTransaction = freezed,
+    Object? showErrorMessages = freezed,
+    Object? isSaving = freezed,
+    Object? isEditing = freezed,
+    Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
       moneyTransaction: moneyTransaction == freezed
           ? _value.moneyTransaction
-          : moneyTransaction as MoneyTransaction,
-      showErrorMessages:
-          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
-      isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
-      isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
+          : moneyTransaction // ignore: cast_nullable_to_non_nullable
+              as MoneyTransaction,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: isSaving == freezed
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEditing: isEditing == freezed
+          ? _value.isEditing
+          : isEditing // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
-          : saveFailureOrSuccessOption as Option<Either<ValueFailure, Unit>>,
+          : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ValueFailure, Unit>>,
     ));
   }
 
   @override
   $MoneyTransactionCopyWith<$Res> get moneyTransaction {
-    if (_value.moneyTransaction == null) {
-      return null;
-    }
     return $MoneyTransactionCopyWith<$Res>(_value.moneyTransaction, (value) {
       return _then(_value.copyWith(moneyTransaction: value));
     });
@@ -1400,8 +1326,8 @@ class _$TransactionCreatorStateCopyWithImpl<$Res>
 /// @nodoc
 abstract class _$TransactionCreatorStateCopyWith<$Res>
     implements $TransactionCreatorStateCopyWith<$Res> {
-  factory _$TransactionCreatorStateCopyWith(
-          _TransactionCreatorState value, $Res Function(_TransactionCreatorState) then) =
+  factory _$TransactionCreatorStateCopyWith(_TransactionCreatorState value,
+          $Res Function(_TransactionCreatorState) then) =
       __$TransactionCreatorStateCopyWithImpl<$Res>;
   @override
   $Res call(
@@ -1419,49 +1345,56 @@ abstract class _$TransactionCreatorStateCopyWith<$Res>
 class __$TransactionCreatorStateCopyWithImpl<$Res>
     extends _$TransactionCreatorStateCopyWithImpl<$Res>
     implements _$TransactionCreatorStateCopyWith<$Res> {
-  __$TransactionCreatorStateCopyWithImpl(
-      _TransactionCreatorState _value, $Res Function(_TransactionCreatorState) _then)
+  __$TransactionCreatorStateCopyWithImpl(_TransactionCreatorState _value,
+      $Res Function(_TransactionCreatorState) _then)
       : super(_value, (v) => _then(v as _TransactionCreatorState));
 
   @override
-  _TransactionCreatorState get _value => super._value as _TransactionCreatorState;
+  _TransactionCreatorState get _value =>
+      super._value as _TransactionCreatorState;
 
   @override
   $Res call({
-    Object moneyTransaction = freezed,
-    Object showErrorMessages = freezed,
-    Object isSaving = freezed,
-    Object isEditing = freezed,
-    Object saveFailureOrSuccessOption = freezed,
+    Object? moneyTransaction = freezed,
+    Object? showErrorMessages = freezed,
+    Object? isSaving = freezed,
+    Object? isEditing = freezed,
+    Object? saveFailureOrSuccessOption = freezed,
   }) {
     return _then(_TransactionCreatorState(
       moneyTransaction: moneyTransaction == freezed
           ? _value.moneyTransaction
-          : moneyTransaction as MoneyTransaction,
-      showErrorMessages:
-          showErrorMessages == freezed ? _value.showErrorMessages : showErrorMessages as bool,
-      isSaving: isSaving == freezed ? _value.isSaving : isSaving as bool,
-      isEditing: isEditing == freezed ? _value.isEditing : isEditing as bool,
+          : moneyTransaction // ignore: cast_nullable_to_non_nullable
+              as MoneyTransaction,
+      showErrorMessages: showErrorMessages == freezed
+          ? _value.showErrorMessages
+          : showErrorMessages // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSaving: isSaving == freezed
+          ? _value.isSaving
+          : isSaving // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isEditing: isEditing == freezed
+          ? _value.isEditing
+          : isEditing // ignore: cast_nullable_to_non_nullable
+              as bool,
       saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
           ? _value.saveFailureOrSuccessOption
-          : saveFailureOrSuccessOption as Option<Either<ValueFailure, Unit>>,
+          : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
+              as Option<Either<ValueFailure, Unit>>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_TransactionCreatorState implements _TransactionCreatorState {
   const _$_TransactionCreatorState(
-      {@required this.moneyTransaction,
-      @required this.showErrorMessages,
-      @required this.isSaving,
-      @required this.isEditing,
-      @required this.saveFailureOrSuccessOption})
-      : assert(moneyTransaction != null),
-        assert(showErrorMessages != null),
-        assert(isSaving != null),
-        assert(isEditing != null),
-        assert(saveFailureOrSuccessOption != null);
+      {required this.moneyTransaction,
+      required this.showErrorMessages,
+      required this.isSaving,
+      required this.isEditing,
+      required this.saveFailureOrSuccessOption});
 
   @override
   final MoneyTransaction moneyTransaction;
@@ -1484,17 +1417,22 @@ class _$_TransactionCreatorState implements _TransactionCreatorState {
     return identical(this, other) ||
         (other is _TransactionCreatorState &&
             (identical(other.moneyTransaction, moneyTransaction) ||
-                const DeepCollectionEquality().equals(other.moneyTransaction, moneyTransaction)) &&
+                const DeepCollectionEquality()
+                    .equals(other.moneyTransaction, moneyTransaction)) &&
             (identical(other.showErrorMessages, showErrorMessages) ||
                 const DeepCollectionEquality()
                     .equals(other.showErrorMessages, showErrorMessages)) &&
             (identical(other.isSaving, isSaving) ||
-                const DeepCollectionEquality().equals(other.isSaving, isSaving)) &&
-            (identical(other.isEditing, isEditing) ||
-                const DeepCollectionEquality().equals(other.isEditing, isEditing)) &&
-            (identical(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption) ||
                 const DeepCollectionEquality()
-                    .equals(other.saveFailureOrSuccessOption, saveFailureOrSuccessOption)));
+                    .equals(other.isSaving, isSaving)) &&
+            (identical(other.isEditing, isEditing) ||
+                const DeepCollectionEquality()
+                    .equals(other.isEditing, isEditing)) &&
+            (identical(other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption) ||
+                const DeepCollectionEquality().equals(
+                    other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption)));
   }
 
   @override
@@ -1506,30 +1444,35 @@ class _$_TransactionCreatorState implements _TransactionCreatorState {
       const DeepCollectionEquality().hash(isEditing) ^
       const DeepCollectionEquality().hash(saveFailureOrSuccessOption);
 
+  @JsonKey(ignore: true)
   @override
   _$TransactionCreatorStateCopyWith<_TransactionCreatorState> get copyWith =>
-      __$TransactionCreatorStateCopyWithImpl<_TransactionCreatorState>(this, _$identity);
+      __$TransactionCreatorStateCopyWithImpl<_TransactionCreatorState>(
+          this, _$identity);
 }
 
 abstract class _TransactionCreatorState implements TransactionCreatorState {
   const factory _TransactionCreatorState(
-          {@required MoneyTransaction moneyTransaction,
-          @required bool showErrorMessages,
-          @required bool isSaving,
-          @required bool isEditing,
-          @required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption}) =
-      _$_TransactionCreatorState;
+      {required MoneyTransaction moneyTransaction,
+      required bool showErrorMessages,
+      required bool isSaving,
+      required bool isEditing,
+      required Option<Either<ValueFailure, Unit>>
+          saveFailureOrSuccessOption}) = _$_TransactionCreatorState;
 
   @override
-  MoneyTransaction get moneyTransaction;
+  MoneyTransaction get moneyTransaction => throw _privateConstructorUsedError;
   @override
-  bool get showErrorMessages;
+  bool get showErrorMessages => throw _privateConstructorUsedError;
   @override
-  bool get isSaving;
+  bool get isSaving => throw _privateConstructorUsedError;
   @override
-  bool get isEditing;
+  bool get isEditing => throw _privateConstructorUsedError;
   @override
-  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
+  Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
+      throw _privateConstructorUsedError;
   @override
-  _$TransactionCreatorStateCopyWith<_TransactionCreatorState> get copyWith;
+  @JsonKey(ignore: true)
+  _$TransactionCreatorStateCopyWith<_TransactionCreatorState> get copyWith =>
+      throw _privateConstructorUsedError;
 }

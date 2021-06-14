@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'account_dto.dart';
 
@@ -8,6 +8,10 @@ part of 'account_dto.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 AccountDTO _$AccountDTOFromJson(Map<String, dynamic> json) {
   return _AccountDTO.fromJson(json);
 }
@@ -16,9 +20,8 @@ AccountDTO _$AccountDTOFromJson(Map<String, dynamic> json) {
 class _$AccountDTOTearOff {
   const _$AccountDTOTearOff();
 
-// ignore: unused_element
   _AccountDTO call(
-      {@JsonKey(ignore: true) String id, @required String name, @required double balance}) {
+      {@JsonKey(ignore: true) required String id, required String name, required double balance}) {
     return _AccountDTO(
       id: id,
       name: name,
@@ -26,25 +29,24 @@ class _$AccountDTOTearOff {
     );
   }
 
-// ignore: unused_element
   AccountDTO fromJson(Map<String, Object> json) {
     return AccountDTO.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $AccountDTO = _$AccountDTOTearOff();
 
 /// @nodoc
 mixin _$AccountDTO {
   @JsonKey(ignore: true)
-  String get id; //Do not use id in database
-  String get name;
-  double get balance;
+  String get id => throw _privateConstructorUsedError; //Do not use id in database
+  String get name => throw _privateConstructorUsedError;
+  double get balance => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $AccountDTOCopyWith<AccountDTO> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $AccountDTOCopyWith<AccountDTO> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -64,14 +66,23 @@ class _$AccountDTOCopyWithImpl<$Res> implements $AccountDTOCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object balance = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      name: name == freezed ? _value.name : name as String,
-      balance: balance == freezed ? _value.balance : balance as double,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: balance == freezed
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
@@ -95,26 +106,33 @@ class __$AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object balance = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_AccountDTO(
-      id: id == freezed ? _value.id : id as String,
-      name: name == freezed ? _value.name : name as String,
-      balance: balance == freezed ? _value.balance : balance as double,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      balance: balance == freezed
+          ? _value.balance
+          : balance // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_AccountDTO extends _AccountDTO {
-  const _$_AccountDTO({@JsonKey(ignore: true) this.id, @required this.name, @required this.balance})
-      : assert(name != null),
-        assert(balance != null),
-        super._();
+  const _$_AccountDTO(
+      {@JsonKey(ignore: true) required this.id, required this.name, required this.balance})
+      : super._();
 
   factory _$_AccountDTO.fromJson(Map<String, dynamic> json) => _$_$_AccountDTOFromJson(json);
 
@@ -149,6 +167,7 @@ class _$_AccountDTO extends _AccountDTO {
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(balance);
 
+  @JsonKey(ignore: true)
   @override
   _$AccountDTOCopyWith<_AccountDTO> get copyWith =>
       __$AccountDTOCopyWithImpl<_AccountDTO>(this, _$identity);
@@ -160,21 +179,22 @@ class _$_AccountDTO extends _AccountDTO {
 }
 
 abstract class _AccountDTO extends AccountDTO {
-  const _AccountDTO._() : super._();
   const factory _AccountDTO(
-      {@JsonKey(ignore: true) String id,
-      @required String name,
-      @required double balance}) = _$_AccountDTO;
+      {@JsonKey(ignore: true) required String id,
+      required String name,
+      required double balance}) = _$_AccountDTO;
+  const _AccountDTO._() : super._();
 
   factory _AccountDTO.fromJson(Map<String, dynamic> json) = _$_AccountDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  double get balance;
+  double get balance => throw _privateConstructorUsedError;
   @override
-  _$AccountDTOCopyWith<_AccountDTO> get copyWith;
+  @JsonKey(ignore: true)
+  _$AccountDTOCopyWith<_AccountDTO> get copyWith => throw _privateConstructorUsedError;
 }

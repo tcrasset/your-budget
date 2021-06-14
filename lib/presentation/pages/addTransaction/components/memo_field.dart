@@ -38,13 +38,13 @@ class MemoField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController? controller = useTextEditingController();
+    final TextEditingController controller = useTextEditingController();
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
       listenWhen: (p, c) => getMemo(p) != getMemo(c),
       listener: (context, state) {
         controller
           ..text = getMemo(state)!
-          ..selection = TextSelection.collapsed(offset: controller!.text.length);
+          ..selection = TextSelection.collapsed(offset: controller.text.length);
       },
       builder: (context, state) {
         return RowContainer(

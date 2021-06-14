@@ -59,7 +59,7 @@ void main() {
     when(mockAccountRepo.create(tAccount)).thenAnswer((_) async => right(accountId));
 
     //Just return unit for moneyTransaction
-    when(mockTransactionRepo.create(any!)).thenAnswer((_) async => right(unit));
+    when(mockTransactionRepo.create(any)).thenAnswer((_) async => right(unit));
     //!Act
     final Either<ValueFailure, Unit> failureOrUnit = await creator.create(tAccount);
 

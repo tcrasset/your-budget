@@ -27,7 +27,7 @@ abstract class PayeeDTO implements _$PayeeDTO {
 
   Payee toDomain() {
     return Payee(
-      id: UniqueId.fromUniqueString(id!),
+      id: UniqueId.fromUniqueString(id),
       name: Name(name),
     );
   }

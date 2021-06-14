@@ -12,7 +12,7 @@ abstract class ValueObject<T> {
   /// Throws [UnexpectedValueError] containing the [ValueFailure]
   T getOrCrash() {
     return value.fold(
-      ((f) => throw UnexpectedValueError(f)) as T Function(ValueFailure<dynamic>),
+      (f) => throw UnexpectedValueError(f),
       (right) => right,
     );
   }

@@ -34,7 +34,7 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
 
   Subcategory toDomain() {
     return Subcategory(
-      id: UniqueId.fromUniqueString(id!),
+      id: UniqueId.fromUniqueString(id),
       categoryID: UniqueId.fromUniqueString(categoryID),
       name: Name(name),
       budgeted: Amount(budgeted.toString()),

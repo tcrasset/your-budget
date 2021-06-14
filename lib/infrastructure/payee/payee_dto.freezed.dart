@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'payee_dto.dart';
 
@@ -8,6 +8,10 @@ part of 'payee_dto.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 PayeeDTO _$PayeeDTOFromJson(Map<String, dynamic> json) {
   return _PayeeDTO.fromJson(json);
 }
@@ -16,32 +20,33 @@ PayeeDTO _$PayeeDTOFromJson(Map<String, dynamic> json) {
 class _$PayeeDTOTearOff {
   const _$PayeeDTOTearOff();
 
-// ignore: unused_element
-  _PayeeDTO call({@JsonKey(ignore: true) String id, @required String name}) {
+  _PayeeDTO call(
+      {@JsonKey(ignore: true) required String id, required String name}) {
     return _PayeeDTO(
       id: id,
       name: name,
     );
   }
 
-// ignore: unused_element
   PayeeDTO fromJson(Map<String, Object> json) {
     return PayeeDTO.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $PayeeDTO = _$PayeeDTOTearOff();
 
 /// @nodoc
 mixin _$PayeeDTO {
   @JsonKey(ignore: true)
-  String get id; //Do not use id in database
-  String get name;
+  String get id =>
+      throw _privateConstructorUsedError; //Do not use id in database
+  String get name => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $PayeeDTOCopyWith<PayeeDTO> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PayeeDTOCopyWith<PayeeDTO> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -61,12 +66,18 @@ class _$PayeeDTOCopyWithImpl<$Res> implements $PayeeDTOCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      name: name == freezed ? _value.name : name as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -90,25 +101,31 @@ class __$PayeeDTOCopyWithImpl<$Res> extends _$PayeeDTOCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
   }) {
     return _then(_PayeeDTO(
-      id: id == freezed ? _value.id : id as String,
-      name: name == freezed ? _value.name : name as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_PayeeDTO extends _PayeeDTO {
-  const _$_PayeeDTO({@JsonKey(ignore: true) this.id, @required this.name})
-      : assert(name != null),
-        super._();
+  const _$_PayeeDTO(
+      {@JsonKey(ignore: true) required this.id, required this.name})
+      : super._();
 
-  factory _$_PayeeDTO.fromJson(Map<String, dynamic> json) => _$_$_PayeeDTOFromJson(json);
+  factory _$_PayeeDTO.fromJson(Map<String, dynamic> json) =>
+      _$_$_PayeeDTOFromJson(json);
 
   @override
   @JsonKey(ignore: true)
@@ -125,7 +142,8 @@ class _$_PayeeDTO extends _PayeeDTO {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _PayeeDTO &&
-            (identical(other.id, id) || const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -136,6 +154,7 @@ class _$_PayeeDTO extends _PayeeDTO {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name);
 
+  @JsonKey(ignore: true)
   @override
   _$PayeeDTOCopyWith<_PayeeDTO> get copyWith =>
       __$PayeeDTOCopyWithImpl<_PayeeDTO>(this, _$identity);
@@ -147,16 +166,20 @@ class _$_PayeeDTO extends _PayeeDTO {
 }
 
 abstract class _PayeeDTO extends PayeeDTO {
+  const factory _PayeeDTO(
+      {@JsonKey(ignore: true) required String id,
+      required String name}) = _$_PayeeDTO;
   const _PayeeDTO._() : super._();
-  const factory _PayeeDTO({@JsonKey(ignore: true) String id, @required String name}) = _$_PayeeDTO;
 
   factory _PayeeDTO.fromJson(Map<String, dynamic> json) = _$_PayeeDTO.fromJson;
 
   @override
   @JsonKey(ignore: true)
-  String get id;
+  String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  _$PayeeDTOCopyWith<_PayeeDTO> get copyWith;
+  @JsonKey(ignore: true)
+  _$PayeeDTOCopyWith<_PayeeDTO> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'subcategory_watcher_bloc.dart';
 
@@ -9,16 +9,17 @@ part of 'subcategory_watcher_bloc.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$SubcategoryWatcherEventTearOff {
   const _$SubcategoryWatcherEventTearOff();
 
-// ignore: unused_element
   _SubcategoryWatchStarted watchSubcategoriesStarted() {
     return const _SubcategoryWatchStarted();
   }
 
-// ignore: unused_element
   _SubcategoriesReceived subcategoriesReceived(
       Either<ValueFailure, List<Subcategory>> failureOrSubcategories) {
     return _SubcategoriesReceived(
@@ -28,41 +29,48 @@ class _$SubcategoryWatcherEventTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $SubcategoryWatcherEvent = _$SubcategoryWatcherEventTearOff();
 
 /// @nodoc
 mixin _$SubcategoryWatcherEvent {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result watchSubcategoriesStarted(),
-    @required
-        Result subcategoriesReceived(
-            Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchSubcategoriesStarted,
+    required TResult Function(
+            Either<ValueFailure, List<Subcategory>> failureOrSubcategories)
+        subcategoriesReceived,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result watchSubcategoriesStarted(),
-    Result subcategoriesReceived(Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchSubcategoriesStarted,
+    TResult Function(
+            Either<ValueFailure, List<Subcategory>> failureOrSubcategories)?
+        subcategoriesReceived,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result watchSubcategoriesStarted(_SubcategoryWatchStarted value),
-    @required Result subcategoriesReceived(_SubcategoriesReceived value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SubcategoryWatchStarted value)
+        watchSubcategoriesStarted,
+    required TResult Function(_SubcategoriesReceived value)
+        subcategoriesReceived,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result watchSubcategoriesStarted(_SubcategoryWatchStarted value),
-    Result subcategoriesReceived(_SubcategoriesReceived value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SubcategoryWatchStarted value)? watchSubcategoriesStarted,
+    TResult Function(_SubcategoriesReceived value)? subcategoriesReceived,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $SubcategoryWatcherEventCopyWith<$Res> {
-  factory $SubcategoryWatcherEventCopyWith(
-          SubcategoryWatcherEvent value, $Res Function(SubcategoryWatcherEvent) then) =
+  factory $SubcategoryWatcherEventCopyWith(SubcategoryWatcherEvent value,
+          $Res Function(SubcategoryWatcherEvent) then) =
       _$SubcategoryWatcherEventCopyWithImpl<$Res>;
 }
 
@@ -78,8 +86,8 @@ class _$SubcategoryWatcherEventCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$SubcategoryWatchStartedCopyWith<$Res> {
-  factory _$SubcategoryWatchStartedCopyWith(
-          _SubcategoryWatchStarted value, $Res Function(_SubcategoryWatchStarted) then) =
+  factory _$SubcategoryWatchStartedCopyWith(_SubcategoryWatchStarted value,
+          $Res Function(_SubcategoryWatchStarted) then) =
       __$SubcategoryWatchStartedCopyWithImpl<$Res>;
 }
 
@@ -87,15 +95,17 @@ abstract class _$SubcategoryWatchStartedCopyWith<$Res> {
 class __$SubcategoryWatchStartedCopyWithImpl<$Res>
     extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements _$SubcategoryWatchStartedCopyWith<$Res> {
-  __$SubcategoryWatchStartedCopyWithImpl(
-      _SubcategoryWatchStarted _value, $Res Function(_SubcategoryWatchStarted) _then)
+  __$SubcategoryWatchStartedCopyWithImpl(_SubcategoryWatchStarted _value,
+      $Res Function(_SubcategoryWatchStarted) _then)
       : super(_value, (v) => _then(v as _SubcategoryWatchStarted));
 
   @override
-  _SubcategoryWatchStarted get _value => super._value as _SubcategoryWatchStarted;
+  _SubcategoryWatchStarted get _value =>
+      super._value as _SubcategoryWatchStarted;
 }
 
 /// @nodoc
+
 class _$_SubcategoryWatchStarted implements _SubcategoryWatchStarted {
   const _$_SubcategoryWatchStarted();
 
@@ -114,25 +124,24 @@ class _$_SubcategoryWatchStarted implements _SubcategoryWatchStarted {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result watchSubcategoriesStarted(),
-    @required
-        Result subcategoriesReceived(
-            Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchSubcategoriesStarted,
+    required TResult Function(
+            Either<ValueFailure, List<Subcategory>> failureOrSubcategories)
+        subcategoriesReceived,
   }) {
-    assert(watchSubcategoriesStarted != null);
-    assert(subcategoriesReceived != null);
     return watchSubcategoriesStarted();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result watchSubcategoriesStarted(),
-    Result subcategoriesReceived(Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchSubcategoriesStarted,
+    TResult Function(
+            Either<ValueFailure, List<Subcategory>> failureOrSubcategories)?
+        subcategoriesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (watchSubcategoriesStarted != null) {
       return watchSubcategoriesStarted();
     }
@@ -141,23 +150,22 @@ class _$_SubcategoryWatchStarted implements _SubcategoryWatchStarted {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result watchSubcategoriesStarted(_SubcategoryWatchStarted value),
-    @required Result subcategoriesReceived(_SubcategoriesReceived value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SubcategoryWatchStarted value)
+        watchSubcategoriesStarted,
+    required TResult Function(_SubcategoriesReceived value)
+        subcategoriesReceived,
   }) {
-    assert(watchSubcategoriesStarted != null);
-    assert(subcategoriesReceived != null);
     return watchSubcategoriesStarted(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result watchSubcategoriesStarted(_SubcategoryWatchStarted value),
-    Result subcategoriesReceived(_SubcategoriesReceived value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SubcategoryWatchStarted value)? watchSubcategoriesStarted,
+    TResult Function(_SubcategoriesReceived value)? subcategoriesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (watchSubcategoriesStarted != null) {
       return watchSubcategoriesStarted(this);
     }
@@ -171,17 +179,18 @@ abstract class _SubcategoryWatchStarted implements SubcategoryWatcherEvent {
 
 /// @nodoc
 abstract class _$SubcategoriesReceivedCopyWith<$Res> {
-  factory _$SubcategoriesReceivedCopyWith(
-          _SubcategoriesReceived value, $Res Function(_SubcategoriesReceived) then) =
+  factory _$SubcategoriesReceivedCopyWith(_SubcategoriesReceived value,
+          $Res Function(_SubcategoriesReceived) then) =
       __$SubcategoriesReceivedCopyWithImpl<$Res>;
   $Res call({Either<ValueFailure, List<Subcategory>> failureOrSubcategories});
 }
 
 /// @nodoc
-class __$SubcategoriesReceivedCopyWithImpl<$Res> extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
+class __$SubcategoriesReceivedCopyWithImpl<$Res>
+    extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements _$SubcategoriesReceivedCopyWith<$Res> {
-  __$SubcategoriesReceivedCopyWithImpl(
-      _SubcategoriesReceived _value, $Res Function(_SubcategoriesReceived) _then)
+  __$SubcategoriesReceivedCopyWithImpl(_SubcategoriesReceived _value,
+      $Res Function(_SubcategoriesReceived) _then)
       : super(_value, (v) => _then(v as _SubcategoriesReceived));
 
   @override
@@ -189,20 +198,21 @@ class __$SubcategoriesReceivedCopyWithImpl<$Res> extends _$SubcategoryWatcherEve
 
   @override
   $Res call({
-    Object failureOrSubcategories = freezed,
+    Object? failureOrSubcategories = freezed,
   }) {
     return _then(_SubcategoriesReceived(
       failureOrSubcategories == freezed
           ? _value.failureOrSubcategories
-          : failureOrSubcategories as Either<ValueFailure, List<Subcategory>>,
+          : failureOrSubcategories // ignore: cast_nullable_to_non_nullable
+              as Either<ValueFailure, List<Subcategory>>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_SubcategoriesReceived implements _SubcategoriesReceived {
-  const _$_SubcategoriesReceived(this.failureOrSubcategories)
-      : assert(failureOrSubcategories != null);
+  const _$_SubcategoriesReceived(this.failureOrSubcategories);
 
   @override
   final Either<ValueFailure, List<Subcategory>> failureOrSubcategories;
@@ -217,39 +227,41 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
     return identical(this, other) ||
         (other is _SubcategoriesReceived &&
             (identical(other.failureOrSubcategories, failureOrSubcategories) ||
-                const DeepCollectionEquality()
-                    .equals(other.failureOrSubcategories, failureOrSubcategories)));
+                const DeepCollectionEquality().equals(
+                    other.failureOrSubcategories, failureOrSubcategories)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failureOrSubcategories);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(failureOrSubcategories);
 
+  @JsonKey(ignore: true)
   @override
   _$SubcategoriesReceivedCopyWith<_SubcategoriesReceived> get copyWith =>
-      __$SubcategoriesReceivedCopyWithImpl<_SubcategoriesReceived>(this, _$identity);
+      __$SubcategoriesReceivedCopyWithImpl<_SubcategoriesReceived>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result watchSubcategoriesStarted(),
-    @required
-        Result subcategoriesReceived(
-            Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchSubcategoriesStarted,
+    required TResult Function(
+            Either<ValueFailure, List<Subcategory>> failureOrSubcategories)
+        subcategoriesReceived,
   }) {
-    assert(watchSubcategoriesStarted != null);
-    assert(subcategoriesReceived != null);
     return subcategoriesReceived(failureOrSubcategories);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result watchSubcategoriesStarted(),
-    Result subcategoriesReceived(Either<ValueFailure, List<Subcategory>> failureOrSubcategories),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchSubcategoriesStarted,
+    TResult Function(
+            Either<ValueFailure, List<Subcategory>> failureOrSubcategories)?
+        subcategoriesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (subcategoriesReceived != null) {
       return subcategoriesReceived(failureOrSubcategories);
     }
@@ -258,23 +270,22 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result watchSubcategoriesStarted(_SubcategoryWatchStarted value),
-    @required Result subcategoriesReceived(_SubcategoriesReceived value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_SubcategoryWatchStarted value)
+        watchSubcategoriesStarted,
+    required TResult Function(_SubcategoriesReceived value)
+        subcategoriesReceived,
   }) {
-    assert(watchSubcategoriesStarted != null);
-    assert(subcategoriesReceived != null);
     return subcategoriesReceived(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result watchSubcategoriesStarted(_SubcategoryWatchStarted value),
-    Result subcategoriesReceived(_SubcategoriesReceived value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_SubcategoryWatchStarted value)? watchSubcategoriesStarted,
+    TResult Function(_SubcategoriesReceived value)? subcategoriesReceived,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (subcategoriesReceived != null) {
       return subcategoriesReceived(this);
     }
@@ -284,35 +295,36 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
 
 abstract class _SubcategoriesReceived implements SubcategoryWatcherEvent {
   const factory _SubcategoriesReceived(
-      Either<ValueFailure, List<Subcategory>> failureOrSubcategories) = _$_SubcategoriesReceived;
+          Either<ValueFailure, List<Subcategory>> failureOrSubcategories) =
+      _$_SubcategoriesReceived;
 
-  Either<ValueFailure, List<Subcategory>> get failureOrSubcategories;
-  _$SubcategoriesReceivedCopyWith<_SubcategoriesReceived> get copyWith;
+  Either<ValueFailure, List<Subcategory>> get failureOrSubcategories =>
+      throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SubcategoriesReceivedCopyWith<_SubcategoriesReceived> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$SubcategoryWatcherStateTearOff {
   const _$SubcategoryWatcherStateTearOff();
 
-// ignore: unused_element
   _Initial initial() {
     return const _Initial();
   }
 
-// ignore: unused_element
   _Loading loading() {
     return const _Loading();
   }
 
-// ignore: unused_element
   _SubcategoryLoadSuccess loadSuccess(List<Subcategory> subcategories) {
     return _SubcategoryLoadSuccess(
       subcategories,
     );
   }
 
-// ignore: unused_element
-  _SubcategoryLoadFailure loadFailure(ValueFailure<dynamic> subcategoryFailure) {
+  _SubcategoryLoadFailure loadFailure(
+      ValueFailure<dynamic> subcategoryFailure) {
     return _SubcategoryLoadFailure(
       subcategoryFailure,
     );
@@ -320,47 +332,51 @@ class _$SubcategoryWatcherStateTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $SubcategoryWatcherState = _$SubcategoryWatcherStateTearOff();
 
 /// @nodoc
 mixin _$SubcategoryWatcherState {
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Subcategory> subcategories),
-    @required Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Subcategory> subcategories) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> subcategoryFailure)
+        loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Subcategory> subcategories),
-    Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_SubcategoryLoadSuccess value),
-    @required Result loadFailure(_SubcategoryLoadFailure value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SubcategoryLoadSuccess value) loadSuccess,
+    required TResult Function(_SubcategoryLoadFailure value) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_SubcategoryLoadSuccess value),
-    Result loadFailure(_SubcategoryLoadFailure value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $SubcategoryWatcherStateCopyWith<$Res> {
-  factory $SubcategoryWatcherStateCopyWith(
-          SubcategoryWatcherState value, $Res Function(SubcategoryWatcherState) then) =
+  factory $SubcategoryWatcherStateCopyWith(SubcategoryWatcherState value,
+          $Res Function(SubcategoryWatcherState) then) =
       _$SubcategoryWatcherStateCopyWithImpl<$Res>;
 }
 
@@ -381,7 +397,8 @@ abstract class _$InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
+class __$InitialCopyWithImpl<$Res>
+    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -391,6 +408,7 @@ class __$InitialCopyWithImpl<$Res> extends _$SubcategoryWatcherStateCopyWithImpl
 }
 
 /// @nodoc
+
 class _$_Initial implements _Initial {
   const _$_Initial();
 
@@ -409,29 +427,25 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Subcategory> subcategories),
-    @required Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Subcategory> subcategories) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> subcategoryFailure)
+        loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return initial();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Subcategory> subcategories),
-    Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial();
     }
@@ -440,29 +454,24 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_SubcategoryLoadSuccess value),
-    @required Result loadFailure(_SubcategoryLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SubcategoryLoadSuccess value) loadSuccess,
+    required TResult Function(_SubcategoryLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return initial(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_SubcategoryLoadSuccess value),
-    Result loadFailure(_SubcategoryLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (initial != null) {
       return initial(this);
     }
@@ -481,7 +490,8 @@ abstract class _$LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
+class __$LoadingCopyWithImpl<$Res>
+    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -491,6 +501,7 @@ class __$LoadingCopyWithImpl<$Res> extends _$SubcategoryWatcherStateCopyWithImpl
 }
 
 /// @nodoc
+
 class _$_Loading implements _Loading {
   const _$_Loading();
 
@@ -509,29 +520,25 @@ class _$_Loading implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Subcategory> subcategories),
-    @required Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Subcategory> subcategories) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> subcategoryFailure)
+        loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loading();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Subcategory> subcategories),
-    Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading();
     }
@@ -540,29 +547,24 @@ class _$_Loading implements _Loading {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_SubcategoryLoadSuccess value),
-    @required Result loadFailure(_SubcategoryLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SubcategoryLoadSuccess value) loadSuccess,
+    required TResult Function(_SubcategoryLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loading(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_SubcategoryLoadSuccess value),
-    Result loadFailure(_SubcategoryLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loading != null) {
       return loading(this);
     }
@@ -576,8 +578,8 @@ abstract class _Loading implements SubcategoryWatcherState {
 
 /// @nodoc
 abstract class _$SubcategoryLoadSuccessCopyWith<$Res> {
-  factory _$SubcategoryLoadSuccessCopyWith(
-          _SubcategoryLoadSuccess value, $Res Function(_SubcategoryLoadSuccess) then) =
+  factory _$SubcategoryLoadSuccessCopyWith(_SubcategoryLoadSuccess value,
+          $Res Function(_SubcategoryLoadSuccess) then) =
       __$SubcategoryLoadSuccessCopyWithImpl<$Res>;
   $Res call({List<Subcategory> subcategories});
 }
@@ -586,8 +588,8 @@ abstract class _$SubcategoryLoadSuccessCopyWith<$Res> {
 class __$SubcategoryLoadSuccessCopyWithImpl<$Res>
     extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$SubcategoryLoadSuccessCopyWith<$Res> {
-  __$SubcategoryLoadSuccessCopyWithImpl(
-      _SubcategoryLoadSuccess _value, $Res Function(_SubcategoryLoadSuccess) _then)
+  __$SubcategoryLoadSuccessCopyWithImpl(_SubcategoryLoadSuccess _value,
+      $Res Function(_SubcategoryLoadSuccess) _then)
       : super(_value, (v) => _then(v as _SubcategoryLoadSuccess));
 
   @override
@@ -595,17 +597,21 @@ class __$SubcategoryLoadSuccessCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object subcategories = freezed,
+    Object? subcategories = freezed,
   }) {
     return _then(_SubcategoryLoadSuccess(
-      subcategories == freezed ? _value.subcategories : subcategories as List<Subcategory>,
+      subcategories == freezed
+          ? _value.subcategories
+          : subcategories // ignore: cast_nullable_to_non_nullable
+              as List<Subcategory>,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
-  const _$_SubcategoryLoadSuccess(this.subcategories) : assert(subcategories != null);
+  const _$_SubcategoryLoadSuccess(this.subcategories);
 
   @override
   final List<Subcategory> subcategories;
@@ -620,41 +626,41 @@ class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
     return identical(this, other) ||
         (other is _SubcategoryLoadSuccess &&
             (identical(other.subcategories, subcategories) ||
-                const DeepCollectionEquality().equals(other.subcategories, subcategories)));
+                const DeepCollectionEquality()
+                    .equals(other.subcategories, subcategories)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategories);
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategories);
 
+  @JsonKey(ignore: true)
   @override
   _$SubcategoryLoadSuccessCopyWith<_SubcategoryLoadSuccess> get copyWith =>
-      __$SubcategoryLoadSuccessCopyWithImpl<_SubcategoryLoadSuccess>(this, _$identity);
+      __$SubcategoryLoadSuccessCopyWithImpl<_SubcategoryLoadSuccess>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Subcategory> subcategories),
-    @required Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Subcategory> subcategories) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> subcategoryFailure)
+        loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadSuccess(subcategories);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Subcategory> subcategories),
-    Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadSuccess != null) {
       return loadSuccess(subcategories);
     }
@@ -663,29 +669,24 @@ class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_SubcategoryLoadSuccess value),
-    @required Result loadFailure(_SubcategoryLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SubcategoryLoadSuccess value) loadSuccess,
+    required TResult Function(_SubcategoryLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadSuccess(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_SubcategoryLoadSuccess value),
-    Result loadFailure(_SubcategoryLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadSuccess != null) {
       return loadSuccess(this);
     }
@@ -697,14 +698,16 @@ abstract class _SubcategoryLoadSuccess implements SubcategoryWatcherState {
   const factory _SubcategoryLoadSuccess(List<Subcategory> subcategories) =
       _$_SubcategoryLoadSuccess;
 
-  List<Subcategory> get subcategories;
-  _$SubcategoryLoadSuccessCopyWith<_SubcategoryLoadSuccess> get copyWith;
+  List<Subcategory> get subcategories => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SubcategoryLoadSuccessCopyWith<_SubcategoryLoadSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class _$SubcategoryLoadFailureCopyWith<$Res> {
-  factory _$SubcategoryLoadFailureCopyWith(
-          _SubcategoryLoadFailure value, $Res Function(_SubcategoryLoadFailure) then) =
+  factory _$SubcategoryLoadFailureCopyWith(_SubcategoryLoadFailure value,
+          $Res Function(_SubcategoryLoadFailure) then) =
       __$SubcategoryLoadFailureCopyWithImpl<$Res>;
   $Res call({ValueFailure<dynamic> subcategoryFailure});
 
@@ -715,8 +718,8 @@ abstract class _$SubcategoryLoadFailureCopyWith<$Res> {
 class __$SubcategoryLoadFailureCopyWithImpl<$Res>
     extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$SubcategoryLoadFailureCopyWith<$Res> {
-  __$SubcategoryLoadFailureCopyWithImpl(
-      _SubcategoryLoadFailure _value, $Res Function(_SubcategoryLoadFailure) _then)
+  __$SubcategoryLoadFailureCopyWithImpl(_SubcategoryLoadFailure _value,
+      $Res Function(_SubcategoryLoadFailure) _then)
       : super(_value, (v) => _then(v as _SubcategoryLoadFailure));
 
   @override
@@ -724,29 +727,29 @@ class __$SubcategoryLoadFailureCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object subcategoryFailure = freezed,
+    Object? subcategoryFailure = freezed,
   }) {
     return _then(_SubcategoryLoadFailure(
       subcategoryFailure == freezed
           ? _value.subcategoryFailure
-          : subcategoryFailure as ValueFailure<dynamic>,
+          : subcategoryFailure // ignore: cast_nullable_to_non_nullable
+              as ValueFailure<dynamic>,
     ));
   }
 
   @override
   $ValueFailureCopyWith<dynamic, $Res> get subcategoryFailure {
-    if (_value.subcategoryFailure == null) {
-      return null;
-    }
-    return $ValueFailureCopyWith<dynamic, $Res>(_value.subcategoryFailure, (value) {
+    return $ValueFailureCopyWith<dynamic, $Res>(_value.subcategoryFailure,
+        (value) {
       return _then(_value.copyWith(subcategoryFailure: value));
     });
   }
 }
 
 /// @nodoc
+
 class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
-  const _$_SubcategoryLoadFailure(this.subcategoryFailure) : assert(subcategoryFailure != null);
+  const _$_SubcategoryLoadFailure(this.subcategoryFailure);
 
   @override
   final ValueFailure<dynamic> subcategoryFailure;
@@ -767,37 +770,36 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(subcategoryFailure);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(subcategoryFailure);
 
+  @JsonKey(ignore: true)
   @override
   _$SubcategoryLoadFailureCopyWith<_SubcategoryLoadFailure> get copyWith =>
-      __$SubcategoryLoadFailureCopyWithImpl<_SubcategoryLoadFailure>(this, _$identity);
+      __$SubcategoryLoadFailureCopyWithImpl<_SubcategoryLoadFailure>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result initial(),
-    @required Result loading(),
-    @required Result loadSuccess(List<Subcategory> subcategories),
-    @required Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function(List<Subcategory> subcategories) loadSuccess,
+    required TResult Function(ValueFailure<dynamic> subcategoryFailure)
+        loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadFailure(subcategoryFailure);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result initial(),
-    Result loading(),
-    Result loadSuccess(List<Subcategory> subcategories),
-    Result loadFailure(ValueFailure<dynamic> subcategoryFailure),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadFailure != null) {
       return loadFailure(subcategoryFailure);
     }
@@ -806,29 +808,24 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result initial(_Initial value),
-    @required Result loading(_Loading value),
-    @required Result loadSuccess(_SubcategoryLoadSuccess value),
-    @required Result loadFailure(_SubcategoryLoadFailure value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_SubcategoryLoadSuccess value) loadSuccess,
+    required TResult Function(_SubcategoryLoadFailure value) loadFailure,
   }) {
-    assert(initial != null);
-    assert(loading != null);
-    assert(loadSuccess != null);
-    assert(loadFailure != null);
     return loadFailure(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result initial(_Initial value),
-    Result loading(_Loading value),
-    Result loadSuccess(_SubcategoryLoadSuccess value),
-    Result loadFailure(_SubcategoryLoadFailure value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (loadFailure != null) {
       return loadFailure(this);
     }
@@ -837,9 +834,12 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
 }
 
 abstract class _SubcategoryLoadFailure implements SubcategoryWatcherState {
-  const factory _SubcategoryLoadFailure(ValueFailure<dynamic> subcategoryFailure) =
-      _$_SubcategoryLoadFailure;
+  const factory _SubcategoryLoadFailure(
+      ValueFailure<dynamic> subcategoryFailure) = _$_SubcategoryLoadFailure;
 
-  ValueFailure<dynamic> get subcategoryFailure;
-  _$SubcategoryLoadFailureCopyWith<_SubcategoryLoadFailure> get copyWith;
+  ValueFailure<dynamic> get subcategoryFailure =>
+      throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$SubcategoryLoadFailureCopyWith<_SubcategoryLoadFailure> get copyWith =>
+      throw _privateConstructorUsedError;
 }

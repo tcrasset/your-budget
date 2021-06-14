@@ -10,7 +10,7 @@ import 'package:your_budget/presentation/pages/addTransaction/add_transaction.da
 class AddTransactionField extends HookWidget {
   final String name;
   final String defaultValue;
-  final String Function(BuildContext) validator;
+  final String? Function(BuildContext) validator;
   final String Function(BuildContext) nameGetter;
   final Future<void> Function(BuildContext) onTap;
 
