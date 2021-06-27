@@ -20,7 +20,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const MoneyTransactionDTO._();
 
   const factory MoneyTransactionDTO({
-    @JsonKey(toJson: ignore, includeIfNull: false) required String id,
+    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false) required String id,
     required String subcatID,
     required String subcatName,
     required String payeeID,
@@ -65,7 +65,4 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
 
   factory MoneyTransactionDTO.fromJson(Map<String, dynamic> json) =>
       _$MoneyTransactionDTOFromJson(json);
-  factory MoneyTransactionDTO.fromSQL(Map<String, dynamic> json) {
-    return MoneyTransactionDTO.fromJson(json).copyWith(id: json["id"].toString());
-  }
 }

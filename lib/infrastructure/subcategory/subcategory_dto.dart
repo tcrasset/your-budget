@@ -16,7 +16,8 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
   const SubcategoryDTO._();
 
   const factory SubcategoryDTO({
-    @JsonKey(toJson: ignore, includeIfNull: false) required String id, //Do not use id in database
+    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+        required String id, //Do not use id in database
     required String categoryID,
     required String name,
     @Default(0.00) double budgeted,
@@ -44,9 +45,4 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
   }
 
   factory SubcategoryDTO.fromJson(Map<String, dynamic> json) => _$SubcategoryDTOFromJson(json);
-  factory SubcategoryDTO.fromSQL(Map<String, dynamic> json) {
-    return SubcategoryDTO.fromJson(json).copyWith(
-      id: json["id"].toString(),
-    );
-  }
 }

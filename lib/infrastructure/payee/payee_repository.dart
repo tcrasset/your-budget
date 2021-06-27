@@ -58,7 +58,7 @@ class SQFlitePayeeRepository implements IPayeeRepository {
       final data = await database!.rawQuery(sql);
       final List<Payee> payees = [];
       for (final rawPayee in data) {
-        final PayeeDTO payeeDTO = PayeeDTO.fromSQL(rawPayee);
+        final PayeeDTO payeeDTO = PayeeDTO.fromJson(rawPayee);
         payees.add(payeeDTO.toDomain());
       }
 

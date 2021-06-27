@@ -59,7 +59,7 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
       final data = await database!.rawQuery(sql);
       final List<Subcategory> subcategories = [];
       for (final rawSubcategory in data) {
-        final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromSQL(rawSubcategory);
+        final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromJson(rawSubcategory);
         subcategories.add(subcategoryDTO.toDomain());
       }
 

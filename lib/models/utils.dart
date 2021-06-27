@@ -7,6 +7,7 @@ import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/models/constants.dart';
 
 T? ignore<T>(dynamic _) => null;
+String convertToString(int id) => id.toString();
 
 ///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
 ///and the current date

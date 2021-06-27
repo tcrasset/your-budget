@@ -15,7 +15,8 @@ abstract class PayeeDTO implements _$PayeeDTO {
   const PayeeDTO._();
 
   const factory PayeeDTO({
-    @JsonKey(toJson: ignore, includeIfNull: false) required String id, //Do not use id in database
+    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+        required String id, //Do not use id in database
     required String name,
   }) = _PayeeDTO;
 
@@ -34,7 +35,4 @@ abstract class PayeeDTO implements _$PayeeDTO {
   }
 
   factory PayeeDTO.fromJson(Map<String, dynamic> json) => _$PayeeDTOFromJson(json);
-  factory PayeeDTO.fromSQL(Map<String, dynamic> json) {
-    return PayeeDTO.fromJson(json).copyWith(id: json["id"].toString());
-  }
 }

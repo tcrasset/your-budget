@@ -93,7 +93,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
       debugPrint(data.toString());
       final List<MoneyTransaction> transactions = [];
       for (final rawTransaction in data) {
-        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromSQL(rawTransaction);
+        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromJson(rawTransaction);
         transactions.add(transactionDTO.toDomain());
       }
 

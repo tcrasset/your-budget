@@ -40,5 +40,3 @@ abstract class AccountDTO implements _$AccountDTO {
 
   factory AccountDTO.fromJson(Map<String, dynamic> json) => _$AccountDTOFromJson(json);
 }
-
-String convertToString(int id) => id.toString();
