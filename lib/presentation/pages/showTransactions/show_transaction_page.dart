@@ -136,24 +136,6 @@ class TransactionListView extends StatelessWidget {
   }
 }
 
-class AtLeastOneTransactionList extends StatelessWidget {
-  final bool isEditable;
-  final Account account;
-
-  const AtLeastOneTransactionList({
-    Key? key,
-    required this.account,
-    required this.isEditable,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<AppState>(builder: (_, appState, __) {
-      return Expanded(child: TransactionList(account, appState, isEditable));
-    });
-  }
-}
-
 class EmptyTransactionList extends StatelessWidget {
   const EmptyTransactionList({
     Key? key,
