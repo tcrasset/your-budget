@@ -13,13 +13,13 @@ import '../../../../models/constants.dart';
 import '../modify_categories.dart';
 
 class ModifyMainCategoryRow extends StatelessWidget {
-  final MainCategory cat;
+  final MainCategory? cat;
 
-  const ModifyMainCategoryRow({Key key, this.cat}) : super(key: key);
+  const ModifyMainCategoryRow({Key? key, this.cat}) : super(key: key);
 
   Future<void> handleAddSubcategory(BuildContext context) async {
     const String hintText = "Add new subcategory";
-    final String subcategoryName = await addDialog(
+    final String? subcategoryName = await addDialog(
         context: context,
         title: hintText,
         hintText: hintText,
@@ -27,13 +27,13 @@ class ModifyMainCategoryRow extends StatelessWidget {
         nameValidator: validateCategoryName);
     if (subcategoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.addSubcategory(subcategoryName: subcategoryName, maincategoryId: cat.id.toString());
+      appState.addSubcategory(subcategoryName: subcategoryName, maincategoryId: cat!.id.toString());
     }
   }
 
   Future<void> handleMainCategoryNameChange(BuildContext context) async {
     const String hintText = "Modify category name";
-    final String categoryName = await addDialog(
+    final String? categoryName = await addDialog(
         context: context,
         title: hintText,
         hintText: hintText,
@@ -41,7 +41,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
         nameValidator: validateCategoryName);
     if (categoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.updateCategoryName(MainCategory(id: cat.id, name: categoryName));
+      appState.updateCategoryName(MainCategory(id: cat!.id, name: categoryName));
     }
   }
 
@@ -59,7 +59,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
                   onTap: () => handleMainCategoryNameChange(context),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8.0),
-                    child: Text(cat.name,
+                    child: Text(cat!.name!,
                         style: TextStyle(
                             fontSize: Constants.CATEGORY_TEXT_STYLE.fontSize,
                             fontWeight: Constants.CATEGORY_TEXT_STYLE.fontWeight,

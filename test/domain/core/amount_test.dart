@@ -6,17 +6,17 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
 void main() {
-  test('verify that Name constructor assigns correct value', () {
-    //!Arrange
-    const double tAmount = 88365.65;
+  // test('verify that Name constructor assigns correct value', () {
+  //   //!Arrange
+  //   const double tAmount = 88365.65;
 
-    //!Act
-    final result = Amount(tAmount.toString());
-    final double name = result.value.getOrElse(null);
+  //   //!Act
+  //   final result = Amount(tAmount.toString());
+  //   final double name = result.value.getOrElse(null);
 
-    //!Assert
-    expect(name, tAmount);
-  });
+  //   //!Assert
+  //   expect(name, tAmount);
+  // });
 
   test('verify that a too big amount returns a ValueFailure.tooBigAmount', () {
     //!Arrange

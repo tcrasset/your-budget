@@ -18,8 +18,8 @@ part 'payee.freezed.dart';
 @freezed
 abstract class Payee implements _$Payee {
   const factory Payee({
-    @required UniqueId id,
-    @required Name name,
+    required UniqueId id,
+    required Name name,
   }) = _Payee;
 
   const Payee._();

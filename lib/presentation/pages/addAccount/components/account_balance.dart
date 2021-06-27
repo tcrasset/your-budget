@@ -15,8 +15,8 @@ class AccountBalance extends HookWidget {
   final TextStyle textStyle;
   final InputDecoration boxDecoration;
   const AccountBalance({
-    @required this.textStyle,
-    @required this.boxDecoration,
+    required this.textStyle,
+    required this.boxDecoration,
   });
 
   void onBalanceChanged(BuildContext context, String value) {
@@ -25,7 +25,7 @@ class AccountBalance extends HookWidget {
         ));
   }
 
-  String _failNameClosure(dynamic f) {
+  String? _failNameClosure(dynamic f) {
     final result = f.maybeMap(
       invalidAmount: (_) => "Must be a valid amount",
       tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
@@ -35,14 +35,14 @@ class AccountBalance extends HookWidget {
     return result is String ? result : null;
   }
 
-  String validateBalance(BuildContext context) {
+  String? validateBalance(BuildContext context) {
     return context.read<AccountCreatorBloc>().state.account.balance.value.fold(
           (f) => _failNameClosure(f),
           (_) => null,
         );
   }
 
-  String handleAccountBalanceValidate(String amount) {
+  String? handleAccountBalanceValidate(String amount) {
     if (amount.isEmpty) {
       return 'Please enter an account balance';
     } else if (!isNumeric(amount)) {
@@ -53,13 +53,13 @@ class AccountBalance extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller = useTextEditingController();
+    final TextEditingController _controller = useTextEditingController();
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       listenWhen: (p, c) => getBalance(p) != getBalance(c),
       listener: (context, state) {
         _controller
-          ..text = getBalance(state)
+          ..text = getBalance(state)!
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
@@ -95,7 +95,7 @@ class AccountBalance extends HookWidget {
   }
 }
 
-String getBalance(AccountCreatorState state) => state.account.balance.value.fold(
+String? getBalance(AccountCreatorState state) => state.account.balance.value.fold(
       (_) => null,
       (v) => v.toString(),
     );

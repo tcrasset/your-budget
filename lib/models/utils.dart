@@ -6,10 +6,14 @@ import 'package:jiffy/jiffy.dart';
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 
+T? ignore<T>(dynamic _) => null;
+
 ///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
 ///and the current date
 DateTime getMaxBudgetDate() {
-  return Jiffy(getDateFromMonthStart(DateTime.now())).add(months: Constants.MAX_NB_MONTHS_AHEAD);
+  return Jiffy(getDateFromMonthStart(DateTime.now()))
+      .add(months: Constants.MAX_NB_MONTHS_AHEAD)
+      .dateTime;
 }
 
 DateTime getLastDayOfMonth(DateTime datetime) {
@@ -62,7 +66,7 @@ DateTime addExactEntryTime(DateTime date) {
 
 /// Returns whether [s] is a string representation of a number or not.
 /// If [s] is null, returns false.
-bool isNumeric(String s) {
+bool isNumeric(String? s) {
   if (s == null) {
     return false;
   }

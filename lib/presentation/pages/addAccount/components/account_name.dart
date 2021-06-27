@@ -13,8 +13,8 @@ class AccountName extends HookWidget {
   final TextStyle textStyle;
   final InputDecoration boxDecoration;
   const AccountName({
-    @required this.textStyle,
-    @required this.boxDecoration,
+    required this.textStyle,
+    required this.boxDecoration,
   });
 
   void onNameChange(BuildContext context, String value) {
@@ -23,7 +23,7 @@ class AccountName extends HookWidget {
         ));
   }
 
-  String _failNameClosure(dynamic f) {
+  String? _failNameClosure(dynamic f) {
     final result = f.maybeMap(
       longName: (_) => "Must be smaller than ${Name.maxLength}",
       emptyName: (_) => "Must not be empty",
@@ -33,7 +33,7 @@ class AccountName extends HookWidget {
     return result is String ? result : null;
   }
 
-  String validateName(BuildContext context) {
+  String? validateName(BuildContext context) {
     return context.read<AccountCreatorBloc>().state.account.name.value.fold(
           (f) => _failNameClosure(f),
           (_) => null,
@@ -42,13 +42,13 @@ class AccountName extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _controller = useTextEditingController();
+    final TextEditingController _controller = useTextEditingController();
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       listenWhen: (p, c) => getName(p) != getName(c),
       listener: (context, state) {
         _controller
-          ..text = getName(state)
+          ..text = getName(state)!
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
@@ -87,7 +87,7 @@ class AccountName extends HookWidget {
   }
 }
 
-String getName(AccountCreatorState state) => state.account.name.value.fold(
+String? getName(AccountCreatorState state) => state.account.name.value.fold(
       (_) => null,
       (v) {
         return v;

@@ -18,13 +18,13 @@ import 'add_transaction_field.dart';
 
 class PayeeField extends StatelessWidget {
   const PayeeField({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const String _DEFAULT_PAYEE = "Select payee";
 
   Future<void> handleOnTap(BuildContext context) async {
-    final Payee payee = await Navigator.push(
+    final Payee? payee = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => PayeeListScaffold()),
     );
@@ -45,7 +45,7 @@ class PayeeField extends StatelessWidget {
         .fold((_) => _DEFAULT_PAYEE, (v) => v);
   }
 
-  String validatePayee(BuildContext context) =>
+  String? validatePayee(BuildContext context) =>
       context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
             (f) => f.maybeMap(orElse: () => null),
             (_) => null,
@@ -65,7 +65,7 @@ class PayeeField extends StatelessWidget {
 class PayeeListScaffold extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final searchController = useTextEditingController();
+    final TextEditingController? searchController = useTextEditingController();
     return MultiBlocProvider(
       providers: [
         BlocProvider<PayeeWatcherBloc>(
@@ -83,7 +83,7 @@ class PayeeListScaffold extends HookWidget {
             return state.maybeMap(
               loadSuccess: (newState) => Column(
                 children: [
-                  SearchField(searchController: searchController),
+                  SearchField(searchController: searchController!),
                   AddPayeeField(searchController: searchController),
                   Expanded(child: PayeeList(searchController: searchController)),
                 ],
@@ -101,8 +101,8 @@ class PayeeListScaffold extends HookWidget {
 
 class AddPayeeField extends StatelessWidget {
   const AddPayeeField({
-    Key key,
-    @required this.searchController,
+    Key? key,
+    required this.searchController,
   }) : super(key: key);
 
   final TextEditingController searchController;
@@ -121,7 +121,7 @@ class AddPayeeField extends StatelessWidget {
 
 class PayeeList extends StatelessWidget {
   final TextEditingController searchController;
-  const PayeeList({@required this.searchController});
+  const PayeeList({required this.searchController});
 
   void _handlePopContext(BuildContext context, Payee payee) => Navigator.of(context).pop(payee);
 
@@ -137,7 +137,7 @@ class PayeeList extends StatelessWidget {
                 const Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
               final payee = newState.payees[index];
-              final name = payee.name.getOrCrash();
+              final String name = payee.name.getOrCrash();
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {

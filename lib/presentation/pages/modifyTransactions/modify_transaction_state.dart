@@ -15,12 +15,12 @@ class ModifyTransactionsState extends ChangeNotifier {
   final Map<int, bool> _isSelectedMap = HashMap();
   int nbSelected = 0;
 
-  bool isSelected(int transactionId) {
+  bool? isSelected(int transactionId) {
     return _isSelectedMap[transactionId];
   }
 
   Future<void> updateIsSelected(int transactionId) async {
-    if (_isSelectedMap[transactionId]) {
+    if (_isSelectedMap[transactionId]!) {
       _isSelectedMap[transactionId] = false;
       nbSelected--;
     } else {
@@ -39,7 +39,7 @@ class ModifyTransactionsState extends ChangeNotifier {
     final AppState appState = Provider.of<AppState>(context, listen: false);
     final List<int> transactionIdsToDelete = [];
     _isSelectedMap.forEach((transactionId, value) {
-      if (_isSelectedMap[transactionId]) {
+      if (_isSelectedMap[transactionId]!) {
         transactionIdsToDelete.add(transactionId);
       }
     });

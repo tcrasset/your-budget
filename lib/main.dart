@@ -22,7 +22,7 @@ import 'presentation/pages/showTransactions/show_transaction_page.dart';
 import 'waiting_screen.dart';
 
 Future<void> main() async {
-  Bloc.observer = SimpleBlocObserver();
+  // Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
   runApp(MyBudget());
@@ -32,7 +32,7 @@ class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<AppState>.value(value: GetIt.instance<AppState>()),
+      // ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
       ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
       ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
@@ -64,7 +64,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AppState appState = Provider.of<AppState>(context);
+    // final AppState appState = Provider.of<AppState>(context);
     return MaterialApp(
       theme: ThemeData(
         // Define the default brightness and colors.

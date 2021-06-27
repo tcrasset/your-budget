@@ -10,14 +10,14 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  int tPayeeId;
-  int tAccountId;
-  int tSubcatId;
-  double tAmount;
-  DateTime tDate;
-  String tMemo;
-  MoneyTransactionCreator creator;
+  late Queries mockQueries;
+  late int tPayeeId;
+  late int tAccountId;
+  late int tSubcatId;
+  late double tAmount;
+  late DateTime tDate;
+  late String tMemo;
+  late MoneyTransactionCreator creator;
   setUp(() async {
     mockQueries = MockQueries();
     tPayeeId = 99;
@@ -55,13 +55,13 @@ void main() {
           ' and verify that the call to the database was made', () async {
     //!Arrange
     const int tId = 25;
-    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())))
+    when(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())!))
         .thenAnswer((_) async => tId);
     //!Act
     final MoneyTransaction moneyTransaction = await creator.create();
 
     //!Assert
-    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())));
+    verify(mockQueries.addMoneyTransaction(argThat(isA<MoneyTransactionModel>())!));
     expect(moneyTransaction.id, tId);
     expect(moneyTransaction.payeeID, tPayeeId);
     expect(moneyTransaction.accountID, tAccountId);

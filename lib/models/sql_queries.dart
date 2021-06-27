@@ -17,13 +17,13 @@ import 'payee.dart';
 import 'queries.dart';
 
 class SQLQueryClass implements Queries {
-  final Database database;
+  final Database? database;
 
-  SQLQueryClass({@required this.database});
+  SQLQueryClass({required this.database});
 
   @override
   Future<void> debugDatabase() async {
-    (await database.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+    (await database!.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
       debugPrint(row.values.toString());
     });
   }
@@ -32,7 +32,7 @@ class SQLQueryClass implements Queries {
   @override
   Future<List<MainCategory>> getCategories() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.categoryTable}''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     final List<MainCategory> categories = [];
     for (final node in data) {
@@ -47,7 +47,7 @@ class SQLQueryClass implements Queries {
   @override
   Future<List<SubCategory>> getSubCategories() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.subcategoryTable};''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     final List<SubCategory> subcategories = [];
     for (final node in data) {
@@ -62,7 +62,7 @@ class SQLQueryClass implements Queries {
   @override
   Future<List<Account>> getAccounts() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.accountTable};''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     final List<Account> accounts = [];
     for (final node in data) {
@@ -77,7 +77,7 @@ class SQLQueryClass implements Queries {
   @override
   Future<List<Payee>> getPayees() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.payeeTable};''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     final List<Payee> payees = [];
     for (final node in data) {
@@ -93,9 +93,9 @@ class SQLQueryClass implements Queries {
   Future<List<MoneyTransaction>> getMoneyTransactions() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
     ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
-    List<MoneyTransaction> transactions = List();
+    final List<MoneyTransaction> transactions = [];
     for (final node in data) {
       final transaction = MoneyTransaction.fromJson(node);
       transactions.add(transaction);
@@ -107,7 +107,7 @@ class SQLQueryClass implements Queries {
   @override
   Future<List<BudgetValue>> getBudgetValues() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.budgetValueTable};''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     final List<BudgetValue> budgetvalues = [];
     for (final node in data) {
@@ -121,7 +121,7 @@ class SQLQueryClass implements Queries {
   @override
   Future<List<Goal>> getGoals() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.goalTable};''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     final List<Goal> goals = [];
     for (final node in data) {
@@ -154,7 +154,7 @@ class SQLQueryClass implements Queries {
           ${DatabaseConstants.BUDGET_VALUE_YEAR} == $year
           and ${DatabaseConstants.BUDGET_VALUE_MONTH} == $month''';
 
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     List<SubCategory> subcategories = [];
     for (final node in data) {
@@ -170,7 +170,7 @@ class SQLQueryClass implements Queries {
     final String sql = '''SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
                           WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == $accountId
                           ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} ASC LIMIT 1;''';
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
 
     if (data.isNotEmpty) {
       return MoneyTransaction.fromJson(data[0]);
@@ -189,7 +189,7 @@ class SQLQueryClass implements Queries {
       VALUES(?);''';
 
     final List<dynamic> params = [categoryModel.name];
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add category', sql, null, id, params);
     return id;
   }
@@ -210,7 +210,7 @@ class SQLQueryClass implements Queries {
       subcategoryModel.name,
     ];
 
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add subcategory', sql, null, id, params);
     return id;
   }
@@ -227,7 +227,7 @@ class SQLQueryClass implements Queries {
     final List<dynamic> params = [
       payeeModel.name,
     ];
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add payee', sql, null, id, params);
     return id;
   }
@@ -247,7 +247,7 @@ class SQLQueryClass implements Queries {
       accountModel.name,
       accountModel.balance,
     ];
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add account', sql, null, id, params);
     return id;
   }
@@ -271,7 +271,7 @@ class SQLQueryClass implements Queries {
       budgetValueModel.month
     ];
 
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add budgetvalue', sql, null, id, params);
     return id;
   }
@@ -318,10 +318,10 @@ class SQLQueryClass implements Queries {
       moneyTransactionModel.accountID,
       moneyTransactionModel.amount,
       moneyTransactionModel.memo,
-      moneyTransactionModel.date.millisecondsSinceEpoch
+      moneyTransactionModel.date!.millisecondsSinceEpoch
     ];
 
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add moneyTransaction', sql, null, id, params);
     return id;
   }
@@ -346,30 +346,30 @@ class SQLQueryClass implements Queries {
       goalModel.month,
       goalModel.year,
     ];
-    final int id = await database.rawInsert(sql, params);
+    final int id = await database!.rawInsert(sql, params);
     DatabaseProvider.databaseLog('Add goal', sql, null, id, params);
     return id;
   }
 
   /// Deletes the [category] of id [categoryId] from the database.
   @override
-  Future<void> deleteCategory(int categoryId) async {
+  Future<void> deleteCategory(int? categoryId) async {
     final sql = '''DELETE FROM ${DatabaseConstants.categoryTable}
       WHERE ${DatabaseConstants.CATEGORY_ID} == ?;''';
 
     final List<dynamic> params = [categoryId];
-    final result = await database.rawDelete(sql, params);
+    final result = await database!.rawDelete(sql, params);
     DatabaseProvider.databaseLog('Delete category', sql, null, result, params);
   }
 
   /// Deletes the [SubCategory] of id [subcategoryID] from the database.
   @override
-  Future<void> deleteSubcategory(int subcategoryID) async {
+  Future<void> deleteSubcategory(int? subcategoryID) async {
     final sql = '''DELETE FROM ${DatabaseConstants.subcategoryTable}
       WHERE ${DatabaseConstants.SUBCAT_ID} == ?;''';
 
     final List<dynamic> params = [subcategoryID];
-    final result = await database.rawDelete(sql, params);
+    final result = await database!.rawDelete(sql, params);
     DatabaseProvider.databaseLog('Delete subcategory', sql, null, result, params);
   }
 
@@ -380,7 +380,7 @@ class SQLQueryClass implements Queries {
       WHERE ${DatabaseConstants.ACCOUNT_ID} == ?;''';
 
     final List<dynamic> params = [account.id];
-    final result = await database.rawDelete(sql, params);
+    final result = await database!.rawDelete(sql, params);
     DatabaseProvider.databaseLog('Delete account', sql, null, result, params);
   }
 
@@ -391,29 +391,29 @@ class SQLQueryClass implements Queries {
       WHERE ${DatabaseConstants.PAYEE_ID} == ?;''';
 
     final List<dynamic> params = [payee.id];
-    final result = await database.rawDelete(sql, params);
+    final result = await database!.rawDelete(sql, params);
     DatabaseProvider.databaseLog('Delete payee', sql, null, result, params);
   }
 
   /// Deletes the [moneytransaction] of id [moneytransaction.id] from the database.
   @override
-  Future<void> deleteTransaction(int moneytransactionId) async {
+  Future<void> deleteTransaction(int? moneytransactionId) async {
     final sql = '''DELETE FROM ${DatabaseConstants.moneyTransactionTable}
       WHERE ${DatabaseConstants.MONEYTRANSACTION_ID} == ?;''';
 
     final List<dynamic> params = [moneytransactionId];
-    final result = await database.rawDelete(sql, params);
+    final result = await database!.rawDelete(sql, params);
     DatabaseProvider.databaseLog('Delete moneyTransaction', sql, null, result, params);
   }
 
   /// Deletes the [budgetValue] of id [budgetValue.id] from the database.
   @override
-  Future<void> deleteBudgetValue(int budgetValueId) async {
+  Future<void> deleteBudgetValue(int? budgetValueId) async {
     final sql = '''DELETE FROM ${DatabaseConstants.budgetValueTable}
       WHERE ${DatabaseConstants.BUDGET_VALUE_ID} == ?;''';
 
     final List<dynamic> params = [budgetValueId];
-    final result = await database.rawDelete(sql, params);
+    final result = await database!.rawDelete(sql, params);
     DatabaseProvider.databaseLog('Delete budgetvalue', sql, null, result, params);
   }
 
@@ -430,20 +430,20 @@ class SQLQueryClass implements Queries {
                 ;''';
 
     final List<dynamic> params = [category.name, category.id];
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update category', sql, null, result, params);
   }
 
   /// Update subcategory name of [subcategory.id] in the database.
   @override
-  Future<void> updateSubcategoryName(int id, String newName) async {
+  Future<void> updateSubcategoryName(int? id, String newName) async {
     final sql = '''UPDATE ${DatabaseConstants.subcategoryTable}
                     SET ${DatabaseConstants.SUBCAT_NAME} = ?
                     WHERE ${DatabaseConstants.SUBCAT_ID} == ?
                     ;''';
 
     final List<dynamic> params = [newName, id];
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update subcategory name', sql, null, result, params);
   }
 
@@ -459,7 +459,7 @@ class SQLQueryClass implements Queries {
                 ;''';
 
     final List<dynamic> params = [account.name, account.balance, account.id];
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update account', sql, null, result, params);
   }
 
@@ -474,7 +474,7 @@ class SQLQueryClass implements Queries {
                 ;''';
 
     List<dynamic> params = [payee.name, payee.id];
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update payee', sql, null, result, params);
   }
   //TODO: Transaction update
@@ -484,7 +484,7 @@ class SQLQueryClass implements Queries {
   /// Fields that can be updated are [budgetValue.budgeted]
   /// and [budgetValue.available]
   @override
-  Future<void> updateBudgetValue(BudgetValue budgetValue) async {
+  Future<void> updateBudgetValue(BudgetValue? budgetValue) async {
     final sql = '''UPDATE ${DatabaseConstants.budgetValueTable}
                 SET ${DatabaseConstants.BUDGET_VALUE_BUDGETED} = ?,
                 ${DatabaseConstants.BUDGET_VALUE_AVAILABLE} = ?
@@ -492,12 +492,12 @@ class SQLQueryClass implements Queries {
                 ;''';
 
     List<dynamic> params = [
-      budgetValue.budgeted, //
+      budgetValue!.budgeted, //
       budgetValue.available,
       budgetValue.id
     ];
 
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update budgetValue', sql, null, result, params);
   }
 
@@ -507,7 +507,7 @@ class SQLQueryClass implements Queries {
         '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.STARTING_BUDGET_DATE}';''';
 
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
     int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
     return DateTime.fromMillisecondsSinceEpoch(startingBudgetDateMillisecondsSinceEpoch);
   }
@@ -518,7 +518,7 @@ class SQLQueryClass implements Queries {
         '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MAX_BUDGET_DATE}';''';
 
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
     final int maxBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
     return DateTime.fromMillisecondsSinceEpoch(maxBudgetDateMillisecondsSinceEpoch);
   }
@@ -531,12 +531,12 @@ class SQLQueryClass implements Queries {
                 ;''';
 
     final List<dynamic> params = [newMaxBudgetDate.millisecondsSinceEpoch];
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update maxBudgetDate', sql, null, result, params);
   }
 
   @override
-  Future<void> updateMostRecentAccountUsed(int accountId) async {
+  Future<void> updateMostRecentAccountUsed(int? accountId) async {
     // TODO: implement setMostRecentAccountUsed
 
     final sql = '''UPDATE ${DatabaseConstants.constantsTable}
@@ -545,7 +545,7 @@ class SQLQueryClass implements Queries {
                 ;''';
 
     final List<dynamic> params = [accountId.toString()];
-    final result = await database.rawUpdate(sql, params);
+    final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update most recent account used', sql, null, result, params);
   }
 
@@ -555,7 +555,7 @@ class SQLQueryClass implements Queries {
         '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MOST_RECENT_ACCOUNT}';''';
 
-    final data = await database.rawQuery(sql);
+    final data = await database!.rawQuery(sql);
     final int accountId = int.parse(data[0]['value'].toString());
     return accountId;
   }

@@ -1,7 +1,7 @@
 part of 'payee_watcher_bloc.dart';
 
 @freezed
-abstract class PayeeWatcherState with _$PayeeWatcherState {
+class PayeeWatcherState with _$PayeeWatcherState {
   const factory PayeeWatcherState.initial() = _Initial;
   const factory PayeeWatcherState.loading() = _Loading;
   const factory PayeeWatcherState.loadSuccess(List<Payee> payees) = _PayeeLoadSuccess;

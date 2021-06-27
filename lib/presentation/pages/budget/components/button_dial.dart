@@ -15,7 +15,7 @@ class ButtonDial extends StatelessWidget {
   final double width;
   final double buttonHeight = 55.0;
   final double buttonWidth = 55.0;
-  const ButtonDial(this.height, this.width, {Key key}) : super(key: key);
+  const ButtonDial(this.height, this.width, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

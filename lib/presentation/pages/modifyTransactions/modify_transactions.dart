@@ -16,7 +16,7 @@ import 'modify_transaction_state.dart';
 class ModifyTransactions extends StatefulWidget {
   final Account account;
 
-  const ModifyTransactions(this.account, {Key key}) : super(key: key);
+  const ModifyTransactions(this.account, {Key? key}) : super(key: key);
 
   @override
   _ModifyTransactionsController createState() => _ModifyTransactionsController();
@@ -27,7 +27,7 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
   Widget build(BuildContext context) => _ModifyTransactionsView(this);
 
   Future<void> handleDeleteTransactions(BuildContext context) async {
-    final String result = await showDeleteDialog(context, 'Delete selected transactions?');
+    final String? result = await showDeleteDialog(context, 'Delete selected transactions?');
     if (result == "Delete") {
       final ModifyTransactionsState showTransactionsState =
           Provider.of<ModifyTransactionsState>(context, listen: false);

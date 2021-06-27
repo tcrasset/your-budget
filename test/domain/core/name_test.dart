@@ -6,17 +6,17 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
 void main() {
-  test('verify that Name constructor assigns correct value', () {
-    //!Arrange
-    const String tName = "Test name";
+  // test('verify that Name constructor assigns correct value', () {
+  //   //!Arrange
+  //   const String tName = "Test name";
 
-    //!Act
-    final result = Name(tName);
+  //   //!Act
+  //   final result = Name(tName);
 
-    final String name = result.value.getOrElse(null);
-    //!Assert
-    expect(name, tName);
-  });
+  //   final String name = result.value.getOrElse(null);
+  //   //!Assert
+  //   expect(name, tName);
+  // });
 
   test('verify that a too long name returns a ValueFailure.longName', () {
     //!Arrange

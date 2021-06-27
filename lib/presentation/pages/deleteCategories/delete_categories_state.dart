@@ -14,12 +14,12 @@ import '../../../models/categories.dart';
 
 class DeleteCategoriesState extends ChangeNotifier {
   /// HashMap to select or unselect Sub- and MainCategories using their id
-  final Map<int, bool> _isSelectedMapMainCategory = HashMap();
-  final Map<int, bool> _isSelectedMapSubCategory = HashMap();
+  final Map<int?, bool> _isSelectedMapMainCategory = HashMap();
+  final Map<int?, bool> _isSelectedMapSubCategory = HashMap();
   int nbSelectedMainCategory = 0;
   int nbSelectedSubCategory = 0;
 
-  bool isSelected(int id, Type type) {
+  bool? isSelected(int id, Type type) {
     /// Checks if the Category of type [type] (SubCategory or MainCategory)
     /// with the given [id] has been selected by the user.
     if (type == MainCategory) {
@@ -29,7 +29,7 @@ class DeleteCategoriesState extends ChangeNotifier {
     }
   }
 
-  Future<void> updateIsSelected(int id, Type type) async {
+  Future<void> updateIsSelected(int? id, Type type) async {
     /// Toggles the selection status of Category of type [type]
     /// (SubCategory or MainCategory)  with the given [id].
     /// e.g. if it was not selected, this method selects it and
@@ -41,8 +41,8 @@ class DeleteCategoriesState extends ChangeNotifier {
     }
   }
 
-  Future<void> _updateIsSelectMainCategory(int id) async {
-    if (_isSelectedMapMainCategory[id]) {
+  Future<void> _updateIsSelectMainCategory(int? id) async {
+    if (_isSelectedMapMainCategory[id]!) {
       _isSelectedMapMainCategory[id] = false;
       nbSelectedMainCategory--;
     } else {
@@ -51,8 +51,8 @@ class DeleteCategoriesState extends ChangeNotifier {
     }
   }
 
-  Future<void> _updateIsSelectSubCategory(int id) async {
-    if (_isSelectedMapSubCategory[id]) {
+  Future<void> _updateIsSelectSubCategory(int? id) async {
+    if (_isSelectedMapSubCategory[id]!) {
       _isSelectedMapSubCategory[id] = false;
       nbSelectedSubCategory--;
     } else {
@@ -61,7 +61,7 @@ class DeleteCategoriesState extends ChangeNotifier {
     }
   }
 
-  void setCategoriesToFalse(int id, Type type) {
+  void setCategoriesToFalse(int? id, Type type) {
     /// Unselects the Category of type [type]
     /// (SubCategory or MainCategory)  with the given [id].
     /// This method is also used to fill up the HashMap
@@ -93,22 +93,22 @@ class DeleteCategoriesState extends ChangeNotifier {
 
   void _deleteSubCategories(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context, listen: false);
-    for (final int subcatId in _getSelectedSubcategories()) {
+    for (final int? subcatId in _getSelectedSubcategories()) {
       appState.removeSubcategory(subcatId);
     }
   }
 
   void _deleteMainCategories(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context, listen: false);
-    for (final int categoryId in _getSelectedCategories()) {
+    for (final int? categoryId in _getSelectedCategories()) {
       appState.removeCategory(categoryId);
     }
   }
 
-  List<int> _getSelectedCategories() {
-    final List<int> selectedCategoryIds = [];
+  List<int?> _getSelectedCategories() {
+    final List<int?> selectedCategoryIds = [];
 
-    for (final int id in _isSelectedMapMainCategory.keys) {
+    for (final int? id in _isSelectedMapMainCategory.keys) {
       if (_isSelectedMapMainCategory[id] == true) {
         selectedCategoryIds.add(id);
       }
@@ -116,10 +116,10 @@ class DeleteCategoriesState extends ChangeNotifier {
     return selectedCategoryIds;
   }
 
-  List<int> _getSelectedSubcategories() {
-    final List<int> selectedSubcCategoryIds = [];
+  List<int?> _getSelectedSubcategories() {
+    final List<int?> selectedSubcCategoryIds = [];
 
-    for (final int id in _isSelectedMapSubCategory.keys) {
+    for (final int? id in _isSelectedMapSubCategory.keys) {
       if (_isSelectedMapSubCategory[id] == true) {
         selectedSubcCategoryIds.add(id);
       }
@@ -130,13 +130,13 @@ class DeleteCategoriesState extends ChangeNotifier {
   void resetAllSelected() {
     /// Resets all the counters and selected fields of the state
     /// This DOES NOT unselect the checked boxes in the UI.
-    final List<int> subcatIds = _isSelectedMapSubCategory.keys.toList();
-    final List<int> catIds = _isSelectedMapMainCategory.keys.toList();
+    final List<int?> subcatIds = _isSelectedMapSubCategory.keys.toList();
+    final List<int?> catIds = _isSelectedMapMainCategory.keys.toList();
 
-    for (final int subcatId in subcatIds) {
+    for (final int? subcatId in subcatIds) {
       _isSelectedMapSubCategory[subcatId] = false;
     }
-    for (final int catId in catIds) {
+    for (final int? catId in catIds) {
       _isSelectedMapMainCategory[catId] = false;
     }
     nbSelectedMainCategory = 0;
@@ -146,21 +146,21 @@ class DeleteCategoriesState extends ChangeNotifier {
   void _unselectSubcategoriesUnderSelectedMainCategories(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context, listen: false);
 
-    for (final int categoryId in _getSelectedCategories()) {
+    for (final int? categoryId in _getSelectedCategories()) {
       // Getting subcategories which are children of the MainCategory that
       // we're going to delete.
-      final List<SubCategory> toUnselect =
-          appState.subcategories.where((subcat) => subcat.parentId == categoryId).toList();
+      final List<SubCategory?> toUnselect =
+          appState.subcategories.where((subcat) => subcat!.parentId == categoryId).toList();
 
       // Unselect categories by setting them to false
       for (final subcat in toUnselect) {
-        setCategoriesToFalse(subcat.id, SubCategory);
+        setCategoriesToFalse(subcat!.id, SubCategory);
       }
     }
   }
 
   bool _unallowDeletionOfEssentialMainCategory(BuildContext context) {
-    final List<int> catIds = _getSelectedCategories();
+    final List<int?> catIds = _getSelectedCategories();
     for (final catId in catIds) {
       if (catId == 1) {
         print("You can't delete the Essentials MainCategory");

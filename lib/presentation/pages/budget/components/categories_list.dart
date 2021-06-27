@@ -16,7 +16,7 @@ class CategoriesList extends StatefulWidget {
 }
 
 class _CategoriesListState extends State<CategoriesList> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -48,12 +48,12 @@ class _CategoriesListState extends State<CategoriesList> {
 }
 
 List<Widget> _buildList(AppState appState) {
-  final List<Category> categories = appState.allCategories;
+  final List<Category?> categories = appState.allCategories;
   final List<Widget> widgetList = [];
 
   const Divider divider = Divider(height: 1, color: Colors.black12);
 
-  for (final Category category in categories) {
+  for (final Category? category in categories) {
     final categoryWidget = (category is MainCategory)
         ? MainCategoryRow(cat: category)
         : SubcategoryRow(subcat: category as SubCategory);

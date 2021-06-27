@@ -8,18 +8,18 @@ import 'creator.dart';
 import 'queries.dart';
 
 class SubCategoryCreator implements Creator<SubCategory> {
-  final Queries queryContext;
+  final Queries? queryContext;
   final String name;
   final String parentId;
   final double budgeted;
   final double available;
 
   SubCategoryCreator({
-    @required this.queryContext,
-    @required this.name,
-    @required this.parentId,
-    @required this.budgeted,
-    @required this.available,
+    required this.queryContext,
+    required this.name,
+    required this.parentId,
+    required this.budgeted,
+    required this.available,
   });
 
   @override
@@ -31,7 +31,7 @@ class SubCategoryCreator implements Creator<SubCategory> {
       available: available,
     );
 
-    final int id = await queryContext.addSubcategory(model);
+    final int id = await queryContext!.addSubcategory(model);
     return SubCategory(
       id: id,
       parentId: parentId,

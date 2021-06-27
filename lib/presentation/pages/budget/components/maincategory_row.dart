@@ -8,7 +8,7 @@ import '../../../../models/constants.dart';
 // Widget containing and displaying the information of a category
 class MainCategoryRow extends StatelessWidget {
   final MainCategory cat;
-  MainCategoryRow({Key key, @required this.cat}) : super(key: key);
+  MainCategoryRow({Key? key, required this.cat}) : super(key: key);
 
   final mainCategoryDivider = SizedBox(
     height: 8.0,
@@ -30,7 +30,7 @@ class MainCategoryRow extends StatelessWidget {
             children: <Widget>[
               Expanded(
                   child: Text(
-                cat.name,
+                cat.name!,
                 style: Constants.CATEGORY_TEXT_STYLE,
               )),
               Expanded(
@@ -40,7 +40,7 @@ class MainCategoryRow extends StatelessWidget {
                   children: <Widget>[
                     const Text('Budgeted',
                         textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
-                    Text(cat.budgeted.toStringAsFixed(2),
+                    Text(cat.budgeted!.toStringAsFixed(2),
                         textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
                   ],
                 ),
@@ -52,7 +52,7 @@ class MainCategoryRow extends StatelessWidget {
                   children: <Widget>[
                     const Text('Available',
                         textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
-                    Text(cat.available.toStringAsFixed(2),
+                    Text(cat.available!.toStringAsFixed(2),
                         textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
                   ],
                 ),

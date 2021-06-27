@@ -10,12 +10,12 @@ import '../../../../models/account.dart';
 import '../../../../models/constants.dart';
 
 class SelectAccountPage extends StatelessWidget {
-  const SelectAccountPage({Key key}) : super(key: key);
+  const SelectAccountPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
-    final List<Account> accounts = appState.accounts.toList();
+    final List<Account?> accounts = appState.accounts.toList();
 
     void handleOnTap(int index) {
       Navigator.pop(context, accounts[index]);
@@ -33,7 +33,7 @@ class SelectAccountPage extends StatelessWidget {
               return GestureDetector(
                 onTap: () => handleOnTap(index),
                 child: ListTile(
-                  title: Text(accounts[index].name),
+                  title: Text(accounts[index]!.name!),
                 ),
               );
             }));

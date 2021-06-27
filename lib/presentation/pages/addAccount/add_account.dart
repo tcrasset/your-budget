@@ -18,9 +18,9 @@ import 'components/account_name.dart';
 import 'components/account_row.dart';
 
 class AddAccountPage extends StatelessWidget {
-  final String title;
+  final String? title;
 
-  const AddAccountPage({Key key, this.title}) : super(key: key);
+  const AddAccountPage({Key? key, this.title}) : super(key: key);
   @override
   @override
   Widget build(BuildContext context) {
@@ -70,9 +70,9 @@ class AddAccountPageScaffold extends StatelessWidget {
 
 class AddAccountForm extends StatelessWidget {
   const AddAccountForm({
-    Key key,
-    @required TextStyle textBoxStyle,
-    @required InputDecoration textBoxDecoration,
+    Key? key,
+    required TextStyle textBoxStyle,
+    required InputDecoration textBoxDecoration,
   })  : _textBoxStyle = textBoxStyle,
         _textBoxDecoration = textBoxDecoration,
         super(key: key);
@@ -89,7 +89,7 @@ class AddAccountForm extends StatelessWidget {
       message: failure.maybeMap(
         unexpected: (_) => 'Unexpected error occured, please contact support.',
         uniqueName: (_) => 'You must chose an unique account name.',
-        orElse: () => null,
+        orElse: (() => null) as String Function(),
       ),
     ).show(context);
   }

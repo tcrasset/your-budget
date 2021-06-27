@@ -1,7 +1,7 @@
 part of 'transaction_creator_bloc.dart';
 
 @freezed
-abstract class TransactionCreatorEvent with _$TransactionCreatorEvent {
+class TransactionCreatorEvent with _$TransactionCreatorEvent {
   const factory TransactionCreatorEvent.initialized() = _Initialized;
 
   const factory TransactionCreatorEvent.amountChanged(String amount) = _AmountChanged;

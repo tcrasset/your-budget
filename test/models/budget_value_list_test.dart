@@ -10,9 +10,9 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  BudgetValue tBudgetValue;
-  BudgetValueList budgetValuesList;
+  Queries? mockQueries;
+  BudgetValue? tBudgetValue;
+  late BudgetValueList budgetValuesList;
   const int testId_1 = 25;
   const int tSubcatId = 10;
   const int tMonth = 1;
@@ -47,12 +47,12 @@ void main() {
 
   test('when removeBySubcatId() is called, remove all budgetvalues by subcategory id', () {
     //!Arrange
-    final List<BudgetValue> toRemove =
-        budgetValuesList.budgetvalues.where((bv) => bv.subcategoryId == tSubcatId).toList();
+    final List<BudgetValue?> toRemove =
+        budgetValuesList.budgetvalues.where((bv) => bv!.subcategoryId == tSubcatId).toList();
     //!Act
     budgetValuesList.removeBySubcatId(tSubcatId);
     //!Assert
-    toRemove.forEach((bv) => {verify(mockQueries.deleteBudgetValue(bv.id))});
+    toRemove.forEach((bv) => {verify(mockQueries!.deleteBudgetValue(bv!.id))});
     expect(budgetValuesList.budgetvalues.isEmpty, true);
   });
 
@@ -63,7 +63,7 @@ void main() {
     const int tMonth = 12;
     const int tSubcatId = 12;
     final DateTime tDate = DateTime(tYear, tMonth);
-    final BudgetValue otherBudgetValue = tBudgetValue.copyWith(
+    final BudgetValue otherBudgetValue = tBudgetValue!.copyWith(
       subcategoryId: tSubcatId,
       month: tMonth,
       year: tYear,
@@ -71,7 +71,7 @@ void main() {
     //!Arrange
     budgetValuesList.add(otherBudgetValue);
     //!Act
-    final BudgetValue budgetvalues = budgetValuesList.getByBudget(tDate, tSubcatId);
+    final BudgetValue? budgetvalues = budgetValuesList.getByBudget(tDate, tSubcatId);
 
     //!Assert
     expect(budgetvalues, otherBudgetValue);
@@ -82,12 +82,12 @@ void main() {
           'with the same subcategory id', () {
     //!Arrange
     const int tSubcatIdOther = 2;
-    final BudgetValue otherBudgetValue = tBudgetValue.copyWith(
+    final BudgetValue otherBudgetValue = tBudgetValue!.copyWith(
       subcategoryId: tSubcatIdOther,
     );
     budgetValuesList.add(otherBudgetValue);
     //!Act
-    final List<BudgetValue> budgetvalues = budgetValuesList.getAllBySubcatId(tSubcatIdOther);
+    final List<BudgetValue?> budgetvalues = budgetValuesList.getAllBySubcatId(tSubcatIdOther);
 
     //!Assert
     expect(budgetvalues, [otherBudgetValue]);
@@ -104,9 +104,9 @@ void main() {
         subcatId: tSubcatId, date: tDate, newBudgeted: tBudgeted, newAvailable: tAvailable);
 
     //!Assert
-    verify(mockQueries.updateBudgetValue(argThat(isA<BudgetValue>())));
+    verify(mockQueries!.updateBudgetValue(argThat(isA<BudgetValue>())));
 
-    final BudgetValue budgetValue = budgetValuesList.getByBudget(tDate, tSubcatId);
+    final BudgetValue budgetValue = budgetValuesList.getByBudget(tDate, tSubcatId)!;
     expect(budgetValue.budgeted, tBudgeted);
     expect(budgetValue.available, tAvailable);
   });

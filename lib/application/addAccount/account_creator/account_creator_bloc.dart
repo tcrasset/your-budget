@@ -22,7 +22,7 @@ part 'account_creator_bloc.freezed.dart';
 class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> {
   final IAccountRepository accountRepository;
   final ITransactionRepository transactionRepository;
-  AccountCreatorBloc({@required this.accountRepository, @required this.transactionRepository})
+  AccountCreatorBloc({required this.accountRepository, required this.transactionRepository})
       : super(AccountCreatorState.initial());
 
   @override
@@ -50,7 +50,7 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
         }
       },
       saved: (e) async* {
-        Either<ValueFailure, Unit> failureOrSuccess;
+        Either<ValueFailure, Unit>? failureOrSuccess;
 
         yield state.copyWith(isSaving: true);
 

@@ -18,7 +18,7 @@ part 'payee_creator_bloc.freezed.dart';
 
 class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
   final IPayeeRepository payeeRepository;
-  PayeeCreatorBloc({@required this.payeeRepository}) : super(PayeeCreatorState.initial());
+  PayeeCreatorBloc({required this.payeeRepository}) : super(PayeeCreatorState.initial());
 
   @override
   Stream<PayeeCreatorState> mapEventToState(
@@ -40,7 +40,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
         }
       },
       saved: (e) async* {
-        Either<ValueFailure, Unit> failureOrSuccess;
+        Either<ValueFailure, Unit>? failureOrSuccess;
 
         yield state.copyWith(isSaving: true);
 

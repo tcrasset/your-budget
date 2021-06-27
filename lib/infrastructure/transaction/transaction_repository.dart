@@ -16,8 +16,8 @@ import '../../models/constants.dart';
 import 'transaction_dto.dart';
 
 class SQFliteTransactionRepository implements ITransactionRepository {
-  final Database database;
-  SQFliteTransactionRepository({@required this.database});
+  final Database? database;
+  SQFliteTransactionRepository({required this.database});
 
   @override
   Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
@@ -26,7 +26,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       debugPrint(transactionDTO.toString());
       debugPrint(transactionDTO.toJson().toString());
-      await database.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
+      await database!.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
       return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -37,7 +37,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   Future<Either<ValueFailure, Unit>> delete(MoneyTransaction transaction) async {
     try {
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
-      await database.delete(
+      await database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
         whereArgs: [transactionDTO.id],
@@ -52,7 +52,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction) async {
     try {
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
-      await database.update(
+      await database!.update(
         DatabaseConstants.moneyTransactionTable,
         transactionDTO.toJson(),
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
@@ -89,7 +89,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
         """;
 
       final args = [accountID];
-      final data = await database.rawQuery(sql, args);
+      final data = await database!.rawQuery(sql, args);
       debugPrint(data.toString());
       final List<MoneyTransaction> transactions = [];
       for (final rawTransaction in data) {

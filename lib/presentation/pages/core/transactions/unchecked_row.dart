@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import '../../../../models/utils.dart';
 
 class UncheckedRow extends StatelessWidget {
-  final String subcategoryName;
+  final String? subcategoryName;
   final TextStyle subcategoryStyle;
 
-  final String memo;
+  final String? memo;
   final TextStyle memoStyle;
-  final double amount;
+  final double? amount;
   final TextStyle amountStyle;
   final DateTime date;
   final TextStyle dateStyle;
-  final String payeeName;
+  final String? payeeName;
 
   const UncheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
       this.date, this.dateStyle, this.payeeName, this.subcategoryStyle,
-      {Key key})
+      {Key? key})
       : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class UncheckedRow extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  subcategoryName,
+                  subcategoryName!,
                   style: subcategoryStyle,
                   overflow: TextOverflow.fade,
                   maxLines: 1,
@@ -45,7 +45,7 @@ class UncheckedRow extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  memo == "" ? "No memo" : memo,
+                  memo == "" ? "No memo" : memo!,
                   textAlign: TextAlign.left,
                   style: memoStyle,
                   overflow: TextOverflow.fade,
@@ -63,7 +63,7 @@ class UncheckedRow extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(getDatePhrase(date), textAlign: TextAlign.right, style: dateStyle),
-              Text(payeeName)
+              Text(payeeName!)
             ],
           ),
         ]));

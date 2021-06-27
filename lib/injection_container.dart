@@ -20,7 +20,7 @@ final sl = GetIt.instance;
 
 Future<void> init() async {
   final DatabaseProvider dbProvider = DatabaseProvider();
-  final Database database = await dbProvider.open();
+  final Database database = await (dbProvider.open() as Future<Database>);
   sl.registerSingleton<Database>(database);
   sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
   sl.registerSingleton<ITransactionRepository>(
@@ -30,7 +30,7 @@ Future<void> init() async {
   sl.registerSingleton<ISubcategoryRepository>(
       SQFliteSubcategoryRepository(database: sl<Database>()));
 
-  final AppState appState = AppState(queryContext: sl());
-  await appState.loadStateFromDatabase();
-  sl.registerLazySingleton(() => appState);
+  // final AppState appState = AppState(queryContext: sl());
+  // await appState.loadStateFromDatabase();
+  // sl.registerLazySingleton(() => appState);
 }

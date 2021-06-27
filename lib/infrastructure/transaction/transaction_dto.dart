@@ -5,16 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/payee/payee.dart';
-import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
-import 'package:your_budget/infrastructure/account/account_dto.dart';
-import 'package:your_budget/infrastructure/payee/payee_dto.dart';
-import 'package:your_budget/infrastructure/subcategory/subcategory_dto.dart';
+import 'package:your_budget/models/utils.dart';
 
 part 'transaction_dto.freezed.dart';
 part 'transaction_dto.g.dart';
@@ -24,16 +20,16 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const MoneyTransactionDTO._();
 
   const factory MoneyTransactionDTO({
-    @JsonKey(ignore: true) String id,
-    @required String subcatID,
-    @required String payeeID,
-    @required String accountID,
-    @JsonKey(toJson: null, includeIfNull: false) String subcatName,
-    @JsonKey(toJson: null, includeIfNull: false) String payeeName,
-    @JsonKey(toJson: null, includeIfNull: false) String accountName,
-    @required double amount,
-    @required String memo,
-    @required int dateInMillisecondsSinceEpoch,
+    @JsonKey(toJson: ignore, includeIfNull: false) required String id,
+    required String subcatID,
+    required String subcatName,
+    required String payeeID,
+    required String payeeName,
+    required String accountID,
+    required String accountName,
+    required double amount,
+    required String memo,
+    required int dateInMillisecondsSinceEpoch,
   }) = _TransactionDTO;
 
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {

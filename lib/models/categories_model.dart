@@ -8,29 +8,29 @@ class SubCategoryModel {
   final double available;
 
   SubCategoryModel(
-      {@required this.parentId,
-      @required this.name,
-      @required this.budgeted,
-      @required this.available});
+      {required this.parentId,
+      required this.name,
+      required this.budgeted,
+      required this.available});
 }
 
 class MainCategoryModel {
   final String name;
 
-  MainCategoryModel({@required this.name});
+  MainCategoryModel({required this.name});
 }
 
 class BudgetValueModel {
-  int subcategoryId;
+  int? subcategoryId;
   double budgeted;
-  double available;
-  int year;
-  int month;
+  double? available;
+  int? year;
+  int? month;
 
   BudgetValueModel(
-      {@required this.subcategoryId,
-      @required this.budgeted,
-      @required this.available,
-      @required this.year,
-      @required this.month});
+      {required this.subcategoryId,
+      required this.budgeted,
+      required this.available,
+      required this.year,
+      required this.month});
 }

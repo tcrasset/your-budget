@@ -15,13 +15,13 @@ import '../addTransaction/components/currency_input_formatter.dart';
 
 class BudgetPageState extends ChangeNotifier {
   bool showButtonDial = false;
-  final Map<int, bool> _isSelectedMap = HashMap();
+  final Map<int/*!*/, bool> _isSelectedMap = HashMap();
   int selectedId = -1;
-  MoneyMaskedTextController budgetedController;
+  MoneyMaskedTextController? budgetedController;
   String budgetedText = "";
 
   bool isSelected(int subcategoryId) {
-    return _isSelectedMap[subcategoryId];
+    return _isSelectedMap[subcategoryId]!;
   }
 
   Map<int, bool> get isSelectedMap => _isSelectedMap;
@@ -62,7 +62,7 @@ class BudgetPageState extends ChangeNotifier {
   void addDigit(String digit) {
     budgetedText += digit;
     final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
-    budgetedController.updateValue(amount);
+    budgetedController!.updateValue(amount);
     print(budgetedText);
   }
 
@@ -70,7 +70,7 @@ class BudgetPageState extends ChangeNotifier {
     try {
       budgetedText = budgetedText.substring(0, budgetedText.length - 1);
       final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
-      budgetedController.updateValue(amount);
+      budgetedController!.updateValue(amount);
       print(budgetedText);
     } on RangeError {
       print('Cannot remove any more digits');
@@ -83,18 +83,18 @@ class BudgetPageState extends ChangeNotifier {
     final AppState appState = Provider.of<AppState>(context, listen: false);
 
     final SubCategory selectedSubcategory =
-        appState.subcategories.singleWhere((subcat) => subcat.id == selectedId);
+        appState.subcategories.singleWhere((subcat) => subcat!.id == selectedId)!;
 
-    if (budgetedController.numberValue != selectedSubcategory.budgeted) {
+    if (budgetedController!.numberValue != selectedSubcategory.budgeted) {
       final double beforeAfterDifference =
-          budgetedController.numberValue - selectedSubcategory.budgeted;
+          budgetedController!.numberValue - selectedSubcategory.budgeted!;
       appState.updateSubcategoryValues(
           SubCategory(
               id: selectedSubcategory.id,
               parentId: selectedSubcategory.parentId,
               name: selectedSubcategory.name,
-              budgeted: budgetedController.numberValue,
-              available: selectedSubcategory.available + beforeAfterDifference),
+              budgeted: budgetedController!.numberValue,
+              available: selectedSubcategory.available! + beforeAfterDifference),
           appState.currentBudgetDate);
 
       resetText();
@@ -112,6 +112,6 @@ class BudgetPageState extends ChangeNotifier {
   }
 
   void setSubcategory(SubCategory subcat) {
-    _isSelectedMap[subcat.id] = false;
+    _isSelectedMap[subcat.id!] = false;
   }
 }

@@ -8,17 +8,27 @@ part of 'subcategory_dto.dart';
 
 _$_SubcategoryDTO _$_$_SubcategoryDTOFromJson(Map<String, dynamic> json) {
   return _$_SubcategoryDTO(
+    id: json['id'] as String,
     categoryID: json['categoryID'] as String,
     name: json['name'] as String,
-    budgeted: (json['budgeted'] as num)?.toDouble() ?? 0.0,
-    available: (json['available'] as num)?.toDouble() ?? 0.0,
+    budgeted: (json['budgeted'] as num?)?.toDouble() ?? 0.0,
+    available: (json['available'] as num?)?.toDouble() ?? 0.0,
   );
 }
 
-Map<String, dynamic> _$_$_SubcategoryDTOToJson(_$_SubcategoryDTO instance) =>
-    <String, dynamic>{
-      'categoryID': instance.categoryID,
-      'name': instance.name,
-      'budgeted': instance.budgeted,
-      'available': instance.available,
-    };
+Map<String, dynamic> _$_$_SubcategoryDTOToJson(_$_SubcategoryDTO instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', ignore(instance.id));
+  val['categoryID'] = instance.categoryID;
+  val['name'] = instance.name;
+  val['budgeted'] = instance.budgeted;
+  val['available'] = instance.available;
+  return val;
+}

@@ -1,7 +1,7 @@
 part of 'subcategory_watcher_bloc.dart';
 
 @freezed
-abstract class SubcategoryWatcherState with _$SubcategoryWatcherState {
+class SubcategoryWatcherState with _$SubcategoryWatcherState {
   const factory SubcategoryWatcherState.initial() = _Initial;
 
   const factory SubcategoryWatcherState.loading() = _Loading;

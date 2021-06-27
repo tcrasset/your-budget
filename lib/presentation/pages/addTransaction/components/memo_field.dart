@@ -11,7 +11,7 @@ import 'package:your_budget/domain/core/name.dart';
 import 'add_transaction_field.dart';
 
 class MemoField extends HookWidget {
-  const MemoField({Key key}) : super(key: key);
+  const MemoField({Key? key}) : super(key: key);
 
   void onMemoChange(BuildContext context, String value) {
     context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.memoChanged(
@@ -19,7 +19,7 @@ class MemoField extends HookWidget {
         ));
   }
 
-  String _failNameClosure(dynamic f) {
+  String? _failNameClosure(dynamic f) {
     final result = f.maybeMap(
       longName: (_) => "Must be smaller than ${Name.maxLength}",
       emptyName: (_) => "Must not be empty",
@@ -29,7 +29,7 @@ class MemoField extends HookWidget {
     return result is String ? result : null;
   }
 
-  String validateMemo(BuildContext context) {
+  String? validateMemo(BuildContext context) {
     return context.read<TransactionCreatorBloc>().state.moneyTransaction.memo.value.fold(
           (f) => _failNameClosure(f),
           (_) => null,
@@ -38,12 +38,12 @@ class MemoField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = useTextEditingController();
+    final TextEditingController controller = useTextEditingController();
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
       listenWhen: (p, c) => getMemo(p) != getMemo(c),
       listener: (context, state) {
         controller
-          ..text = getMemo(state)
+          ..text = getMemo(state)!
           ..selection = TextSelection.collapsed(offset: controller.text.length);
       },
       builder: (context, state) {
@@ -61,7 +61,7 @@ class MemoField extends HookWidget {
   }
 }
 
-String getMemo(TransactionCreatorState state) => state.moneyTransaction.memo.value.fold(
+String? getMemo(TransactionCreatorState state) => state.moneyTransaction.memo.value.fold(
       (_) => null,
       (v) => v,
     );

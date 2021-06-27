@@ -11,12 +11,12 @@ import 'package:your_budget/models/subcategory_creator.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  String tName;
-  String tParentId;
-  double tBudgeted;
-  double tAvailable;
-  SubCategoryCreator creator;
+  late Queries mockQueries;
+  late String tName;
+  late String tParentId;
+  late double tBudgeted;
+  late double tAvailable;
+  late SubCategoryCreator creator;
   setUp(() async {
     mockQueries = MockQueries();
     tName = "Test subcategory";
@@ -47,13 +47,13 @@ void main() {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>()))).thenAnswer((_) async => tId);
+    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())!)).thenAnswer((_) async => tId);
 
     //!Act
     final SubCategory subcategory = await creator.create();
 
     //!Assert
-    verify(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())));
+    verify(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())!));
     expect(subcategory.name, tName);
     expect(subcategory.parentId, tParentId);
     expect(subcategory.budgeted, tBudgeted);

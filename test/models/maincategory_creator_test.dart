@@ -11,9 +11,9 @@ import 'package:your_budget/models/queries.dart';
 class MockQueries extends Mock implements Queries {}
 
 void main() {
-  Queries mockQueries;
-  String tName;
-  MainCategoryCreator creator;
+  late Queries mockQueries;
+  late String tName;
+  late MainCategoryCreator creator;
   setUp(() async {
     mockQueries = MockQueries();
     tName = "Test maincategory";
@@ -36,13 +36,13 @@ void main() {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addCategory(argThat(isA<MainCategoryModel>()))).thenAnswer((_) async => tId);
+    when(mockQueries.addCategory(argThat(isA<MainCategoryModel>())!)).thenAnswer((_) async => tId);
 
     //!Act
     final MainCategory maincategory = await creator.create();
 
     //!Assert
-    verify(mockQueries.addCategory(argThat(isA<MainCategoryModel>())));
+    verify(mockQueries.addCategory(argThat(isA<MainCategoryModel>())!));
     expect(maincategory.name, tName);
     expect(maincategory.id, tId);
   });

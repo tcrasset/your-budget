@@ -8,12 +8,12 @@ import 'package:provider/provider.dart';
 import '../delete_categories_state.dart';
 
 class CheckedRow extends StatefulWidget {
-  final String categoryName;
-  final int categoryId;
+  final String? categoryName;
+  final int? categoryId;
   final Type type;
   final TextStyle textStyle;
 
-  const CheckedRow(this.categoryName, this.categoryId, this.type, this.textStyle, {Key key})
+  const CheckedRow(this.categoryName, this.categoryId, this.type, this.textStyle, {Key? key})
       : super(key: key);
 
   @override
@@ -21,9 +21,9 @@ class CheckedRow extends StatefulWidget {
 }
 
 class _CheckedRowState extends State<CheckedRow> {
-  bool isChecked = false;
+  bool? isChecked = false;
 
-  void handleCheckboxOnChanged(bool value) {
+  void handleCheckboxOnChanged(bool? value) {
     DeleteCategoriesState showCategoriesState =
         Provider.of<DeleteCategoriesState>(context, listen: false);
     showCategoriesState.updateIsSelected(widget.categoryId, widget.type);
@@ -53,7 +53,7 @@ class _CheckedRowState extends State<CheckedRow> {
           Checkbox(value: isChecked, onChanged: handleCheckboxOnChanged),
           Expanded(
             child: Text(
-              widget.categoryName,
+              widget.categoryName!,
               style: widget.textStyle,
             ),
           ),

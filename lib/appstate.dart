@@ -34,63 +34,64 @@ import 'models/utils.dart';
 class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
   List<Goal> _goals = [];
-  final Queries queryContext;
+  final Queries? queryContext;
 
-  PayeeList payeeList;
-  AccountList accountList;
-  MoneyTransactionList transactionList;
-  BudgetValueList budgetValueList;
-  BudgetList budgetList;
+  late PayeeList payeeList;
+  late AccountList accountList;
+  late MoneyTransactionList transactionList;
+  late BudgetValueList budgetValueList;
+  late BudgetList budgetList;
 
   double toBeBudgeted = 0;
 
-  DateTime startingBudgetDate;
-  DateTime currentBudgetDate;
+  DateTime? startingBudgetDate;
+  DateTime? currentBudgetDate;
 
-  Budget currentBudget;
+  Budget? currentBudget;
 
   /// An unmodifiable view of the information in the data base.
-  UnmodifiableListView<Category> get allCategories {
+  UnmodifiableListView<Category?> get allCategories {
     if (currentBudget != null) {
-      return UnmodifiableListView(currentBudget.allcategories);
+      return UnmodifiableListView(currentBudget!.allcategories!);
     }
     return UnmodifiableListView([]);
   }
 
-  UnmodifiableListView<SubCategory> get subcategories =>
-      UnmodifiableListView(currentBudget.subcategories);
-  UnmodifiableListView<Payee> get payees => UnmodifiableListView(payeeList.payees);
-  UnmodifiableListView<Account> get accounts => UnmodifiableListView(accountList.accounts);
-  UnmodifiableListView<MoneyTransaction> get transactions =>
+  UnmodifiableListView<SubCategory?> get subcategories =>
+      UnmodifiableListView(currentBudget!.subcategories);
+  UnmodifiableListView<Payee?> get payees => UnmodifiableListView(payeeList.payees);
+  UnmodifiableListView<Account?> get accounts => UnmodifiableListView(accountList.accounts);
+  UnmodifiableListView<MoneyTransaction?> get transactions =>
       UnmodifiableListView(transactionList.transactions);
-  UnmodifiableListView<Budget> get budgets => UnmodifiableListView(budgetList.budgets);
+  UnmodifiableListView<Budget?> get budgets => UnmodifiableListView(budgetList.budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
-  UnmodifiableListView<BudgetValue> get budgetValues =>
+  UnmodifiableListView<BudgetValue?> get budgetValues =>
       UnmodifiableListView(budgetValueList.budgetvalues);
-  Future<Account> get mostRecentAccount => accountList.getMostRecentAccount();
-  Future<Account> get nextMostRecentAccount async {
-    final Account account = await accountList.cycleNextAccount();
+  Future<Account?> get mostRecentAccount => accountList.getMostRecentAccount();
+  Future<Account?> get nextMostRecentAccount async {
+    final Account? account = await accountList.cycleNextAccount();
     notifyListeners();
     return account;
   }
 
-  AppState({@required this.queryContext});
+  AppState({required this.queryContext});
 
   @override
   Future<void> loadStateFromDatabase() async {
-    // startingBudgetDate = await queryContext.getStartingBudgetDateConstant();
+    startingBudgetDate = await queryContext!.getStartingBudgetDateConstant();
 
-    // //transactionList = MoneyTransactionList(queryContext, await queryContext.getMoneyTransactions());
-    // budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
+    transactionList =
+        MoneyTransactionList(queryContext, await queryContext!.getMoneyTransactions());
+    budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
 
-    // budgetValueList = BudgetValueList(queryContext, await queryContext.getBudgetValues());
-    // _goals = await queryContext.getGoals();
+    budgetValueList = BudgetValueList(queryContext, await queryContext!.getBudgetValues());
+    _goals = await queryContext!.getGoals();
 
     // currentBudgetDate = getDateFromMonthStart(DateTime.now());
     // currentBudget = budgetList.getByDate(currentBudgetDate);
 
-    // payeeList = PayeeList(queryContext, await queryContext.getPayees());
-    // accountList = AccountList(queryContext, await queryContext.getAccounts());
+    payeeList = PayeeList(queryContext, await queryContext!.getPayees());
+    accountList = AccountList(queryContext, await queryContext!.getAccounts());
 
     // await computeToBeBudgeted();
 
@@ -100,7 +101,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
   @override
-  Future<void> addCategory({@required String categoryName}) async {
+  Future<void> addCategory({required String categoryName}) async {
     final MainCategory cat =
         await MainCategoryCreator(queryContext: queryContext, name: categoryName).create();
 
@@ -109,7 +110,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   @override
-  Future<Payee> addPayee({@required String payeeName}) async {
+  Future<Payee> addPayee({required String payeeName}) async {
     final PayeeCreator creator = PayeeCreator(queryContext: queryContext, name: payeeName);
     final Payee payee = await creator.create();
     payeeList.add(payee);
@@ -123,10 +124,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// scratch
   @override
   Future<void> addSubcategory(
-      {@required String subcategoryName, @required String maincategoryId}) async {
-    DateTime newDate = startingBudgetDate;
+      {required String subcategoryName, required String maincategoryId}) async {
+    DateTime? newDate = startingBudgetDate;
     final DateTime maxBudgetDate = getMaxBudgetDate();
-    DateTime previousDate;
+    DateTime? previousDate;
 
     final SubCategory subcategory = await SubCategoryCreator(
             queryContext: queryContext,
@@ -150,12 +151,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         subcategoryId: subcategory.id,
         budgeted: 0,
         available: 0,
-        year: previousDate.year,
+        year: previousDate!.year,
         month: previousDate.month,
       );
 
       budgetValueList.add(await creator.create());
-      newDate = Jiffy(previousDate).add(months: 1);
+      newDate = Jiffy(previousDate).add(months: 1).dateTime;
     } while (previousDate.isBefore(maxBudgetDate));
 
     notifyListeners();
@@ -167,12 +168,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// subcategory.
   @override
   Future<void> addTransaction({
-    @required int subcatId,
-    @required int payeeId,
-    @required int accountId,
-    @required double amount,
-    @required String memo,
-    @required DateTime date,
+    required int subcatId,
+    required int payeeId,
+    required int accountId,
+    required double amount,
+    required String memo,
+    required DateTime date,
   }) async {
     // Add transaction to the state, to the database and update the count
 
@@ -208,14 +209,14 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void _addStandardTransaction(MoneyTransaction transaction) {
-    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount);
+    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount!);
 
     final Budget budget =
-        budgetList.getByDate(DateTime(transaction.date.year, transaction.date.month));
+        budgetList.getByDate(DateTime(transaction.date!.year, transaction.date!.month))!;
     final SubCategory oldSubcat =
-        budget.subcategories.singleWhere((subcat) => subcat.id == transaction.subcatID);
+        budget.subcategories.singleWhere((subcat) => subcat!.id == transaction.subcatID)!;
 
-    final double newAvailableAmount = oldSubcat.available + transaction.amount;
+    final double newAvailableAmount = oldSubcat.available! + transaction.amount!;
     final SubCategory newSubcat = SubCategory(
         id: oldSubcat.id,
         parentId: oldSubcat.parentId,
@@ -234,12 +235,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     /// [outAccount] is ALWAYS the one pointed to by accountID.
     /// Therefore, [inAccount] will be the one defined by [-payee.id].
-    accountList.debitAccount(id: transaction.accountID, amount: transaction.amount);
-    accountList.creditAccount(id: -transaction.payeeID, amount: transaction.amount);
+    accountList.debitAccount(id: transaction.accountID, amount: transaction.amount!);
+    accountList.creditAccount(id: -transaction.payeeID!, amount: transaction.amount!);
   }
 
   Future<void> _addTransactionIntoToBeBudgeted(MoneyTransaction transaction) async {
-    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount);
+    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount!);
 
     budgetList = BudgetList(queryContext, await createAllMonthlyBudgets());
     await computeToBeBudgeted();
@@ -247,10 +248,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   @override
   Future<void> addGoal({
-    @required GoalType goalType,
-    @required int subcategoryId,
-    @required double amount,
-    @required DateTime date,
+    required GoalType goalType,
+    required int subcategoryId,
+    required double amount,
+    required DateTime date,
   }) async {
     final GoalModel goalModel = GoalModel(
         correspondingSubcategoryId: subcategoryId,
@@ -259,7 +260,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         month: date.month,
         year: date.year);
 
-    final int goalId = await queryContext.addGoal(goalModel);
+    final int goalId = await queryContext!.addGoal(goalModel);
 
     Goal newGoal;
     if (goalType == GoalType.TargetAmountByDate) {
@@ -267,7 +268,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     } else {
       ///Use the current budget date, as there is no end date for the other types of goal
       newGoal =
-          Goal(goalId, subcategoryId, goalType, amount, currentBudget.month, currentBudget.year);
+          Goal(goalId, subcategoryId, goalType, amount, currentBudget!.month, currentBudget!.year);
     }
     _goals.add(newGoal);
     notifyListeners();
@@ -277,7 +278,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// in both the state and in the data base.
   @override
   Future<void> updateSubcategoryValues(
-      SubCategory modifiedSubcategory, DateTime dateMofidied) async {
+      SubCategory modifiedSubcategory, DateTime? dateMofidied) async {
     _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
     _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
     await computeToBeBudgeted();
@@ -286,35 +287,35 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void _updateSubcategoryInSubsequentBudgets(
-      SubCategory modifiedSubcategory, DateTime dateMofidied) {
-    double lastMonthAvailable = modifiedSubcategory.available;
+      SubCategory modifiedSubcategory, DateTime? dateMofidied) {
+    double? lastMonthAvailable = modifiedSubcategory.available;
     final DateTime maxBudgetDate = getMaxBudgetDate();
-    DateTime date = Jiffy(dateMofidied).add(months: 1);
+    DateTime date = Jiffy(dateMofidied).add(months: 1).dateTime;
 
     ///TODO: THink about removing BudgetValue from appState and only storing it in Budgets
 
     while (date.isBefore(maxBudgetDate)) {
-      final BudgetValue budgetValue = budgetValueList.getByBudget(date, modifiedSubcategory.id);
+      final BudgetValue budgetValue = budgetValueList.getByBudget(date, modifiedSubcategory.id)!;
 
       // Combine the total available money from month to month
-      budgetValue.available = lastMonthAvailable + budgetValue.budgeted;
+      budgetValue.available = lastMonthAvailable! + budgetValue.budgeted!;
       lastMonthAvailable = budgetValue.available;
 
-      queryContext.updateBudgetValue(budgetValue);
+      queryContext!.updateBudgetValue(budgetValue);
 
-      final Budget budget = budgetList.getByDate(date);
+      final Budget budget = budgetList.getByDate(date)!;
       budget.makeSubcategoryChangeBySubcatId(
           modifiedSubcategory.id, //
           modifiedSubcategory.parentId,
           "available",
           budgetValue.available.toString());
 
-      date = Jiffy(date).add(months: 1);
+      date = Jiffy(date).add(months: 1).dateTime;
     }
   }
 
-  void _updateSubcategoryInCurrentBudget(SubCategory modifiedSubcategory, DateTime dateMofidied) {
-    currentBudget.updateSubCategory(modifiedSubcategory);
+  void _updateSubcategoryInCurrentBudget(SubCategory modifiedSubcategory, DateTime? dateMofidied) {
+    currentBudget!.updateSubCategory(modifiedSubcategory);
 
     budgetValueList.updateBudgetValue(
         subcatId: modifiedSubcategory.id,
@@ -323,18 +324,18 @@ class AppState extends ChangeNotifier implements AppStateRepository {
         newAvailable: modifiedSubcategory.available);
   }
 
-  void updateSubcategoryName(int id, String newName) {
+  void updateSubcategoryName(int? id, String newName) {
     budgetList.updateSubcategoryName(id: id, newName: newName);
     notifyListeners();
-    queryContext.updateSubcategoryName(id, newName);
+    queryContext!.updateSubcategoryName(id, newName);
   }
 
   @override
-  void removeSubcategory(int subcategoryId) {
+  void removeSubcategory(int? subcategoryId) {
     final SubCategory toBeRemoved =
-        currentBudget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+        currentBudget!.subcategories.singleWhere((subcat) => subcat!.id == subcategoryId)!;
     budgetList.removeSubcategory(toBeRemoved.id, toBeRemoved.parentId);
-    queryContext.deleteSubcategory(subcategoryId);
+    queryContext!.deleteSubcategory(subcategoryId);
     budgetValueList.removeBySubcatId(subcategoryId);
     notifyListeners();
   }
@@ -345,7 +346,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   void updateCategoryName(MainCategory modifiedCategory) {
     budgetList.updateMaincategory(modifiedCategory);
     notifyListeners();
-    queryContext.updateCategory(modifiedCategory);
+    queryContext!.updateCategory(modifiedCategory);
   }
 
   @override
@@ -353,30 +354,30 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     toBeBudgeted = 0;
 
     // Sum up starting total for every account
-    // for (final Account account in accounts) {
-    //   final MoneyTransaction firstTransaction =
-    //       await queryContext.getFirstTransactionOfAccount(account.id);
-    //   toBeBudgeted += firstTransaction.amount;
-    // }
+    for (final Account? account in accounts) {
+      final MoneyTransaction firstTransaction =
+          await queryContext!.getFirstTransactionOfAccount(account!.id!);
+      toBeBudgeted += firstTransaction.amount!;
+    }
 
     // Remove total budgeted of each month
-    DateTime prevDate = startingBudgetDate;
-    DateTime nextDate = startingBudgetDate;
+    DateTime? prevDate = startingBudgetDate;
+    DateTime? nextDate = startingBudgetDate;
 
     do {
       prevDate = nextDate;
-      final Budget budget = budgetList.getByDate(prevDate);
+      final Budget budget = budgetList.getByDate(prevDate)!;
       toBeBudgeted -= budget.totalBudgeted;
       toBeBudgeted += budget.toBeBudgetedInputFromMoneyTransactions;
       //Go to next month
-      nextDate = Jiffy(nextDate).add(months: 1);
-    } while (currentBudgetDate.isAfter(prevDate));
+      nextDate = Jiffy(nextDate).add(months: 1).dateTime;
+    } while (currentBudgetDate!.isAfter(prevDate!));
   }
 
   @override
   Future<void> incrementMonth() async {
-    if (currentBudgetDate.isBefore(getMaxBudgetDate())) {
-      currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1);
+    if (currentBudgetDate!.isBefore(getMaxBudgetDate())) {
+      currentBudgetDate = Jiffy(currentBudgetDate).add(months: 1).dateTime;
       currentBudget = budgetList.getByDate(currentBudgetDate);
       await computeToBeBudgeted();
       notifyListeners();
@@ -385,8 +386,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   @override
   Future<void> decrementMonth() async {
-    if (currentBudgetDate.isAfter(startingBudgetDate)) {
-      currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1);
+    if (currentBudgetDate!.isAfter(startingBudgetDate!)) {
+      currentBudgetDate = Jiffy(currentBudgetDate).subtract(months: 1).dateTime;
       currentBudget = budgetList.getByDate(currentBudgetDate);
       await computeToBeBudgeted();
       notifyListeners();
@@ -394,21 +395,21 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   @override
-  double computeAverageBudgeted(int subcategoryId) {
+  double computeAverageBudgeted(int? subcategoryId) {
     return budgetList.computeAvgBugdetedPerSubcategory(subcategoryId);
   }
 
   @override
-  double computeLastMonthBudgeted(int subcategoryId) {
-    final DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1);
-    final Budget lastMonthBudget = budgetList.getByDate(lastMonthDate);
+  double? computeLastMonthBudgeted(int? subcategoryId) {
+    final DateTime lastMonthDate = Jiffy(currentBudgetDate).subtract(months: 1).dateTime;
+    final Budget? lastMonthBudget = budgetList.getByDate(lastMonthDate);
 
     if (lastMonthBudget == null) {
       return 0.00;
     }
 
     final SubCategory lastMonthSubcat =
-        lastMonthBudget.subcategories.singleWhere((subcat) => subcat.id == subcategoryId);
+        lastMonthBudget.subcategories.singleWhere((subcat) => subcat!.id == subcategoryId)!;
 
     return lastMonthSubcat.budgeted;
   }
@@ -417,32 +418,32 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   @override
   Future<List<Budget>> createAllMonthlyBudgets() async {
     List<Budget> budgets = [];
-    DateTime currentDate = startingBudgetDate;
-    final List<MainCategory> maincategories = await queryContext.getCategories();
-    final DateTime storedMaxBudgetDate = await queryContext.getMaxBudgetDateConstant();
+    DateTime currentDate = startingBudgetDate!;
+    final List<MainCategory> maincategories = await queryContext!.getCategories();
+    final DateTime storedMaxBudgetDate = await queryContext!.getMaxBudgetDateConstant();
     // Start with 1 month's difference and keep incrementing
     // until we overshoot the endDate
 
     // Get every transaction made into 'To Be Budgeted'
-    final List<MoneyTransaction> toBeBudgetedTransactions =
+    final List<MoneyTransaction?> toBeBudgetedTransactions =
         transactionList.getToBeBudgetedTransactions();
 
     do {
       final List<SubCategory> subcategories =
-          await queryContext.getSubCategoriesJoined(currentDate.year, currentDate.month);
+          await queryContext!.getSubCategoriesJoined(currentDate.year, currentDate.month);
       final Budget budget =
           Budget(maincategories, subcategories, currentDate.month, currentDate.year);
 
       final double positiveAmountTransferedIntoToBeBudgeted = toBeBudgetedTransactions
-          .where((transaction) => isSameMonth(transaction.date, currentDate))
-          .fold(0, (total, transaction) => total + transaction.amount);
+          .where((transaction) => isSameMonth(transaction!.date!, currentDate))
+          .fold(0, (total, transaction) => total + transaction!.amount!);
 
       budget.toBeBudgetedInputFromMoneyTransactions += positiveAmountTransferedIntoToBeBudgeted;
       budgets.add(budget);
 
       //Go to next month
-      currentDate = Jiffy(currentDate).add(months: 1);
-    } while (currentDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1)));
+      currentDate = Jiffy(currentDate).add(months: 1).dateTime;
+    } while (currentDate.isBefore(Jiffy(storedMaxBudgetDate).add(months: 1).dateTime));
 
     if (await _checkIfNeedToIncrementMax()) {
       budgets = await _incrementMaxBudgetAndUpdateBudgets(budgets);
@@ -451,8 +452,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   @override
-  Future<void> deleteTransaction(int transactionId) async {
-    final MoneyTransaction transaction = transactionList.getById(transactionId);
+  Future<void> deleteTransaction(int? transactionId) async {
+    final MoneyTransaction transaction = transactionList.getById(transactionId)!;
 
     final bool isTransactionIntoToBeBudgeted =
         transaction.subcatID == Constants.TO_BE_BUDGETED_ID_IN_MONEYTRANSACTION;
@@ -471,18 +472,18 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     }
 
     transactionList.remove(transactionId);
-    queryContext.deleteTransaction(transactionId);
+    queryContext!.deleteTransaction(transactionId);
   }
 
   void _deleteStandardTransaction(MoneyTransaction transaction) {
-    accountList.debitAccount(id: transaction.accountID, amount: transaction.amount);
+    accountList.debitAccount(id: transaction.accountID, amount: transaction.amount!);
 
     final Budget budget =
-        budgetList.getByDate(DateTime(transaction.date.year, transaction.date.month));
+        budgetList.getByDate(DateTime(transaction.date!.year, transaction.date!.month))!;
     final SubCategory oldSubcat =
-        budget.subcategories.singleWhere((subcat) => subcat.id == transaction.subcatID);
+        budget.subcategories.singleWhere((subcat) => subcat!.id == transaction.subcatID)!;
 
-    final double newAvailableAmount = oldSubcat.available - transaction.amount;
+    final double newAvailableAmount = oldSubcat.available! - transaction.amount!;
     final SubCategory newSubcat = SubCategory(
         id: oldSubcat.id,
         parentId: oldSubcat.parentId,
@@ -497,26 +498,26 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   void _deleteTransactionBetweenAccounts(MoneyTransaction transaction) {
     /// If we do a MoneyTransaction between accounts (subcat.ID == UNASSIGNED_SUBCAT_ID)
     /// subcategories are not affected.
-    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount);
-    accountList.debitAccount(id: -transaction.payeeID, amount: transaction.amount);
+    accountList.creditAccount(id: transaction.accountID, amount: transaction.amount!);
+    accountList.debitAccount(id: -transaction.payeeID!, amount: transaction.amount!);
   }
 
   Future<void> _deleteTransactionIntoToBeBudgeted(MoneyTransaction transaction) async {
-    accountList.debitAccount(id: transaction.accountID, amount: transaction.amount);
+    accountList.debitAccount(id: transaction.accountID, amount: transaction.amount!);
 
-    final Budget budget = budgetList.getByDate(transaction.date);
-    budget.toBeBudgetedInputFromMoneyTransactions -= transaction.amount;
+    final Budget budget = budgetList.getByDate(transaction.date)!;
+    budget.toBeBudgetedInputFromMoneyTransactions -= transaction.amount!;
   }
 
   @override
-  void removeCategory(int categoryId) {
-    final List<SubCategory> correspondingSubcategories =
-        subcategories.where((subcat) => subcat.parentId == categoryId).toList();
+  void removeCategory(int? categoryId) {
+    final List<SubCategory?> correspondingSubcategories =
+        subcategories.where((subcat) => subcat!.parentId == categoryId).toList();
 
     budgetList.removeMaincategory(categoryId);
-    queryContext.deleteCategory(categoryId);
+    queryContext!.deleteCategory(categoryId);
 
-    correspondingSubcategories.forEach((subcat) => removeSubcategory(subcat.id));
+    correspondingSubcategories.forEach((subcat) => removeSubcategory(subcat!.id));
 
     computeToBeBudgeted();
     notifyListeners();
@@ -524,7 +525,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   Future<List<Budget>> _incrementMaxBudgetAndUpdateBudgets(List<Budget> budgets) async {
     DateTime newDate;
-    DateTime previousDate = await queryContext.getMaxBudgetDateConstant();
+    DateTime previousDate = await queryContext!.getMaxBudgetDateConstant();
     final DateTime maxBudgetDate = getMaxBudgetDate();
 
     Budget currentMaxBudget = budgets.singleWhere(
@@ -536,7 +537,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     });
 
     do {
-      newDate = Jiffy(previousDate).add(months: 1);
+      newDate = Jiffy(previousDate).add(months: 1).dateTime;
 
       currentMaxBudget = budgets.singleWhere(
         (budget) => budget.year == previousDate.year && budget.month == previousDate.month,
@@ -545,22 +546,22 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
       // Add all BudgetValue for the new month to the database
       // print(currentMaxBudget.subcategories);
-      for (final SubCategory previousMonthSubcat in currentMaxBudget.subcategories) {
+      for (final SubCategory? previousMonthSubcat in currentMaxBudget.subcategories) {
         final BudgetValueModel budgetValueModel = BudgetValueModel(
-          subcategoryId: previousMonthSubcat.id,
+          subcategoryId: previousMonthSubcat!.id,
           budgeted: 0,
           available: previousMonthSubcat.available,
           year: newDate.year,
           month: newDate.month,
         );
 
-        await queryContext.addBudgetValue(budgetValueModel);
+        await queryContext!.addBudgetValue(budgetValueModel);
       }
 
       // Fetch the newly added BudgetValues and create a new budget, adding it to the
       // already existing list of budgets
       final List<SubCategory> updatedSubcategories =
-          await queryContext.getSubCategoriesJoined(newDate.year, newDate.month);
+          await queryContext!.getSubCategoriesJoined(newDate.year, newDate.month);
 
       final Budget newBudget = Budget(
           currentMaxBudget.maincategories, updatedSubcategories, newDate.month, newDate.year);
@@ -569,7 +570,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     } while (newDate.isBefore(maxBudgetDate));
 
     //Update max budget date constant
-    await queryContext.setMaxBudgetDateConstant(maxBudgetDate);
+    await queryContext!.setMaxBudgetDateConstant(maxBudgetDate);
 
     return budgets;
   }
@@ -581,7 +582,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   Future<int> _getNbMonthDifferenceBetweenCurrentAndStoredMaxBudgetDate() async {
     final DateTime currentMaxBudgetDate = getMaxBudgetDate();
-    final DateTime storedMaxBudgetDate = await queryContext.getMaxBudgetDateConstant();
+    final DateTime storedMaxBudgetDate = await queryContext!.getMaxBudgetDateConstant();
     return getMonthDifference(currentMaxBudgetDate, storedMaxBudgetDate);
   }
 }

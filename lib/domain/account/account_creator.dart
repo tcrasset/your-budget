@@ -9,6 +9,7 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
@@ -18,8 +19,8 @@ class AccountCreator {
   final ITransactionRepository transactionRepository;
 
   AccountCreator({
-    @required this.accountRepository,
-    @required this.transactionRepository,
+    required this.accountRepository,
+    required this.transactionRepository,
   });
 
   Future<Either<ValueFailure, Unit>> create(Account account) async {
@@ -44,13 +45,16 @@ class AccountCreator {
   Future<Either<ValueFailure, Unit>> _createStartingMoneyTransaction(
       int accountId, Amount balance) async {
 //Create starting money transaction
+//TODO: Use real names
     final MoneyTransaction transaction = MoneyTransaction(
       id: UniqueId(),
       subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
       subcatName: Name(""),
+      payee: Payee(id: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID), name: Name("")),
       payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
       payeeName: Name(""),
       accountID: UniqueId.fromUniqueInt(accountId),
+      accountName: Name(""),
       amount: balance,
       memo: Name("Starting balance"),
       date: DateTime.now(),

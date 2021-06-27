@@ -1,13 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-Future<String> addDialog(
-    {@required BuildContext context,
-    @required String title,
-    @required String hintText,
-    @required String successButtonName,
-    @required Function(String) nameValidator,
-    String defaultValue}) {
+Future<String?> addDialog(
+    {required BuildContext context,
+    required String title,
+    required String hintText,
+    required String successButtonName,
+    required Function(String) nameValidator,
+    String? defaultValue}) {
   final TextEditingController textController = TextEditingController();
 
   if (defaultValue != null && defaultValue.trim() != "") {
@@ -27,13 +27,13 @@ Future<String> addDialog(
               decoration:
                   InputDecoration(hintText: hintText, filled: true, fillColor: Colors.grey[200]),
               controller: textController,
-              validator: (_) => nameValidator(textController.text) as String,
+              validator: (_) => nameValidator(textController.text) as String?,
             ),
           ),
           actions: <Widget>[
             FlatButton(
                 onPressed: () {
-                  if (_formKey.currentState.validate()) {
+                  if (_formKey.currentState!.validate()) {
                     Navigator.of(context).pop(textController.text);
                   }
                 },

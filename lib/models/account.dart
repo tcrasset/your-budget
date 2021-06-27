@@ -9,25 +9,25 @@ class AccountModel {
   final double balance;
 
   AccountModel({
-    @required this.name,
-    @required this.balance,
+    required this.name,
+    required this.balance,
   });
 }
 
 /// Class representing the physical account where the money is stored.
 class Account {
   /// Unique id of this.
-  int id;
+  int? id;
 
   /// Name given to this.
-  String name;
+  String? name;
 
   /// Balance of this.
-  double balance;
+  double? balance;
 
   /// Default constructor for [Account] with an unique [id], a [name] and the
   /// current [balance].
-  Account({@required this.id, @required this.name, @required this.balance});
+  Account({required this.id, required this.name, required this.balance});
 
   /// Constructor building an [Account] from a [json] representation taken
   /// from a database.
@@ -47,9 +47,9 @@ class Account {
   }
 
   Account copyWith({
-    int id,
-    String name,
-    double balance,
+    int? id,
+    String? name,
+    double? balance,
   }) {
     return Account(
       id: id ?? this.id,

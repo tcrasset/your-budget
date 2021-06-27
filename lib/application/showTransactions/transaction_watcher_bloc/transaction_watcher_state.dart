@@ -1,7 +1,7 @@
 part of 'transaction_watcher_bloc.dart';
 
 @freezed
-abstract class TransactionWatcherState with _$TransactionWatcherState {
+class TransactionWatcherState with _$TransactionWatcherState {
   const factory TransactionWatcherState.initial() = _Initial;
   const factory TransactionWatcherState.loading() = _Loading;
   const factory TransactionWatcherState.loadSuccess(List<MoneyTransaction> transactions) =

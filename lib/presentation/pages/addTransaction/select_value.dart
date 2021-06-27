@@ -14,7 +14,7 @@ import 'components/search_field.dart';
 class SelectValuePage extends StatefulWidget {
   final List listEntries;
   final String title;
-  const SelectValuePage({@required this.title, @required this.listEntries});
+  const SelectValuePage({required this.title, required this.listEntries});
 
   @override
   State createState() => SelectValuePageState();
@@ -22,11 +22,11 @@ class SelectValuePage extends StatefulWidget {
 
 class SelectValuePageState extends State<SelectValuePage> {
   TextEditingController searchController = TextEditingController();
-  String filter;
-  bool isPayee;
-  bool isSubcategories;
+  String? filter;
+  late bool isPayee;
+  late bool isSubcategories;
 
-  AppState appState;
+  late AppState appState;
   @override
   void initState() {
     super.initState();
@@ -50,16 +50,16 @@ class SelectValuePageState extends State<SelectValuePage> {
     Navigator.pop(context, item);
   }
 
-  String newPayeeValidator(String payeeName) {
+  String? newPayeeValidator(String payeeName) {
     if (payeeName == null || payeeName.trim() == "") {
       return "Name must be valid";
     }
     return null;
   }
 
-  Future<void> createNewPayee({@required BuildContext context, String defaultName}) async {
+  Future<void> createNewPayee({required BuildContext context, String? defaultName}) async {
     const String hint = "Add new payee";
-    final String payeeName = await addDialog(
+    final String? payeeName = await addDialog(
         context: context,
         title: hint,
         hintText: hint,
@@ -75,9 +75,9 @@ class SelectValuePageState extends State<SelectValuePage> {
   }
 
   List<dynamic> _getDuplicateEntries() {
-    final map = Map<String, int>(); // Mapping between name and id
+    final map = Map<String?, int?>(); // Mapping between name and id
 
-    final Set<int> duplicateIDs = Set<int>();
+    final Set<int?> duplicateIDs = Set<int?>();
     widget.listEntries.forEach((element) {
       if (element is SubCategory) {
         if (!map.containsKey(element.name)) {
@@ -88,7 +88,7 @@ class SelectValuePageState extends State<SelectValuePage> {
         }
       }
     });
-    return appState.subcategories.where((element) => duplicateIDs.contains(element.id)).toList();
+    return appState.subcategories.where((element) => duplicateIDs.contains(element!.id)).toList();
   }
 
   List _addLabelForDuplicateEntries(List<dynamic> duplicateEntries) {
@@ -173,7 +173,7 @@ class SelectValuePageState extends State<SelectValuePage> {
                 return ListTile(title: itemToShow, onTap: () => handlePopContext(item));
               } else if (noFilter == false) {
                 // The filter is not empty, we filter by name
-                if (itemToFilter.toLowerCase().contains(filter.toLowerCase()) == true) {
+                if (itemToFilter.toLowerCase().contains(filter!.toLowerCase()) == true) {
                   return ListTile(title: item as Text, onTap: () => handlePopContext(item));
                 }
               }

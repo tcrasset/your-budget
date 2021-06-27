@@ -12,7 +12,7 @@ import 'constants.dart';
 import 'utils.dart';
 
 //Global database variable so as not to handle concurrency issues
-Database db;
+Database? db;
 
 /// Class that is responsible for creating the database, filling up the default values
 /// and assigning it to global variable [db].
@@ -24,9 +24,9 @@ class DatabaseProvider {
   /// the results [insertAndUpdateQueryResult] of an INSERT query are returned.
   /// This depends on what action was taken on the database.
   static void databaseLog(String functionName, String sql,
-      [List<Map<String, dynamic>> selectQueryResult,
-      int insertAndUpdateQueryResult,
-      List<dynamic> params]) {
+      [List<Map<String, dynamic>>? selectQueryResult,
+      int? insertAndUpdateQueryResult,
+      List<dynamic>? params]) {
     print("Method called : $functionName");
     print("SQL: $sql");
     if (params != null) {
@@ -57,7 +57,7 @@ class DatabaseProvider {
   /// Initiates the database and assigns it to the global variable [db]
   /// by calling [DatabaseCreator.onCreate()] with the path to the database
   /// and the version number.
-  Future<Database> open() async {
+  Future<Database?> open() async {
     final path = await getDatabasePath('budgetDB');
     db = await openDatabase(
       path,
@@ -188,7 +188,7 @@ class DatabaseProvider {
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      DateTime newDate = Jiffy(startingDate).add(months: monthDifference);
+      DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
       for (int subcatId in subcategoryIds) {
         await db.rawInsert(CREATE_BUDGETVALUE, [
           subcatId,

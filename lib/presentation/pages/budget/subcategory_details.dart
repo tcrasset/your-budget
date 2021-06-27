@@ -12,7 +12,7 @@ import '../../../models/utils.dart';
 
 class SubcategoryDetails extends StatelessWidget {
   final SubCategory subcat;
-  const SubcategoryDetails({Key key, this.subcat}) : super(key: key);
+  const SubcategoryDetails({Key? key, required this.subcat}) : super(key: key);
 
   List<Widget> createListOfGoals(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
@@ -42,7 +42,7 @@ class SubcategoryDetails extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(subcat.name),
+          title: Text(subcat.name!),
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -61,7 +61,7 @@ class SubcategoryDetails extends StatelessWidget {
 class Information extends StatelessWidget {
   final SubCategory subcat;
 
-  const Information(this.subcat, {Key key}) : super(key: key);
+  const Information(this.subcat, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,10 +71,10 @@ class Information extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          InformationRow("Budgeted", subcat.budgeted),
-          InformationRow("Available", subcat.available),
+          InformationRow("Budgeted", subcat.budgeted!),
+          InformationRow("Available", subcat.available!),
           InformationRow("Average budgeted", appState.computeAverageBudgeted(subcat.id)),
-          InformationRow("Last month budgeted", appState.computeLastMonthBudgeted(subcat.id)),
+          InformationRow("Last month budgeted", appState.computeLastMonthBudgeted(subcat.id)!),
         ],
       ),
     );
@@ -87,7 +87,7 @@ class InformationRow extends StatelessWidget {
   const InformationRow(
     this.title,
     this.value, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -116,7 +116,7 @@ class InformationRow extends StatelessWidget {
 
 class GoalRow extends StatelessWidget {
   final Goal goal;
-  const GoalRow(this.goal, {Key key}) : super(key: key);
+  const GoalRow(this.goal, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -125,9 +125,9 @@ class GoalRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(goalTypeNames[goal.goalType.index]),
+          Text(goalTypeNames[goal.goalType!.index]),
           Text("${goal.amount} €"),
-          Text("${monthStringFromDate(DateTime(goal.year, goal.month))} ${goal.year}")
+          Text("${monthStringFromDate(DateTime(goal.year!, goal.month!))} ${goal.year}")
         ],
       ),
     );
@@ -135,7 +135,7 @@ class GoalRow extends StatelessWidget {
 }
 
 class GoalRowsTitle extends StatelessWidget {
-  const GoalRowsTitle({Key key}) : super(key: key);
+  const GoalRowsTitle({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

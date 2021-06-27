@@ -16,13 +16,13 @@ import 'search_field.dart';
 
 class AccountField extends StatelessWidget {
   const AccountField({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const String _DEFAULT_ACCOUNT = "Select account";
 
   Future<void> handleOnTap(BuildContext context) async {
-    final Account account = await Navigator.push(
+    final Account? account = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => AccountListScaffold()),
     );
@@ -41,7 +41,7 @@ class AccountField extends StatelessWidget {
         .fold((_) => _DEFAULT_ACCOUNT, (v) => v);
   }
 
-  String validateAccount(BuildContext context) =>
+  String? validateAccount(BuildContext context) =>
       context.read<TransactionCreatorBloc>().state.moneyTransaction.accountName.value.fold(
             (f) => f.maybeMap(orElse: () => null),
             (_) => null,
@@ -60,7 +60,7 @@ class AccountField extends StatelessWidget {
 class AccountListScaffold extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final searchController = useTextEditingController();
+    final TextEditingController? searchController = useTextEditingController();
     return MultiBlocProvider(
       providers: [
         BlocProvider<AccountWatcherBloc>(
@@ -79,7 +79,7 @@ class AccountListScaffold extends HookWidget {
             return state.maybeMap(
                 loadSuccess: (newState) => Column(
                       children: [
-                        SearchField(searchController: searchController),
+                        SearchField(searchController: searchController!),
                         Expanded(child: AccountList(searchController: searchController)),
                       ],
                     ),
@@ -95,7 +95,7 @@ class AccountListScaffold extends HookWidget {
 
 class AccountList extends StatelessWidget {
   final TextEditingController searchController;
-  const AccountList({@required this.searchController});
+  const AccountList({required this.searchController});
 
   void _handlePopContext(BuildContext context, Account account) =>
       Navigator.of(context).pop(account);
@@ -112,7 +112,7 @@ class AccountList extends StatelessWidget {
                 const Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
               final account = newState.accounts[index];
-              final name = account.name.getOrCrash();
+              final String name = account.name.getOrCrash();
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {

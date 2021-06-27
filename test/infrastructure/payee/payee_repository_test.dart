@@ -14,12 +14,12 @@ import 'package:your_budget/models/constants.dart';
 class MockDatabase extends Mock implements Database {}
 
 void main() {
-  Database mockDatabase;
-  SQFlitePayeeRepository repository;
+  late Database mockDatabase;
+  late SQFlitePayeeRepository repository;
   int tId;
   String tName;
-  Payee tPayee;
-  PayeeDTO payeeDTO;
+  late Payee tPayee;
+  late PayeeDTO payeeDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
     repository = SQFlitePayeeRepository(database: mockDatabase);
@@ -85,7 +85,7 @@ void main() {
     tRawPayee2['id'] = tId2;
     final List<Map<String, dynamic>> tRawPayees = [tRawPayee1, tRawPayee2];
 
-    when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawPayees);
+    when(mockDatabase.rawQuery(any!)).thenAnswer((_) async => tRawPayees);
 
     //!Act
     final payees = await repository.getAllPayees();

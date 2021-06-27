@@ -16,16 +16,16 @@ import '../../models/constants.dart';
 import 'account_dto.dart';
 
 class SQFliteAccountRepository implements IAccountRepository {
-  final Database database;
-  SQFliteAccountRepository({@required this.database});
+  final Database? database;
+  SQFliteAccountRepository({required this.database});
 
   @override
-  Future<Either<ValueFailure, int>> count() async {
+  Future<Either<ValueFailure, int?>> count() async {
     try {
       const sql = """
         SELECT COUNT(*) FROM ${DatabaseConstants.accountTable};
         """;
-      final data = await database.rawQuery(sql);
+      final data = await database!.rawQuery(sql);
 
       return right(Sqflite.firstIntValue(data));
     } on DatabaseException catch (e) {
@@ -37,7 +37,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   Future<Either<ValueFailure, int>> create(Account account) async {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
-      final int id = await database.insert(DatabaseConstants.accountTable, accountDTO.toJson());
+      final int id = await database!.insert(DatabaseConstants.accountTable, accountDTO.toJson());
       return right(id);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
@@ -55,10 +55,10 @@ class SQFliteAccountRepository implements IAccountRepository {
         ORDER BY ${DatabaseConstants.ACCOUNT_BALANCE} DESC;
         """;
 
-      final data = await database.rawQuery(sql);
+      final data = await database!.rawQuery(sql);
       final List<Account> accounts = [];
       for (final rawAccount in data) {
-        final AccountDTO accountDTO = AccountDTO.fromSQL(rawAccount);
+        final AccountDTO accountDTO = AccountDTO.fromJson(rawAccount);
         accounts.add(accountDTO.toDomain());
       }
 

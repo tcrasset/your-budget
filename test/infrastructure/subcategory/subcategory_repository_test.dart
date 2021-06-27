@@ -15,15 +15,15 @@ import 'package:your_budget/models/constants.dart';
 class MockDatabase extends Mock implements Database {}
 
 void main() {
-  Database mockDatabase;
-  SQFliteSubcategoryRepository repository;
+  late Database mockDatabase;
+  late SQFliteSubcategoryRepository repository;
   int tId;
   int tParentID;
   double budgeted;
   double available;
   String tName;
-  Subcategory tSubcategory;
-  SubcategoryDTO subcategoryDTO;
+  late Subcategory tSubcategory;
+  late SubcategoryDTO subcategoryDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
     repository = SQFliteSubcategoryRepository(database: mockDatabase);
@@ -92,7 +92,7 @@ void main() {
     tRawSubcategory2['id'] = tId2;
     final List<Map<String, dynamic>> tRawSubcategorys = [tRawSubcategory1, tRawSubcategory2];
 
-    when(mockDatabase.rawQuery(any)).thenAnswer((_) async => tRawSubcategorys);
+    when(mockDatabase.rawQuery(any!)).thenAnswer((_) async => tRawSubcategorys);
 
     //!Act
     final subcategorys = await repository.getAllSubcategories();

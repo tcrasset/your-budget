@@ -6,6 +6,7 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/models/utils.dart';
 
 part 'subcategory_dto.freezed.dart';
 part 'subcategory_dto.g.dart';
@@ -15,9 +16,9 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
   const SubcategoryDTO._();
 
   const factory SubcategoryDTO({
-    @JsonKey(ignore: true) String id, //Do not use id in database
-    @required String categoryID,
-    @required String name,
+    @JsonKey(toJson: ignore, includeIfNull: false) required String id, //Do not use id in database
+    required String categoryID,
+    required String name,
     @Default(0.00) double budgeted,
     @Default(0.00) double available,
   }) = _SubcategoryDTO;

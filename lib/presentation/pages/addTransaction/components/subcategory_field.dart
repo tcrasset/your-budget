@@ -16,13 +16,13 @@ import 'search_field.dart';
 
 class SubcategoryField extends StatelessWidget {
   const SubcategoryField({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   static const String _DEFAULT_SUBCATEGORY = "Select subcategory";
 
   Future<void> handleOnTap(BuildContext context) async {
-    final Subcategory subcategory = await Navigator.push(
+    final Subcategory? subcategory = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => SubcategoryListScaffold()),
     );
@@ -44,7 +44,7 @@ class SubcategoryField extends StatelessWidget {
         .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
   }
 
-  String validateSubcategory(BuildContext context) =>
+  String? validateSubcategory(BuildContext context) =>
       context.read<TransactionCreatorBloc>().state.moneyTransaction.subcatName.value.fold(
             (f) => f.maybeMap(orElse: () => null),
             (_) => null,
@@ -63,7 +63,7 @@ class SubcategoryField extends StatelessWidget {
 class SubcategoryListScaffold extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final searchController = useTextEditingController();
+    final TextEditingController? searchController = useTextEditingController();
     return MultiBlocProvider(
       providers: [
         BlocProvider<SubcategoryWatcherBloc>(
@@ -82,7 +82,7 @@ class SubcategoryListScaffold extends HookWidget {
             return state.maybeMap(
                 loadSuccess: (newState) => Column(
                       children: [
-                        SearchField(searchController: searchController),
+                        SearchField(searchController: searchController!),
                         Expanded(child: SubcategoryList(searchController: searchController)),
                       ],
                     ),
@@ -98,7 +98,7 @@ class SubcategoryListScaffold extends HookWidget {
 
 class SubcategoryList extends StatelessWidget {
   final TextEditingController searchController;
-  const SubcategoryList({@required this.searchController});
+  const SubcategoryList({required this.searchController});
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +112,7 @@ class SubcategoryList extends StatelessWidget {
                 const Divider(height: 1, color: Colors.black12),
             itemBuilder: (BuildContext context, int index) {
               final subcategory = newState.subcategories[index];
-              final name = subcategory.name.getOrCrash();
+              final String name = subcategory.name.getOrCrash();
               final bool noFilter = searchController.text == null || searchController.text == "";
 
               if (noFilter == true) {

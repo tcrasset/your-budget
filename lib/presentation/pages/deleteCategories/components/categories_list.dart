@@ -25,7 +25,7 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Category> categories = Provider.of<AppState>(context).allCategories;
+    final List<Category?> categories = Provider.of<AppState>(context).allCategories;
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,
@@ -39,8 +39,8 @@ class _CategoriesListState extends State<CategoriesList> {
           final type = categories[index].runtimeType;
           return Card(
             child: CheckedRow(
-                categories[index].name,
-                categories[index].id,
+                categories[index]!.name,
+                categories[index]!.id,
                 type,
                 type == MainCategory
                     ? Constants.CATEGORY_TEXT_STYLE

@@ -16,16 +16,16 @@ import '../../models/constants.dart';
 import 'payee_dto.dart';
 
 class SQFlitePayeeRepository implements IPayeeRepository {
-  final Database database;
-  SQFlitePayeeRepository({@required this.database});
+  final Database? database;
+  SQFlitePayeeRepository({required this.database});
 
   @override
-  Future<Either<ValueFailure, int>> count() async {
+  Future<Either<ValueFailure, int?>> count() async {
     try {
       const sql = """
         SELECT COUNT(*) FROM ${DatabaseConstants.payeeTable};
         """;
-      final data = await database.rawQuery(sql);
+      final data = await database!.rawQuery(sql);
 
       return right(Sqflite.firstIntValue(data));
     } on DatabaseException catch (e) {
@@ -37,7 +37,7 @@ class SQFlitePayeeRepository implements IPayeeRepository {
   Future<Either<ValueFailure, Unit>> create(Payee payee) async {
     try {
       final PayeeDTO payeeDTO = PayeeDTO.fromDomain(payee);
-      await database.insert(DatabaseConstants.payeeTable, payeeDTO.toJson());
+      await database!.insert(DatabaseConstants.payeeTable, payeeDTO.toJson());
       return right(unit);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
@@ -55,7 +55,7 @@ class SQFlitePayeeRepository implements IPayeeRepository {
         ORDER BY ${DatabaseConstants.PAYEE_NAME} DESC;
         """;
 
-      final data = await database.rawQuery(sql);
+      final data = await database!.rawQuery(sql);
       final List<Payee> payees = [];
       for (final rawPayee in data) {
         final PayeeDTO payeeDTO = PayeeDTO.fromSQL(rawPayee);

@@ -12,34 +12,34 @@ abstract class AppStateRepository {
 
   /// Adds [category] to the current [_allCategories], to [_maincategories],
   /// and to the data base.
-  void addCategory({@required String categoryName});
+  void addCategory({required String categoryName});
 
-  Future<Payee> addPayee({@required String payeeName});
+  Future<Payee> addPayee({required String payeeName});
 
   /// Adds [subcategory] to the list [_subcategories],
   /// ,to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory({@required String subcategoryName, @required String maincategoryId});
+  void addSubcategory({required String subcategoryName, required String maincategoryId});
 
   /// Add the [transaction] to the [_transactions] list, persist it to
   /// the database and add the transaction amount to the corresponding subcategory.
   /// Finally, update the fields of the [MainCategory] which contains the
   /// subcategory.
   Future<void> addTransaction({
-    int subcatId,
-    int payeeId,
-    int accountId,
-    double amount,
-    String memo,
-    DateTime date,
+    required int subcatId,
+    required int payeeId,
+    required int accountId,
+    required double amount,
+    required String memo,
+    required DateTime date,
   });
 
   Future<void> addGoal({
-    @required GoalType goalType,
-    @required int subcategoryId,
-    @required double amount,
-    @required DateTime date,
+    required GoalType goalType,
+    required int subcategoryId,
+    required double amount,
+    required DateTime date,
   });
 
   /// Update all the fields of [modifiedSubcategory]
@@ -60,7 +60,7 @@ abstract class AppStateRepository {
 
   double computeAverageBudgeted(int subcategoryId);
 
-  double computeLastMonthBudgeted(int subcategoryId);
+  double? computeLastMonthBudgeted(int subcategoryId);
 
   Future<List<Budget>> createAllMonthlyBudgets();
 
