@@ -27,9 +27,7 @@ class AccountCreator {
     final Either<ValueFailure, int> failureOrInt = await accountRepository.create(account);
 
     return failureOrInt.fold(
-      (f) {
-        return left(f); // Failure in account creation
-      },
+      (f) => left(f),
       (accountId) async {
         final Either<ValueFailure, Unit> failureOrUnit =
             await _createStartingMoneyTransaction(accountId, account.balance);
@@ -46,20 +44,28 @@ class AccountCreator {
       int accountId, Amount balance) async {
 //Create starting money transaction
 //TODO: Use real names
-    final MoneyTransaction transaction = MoneyTransaction(
-      id: UniqueId(),
-      subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
-      subcatName: Name(""),
-      payee: Payee(id: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID), name: Name("")),
-      payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
-      payeeName: Name(""),
-      accountID: UniqueId.fromUniqueInt(accountId),
-      accountName: Name(""),
-      amount: balance,
-      memo: Name("Starting balance"),
-      date: DateTime.now(),
-    );
 
-    return transactionRepository.create(transaction);
+    final Either<ValueFailure, Account> failureOrAccount = await accountRepository.get(accountId);
+
+    return failureOrAccount.fold(
+      (l) => left(l),
+      (account) {
+        final MoneyTransaction transaction = MoneyTransaction(
+          id: UniqueId(),
+          subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
+          subcatName: Name("ToBeBudgeted"),
+          payee: Payee(id: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID), name: Name("")),
+          payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
+          payeeName: Name("ToBeBudgeted"),
+          accountID: account.id,
+          accountName: account.name,
+          amount: balance,
+          memo: Name("Starting balance"),
+          date: DateTime.now(),
+        );
+
+        return transactionRepository.create(transaction);
+      },
+    );
   }
 }
