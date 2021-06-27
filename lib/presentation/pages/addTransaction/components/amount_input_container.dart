@@ -14,16 +14,7 @@ import '../../../../models/constants.dart';
 import 'currency_input_formatter.dart';
 
 class AmountInputContainer extends HookWidget {
-  // Create number controller
-  /// This [TextFormField] handles the amount selected while providing
-  /// an intuitive experience to the user, who does not need to manually
-  /// separators and currencies.
-  /// The length is limited by a [LengthLimitingTextInputFormatter] to
-  /// [state.amountLength] which is equivalent to a maximal value of
-  /// 999.999.999,99 €.
-  /// The currency format is handled by [CurrencyInputFormatter].
-  /// [onTap()] resets the value to a chosen default value.
-
+  //TODO: Extract Container logic so that it is self-sufficient
   const AmountInputContainer({
     Key? key,
   }) : super(key: key);
@@ -52,7 +43,7 @@ class AmountInputContainer extends HookWidget {
     isPositive.value = !isPositive.value;
     final String newAmount =
         isPositive.value ? _removeMinusSign(controller!) : _addMinusSign(controller!);
-    _onAmountChange(context, _removeSymbol(newAmount));
+    changeAmount(context, newAmount);
   }
 
   String _addMinusSign(TextEditingController controller) => "-${controller.text}";
@@ -96,42 +87,38 @@ class AmountInputContainer extends HookWidget {
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
-        return Container(
-            alignment: Alignment.centerRight,
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: "",
-                        enabledBorder: OutlineInputBorder(),
-                      ),
-                      keyboardType: TextInputType.number,
-                      controller: _controller,
-                      inputFormatters: [
-                        CurrencyInputFormatter(Constants.CURRENCY_FORMAT, _isPositive.value),
-                      ],
-                      textInputAction: TextInputAction.done,
-                      textAlign: TextAlign.right,
-                      style:
-                          _isPositive.value ? _positiveAmountTextStyle : _negativeAmountTextStyle,
-                      validator: (_) => validateAmount(context),
-                      onChanged: (value) => changeAmount(context, value),
-                      onTap: () => changeAmount(context, _zero)),
-                ),
-                Switch(
-                  value: _isPositive.value,
-                  onChanged: (_) => toggleSwitch(context, _controller, _isPositive),
-                  activeTrackColor: Constants.GREEN_COLOR,
-                  activeColor: Colors.grey[300],
-                  activeThumbImage: const AssetImage("assets/plus.png"),
-                  inactiveThumbImage: const AssetImage("assets/minus.png"),
-                  inactiveTrackColor: Constants.RED_COLOR,
-                  inactiveThumbColor: Colors.grey[300],
-                )
-              ],
-            ));
+        return Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                  decoration: const InputDecoration(
+                    hintText: "",
+                    enabledBorder: OutlineInputBorder(),
+                  ),
+                  keyboardType: TextInputType.number,
+                  controller: _controller,
+                  inputFormatters: [
+                    CurrencyInputFormatter(Constants.CURRENCY_FORMAT, _isPositive.value),
+                  ],
+                  textInputAction: TextInputAction.done,
+                  textAlign: TextAlign.right,
+                  style: _isPositive.value ? _positiveAmountTextStyle : _negativeAmountTextStyle,
+                  validator: (_) => validateAmount(context),
+                  onChanged: (value) => changeAmount(context, value),
+                  onTap: () => changeAmount(context, _zero)),
+            ),
+            Switch(
+              value: _isPositive.value,
+              onChanged: (_) => toggleSwitch(context, _controller, _isPositive),
+              activeTrackColor: Constants.GREEN_COLOR,
+              activeColor: Colors.grey[300],
+              activeThumbImage: const AssetImage("assets/plus.png"),
+              inactiveThumbImage: const AssetImage("assets/minus.png"),
+              inactiveTrackColor: Constants.RED_COLOR,
+              inactiveThumbColor: Colors.grey[300],
+            )
+          ],
+        );
       },
     );
   }

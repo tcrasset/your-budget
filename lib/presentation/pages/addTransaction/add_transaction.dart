@@ -73,7 +73,10 @@ class AddTransactionPage extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          const AmountInputContainer(),
+                          Container(
+                              alignment: Alignment.centerRight,
+                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                              child: const AmountInputContainer()),
                           const PayeeField(),
                           const AccountField(),
                           const SubcategoryField(),
