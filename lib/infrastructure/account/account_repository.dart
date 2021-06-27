@@ -48,6 +48,24 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
+  Future<Either<ValueFailure, Account>> get(int accountId) async {
+    try {
+      final rawAccount = await database!.query(
+        DatabaseConstants.moneyTransactionTable,
+        where: '${DatabaseConstants.ACCOUNT_ID} = ?',
+        whereArgs: [accountId],
+      );
+      final AccountDTO accountDTO = AccountDTO.fromJson(rawAccount.first);
+      final Account account = accountDTO.toDomain();
+      return right(account);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    } catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<ValueFailure, List<Account>>> getAllAccounts() async {
     try {
       const sql = """

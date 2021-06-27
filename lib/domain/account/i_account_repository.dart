@@ -11,6 +11,7 @@ abstract class IAccountRepository {
   Future<Either<ValueFailure, int>> create(Account account);
   // Future<Either<ValueFailure, Unit>> update(NewAccount account);
   // Future<Either<ValueFailure, Unit>> delete(NewAccount account);
+  Future<Either<ValueFailure, Account>> get(int accountId);
   Future<Either<ValueFailure, List<Account>>> getAllAccounts();
   Stream<Either<ValueFailure<dynamic>, List<Account>>> watchAllAccounts();
   Future<Either<ValueFailure, int?>> count();
