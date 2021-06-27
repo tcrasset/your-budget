@@ -22,7 +22,7 @@ import 'presentation/pages/showTransactions/show_transaction_page.dart';
 import 'waiting_screen.dart';
 
 Future<void> main() async {
-  Bloc.observer = SimpleBlocObserver();
+  // Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
   runApp(MyBudget());
@@ -32,7 +32,7 @@ class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
+      // ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
       // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
       ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
       ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
@@ -49,8 +49,8 @@ class HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   final List<Widget> _tabs = [
-    ChangeNotifierProvider(
-        create: (_) => BudgetPageState(), child: const BudgetPage(title: 'Bugdet Page')),
+    // ChangeNotifierProvider(
+    //     create: (_) => BudgetPageState(), child: const BudgetPage(title: 'Bugdet Page')),
     const AddAccountPage(title: 'Accounts'),
     AddTransactionPage(),
     const ShowTransactionPage(title: "Transactions")
@@ -64,40 +64,38 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AppState appState = Provider.of<AppState>(context);
-    if (appState.allCategories.isNotEmpty) {
-      return MaterialApp(
-        theme: ThemeData(
-          // Define the default brightness and colors.
-          brightness: Brightness.light,
-          primaryColor: Constants.PRIMARY_COLOR,
-          accentColor: Constants.SECONDARY_COLOR,
+    return MaterialApp(
+      theme: ThemeData(
+        // Define the default brightness and colors.
+        brightness: Brightness.light,
+        primaryColor: Constants.PRIMARY_COLOR,
+        accentColor: Constants.SECONDARY_COLOR,
+      ),
+      home: Scaffold(
+        body: _tabs[_currentTab],
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentTab,
+          unselectedItemColor: Colors.grey[500],
+          onTap: _onItemTapped,
+          items: [
+            // const BottomNavigationBarItem(
+            //   icon: FaIcon(Constants.BUDGET_ICON),
+            //   label: "Budget",
+            // ),
+            const BottomNavigationBarItem(
+              icon: FaIcon(Constants.ACCOUNT_ICON),
+              label: "Accounts",
+            ),
+            const BottomNavigationBarItem(
+                icon: FaIcon(Constants.ADD_TRANSACTION_ICON), label: "Add transaction"),
+            const BottomNavigationBarItem(
+                icon: FaIcon(Constants.ALLTRANSACTION_ICON), label: "Transactions"),
+          ],
         ),
-        home: Scaffold(
-          body: _tabs[_currentTab],
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentTab,
-            unselectedItemColor: Colors.grey[500],
-            onTap: _onItemTapped,
-            items: [
-              const BottomNavigationBarItem(
-                icon: FaIcon(Constants.BUDGET_ICON),
-                label: "Budget",
-              ),
-              const BottomNavigationBarItem(
-                icon: FaIcon(Constants.ACCOUNT_ICON),
-                label: "Accounts",
-              ),
-              const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON), label: "Add transaction"),
-              const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ALLTRANSACTION_ICON), label: "Transactions"),
-            ],
-          ),
-        ),
-      );
-    }
-    return const WaitingScreen();
+      ),
+    );
+
+    // return const WaitingScreen();
   }
 }

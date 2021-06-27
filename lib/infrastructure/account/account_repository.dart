@@ -58,7 +58,7 @@ class SQFliteAccountRepository implements IAccountRepository {
       final data = await database!.rawQuery(sql);
       final List<Account> accounts = [];
       for (final rawAccount in data) {
-        final AccountDTO accountDTO = AccountDTO.fromSQL(rawAccount);
+        final AccountDTO accountDTO = AccountDTO.fromJson(rawAccount);
         accounts.add(accountDTO.toDomain());
       }
 

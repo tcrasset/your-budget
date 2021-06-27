@@ -6,6 +6,8 @@ import 'package:jiffy/jiffy.dart';
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 
+T? ignore<T>(dynamic _) => null;
+
 ///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
 ///and the current date
 DateTime getMaxBudgetDate() {

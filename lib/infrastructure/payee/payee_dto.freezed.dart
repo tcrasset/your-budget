@@ -21,7 +21,8 @@ class _$PayeeDTOTearOff {
   const _$PayeeDTOTearOff();
 
   _PayeeDTO call(
-      {@JsonKey(ignore: true) required String id, required String name}) {
+      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
+      required String name}) {
     return _PayeeDTO(
       id: id,
       name: name,
@@ -38,7 +39,7 @@ const $PayeeDTO = _$PayeeDTOTearOff();
 
 /// @nodoc
 mixin _$PayeeDTO {
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get id =>
       throw _privateConstructorUsedError; //Do not use id in database
   String get name => throw _privateConstructorUsedError;
@@ -53,7 +54,8 @@ mixin _$PayeeDTO {
 abstract class $PayeeDTOCopyWith<$Res> {
   factory $PayeeDTOCopyWith(PayeeDTO value, $Res Function(PayeeDTO) then) =
       _$PayeeDTOCopyWithImpl<$Res>;
-  $Res call({@JsonKey(ignore: true) String id, String name});
+  $Res call(
+      {@JsonKey(toJson: ignore, includeIfNull: false) String id, String name});
 }
 
 /// @nodoc
@@ -87,7 +89,8 @@ abstract class _$PayeeDTOCopyWith<$Res> implements $PayeeDTOCopyWith<$Res> {
   factory _$PayeeDTOCopyWith(_PayeeDTO value, $Res Function(_PayeeDTO) then) =
       __$PayeeDTOCopyWithImpl<$Res>;
   @override
-  $Res call({@JsonKey(ignore: true) String id, String name});
+  $Res call(
+      {@JsonKey(toJson: ignore, includeIfNull: false) String id, String name});
 }
 
 /// @nodoc
@@ -121,14 +124,15 @@ class __$PayeeDTOCopyWithImpl<$Res> extends _$PayeeDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PayeeDTO extends _PayeeDTO {
   const _$_PayeeDTO(
-      {@JsonKey(ignore: true) required this.id, required this.name})
+      {@JsonKey(toJson: ignore, includeIfNull: false) required this.id,
+      required this.name})
       : super._();
 
   factory _$_PayeeDTO.fromJson(Map<String, dynamic> json) =>
       _$_$_PayeeDTOFromJson(json);
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: ignore, includeIfNull: false)
   final String id;
   @override //Do not use id in database
   final String name;
@@ -167,14 +171,14 @@ class _$_PayeeDTO extends _PayeeDTO {
 
 abstract class _PayeeDTO extends PayeeDTO {
   const factory _PayeeDTO(
-      {@JsonKey(ignore: true) required String id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
       required String name}) = _$_PayeeDTO;
   const _PayeeDTO._() : super._();
 
   factory _PayeeDTO.fromJson(Map<String, dynamic> json) = _$_PayeeDTO.fromJson;
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
   String get name => throw _privateConstructorUsedError;

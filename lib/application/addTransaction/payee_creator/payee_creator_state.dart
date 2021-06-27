@@ -1,7 +1,7 @@
 part of 'payee_creator_bloc.dart';
 
 @freezed
-abstract class PayeeCreatorState with _$PayeeCreatorState {
+class PayeeCreatorState with _$PayeeCreatorState {
   const factory PayeeCreatorState({
     required Payee payee,
     required bool showErrorMessages,

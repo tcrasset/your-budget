@@ -44,11 +44,15 @@ class AccountCreator {
   Future<Either<ValueFailure, Unit>> _createStartingMoneyTransaction(
       int accountId, Amount balance) async {
 //Create starting money transaction
+//TODO: Use real names
     final MoneyTransaction transaction = MoneyTransaction(
       id: UniqueId(),
       subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
+      subcatName: Name(""),
       payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
+      payeeName: Name(""),
       accountID: UniqueId.fromUniqueInt(accountId),
+      accountName: Name(""),
       amount: balance,
       memo: Name("Starting balance"),
       date: DateTime.now(),

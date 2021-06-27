@@ -21,7 +21,7 @@ class _$MoneyTransactionDTOTearOff {
   const _$MoneyTransactionDTOTearOff();
 
   _TransactionDTO call(
-      {@JsonKey(ignore: true) String? id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
       required String subcatID,
       required String subcatName,
       required String payeeID,
@@ -55,8 +55,8 @@ const $MoneyTransactionDTO = _$MoneyTransactionDTOTearOff();
 
 /// @nodoc
 mixin _$MoneyTransactionDTO {
-  @JsonKey(ignore: true)
-  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get id => throw _privateConstructorUsedError;
   String get subcatID => throw _privateConstructorUsedError;
   String get subcatName => throw _privateConstructorUsedError;
   String get payeeID => throw _privateConstructorUsedError;
@@ -79,7 +79,7 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
           MoneyTransactionDTO value, $Res Function(MoneyTransactionDTO) then) =
       _$MoneyTransactionDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(ignore: true) String? id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) String id,
       String subcatID,
       String subcatName,
       String payeeID,
@@ -117,7 +117,7 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ abstract class _$TransactionDTOCopyWith<$Res>
       __$TransactionDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(ignore: true) String? id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) String id,
       String subcatID,
       String subcatName,
       String payeeID,
@@ -206,7 +206,7 @@ class __$TransactionDTOCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
@@ -251,7 +251,7 @@ class __$TransactionDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TransactionDTO extends _TransactionDTO {
   const _$_TransactionDTO(
-      {@JsonKey(ignore: true) this.id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required this.id,
       required this.subcatID,
       required this.subcatName,
       required this.payeeID,
@@ -267,8 +267,8 @@ class _$_TransactionDTO extends _TransactionDTO {
       _$_$_TransactionDTOFromJson(json);
 
   @override
-  @JsonKey(ignore: true)
-  final String? id;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final String id;
   @override
   final String subcatID;
   @override
@@ -355,7 +355,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
 abstract class _TransactionDTO extends MoneyTransactionDTO {
   const factory _TransactionDTO(
-      {@JsonKey(ignore: true) String? id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
       required String subcatID,
       required String subcatName,
       required String payeeID,
@@ -371,8 +371,8 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       _$_TransactionDTO.fromJson;
 
   @override
-  @JsonKey(ignore: true)
-  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get id => throw _privateConstructorUsedError;
   @override
   String get subcatID => throw _privateConstructorUsedError;
   @override

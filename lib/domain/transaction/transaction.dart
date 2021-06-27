@@ -1,10 +1,6 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:meta/meta.dart';
 
 // Project imports:
 import 'package:your_budget/domain/core/amount.dart';

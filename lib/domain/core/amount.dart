@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:your_budget/models/constants.dart';
@@ -21,25 +22,35 @@ class Amount extends ValueObject<double> {
 }
 
 Either<ValueFailure<String>, double> _validateAmount(String input) {
+  if (input == "") {
+    return left(ValueFailure<String>.invalidAmount(failedValue: input));
+  }
+
+  final double amount = _formatToCurrency(input);
+
+  if (amount >= Amount.maxValue) {
+    return left(ValueFailure<String>.tooBigAmount(failedValue: input));
+  } else {
+    return right(amount);
+  }
+}
+
+double _formatToCurrency(String input) {
   final bool isNegative = input.contains("-");
   final String absoluteInput = input.replaceAll("-", "");
+
   num? tryParsedAmount;
   double amount;
-
   try {
     tryParsedAmount = Constants.CURRENCY_FORMAT.parse(absoluteInput); //Can't parse negative amounts
   } on FormatException catch (e) {
     print(e);
   } finally {
+    debugPrint(input);
+    debugPrint(tryParsedAmount?.toString());
+    debugPrint(absoluteInput);
     amount = double.tryParse(tryParsedAmount?.toString() ?? absoluteInput)!;
     if (isNegative) amount = -amount;
   }
-
-  if (amount == null) {
-    return left(ValueFailure<String>.invalidAmount(failedValue: input));
-  } else if (amount >= Amount.maxValue) {
-    return left(ValueFailure<String>.tooBigAmount(failedValue: input));
-  } else {
-    return right(amount);
-  }
+  return amount;
 }

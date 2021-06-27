@@ -50,7 +50,7 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
         }
       },
       saved: (e) async* {
-        Either<ValueFailure, Unit> failureOrSuccess;
+        Either<ValueFailure, Unit>? failureOrSuccess;
 
         yield state.copyWith(isSaving: true);
 

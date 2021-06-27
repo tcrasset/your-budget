@@ -28,7 +28,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
       initialized: (e) async* {
         yield e.initialNameOption.fold(
           () => /*No initial name*/ state,
-          ((initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName))) as PayeeCreatorState Function(Name),
+          (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
         );
       },
       nameChanged: (e) async* {

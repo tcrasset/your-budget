@@ -6,6 +6,7 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/models/utils.dart';
 
 part 'transaction_dto.freezed.dart';
 part 'transaction_dto.g.dart';
@@ -15,7 +16,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const MoneyTransactionDTO._();
 
   const factory MoneyTransactionDTO({
-    @JsonKey(ignore: true) String? id,
+    @JsonKey(toJson: ignore, includeIfNull: false) required String id,
     required String subcatID,
     required String subcatName,
     required String payeeID,
@@ -44,7 +45,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
 
   MoneyTransaction toDomain() {
     return MoneyTransaction(
-      id: UniqueId.fromUniqueString(id!),
+      id: UniqueId.fromUniqueString(id),
       subcatID: UniqueId.fromUniqueString(subcatID),
       subcatName: Name(subcatName),
       payeeID: UniqueId.fromUniqueString(payeeID),

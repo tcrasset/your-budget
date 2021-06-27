@@ -1,7 +1,7 @@
 part of 'transaction_creator_bloc.dart';
 
 @freezed
-abstract class TransactionCreatorState with _$TransactionCreatorState {
+class TransactionCreatorState with _$TransactionCreatorState {
   const factory TransactionCreatorState({
     required MoneyTransaction moneyTransaction,
     required bool showErrorMessages,

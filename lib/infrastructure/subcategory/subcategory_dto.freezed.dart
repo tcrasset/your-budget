@@ -21,11 +21,11 @@ class _$SubcategoryDTOTearOff {
   const _$SubcategoryDTOTearOff();
 
   _SubcategoryDTO call(
-      {@JsonKey(ignore: true) required String id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
       required String categoryID,
       required String name,
-      required double budgeted = 0.00,
-      required double available = 0.00}) {
+      double budgeted = 0.00,
+      double available = 0.00}) {
     return _SubcategoryDTO(
       id: id,
       categoryID: categoryID,
@@ -45,7 +45,7 @@ const $SubcategoryDTO = _$SubcategoryDTOTearOff();
 
 /// @nodoc
 mixin _$SubcategoryDTO {
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get id =>
       throw _privateConstructorUsedError; //Do not use id in database
   String get categoryID => throw _privateConstructorUsedError;
@@ -65,7 +65,7 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
           SubcategoryDTO value, $Res Function(SubcategoryDTO) then) =
       _$SubcategoryDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(ignore: true) String id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) String id,
       String categoryID,
       String name,
       double budgeted,
@@ -122,7 +122,7 @@ abstract class _$SubcategoryDTOCopyWith<$Res>
       __$SubcategoryDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(ignore: true) String id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) String id,
       String categoryID,
       String name,
       double budgeted,
@@ -177,18 +177,18 @@ class __$SubcategoryDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SubcategoryDTO extends _SubcategoryDTO {
   const _$_SubcategoryDTO(
-      {@JsonKey(ignore: true) required this.id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required this.id,
       required this.categoryID,
       required this.name,
-      required this.budgeted = 0.00,
-      required this.available = 0.00})
+      this.budgeted = 0.00,
+      this.available = 0.00})
       : super._();
 
   factory _$_SubcategoryDTO.fromJson(Map<String, dynamic> json) =>
       _$_$_SubcategoryDTOFromJson(json);
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: ignore, includeIfNull: false)
   final String id;
   @override //Do not use id in database
   final String categoryID;
@@ -247,18 +247,18 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
 
 abstract class _SubcategoryDTO extends SubcategoryDTO {
   const factory _SubcategoryDTO(
-      {@JsonKey(ignore: true) required String id,
+      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
       required String categoryID,
       required String name,
-      required double budgeted,
-      required double available}) = _$_SubcategoryDTO;
+      double budgeted,
+      double available}) = _$_SubcategoryDTO;
   const _SubcategoryDTO._() : super._();
 
   factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) =
       _$_SubcategoryDTO.fromJson;
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
   String get categoryID => throw _privateConstructorUsedError;

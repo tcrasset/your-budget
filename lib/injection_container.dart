@@ -30,7 +30,7 @@ Future<void> init() async {
   sl.registerSingleton<ISubcategoryRepository>(
       SQFliteSubcategoryRepository(database: sl<Database>()));
 
-  final AppState appState = AppState(queryContext: sl());
-  await appState.loadStateFromDatabase();
-  sl.registerLazySingleton(() => appState);
+  // final AppState appState = AppState(queryContext: sl());
+  // await appState.loadStateFromDatabase();
+  // sl.registerLazySingleton(() => appState);
 }

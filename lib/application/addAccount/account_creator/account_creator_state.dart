@@ -1,7 +1,7 @@
 part of 'account_creator_bloc.dart';
 
 @freezed
-abstract class AccountCreatorState with _$AccountCreatorState {
+class AccountCreatorState with _$AccountCreatorState {
   const factory AccountCreatorState({
     /*required*/ required Account account,
     /*required*/ required bool showErrorMessages,
