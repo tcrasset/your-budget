@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -10,11 +11,12 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import '../../../models/constants.dart';
 import 'components/account_field.dart';
-import 'components/amount_input_container.dart';
+import 'components/amount_input_row.dart';
 import 'components/date_field.dart';
 import 'components/memo_field.dart';
 import 'components/payee_field.dart';
@@ -76,7 +78,10 @@ class AddTransactionPage extends StatelessWidget {
                           Container(
                               alignment: Alignment.centerRight,
                               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: const AmountInputContainer()),
+                              child: const AmountInputRow(
+                                onAmountChange: _onAmountChange,
+                                validateAmount: _validateAmount,
+                              )),
                           const PayeeField(),
                           const AccountField(),
                           const SubcategoryField(),
@@ -98,4 +103,25 @@ class AddTransactionPage extends StatelessWidget {
       ),
     );
   }
+}
+
+void _onAmountChange(BuildContext context, String value) =>
+    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(
+          value,
+        ));
+
+String? _validateAmount(BuildContext context) =>
+    context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
+          (f) => _failAccountClosure(f),
+          (_) => null,
+        );
+
+String? _failAccountClosure(ValueFailure f) {
+  final result = f.maybeMap(
+    tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
+    invalidAmount: (_) => "Amount is invalid. Use only numerical characters.",
+    orElse: () => null,
+  );
+
+  return result is String ? result : null;
 }
