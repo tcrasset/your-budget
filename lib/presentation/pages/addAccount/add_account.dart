@@ -12,6 +12,7 @@ import 'package:your_budget/application/addAccount/account_creator/account_creat
 import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'components/account_balance.dart';
 import 'components/account_name.dart';
@@ -33,7 +34,8 @@ class AddAccountPage extends StatelessWidget {
       BlocProvider<AccountCreatorBloc>(
           create: (_) => AccountCreatorBloc(
               accountRepository: GetIt.instance<IAccountRepository>(),
-              transactionRepository: GetIt.instance<ITransactionRepository>())
+              transactionRepository: GetIt.instance<ITransactionRepository>(),
+              subcategoryRepository: GetIt.instance<ISubcategoryRepository>())
             ..add(const AccountCreatorEvent.initialized())),
     ], child: AddAccountPageScaffold());
   }

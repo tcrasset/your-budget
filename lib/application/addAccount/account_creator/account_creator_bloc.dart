@@ -14,6 +14,7 @@ import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 
 part 'account_creator_event.dart';
@@ -23,8 +24,12 @@ part 'account_creator_bloc.freezed.dart';
 class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> {
   final IAccountRepository accountRepository;
   final ITransactionRepository transactionRepository;
-  AccountCreatorBloc({required this.accountRepository, required this.transactionRepository})
-      : super(AccountCreatorState.initial());
+  final ISubcategoryRepository subcategoryRepository;
+  AccountCreatorBloc({
+    required this.accountRepository,
+    required this.transactionRepository,
+    required this.subcategoryRepository,
+  }) : super(AccountCreatorState.initial());
 
   @override
   Stream<AccountCreatorState> mapEventToState(
@@ -59,6 +64,7 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
           failureOrSuccess = await AccountCreator(
             accountRepository: accountRepository,
             transactionRepository: transactionRepository,
+            subcategoryRepository: subcategoryRepository,
           ).create(state.account);
         }
 
