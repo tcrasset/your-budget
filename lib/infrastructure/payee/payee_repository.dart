@@ -78,7 +78,7 @@ class SQFlitePayeeRepository implements IPayeeRepository {
     try {
       const sql = """
         SELECT * FROM ${DatabaseConstants.payeeTable}
-        WHERE ${DatabaseConstants.PAYEE_NAME}  = ${DatabaseConstants.TO_BE_BUDGETED};
+        WHERE ${DatabaseConstants.PAYEE_NAME}  = '${DatabaseConstants.TO_BE_BUDGETED}';
         """;
 
       final data = await database!.rawQuery(sql);
