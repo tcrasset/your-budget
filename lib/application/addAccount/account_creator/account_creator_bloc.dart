@@ -4,6 +4,7 @@ import 'dart:async';
 // Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -34,20 +35,17 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
         yield state;
       },
       nameChanged: (e) async* {
-        if (e != null) {
-          yield state.copyWith(
-            account: state.account.copyWith(name: Name(e.name)),
-            saveFailureOrSuccessOption: none(),
-          );
-        }
+        yield state.copyWith(
+          account: state.account.copyWith(name: Name(e.name)),
+          saveFailureOrSuccessOption: none(),
+        );
       },
       balanceChanged: (e) async* {
-        if (e != null) {
-          yield state.copyWith(
-            account: state.account.copyWith(balance: Amount(e.balance)),
-            saveFailureOrSuccessOption: none(),
-          );
-        }
+        debugPrint("Bloc: ${e.balance.toString()}");
+        yield state.copyWith(
+          account: state.account.copyWith(balance: Amount(e.balance)),
+          saveFailureOrSuccessOption: none(),
+        );
       },
       saved: (e) async* {
         Either<ValueFailure, Unit>? failureOrSuccess;

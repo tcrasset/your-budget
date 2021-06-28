@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -21,6 +22,8 @@ final sl = GetIt.instance;
 Future<void> init() async {
   final DatabaseProvider dbProvider = DatabaseProvider();
   final Database database = await (dbProvider.open() as Future<Database>);
+
+  // debugDatabase(database);
   sl.registerSingleton<Database>(database);
   sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
   sl.registerSingleton<ITransactionRepository>(
@@ -33,4 +36,10 @@ Future<void> init() async {
   // final AppState appState = AppState(queryContext: sl());
   // await appState.loadStateFromDatabase();
   // sl.registerLazySingleton(() => appState);
+}
+
+Future<void> debugDatabase(Database database) async {
+  (await database.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+    debugPrint(row.values.toString());
+  });
 }
