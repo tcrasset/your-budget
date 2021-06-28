@@ -16,12 +16,11 @@ import 'currency_input_formatter.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class CurrencyOperations {
-  static String addMinusSign(TextEditingController controller) => "-${controller.text}";
-  static String removeMinusSign(TextEditingController controller) =>
-      controller.text.replaceAll("-", "");
-  static String removeSymbol(String value) =>
-      value.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "");
-  static String formatAmount(double value) => Constants.CURRENCY_FORMAT.format(value).trim();
+  static String addMinusSign(String amount) => "-$amount";
+  static String removeMinusSign(String amount) => amount.replaceAll("-", "").trim();
+  static String removeSymbol(String amount) =>
+      amount.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "").trim();
+  static String formatAmount(double amount) => Constants.CURRENCY_FORMAT.format(amount).trim();
   static final zero = Constants.CURRENCY_FORMAT.format(0);
 }
 
@@ -105,8 +104,8 @@ class AmountSwitch extends StatelessWidget {
     debugPrint("Toggling switch");
     isPositive.value = !isPositive.value;
     final String newAmount = isPositive.value
-        ? CurrencyOperations.removeMinusSign(controller!)
-        : CurrencyOperations.addMinusSign(controller!);
+        ? CurrencyOperations.removeMinusSign(controller!.text)
+        : CurrencyOperations.addMinusSign(controller!.text);
     onAmountChange(context, newAmount);
   }
 
