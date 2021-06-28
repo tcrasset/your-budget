@@ -8,7 +8,7 @@ part of 'transaction_dto.dart';
 
 _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
   return _$_TransactionDTO(
-    id: json['id'] as String,
+    id: convertToString(json['id'] as int),
     subcatID: json['subcatID'] as String,
     subcatName: json['subcatName'] as String,
     payeeID: json['payeeID'] as String,
@@ -32,11 +32,11 @@ Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) {
 
   writeNotNull('id', ignore(instance.id));
   val['subcatID'] = instance.subcatID;
-  val['subcatName'] = instance.subcatName;
+  writeNotNull('subcatName', ignore(instance.subcatName));
   val['payeeID'] = instance.payeeID;
-  val['payeeName'] = instance.payeeName;
+  writeNotNull('payeeName', ignore(instance.payeeName));
   val['accountID'] = instance.accountID;
-  val['accountName'] = instance.accountName;
+  writeNotNull('accountName', ignore(instance.accountName));
   val['amount'] = instance.amount;
   val['memo'] = instance.memo;
   val['dateInMillisecondsSinceEpoch'] = instance.dateInMillisecondsSinceEpoch;

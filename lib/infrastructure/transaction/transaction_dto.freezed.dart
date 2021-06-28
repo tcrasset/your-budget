@@ -21,13 +21,17 @@ class _$MoneyTransactionDTOTearOff {
   const _$MoneyTransactionDTOTearOff();
 
   _TransactionDTO call(
-      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
+      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+          required String id,
       required String subcatID,
-      required String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String subcatName,
       required String payeeID,
-      required String payeeName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String payeeName,
       required String accountID,
-      required String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String accountName,
       required double amount,
       required String memo,
       required int dateInMillisecondsSinceEpoch}) {
@@ -55,13 +59,16 @@ const $MoneyTransactionDTO = _$MoneyTransactionDTOTearOff();
 
 /// @nodoc
 mixin _$MoneyTransactionDTO {
-  @JsonKey(toJson: ignore, includeIfNull: false)
+  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   String get subcatID => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get subcatName => throw _privateConstructorUsedError;
   String get payeeID => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get payeeName => throw _privateConstructorUsedError;
   String get accountID => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get accountName => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
   String get memo => throw _privateConstructorUsedError;
@@ -79,13 +86,17 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
           MoneyTransactionDTO value, $Res Function(MoneyTransactionDTO) then) =
       _$MoneyTransactionDTOCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(toJson: ignore, includeIfNull: false) String id,
+      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+          String id,
       String subcatID,
-      String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String subcatName,
       String payeeID,
-      String payeeName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String payeeName,
       String accountID,
-      String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String accountName,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -166,13 +177,17 @@ abstract class _$TransactionDTOCopyWith<$Res>
       __$TransactionDTOCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(toJson: ignore, includeIfNull: false) String id,
+      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+          String id,
       String subcatID,
-      String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String subcatName,
       String payeeID,
-      String payeeName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String payeeName,
       String accountID,
-      String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String accountName,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -251,13 +266,17 @@ class __$TransactionDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TransactionDTO extends _TransactionDTO {
   const _$_TransactionDTO(
-      {@JsonKey(toJson: ignore, includeIfNull: false) required this.id,
+      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+          required this.id,
       required this.subcatID,
-      required this.subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.subcatName,
       required this.payeeID,
-      required this.payeeName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.payeeName,
       required this.accountID,
-      required this.accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.accountName,
       required this.amount,
       required this.memo,
       required this.dateInMillisecondsSinceEpoch})
@@ -267,19 +286,22 @@ class _$_TransactionDTO extends _TransactionDTO {
       _$_$_TransactionDTOFromJson(json);
 
   @override
-  @JsonKey(toJson: ignore, includeIfNull: false)
+  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   final String id;
   @override
   final String subcatID;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
   final String subcatName;
   @override
   final String payeeID;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
   final String payeeName;
   @override
   final String accountID;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
   final String accountName;
   @override
   final double amount;
@@ -355,13 +377,17 @@ class _$_TransactionDTO extends _TransactionDTO {
 
 abstract class _TransactionDTO extends MoneyTransactionDTO {
   const factory _TransactionDTO(
-      {@JsonKey(toJson: ignore, includeIfNull: false) required String id,
+      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+          required String id,
       required String subcatID,
-      required String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String subcatName,
       required String payeeID,
-      required String payeeName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String payeeName,
       required String accountID,
-      required String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String accountName,
       required double amount,
       required String memo,
       required int dateInMillisecondsSinceEpoch}) = _$_TransactionDTO;
@@ -371,19 +397,22 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       _$_TransactionDTO.fromJson;
 
   @override
-  @JsonKey(toJson: ignore, includeIfNull: false)
+  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   @override
   String get subcatID => throw _privateConstructorUsedError;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get subcatName => throw _privateConstructorUsedError;
   @override
   String get payeeID => throw _privateConstructorUsedError;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get payeeName => throw _privateConstructorUsedError;
   @override
   String get accountID => throw _privateConstructorUsedError;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
   String get accountName => throw _privateConstructorUsedError;
   @override
   double get amount => throw _privateConstructorUsedError;

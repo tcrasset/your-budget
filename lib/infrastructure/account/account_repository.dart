@@ -51,7 +51,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   Future<Either<ValueFailure, Account>> get(int accountId) async {
     try {
       final rawAccount = await database!.query(
-        DatabaseConstants.moneyTransactionTable,
+        DatabaseConstants.accountTable,
         where: '${DatabaseConstants.ACCOUNT_ID} = ?',
         whereArgs: [accountId],
       );

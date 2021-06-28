@@ -8,7 +8,7 @@ part of 'payee_dto.dart';
 
 _$_PayeeDTO _$_$_PayeeDTOFromJson(Map<String, dynamic> json) {
   return _$_PayeeDTO(
-    id: json['id'] as String,
+    id: convertToString(json['id'] as int),
     name: json['name'] as String,
   );
 }
