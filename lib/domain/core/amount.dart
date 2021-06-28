@@ -1,6 +1,8 @@
+// Flutter imports:
+import 'package:flutter/material.dart';
+
 // Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:your_budget/models/constants.dart';

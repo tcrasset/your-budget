@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:collection/collection.dart' show IterableExtension, UnmodifiableListView;
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:collection/collection.dart' show IterableExtension, UnmodifiableListView;
 import 'package:provider/provider.dart';
 
 // Project imports:

@@ -1,12 +1,9 @@
-// // Dart imports:
 // import 'dart:collection';
 
-// // Package imports:
 // import 'package:flutter_test/flutter_test.dart';
 // import 'package:jiffy/jiffy.dart';
 // import 'package:mockito/mockito.dart';
 
-// // Project imports:
 // import 'package:your_budget/appstate.dart';
 // import 'package:your_budget/models/account.dart';
 // import 'package:your_budget/models/budget.dart';

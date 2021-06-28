@@ -1,8 +1,6 @@
-// // Package imports:
 // import 'package:flutter_test/flutter_test.dart';
 // import 'package:mockito/mockito.dart';
 
-// // Project imports:
 // import 'package:your_budget/models/account.dart';
 // import 'package:your_budget/models/account_list.dart';
 // import 'package:your_budget/models/queries.dart';

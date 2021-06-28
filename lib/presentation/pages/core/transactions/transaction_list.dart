@@ -3,9 +3,9 @@ import 'dart:collection';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:your_budget/models/categories.dart';
 
 // Project imports:
+import 'package:your_budget/models/categories.dart';
 import '../../../../appstate.dart';
 import '../../../../models/account.dart';
 import '../../../../models/money_transaction.dart';
