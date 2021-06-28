@@ -102,4 +102,5 @@ class DatabaseConstants {
   static const String STARTING_BUDGET_DATE = "STARTING_BUDGET_DATE";
   static const String MAX_BUDGET_DATE = "MAX_BUDGET_DATE";
   static const String MOST_RECENT_ACCOUNT = "MOST_RECENT_ACCOUNT";
+  static const String TO_BE_BUDGETED = "To be budgeted";
 }

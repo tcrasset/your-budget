@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -75,6 +76,7 @@ class DatabaseProvider {
     await _createTables(db);
     await _createConstants(db);
     await _createBasicCategories(db);
+    await _populatePayees(db);
   }
 
   /// Creates the table of the database. These are [categoryTable], [subcategoryTable],
@@ -205,6 +207,7 @@ class DatabaseProvider {
       VALUES(?, ?);''';
 
     final List<String> subcategoryNames = [
+      DatabaseConstants.TO_BE_BUDGETED,
       "Rent",
       "Electricity",
       "Water",
@@ -242,6 +245,15 @@ class DatabaseProvider {
 
     ///Save account most recently used.
     db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
+  }
+
+  Future<void> _populatePayees(Database db) async {
+    const String CREATE_PAYEE = '''
+    INSERT INTO ${DatabaseConstants.payeeTable}
+      (${DatabaseConstants.PAYEE_NAME})
+      VALUES(?);''';
+    debugPrint(CREATE_PAYEE);
+    await db.rawInsert(CREATE_PAYEE, [DatabaseConstants.TO_BE_BUDGETED]);
   }
 
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) {

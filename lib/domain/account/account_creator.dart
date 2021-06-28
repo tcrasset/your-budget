@@ -54,7 +54,9 @@ class AccountCreator {
           id: UniqueId(),
           subcatID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_SUBCAT_ID),
           subcatName: Name("ToBeBudgeted"),
-          payee: Payee(id: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID), name: Name("")),
+          payee: Payee(
+              id: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
+              name: Name("ToBeBudgeted")),
           payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
           payeeName: Name("ToBeBudgeted"),
           accountID: account.id,
