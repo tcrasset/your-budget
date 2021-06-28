@@ -86,19 +86,40 @@ class AmountInputRow extends HookWidget {
               changeAmount: changeAmount,
               validateAmount: validateAmount,
             )),
-            Switch(
-              value: _isPositive.value,
-              onChanged: (_) => toggleSwitch(context, _controller, _isPositive),
-              activeTrackColor: Constants.GREEN_COLOR,
-              activeColor: Colors.grey[300],
-              activeThumbImage: const AssetImage("assets/plus.png"),
-              inactiveThumbImage: const AssetImage("assets/minus.png"),
-              inactiveTrackColor: Constants.RED_COLOR,
-              inactiveThumbColor: Colors.grey[300],
+            AmountSwitch(
+              controller: _controller,
+              isPositive: _isPositive,
+              toggleSwitch: toggleSwitch,
             )
           ],
         );
       },
+    );
+  }
+}
+
+class AmountSwitch extends StatelessWidget {
+  final ValueNotifier<bool> isPositive;
+  final TextEditingController controller;
+  final Function(BuildContext, TextEditingController, ValueNotifier<bool>) toggleSwitch;
+  const AmountSwitch({
+    Key? key,
+    required this.controller,
+    required this.isPositive,
+    required this.toggleSwitch,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Switch(
+      value: isPositive.value,
+      onChanged: (_) => toggleSwitch(context, controller, isPositive),
+      activeTrackColor: Constants.GREEN_COLOR,
+      activeColor: Colors.grey[300],
+      activeThumbImage: const AssetImage("assets/plus.png"),
+      inactiveThumbImage: const AssetImage("assets/minus.png"),
+      inactiveTrackColor: Constants.RED_COLOR,
+      inactiveThumbColor: Colors.grey[300],
     );
   }
 }
