@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,8 +8,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
-import 'package:your_budget/domain/core/amount.dart';
-import 'package:your_budget/domain/core/value_failure.dart';
 import '../../../../models/constants.dart';
 import 'currency_input_formatter.dart';
 

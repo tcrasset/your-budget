@@ -9,7 +9,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // Project imports:
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/amount_input_row.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
 
 class AccountBalance extends HookWidget {
   final TextStyle textStyle;
@@ -20,9 +23,7 @@ class AccountBalance extends HookWidget {
   });
 
   void onBalanceChanged(BuildContext context, String value) {
-    context.read<AccountCreatorBloc>().add(AccountCreatorEvent.balanceChanged(
-          value,
-        ));
+    context.read<AccountCreatorBloc>().add(AccountCreatorEvent.balanceChanged(value));
   }
 
   String? _failNameClosure(dynamic f) {
@@ -53,7 +54,8 @@ class AccountBalance extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = useTextEditingController();
+    final TextEditingController _controller =
+        useTextEditingController(text: CurrencyOperations.zero);
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       listenWhen: (p, c) => getBalance(p) != getBalance(c),
@@ -83,8 +85,12 @@ class AccountBalance extends HookWidget {
                     textAlign: TextAlign.center,
                     validator: (_) => validateBalance(context),
                     onChanged: (value) => onBalanceChanged(context, value),
+                    onTap: () => onBalanceChanged(context, CurrencyOperations.zero),
                     keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp("[0-9-.]"))],
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                      CurrencyInputFormatter(Constants.CURRENCY_FORMAT, true)
+                    ],
                     textInputAction: TextInputAction.done,
                   ),
                 )),
@@ -97,5 +103,5 @@ class AccountBalance extends HookWidget {
 
 String? getBalance(AccountCreatorState state) => state.account.balance.value.fold(
       (_) => null,
-      (v) => v.toString(),
+      (v) => CurrencyOperations.formatAmount(v),
     );
