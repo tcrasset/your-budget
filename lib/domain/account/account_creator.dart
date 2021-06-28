@@ -9,6 +9,7 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
@@ -20,11 +21,13 @@ class AccountCreator {
   final IAccountRepository accountRepository;
   final ITransactionRepository transactionRepository;
   final ISubcategoryRepository subcategoryRepository;
+  final IPayeeRepository payeeRepository;
 
   AccountCreator({
     required this.accountRepository,
     required this.transactionRepository,
     required this.subcategoryRepository,
+    required this.payeeRepository,
   });
 
   Future<Either<ValueFailure, Unit>> create(Account account) async {
@@ -52,30 +55,31 @@ class AccountCreator {
     final Either<ValueFailure, Account> failureOrAccount = await accountRepository.get(accountId);
     final Either<ValueFailure, Subcategory> failureOrSubcategory =
         await subcategoryRepository.getToBeBudgetedSubcategory();
-
+    final Either<ValueFailure, Payee> failureOrPayee = await payeeRepository.getToBeBudgetedPayee();
     return failureOrAccount.fold(
       (l) => left(l),
       (account) => failureOrSubcategory.fold(
         (l) => left(l),
-        (subcategory) {
-          final MoneyTransaction transaction = MoneyTransaction(
-            id: UniqueId(),
-            subcatID: subcategory.id,
-            subcatName: subcategory.name,
-            payee: Payee(
-                id: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
-                name: Name("ToBeBudgeted")),
-            payeeID: UniqueId.fromUniqueInt(Constants.UNASSIGNED_PAYEE_ID),
-            payeeName: Name("ToBeBudgeted"),
-            accountID: account.id,
-            accountName: account.name,
-            amount: balance,
-            memo: Name("Starting balance"),
-            date: DateTime.now(),
-          );
+        (subcategory) => failureOrPayee.fold(
+          (l) => left(l),
+          (payee) {
+            final MoneyTransaction transaction = MoneyTransaction(
+              id: UniqueId(),
+              subcatID: subcategory.id,
+              subcatName: subcategory.name,
+              payee: payee,
+              payeeID: payee.id,
+              payeeName: payee.name,
+              accountID: account.id,
+              accountName: account.name,
+              amount: balance,
+              memo: Name("Starting balance"),
+              date: DateTime.now(),
+            );
 
-          return transactionRepository.create(transaction);
-        },
+            return transactionRepository.create(transaction);
+          },
+        ),
       ),
     );
   }
