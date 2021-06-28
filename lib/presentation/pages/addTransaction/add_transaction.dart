@@ -107,7 +107,7 @@ class AddTransactionPage extends StatelessWidget {
 
 void _onAmountChange(BuildContext context, String value) =>
     context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(
-          value,
+          CurrencyOperations.removeSymbol(value),
         ));
 
 String? _validateAmount(BuildContext context) =>

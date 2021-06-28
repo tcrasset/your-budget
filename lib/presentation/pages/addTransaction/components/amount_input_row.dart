@@ -35,22 +35,6 @@ class AmountInputRow extends HookWidget {
     required this.validateAmount,
   }) : super(key: key);
 
-  void changeAmount(BuildContext context, String value) =>
-      onAmountChange(context, CurrencyOperations.removeSymbol(value));
-
-  void toggleSwitch(
-    BuildContext context,
-    TextEditingController? controller,
-    ValueNotifier<bool> isPositive,
-  ) {
-    debugPrint("Toggling switch");
-    isPositive.value = !isPositive.value;
-    final String newAmount = isPositive.value
-        ? CurrencyOperations.removeMinusSign(controller!)
-        : CurrencyOperations.addMinusSign(controller!);
-    changeAmount(context, newAmount);
-  }
-
   @override
   Widget build(BuildContext context) {
     final TextEditingController _controller =
@@ -83,13 +67,14 @@ class AmountInputRow extends HookWidget {
               key: const Key("AmountInput"),
               isPositive: _isPositive,
               controller: _controller,
-              changeAmount: changeAmount,
+              changeAmount: onAmountChange,
               validateAmount: validateAmount,
             )),
             AmountSwitch(
               controller: _controller,
               isPositive: _isPositive,
-              toggleSwitch: toggleSwitch,
+              // toggleSwitch: toggleSwitch,
+              onAmountChange: onAmountChange,
             )
           ],
         );
@@ -101,13 +86,29 @@ class AmountInputRow extends HookWidget {
 class AmountSwitch extends StatelessWidget {
   final ValueNotifier<bool> isPositive;
   final TextEditingController controller;
-  final Function(BuildContext, TextEditingController, ValueNotifier<bool>) toggleSwitch;
+  final void Function(BuildContext, String) onAmountChange;
+
+  // final Function(BuildContext, TextEditingController, ValueNotifier<bool>) toggleSwitch;
   const AmountSwitch({
     Key? key,
     required this.controller,
     required this.isPositive,
-    required this.toggleSwitch,
+    required this.onAmountChange,
+    // required this.toggleSwitch,
   }) : super(key: key);
+
+  void toggleSwitch(
+    BuildContext context,
+    TextEditingController? controller,
+    ValueNotifier<bool> isPositive,
+  ) {
+    debugPrint("Toggling switch");
+    isPositive.value = !isPositive.value;
+    final String newAmount = isPositive.value
+        ? CurrencyOperations.removeMinusSign(controller!)
+        : CurrencyOperations.addMinusSign(controller!);
+    onAmountChange(context, newAmount);
+  }
 
   @override
   Widget build(BuildContext context) {

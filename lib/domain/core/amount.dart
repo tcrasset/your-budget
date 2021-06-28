@@ -49,7 +49,8 @@ double _formatToCurrency(String input) {
     debugPrint(input);
     debugPrint(tryParsedAmount?.toString());
     debugPrint(absoluteInput);
-    amount = double.tryParse(tryParsedAmount?.toString() ?? absoluteInput)!;
+    final String amountInput = tryParsedAmount != null ? tryParsedAmount.toString() : absoluteInput;
+    amount = double.tryParse(amountInput)!;
     if (isNegative) amount = -amount;
   }
   return amount;
