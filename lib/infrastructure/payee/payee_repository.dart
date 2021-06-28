@@ -72,4 +72,22 @@ class SQFlitePayeeRepository implements IPayeeRepository {
   Stream<Either<ValueFailure<dynamic>, List<Payee>>> watchAllPayees() {
     return getAllPayees().asStream();
   }
+
+  @override
+  Future<Either<ValueFailure, Payee>> getToBeBudgetedPayee() async {
+    try {
+      const sql = """
+        SELECT * FROM ${DatabaseConstants.payeeTable}
+        WHERE ${DatabaseConstants.PAYEE_NAME}  = ${DatabaseConstants.TO_BE_BUDGETED};
+        """;
+
+      final data = await database!.rawQuery(sql);
+      final PayeeDTO payeeDTO = PayeeDTO.fromJson(data.first);
+      final Payee payee = payeeDTO.toDomain();
+
+      return right(payee);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
 }
