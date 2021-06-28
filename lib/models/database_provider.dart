@@ -154,32 +154,20 @@ class DatabaseProvider {
   /// Populates the tables of database [db] with the default categories, subcategories and
   /// their budgetValues.
   Future<void> _createBasicCategories(Database db) async {
-    const String CREATE_CATEGORY = '''INSERT INTO ${DatabaseConstants.categoryTable}
-      (${DatabaseConstants.CATEGORY_NAME})
-      VALUES(?);''';
+    final int categoryId = await _populateCategories(db);
+    final List<int> subcategoryIds = await _populateSubcategories(db, categoryId);
+    await _populateBudgetValues(subcategoryIds, db);
+  }
 
-    const String CREATE_SUBCATEGORY = '''INSERT INTO ${DatabaseConstants.subcategoryTable}
-      (${DatabaseConstants.CAT_ID_OUTSIDE},
-      ${DatabaseConstants.SUBCAT_NAME})
-      VALUES(?, ?);''';
-
-    const String CREATE_BUDGETVALUE = '''INSERT INTO ${DatabaseConstants.budgetValueTable}
+  Future<void> _populateBudgetValues(List<int> subcategoryIds, Database db) async {
+    const String CREATE_BUDGETVALUE = '''
+    INSERT INTO ${DatabaseConstants.budgetValueTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
       ${DatabaseConstants.BUDGET_VALUE_BUDGETED},
       ${DatabaseConstants.BUDGET_VALUE_AVAILABLE},
       ${DatabaseConstants.BUDGET_VALUE_YEAR},
       ${DatabaseConstants.BUDGET_VALUE_MONTH})
       VALUES(?, ?, ?, ?, ?);''';
-
-    int categoryId = await db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
-
-    List<String> subcategoryNames = ["Rent", "Electricity", "Water", "Food", "Internet", "Phone"];
-    List<int> subcategoryIds = [];
-    for (int i = 0; i < subcategoryNames.length; i++) {
-      int subcategoryId =
-          await db.rawInsert(CREATE_SUBCATEGORY, [categoryId.toString(), subcategoryNames[i]]);
-      subcategoryIds.add(subcategoryId);
-    }
 
     /// Insert [BudgetValues] corresponding to the subcategories into the data base
     /// for every month of the budget, from the current Date to [MAX_NB_MONTHS_AHEAD]
@@ -188,8 +176,8 @@ class DatabaseProvider {
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
-      for (int subcatId in subcategoryIds) {
+      final DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
+      for (final int subcatId in subcategoryIds) {
         await db.rawInsert(CREATE_BUDGETVALUE, [
           subcatId,
           0.00,
@@ -201,19 +189,53 @@ class DatabaseProvider {
     }
   }
 
+  Future<int> _populateCategories(Database db) async {
+    const String CREATE_CATEGORY = '''
+    INSERT INTO ${DatabaseConstants.categoryTable}
+      (${DatabaseConstants.CATEGORY_NAME})
+      VALUES(?);''';
+    return db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
+  }
+
+  Future<List<int>> _populateSubcategories(Database db, int categoryId) async {
+    const String CREATE_SUBCATEGORY = '''
+    INSERT INTO ${DatabaseConstants.subcategoryTable}
+      (${DatabaseConstants.CAT_ID_OUTSIDE},
+      ${DatabaseConstants.SUBCAT_NAME})
+      VALUES(?, ?);''';
+
+    final List<String> subcategoryNames = [
+      "Rent",
+      "Electricity",
+      "Water",
+      "Food",
+      "Internet",
+      "Phone"
+    ];
+
+    final List<int> subcategoryIds = [];
+    for (int i = 0; i < subcategoryNames.length; i++) {
+      final int subcategoryId =
+          await db.rawInsert(CREATE_SUBCATEGORY, [categoryId.toString(), subcategoryNames[i]]);
+      subcategoryIds.add(subcategoryId);
+    }
+    return subcategoryIds;
+  }
+
   Future<void> _createConstants(Database db) async {
-    const String CREATE_CONSTANT = '''INSERT INTO ${DatabaseConstants.constantsTable}
+    const String CREATE_CONSTANT = '''
+    INSERT INTO ${DatabaseConstants.constantsTable}
       (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
       VALUES(?, ?);''';
 
     /// Create the starting budget date based on the first time the user uses the app
-    String startingDateMillisecondsSinceEpoch =
+    final String startingDateMillisecondsSinceEpoch =
         getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
     db.rawInsert(CREATE_CONSTANT,
         [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch]);
 
     /// Create the maximum budget date based on current date + Constants.MAX_NB_MONTHS_AHEAD
-    String maxBudgetDateMillisecondsSinceEpoch =
+    final String maxBudgetDateMillisecondsSinceEpoch =
         getMaxBudgetDate().millisecondsSinceEpoch.toString();
     db.rawInsert(
         CREATE_CONSTANT, [DatabaseConstants.MAX_BUDGET_DATE, maxBudgetDateMillisecondsSinceEpoch]);
@@ -223,7 +245,8 @@ class DatabaseProvider {
   }
 
   FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) {
-    const String CREATE_CONSTANT = '''INSERT INTO ${DatabaseConstants.constantsTable}
+    const String CREATE_CONSTANT = '''
+    INSERT INTO ${DatabaseConstants.constantsTable}
       (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
       VALUES(?, ?);''';
 
