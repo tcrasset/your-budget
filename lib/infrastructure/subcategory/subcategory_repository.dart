@@ -73,4 +73,22 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
   Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> watchAllSubcategories() {
     return getAllSubcategories().asStream();
   }
+
+  @override
+  Future<Either<ValueFailure, Subcategory>> getToBeBudgetedSubcategory() async {
+    try {
+      const sql = """
+        SELECT * FROM ${DatabaseConstants.subcategoryTable}
+        WHERE ${DatabaseConstants.SUBCAT_NAME}  = ${DatabaseConstants.TO_BE_BUDGETED};
+        """;
+
+      final data = await database!.rawQuery(sql);
+      final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromJson(data.first);
+      final Subcategory subcategory = subcategoryDTO.toDomain();
+
+      return right(subcategory);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
 }

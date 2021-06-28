@@ -12,6 +12,7 @@ abstract class ISubcategoryRepository {
   // Future<Either<ValueFailure, Unit>> update(NewAccount account);
   // Future<Either<ValueFailure, Unit>> delete(NewAccount account);
   Future<Either<ValueFailure, List<Subcategory>>> getAllSubcategories();
+  Future<Either<ValueFailure, Subcategory>> getToBeBudgetedSubcategory();
   Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> watchAllSubcategories();
   Future<Either<ValueFailure, int?>> count();
 }
