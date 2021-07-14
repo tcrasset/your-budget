@@ -51,7 +51,6 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
         );
       },
       balanceChanged: (e) async* {
-        debugPrint("Bloc: ${e.balance.toString()}");
         yield state.copyWith(
           account: state.account.copyWith(balance: Amount(e.balance)),
           saveFailureOrSuccessOption: none(),

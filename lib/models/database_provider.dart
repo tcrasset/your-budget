@@ -254,7 +254,6 @@ class DatabaseProvider {
     INSERT INTO ${DatabaseConstants.payeeTable}
       (${DatabaseConstants.PAYEE_NAME})
       VALUES(?);''';
-    debugPrint(CREATE_PAYEE);
     await db.rawInsert(CREATE_PAYEE, [DatabaseConstants.TO_BE_BUDGETED]);
   }
 

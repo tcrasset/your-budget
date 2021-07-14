@@ -98,7 +98,6 @@ class AmountSwitch extends StatelessWidget {
     TextEditingController? controller,
     ValueNotifier<bool> isPositive,
   ) {
-    debugPrint("Toggling switch");
     isPositive.value = !isPositive.value;
     final String newAmount = isPositive.value
         ? CurrencyOperations.removeMinusSign(controller!.text)
