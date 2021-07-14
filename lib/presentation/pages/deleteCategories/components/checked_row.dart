@@ -44,8 +44,8 @@ class _CheckedRowState extends State<CheckedRow> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      margin: EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
