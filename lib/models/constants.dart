@@ -33,8 +33,11 @@ class Constants {
 
   static const String CURRENCY_SYMBOL = "€";
   // ignore: non_constant_identifier_names
-  static NumberFormat CURRENCY_FORMAT =
-      NumberFormat.currency(locale: 'de', decimalDigits: 2, symbol: CURRENCY_SYMBOL);
+  static NumberFormat CURRENCY_FORMAT = NumberFormat.currency(
+    locale: 'be',
+    decimalDigits: 2,
+    symbol: CURRENCY_SYMBOL,
+  );
 }
 
 class DatabaseConstants {
