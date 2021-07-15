@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
@@ -27,6 +28,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
     @JsonKey(toJson: ignore, includeIfNull: false) required String payeeName,
     required String accountID,
     @JsonKey(toJson: ignore, includeIfNull: false) required String accountName,
+    @JsonKey(toJson: ignore, includeIfNull: false) required double accountBalance,
     required double amount,
     required String memo,
     required int dateInMillisecondsSinceEpoch,
@@ -39,8 +41,9 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       subcatName: transaction.subcatName.getOrCrash(),
       payeeID: transaction.payee.id.getOrCrash(),
       payeeName: transaction.payee.name.getOrCrash(),
-      accountID: transaction.accountID.getOrCrash(),
-      accountName: transaction.accountName.getOrCrash(),
+      accountID: transaction.account.id.getOrCrash(),
+      accountName: transaction.account.name.getOrCrash(),
+      accountBalance: transaction.account.balance.getOrCrash(),
       amount: transaction.amount.getOrCrash(),
       memo: transaction.memo.getOrCrash(),
       dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
@@ -53,8 +56,10 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       subcatID: UniqueId.fromUniqueString(subcatID),
       subcatName: Name(subcatName),
       payee: Payee(id: UniqueId.fromUniqueString(payeeID), name: Name(payeeName)),
-      accountID: UniqueId.fromUniqueString(accountID),
-      accountName: Name(accountName),
+      account: Account(
+          id: UniqueId.fromUniqueString(accountID),
+          name: Name(accountName),
+          balance: Amount(accountBalance.toString())),
       amount: Amount(amount.toString()),
       memo: Name(memo),
       date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),

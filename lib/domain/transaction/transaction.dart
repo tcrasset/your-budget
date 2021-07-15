@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
@@ -23,8 +24,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
     required UniqueId subcatID,
     required Name subcatName,
     required Payee payee,
-    required UniqueId accountID,
-    required Name accountName,
+    required Account account,
     required Amount amount,
     required Name memo,
     required DateTime date,
@@ -36,9 +36,8 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
         id: UniqueId(),
         subcatID: UniqueId(),
         subcatName: Name(""),
+        account: Account(id: UniqueId(), name: Name(""), balance: Amount("")),
         payee: Payee(id: UniqueId(), name: Name("")),
-        accountID: UniqueId(),
-        accountName: Name(""),
         memo: Name(""),
         amount: Amount(""),
         date: DateTime.now(),

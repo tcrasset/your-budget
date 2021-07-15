@@ -32,6 +32,8 @@ class _$MoneyTransactionDTOTearOff {
       required String accountID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required double accountBalance,
       required double amount,
       required String memo,
       required int dateInMillisecondsSinceEpoch}) {
@@ -43,6 +45,7 @@ class _$MoneyTransactionDTOTearOff {
       payeeName: payeeName,
       accountID: accountID,
       accountName: accountName,
+      accountBalance: accountBalance,
       amount: amount,
       memo: memo,
       dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch,
@@ -70,6 +73,8 @@ mixin _$MoneyTransactionDTO {
   String get accountID => throw _privateConstructorUsedError;
   @JsonKey(toJson: ignore, includeIfNull: false)
   String get accountName => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  double get accountBalance => throw _privateConstructorUsedError;
   double get amount => throw _privateConstructorUsedError;
   String get memo => throw _privateConstructorUsedError;
   int get dateInMillisecondsSinceEpoch => throw _privateConstructorUsedError;
@@ -97,6 +102,8 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
       String accountID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          double accountBalance,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -120,6 +127,7 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object? payeeName = freezed,
     Object? accountID = freezed,
     Object? accountName = freezed,
+    Object? accountBalance = freezed,
     Object? amount = freezed,
     Object? memo = freezed,
     Object? dateInMillisecondsSinceEpoch = freezed,
@@ -153,6 +161,10 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
               as String,
+      accountBalance: accountBalance == freezed
+          ? _value.accountBalance
+          : accountBalance // ignore: cast_nullable_to_non_nullable
+              as double,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -188,6 +200,8 @@ abstract class _$TransactionDTOCopyWith<$Res>
       String accountID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          double accountBalance,
       double amount,
       String memo,
       int dateInMillisecondsSinceEpoch});
@@ -213,6 +227,7 @@ class __$TransactionDTOCopyWithImpl<$Res>
     Object? payeeName = freezed,
     Object? accountID = freezed,
     Object? accountName = freezed,
+    Object? accountBalance = freezed,
     Object? amount = freezed,
     Object? memo = freezed,
     Object? dateInMillisecondsSinceEpoch = freezed,
@@ -246,6 +261,10 @@ class __$TransactionDTOCopyWithImpl<$Res>
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
               as String,
+      accountBalance: accountBalance == freezed
+          ? _value.accountBalance
+          : accountBalance // ignore: cast_nullable_to_non_nullable
+              as double,
       amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
@@ -277,6 +296,8 @@ class _$_TransactionDTO extends _TransactionDTO {
       required this.accountID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required this.accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.accountBalance,
       required this.amount,
       required this.memo,
       required this.dateInMillisecondsSinceEpoch})
@@ -304,6 +325,9 @@ class _$_TransactionDTO extends _TransactionDTO {
   @JsonKey(toJson: ignore, includeIfNull: false)
   final String accountName;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final double accountBalance;
+  @override
   final double amount;
   @override
   final String memo;
@@ -312,7 +336,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
+    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
   }
 
   @override
@@ -339,6 +363,9 @@ class _$_TransactionDTO extends _TransactionDTO {
             (identical(other.accountName, accountName) ||
                 const DeepCollectionEquality()
                     .equals(other.accountName, accountName)) &&
+            (identical(other.accountBalance, accountBalance) ||
+                const DeepCollectionEquality()
+                    .equals(other.accountBalance, accountBalance)) &&
             (identical(other.amount, amount) ||
                 const DeepCollectionEquality().equals(other.amount, amount)) &&
             (identical(other.memo, memo) ||
@@ -360,6 +387,7 @@ class _$_TransactionDTO extends _TransactionDTO {
       const DeepCollectionEquality().hash(payeeName) ^
       const DeepCollectionEquality().hash(accountID) ^
       const DeepCollectionEquality().hash(accountName) ^
+      const DeepCollectionEquality().hash(accountBalance) ^
       const DeepCollectionEquality().hash(amount) ^
       const DeepCollectionEquality().hash(memo) ^
       const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch);
@@ -388,6 +416,8 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       required String accountID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required String accountName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required double accountBalance,
       required double amount,
       required String memo,
       required int dateInMillisecondsSinceEpoch}) = _$_TransactionDTO;
@@ -414,6 +444,9 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @override
   @JsonKey(toJson: ignore, includeIfNull: false)
   String get accountName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  double get accountBalance => throw _privateConstructorUsedError;
   @override
   double get amount => throw _privateConstructorUsedError;
   @override

@@ -75,6 +75,7 @@ class SQFliteTransactionRepository implements ITransactionRepository {
           ${DatabaseConstants.MONEYTRANSACTION_MEMO},
           ${DatabaseConstants.MONEYTRANSACTION_DATE},
           ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_NAME} as accountName,
+          ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_BALANCE} as accountBalance,
           ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_NAME} as payeeName,
           ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_NAME} as subcatName
 

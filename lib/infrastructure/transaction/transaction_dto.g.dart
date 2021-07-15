@@ -15,6 +15,7 @@ _$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
     payeeName: json['payeeName'] as String,
     accountID: json['accountID'] as String,
     accountName: json['accountName'] as String,
+    accountBalance: (json['accountBalance'] as num).toDouble(),
     amount: (json['amount'] as num).toDouble(),
     memo: json['memo'] as String,
     dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
@@ -37,6 +38,7 @@ Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) {
   writeNotNull('payeeName', ignore(instance.payeeName));
   val['accountID'] = instance.accountID;
   writeNotNull('accountName', ignore(instance.accountName));
+  writeNotNull('accountBalance', ignore(instance.accountBalance));
   val['amount'] = instance.amount;
   val['memo'] = instance.memo;
   val['dateInMillisecondsSinceEpoch'] = instance.dateInMillisecondsSinceEpoch;

@@ -75,7 +75,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       },
       accountChanged: (e) async* {
         yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(accountName: e.account.name),
+          moneyTransaction: state.moneyTransaction.copyWith(account: e.account),
           saveFailureOrSuccessOption: none(),
         );
       },

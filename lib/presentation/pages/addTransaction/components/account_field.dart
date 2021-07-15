@@ -36,13 +36,14 @@ class AccountField extends StatelessWidget {
         .watch<TransactionCreatorBloc>()
         .state
         .moneyTransaction
-        .accountName
+        .account
+        .name
         .value
         .fold((_) => _DEFAULT_ACCOUNT, (v) => v);
   }
 
   String? validateAccount(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.accountName.value.fold(
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.account.name.value.fold(
             (f) => f.maybeMap(orElse: () => null),
             (_) => null,
           );
