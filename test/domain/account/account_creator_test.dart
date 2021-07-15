@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
@@ -11,25 +12,39 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/models/queries.dart';
+import 'account_creator_test.mocks.dart';
 
-class MockQueries extends Mock implements Queries {}
-
-class MockTransactionRepo extends Mock implements ITransactionRepository {}
-
-class MockAccountRepo extends Mock implements IAccountRepository {}
-
+@GenerateMocks(
+  [],
+  customMocks: [
+    MockSpec<ITransactionRepository>(as: #MockTransactionRepository),
+    MockSpec<IAccountRepository>(as: #MockAccountRepository),
+    MockSpec<ISubcategoryRepository>(as: #MockSubcategoryRepository),
+    MockSpec<IPayeeRepository>(as: #MockPayeeRepository),
+  ],
+)
 void main() {
-  late ITransactionRepository mockTransactionRepo;
-  late IAccountRepository mockAccountRepo;
+  late MockTransactionRepository mockTransactionRepo;
+  late MockAccountRepository mockAccountRepo;
+  late MockSubcategoryRepository mockSubcategoryRepo;
+  late MockPayeeRepository mockPayeeRepo;
   String tAccountName;
   double tAccountBalance;
   late Account tAccount;
+  late Subcategory tSubcategory;
+  late Payee tPayee;
   late AccountCreator creator;
   setUp(() async {
-    mockTransactionRepo = MockTransactionRepo();
-    mockAccountRepo = MockAccountRepo();
+    mockTransactionRepo = MockTransactionRepository();
+    mockAccountRepo = MockAccountRepository();
+    mockSubcategoryRepo = MockSubcategoryRepository();
+    mockPayeeRepo = MockPayeeRepository();
     tAccountName = "Test account";
     tAccountBalance = 100.00;
     tAccount = Account(
@@ -37,9 +52,22 @@ void main() {
       balance: Amount(tAccountBalance.toString()),
       name: Name(tAccountName),
     );
+    tPayee = Payee(
+      id: UniqueId(),
+      name: Name("Test payee"),
+    );
+    tSubcategory = Subcategory(
+        id: UniqueId(),
+        categoryID: UniqueId(),
+        name: Name("Test subcategory"),
+        budgeted: Amount("0"),
+        available: Amount("0"));
+
     creator = AccountCreator(
       accountRepository: mockAccountRepo,
       transactionRepository: mockTransactionRepo,
+      subcategoryRepository: mockSubcategoryRepo,
+      payeeRepository: mockPayeeRepo,
     );
   });
   test('when the constructor is called, assign the correct values to instance', () {
@@ -50,22 +78,29 @@ void main() {
 
     expect(creator.accountRepository, mockAccountRepo);
     expect(creator.transactionRepository, mockTransactionRepo);
+    expect(creator.subcategoryRepository, mockSubcategoryRepo);
+    expect(creator.payeeRepository, mockPayeeRepo);
   });
 
-  // test('when the create() method is called, verify that a call to the database was made', () async {
-  //   //!Arrange
-  //   const int accountId = 1;
+  test('when the create() method is called, verify that a call to the database was made', () async {
+    //!Arrange
+    const int accountId = 1;
 
-  //   when(mockAccountRepo.create(tAccount)).thenAnswer((_) async => right(accountId));
+    when(mockAccountRepo.create(tAccount)).thenAnswer((_) async => right(accountId));
+    when(mockAccountRepo.get(accountId)).thenAnswer((_) async => right(tAccount));
+    when(mockSubcategoryRepo.getToBeBudgetedSubcategory())
+        .thenAnswer((_) async => right(tSubcategory));
+    when(mockPayeeRepo.getToBeBudgetedPayee()).thenAnswer((_) async => right(tPayee));
 
-  //   //Just return unit for moneyTransaction
-  //   when(mockTransactionRepo.create(any)).thenAnswer((_) async => right(unit));
-  //   //!Act
-  //   final Either<ValueFailure, Unit> failureOrUnit = await creator.create(tAccount);
+    //Just return unit for moneyTransaction
+    when(mockTransactionRepo.create(any)).thenAnswer((_) async => right(unit));
 
-  //   //!Assert
-  //   expect(failureOrUnit.getOrElse(null), unit);
-  //   verify(mockAccountRepo.create(tAccount));
-  //   verify(mockTransactionRepo.create(any!));
-  // });
+    //!Act
+    final Either<ValueFailure, Unit> failureOrUnit = await creator.create(tAccount);
+
+    //!Assert
+    expect(failureOrUnit.getOrElse(() => throw TestFailure("Unable to get result.")), unit);
+    verify(mockAccountRepo.create(tAccount));
+    verify(mockTransactionRepo.create(any));
+  });
 }
