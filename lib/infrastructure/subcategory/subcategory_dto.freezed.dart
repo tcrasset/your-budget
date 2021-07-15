@@ -25,8 +25,8 @@ class _$SubcategoryDTOTearOff {
           required String id,
       required String categoryID,
       required String name,
-      double budgeted = 0.00,
-      double available = 0.00}) {
+      double budgeted = 0.0,
+      double available = 0.0}) {
     return _SubcategoryDTO(
       id: id,
       categoryID: categoryID,
@@ -184,8 +184,8 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
           required this.id,
       required this.categoryID,
       required this.name,
-      this.budgeted = 0.00,
-      this.available = 0.00})
+      this.budgeted = 0.0,
+      this.available = 0.0})
       : super._();
 
   factory _$_SubcategoryDTO.fromJson(Map<String, dynamic> json) =>
@@ -198,10 +198,10 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   final String categoryID;
   @override
   final String name;
-  @JsonKey(defaultValue: 0.00)
+  @JsonKey(defaultValue: 0.0)
   @override
   final double budgeted;
-  @JsonKey(defaultValue: 0.00)
+  @JsonKey(defaultValue: 0.0)
   @override
   final double available;
 
