@@ -1,4 +1,9 @@
+// Dart imports:
+import 'dart:convert';
+
 // Package imports:
+import 'package:dartz/dartz.dart';
+import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:test/test.dart';
@@ -7,22 +12,29 @@ import 'package:test/test.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
+import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
+import 'transaction_repository_test.mocks.dart';
 
-class MockDatabase extends Mock implements Database {}
-
+@GenerateMocks(
+  [],
+  customMocks: [
+    MockSpec<Database>(as: #MockDatabase),
+  ],
+)
 void main() {
-  late Database mockDatabase;
+  late MockDatabase mockDatabase;
   late SQFliteTransactionRepository repository;
-  int tPayeeId;
+  late int tPayeeId;
+  late int tMoneyTransactionId;
   late int tAccountId;
-  int tSubcatId;
-  double tAmount;
-  DateTime tDate;
-  String tMemo;
+  late int tSubcatId;
+  late double tAmount;
+  late DateTime tDate;
+  late String tMemo;
   late MoneyTransaction transaction;
   late MoneyTransactionDTO transactionDTO;
   setUp(() async {
@@ -35,12 +47,16 @@ void main() {
     tAmount = 666.66;
     tDate = DateTime.now();
     tMemo = "Test memo";
-
+    tMoneyTransactionId = 1;
     transaction = MoneyTransaction(
         id: UniqueId.fromUniqueInt(1),
         subcatID: UniqueId.fromUniqueInt(tSubcatId),
         payeeID: UniqueId.fromUniqueInt(tPayeeId),
         accountID: UniqueId.fromUniqueInt(tAccountId),
+        accountName: Name("Test account"),
+        payeeName: Name("Test payee"),
+        subcatName: Name("Test subcategory"),
+        payee: Payee(id: UniqueId.fromUniqueInt(tPayeeId), name: Name("Test payee")),
         amount: Amount(tAmount.toString()),
         memo: Name(tMemo),
         date: tDate);
@@ -58,6 +74,7 @@ void main() {
 
   test('verify that db.insert is called when creating MoneyTransaction', () async {
     //!Arrange
+    when(mockDatabase.insert(any, any)).thenAnswer((_) async => tMoneyTransactionId);
     //!Act
     await repository.create(transaction);
     //!Assert
@@ -66,6 +83,13 @@ void main() {
 
   test('verify that db.update is called when updating MoneyTransaction', () async {
     //!Arrange
+    when(mockDatabase.update(
+      DatabaseConstants.moneyTransactionTable,
+      transactionDTO.toJson(),
+      where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
+      whereArgs: [transactionDTO.id],
+    )).thenAnswer((_) async => 1);
+
     //!Act
     await repository.update(transaction);
     //!Assert
@@ -79,6 +103,11 @@ void main() {
 
   test('verify that db.delete is called when deleting MoneyTransaction', () async {
     //!Arrange
+    when(mockDatabase.delete(
+      DatabaseConstants.moneyTransactionTable,
+      where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
+      whereArgs: [transactionDTO.id],
+    )).thenAnswer((_) async => 1);
     //!Act
     await repository.delete(transaction);
     //!Assert
@@ -92,18 +121,32 @@ void main() {
   test('verify that getAccountTransactions creates the correct raw query', () async {
     //!Arrange
     const int id = 1;
-    const sql = """
-        SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+    final sql = """
+        SELECT
+          ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_ID},
+          ${DatabaseConstants.PAYEE_ID_OUTSIDE},
+          ${DatabaseConstants.ACCOUNT_ID_OUTSIDE},
+          ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+          ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
+          ${DatabaseConstants.MONEYTRANSACTION_MEMO},
+          ${DatabaseConstants.MONEYTRANSACTION_DATE},
+          ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_NAME} as accountName,
+          ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_NAME} as payeeName,
+          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_NAME} as subcatName
+
+        FROM ${DatabaseConstants.moneyTransactionTable}
+        JOIN ${DatabaseConstants.accountTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.ACCOUNT_ID_OUTSIDE} = ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_ID}
+        JOIN ${DatabaseConstants.payeeTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.PAYEE_ID_OUTSIDE} = ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_ID}
+        JOIN ${DatabaseConstants.subcategoryTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID}
         WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == ?
         ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
-    //!Act
-    try {
-      await repository.getAccountTransactions(id);
-    } catch (e) {
-      /* We are catching the error because mockDatabase.rawQuery returns nothing */
-    }
+    when(mockDatabase.rawQuery(sql, [id])).thenAnswer((_) async => [
+          transactionDTO.toJson()..addAll({"id": 1})
+        ]);
+
+    await repository.getAccountTransactions(id);
 
     //!Assert
     verify(mockDatabase.rawQuery(sql, [id]));
