@@ -20,8 +20,6 @@ class _$MoneyTransactionTearOff {
       {required UniqueId id,
       required UniqueId subcatID,
       required Name subcatName,
-      required UniqueId payeeID,
-      required Name payeeName,
       required Payee payee,
       required UniqueId accountID,
       required Name accountName,
@@ -32,8 +30,6 @@ class _$MoneyTransactionTearOff {
       id: id,
       subcatID: subcatID,
       subcatName: subcatName,
-      payeeID: payeeID,
-      payeeName: payeeName,
       payee: payee,
       accountID: accountID,
       accountName: accountName,
@@ -52,8 +48,6 @@ mixin _$MoneyTransaction {
   UniqueId get id => throw _privateConstructorUsedError;
   UniqueId get subcatID => throw _privateConstructorUsedError;
   Name get subcatName => throw _privateConstructorUsedError;
-  UniqueId get payeeID => throw _privateConstructorUsedError;
-  Name get payeeName => throw _privateConstructorUsedError;
   Payee get payee => throw _privateConstructorUsedError;
   UniqueId get accountID => throw _privateConstructorUsedError;
   Name get accountName => throw _privateConstructorUsedError;
@@ -75,8 +69,6 @@ abstract class $MoneyTransactionCopyWith<$Res> {
       {UniqueId id,
       UniqueId subcatID,
       Name subcatName,
-      UniqueId payeeID,
-      Name payeeName,
       Payee payee,
       UniqueId accountID,
       Name accountName,
@@ -101,8 +93,6 @@ class _$MoneyTransactionCopyWithImpl<$Res>
     Object? id = freezed,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
-    Object? payeeID = freezed,
-    Object? payeeName = freezed,
     Object? payee = freezed,
     Object? accountID = freezed,
     Object? accountName = freezed,
@@ -122,14 +112,6 @@ class _$MoneyTransactionCopyWithImpl<$Res>
       subcatName: subcatName == freezed
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
-              as Name,
-      payeeID: payeeID == freezed
-          ? _value.payeeID
-          : payeeID // ignore: cast_nullable_to_non_nullable
-              as UniqueId,
-      payeeName: payeeName == freezed
-          ? _value.payeeName
-          : payeeName // ignore: cast_nullable_to_non_nullable
               as Name,
       payee: payee == freezed
           ? _value.payee
@@ -177,8 +159,6 @@ abstract class _$MoneyTransactionCopyWith<$Res>
       {UniqueId id,
       UniqueId subcatID,
       Name subcatName,
-      UniqueId payeeID,
-      Name payeeName,
       Payee payee,
       UniqueId accountID,
       Name accountName,
@@ -206,8 +186,6 @@ class __$MoneyTransactionCopyWithImpl<$Res>
     Object? id = freezed,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
-    Object? payeeID = freezed,
-    Object? payeeName = freezed,
     Object? payee = freezed,
     Object? accountID = freezed,
     Object? accountName = freezed,
@@ -227,14 +205,6 @@ class __$MoneyTransactionCopyWithImpl<$Res>
       subcatName: subcatName == freezed
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
-              as Name,
-      payeeID: payeeID == freezed
-          ? _value.payeeID
-          : payeeID // ignore: cast_nullable_to_non_nullable
-              as UniqueId,
-      payeeName: payeeName == freezed
-          ? _value.payeeName
-          : payeeName // ignore: cast_nullable_to_non_nullable
               as Name,
       payee: payee == freezed
           ? _value.payee
@@ -271,8 +241,6 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       {required this.id,
       required this.subcatID,
       required this.subcatName,
-      required this.payeeID,
-      required this.payeeName,
       required this.payee,
       required this.accountID,
       required this.accountName,
@@ -288,10 +256,6 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   @override
   final Name subcatName;
   @override
-  final UniqueId payeeID;
-  @override
-  final Name payeeName;
-  @override
   final Payee payee;
   @override
   final UniqueId accountID;
@@ -306,7 +270,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
 
   @override
   String toString() {
-    return 'MoneyTransaction(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, payeeName: $payeeName, payee: $payee, accountID: $accountID, accountName: $accountName, amount: $amount, memo: $memo, date: $date)';
+    return 'MoneyTransaction(id: $id, subcatID: $subcatID, subcatName: $subcatName, payee: $payee, accountID: $accountID, accountName: $accountName, amount: $amount, memo: $memo, date: $date)';
   }
 
   @override
@@ -321,12 +285,6 @@ class _$_MoneyTransaction extends _MoneyTransaction {
             (identical(other.subcatName, subcatName) ||
                 const DeepCollectionEquality()
                     .equals(other.subcatName, subcatName)) &&
-            (identical(other.payeeID, payeeID) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeID, payeeID)) &&
-            (identical(other.payeeName, payeeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeName, payeeName)) &&
             (identical(other.payee, payee) ||
                 const DeepCollectionEquality().equals(other.payee, payee)) &&
             (identical(other.accountID, accountID) ||
@@ -349,8 +307,6 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(subcatID) ^
       const DeepCollectionEquality().hash(subcatName) ^
-      const DeepCollectionEquality().hash(payeeID) ^
-      const DeepCollectionEquality().hash(payeeName) ^
       const DeepCollectionEquality().hash(payee) ^
       const DeepCollectionEquality().hash(accountID) ^
       const DeepCollectionEquality().hash(accountName) ^
@@ -369,8 +325,6 @@ abstract class _MoneyTransaction extends MoneyTransaction {
       {required UniqueId id,
       required UniqueId subcatID,
       required Name subcatName,
-      required UniqueId payeeID,
-      required Name payeeName,
       required Payee payee,
       required UniqueId accountID,
       required Name accountName,
@@ -385,10 +339,6 @@ abstract class _MoneyTransaction extends MoneyTransaction {
   UniqueId get subcatID => throw _privateConstructorUsedError;
   @override
   Name get subcatName => throw _privateConstructorUsedError;
-  @override
-  UniqueId get payeeID => throw _privateConstructorUsedError;
-  @override
-  Name get payeeName => throw _privateConstructorUsedError;
   @override
   Payee get payee => throw _privateConstructorUsedError;
   @override

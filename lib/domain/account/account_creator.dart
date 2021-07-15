@@ -68,8 +68,6 @@ class AccountCreator {
               subcatID: subcategory.id,
               subcatName: subcategory.name,
               payee: payee,
-              payeeID: payee.id,
-              payeeName: payee.name,
               accountID: account.id,
               accountName: account.name,
               amount: balance,

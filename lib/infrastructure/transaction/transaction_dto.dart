@@ -52,8 +52,6 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       id: UniqueId.fromUniqueString(id),
       subcatID: UniqueId.fromUniqueString(subcatID),
       subcatName: Name(subcatName),
-      payeeID: UniqueId.fromUniqueString(payeeID),
-      payeeName: Name(payeeName),
       payee: Payee(id: UniqueId.fromUniqueString(payeeID), name: Name(payeeName)),
       accountID: UniqueId.fromUniqueString(accountID),
       accountName: Name(accountName),
