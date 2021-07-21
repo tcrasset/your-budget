@@ -69,7 +69,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       },
       subcategoryChanged: (e) async* {
         yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(subcatName: e.subcategory.name),
+          moneyTransaction: state.moneyTransaction.copyWith(subcategory: e.subcategory),
           saveFailureOrSuccessOption: none(),
         );
       },

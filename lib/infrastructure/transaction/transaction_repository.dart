@@ -77,7 +77,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
           ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_NAME} as accountName,
           ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_BALANCE} as accountBalance,
           ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_NAME} as payeeName,
-          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_NAME} as subcatName
+          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_NAME} as subcatName,
+          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.CAT_ID_OUTSIDE} as subcatCategoryId
 
         FROM ${DatabaseConstants.moneyTransactionTable}
         JOIN ${DatabaseConstants.accountTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.ACCOUNT_ID_OUTSIDE} = ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_ID}

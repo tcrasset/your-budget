@@ -26,6 +26,12 @@ class _$MoneyTransactionDTOTearOff {
       required String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String subcatCategoryId,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          required double subcatBudgeted,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          required double subcatAvailable,
       required String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required String payeeName,
@@ -41,6 +47,9 @@ class _$MoneyTransactionDTOTearOff {
       id: id,
       subcatID: subcatID,
       subcatName: subcatName,
+      subcatCategoryId: subcatCategoryId,
+      subcatBudgeted: subcatBudgeted,
+      subcatAvailable: subcatAvailable,
       payeeID: payeeID,
       payeeName: payeeName,
       accountID: accountID,
@@ -67,6 +76,12 @@ mixin _$MoneyTransactionDTO {
   String get subcatID => throw _privateConstructorUsedError;
   @JsonKey(toJson: ignore, includeIfNull: false)
   String get subcatName => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get subcatCategoryId => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+  double get subcatBudgeted => throw _privateConstructorUsedError;
+  @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+  double get subcatAvailable => throw _privateConstructorUsedError;
   String get payeeID => throw _privateConstructorUsedError;
   @JsonKey(toJson: ignore, includeIfNull: false)
   String get payeeName => throw _privateConstructorUsedError;
@@ -96,6 +111,12 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
       String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String subcatCategoryId,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          double subcatBudgeted,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          double subcatAvailable,
       String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String payeeName,
@@ -123,6 +144,9 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
+    Object? subcatCategoryId = freezed,
+    Object? subcatBudgeted = freezed,
+    Object? subcatAvailable = freezed,
     Object? payeeID = freezed,
     Object? payeeName = freezed,
     Object? accountID = freezed,
@@ -145,6 +169,18 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
               as String,
+      subcatCategoryId: subcatCategoryId == freezed
+          ? _value.subcatCategoryId
+          : subcatCategoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      subcatBudgeted: subcatBudgeted == freezed
+          ? _value.subcatBudgeted
+          : subcatBudgeted // ignore: cast_nullable_to_non_nullable
+              as double,
+      subcatAvailable: subcatAvailable == freezed
+          ? _value.subcatAvailable
+          : subcatAvailable // ignore: cast_nullable_to_non_nullable
+              as double,
       payeeID: payeeID == freezed
           ? _value.payeeID
           : payeeID // ignore: cast_nullable_to_non_nullable
@@ -194,6 +230,12 @@ abstract class _$TransactionDTOCopyWith<$Res>
       String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String subcatCategoryId,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          double subcatBudgeted,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          double subcatAvailable,
       String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String payeeName,
@@ -223,6 +265,9 @@ class __$TransactionDTOCopyWithImpl<$Res>
     Object? id = freezed,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
+    Object? subcatCategoryId = freezed,
+    Object? subcatBudgeted = freezed,
+    Object? subcatAvailable = freezed,
     Object? payeeID = freezed,
     Object? payeeName = freezed,
     Object? accountID = freezed,
@@ -245,6 +290,18 @@ class __$TransactionDTOCopyWithImpl<$Res>
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
               as String,
+      subcatCategoryId: subcatCategoryId == freezed
+          ? _value.subcatCategoryId
+          : subcatCategoryId // ignore: cast_nullable_to_non_nullable
+              as String,
+      subcatBudgeted: subcatBudgeted == freezed
+          ? _value.subcatBudgeted
+          : subcatBudgeted // ignore: cast_nullable_to_non_nullable
+              as double,
+      subcatAvailable: subcatAvailable == freezed
+          ? _value.subcatAvailable
+          : subcatAvailable // ignore: cast_nullable_to_non_nullable
+              as double,
       payeeID: payeeID == freezed
           ? _value.payeeID
           : payeeID // ignore: cast_nullable_to_non_nullable
@@ -290,6 +347,12 @@ class _$_TransactionDTO extends _TransactionDTO {
       required this.subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required this.subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.subcatCategoryId,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          required this.subcatBudgeted,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          required this.subcatAvailable,
       required this.payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required this.payeeName,
@@ -315,6 +378,15 @@ class _$_TransactionDTO extends _TransactionDTO {
   @JsonKey(toJson: ignore, includeIfNull: false)
   final String subcatName;
   @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final String subcatCategoryId;
+  @override
+  @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+  final double subcatBudgeted;
+  @override
+  @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+  final double subcatAvailable;
+  @override
   final String payeeID;
   @override
   @JsonKey(toJson: ignore, includeIfNull: false)
@@ -336,7 +408,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
+    return 'MoneyTransactionDTO(id: $id, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, subcatBudgeted: $subcatBudgeted, subcatAvailable: $subcatAvailable, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch)';
   }
 
   @override
@@ -351,6 +423,15 @@ class _$_TransactionDTO extends _TransactionDTO {
             (identical(other.subcatName, subcatName) ||
                 const DeepCollectionEquality()
                     .equals(other.subcatName, subcatName)) &&
+            (identical(other.subcatCategoryId, subcatCategoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.subcatCategoryId, subcatCategoryId)) &&
+            (identical(other.subcatBudgeted, subcatBudgeted) ||
+                const DeepCollectionEquality()
+                    .equals(other.subcatBudgeted, subcatBudgeted)) &&
+            (identical(other.subcatAvailable, subcatAvailable) ||
+                const DeepCollectionEquality()
+                    .equals(other.subcatAvailable, subcatAvailable)) &&
             (identical(other.payeeID, payeeID) ||
                 const DeepCollectionEquality()
                     .equals(other.payeeID, payeeID)) &&
@@ -383,6 +464,9 @@ class _$_TransactionDTO extends _TransactionDTO {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(subcatID) ^
       const DeepCollectionEquality().hash(subcatName) ^
+      const DeepCollectionEquality().hash(subcatCategoryId) ^
+      const DeepCollectionEquality().hash(subcatBudgeted) ^
+      const DeepCollectionEquality().hash(subcatAvailable) ^
       const DeepCollectionEquality().hash(payeeID) ^
       const DeepCollectionEquality().hash(payeeName) ^
       const DeepCollectionEquality().hash(accountID) ^
@@ -410,6 +494,12 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       required String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required String subcatName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required String subcatCategoryId,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          required double subcatBudgeted,
+      @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+          required double subcatAvailable,
       required String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required String payeeName,
@@ -434,6 +524,15 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @override
   @JsonKey(toJson: ignore, includeIfNull: false)
   String get subcatName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get subcatCategoryId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+  double get subcatBudgeted => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+  double get subcatAvailable => throw _privateConstructorUsedError;
   @override
   String get payeeID => throw _privateConstructorUsedError;
   @override

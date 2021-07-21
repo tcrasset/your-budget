@@ -18,8 +18,7 @@ class _$MoneyTransactionTearOff {
 
   _MoneyTransaction call(
       {required UniqueId id,
-      required UniqueId subcatID,
-      required Name subcatName,
+      required Subcategory subcategory,
       required Payee payee,
       required Account account,
       required Amount amount,
@@ -27,8 +26,7 @@ class _$MoneyTransactionTearOff {
       required DateTime date}) {
     return _MoneyTransaction(
       id: id,
-      subcatID: subcatID,
-      subcatName: subcatName,
+      subcategory: subcategory,
       payee: payee,
       account: account,
       amount: amount,
@@ -44,8 +42,7 @@ const $MoneyTransaction = _$MoneyTransactionTearOff();
 /// @nodoc
 mixin _$MoneyTransaction {
   UniqueId get id => throw _privateConstructorUsedError;
-  UniqueId get subcatID => throw _privateConstructorUsedError;
-  Name get subcatName => throw _privateConstructorUsedError;
+  Subcategory get subcategory => throw _privateConstructorUsedError;
   Payee get payee => throw _privateConstructorUsedError;
   Account get account => throw _privateConstructorUsedError;
   Amount get amount => throw _privateConstructorUsedError;
@@ -64,14 +61,14 @@ abstract class $MoneyTransactionCopyWith<$Res> {
       _$MoneyTransactionCopyWithImpl<$Res>;
   $Res call(
       {UniqueId id,
-      UniqueId subcatID,
-      Name subcatName,
+      Subcategory subcategory,
       Payee payee,
       Account account,
       Amount amount,
       Name memo,
       DateTime date});
 
+  $SubcategoryCopyWith<$Res> get subcategory;
   $PayeeCopyWith<$Res> get payee;
   $AccountCopyWith<$Res> get account;
 }
@@ -88,8 +85,7 @@ class _$MoneyTransactionCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? subcatID = freezed,
-    Object? subcatName = freezed,
+    Object? subcategory = freezed,
     Object? payee = freezed,
     Object? account = freezed,
     Object? amount = freezed,
@@ -101,14 +97,10 @@ class _$MoneyTransactionCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      subcatID: subcatID == freezed
-          ? _value.subcatID
-          : subcatID // ignore: cast_nullable_to_non_nullable
-              as UniqueId,
-      subcatName: subcatName == freezed
-          ? _value.subcatName
-          : subcatName // ignore: cast_nullable_to_non_nullable
-              as Name,
+      subcategory: subcategory == freezed
+          ? _value.subcategory
+          : subcategory // ignore: cast_nullable_to_non_nullable
+              as Subcategory,
       payee: payee == freezed
           ? _value.payee
           : payee // ignore: cast_nullable_to_non_nullable
@@ -130,6 +122,13 @@ class _$MoneyTransactionCopyWithImpl<$Res>
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
     ));
+  }
+
+  @override
+  $SubcategoryCopyWith<$Res> get subcategory {
+    return $SubcategoryCopyWith<$Res>(_value.subcategory, (value) {
+      return _then(_value.copyWith(subcategory: value));
+    });
   }
 
   @override
@@ -156,14 +155,15 @@ abstract class _$MoneyTransactionCopyWith<$Res>
   @override
   $Res call(
       {UniqueId id,
-      UniqueId subcatID,
-      Name subcatName,
+      Subcategory subcategory,
       Payee payee,
       Account account,
       Amount amount,
       Name memo,
       DateTime date});
 
+  @override
+  $SubcategoryCopyWith<$Res> get subcategory;
   @override
   $PayeeCopyWith<$Res> get payee;
   @override
@@ -184,8 +184,7 @@ class __$MoneyTransactionCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? subcatID = freezed,
-    Object? subcatName = freezed,
+    Object? subcategory = freezed,
     Object? payee = freezed,
     Object? account = freezed,
     Object? amount = freezed,
@@ -197,14 +196,10 @@ class __$MoneyTransactionCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      subcatID: subcatID == freezed
-          ? _value.subcatID
-          : subcatID // ignore: cast_nullable_to_non_nullable
-              as UniqueId,
-      subcatName: subcatName == freezed
-          ? _value.subcatName
-          : subcatName // ignore: cast_nullable_to_non_nullable
-              as Name,
+      subcategory: subcategory == freezed
+          ? _value.subcategory
+          : subcategory // ignore: cast_nullable_to_non_nullable
+              as Subcategory,
       payee: payee == freezed
           ? _value.payee
           : payee // ignore: cast_nullable_to_non_nullable
@@ -234,8 +229,7 @@ class __$MoneyTransactionCopyWithImpl<$Res>
 class _$_MoneyTransaction extends _MoneyTransaction {
   const _$_MoneyTransaction(
       {required this.id,
-      required this.subcatID,
-      required this.subcatName,
+      required this.subcategory,
       required this.payee,
       required this.account,
       required this.amount,
@@ -246,9 +240,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   @override
   final UniqueId id;
   @override
-  final UniqueId subcatID;
-  @override
-  final Name subcatName;
+  final Subcategory subcategory;
   @override
   final Payee payee;
   @override
@@ -262,7 +254,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
 
   @override
   String toString() {
-    return 'MoneyTransaction(id: $id, subcatID: $subcatID, subcatName: $subcatName, payee: $payee, account: $account, amount: $amount, memo: $memo, date: $date)';
+    return 'MoneyTransaction(id: $id, subcategory: $subcategory, payee: $payee, account: $account, amount: $amount, memo: $memo, date: $date)';
   }
 
   @override
@@ -271,12 +263,9 @@ class _$_MoneyTransaction extends _MoneyTransaction {
         (other is _MoneyTransaction &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.subcatID, subcatID) ||
+            (identical(other.subcategory, subcategory) ||
                 const DeepCollectionEquality()
-                    .equals(other.subcatID, subcatID)) &&
-            (identical(other.subcatName, subcatName) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatName, subcatName)) &&
+                    .equals(other.subcategory, subcategory)) &&
             (identical(other.payee, payee) ||
                 const DeepCollectionEquality().equals(other.payee, payee)) &&
             (identical(other.account, account) ||
@@ -294,8 +283,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(subcatID) ^
-      const DeepCollectionEquality().hash(subcatName) ^
+      const DeepCollectionEquality().hash(subcategory) ^
       const DeepCollectionEquality().hash(payee) ^
       const DeepCollectionEquality().hash(account) ^
       const DeepCollectionEquality().hash(amount) ^
@@ -311,8 +299,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
 abstract class _MoneyTransaction extends MoneyTransaction {
   const factory _MoneyTransaction(
       {required UniqueId id,
-      required UniqueId subcatID,
-      required Name subcatName,
+      required Subcategory subcategory,
       required Payee payee,
       required Account account,
       required Amount amount,
@@ -323,9 +310,7 @@ abstract class _MoneyTransaction extends MoneyTransaction {
   @override
   UniqueId get id => throw _privateConstructorUsedError;
   @override
-  UniqueId get subcatID => throw _privateConstructorUsedError;
-  @override
-  Name get subcatName => throw _privateConstructorUsedError;
+  Subcategory get subcategory => throw _privateConstructorUsedError;
   @override
   Payee get payee => throw _privateConstructorUsedError;
   @override

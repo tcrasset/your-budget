@@ -10,6 +10,7 @@ import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/utils.dart';
 
@@ -24,6 +25,11 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
     @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false) required String id,
     required String subcatID,
     @JsonKey(toJson: ignore, includeIfNull: false) required String subcatName,
+    @JsonKey(toJson: ignore, includeIfNull: false) required String subcatCategoryId,
+    @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+        required double subcatBudgeted,
+    @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+        required double subcatAvailable,
     required String payeeID,
     @JsonKey(toJson: ignore, includeIfNull: false) required String payeeName,
     required String accountID,
@@ -37,8 +43,11 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {
     return MoneyTransactionDTO(
       id: transaction.id.getOrCrash(),
-      subcatID: transaction.subcatID.getOrCrash(),
-      subcatName: transaction.subcatName.getOrCrash(),
+      subcatID: transaction.subcategory.id.getOrCrash(),
+      subcatName: transaction.subcategory.name.getOrCrash(),
+      subcatCategoryId: transaction.subcategory.categoryID.getOrCrash(),
+      subcatBudgeted: transaction.subcategory.budgeted.getOrCrash(),
+      subcatAvailable: transaction.subcategory.available.getOrCrash(),
       payeeID: transaction.payee.id.getOrCrash(),
       payeeName: transaction.payee.name.getOrCrash(),
       accountID: transaction.account.id.getOrCrash(),
@@ -53,8 +62,13 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   MoneyTransaction toDomain() {
     return MoneyTransaction(
       id: UniqueId.fromUniqueString(id),
-      subcatID: UniqueId.fromUniqueString(subcatID),
-      subcatName: Name(subcatName),
+      subcategory: Subcategory(
+        id: UniqueId.fromUniqueString(subcatID),
+        categoryID: UniqueId.fromUniqueString(subcatCategoryId),
+        name: Name(subcatName),
+        budgeted: Amount(subcatBudgeted.toString()),
+        available: Amount(subcatAvailable.toString()),
+      ),
       payee: Payee(id: UniqueId.fromUniqueString(payeeID), name: Name(payeeName)),
       account: Account(
           id: UniqueId.fromUniqueString(accountID),

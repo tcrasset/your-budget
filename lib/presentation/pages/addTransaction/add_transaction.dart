@@ -30,6 +30,7 @@ class AddTransactionStyles {
 
 class AddTransactionPage extends StatelessWidget {
   Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
+    debugPrint("Error created. ${failure.toString()}");
     return FlushbarHelper.createError(
       message: failure.maybeMap(
         orElse: (() => null) as String Function(),

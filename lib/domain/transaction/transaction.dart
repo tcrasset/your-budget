@@ -9,6 +9,7 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 
 part 'transaction.freezed.dart';
 
@@ -21,8 +22,7 @@ part 'transaction.freezed.dart';
 abstract class MoneyTransaction implements _$MoneyTransaction {
   const factory MoneyTransaction({
     required UniqueId id,
-    required UniqueId subcatID,
-    required Name subcatName,
+    required Subcategory subcategory,
     required Payee payee,
     required Account account,
     required Amount amount,
@@ -34,8 +34,13 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
 
   factory MoneyTransaction.empty() => MoneyTransaction(
         id: UniqueId(),
-        subcatID: UniqueId(),
-        subcatName: Name(""),
+        subcategory: Subcategory(
+          id: UniqueId(),
+          categoryID: UniqueId(),
+          name: Name(""),
+          budgeted: Amount(""),
+          available: Amount(""),
+        ),
         account: Account(id: UniqueId(), name: Name(""), balance: Amount("")),
         payee: Payee(id: UniqueId(), name: Name("")),
         memo: Name(""),

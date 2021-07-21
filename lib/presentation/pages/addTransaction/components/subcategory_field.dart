@@ -39,13 +39,14 @@ class SubcategoryField extends StatelessWidget {
         .watch<TransactionCreatorBloc>()
         .state
         .moneyTransaction
-        .subcatName
+        .subcategory
+        .name
         .value
         .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
   }
 
   String? validateSubcategory(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.subcatName.value.fold(
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.subcategory.name.value.fold(
             (f) => f.maybeMap(orElse: () => null),
             (_) => null,
           );

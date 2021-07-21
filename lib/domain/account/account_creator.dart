@@ -65,8 +65,7 @@ class AccountCreator {
           (payee) {
             final MoneyTransaction transaction = MoneyTransaction(
               id: UniqueId(),
-              subcatID: subcategory.id,
-              subcatName: subcategory.name,
+              subcategory: subcategory,
               payee: payee,
               account: account,
               amount: balance,
