@@ -12,6 +12,7 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 
 part 'transaction_dto.freezed.dart';
@@ -22,27 +23,47 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   const MoneyTransactionDTO._();
 
   const factory MoneyTransactionDTO({
-    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false) required String id,
-    required String subcatID,
-    @JsonKey(toJson: ignore, includeIfNull: false) required String subcatName,
-    @JsonKey(toJson: ignore, includeIfNull: false) required String subcatCategoryId,
-    @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+    @JsonKey(
+      toJson: ignore,
+      fromJson: convertToString,
+      includeIfNull: false,
+      name: DatabaseConstants.MONEYTRANSACTION_ID,
+    )
+        required String id,
+    @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_AMOUNT)
+        required double amount,
+    @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_MEMO)
+        required String memo,
+    @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
+        required int dateInMillisecondsSinceEpoch,
+    @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
+        required String subcatID,
+    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
+        required String subcatName,
+    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
+        required String subcatCategoryId,
+    @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
         required double subcatBudgeted,
-    @JsonKey(defaultValue: 0.00, toJson: ignore, includeIfNull: false)
+    @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
         required double subcatAvailable,
-    required String payeeID,
-    @JsonKey(toJson: ignore, includeIfNull: false) required String payeeName,
-    required String accountID,
-    @JsonKey(toJson: ignore, includeIfNull: false) required String accountName,
-    @JsonKey(toJson: ignore, includeIfNull: false) required double accountBalance,
-    required double amount,
-    required String memo,
-    required int dateInMillisecondsSinceEpoch,
+    @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
+        required String payeeID,
+    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
+        required String payeeName,
+    @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
+        required String accountID,
+    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
+        required String accountName,
+    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
+        required double accountBalance,
   }) = _TransactionDTO;
 
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {
     return MoneyTransactionDTO(
       id: transaction.id.getOrCrash(),
+      amount: transaction.amount.getOrCrash(),
+      memo: transaction.memo.getOrCrash(),
+      dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
       subcatID: transaction.subcategory.id.getOrCrash(),
       subcatName: transaction.subcategory.name.getOrCrash(),
       subcatCategoryId: transaction.subcategory.categoryID.getOrCrash(),
@@ -53,15 +74,15 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       accountID: transaction.account.id.getOrCrash(),
       accountName: transaction.account.name.getOrCrash(),
       accountBalance: transaction.account.balance.getOrCrash(),
-      amount: transaction.amount.getOrCrash(),
-      memo: transaction.memo.getOrCrash(),
-      dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
     );
   }
 
   MoneyTransaction toDomain() {
     return MoneyTransaction(
       id: UniqueId.fromUniqueString(id),
+      amount: Amount(amount.toString()),
+      memo: Name(memo),
+      date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
       subcategory: Subcategory(
         id: UniqueId.fromUniqueString(subcatID),
         categoryID: UniqueId.fromUniqueString(subcatCategoryId),
@@ -69,14 +90,15 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
         budgeted: Amount(subcatBudgeted.toString()),
         available: Amount(subcatAvailable.toString()),
       ),
-      payee: Payee(id: UniqueId.fromUniqueString(payeeID), name: Name(payeeName)),
+      payee: Payee(
+        id: UniqueId.fromUniqueString(payeeID),
+        name: Name(payeeName),
+      ),
       account: Account(
-          id: UniqueId.fromUniqueString(accountID),
-          name: Name(accountName),
-          balance: Amount(accountBalance.toString())),
-      amount: Amount(amount.toString()),
-      memo: Name(memo),
-      date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
+        id: UniqueId.fromUniqueString(accountID),
+        name: Name(accountName),
+        balance: Amount(accountBalance.toString()),
+      ),
     );
   }
 

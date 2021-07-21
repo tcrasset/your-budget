@@ -23,7 +23,8 @@ class _$PayeeDTOTearOff {
   _PayeeDTO call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required String id,
-      required String name}) {
+      @JsonKey(name: DatabaseConstants.PAYEE_NAME)
+          required String name}) {
     return _PayeeDTO(
       id: id,
       name: name,
@@ -43,6 +44,7 @@ mixin _$PayeeDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id =>
       throw _privateConstructorUsedError; //Do not use id in database
+  @JsonKey(name: DatabaseConstants.PAYEE_NAME)
   String get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -58,7 +60,8 @@ abstract class $PayeeDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
-      String name});
+      @JsonKey(name: DatabaseConstants.PAYEE_NAME)
+          String name});
 }
 
 /// @nodoc
@@ -95,7 +98,8 @@ abstract class _$PayeeDTOCopyWith<$Res> implements $PayeeDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
-      String name});
+      @JsonKey(name: DatabaseConstants.PAYEE_NAME)
+          String name});
 }
 
 /// @nodoc
@@ -131,7 +135,8 @@ class _$_PayeeDTO extends _PayeeDTO {
   const _$_PayeeDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required this.id,
-      required this.name})
+      @JsonKey(name: DatabaseConstants.PAYEE_NAME)
+          required this.name})
       : super._();
 
   factory _$_PayeeDTO.fromJson(Map<String, dynamic> json) =>
@@ -141,6 +146,7 @@ class _$_PayeeDTO extends _PayeeDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   final String id;
   @override //Do not use id in database
+  @JsonKey(name: DatabaseConstants.PAYEE_NAME)
   final String name;
 
   @override
@@ -179,7 +185,8 @@ abstract class _PayeeDTO extends PayeeDTO {
   const factory _PayeeDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required String id,
-      required String name}) = _$_PayeeDTO;
+      @JsonKey(name: DatabaseConstants.PAYEE_NAME)
+          required String name}) = _$_PayeeDTO;
   const _PayeeDTO._() : super._();
 
   factory _PayeeDTO.fromJson(Map<String, dynamic> json) = _$_PayeeDTO.fromJson;
@@ -188,6 +195,7 @@ abstract class _PayeeDTO extends PayeeDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
+  @JsonKey(name: DatabaseConstants.PAYEE_NAME)
   String get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

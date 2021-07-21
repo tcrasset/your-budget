@@ -23,8 +23,10 @@ class _$AccountDTOTearOff {
   _AccountDTO call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required String id,
-      required String name,
-      required double balance}) {
+      @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
+          required String name,
+      @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
+          required double balance}) {
     return _AccountDTO(
       id: id,
       name: name,
@@ -45,7 +47,9 @@ mixin _$AccountDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id =>
       throw _privateConstructorUsedError; //Do not use id in database
+  @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
   String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
   double get balance => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -62,8 +66,10 @@ abstract class $AccountDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
-      String name,
-      double balance});
+      @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
+          String name,
+      @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
+          double balance});
 }
 
 /// @nodoc
@@ -106,8 +112,10 @@ abstract class _$AccountDTOCopyWith<$Res> implements $AccountDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
-      String name,
-      double balance});
+      @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
+          String name,
+      @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
+          double balance});
 }
 
 /// @nodoc
@@ -149,8 +157,10 @@ class _$_AccountDTO extends _AccountDTO {
   const _$_AccountDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required this.id,
-      required this.name,
-      required this.balance})
+      @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
+          required this.name,
+      @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
+          required this.balance})
       : super._();
 
   factory _$_AccountDTO.fromJson(Map<String, dynamic> json) =>
@@ -160,8 +170,10 @@ class _$_AccountDTO extends _AccountDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   final String id;
   @override //Do not use id in database
+  @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
   final String name;
   @override
+  @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
   final double balance;
 
   @override
@@ -203,8 +215,10 @@ abstract class _AccountDTO extends AccountDTO {
   const factory _AccountDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required String id,
-      required String name,
-      required double balance}) = _$_AccountDTO;
+      @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
+          required String name,
+      @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
+          required double balance}) = _$_AccountDTO;
   const _AccountDTO._() : super._();
 
   factory _AccountDTO.fromJson(Map<String, dynamic> json) =
@@ -214,8 +228,10 @@ abstract class _AccountDTO extends AccountDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
+  @JsonKey(name: DatabaseConstants.ACCOUNT_NAME)
   String get name => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE)
   double get balance => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

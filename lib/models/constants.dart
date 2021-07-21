@@ -53,19 +53,19 @@ class DatabaseConstants {
 
   /// Field names of the [categoryTable]
   static const String CATEGORY_ID = 'id';
-  static const String CATEGORY_NAME = 'name';
+  static const String CATEGORY_NAME = 'categoryName';
 
   /// Field names of the [subcategoryTable]
   static const String SUBCAT_ID = 'id';
-  static const String SUBCAT_NAME = 'name';
+  static const String SUBCAT_NAME = 'subcategoryName';
 
   /// Field names of the [payeeTable]
   static const String PAYEE_ID = 'id';
-  static const String PAYEE_NAME = 'name';
+  static const String PAYEE_NAME = 'payeeName';
 
   /// Field names of the [accountTable]
   static const String ACCOUNT_ID = 'id';
-  static const String ACCOUNT_NAME = 'name';
+  static const String ACCOUNT_NAME = 'accountName';
   static const String ACCOUNT_BALANCE = 'balance';
 
   /// Field names of the [moneyTransactionTable]
@@ -83,7 +83,7 @@ class DatabaseConstants {
 
   /// Field names of the [constantsTable]
   static const String CONSTANT_ID = 'id';
-  static const String CONSTANT_NAME = 'name';
+  static const String CONSTANT_NAME = 'constantName';
   static const String CONSTANT_VALUE = 'value';
 
   /// Field names of the [goalTable]

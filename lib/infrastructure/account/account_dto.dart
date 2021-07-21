@@ -6,6 +6,7 @@ import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 
 part 'account_dto.freezed.dart';
@@ -18,8 +19,8 @@ abstract class AccountDTO implements _$AccountDTO {
   const factory AccountDTO({
     @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
         required String id, //Do not use id in database
-    required String name,
-    required double balance,
+    @JsonKey(name: DatabaseConstants.ACCOUNT_NAME) required String name,
+    @JsonKey(name: DatabaseConstants.ACCOUNT_BALANCE) required double balance,
   }) = _AccountDTO;
 
   factory AccountDTO.fromDomain(Account account) {

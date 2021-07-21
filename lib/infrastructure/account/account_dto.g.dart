@@ -9,7 +9,7 @@ part of 'account_dto.dart';
 _$_AccountDTO _$_$_AccountDTOFromJson(Map<String, dynamic> json) {
   return _$_AccountDTO(
     id: convertToString(json['id'] as int),
-    name: json['name'] as String,
+    name: json['accountName'] as String,
     balance: (json['balance'] as num).toDouble(),
   );
 }
@@ -24,7 +24,7 @@ Map<String, dynamic> _$_$_AccountDTOToJson(_$_AccountDTO instance) {
   }
 
   writeNotNull('id', ignore(instance.id));
-  val['name'] = instance.name;
+  val['accountName'] = instance.name;
   val['balance'] = instance.balance;
   return val;
 }

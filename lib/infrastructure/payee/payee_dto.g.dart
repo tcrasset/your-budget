@@ -9,7 +9,7 @@ part of 'payee_dto.dart';
 _$_PayeeDTO _$_$_PayeeDTOFromJson(Map<String, dynamic> json) {
   return _$_PayeeDTO(
     id: convertToString(json['id'] as int),
-    name: json['name'] as String,
+    name: json['payeeName'] as String,
   );
 }
 
@@ -23,6 +23,6 @@ Map<String, dynamic> _$_$_PayeeDTOToJson(_$_PayeeDTO instance) {
   }
 
   writeNotNull('id', ignore(instance.id));
-  val['name'] = instance.name;
+  val['payeeName'] = instance.name;
   return val;
 }

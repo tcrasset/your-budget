@@ -23,10 +23,12 @@ class _$SubcategoryDTOTearOff {
   _SubcategoryDTO call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required String id,
-      required String categoryID,
-      required String name,
-      double budgeted = 0.0,
-      double available = 0.0}) {
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
+          required String categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
+          required String name,
+      double budgeted = 0.00,
+      double available = 0.00}) {
     return _SubcategoryDTO(
       id: id,
       categoryID: categoryID,
@@ -49,7 +51,9 @@ mixin _$SubcategoryDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id =>
       throw _privateConstructorUsedError; //Do not use id in database
+  @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
   String get categoryID => throw _privateConstructorUsedError;
+  @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
   String get name => throw _privateConstructorUsedError;
   double get budgeted => throw _privateConstructorUsedError;
   double get available => throw _privateConstructorUsedError;
@@ -68,8 +72,10 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
-      String categoryID,
-      String name,
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
+          String categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
+          String name,
       double budgeted,
       double available});
 }
@@ -126,8 +132,10 @@ abstract class _$SubcategoryDTOCopyWith<$Res>
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
-      String categoryID,
-      String name,
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
+          String categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
+          String name,
       double budgeted,
       double available});
 }
@@ -182,10 +190,12 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   const _$_SubcategoryDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required this.id,
-      required this.categoryID,
-      required this.name,
-      this.budgeted = 0.0,
-      this.available = 0.0})
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
+          required this.categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
+          required this.name,
+      this.budgeted = 0.00,
+      this.available = 0.00})
       : super._();
 
   factory _$_SubcategoryDTO.fromJson(Map<String, dynamic> json) =>
@@ -195,13 +205,15 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   final String id;
   @override //Do not use id in database
+  @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
   final String categoryID;
   @override
+  @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
   final String name;
-  @JsonKey(defaultValue: 0.0)
+  @JsonKey(defaultValue: 0.00)
   @override
   final double budgeted;
-  @JsonKey(defaultValue: 0.0)
+  @JsonKey(defaultValue: 0.00)
   @override
   final double available;
 
@@ -253,8 +265,10 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
   const factory _SubcategoryDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           required String id,
-      required String categoryID,
-      required String name,
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
+          required String categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
+          required String name,
       double budgeted,
       double available}) = _$_SubcategoryDTO;
   const _SubcategoryDTO._() : super._();
@@ -266,8 +280,10 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
   @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
   String get id => throw _privateConstructorUsedError;
   @override //Do not use id in database
+  @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
   String get categoryID => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
   String get name => throw _privateConstructorUsedError;
   @override
   double get budgeted => throw _privateConstructorUsedError;
