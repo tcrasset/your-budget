@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -61,7 +60,7 @@ class TransactionScaffold extends StatelessWidget {
               );
 
               if (errorMessage != null) {
-                FlushbarHelper.createError(message: errorMessage).show(context);
+                // FlushbarHelper.createError(message: errorMessage).show(context);
               }
             },
           )

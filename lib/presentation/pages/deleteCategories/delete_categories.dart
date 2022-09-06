@@ -46,7 +46,7 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
       } else {
         const SnackBar snackbar =
             SnackBar(content: Text("You can't delete the Essentials MainCategory"));
-        Scaffold.of(context).showSnackBar(snackbar);
+        ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }
     }
   }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
@@ -29,13 +28,13 @@ class AddTransactionStyles {
 }
 
 class AddTransactionPage extends StatelessWidget {
-  Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
+  Future? showErrorFlushbar(ValueFailure failure, BuildContext context) {
     debugPrint("Error created. ${failure.toString()}");
-    return FlushbarHelper.createError(
-      message: failure.maybeMap(
-        orElse: (() => null) as String Function(),
-      ),
-    ).show(context);
+    // return FlushbarHelper.createError(
+    //   message: failure.maybeMap(
+    //     orElse: (() => null) as String Function(),
+    //   ),
+    // ).show(context);
   }
 
   @override

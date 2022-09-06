@@ -17,9 +17,11 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       height: buttonHeight,
       width: buttonWidth,
-      child: RaisedButton(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          color: buttonColor,
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: buttonColor,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          ),
           onPressed: () => handleOnPressed(context, buttonText),
           child: child ??
               Text(

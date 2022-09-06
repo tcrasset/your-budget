@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
-import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
@@ -27,7 +26,7 @@ Future<String?> addPayeeDialog({required BuildContext context, String? defaultVa
 }
 
 class PayeeNameForm extends HookWidget {
-  final String/*!*/ defaultValue;
+  final String /*!*/ defaultValue;
   const PayeeNameForm({
     Key? key,
     required this.defaultValue,
@@ -76,7 +75,7 @@ class PayeeNameForm extends HookWidget {
               ),
             ),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 onPressed: () => handleSubmit(context),
                 child: const Text("Create"),
               ),
@@ -123,12 +122,12 @@ String? validateName(BuildContext context) {
       );
 }
 
-Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
-  return FlushbarHelper.createError(
-    message: failure.maybeMap(
-      unexpected: (_) => 'Unexpected error occured, please contact support.',
-      uniqueName: (_) => 'You must chose an unique account name.',
-      orElse: (() => null) as String Function(),
-    ),
-  ).show(context);
+Future? showErrorFlushbar(ValueFailure failure, BuildContext context) {
+  // return FlushbarHelper.createError(
+  //   message: failure.maybeMap(
+  //     unexpected: (_) => 'Unexpected error occured, please contact support.',
+  //     uniqueName: (_) => 'You must chose an unique account name.',
+  //     orElse: (() => null) as String Function(),
+  //   ),
+  // ).show(context);
 }

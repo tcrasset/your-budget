@@ -5,7 +5,6 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -15,9 +14,9 @@ import '../addTransaction/components/currency_input_formatter.dart';
 
 class BudgetPageState extends ChangeNotifier {
   bool showButtonDial = false;
-  final Map<int/*!*/, bool> _isSelectedMap = HashMap();
+  final Map<int /*!*/, bool> _isSelectedMap = HashMap();
   int selectedId = -1;
-  MoneyMaskedTextController? budgetedController;
+  // MoneyMaskedTextController? budgetedController;
   String budgetedText = "";
 
   bool isSelected(int subcategoryId) {
@@ -62,7 +61,7 @@ class BudgetPageState extends ChangeNotifier {
   void addDigit(String digit) {
     budgetedText += digit;
     final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
-    budgetedController!.updateValue(amount);
+    // budgetedController!.updateValue(amount);
     print(budgetedText);
   }
 
@@ -70,7 +69,7 @@ class BudgetPageState extends ChangeNotifier {
     try {
       budgetedText = budgetedText.substring(0, budgetedText.length - 1);
       final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
-      budgetedController!.updateValue(amount);
+      // budgetedController!.updateValue(amount);
       print(budgetedText);
     } on RangeError {
       print('Cannot remove any more digits');
@@ -85,21 +84,21 @@ class BudgetPageState extends ChangeNotifier {
     final SubCategory selectedSubcategory =
         appState.subcategories.singleWhere((subcat) => subcat!.id == selectedId)!;
 
-    if (budgetedController!.numberValue != selectedSubcategory.budgeted) {
-      final double beforeAfterDifference =
-          budgetedController!.numberValue - selectedSubcategory.budgeted!;
-      appState.updateSubcategoryValues(
-          SubCategory(
-              id: selectedSubcategory.id,
-              parentId: selectedSubcategory.parentId,
-              name: selectedSubcategory.name,
-              budgeted: budgetedController!.numberValue,
-              available: selectedSubcategory.available! + beforeAfterDifference),
-          appState.currentBudgetDate);
+    // if (budgetedController!.numberValue != selectedSubcategory.budgeted) {
+    // final double beforeAfterDifference =
+    //     budgetedController!.numberValue - selectedSubcategory.budgeted!;
+    // appState.updateSubcategoryValues(
+    //     SubCategory(
+    //         id: selectedSubcategory.id,
+    //         parentId: selectedSubcategory.parentId,
+    //         name: selectedSubcategory.name,
+    //         budgeted: budgetedController!.numberValue,
+    //         available: selectedSubcategory.available! + beforeAfterDifference),
+    //     appState.currentBudgetDate);
 
-      resetText();
-      closeButtonDialAndUpdate();
-    }
+    resetText();
+    closeButtonDialAndUpdate();
+    // }
   }
 
   void closeButtonDialAndUpdate() {

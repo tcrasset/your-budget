@@ -37,14 +37,14 @@ class ModifySubcategoryRow extends StatelessWidget {
         return AlertDialog(
           title: Text('Delete Subcategory ${subcat!.name} ?'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop("Cancel");
               },
               child: const Text('Cancel'),
             ),
-            FlatButton(
-              textColor: Constants.RED_COLOR,
+            TextButton(
+              style: TextButton.styleFrom(foregroundColor: Constants.RED_COLOR),
               onPressed: () {
                 Navigator.of(context).pop("Delete");
               },

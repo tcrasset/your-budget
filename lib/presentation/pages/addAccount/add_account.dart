@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flushbar/flushbar_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -88,14 +87,15 @@ class AddAccountForm extends StatelessWidget {
     context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.saved());
   }
 
-  Future showErrorFlushbar(ValueFailure failure, BuildContext context) {
-    return FlushbarHelper.createError(
-      message: failure.maybeMap(
-        unexpected: (_) => 'Unexpected error occured, please contact support.',
-        uniqueName: (_) => 'You must chose an unique account name.',
-        orElse: (() => null) as String Function(),
-      ),
-    ).show(context);
+  Future? showErrorFlushbar(ValueFailure failure, BuildContext context) {
+    return null;
+    // return FlushbarHelper.createError(
+    //   message: failure.maybeMap(
+    //     unexpected: (_) => 'Unexpected error occured, please contact support.',
+    //     uniqueName: (_) => 'You must chose an unique account name.',
+    //     orElse: (() => null) as String Function(),
+    //   ),
+    // ).show(context);
   }
 
   @override
@@ -124,9 +124,11 @@ class AddAccountForm extends StatelessWidget {
                 AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: RaisedButton(
+                  child: ElevatedButton(
                     key: const Key('addAccountButton'),
-                    color: Theme.of(context).accentColor,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                    ),
                     onPressed: () => handleSubmitForm(context),
                     child: const Text(
                       'Add account',

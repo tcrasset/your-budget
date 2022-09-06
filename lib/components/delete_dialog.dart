@@ -12,14 +12,13 @@ Future<String?> showDeleteDialog(BuildContext context, String warningText) async
       return AlertDialog(
         title: Text(warningText),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop("Cancel");
             },
             child: const Text('Cancel'),
           ),
-          FlatButton(
-            textColor: Constants.RED_COLOR,
+          TextButton(
             onPressed: () {
               Navigator.of(context).pop("Delete");
             },

@@ -31,7 +31,7 @@ Future<String?> addDialog(
             ),
           ),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     Navigator.of(context).pop(textController.text);

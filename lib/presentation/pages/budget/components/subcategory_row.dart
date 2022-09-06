@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -24,12 +23,12 @@ class SubcategoryRow extends StatefulWidget {
 
 class _SubcategoryRowController extends State<SubcategoryRow> {
   AppState? appState;
-  MoneyMaskedTextController? _budgetedController;
+  // MoneyMaskedTextController? _budgetedController;
   late BudgetPageState buttonDialState;
 
   void handleOnTap() {
     if (!buttonDialState.isSelected(widget.subcat.id!)) {
-      buttonDialState.budgetedController = _budgetedController;
+      // buttonDialState.budgetedController = _budgetedController;
     }
     buttonDialState.toggleButtonDial(widget.subcat.id!);
     buttonDialState.updateIsSelected(widget.subcat.id!);
@@ -43,13 +42,13 @@ class _SubcategoryRowController extends State<SubcategoryRow> {
 
     appState = Provider.of(context, listen: false);
 
-    _budgetedController =
-        MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: '€');
+    // _budgetedController =
+    //     MoneyMaskedTextController(decimalSeparator: '.', thousandSeparator: ' ', rightSymbol: '€');
   }
 
   @override
   void dispose() {
-    _budgetedController!.dispose();
+    // _budgetedController!.dispose();
     super.dispose();
   }
 
@@ -72,14 +71,15 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
 
   @override
   Widget build(BuildContext context) {
-    state._budgetedController!.updateValue(widget.subcat.budgeted!);
+    // state._budgetedController!.updateValue(widget.subcat.budgeted!);
 
     return GestureDetector(
       onTap: state.handleOnTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 10),
-        color: state.buttonDialState.isSelected(widget.subcat.id!) ? Colors.grey[200] : Colors.white,
+        color:
+            state.buttonDialState.isSelected(widget.subcat.id!) ? Colors.grey[200] : Colors.white,
         child: Row(
           children: <Widget>[
             Expanded(
@@ -94,7 +94,7 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
               decoration: const InputDecoration.collapsed(
                 hintText: "",
               ),
-              controller: state._budgetedController,
+              // controller: state._budgetedController,
               textAlign: TextAlign.right,
               style: Constants.SUBCATEGORY_TEXT_STYLE,
             )),
