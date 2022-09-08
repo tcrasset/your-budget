@@ -33,6 +33,16 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
     emit(newState);
   }
 
+  _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        payee: state.payee.copyWith(name: Name(event.name)),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
+
   _onSaved(_Saved event, Emitter<PayeeCreatorState> emit) async {
     Either<ValueFailure, Unit>? failureOrSuccess;
 
@@ -52,15 +62,5 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
     );
 
     emit(newState);
-  }
-
-  _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        payee: state.payee.copyWith(name: Name(event.name)),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
   }
 }

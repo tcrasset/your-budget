@@ -17,29 +17,32 @@ part 'subcategory_watcher_bloc.freezed.dart';
 
 class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWatcherState> {
   final ISubcategoryRepository subcategoryRepository;
-
-  SubcategoryWatcherBloc({required this.subcategoryRepository})
-      : super(const SubcategoryWatcherState.initial());
-
   StreamSubscription<List<Subcategory>>? _subcategoryStreamSubscription;
 
-  @override
-  Stream<SubcategoryWatcherState> mapEventToState(
-    SubcategoryWatcherEvent event,
-  ) async* {
-    yield* event.map(watchSubcategoriesStarted: (e) async* {
-      yield const SubcategoryWatcherState.loading();
-      await _subcategoryStreamSubscription?.cancel();
+  SubcategoryWatcherBloc({required this.subcategoryRepository})
+      : super(const SubcategoryWatcherState.initial()) {
+    on<_SubcategoryWatchStarted>((event, emit) => _onSubcategoryWatchStarted);
+    on<_SubcategoriesReceived>((event, emit) => _onSubcategiesReceived);
+  }
 
-      subcategoryRepository.watchAllSubcategories().listen(
-            (failureOrSubcategories) =>
-                add(SubcategoryWatcherEvent.subcategoriesReceived(failureOrSubcategories)),
-          );
-    }, subcategoriesReceived: (e) async* {
-      yield e.failureOrSubcategories.fold(
-        (f) => SubcategoryWatcherState.loadFailure(f),
-        (subcategorys) => SubcategoryWatcherState.loadSuccess(subcategorys),
-      );
-    });
+  _onSubcategoryWatchStarted(
+      _SubcategoryWatchStarted event, Emitter<SubcategoryWatcherState> emit) async {
+    emit(const SubcategoryWatcherState.loading());
+    await _subcategoryStreamSubscription?.cancel();
+
+    subcategoryRepository.watchAllSubcategories().listen(
+          (failureOrSubcategories) =>
+              add(SubcategoryWatcherEvent.subcategoriesReceived(failureOrSubcategories)),
+        );
+  }
+
+  _onSubcategiesReceived(
+      _SubcategoriesReceived event, Emitter<SubcategoryWatcherState> emit) async {
+    var newState = event.failureOrSubcategories.fold(
+      (f) => SubcategoryWatcherState.loadFailure(f),
+      (subcategories) => SubcategoryWatcherState.loadSuccess(subcategories),
+    );
+
+    emit(newState);
   }
 }
