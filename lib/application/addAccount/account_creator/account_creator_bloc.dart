@@ -34,51 +34,44 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
     required this.transactionRepository,
     required this.subcategoryRepository,
     required this.payeeRepository,
-  }) : super(AccountCreatorState.initial());
+  }) : super(AccountCreatorState.initial()) {
+    on<_Initialized>((event, emit) => emit(state));
+    on<_NameChanged>((event, emit) => emit(
+          state.copyWith(
+            account: state.account.copyWith(name: Name(event.name)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        ));
+    on<_BalanceChanged>((event, emit) => emit(
+          state.copyWith(
+            account: state.account.copyWith(balance: Amount(event.balance)),
+            saveFailureOrSuccessOption: none(),
+          ),
+        ));
+    on<_Saved>((event, emit) => _onSaved);
+  }
 
-  @override
-  Stream<AccountCreatorState> mapEventToState(
-    AccountCreatorEvent event,
-  ) async* {
-    yield* event.map(
-      initialized: (e) async* {
-        yield state;
-      },
-      nameChanged: (e) async* {
-        yield state.copyWith(
-          account: state.account.copyWith(name: Name(e.name)),
-          saveFailureOrSuccessOption: none(),
-        );
-      },
-      balanceChanged: (e) async* {
-        yield state.copyWith(
-          account: state.account.copyWith(balance: Amount(e.balance)),
-          saveFailureOrSuccessOption: none(),
-        );
-      },
-      saved: (e) async* {
-        Either<ValueFailure, Unit>? failureOrSuccess;
+  _onSaved(_Saved event, Emitter<AccountCreatorState> emit) async {
+    Either<ValueFailure, Unit>? failureOrSuccess;
 
-        yield state.copyWith(isSaving: true);
+    emit(state.copyWith(isSaving: true));
 
-        if (state.account.failureOption.isNone()) {
-          // failureOrSuccess = state.isEditing
-          //     ? await accountRepository.update(state.account)
-          //     : await accountRepository.create(state.account);
-          failureOrSuccess = await AccountCreator(
-            accountRepository: accountRepository,
-            transactionRepository: transactionRepository,
-            subcategoryRepository: subcategoryRepository,
-            payeeRepository: payeeRepository,
-          ).create(state.account);
-        }
+    if (state.account.failureOption.isNone()) {
+      // failureOrSuccess = state.isEditing
+      //     ? await accountRepository.update(state.account)
+      //     : await accountRepository.create(state.account);
+      failureOrSuccess = await AccountCreator(
+        accountRepository: accountRepository,
+        transactionRepository: transactionRepository,
+        subcategoryRepository: subcategoryRepository,
+        payeeRepository: payeeRepository,
+      ).create(state.account);
+    }
 
-        yield state.copyWith(
-          isSaving: false,
-          showErrorMessages: true,
-          saveFailureOrSuccessOption: optionOf(failureOrSuccess),
-        );
-      },
-    );
+    emit(state.copyWith(
+      isSaving: false,
+      showErrorMessages: true,
+      saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+    ));
   }
 }
