@@ -17,28 +17,27 @@ part 'account_watcher_bloc.freezed.dart';
 
 class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> {
   final IAccountRepository accountRepository;
-
-  AccountWatcherBloc({required this.accountRepository})
-      : super(const AccountWatcherState.initial());
-
   StreamSubscription<List<Account>>? _accountStreamSubscription;
 
-  @override
-  Stream<AccountWatcherState> mapEventToState(
-    AccountWatcherEvent event,
-  ) async* {
-    yield* event.map(watchAccountsStarted: (e) async* {
-      yield const AccountWatcherState.loading();
-      await _accountStreamSubscription?.cancel();
+  AccountWatcherBloc({required this.accountRepository})
+      : super(const AccountWatcherState.initial()) {
+    on<_AccountWatchStarted>(_onWatchAccountsStarted);
+    on<_AccountsReceived>(_onAccountsReceived);
+  }
 
-      accountRepository.watchAllAccounts().listen(
-            (failureOrAccounts) => add(AccountWatcherEvent.accountsReceived(failureOrAccounts)),
-          );
-    }, accountsReceived: (e) async* {
-      yield e.failureOrAccounts.fold(
-        (f) => AccountWatcherState.loadFailure(f),
-        (accounts) => AccountWatcherState.loadSuccess(accounts),
-      );
-    });
+  _onWatchAccountsStarted(_AccountWatchStarted event, Emitter<AccountWatcherState> emit) async {
+    emit(const AccountWatcherState.loading());
+    await _accountStreamSubscription?.cancel();
+
+    accountRepository.watchAllAccounts().listen(
+          (failureOrAccounts) => add(AccountWatcherEvent.accountsReceived(failureOrAccounts)),
+        );
+  }
+
+  _onAccountsReceived(_AccountsReceived event, Emitter<AccountWatcherState> emit) async {
+    event.failureOrAccounts.fold(
+      (f) => emit(AccountWatcherState.loadFailure(f)),
+      (accounts) => emit(AccountWatcherState.loadSuccess(accounts)),
+    );
   }
 }
