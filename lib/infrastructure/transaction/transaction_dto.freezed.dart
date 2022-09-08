@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'transaction_dto.dart';
 
@@ -10,70 +12,11 @@ part of 'transaction_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 MoneyTransactionDTO _$MoneyTransactionDTOFromJson(Map<String, dynamic> json) {
   return _TransactionDTO.fromJson(json);
 }
-
-/// @nodoc
-class _$MoneyTransactionDTOTearOff {
-  const _$MoneyTransactionDTOTearOff();
-
-  _TransactionDTO call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
-          required String id,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_AMOUNT)
-          required double amount,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_MEMO)
-          required String memo,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
-          required int dateInMillisecondsSinceEpoch,
-      @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          required String subcatID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-          required String subcatName,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
-          required String subcatCategoryId,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required double subcatBudgeted,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required double subcatAvailable,
-      @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-          required String payeeID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-          required String payeeName,
-      @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-          required String accountID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-          required String accountName,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-          required double accountBalance}) {
-    return _TransactionDTO(
-      id: id,
-      amount: amount,
-      memo: memo,
-      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch,
-      subcatID: subcatID,
-      subcatName: subcatName,
-      subcatCategoryId: subcatCategoryId,
-      subcatBudgeted: subcatBudgeted,
-      subcatAvailable: subcatAvailable,
-      payeeID: payeeID,
-      payeeName: payeeName,
-      accountID: accountID,
-      accountName: accountName,
-      accountBalance: accountBalance,
-    );
-  }
-
-  MoneyTransactionDTO fromJson(Map<String, Object> json) {
-    return MoneyTransactionDTO.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MoneyTransactionDTO = _$MoneyTransactionDTOTearOff();
 
 /// @nodoc
 mixin _$MoneyTransactionDTO {
@@ -251,11 +194,11 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$TransactionDTOCopyWith<$Res>
+abstract class _$$_TransactionDTOCopyWith<$Res>
     implements $MoneyTransactionDTOCopyWith<$Res> {
-  factory _$TransactionDTOCopyWith(
-          _TransactionDTO value, $Res Function(_TransactionDTO) then) =
-      __$TransactionDTOCopyWithImpl<$Res>;
+  factory _$$_TransactionDTOCopyWith(
+          _$_TransactionDTO value, $Res Function(_$_TransactionDTO) then) =
+      __$$_TransactionDTOCopyWithImpl<$Res>;
   @override
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
@@ -289,15 +232,15 @@ abstract class _$TransactionDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$TransactionDTOCopyWithImpl<$Res>
+class __$$_TransactionDTOCopyWithImpl<$Res>
     extends _$MoneyTransactionDTOCopyWithImpl<$Res>
-    implements _$TransactionDTOCopyWith<$Res> {
-  __$TransactionDTOCopyWithImpl(
-      _TransactionDTO _value, $Res Function(_TransactionDTO) _then)
-      : super(_value, (v) => _then(v as _TransactionDTO));
+    implements _$$_TransactionDTOCopyWith<$Res> {
+  __$$_TransactionDTOCopyWithImpl(
+      _$_TransactionDTO _value, $Res Function(_$_TransactionDTO) _then)
+      : super(_value, (v) => _then(v as _$_TransactionDTO));
 
   @override
-  _TransactionDTO get _value => super._value as _TransactionDTO;
+  _$_TransactionDTO get _value => super._value as _$_TransactionDTO;
 
   @override
   $Res call({
@@ -316,7 +259,7 @@ class __$TransactionDTOCopyWithImpl<$Res>
     Object? accountName = freezed,
     Object? accountBalance = freezed,
   }) {
-    return _then(_TransactionDTO(
+    return _then(_$_TransactionDTO(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -412,7 +355,7 @@ class _$_TransactionDTO extends _TransactionDTO {
       : super._();
 
   factory _$_TransactionDTO.fromJson(Map<String, dynamic> json) =>
-      _$_$_TransactionDTOFromJson(json);
+      _$$_TransactionDTOFromJson(json);
 
   @override
   @JsonKey(
@@ -480,109 +423,94 @@ class _$_TransactionDTO extends _TransactionDTO {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TransactionDTO &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.amount, amount) ||
-                const DeepCollectionEquality().equals(other.amount, amount)) &&
-            (identical(other.memo, memo) ||
-                const DeepCollectionEquality().equals(other.memo, memo)) &&
-            (identical(other.dateInMillisecondsSinceEpoch,
-                    dateInMillisecondsSinceEpoch) ||
-                const DeepCollectionEquality().equals(
-                    other.dateInMillisecondsSinceEpoch,
-                    dateInMillisecondsSinceEpoch)) &&
-            (identical(other.subcatID, subcatID) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatID, subcatID)) &&
-            (identical(other.subcatName, subcatName) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatName, subcatName)) &&
-            (identical(other.subcatCategoryId, subcatCategoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatCategoryId, subcatCategoryId)) &&
-            (identical(other.subcatBudgeted, subcatBudgeted) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatBudgeted, subcatBudgeted)) &&
-            (identical(other.subcatAvailable, subcatAvailable) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcatAvailable, subcatAvailable)) &&
-            (identical(other.payeeID, payeeID) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeID, payeeID)) &&
-            (identical(other.payeeName, payeeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeName, payeeName)) &&
-            (identical(other.accountID, accountID) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountID, accountID)) &&
-            (identical(other.accountName, accountName) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountName, accountName)) &&
-            (identical(other.accountBalance, accountBalance) ||
-                const DeepCollectionEquality()
-                    .equals(other.accountBalance, accountBalance)));
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionDTO &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(
+                other.dateInMillisecondsSinceEpoch,
+                dateInMillisecondsSinceEpoch) &&
+            const DeepCollectionEquality().equals(other.subcatID, subcatID) &&
+            const DeepCollectionEquality()
+                .equals(other.subcatName, subcatName) &&
+            const DeepCollectionEquality()
+                .equals(other.subcatCategoryId, subcatCategoryId) &&
+            const DeepCollectionEquality()
+                .equals(other.subcatBudgeted, subcatBudgeted) &&
+            const DeepCollectionEquality()
+                .equals(other.subcatAvailable, subcatAvailable) &&
+            const DeepCollectionEquality().equals(other.payeeID, payeeID) &&
+            const DeepCollectionEquality().equals(other.payeeName, payeeName) &&
+            const DeepCollectionEquality().equals(other.accountID, accountID) &&
+            const DeepCollectionEquality()
+                .equals(other.accountName, accountName) &&
+            const DeepCollectionEquality()
+                .equals(other.accountBalance, accountBalance));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(amount) ^
-      const DeepCollectionEquality().hash(memo) ^
-      const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch) ^
-      const DeepCollectionEquality().hash(subcatID) ^
-      const DeepCollectionEquality().hash(subcatName) ^
-      const DeepCollectionEquality().hash(subcatCategoryId) ^
-      const DeepCollectionEquality().hash(subcatBudgeted) ^
-      const DeepCollectionEquality().hash(subcatAvailable) ^
-      const DeepCollectionEquality().hash(payeeID) ^
-      const DeepCollectionEquality().hash(payeeName) ^
-      const DeepCollectionEquality().hash(accountID) ^
-      const DeepCollectionEquality().hash(accountName) ^
-      const DeepCollectionEquality().hash(accountBalance);
 
   @JsonKey(ignore: true)
   @override
-  _$TransactionDTOCopyWith<_TransactionDTO> get copyWith =>
-      __$TransactionDTOCopyWithImpl<_TransactionDTO>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(amount),
+      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch),
+      const DeepCollectionEquality().hash(subcatID),
+      const DeepCollectionEquality().hash(subcatName),
+      const DeepCollectionEquality().hash(subcatCategoryId),
+      const DeepCollectionEquality().hash(subcatBudgeted),
+      const DeepCollectionEquality().hash(subcatAvailable),
+      const DeepCollectionEquality().hash(payeeID),
+      const DeepCollectionEquality().hash(payeeName),
+      const DeepCollectionEquality().hash(accountID),
+      const DeepCollectionEquality().hash(accountName),
+      const DeepCollectionEquality().hash(accountBalance));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TransactionDTOCopyWith<_$_TransactionDTO> get copyWith =>
+      __$$_TransactionDTOCopyWithImpl<_$_TransactionDTO>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_TransactionDTOToJson(this);
+    return _$$_TransactionDTOToJson(
+      this,
+    );
   }
 }
 
 abstract class _TransactionDTO extends MoneyTransactionDTO {
   const factory _TransactionDTO(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
-          required String id,
+          required final String id,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_AMOUNT)
-          required double amount,
+          required final double amount,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_MEMO)
-          required String memo,
+          required final String memo,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
-          required int dateInMillisecondsSinceEpoch,
+          required final int dateInMillisecondsSinceEpoch,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          required String subcatID,
+          required final String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-          required String subcatName,
+          required final String subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
-          required String subcatCategoryId,
+          required final String subcatCategoryId,
       @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required double subcatBudgeted,
+          required final double subcatBudgeted,
       @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required double subcatAvailable,
+          required final double subcatAvailable,
       @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-          required String payeeID,
+          required final String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-          required String payeeName,
+          required final String payeeName,
       @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-          required String accountID,
+          required final String accountID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-          required String accountName,
+          required final String accountName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-          required double accountBalance}) = _$_TransactionDTO;
+          required final double accountBalance}) = _$_TransactionDTO;
   const _TransactionDTO._() : super._();
 
   factory _TransactionDTO.fromJson(Map<String, dynamic> json) =
@@ -594,59 +522,59 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       fromJson: convertToString,
       includeIfNull: false,
       name: DatabaseConstants.MONEYTRANSACTION_ID)
-  String get id => throw _privateConstructorUsedError;
+  String get id;
   @override
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_AMOUNT)
-  double get amount => throw _privateConstructorUsedError;
+  double get amount;
   @override
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_MEMO)
-  String get memo => throw _privateConstructorUsedError;
+  String get memo;
   @override
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
-  int get dateInMillisecondsSinceEpoch => throw _privateConstructorUsedError;
+  int get dateInMillisecondsSinceEpoch;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-  String get subcatID => throw _privateConstructorUsedError;
+  String get subcatID;
   @override
   @JsonKey(
       toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-  String get subcatName => throw _privateConstructorUsedError;
+  String get subcatName;
   @override
   @JsonKey(
       toJson: ignore,
       includeIfNull: false,
       name: DatabaseConstants.CAT_ID_OUTSIDE)
-  String get subcatCategoryId => throw _privateConstructorUsedError;
+  String get subcatCategoryId;
   @override
   @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  double get subcatBudgeted => throw _privateConstructorUsedError;
+  double get subcatBudgeted;
   @override
   @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  double get subcatAvailable => throw _privateConstructorUsedError;
+  double get subcatAvailable;
   @override
   @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-  String get payeeID => throw _privateConstructorUsedError;
+  String get payeeID;
   @override
   @JsonKey(
       toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-  String get payeeName => throw _privateConstructorUsedError;
+  String get payeeName;
   @override
   @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-  String get accountID => throw _privateConstructorUsedError;
+  String get accountID;
   @override
   @JsonKey(
       toJson: ignore,
       includeIfNull: false,
       name: DatabaseConstants.ACCOUNT_NAME)
-  String get accountName => throw _privateConstructorUsedError;
+  String get accountName;
   @override
   @JsonKey(
       toJson: ignore,
       includeIfNull: false,
       name: DatabaseConstants.ACCOUNT_BALANCE)
-  double get accountBalance => throw _privateConstructorUsedError;
+  double get accountBalance;
   @override
   @JsonKey(ignore: true)
-  _$TransactionDTOCopyWith<_TransactionDTO> get copyWith =>
+  _$$_TransactionDTOCopyWith<_$_TransactionDTO> get copyWith =>
       throw _privateConstructorUsedError;
 }

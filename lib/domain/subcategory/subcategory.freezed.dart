@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'subcategory.dart';
 
@@ -10,30 +12,7 @@ part of 'subcategory.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$SubcategoryTearOff {
-  const _$SubcategoryTearOff();
-
-  _Subcategory call(
-      {required UniqueId id,
-      required UniqueId categoryID,
-      required Name name,
-      required Amount budgeted,
-      required Amount available}) {
-    return _Subcategory(
-      id: id,
-      categoryID: categoryID,
-      name: name,
-      budgeted: budgeted,
-      available: available,
-    );
-  }
-}
-
-/// @nodoc
-const $Subcategory = _$SubcategoryTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Subcategory {
@@ -103,11 +82,11 @@ class _$SubcategoryCopyWithImpl<$Res> implements $SubcategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$SubcategoryCopyWith<$Res>
+abstract class _$$_SubcategoryCopyWith<$Res>
     implements $SubcategoryCopyWith<$Res> {
-  factory _$SubcategoryCopyWith(
-          _Subcategory value, $Res Function(_Subcategory) then) =
-      __$SubcategoryCopyWithImpl<$Res>;
+  factory _$$_SubcategoryCopyWith(
+          _$_Subcategory value, $Res Function(_$_Subcategory) then) =
+      __$$_SubcategoryCopyWithImpl<$Res>;
   @override
   $Res call(
       {UniqueId id,
@@ -118,14 +97,14 @@ abstract class _$SubcategoryCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
-    implements _$SubcategoryCopyWith<$Res> {
-  __$SubcategoryCopyWithImpl(
-      _Subcategory _value, $Res Function(_Subcategory) _then)
-      : super(_value, (v) => _then(v as _Subcategory));
+class __$$_SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
+    implements _$$_SubcategoryCopyWith<$Res> {
+  __$$_SubcategoryCopyWithImpl(
+      _$_Subcategory _value, $Res Function(_$_Subcategory) _then)
+      : super(_value, (v) => _then(v as _$_Subcategory));
 
   @override
-  _Subcategory get _value => super._value as _Subcategory;
+  _$_Subcategory get _value => super._value as _$_Subcategory;
 
   @override
   $Res call({
@@ -135,7 +114,7 @@ class __$SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
     Object? budgeted = freezed,
     Object? available = freezed,
   }) {
-    return _then(_Subcategory(
+    return _then(_$_Subcategory(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -190,58 +169,52 @@ class _$_Subcategory extends _Subcategory {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Subcategory &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.categoryID, categoryID) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryID, categoryID)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.budgeted, budgeted) ||
-                const DeepCollectionEquality()
-                    .equals(other.budgeted, budgeted)) &&
-            (identical(other.available, available) ||
-                const DeepCollectionEquality()
-                    .equals(other.available, available)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Subcategory &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.categoryID, categoryID) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.budgeted, budgeted) &&
+            const DeepCollectionEquality().equals(other.available, available));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(categoryID) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(budgeted) ^
-      const DeepCollectionEquality().hash(available);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(categoryID),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(budgeted),
+      const DeepCollectionEquality().hash(available));
 
   @JsonKey(ignore: true)
   @override
-  _$SubcategoryCopyWith<_Subcategory> get copyWith =>
-      __$SubcategoryCopyWithImpl<_Subcategory>(this, _$identity);
+  _$$_SubcategoryCopyWith<_$_Subcategory> get copyWith =>
+      __$$_SubcategoryCopyWithImpl<_$_Subcategory>(this, _$identity);
 }
 
 abstract class _Subcategory extends Subcategory {
   const factory _Subcategory(
-      {required UniqueId id,
-      required UniqueId categoryID,
-      required Name name,
-      required Amount budgeted,
-      required Amount available}) = _$_Subcategory;
+      {required final UniqueId id,
+      required final UniqueId categoryID,
+      required final Name name,
+      required final Amount budgeted,
+      required final Amount available}) = _$_Subcategory;
   const _Subcategory._() : super._();
 
   @override
-  UniqueId get id => throw _privateConstructorUsedError;
+  UniqueId get id;
   @override
-  UniqueId get categoryID => throw _privateConstructorUsedError;
+  UniqueId get categoryID;
   @override
-  Name get name => throw _privateConstructorUsedError;
+  Name get name;
   @override
-  Amount get budgeted => throw _privateConstructorUsedError;
+  Amount get budgeted;
   @override
-  Amount get available => throw _privateConstructorUsedError;
+  Amount get available;
   @override
   @JsonKey(ignore: true)
-  _$SubcategoryCopyWith<_Subcategory> get copyWith =>
+  _$$_SubcategoryCopyWith<_$_Subcategory> get copyWith =>
       throw _privateConstructorUsedError;
 }

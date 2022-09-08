@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'transaction_watcher_bloc.dart';
 
@@ -10,32 +12,7 @@ part of 'transaction_watcher_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TransactionWatcherEventTearOff {
-  const _$TransactionWatcherEventTearOff();
-
-  _TransactionWatchStarted watchTransactionsStarted() {
-    return const _TransactionWatchStarted();
-  }
-
-  _TransactionsReceived transactionsReceived(
-      Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) {
-    return _TransactionsReceived(
-      failureOrTransactions,
-    );
-  }
-
-  _CycleAccount cycleAccount({required bool increment}) {
-    return _CycleAccount(
-      increment: increment,
-    );
-  }
-}
-
-/// @nodoc
-const $TransactionWatcherEvent = _$TransactionWatcherEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TransactionWatcherEvent {
@@ -46,6 +23,15 @@ mixin _$TransactionWatcherEvent {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
         transactionsReceived,
     required TResult Function(bool increment) cycleAccount,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +50,13 @@ mixin _$TransactionWatcherEvent {
         watchTransactionsStarted,
     required TResult Function(_TransactionsReceived value) transactionsReceived,
     required TResult Function(_CycleAccount value) cycleAccount,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -94,23 +87,23 @@ class _$TransactionWatcherEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$TransactionWatchStartedCopyWith<$Res> {
-  factory _$TransactionWatchStartedCopyWith(_TransactionWatchStarted value,
-          $Res Function(_TransactionWatchStarted) then) =
-      __$TransactionWatchStartedCopyWithImpl<$Res>;
+abstract class _$$_TransactionWatchStartedCopyWith<$Res> {
+  factory _$$_TransactionWatchStartedCopyWith(_$_TransactionWatchStarted value,
+          $Res Function(_$_TransactionWatchStarted) then) =
+      __$$_TransactionWatchStartedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$TransactionWatchStartedCopyWithImpl<$Res>
+class __$$_TransactionWatchStartedCopyWithImpl<$Res>
     extends _$TransactionWatcherEventCopyWithImpl<$Res>
-    implements _$TransactionWatchStartedCopyWith<$Res> {
-  __$TransactionWatchStartedCopyWithImpl(_TransactionWatchStarted _value,
-      $Res Function(_TransactionWatchStarted) _then)
-      : super(_value, (v) => _then(v as _TransactionWatchStarted));
+    implements _$$_TransactionWatchStartedCopyWith<$Res> {
+  __$$_TransactionWatchStartedCopyWithImpl(_$_TransactionWatchStarted _value,
+      $Res Function(_$_TransactionWatchStarted) _then)
+      : super(_value, (v) => _then(v as _$_TransactionWatchStarted));
 
   @override
-  _TransactionWatchStarted get _value =>
-      super._value as _TransactionWatchStarted;
+  _$_TransactionWatchStarted get _value =>
+      super._value as _$_TransactionWatchStarted;
 }
 
 /// @nodoc
@@ -125,7 +118,9 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _TransactionWatchStarted);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionWatchStarted);
   }
 
   @override
@@ -141,6 +136,18 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
     required TResult Function(bool increment) cycleAccount,
   }) {
     return watchTransactionsStarted();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+  }) {
+    return watchTransactionsStarted?.call();
   }
 
   @override
@@ -172,6 +179,16 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+  }) {
+    return watchTransactionsStarted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
@@ -190,30 +207,30 @@ abstract class _TransactionWatchStarted implements TransactionWatcherEvent {
 }
 
 /// @nodoc
-abstract class _$TransactionsReceivedCopyWith<$Res> {
-  factory _$TransactionsReceivedCopyWith(_TransactionsReceived value,
-          $Res Function(_TransactionsReceived) then) =
-      __$TransactionsReceivedCopyWithImpl<$Res>;
+abstract class _$$_TransactionsReceivedCopyWith<$Res> {
+  factory _$$_TransactionsReceivedCopyWith(_$_TransactionsReceived value,
+          $Res Function(_$_TransactionsReceived) then) =
+      __$$_TransactionsReceivedCopyWithImpl<$Res>;
   $Res call(
       {Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions});
 }
 
 /// @nodoc
-class __$TransactionsReceivedCopyWithImpl<$Res>
+class __$$_TransactionsReceivedCopyWithImpl<$Res>
     extends _$TransactionWatcherEventCopyWithImpl<$Res>
-    implements _$TransactionsReceivedCopyWith<$Res> {
-  __$TransactionsReceivedCopyWithImpl(
-      _TransactionsReceived _value, $Res Function(_TransactionsReceived) _then)
-      : super(_value, (v) => _then(v as _TransactionsReceived));
+    implements _$$_TransactionsReceivedCopyWith<$Res> {
+  __$$_TransactionsReceivedCopyWithImpl(_$_TransactionsReceived _value,
+      $Res Function(_$_TransactionsReceived) _then)
+      : super(_value, (v) => _then(v as _$_TransactionsReceived));
 
   @override
-  _TransactionsReceived get _value => super._value as _TransactionsReceived;
+  _$_TransactionsReceived get _value => super._value as _$_TransactionsReceived;
 
   @override
   $Res call({
     Object? failureOrTransactions = freezed,
   }) {
-    return _then(_TransactionsReceived(
+    return _then(_$_TransactionsReceived(
       failureOrTransactions == freezed
           ? _value.failureOrTransactions
           : failureOrTransactions // ignore: cast_nullable_to_non_nullable
@@ -238,21 +255,20 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TransactionsReceived &&
-            (identical(other.failureOrTransactions, failureOrTransactions) ||
-                const DeepCollectionEquality().equals(
-                    other.failureOrTransactions, failureOrTransactions)));
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionsReceived &&
+            const DeepCollectionEquality()
+                .equals(other.failureOrTransactions, failureOrTransactions));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrTransactions);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failureOrTransactions));
 
   @JsonKey(ignore: true)
   @override
-  _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith =>
-      __$TransactionsReceivedCopyWithImpl<_TransactionsReceived>(
+  _$$_TransactionsReceivedCopyWith<_$_TransactionsReceived> get copyWith =>
+      __$$_TransactionsReceivedCopyWithImpl<_$_TransactionsReceived>(
           this, _$identity);
 
   @override
@@ -265,6 +281,18 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     required TResult Function(bool increment) cycleAccount,
   }) {
     return transactionsReceived(failureOrTransactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+  }) {
+    return transactionsReceived?.call(failureOrTransactions);
   }
 
   @override
@@ -296,6 +324,16 @@ class _$_TransactionsReceived implements _TransactionsReceived {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+  }) {
+    return transactionsReceived?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
@@ -311,40 +349,39 @@ class _$_TransactionsReceived implements _TransactionsReceived {
 
 abstract class _TransactionsReceived implements TransactionWatcherEvent {
   const factory _TransactionsReceived(
-          Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions) =
-      _$_TransactionsReceived;
+      final Either<ValueFailure, List<MoneyTransaction>>
+          failureOrTransactions) = _$_TransactionsReceived;
 
-  Either<ValueFailure, List<MoneyTransaction>> get failureOrTransactions =>
-      throw _privateConstructorUsedError;
+  Either<ValueFailure, List<MoneyTransaction>> get failureOrTransactions;
   @JsonKey(ignore: true)
-  _$TransactionsReceivedCopyWith<_TransactionsReceived> get copyWith =>
+  _$$_TransactionsReceivedCopyWith<_$_TransactionsReceived> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$CycleAccountCopyWith<$Res> {
-  factory _$CycleAccountCopyWith(
-          _CycleAccount value, $Res Function(_CycleAccount) then) =
-      __$CycleAccountCopyWithImpl<$Res>;
+abstract class _$$_CycleAccountCopyWith<$Res> {
+  factory _$$_CycleAccountCopyWith(
+          _$_CycleAccount value, $Res Function(_$_CycleAccount) then) =
+      __$$_CycleAccountCopyWithImpl<$Res>;
   $Res call({bool increment});
 }
 
 /// @nodoc
-class __$CycleAccountCopyWithImpl<$Res>
+class __$$_CycleAccountCopyWithImpl<$Res>
     extends _$TransactionWatcherEventCopyWithImpl<$Res>
-    implements _$CycleAccountCopyWith<$Res> {
-  __$CycleAccountCopyWithImpl(
-      _CycleAccount _value, $Res Function(_CycleAccount) _then)
-      : super(_value, (v) => _then(v as _CycleAccount));
+    implements _$$_CycleAccountCopyWith<$Res> {
+  __$$_CycleAccountCopyWithImpl(
+      _$_CycleAccount _value, $Res Function(_$_CycleAccount) _then)
+      : super(_value, (v) => _then(v as _$_CycleAccount));
 
   @override
-  _CycleAccount get _value => super._value as _CycleAccount;
+  _$_CycleAccount get _value => super._value as _$_CycleAccount;
 
   @override
   $Res call({
     Object? increment = freezed,
   }) {
-    return _then(_CycleAccount(
+    return _then(_$_CycleAccount(
       increment: increment == freezed
           ? _value.increment
           : increment // ignore: cast_nullable_to_non_nullable
@@ -369,20 +406,19 @@ class _$_CycleAccount implements _CycleAccount {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CycleAccount &&
-            (identical(other.increment, increment) ||
-                const DeepCollectionEquality()
-                    .equals(other.increment, increment)));
+        (other.runtimeType == runtimeType &&
+            other is _$_CycleAccount &&
+            const DeepCollectionEquality().equals(other.increment, increment));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(increment);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(increment));
 
   @JsonKey(ignore: true)
   @override
-  _$CycleAccountCopyWith<_CycleAccount> get copyWith =>
-      __$CycleAccountCopyWithImpl<_CycleAccount>(this, _$identity);
+  _$$_CycleAccountCopyWith<_$_CycleAccount> get copyWith =>
+      __$$_CycleAccountCopyWithImpl<_$_CycleAccount>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -394,6 +430,18 @@ class _$_CycleAccount implements _CycleAccount {
     required TResult Function(bool increment) cycleAccount,
   }) {
     return cycleAccount(increment);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+  }) {
+    return cycleAccount?.call(increment);
   }
 
   @override
@@ -425,6 +473,16 @@ class _$_CycleAccount implements _CycleAccount {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+  }) {
+    return cycleAccount?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
@@ -439,42 +497,14 @@ class _$_CycleAccount implements _CycleAccount {
 }
 
 abstract class _CycleAccount implements TransactionWatcherEvent {
-  const factory _CycleAccount({required bool increment}) = _$_CycleAccount;
+  const factory _CycleAccount({required final bool increment}) =
+      _$_CycleAccount;
 
-  bool get increment => throw _privateConstructorUsedError;
+  bool get increment;
   @JsonKey(ignore: true)
-  _$CycleAccountCopyWith<_CycleAccount> get copyWith =>
+  _$$_CycleAccountCopyWith<_$_CycleAccount> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$TransactionWatcherStateTearOff {
-  const _$TransactionWatcherStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _TransactionLoadSuccess loadSuccess(List<MoneyTransaction> transactions) {
-    return _TransactionLoadSuccess(
-      transactions,
-    );
-  }
-
-  _TransactionLoadFailure loadFailure(
-      ValueFailure<dynamic> transactionFailure) {
-    return _TransactionLoadFailure(
-      transactionFailure,
-    );
-  }
-}
-
-/// @nodoc
-const $TransactionWatcherState = _$TransactionWatcherStateTearOff();
 
 /// @nodoc
 mixin _$TransactionWatcherState {
@@ -485,6 +515,14 @@ mixin _$TransactionWatcherState {
     required TResult Function(List<MoneyTransaction> transactions) loadSuccess,
     required TResult Function(ValueFailure<dynamic> transactionFailure)
         loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -502,6 +540,14 @@ mixin _$TransactionWatcherState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_TransactionLoadSuccess value) loadSuccess,
     required TResult Function(_TransactionLoadFailure value) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult Function(_TransactionLoadFailure value)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -533,20 +579,21 @@ class _$TransactionWatcherStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
     extends _$TransactionWatcherStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -561,7 +608,8 @@ class _$_Initial implements _Initial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Initial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -577,6 +625,17 @@ class _$_Initial implements _Initial {
         loadFailure,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -607,6 +666,17 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult Function(_TransactionLoadFailure value)? loadFailure,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -626,20 +696,21 @@ abstract class _Initial implements TransactionWatcherState {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
+class __$$_LoadingCopyWithImpl<$Res>
     extends _$TransactionWatcherStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -654,7 +725,8 @@ class _$_Loading implements _Loading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -670,6 +742,17 @@ class _$_Loading implements _Loading {
         loadFailure,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -700,6 +783,17 @@ class _$_Loading implements _Loading {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult Function(_TransactionLoadFailure value)? loadFailure,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -719,31 +813,32 @@ abstract class _Loading implements TransactionWatcherState {
 }
 
 /// @nodoc
-abstract class _$TransactionLoadSuccessCopyWith<$Res> {
-  factory _$TransactionLoadSuccessCopyWith(_TransactionLoadSuccess value,
-          $Res Function(_TransactionLoadSuccess) then) =
-      __$TransactionLoadSuccessCopyWithImpl<$Res>;
+abstract class _$$_TransactionLoadSuccessCopyWith<$Res> {
+  factory _$$_TransactionLoadSuccessCopyWith(_$_TransactionLoadSuccess value,
+          $Res Function(_$_TransactionLoadSuccess) then) =
+      __$$_TransactionLoadSuccessCopyWithImpl<$Res>;
   $Res call({List<MoneyTransaction> transactions});
 }
 
 /// @nodoc
-class __$TransactionLoadSuccessCopyWithImpl<$Res>
+class __$$_TransactionLoadSuccessCopyWithImpl<$Res>
     extends _$TransactionWatcherStateCopyWithImpl<$Res>
-    implements _$TransactionLoadSuccessCopyWith<$Res> {
-  __$TransactionLoadSuccessCopyWithImpl(_TransactionLoadSuccess _value,
-      $Res Function(_TransactionLoadSuccess) _then)
-      : super(_value, (v) => _then(v as _TransactionLoadSuccess));
+    implements _$$_TransactionLoadSuccessCopyWith<$Res> {
+  __$$_TransactionLoadSuccessCopyWithImpl(_$_TransactionLoadSuccess _value,
+      $Res Function(_$_TransactionLoadSuccess) _then)
+      : super(_value, (v) => _then(v as _$_TransactionLoadSuccess));
 
   @override
-  _TransactionLoadSuccess get _value => super._value as _TransactionLoadSuccess;
+  _$_TransactionLoadSuccess get _value =>
+      super._value as _$_TransactionLoadSuccess;
 
   @override
   $Res call({
     Object? transactions = freezed,
   }) {
-    return _then(_TransactionLoadSuccess(
+    return _then(_$_TransactionLoadSuccess(
       transactions == freezed
-          ? _value.transactions
+          ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<MoneyTransaction>,
     ));
@@ -753,10 +848,15 @@ class __$TransactionLoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
-  const _$_TransactionLoadSuccess(this.transactions);
+  const _$_TransactionLoadSuccess(final List<MoneyTransaction> transactions)
+      : _transactions = transactions;
 
+  final List<MoneyTransaction> _transactions;
   @override
-  final List<MoneyTransaction> transactions;
+  List<MoneyTransaction> get transactions {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_transactions);
+  }
 
   @override
   String toString() {
@@ -766,20 +866,20 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TransactionLoadSuccess &&
-            (identical(other.transactions, transactions) ||
-                const DeepCollectionEquality()
-                    .equals(other.transactions, transactions)));
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionLoadSuccess &&
+            const DeepCollectionEquality()
+                .equals(other._transactions, _transactions));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(transactions);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_transactions));
 
   @JsonKey(ignore: true)
   @override
-  _$TransactionLoadSuccessCopyWith<_TransactionLoadSuccess> get copyWith =>
-      __$TransactionLoadSuccessCopyWithImpl<_TransactionLoadSuccess>(
+  _$$_TransactionLoadSuccessCopyWith<_$_TransactionLoadSuccess> get copyWith =>
+      __$$_TransactionLoadSuccessCopyWithImpl<_$_TransactionLoadSuccess>(
           this, _$identity);
 
   @override
@@ -792,6 +892,17 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
         loadFailure,
   }) {
     return loadSuccess(transactions);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+  }) {
+    return loadSuccess?.call(transactions);
   }
 
   @override
@@ -822,6 +933,17 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult Function(_TransactionLoadFailure value)? loadFailure,
+  }) {
+    return loadSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -837,41 +959,42 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
 }
 
 abstract class _TransactionLoadSuccess implements TransactionWatcherState {
-  const factory _TransactionLoadSuccess(List<MoneyTransaction> transactions) =
-      _$_TransactionLoadSuccess;
+  const factory _TransactionLoadSuccess(
+      final List<MoneyTransaction> transactions) = _$_TransactionLoadSuccess;
 
-  List<MoneyTransaction> get transactions => throw _privateConstructorUsedError;
+  List<MoneyTransaction> get transactions;
   @JsonKey(ignore: true)
-  _$TransactionLoadSuccessCopyWith<_TransactionLoadSuccess> get copyWith =>
+  _$$_TransactionLoadSuccessCopyWith<_$_TransactionLoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$TransactionLoadFailureCopyWith<$Res> {
-  factory _$TransactionLoadFailureCopyWith(_TransactionLoadFailure value,
-          $Res Function(_TransactionLoadFailure) then) =
-      __$TransactionLoadFailureCopyWithImpl<$Res>;
+abstract class _$$_TransactionLoadFailureCopyWith<$Res> {
+  factory _$$_TransactionLoadFailureCopyWith(_$_TransactionLoadFailure value,
+          $Res Function(_$_TransactionLoadFailure) then) =
+      __$$_TransactionLoadFailureCopyWithImpl<$Res>;
   $Res call({ValueFailure<dynamic> transactionFailure});
 
   $ValueFailureCopyWith<dynamic, $Res> get transactionFailure;
 }
 
 /// @nodoc
-class __$TransactionLoadFailureCopyWithImpl<$Res>
+class __$$_TransactionLoadFailureCopyWithImpl<$Res>
     extends _$TransactionWatcherStateCopyWithImpl<$Res>
-    implements _$TransactionLoadFailureCopyWith<$Res> {
-  __$TransactionLoadFailureCopyWithImpl(_TransactionLoadFailure _value,
-      $Res Function(_TransactionLoadFailure) _then)
-      : super(_value, (v) => _then(v as _TransactionLoadFailure));
+    implements _$$_TransactionLoadFailureCopyWith<$Res> {
+  __$$_TransactionLoadFailureCopyWithImpl(_$_TransactionLoadFailure _value,
+      $Res Function(_$_TransactionLoadFailure) _then)
+      : super(_value, (v) => _then(v as _$_TransactionLoadFailure));
 
   @override
-  _TransactionLoadFailure get _value => super._value as _TransactionLoadFailure;
+  _$_TransactionLoadFailure get _value =>
+      super._value as _$_TransactionLoadFailure;
 
   @override
   $Res call({
     Object? transactionFailure = freezed,
   }) {
-    return _then(_TransactionLoadFailure(
+    return _then(_$_TransactionLoadFailure(
       transactionFailure == freezed
           ? _value.transactionFailure
           : transactionFailure // ignore: cast_nullable_to_non_nullable
@@ -904,21 +1027,20 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _TransactionLoadFailure &&
-            (identical(other.transactionFailure, transactionFailure) ||
-                const DeepCollectionEquality()
-                    .equals(other.transactionFailure, transactionFailure)));
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionLoadFailure &&
+            const DeepCollectionEquality()
+                .equals(other.transactionFailure, transactionFailure));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(transactionFailure);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(transactionFailure));
 
   @JsonKey(ignore: true)
   @override
-  _$TransactionLoadFailureCopyWith<_TransactionLoadFailure> get copyWith =>
-      __$TransactionLoadFailureCopyWithImpl<_TransactionLoadFailure>(
+  _$$_TransactionLoadFailureCopyWith<_$_TransactionLoadFailure> get copyWith =>
+      __$$_TransactionLoadFailureCopyWithImpl<_$_TransactionLoadFailure>(
           this, _$identity);
 
   @override
@@ -931,6 +1053,17 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
         loadFailure,
   }) {
     return loadFailure(transactionFailure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+  }) {
+    return loadFailure?.call(transactionFailure);
   }
 
   @override
@@ -961,6 +1094,17 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult Function(_TransactionLoadFailure value)? loadFailure,
+  }) {
+    return loadFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -977,11 +1121,11 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
 
 abstract class _TransactionLoadFailure implements TransactionWatcherState {
   const factory _TransactionLoadFailure(
-      ValueFailure<dynamic> transactionFailure) = _$_TransactionLoadFailure;
+          final ValueFailure<dynamic> transactionFailure) =
+      _$_TransactionLoadFailure;
 
-  ValueFailure<dynamic> get transactionFailure =>
-      throw _privateConstructorUsedError;
+  ValueFailure<dynamic> get transactionFailure;
   @JsonKey(ignore: true)
-  _$TransactionLoadFailureCopyWith<_TransactionLoadFailure> get copyWith =>
+  _$$_TransactionLoadFailureCopyWith<_$_TransactionLoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }

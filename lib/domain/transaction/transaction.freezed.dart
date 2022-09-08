@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'transaction.dart';
 
@@ -10,34 +12,7 @@ part of 'transaction.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$MoneyTransactionTearOff {
-  const _$MoneyTransactionTearOff();
-
-  _MoneyTransaction call(
-      {required UniqueId id,
-      required Subcategory subcategory,
-      required Payee payee,
-      required Account account,
-      required Amount amount,
-      required Name memo,
-      required DateTime date}) {
-    return _MoneyTransaction(
-      id: id,
-      subcategory: subcategory,
-      payee: payee,
-      account: account,
-      amount: amount,
-      memo: memo,
-      date: date,
-    );
-  }
-}
-
-/// @nodoc
-const $MoneyTransaction = _$MoneyTransactionTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$MoneyTransaction {
@@ -147,11 +122,11 @@ class _$MoneyTransactionCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$MoneyTransactionCopyWith<$Res>
+abstract class _$$_MoneyTransactionCopyWith<$Res>
     implements $MoneyTransactionCopyWith<$Res> {
-  factory _$MoneyTransactionCopyWith(
-          _MoneyTransaction value, $Res Function(_MoneyTransaction) then) =
-      __$MoneyTransactionCopyWithImpl<$Res>;
+  factory _$$_MoneyTransactionCopyWith(
+          _$_MoneyTransaction value, $Res Function(_$_MoneyTransaction) then) =
+      __$$_MoneyTransactionCopyWithImpl<$Res>;
   @override
   $Res call(
       {UniqueId id,
@@ -171,15 +146,15 @@ abstract class _$MoneyTransactionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MoneyTransactionCopyWithImpl<$Res>
+class __$$_MoneyTransactionCopyWithImpl<$Res>
     extends _$MoneyTransactionCopyWithImpl<$Res>
-    implements _$MoneyTransactionCopyWith<$Res> {
-  __$MoneyTransactionCopyWithImpl(
-      _MoneyTransaction _value, $Res Function(_MoneyTransaction) _then)
-      : super(_value, (v) => _then(v as _MoneyTransaction));
+    implements _$$_MoneyTransactionCopyWith<$Res> {
+  __$$_MoneyTransactionCopyWithImpl(
+      _$_MoneyTransaction _value, $Res Function(_$_MoneyTransaction) _then)
+      : super(_value, (v) => _then(v as _$_MoneyTransaction));
 
   @override
-  _MoneyTransaction get _value => super._value as _MoneyTransaction;
+  _$_MoneyTransaction get _value => super._value as _$_MoneyTransaction;
 
   @override
   $Res call({
@@ -191,7 +166,7 @@ class __$MoneyTransactionCopyWithImpl<$Res>
     Object? memo = freezed,
     Object? date = freezed,
   }) {
-    return _then(_MoneyTransaction(
+    return _then(_$_MoneyTransaction(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -260,69 +235,62 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _MoneyTransaction &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.subcategory, subcategory) ||
-                const DeepCollectionEquality()
-                    .equals(other.subcategory, subcategory)) &&
-            (identical(other.payee, payee) ||
-                const DeepCollectionEquality().equals(other.payee, payee)) &&
-            (identical(other.account, account) ||
-                const DeepCollectionEquality()
-                    .equals(other.account, account)) &&
-            (identical(other.amount, amount) ||
-                const DeepCollectionEquality().equals(other.amount, amount)) &&
-            (identical(other.memo, memo) ||
-                const DeepCollectionEquality().equals(other.memo, memo)) &&
-            (identical(other.date, date) ||
-                const DeepCollectionEquality().equals(other.date, date)));
+        (other.runtimeType == runtimeType &&
+            other is _$_MoneyTransaction &&
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.subcategory, subcategory) &&
+            const DeepCollectionEquality().equals(other.payee, payee) &&
+            const DeepCollectionEquality().equals(other.account, account) &&
+            const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(other.date, date));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(subcategory) ^
-      const DeepCollectionEquality().hash(payee) ^
-      const DeepCollectionEquality().hash(account) ^
-      const DeepCollectionEquality().hash(amount) ^
-      const DeepCollectionEquality().hash(memo) ^
-      const DeepCollectionEquality().hash(date);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(subcategory),
+      const DeepCollectionEquality().hash(payee),
+      const DeepCollectionEquality().hash(account),
+      const DeepCollectionEquality().hash(amount),
+      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(date));
 
   @JsonKey(ignore: true)
   @override
-  _$MoneyTransactionCopyWith<_MoneyTransaction> get copyWith =>
-      __$MoneyTransactionCopyWithImpl<_MoneyTransaction>(this, _$identity);
+  _$$_MoneyTransactionCopyWith<_$_MoneyTransaction> get copyWith =>
+      __$$_MoneyTransactionCopyWithImpl<_$_MoneyTransaction>(this, _$identity);
 }
 
 abstract class _MoneyTransaction extends MoneyTransaction {
   const factory _MoneyTransaction(
-      {required UniqueId id,
-      required Subcategory subcategory,
-      required Payee payee,
-      required Account account,
-      required Amount amount,
-      required Name memo,
-      required DateTime date}) = _$_MoneyTransaction;
+      {required final UniqueId id,
+      required final Subcategory subcategory,
+      required final Payee payee,
+      required final Account account,
+      required final Amount amount,
+      required final Name memo,
+      required final DateTime date}) = _$_MoneyTransaction;
   const _MoneyTransaction._() : super._();
 
   @override
-  UniqueId get id => throw _privateConstructorUsedError;
+  UniqueId get id;
   @override
-  Subcategory get subcategory => throw _privateConstructorUsedError;
+  Subcategory get subcategory;
   @override
-  Payee get payee => throw _privateConstructorUsedError;
+  Payee get payee;
   @override
-  Account get account => throw _privateConstructorUsedError;
+  Account get account;
   @override
-  Amount get amount => throw _privateConstructorUsedError;
+  Amount get amount;
   @override
-  Name get memo => throw _privateConstructorUsedError;
+  Name get memo;
   @override
-  DateTime get date => throw _privateConstructorUsedError;
+  DateTime get date;
   @override
   @JsonKey(ignore: true)
-  _$MoneyTransactionCopyWith<_MoneyTransaction> get copyWith =>
+  _$$_MoneyTransactionCopyWith<_$_MoneyTransaction> get copyWith =>
       throw _privateConstructorUsedError;
 }

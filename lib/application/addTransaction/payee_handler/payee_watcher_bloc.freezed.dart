@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'payee_watcher_bloc.dart';
 
@@ -10,26 +12,7 @@ part of 'payee_watcher_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PayeeWatcherEventTearOff {
-  const _$PayeeWatcherEventTearOff();
-
-  _PayeeWatchStarted watchPayeesStarted() {
-    return const _PayeeWatchStarted();
-  }
-
-  _PayeesReceived payeesReceived(
-      Either<ValueFailure, List<Payee>> failureOrPayees) {
-    return _PayeesReceived(
-      failureOrPayees,
-    );
-  }
-}
-
-/// @nodoc
-const $PayeeWatcherEvent = _$PayeeWatcherEventTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PayeeWatcherEvent {
@@ -37,6 +20,13 @@ mixin _$PayeeWatcherEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() watchPayeesStarted,
     required TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)
+        payeesReceived,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchPayeesStarted,
+    TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)?
         payeesReceived,
   }) =>
       throw _privateConstructorUsedError;
@@ -52,6 +42,12 @@ mixin _$PayeeWatcherEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_PayeeWatchStarted value) watchPayeesStarted,
     required TResult Function(_PayeesReceived value) payeesReceived,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
+    TResult Function(_PayeesReceived value)? payeesReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,22 +77,22 @@ class _$PayeeWatcherEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$PayeeWatchStartedCopyWith<$Res> {
-  factory _$PayeeWatchStartedCopyWith(
-          _PayeeWatchStarted value, $Res Function(_PayeeWatchStarted) then) =
-      __$PayeeWatchStartedCopyWithImpl<$Res>;
+abstract class _$$_PayeeWatchStartedCopyWith<$Res> {
+  factory _$$_PayeeWatchStartedCopyWith(_$_PayeeWatchStarted value,
+          $Res Function(_$_PayeeWatchStarted) then) =
+      __$$_PayeeWatchStartedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$PayeeWatchStartedCopyWithImpl<$Res>
+class __$$_PayeeWatchStartedCopyWithImpl<$Res>
     extends _$PayeeWatcherEventCopyWithImpl<$Res>
-    implements _$PayeeWatchStartedCopyWith<$Res> {
-  __$PayeeWatchStartedCopyWithImpl(
-      _PayeeWatchStarted _value, $Res Function(_PayeeWatchStarted) _then)
-      : super(_value, (v) => _then(v as _PayeeWatchStarted));
+    implements _$$_PayeeWatchStartedCopyWith<$Res> {
+  __$$_PayeeWatchStartedCopyWithImpl(
+      _$_PayeeWatchStarted _value, $Res Function(_$_PayeeWatchStarted) _then)
+      : super(_value, (v) => _then(v as _$_PayeeWatchStarted));
 
   @override
-  _PayeeWatchStarted get _value => super._value as _PayeeWatchStarted;
+  _$_PayeeWatchStarted get _value => super._value as _$_PayeeWatchStarted;
 }
 
 /// @nodoc
@@ -111,7 +107,8 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _PayeeWatchStarted);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_PayeeWatchStarted);
   }
 
   @override
@@ -125,6 +122,16 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
         payeesReceived,
   }) {
     return watchPayeesStarted();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchPayeesStarted,
+    TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)?
+        payeesReceived,
+  }) {
+    return watchPayeesStarted?.call();
   }
 
   @override
@@ -152,6 +159,15 @@ class _$_PayeeWatchStarted implements _PayeeWatchStarted {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
+    TResult Function(_PayeesReceived value)? payeesReceived,
+  }) {
+    return watchPayeesStarted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
     TResult Function(_PayeesReceived value)? payeesReceived,
@@ -169,29 +185,29 @@ abstract class _PayeeWatchStarted implements PayeeWatcherEvent {
 }
 
 /// @nodoc
-abstract class _$PayeesReceivedCopyWith<$Res> {
-  factory _$PayeesReceivedCopyWith(
-          _PayeesReceived value, $Res Function(_PayeesReceived) then) =
-      __$PayeesReceivedCopyWithImpl<$Res>;
+abstract class _$$_PayeesReceivedCopyWith<$Res> {
+  factory _$$_PayeesReceivedCopyWith(
+          _$_PayeesReceived value, $Res Function(_$_PayeesReceived) then) =
+      __$$_PayeesReceivedCopyWithImpl<$Res>;
   $Res call({Either<ValueFailure, List<Payee>> failureOrPayees});
 }
 
 /// @nodoc
-class __$PayeesReceivedCopyWithImpl<$Res>
+class __$$_PayeesReceivedCopyWithImpl<$Res>
     extends _$PayeeWatcherEventCopyWithImpl<$Res>
-    implements _$PayeesReceivedCopyWith<$Res> {
-  __$PayeesReceivedCopyWithImpl(
-      _PayeesReceived _value, $Res Function(_PayeesReceived) _then)
-      : super(_value, (v) => _then(v as _PayeesReceived));
+    implements _$$_PayeesReceivedCopyWith<$Res> {
+  __$$_PayeesReceivedCopyWithImpl(
+      _$_PayeesReceived _value, $Res Function(_$_PayeesReceived) _then)
+      : super(_value, (v) => _then(v as _$_PayeesReceived));
 
   @override
-  _PayeesReceived get _value => super._value as _PayeesReceived;
+  _$_PayeesReceived get _value => super._value as _$_PayeesReceived;
 
   @override
   $Res call({
     Object? failureOrPayees = freezed,
   }) {
-    return _then(_PayeesReceived(
+    return _then(_$_PayeesReceived(
       failureOrPayees == freezed
           ? _value.failureOrPayees
           : failureOrPayees // ignore: cast_nullable_to_non_nullable
@@ -216,21 +232,20 @@ class _$_PayeesReceived implements _PayeesReceived {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PayeesReceived &&
-            (identical(other.failureOrPayees, failureOrPayees) ||
-                const DeepCollectionEquality()
-                    .equals(other.failureOrPayees, failureOrPayees)));
+        (other.runtimeType == runtimeType &&
+            other is _$_PayeesReceived &&
+            const DeepCollectionEquality()
+                .equals(other.failureOrPayees, failureOrPayees));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(failureOrPayees);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failureOrPayees));
 
   @JsonKey(ignore: true)
   @override
-  _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith =>
-      __$PayeesReceivedCopyWithImpl<_PayeesReceived>(this, _$identity);
+  _$$_PayeesReceivedCopyWith<_$_PayeesReceived> get copyWith =>
+      __$$_PayeesReceivedCopyWithImpl<_$_PayeesReceived>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -240,6 +255,16 @@ class _$_PayeesReceived implements _PayeesReceived {
         payeesReceived,
   }) {
     return payeesReceived(failureOrPayees);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchPayeesStarted,
+    TResult Function(Either<ValueFailure, List<Payee>> failureOrPayees)?
+        payeesReceived,
+  }) {
+    return payeesReceived?.call(failureOrPayees);
   }
 
   @override
@@ -267,6 +292,15 @@ class _$_PayeesReceived implements _PayeesReceived {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
+    TResult Function(_PayeesReceived value)? payeesReceived,
+  }) {
+    return payeesReceived?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_PayeeWatchStarted value)? watchPayeesStarted,
     TResult Function(_PayeesReceived value)? payeesReceived,
@@ -281,42 +315,14 @@ class _$_PayeesReceived implements _PayeesReceived {
 
 abstract class _PayeesReceived implements PayeeWatcherEvent {
   const factory _PayeesReceived(
-      Either<ValueFailure, List<Payee>> failureOrPayees) = _$_PayeesReceived;
+          final Either<ValueFailure, List<Payee>> failureOrPayees) =
+      _$_PayeesReceived;
 
-  Either<ValueFailure, List<Payee>> get failureOrPayees =>
-      throw _privateConstructorUsedError;
+  Either<ValueFailure, List<Payee>> get failureOrPayees;
   @JsonKey(ignore: true)
-  _$PayeesReceivedCopyWith<_PayeesReceived> get copyWith =>
+  _$$_PayeesReceivedCopyWith<_$_PayeesReceived> get copyWith =>
       throw _privateConstructorUsedError;
 }
-
-/// @nodoc
-class _$PayeeWatcherStateTearOff {
-  const _$PayeeWatcherStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _PayeeLoadSuccess loadSuccess(List<Payee> payees) {
-    return _PayeeLoadSuccess(
-      payees,
-    );
-  }
-
-  _PayeeLoadFailure loadFailure(ValueFailure<dynamic> payeeFailure) {
-    return _PayeeLoadFailure(
-      payeeFailure,
-    );
-  }
-}
-
-/// @nodoc
-const $PayeeWatcherState = _$PayeeWatcherStateTearOff();
 
 /// @nodoc
 mixin _$PayeeWatcherState {
@@ -326,6 +332,14 @@ mixin _$PayeeWatcherState {
     required TResult Function() loading,
     required TResult Function(List<Payee> payees) loadSuccess,
     required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -343,6 +357,14 @@ mixin _$PayeeWatcherState {
     required TResult Function(_Loading value) loading,
     required TResult Function(_PayeeLoadSuccess value) loadSuccess,
     required TResult Function(_PayeeLoadFailure value) loadFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -374,19 +396,21 @@ class _$PayeeWatcherStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$PayeeWatcherStateCopyWithImpl<$Res>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _Initial get _value => super._value as _Initial;
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -401,7 +425,8 @@ class _$_Initial implements _Initial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Initial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -416,6 +441,17 @@ class _$_Initial implements _Initial {
     required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
     return initial();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+  }) {
+    return initial?.call();
   }
 
   @override
@@ -446,6 +482,17 @@ class _$_Initial implements _Initial {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+  }) {
+    return initial?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -465,19 +512,21 @@ abstract class _Initial implements PayeeWatcherState {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res> extends _$PayeeWatcherStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$PayeeWatcherStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _Loading get _value => super._value as _Loading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -492,7 +541,8 @@ class _$_Loading implements _Loading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -507,6 +557,17 @@ class _$_Loading implements _Loading {
     required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
     return loading();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+  }) {
+    return loading?.call();
   }
 
   @override
@@ -537,6 +598,17 @@ class _$_Loading implements _Loading {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+  }) {
+    return loading?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -556,31 +628,31 @@ abstract class _Loading implements PayeeWatcherState {
 }
 
 /// @nodoc
-abstract class _$PayeeLoadSuccessCopyWith<$Res> {
-  factory _$PayeeLoadSuccessCopyWith(
-          _PayeeLoadSuccess value, $Res Function(_PayeeLoadSuccess) then) =
-      __$PayeeLoadSuccessCopyWithImpl<$Res>;
+abstract class _$$_PayeeLoadSuccessCopyWith<$Res> {
+  factory _$$_PayeeLoadSuccessCopyWith(
+          _$_PayeeLoadSuccess value, $Res Function(_$_PayeeLoadSuccess) then) =
+      __$$_PayeeLoadSuccessCopyWithImpl<$Res>;
   $Res call({List<Payee> payees});
 }
 
 /// @nodoc
-class __$PayeeLoadSuccessCopyWithImpl<$Res>
+class __$$_PayeeLoadSuccessCopyWithImpl<$Res>
     extends _$PayeeWatcherStateCopyWithImpl<$Res>
-    implements _$PayeeLoadSuccessCopyWith<$Res> {
-  __$PayeeLoadSuccessCopyWithImpl(
-      _PayeeLoadSuccess _value, $Res Function(_PayeeLoadSuccess) _then)
-      : super(_value, (v) => _then(v as _PayeeLoadSuccess));
+    implements _$$_PayeeLoadSuccessCopyWith<$Res> {
+  __$$_PayeeLoadSuccessCopyWithImpl(
+      _$_PayeeLoadSuccess _value, $Res Function(_$_PayeeLoadSuccess) _then)
+      : super(_value, (v) => _then(v as _$_PayeeLoadSuccess));
 
   @override
-  _PayeeLoadSuccess get _value => super._value as _PayeeLoadSuccess;
+  _$_PayeeLoadSuccess get _value => super._value as _$_PayeeLoadSuccess;
 
   @override
   $Res call({
     Object? payees = freezed,
   }) {
-    return _then(_PayeeLoadSuccess(
+    return _then(_$_PayeeLoadSuccess(
       payees == freezed
-          ? _value.payees
+          ? _value._payees
           : payees // ignore: cast_nullable_to_non_nullable
               as List<Payee>,
     ));
@@ -590,10 +662,14 @@ class __$PayeeLoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
-  const _$_PayeeLoadSuccess(this.payees);
+  const _$_PayeeLoadSuccess(final List<Payee> payees) : _payees = payees;
 
+  final List<Payee> _payees;
   @override
-  final List<Payee> payees;
+  List<Payee> get payees {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_payees);
+  }
 
   @override
   String toString() {
@@ -603,19 +679,19 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PayeeLoadSuccess &&
-            (identical(other.payees, payees) ||
-                const DeepCollectionEquality().equals(other.payees, payees)));
+        (other.runtimeType == runtimeType &&
+            other is _$_PayeeLoadSuccess &&
+            const DeepCollectionEquality().equals(other._payees, _payees));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payees);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_payees));
 
   @JsonKey(ignore: true)
   @override
-  _$PayeeLoadSuccessCopyWith<_PayeeLoadSuccess> get copyWith =>
-      __$PayeeLoadSuccessCopyWithImpl<_PayeeLoadSuccess>(this, _$identity);
+  _$$_PayeeLoadSuccessCopyWith<_$_PayeeLoadSuccess> get copyWith =>
+      __$$_PayeeLoadSuccessCopyWithImpl<_$_PayeeLoadSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -626,6 +702,17 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
     required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
     return loadSuccess(payees);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+  }) {
+    return loadSuccess?.call(payees);
   }
 
   @override
@@ -656,6 +743,17 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+  }) {
+    return loadSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -671,40 +769,41 @@ class _$_PayeeLoadSuccess implements _PayeeLoadSuccess {
 }
 
 abstract class _PayeeLoadSuccess implements PayeeWatcherState {
-  const factory _PayeeLoadSuccess(List<Payee> payees) = _$_PayeeLoadSuccess;
+  const factory _PayeeLoadSuccess(final List<Payee> payees) =
+      _$_PayeeLoadSuccess;
 
-  List<Payee> get payees => throw _privateConstructorUsedError;
+  List<Payee> get payees;
   @JsonKey(ignore: true)
-  _$PayeeLoadSuccessCopyWith<_PayeeLoadSuccess> get copyWith =>
+  _$$_PayeeLoadSuccessCopyWith<_$_PayeeLoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$PayeeLoadFailureCopyWith<$Res> {
-  factory _$PayeeLoadFailureCopyWith(
-          _PayeeLoadFailure value, $Res Function(_PayeeLoadFailure) then) =
-      __$PayeeLoadFailureCopyWithImpl<$Res>;
+abstract class _$$_PayeeLoadFailureCopyWith<$Res> {
+  factory _$$_PayeeLoadFailureCopyWith(
+          _$_PayeeLoadFailure value, $Res Function(_$_PayeeLoadFailure) then) =
+      __$$_PayeeLoadFailureCopyWithImpl<$Res>;
   $Res call({ValueFailure<dynamic> payeeFailure});
 
   $ValueFailureCopyWith<dynamic, $Res> get payeeFailure;
 }
 
 /// @nodoc
-class __$PayeeLoadFailureCopyWithImpl<$Res>
+class __$$_PayeeLoadFailureCopyWithImpl<$Res>
     extends _$PayeeWatcherStateCopyWithImpl<$Res>
-    implements _$PayeeLoadFailureCopyWith<$Res> {
-  __$PayeeLoadFailureCopyWithImpl(
-      _PayeeLoadFailure _value, $Res Function(_PayeeLoadFailure) _then)
-      : super(_value, (v) => _then(v as _PayeeLoadFailure));
+    implements _$$_PayeeLoadFailureCopyWith<$Res> {
+  __$$_PayeeLoadFailureCopyWithImpl(
+      _$_PayeeLoadFailure _value, $Res Function(_$_PayeeLoadFailure) _then)
+      : super(_value, (v) => _then(v as _$_PayeeLoadFailure));
 
   @override
-  _PayeeLoadFailure get _value => super._value as _PayeeLoadFailure;
+  _$_PayeeLoadFailure get _value => super._value as _$_PayeeLoadFailure;
 
   @override
   $Res call({
     Object? payeeFailure = freezed,
   }) {
-    return _then(_PayeeLoadFailure(
+    return _then(_$_PayeeLoadFailure(
       payeeFailure == freezed
           ? _value.payeeFailure
           : payeeFailure // ignore: cast_nullable_to_non_nullable
@@ -736,20 +835,20 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PayeeLoadFailure &&
-            (identical(other.payeeFailure, payeeFailure) ||
-                const DeepCollectionEquality()
-                    .equals(other.payeeFailure, payeeFailure)));
+        (other.runtimeType == runtimeType &&
+            other is _$_PayeeLoadFailure &&
+            const DeepCollectionEquality()
+                .equals(other.payeeFailure, payeeFailure));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(payeeFailure);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(payeeFailure));
 
   @JsonKey(ignore: true)
   @override
-  _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith =>
-      __$PayeeLoadFailureCopyWithImpl<_PayeeLoadFailure>(this, _$identity);
+  _$$_PayeeLoadFailureCopyWith<_$_PayeeLoadFailure> get copyWith =>
+      __$$_PayeeLoadFailureCopyWithImpl<_$_PayeeLoadFailure>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -760,6 +859,17 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
     required TResult Function(ValueFailure<dynamic> payeeFailure) loadFailure,
   }) {
     return loadFailure(payeeFailure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Payee> payees)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> payeeFailure)? loadFailure,
+  }) {
+    return loadFailure?.call(payeeFailure);
   }
 
   @override
@@ -790,6 +900,17 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
 
   @override
   @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_PayeeLoadSuccess value)? loadSuccess,
+    TResult Function(_PayeeLoadFailure value)? loadFailure,
+  }) {
+    return loadFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
@@ -805,11 +926,11 @@ class _$_PayeeLoadFailure implements _PayeeLoadFailure {
 }
 
 abstract class _PayeeLoadFailure implements PayeeWatcherState {
-  const factory _PayeeLoadFailure(ValueFailure<dynamic> payeeFailure) =
+  const factory _PayeeLoadFailure(final ValueFailure<dynamic> payeeFailure) =
       _$_PayeeLoadFailure;
 
-  ValueFailure<dynamic> get payeeFailure => throw _privateConstructorUsedError;
+  ValueFailure<dynamic> get payeeFailure;
   @JsonKey(ignore: true)
-  _$PayeeLoadFailureCopyWith<_PayeeLoadFailure> get copyWith =>
+  _$$_PayeeLoadFailureCopyWith<_$_PayeeLoadFailure> get copyWith =>
       throw _privateConstructorUsedError;
 }

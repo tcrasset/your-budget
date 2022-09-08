@@ -6,26 +6,25 @@ part of 'transaction_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TransactionDTO _$_$_TransactionDTOFromJson(Map<String, dynamic> json) {
-  return _$_TransactionDTO(
-    id: convertToString(json['id'] as int),
-    amount: (json['amount'] as num).toDouble(),
-    memo: json['memo'] as String,
-    dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
-    subcatID: json['subcatID'] as String,
-    subcatName: json['subcategoryName'] as String,
-    subcatCategoryId: json['categoryID'] as String,
-    subcatBudgeted: (json['subcatBudgeted'] as num?)?.toDouble() ?? 0.0,
-    subcatAvailable: (json['subcatAvailable'] as num?)?.toDouble() ?? 0.0,
-    payeeID: json['payeeID'] as String,
-    payeeName: json['payeeName'] as String,
-    accountID: json['accountID'] as String,
-    accountName: json['accountName'] as String,
-    accountBalance: (json['balance'] as num).toDouble(),
-  );
-}
+_$_TransactionDTO _$$_TransactionDTOFromJson(Map<String, dynamic> json) =>
+    _$_TransactionDTO(
+      id: convertToString(json['id'] as int),
+      amount: (json['amount'] as num).toDouble(),
+      memo: json['memo'] as String,
+      dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
+      subcatID: json['subcatID'] as String,
+      subcatName: json['subcategoryName'] as String,
+      subcatCategoryId: json['categoryID'] as String,
+      subcatBudgeted: (json['subcatBudgeted'] as num?)?.toDouble() ?? 0.0,
+      subcatAvailable: (json['subcatAvailable'] as num?)?.toDouble() ?? 0.0,
+      payeeID: json['payeeID'] as String,
+      payeeName: json['payeeName'] as String,
+      accountID: json['accountID'] as String,
+      accountName: json['accountName'] as String,
+      accountBalance: (json['balance'] as num).toDouble(),
+    );
 
-Map<String, dynamic> _$_$_TransactionDTOToJson(_$_TransactionDTO instance) {
+Map<String, dynamic> _$$_TransactionDTOToJson(_$_TransactionDTO instance) {
   final val = <String, dynamic>{};
 
   void writeNotNull(String key, dynamic value) {
