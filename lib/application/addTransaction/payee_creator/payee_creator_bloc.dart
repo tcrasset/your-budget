@@ -18,45 +18,49 @@ part 'payee_creator_bloc.freezed.dart';
 
 class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
   final IPayeeRepository payeeRepository;
-  PayeeCreatorBloc({required this.payeeRepository}) : super(PayeeCreatorState.initial());
+  PayeeCreatorBloc({required this.payeeRepository}) : super(PayeeCreatorState.initial()) {
+    on<_Initialized>((event, emit) => _onInitialized);
+    on<_NameChanged>((event, emit) => _onNameChanged);
+    on<_Saved>((event, emit) => _onSaved);
+  }
 
-  @override
-  Stream<PayeeCreatorState> mapEventToState(
-    PayeeCreatorEvent event,
-  ) async* {
-    yield* event.map(
-      initialized: (e) async* {
-        yield e.initialNameOption.fold(
-          () => /*No initial name*/ state,
-          (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
-        );
-      },
-      nameChanged: (e) async* {
-        if (e != null) {
-          yield state.copyWith(
-            payee: state.payee.copyWith(name: Name(e.name)),
-            saveFailureOrSuccessOption: none(),
-          );
-        }
-      },
-      saved: (e) async* {
-        Either<ValueFailure, Unit>? failureOrSuccess;
-
-        yield state.copyWith(isSaving: true);
-
-        if (state.payee.failureOption.isNone()) {
-          // failureOrSuccess = state.isEditing
-          //     ? await payeeRepository.update(state.payee)
-          //     : await payeeRepository.create(state.payee);
-          failureOrSuccess = await payeeRepository.create(state.payee);
-        }
-
-        yield state.copyWith(
-          isSaving: false,
-          showErrorMessages: true,
-          saveFailureOrSuccessOption: optionOf(failureOrSuccess),
-        );
-      },
+  _onInitialized(_Initialized event, Emitter<PayeeCreatorState> emit) async {
+    var newState = event.initialNameOption.fold(
+      () => /*No initial name*/ state,
+      (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
     );
+
+    emit(newState);
+  }
+
+  _onSaved(_Saved event, Emitter<PayeeCreatorState> emit) async {
+    Either<ValueFailure, Unit>? failureOrSuccess;
+
+    emit(state.copyWith(isSaving: true));
+
+    if (state.payee.failureOption.isNone()) {
+      // failureOrSuccess = state.isEditing
+      //     ? await payeeRepository.update(state.payee)
+      //     : await payeeRepository.create(state.payee);
+      failureOrSuccess = await payeeRepository.create(state.payee);
+    }
+
+    var newState = state.copyWith(
+      isSaving: false,
+      showErrorMessages: true,
+      saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+    );
+
+    emit(newState);
+  }
+
+  _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        payee: state.payee.copyWith(name: Name(event.name)),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
   }
 }
