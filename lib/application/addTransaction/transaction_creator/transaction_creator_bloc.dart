@@ -27,72 +27,91 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
   final ITransactionRepository transactionRepository;
   TransactionCreatorBloc({
     required this.transactionRepository,
-  }) : super(TransactionCreatorState.initial());
+  }) : super(TransactionCreatorState.initial()) {
+    on<_Initialized>((event, emit) => emit(state));
+    on<_AmountChanged>(_onAmountChanged);
+    on<_AccountChanged>(_onAccountChanged);
+    on<_PayeeChanged>(_onPayeeChanged);
+    on<_DateChanged>(_onDateChanged);
+    on<_SubcategoryChanged>(_onSubcategoryChanged);
+    on<_MemoChanged>(_onMemoChanged);
+    on<_Saved>(_onSaved);
+  }
 
-  @override
-  Stream<TransactionCreatorState> mapEventToState(
-    TransactionCreatorEvent event,
-  ) async* {
-    yield* event.map(
-      initialized: (e) async* {
-        yield state;
-      },
-      amountChanged: (e) async* {
-        if (e != null) {
-          yield state.copyWith(
-            moneyTransaction: state.moneyTransaction.copyWith(amount: Amount(e.amount)),
-            saveFailureOrSuccessOption: none(),
-          );
-        }
-      },
-      dateChanged: (e) async* {
-        if (e != null) {
-          yield state.copyWith(
-            moneyTransaction: state.moneyTransaction.copyWith(date: e.date),
-            saveFailureOrSuccessOption: none(),
-          );
-        }
-      },
-      memoChanged: (e) async* {
-        if (e != null) {
-          yield state.copyWith(
-            moneyTransaction: state.moneyTransaction.copyWith(memo: Name(e.memo)),
-            saveFailureOrSuccessOption: none(),
-          );
-        }
-      },
-      payeeChanged: (e) async* {
-        yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(payee: e.payee),
-          saveFailureOrSuccessOption: none(),
-        );
-      },
-      subcategoryChanged: (e) async* {
-        yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(subcategory: e.subcategory),
-          saveFailureOrSuccessOption: none(),
-        );
-      },
-      accountChanged: (e) async* {
-        yield state.copyWith(
-          moneyTransaction: state.moneyTransaction.copyWith(account: e.account),
-          saveFailureOrSuccessOption: none(),
-        );
-      },
-      saved: (e) async* {
-        Either<ValueFailure, Unit>? failureOrSuccess;
-        yield state.copyWith(isSaving: true);
+  _onAmountChanged(_AmountChanged event, Emitter<TransactionCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        moneyTransaction: state.moneyTransaction.copyWith(amount: Amount(event.amount)),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
 
-        if (state.moneyTransaction.failureOption.isNone()) {
-          failureOrSuccess = await transactionRepository.create(state.moneyTransaction);
-        }
+  _onAccountChanged(_AccountChanged event, Emitter<TransactionCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        moneyTransaction: state.moneyTransaction.copyWith(account: event.account),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
 
-        yield state.copyWith(
-          isSaving: false,
-          showErrorMessages: true,
-          saveFailureOrSuccessOption: optionOf(failureOrSuccess),
-        );
-      },
+  _onPayeeChanged(_PayeeChanged event, Emitter<TransactionCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        moneyTransaction: state.moneyTransaction.copyWith(payee: event.payee),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
+
+  _onDateChanged(_DateChanged event, Emitter<TransactionCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        moneyTransaction: state.moneyTransaction.copyWith(date: event.date),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
+
+  _onSubcategoryChanged(_SubcategoryChanged event, Emitter<TransactionCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        moneyTransaction: state.moneyTransaction.copyWith(subcategory: event.subcategory),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
+
+  _onMemoChanged(_MemoChanged event, Emitter<TransactionCreatorState> emit) async {
+    if (event != null) {
+      var newState = state.copyWith(
+        moneyTransaction: state.moneyTransaction.copyWith(memo: Name(event.memo)),
+        saveFailureOrSuccessOption: none(),
+      );
+      emit(newState);
+    }
+  }
+
+  _onSaved(_Saved event, Emitter<TransactionCreatorState> emit) async {
+    Either<ValueFailure, Unit>? failureOrSuccess;
+    emit(state.copyWith(isSaving: true));
+
+    if (state.moneyTransaction.failureOption.isNone()) {
+      failureOrSuccess = await transactionRepository.create(state.moneyTransaction);
+    }
+
+    var newState = state.copyWith(
+      isSaving: false,
+      showErrorMessages: true,
+      saveFailureOrSuccessOption: optionOf(failureOrSuccess),
     );
+
+    emit(newState);
   }
 }
