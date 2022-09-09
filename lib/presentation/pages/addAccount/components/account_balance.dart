@@ -75,25 +75,26 @@ class AccountBalance extends HookWidget {
               ),
             ),
             Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: Center(
-                  child: TextFormField(
-                    key: const Key('accountBalanceTextField'),
-                    decoration: boxDecoration,
-                    style: textStyle,
-                    controller: _controller,
-                    textAlign: TextAlign.center,
-                    validator: (_) => validateBalance(context),
-                    onChanged: (value) => onBalanceChanged(context, value),
-                    onTap: () => onBalanceChanged(context, CurrencyOperations.zero),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                      CurrencyInputFormatter(Constants.CURRENCY_FORMAT, true)
-                    ],
-                    textInputAction: TextInputAction.done,
-                  ),
-                )),
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Center(
+                child: TextFormField(
+                  key: const Key('accountBalanceTextField'),
+                  decoration: boxDecoration,
+                  style: textStyle,
+                  controller: _controller,
+                  textAlign: TextAlign.center,
+                  validator: (_) => validateBalance(context),
+                  onChanged: (value) => onBalanceChanged(context, value),
+                  onTap: () => onBalanceChanged(context, CurrencyOperations.zero),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]")),
+                    CurrencyInputFormatter(Constants.CURRENCY_FORMAT, true)
+                  ],
+                  textInputAction: TextInputAction.done,
+                ),
+              ),
+            ),
           ],
         );
       },

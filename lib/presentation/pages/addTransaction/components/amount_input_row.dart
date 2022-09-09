@@ -59,13 +59,14 @@ class AmountInputRow extends HookWidget {
         return Row(
           children: [
             Expanded(
-                child: AmountInput(
-              key: const Key("AmountInput"),
-              isPositive: _isPositive,
-              controller: _controller,
-              changeAmount: onAmountChange,
-              validateAmount: validateAmount,
-            )),
+              child: AmountInput(
+                key: const Key("AmountInput"),
+                isPositive: _isPositive,
+                controller: _controller,
+                changeAmount: onAmountChange,
+                validateAmount: validateAmount,
+              ),
+            ),
             AmountSwitch(
               controller: _controller,
               isPositive: _isPositive,
@@ -142,20 +143,21 @@ class AmountInput extends StatelessWidget {
         TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
     return TextFormField(
-        decoration: const InputDecoration(
-          hintText: "",
-          enabledBorder: OutlineInputBorder(),
-        ),
-        keyboardType: TextInputType.number,
-        controller: controller,
-        inputFormatters: [
-          CurrencyInputFormatter(Constants.CURRENCY_FORMAT, isPositive.value),
-        ],
-        textInputAction: TextInputAction.done,
-        textAlign: TextAlign.right,
-        style: isPositive.value ? _positiveAmountTextStyle : _negativeAmountTextStyle,
-        validator: (_) => validateAmount(context),
-        onChanged: (value) => changeAmount(context, value),
-        onTap: () => changeAmount(context, CurrencyOperations.zero));
+      decoration: const InputDecoration(
+        hintText: "",
+        enabledBorder: OutlineInputBorder(),
+      ),
+      keyboardType: TextInputType.number,
+      controller: controller,
+      inputFormatters: [
+        CurrencyInputFormatter(Constants.CURRENCY_FORMAT, isPositive.value),
+      ],
+      textInputAction: TextInputAction.done,
+      textAlign: TextAlign.right,
+      style: isPositive.value ? _positiveAmountTextStyle : _negativeAmountTextStyle,
+      validator: (_) => validateAmount(context),
+      onChanged: (value) => changeAmount(context, value),
+      onTap: () => changeAmount(context, CurrencyOperations.zero),
+    );
   }
 }

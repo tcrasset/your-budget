@@ -10,10 +10,10 @@ import 'package:sqflite/sqflite.dart';
 
 // Project imports:
 import 'package:your_budget/domain/payee/payee.dart';
-import '../../domain/core/value_failure.dart';
-import '../../domain/payee/i_payee_repository.dart';
-import '../../models/constants.dart';
-import 'payee_dto.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/infrastructure/payee/payee_dto.dart';
 
 class SQFlitePayeeRepository implements IPayeeRepository {
   final Database? database;

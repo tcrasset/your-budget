@@ -11,5 +11,6 @@ abstract class ITransactionRepository {
   Future<Either<ValueFailure, Unit>> delete(MoneyTransaction transaction);
   Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(int accountID);
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
-      int accountID);
+    int accountID,
+  );
 }

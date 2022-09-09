@@ -21,12 +21,14 @@ class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWa
 
   SubcategoryWatcherBloc({required this.subcategoryRepository})
       : super(const SubcategoryWatcherState.initial()) {
-    on<_SubcategoryWatchStarted>((event, emit) => _onSubcategoryWatchStarted);
-    on<_SubcategoriesReceived>((event, emit) => _onSubcategiesReceived);
+    on<_SubcategoryWatchStarted>(_onSubcategoryWatchStarted);
+    on<_SubcategoriesReceived>(_onSubcategoriesReceived);
   }
 
-  _onSubcategoryWatchStarted(
-      _SubcategoryWatchStarted event, Emitter<SubcategoryWatcherState> emit) async {
+  Future<void> _onSubcategoryWatchStarted(
+    _SubcategoryWatchStarted event,
+    Emitter<SubcategoryWatcherState> emit,
+  ) async {
     emit(const SubcategoryWatcherState.loading());
     await _subcategoryStreamSubscription?.cancel();
 
@@ -36,8 +38,10 @@ class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWa
         );
   }
 
-  _onSubcategiesReceived(
-      _SubcategoriesReceived event, Emitter<SubcategoryWatcherState> emit) async {
+  Future<void> _onSubcategoriesReceived(
+    _SubcategoriesReceived event,
+    Emitter<SubcategoryWatcherState> emit,
+  ) async {
     var newState = event.failureOrSubcategories.fold(
       (f) => SubcategoryWatcherState.loadFailure(f),
       (subcategories) => SubcategoryWatcherState.loadSuccess(subcategories),

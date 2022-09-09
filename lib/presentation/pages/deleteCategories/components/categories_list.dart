@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../appstate.dart';
-import '../../../../models/categories.dart';
-import '../../../../models/constants.dart';
-import 'checked_row.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/deleteCategories/components/checked_row.dart';
 
 class CategoriesList extends StatefulWidget {
   @override
@@ -39,12 +39,13 @@ class _CategoriesListState extends State<CategoriesList> {
           final type = categories[index].runtimeType;
           return Card(
             child: CheckedRow(
-                categories[index]!.name,
-                categories[index]!.id,
-                type,
-                type == MainCategory
-                    ? Constants.CATEGORY_TEXT_STYLE
-                    : Constants.SUBCATEGORY_TEXT_STYLE),
+              categories[index]!.name,
+              categories[index]!.id,
+              type,
+              type == MainCategory
+                  ? Constants.CATEGORY_TEXT_STYLE
+                  : Constants.SUBCATEGORY_TEXT_STYLE,
+            ),
           );
         },
       ),

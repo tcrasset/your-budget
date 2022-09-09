@@ -28,11 +28,12 @@ class DateField extends StatelessWidget {
 
   Future<DateTime?> _pickDate(BuildContext context, DateTime previousDate) async {
     final DateTime? picked = await showDatePicker(
-        context: context,
-        initialDate: getDateYMD(previousDate),
-        firstDate: DateTime(2020),
-        // firstDate: appState.startingBudgetDate,
-        lastDate: getLastDayOfMonth(getMaxBudgetDate()));
+      context: context,
+      initialDate: getDateYMD(previousDate),
+      firstDate: DateTime(2020),
+      // firstDate: appState.startingBudgetDate,
+      lastDate: getLastDayOfMonth(getMaxBudgetDate()),
+    );
     return picked;
   }
 
@@ -41,14 +42,16 @@ class DateField extends StatelessWidget {
     return BlocBuilder<TransactionCreatorBloc, TransactionCreatorState>(
       builder: (context, state) {
         return GestureDetector(
-            // Date gesture detector
-            onTap: () => handleOnTapDate(context),
-            child: RowContainer(
-                name: "Date",
-                childWidget: Text(
-                  state.moneyTransaction.date.toString(),
-                  style: AddTransactionStyles.selected,
-                )));
+          // Date gesture detector
+          onTap: () => handleOnTapDate(context),
+          child: RowContainer(
+            name: "Date",
+            childWidget: Text(
+              state.moneyTransaction.date.toString(),
+              style: AddTransactionStyles.selected,
+            ),
+          ),
+        );
       },
     );
   }

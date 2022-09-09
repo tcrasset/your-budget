@@ -24,7 +24,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
     on<_Saved>(_onSaved);
   }
 
-  _onInitialized(_Initialized event, Emitter<PayeeCreatorState> emit) async {
+  void _onInitialized(_Initialized event, Emitter<PayeeCreatorState> emit) {
     var newState = event.initialNameOption.fold(
       () => /*No initial name*/ state,
       (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
@@ -33,7 +33,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
     emit(newState);
   }
 
-  _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) async {
+  void _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) async {
     if (event != null) {
       var newState = state.copyWith(
         payee: state.payee.copyWith(name: Name(event.name)),
@@ -43,7 +43,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
     }
   }
 
-  _onSaved(_Saved event, Emitter<PayeeCreatorState> emit) async {
+  Future<void> _onSaved(_Saved event, Emitter<PayeeCreatorState> emit) async {
     Either<ValueFailure, Unit>? failureOrSuccess;
 
     emit(state.copyWith(isSaving: true));

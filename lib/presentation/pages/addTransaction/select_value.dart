@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../appstate.dart';
-import '../../../components/add_dialog.dart';
-import '../../../models/categories.dart';
-import '../../../models/payee.dart';
-import 'components/search_field.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/components/add_dialog.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 
 class SelectValuePage extends StatefulWidget {
   final List listEntries;
@@ -60,12 +60,13 @@ class SelectValuePageState extends State<SelectValuePage> {
   Future<void> createNewPayee({required BuildContext context, String? defaultName}) async {
     const String hint = "Add new payee";
     final String? payeeName = await addDialog(
-        context: context,
-        title: hint,
-        hintText: hint,
-        successButtonName: "Create and select",
-        defaultValue: defaultName,
-        nameValidator: newPayeeValidator);
+      context: context,
+      title: hint,
+      hintText: hint,
+      successButtonName: "Create and select",
+      defaultValue: defaultName,
+      nameValidator: newPayeeValidator,
+    );
 
     if (payeeName != null) {
       print("Created payee $payeeName");
@@ -158,29 +159,30 @@ class SelectValuePageState extends State<SelectValuePage> {
             ),
 
           Expanded(
-              child: ListView.separated(
-            shrinkWrap: true,
-            itemCount: listEntries.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(height: 1, color: Colors.black12),
-            itemBuilder: (BuildContext context, int index) {
-              final item = listEntries[index];
-              final itemToShow = item is Text ? item : Text(item.name as String);
-              final itemToFilter = item is Text ? item.data : item.name;
-              final bool noFilter = filter == null || filter == "";
+            child: ListView.separated(
+              shrinkWrap: true,
+              itemCount: listEntries.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(height: 1, color: Colors.black12),
+              itemBuilder: (BuildContext context, int index) {
+                final item = listEntries[index];
+                final itemToShow = item is Text ? item : Text(item.name as String);
+                final itemToFilter = item is Text ? item.data : item.name;
+                final bool noFilter = filter == null || filter == "";
 
-              if (noFilter == true) {
-                return ListTile(title: itemToShow, onTap: () => handlePopContext(item));
-              } else if (noFilter == false) {
-                // The filter is not empty, we filter by name
-                if (itemToFilter.toLowerCase().contains(filter!.toLowerCase()) == true) {
-                  return ListTile(title: item as Text, onTap: () => handlePopContext(item));
+                if (noFilter == true) {
+                  return ListTile(title: itemToShow, onTap: () => handlePopContext(item));
+                } else if (noFilter == false) {
+                  // The filter is not empty, we filter by name
+                  if (itemToFilter.toLowerCase().contains(filter!.toLowerCase()) == true) {
+                    return ListTile(title: item as Text, onTap: () => handlePopContext(item));
+                  }
                 }
-              }
-              // There is an error
-              return Container();
-            },
-          ))
+                // There is an error
+                return Container();
+              },
+            ),
+          )
         ],
       ),
     );

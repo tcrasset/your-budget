@@ -64,26 +64,32 @@ class FakeDatabase {
     when(mockQueries!.getStartingBudgetDateConstant()).thenAnswer((_) async => startingBudgetDate);
 
     //! MainCategories
-    when(mockQueries!.getCategories()).thenAnswer(((_) async => maincategories!) as Future<List<MainCategory>> Function(Invocation));
+    when(mockQueries!.getCategories()).thenAnswer(
+        ((_) async => maincategories!) as Future<List<MainCategory>> Function(Invocation));
 
     //! MoneyTransactions
-    when(mockQueries!.getMoneyTransactions()).thenAnswer(((_) async => moneyTransactions!) as Future<List<MoneyTransaction>> Function(Invocation));
+    when(mockQueries!.getMoneyTransactions()).thenAnswer(
+        ((_) async => moneyTransactions!) as Future<List<MoneyTransaction>> Function(Invocation));
 
     //! Payees
-    when(mockQueries!.getPayees()).thenAnswer(((_) async => payees!) as Future<List<Payee>> Function(Invocation));
+    when(mockQueries!.getPayees())
+        .thenAnswer(((_) async => payees!) as Future<List<Payee>> Function(Invocation));
 
     //! Accounts
-    when(mockQueries!.getAccounts()).thenAnswer(((_) async => accounts!) as Future<List<Account>> Function(Invocation));
+    when(mockQueries!.getAccounts())
+        .thenAnswer(((_) async => accounts!) as Future<List<Account>> Function(Invocation));
 
     //! BudgetValues
-    when(mockQueries!.getBudgetValues()).thenAnswer(((_) async => budgetValues!) as Future<List<BudgetValue>> Function(Invocation));
+    when(mockQueries!.getBudgetValues())
+        .thenAnswer(((_) async => budgetValues!) as Future<List<BudgetValue>> Function(Invocation));
 
     //! Goals
-    when(mockQueries!.getGoals()).thenAnswer(((_) async => goals!) as Future<List<Goal>> Function(Invocation));
+    when(mockQueries!.getGoals())
+        .thenAnswer(((_) async => goals!) as Future<List<Goal>> Function(Invocation));
 
     //! Most recent account used
-    when(mockQueries!.getMostRecentAccountUsed())
-        .thenAnswer(((_) async => accounts!.isNotEmpty ? accounts![0].id : null) as Future<int> Function(Invocation));
+    when(mockQueries!.getMostRecentAccountUsed()).thenAnswer(((_) async =>
+        accounts!.isNotEmpty ? accounts![0].id : null) as Future<int> Function(Invocation));
 
     //! Max Budget Date Constant
     when(mockQueries!.getMaxBudgetDateConstant()).thenAnswer((_) async => getMaxBudgetDate());
@@ -153,14 +159,22 @@ class FakeDatabase {
 
     for (int i = 0; i < subcategoryNames.length; i++) {
       final SubCategory subcat = SubCategory(
-          id: i + 1, parentId: "1", name: subcategoryNames[i], budgeted: 0.0, available: 0.0);
+        id: i + 1,
+        parentId: "1",
+        name: subcategoryNames[i],
+        budgeted: 0.0,
+        available: 0.0,
+      );
       subcategories.add(subcat);
     }
     return subcategories;
   }
 
-  List<Budget> _buildBudgets(List<MainCategory> maincategories, List<SubCategory> subcategories,
-      List<BudgetValue>? budgetvalues) {
+  List<Budget> _buildBudgets(
+    List<MainCategory> maincategories,
+    List<SubCategory> subcategories,
+    List<BudgetValue>? budgetvalues,
+  ) {
     //TODO: Implement getSubcategoriesJoined()
 
     DateTime currentDate = startingBudgetDate;
@@ -170,17 +184,20 @@ class FakeDatabase {
     do {
       final List<SubCategory> mergedSubcategories = [];
       for (final SubCategory subcat in subcategories) {
-        final BudgetValue budgetvalue = budgetvalues!.singleWhere((bv) =>
-            bv.subcategoryId == subcat.id &&
-            bv.month == currentDate.month &&
-            bv.year == currentDate.year);
+        final BudgetValue budgetvalue = budgetvalues!.singleWhere(
+          (bv) =>
+              bv.subcategoryId == subcat.id &&
+              bv.month == currentDate.month &&
+              bv.year == currentDate.year,
+        );
 
         final SubCategory mergedSubcat = SubCategory(
-            id: subcat.id,
-            parentId: subcat.parentId,
-            name: subcat.name,
-            available: budgetvalue.available,
-            budgeted: budgetvalue.budgeted);
+          id: subcat.id,
+          parentId: subcat.parentId,
+          name: subcat.name,
+          available: budgetvalue.available,
+          budgeted: budgetvalue.budgeted,
+        );
 
         mergedSubcategories.add(mergedSubcat);
       }
@@ -196,22 +213,24 @@ class FakeDatabase {
 
   List<MoneyTransaction> _buildMoneyTransactions() {
     final MoneyTransaction startingTransaction1 = MoneyTransaction(
-        accountID: TEST_ACCOUNT_ID_1,
-        amount: 1000,
-        date: startingBudgetDate,
-        id: TEST_MONEYTRANSACTION_ID_1,
-        payeeID: TEST_PAYEE_ID,
-        subcatID: TEST_SUBCATEGORY_ID,
-        memo: "");
+      accountID: TEST_ACCOUNT_ID_1,
+      amount: 1000,
+      date: startingBudgetDate,
+      id: TEST_MONEYTRANSACTION_ID_1,
+      payeeID: TEST_PAYEE_ID,
+      subcatID: TEST_SUBCATEGORY_ID,
+      memo: "",
+    );
 
     final MoneyTransaction startingTransaction2 = MoneyTransaction(
-        accountID: TEST_ACCOUNT_ID_2,
-        amount: 500,
-        date: startingBudgetDate,
-        id: TEST_MONEYTRANSACTION_ID_2,
-        payeeID: TEST_PAYEE_ID,
-        subcatID: TEST_SUBCATEGORY_ID,
-        memo: "");
+      accountID: TEST_ACCOUNT_ID_2,
+      amount: 500,
+      date: startingBudgetDate,
+      id: TEST_MONEYTRANSACTION_ID_2,
+      payeeID: TEST_PAYEE_ID,
+      subcatID: TEST_SUBCATEGORY_ID,
+      memo: "",
+    );
 
     return [startingTransaction1, startingTransaction2];
   }

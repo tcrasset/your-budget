@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 // Project imports:
 import 'package:your_budget/models/categories.dart';
-import '../../../../appstate.dart';
-import '../../../../models/account.dart';
-import '../../../../models/money_transaction.dart';
-import 'transaction_row.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/money_transaction.dart';
+import 'package:your_budget/presentation/pages/core/transactions/transaction_row.dart';
 
 class TransactionList extends StatefulWidget {
   final Account account;
@@ -47,10 +47,12 @@ class _TransactionListState extends State<TransactionList> {
             const Divider(height: 1, color: Colors.black12),
         itemBuilder: (BuildContext context, int index) {
           return Card(
-              child: TransactionRow(
-                  transactionsOfAccount[index]!,
-                  widget.appState.allCategories as UnmodifiableListView<Category>,
-                  widget.isEditable));
+            child: TransactionRow(
+              transactionsOfAccount[index]!,
+              widget.appState.allCategories as UnmodifiableListView<Category>,
+              widget.isEditable,
+            ),
+          );
         },
       ),
     );
@@ -58,7 +60,9 @@ class _TransactionListState extends State<TransactionList> {
 }
 
 List<MoneyTransaction?> _getMoneyTransactions(
-    UnmodifiableListView<MoneyTransaction?> transactions, int currentAccountId) {
+  UnmodifiableListView<MoneyTransaction?> transactions,
+  int currentAccountId,
+) {
   /// Here, [currentAccountId] is the outgoingAccount.
 
   final List<MoneyTransaction?> transactionsOfAccount = [];

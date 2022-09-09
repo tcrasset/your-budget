@@ -14,8 +14,12 @@ abstract class Category {
   double? budgeted;
   double? available;
 
-  Category(
-      {required this.id, required this.name, required this.budgeted, required this.available});
+  Category({
+    required this.id,
+    required this.name,
+    required this.budgeted,
+    required this.available,
+  });
 }
 
 /// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
@@ -23,13 +27,13 @@ class SubCategory extends Category {
   final String? parentId;
 
   /// Default SubCategory constructor
-  SubCategory(
-      {required int? id,
-      required String? parentId,
-      required String? name,
-      required double? budgeted,
-      required double? available})
-      : parentId = parentId,
+  SubCategory({
+    required int? id,
+    required String? parentId,
+    required String? name,
+    required double? budgeted,
+    required double? available,
+  })  : parentId = parentId,
         super(id: id, name: name, budgeted: budgeted, available: available);
 
   /// Constructor building a SubCategory from a [json] representation taken
@@ -37,10 +41,11 @@ class SubCategory extends Category {
   SubCategory.fromJson(Map<String, dynamic> json)
       : parentId = json[DatabaseConstants.CAT_ID_OUTSIDE] as String?,
         super(
-            id: json[DatabaseConstants.SUBCAT_ID] as int?, //
-            name: json[DatabaseConstants.SUBCAT_NAME] as String?,
-            budgeted: json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double?,
-            available: json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double?);
+          id: json[DatabaseConstants.SUBCAT_ID] as int?, //
+          name: json[DatabaseConstants.SUBCAT_NAME] as String?,
+          budgeted: json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double?,
+          available: json[DatabaseConstants.BUDGET_VALUE_AVAILABLE] as double?,
+        );
 
   @override
   String toString() {
@@ -56,7 +61,12 @@ class SubCategory extends Category {
   /// Creates an exact copy of this.
   SubCategory copy() {
     return SubCategory(
-        id: id, parentId: parentId, name: name, budgeted: budgeted, available: available);
+      id: id,
+      parentId: parentId,
+      name: name,
+      budgeted: budgeted,
+      available: available,
+    );
   }
 
   SubCategory copyWith({
@@ -106,10 +116,11 @@ class MainCategory extends Category {
   /// from a database
   MainCategory.fromJson(Map<String, dynamic> json)
       : super(
-            id: json[DatabaseConstants.CATEGORY_ID] as int?, //
-            name: json[DatabaseConstants.CATEGORY_NAME] as String?,
-            budgeted: 0.00,
-            available: 0.00);
+          id: json[DatabaseConstants.CATEGORY_ID] as int?, //
+          name: json[DatabaseConstants.CATEGORY_NAME] as String?,
+          budgeted: 0.00,
+          available: 0.00,
+        );
 
   List<SubCategory?> get subcategories {
     return _subcategories;
@@ -218,13 +229,14 @@ class BudgetValue {
   int? month;
   int? year;
 
-  BudgetValue(
-      {required this.id,
-      required this.subcategoryId,
-      required this.budgeted,
-      required this.available,
-      required this.year,
-      required this.month});
+  BudgetValue({
+    required this.id,
+    required this.subcategoryId,
+    required this.budgeted,
+    required this.available,
+    required this.year,
+    required this.month,
+  });
 
   /// Constructor building a BudgetValue from a [json] representation taken
   /// from a database.

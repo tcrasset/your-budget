@@ -105,13 +105,21 @@ void main() {
 
     // Modify budgeted
     myBudget.makeSubcategoryChangeBySubcatId(
-        subcatTest.id, subcatTest.parentId, "budgeted", "9.99");
+      subcatTest.id,
+      subcatTest.parentId,
+      "budgeted",
+      "9.99",
+    );
     expect(myBudget.subcategories[0]!.budgeted, 9.99);
     expect(myBudget.maincategories[0]!.subcategories[0]!.budgeted, 9.99);
 
     // Modify available
     myBudget.makeSubcategoryChangeBySubcatId(
-        subcatTest.id, subcatTest.parentId, "available", "9.99");
+      subcatTest.id,
+      subcatTest.parentId,
+      "available",
+      "9.99",
+    );
     expect(myBudget.subcategories[0]!.available, 9.99);
     expect(myBudget.maincategories[0]!.subcategories[0]!.available, 9.99);
 

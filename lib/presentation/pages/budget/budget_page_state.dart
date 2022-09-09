@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../appstate.dart';
-import '../../../models/categories.dart';
-import '../addTransaction/components/currency_input_formatter.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
 
 class BudgetPageState extends ChangeNotifier {
   bool showButtonDial = false;

@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../appstate.dart';
-import '../../../models/categories.dart';
-import '../../../models/goal.dart';
-import '../../../models/utils.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/utils.dart';
 
 class SubcategoryDetails extends StatelessWidget {
   final SubCategory subcat;
@@ -32,29 +32,32 @@ class SubcategoryDetails extends StatelessWidget {
     final List<Widget> items = [];
 
     items.add(Information(subcat));
-    items.add(SizedBox(
-      child: Container(
-        height: 20,
+    items.add(
+      SizedBox(
+        child: Container(
+          height: 20,
+        ),
       ),
-    ));
+    );
     items.add(const GoalRowsTitle());
     items.addAll(createListOfGoals(context));
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(subcat.name!),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Container(
-              color: Colors.red,
-              child: Center(
-                child: Column(children: items),
-              ),
+      appBar: AppBar(
+        title: Text(subcat.name!),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Container(
+            color: Colors.red,
+            child: Center(
+              child: Column(children: items),
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -104,11 +107,12 @@ class InformationRow extends StatelessWidget {
           ),
         ),
         Expanded(
-            child: Text(
-          value.toStringAsFixed(2) + " €",
-          style: titleStyle,
-          textAlign: TextAlign.right,
-        ))
+          child: Text(
+            value.toStringAsFixed(2) + " €",
+            style: titleStyle,
+            textAlign: TextAlign.right,
+          ),
+        )
       ],
     );
   }

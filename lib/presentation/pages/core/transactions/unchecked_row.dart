@@ -16,18 +16,28 @@ class UncheckedRow extends StatelessWidget {
   final TextStyle dateStyle;
   final String? payeeName;
 
-  const UncheckedRow(this.subcategoryName, this.memo, this.memoStyle, this.amount, this.amountStyle,
-      this.date, this.dateStyle, this.payeeName, this.subcategoryStyle,
-      {Key? key})
-      : super(key: key);
+  const UncheckedRow(
+    this.subcategoryName,
+    this.memo,
+    this.memoStyle,
+    this.amount,
+    this.amountStyle,
+    this.date,
+    this.dateStyle,
+    this.payeeName,
+    this.subcategoryStyle, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        margin: const EdgeInsets.symmetric(horizontal: 10),
-        height: 70,
-        child: Column(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
+      height: 70,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -66,6 +76,8 @@ class UncheckedRow extends StatelessWidget {
               Text(payeeName!)
             ],
           ),
-        ]));
+        ],
+      ),
+    );
   }
 }

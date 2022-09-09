@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'creator.dart';
-import 'money_transaction.dart';
-import 'queries.dart';
+import 'package:your_budget/models/creator.dart';
+import 'package:your_budget/models/money_transaction.dart';
+import 'package:your_budget/models/queries.dart';
 
 class MoneyTransactionCreator implements Creator<MoneyTransaction> {
   final Queries? queryContext;
@@ -28,22 +28,24 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
   @override
   Future<MoneyTransaction> create() async {
     final MoneyTransactionModel moneyTransactionModel = MoneyTransactionModel(
-        accountID: accountId,
-        payeeID: payeeId,
-        subcatID: subcatId,
-        amount: amount,
-        date: date,
-        memo: memo);
+      accountID: accountId,
+      payeeID: payeeId,
+      subcatID: subcatId,
+      amount: amount,
+      date: date,
+      memo: memo,
+    );
 
     final int id = await queryContext!.addMoneyTransaction(moneyTransactionModel);
 
     return MoneyTransaction(
-        id: id,
-        accountID: accountId,
-        payeeID: payeeId,
-        subcatID: subcatId,
-        amount: amount,
-        date: date!,
-        memo: memo);
+      id: id,
+      accountID: accountId,
+      payeeID: payeeId,
+      subcatID: subcatId,
+      amount: amount,
+      date: date!,
+      memo: memo,
+    );
   }
 }

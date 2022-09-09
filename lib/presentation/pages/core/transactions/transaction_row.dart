@@ -6,14 +6,14 @@ import 'package:collection/collection.dart' show IterableExtension, Unmodifiable
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../appstate.dart';
-import '../../../../models/account.dart';
-import '../../../../models/categories.dart';
-import '../../../../models/constants.dart';
-import '../../../../models/money_transaction.dart';
-import '../../../../models/payee.dart';
-import 'checked_row.dart';
-import 'unchecked_row.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/money_transaction.dart';
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/presentation/pages/core/transactions/checked_row.dart';
+import 'package:your_budget/presentation/pages/core/transactions/unchecked_row.dart';
 
 class TransactionRow extends StatefulWidget {
   final MoneyTransaction moneyTransaction;
@@ -41,11 +41,11 @@ class _TransactionRowState extends State<TransactionRow> {
     String? subcategoryName = "";
     String? payeeName;
     final TextStyle amountStyle = TextStyle(
-        fontSize: 22.0,
-        fontWeight: FontWeight.w600,
-        color: widget.moneyTransaction.amount!.isNegative
-            ? Constants.RED_COLOR
-            : Constants.GREEN_COLOR);
+      fontSize: 22.0,
+      fontWeight: FontWeight.w600,
+      color:
+          widget.moneyTransaction.amount!.isNegative ? Constants.RED_COLOR : Constants.GREEN_COLOR,
+    );
     final AppState appState = Provider.of<AppState>(context, listen: false);
 
     payeeName = _setPayeeName(appState);
@@ -62,7 +62,8 @@ class _TransactionRowState extends State<TransactionRow> {
             dateStyle,
             payeeName!,
             subcategoryStyle,
-            widget.moneyTransaction.id!)
+            widget.moneyTransaction.id!,
+          )
         : UncheckedRow(
             subcategoryName,
             widget.moneyTransaction.memo,
@@ -72,7 +73,8 @@ class _TransactionRowState extends State<TransactionRow> {
             widget.moneyTransaction.date!,
             dateStyle,
             payeeName,
-            subcategoryStyle);
+            subcategoryStyle,
+          );
   }
 
   String? _setSubcategoryName(AppState appState) {
@@ -91,7 +93,8 @@ class _TransactionRowState extends State<TransactionRow> {
     }
     // Transaction into subcategories
     final correspondingSubcategory = widget.categories.singleWhereOrNull(
-        (cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID);
+      (cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID,
+    );
     return correspondingSubcategory != null ? correspondingSubcategory.name : "";
   }
 

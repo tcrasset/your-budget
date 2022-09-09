@@ -24,11 +24,12 @@ void main() {
     tBudgeted = 99.99;
     tAvailable = 50.00;
     creator = SubCategoryCreator(
-        queryContext: mockQueries,
-        name: tName,
-        parentId: tParentId,
-        budgeted: tBudgeted,
-        available: tAvailable);
+      queryContext: mockQueries,
+      name: tName,
+      parentId: tParentId,
+      budgeted: tBudgeted,
+      available: tAvailable,
+    );
   });
 
   test('verify that constructor sets the parameters', () {
@@ -47,7 +48,8 @@ void main() {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())!)).thenAnswer((_) async => tId);
+    when(mockQueries.addSubcategory(argThat(isA<SubCategoryModel>())!))
+        .thenAnswer((_) async => tId);
 
     //!Act
     final SubCategory subcategory = await creator.create();

@@ -10,10 +10,10 @@ import 'package:sqflite/sqflite.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
-import '../../domain/account/i_account_repository.dart';
-import '../../domain/core/value_failure.dart';
-import '../../models/constants.dart';
-import 'account_dto.dart';
+import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/infrastructure/account/account_dto.dart';
 
 class SQFliteAccountRepository implements IAccountRepository {
   final Database? database;
@@ -38,6 +38,8 @@ class SQFliteAccountRepository implements IAccountRepository {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
       final int id = await database!.insert(DatabaseConstants.accountTable, accountDTO.toJson());
+
+      debugPrint(accountDTO.toString());
       return right(id);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {

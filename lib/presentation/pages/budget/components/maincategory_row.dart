@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../../models/categories.dart';
-import '../../../../models/constants.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
 
 // Widget containing and displaying the information of a category
 class MainCategoryRow extends StatelessWidget {
@@ -29,19 +29,26 @@ class MainCategoryRow extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                  child: Text(
-                cat.name!,
-                style: Constants.CATEGORY_TEXT_STYLE,
-              )),
+                child: Text(
+                  cat.name!,
+                  style: Constants.CATEGORY_TEXT_STYLE,
+                ),
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text('Budgeted',
-                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
-                    Text(cat.budgeted!.toStringAsFixed(2),
-                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
+                    const Text(
+                      'Budgeted',
+                      textAlign: TextAlign.right,
+                      style: Constants.CATEGORY_TEXT_STYLE,
+                    ),
+                    Text(
+                      cat.budgeted!.toStringAsFixed(2),
+                      textAlign: TextAlign.right,
+                      style: Constants.CATEGORY_TEXT_STYLE,
+                    )
                   ],
                 ),
               ),
@@ -50,10 +57,16 @@ class MainCategoryRow extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    const Text('Available',
-                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE),
-                    Text(cat.available!.toStringAsFixed(2),
-                        textAlign: TextAlign.right, style: Constants.CATEGORY_TEXT_STYLE)
+                    const Text(
+                      'Available',
+                      textAlign: TextAlign.right,
+                      style: Constants.CATEGORY_TEXT_STYLE,
+                    ),
+                    Text(
+                      cat.available!.toStringAsFixed(2),
+                      textAlign: TextAlign.right,
+                      style: Constants.CATEGORY_TEXT_STYLE,
+                    )
                   ],
                 ),
               ),

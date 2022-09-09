@@ -11,8 +11,8 @@ import 'package:your_budget/application/addAccount/account_watcher_bloc/account_
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'add_transaction_field.dart';
-import 'search_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 
 class AccountField extends StatelessWidget {
   const AccountField({
@@ -78,15 +78,16 @@ class AccountListScaffold extends HookWidget {
         body: BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
           builder: (context, state) {
             return state.maybeMap(
-                loadSuccess: (newState) => Column(
-                      children: [
-                        SearchField(searchController: searchController!),
-                        Expanded(child: AccountList(searchController: searchController)),
-                      ],
-                    ),
-                loadFailure: (_) => const Center(child: Text("Failure.")),
-                loading: (_) => const Center(child: CircularProgressIndicator()),
-                orElse: () => Container());
+              loadSuccess: (newState) => Column(
+                children: [
+                  SearchField(searchController: searchController!),
+                  Expanded(child: AccountList(searchController: searchController)),
+                ],
+              ),
+              loadFailure: (_) => const Center(child: Text("Failure.")),
+              loading: (_) => const Center(child: CircularProgressIndicator()),
+              orElse: () => Container(),
+            );
           },
         ),
       ),

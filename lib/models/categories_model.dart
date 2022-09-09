@@ -7,11 +7,12 @@ class SubCategoryModel {
   final double budgeted;
   final double available;
 
-  SubCategoryModel(
-      {required this.parentId,
-      required this.name,
-      required this.budgeted,
-      required this.available});
+  SubCategoryModel({
+    required this.parentId,
+    required this.name,
+    required this.budgeted,
+    required this.available,
+  });
 }
 
 class MainCategoryModel {
@@ -27,10 +28,11 @@ class BudgetValueModel {
   int? year;
   int? month;
 
-  BudgetValueModel(
-      {required this.subcategoryId,
-      required this.budgeted,
-      required this.available,
-      required this.year,
-      required this.month});
+  BudgetValueModel({
+    required this.subcategoryId,
+    required this.budgeted,
+    required this.available,
+    required this.year,
+    required this.month,
+  });
 }

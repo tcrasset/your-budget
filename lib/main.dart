@@ -4,25 +4,20 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import 'application/core/bloc_observer.dart';
-import 'appstate.dart';
-import 'injection_container.dart' as injections;
-import 'models/constants.dart';
-import 'presentation/pages/addAccount/add_account.dart';
-import 'presentation/pages/addTransaction/add_transaction.dart';
-import 'presentation/pages/budget/budget_page.dart';
-import 'presentation/pages/budget/budget_page_state.dart';
-import 'presentation/pages/deleteCategories/delete_categories_state.dart';
-import 'presentation/pages/modifyTransactions/modify_transaction_state.dart';
-import 'presentation/pages/showTransactions/show_transaction_page.dart';
-import 'waiting_screen.dart';
+import 'package:your_budget/application/core/bloc_observer.dart';
+import 'package:your_budget/injection_container.dart' as injections;
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
+import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
+import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
+import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
+import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
 
 Future<void> main() async {
-  // Bloc.observer = SimpleBlocObserver();
+  Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
   runApp(MyBudget());
@@ -31,12 +26,15 @@ Future<void> main() async {
 class MyBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      // ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
-      // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
-      ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
-      ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
-    ], child: HomeScreen());
+    return MultiProvider(
+      providers: [
+        // ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
+        // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
+        ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
+        ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
+      ],
+      child: HomeScreen(),
+    );
   }
 }
 
@@ -89,9 +87,13 @@ class HomeScreenState extends State<HomeScreen> {
               label: "Accounts",
             ),
             const BottomNavigationBarItem(
-                icon: FaIcon(Constants.ADD_TRANSACTION_ICON), label: "Add transaction"),
+              icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
+              label: "Add transaction",
+            ),
             const BottomNavigationBarItem(
-                icon: FaIcon(Constants.ALLTRANSACTION_ICON), label: "Transactions"),
+              icon: FaIcon(Constants.ALLTRANSACTION_ICON),
+              label: "Transactions",
+            ),
           ],
         ),
       ),

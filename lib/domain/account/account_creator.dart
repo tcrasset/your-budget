@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 // Project imports:
@@ -31,6 +32,8 @@ class AccountCreator {
   });
 
   Future<Either<ValueFailure, Unit>> create(Account account) async {
+    debugPrint(account.toString());
+
     final Either<ValueFailure, int> failureOrInt = await accountRepository.create(account);
 
     return failureOrInt.fold(
@@ -48,9 +51,11 @@ class AccountCreator {
   }
 
   Future<Either<ValueFailure, Unit>> _createStartingMoneyTransaction(
-      int accountId, Amount balance) async {
-//Create starting money transaction
-//TODO: Use real names
+    int accountId,
+    Amount balance,
+  ) async {
+    //Create starting money transaction
+    //TODO: Use real names
 
     final Either<ValueFailure, Account> failureOrAccount = await accountRepository.get(accountId);
     final Either<ValueFailure, Subcategory> failureOrSubcategory =

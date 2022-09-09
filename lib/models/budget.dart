@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import '../main.dart';
-import 'categories.dart';
-import 'utils.dart';
+import 'package:your_budget/main.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/utils.dart';
 
 /// Class representing budget that is held monthly, specified by [month] and [year].
 /// It holds a list of all [maincategories] and [subcategories], which are put in a specific
@@ -29,7 +29,8 @@ class Budget {
   ///
   /// The contents of MainCategory.subcategories of each MainCategory passed in [maincategories] is not taken
   /// into account and replaced with the corresponding [subcategories] .
-  Budget(List<MainCategory?> maincategories, List<SubCategory?> subcategories, int? month, int? year) {
+  Budget(
+      List<MainCategory?> maincategories, List<SubCategory?> subcategories, int? month, int? year) {
     for (final MainCategory? cat in maincategories) {
       final MainCategory newCat = cat!.copy();
       final List<SubCategory?> correspondingSubcats =
@@ -101,7 +102,8 @@ class Budget {
   }
 
   void updateMaincategory(MainCategory modifiedMaincategory) {
-    final MainCategory cat = maincategories.singleWhere((cat) => cat!.id == modifiedMaincategory.id)!;
+    final MainCategory cat =
+        maincategories.singleWhere((cat) => cat!.id == modifiedMaincategory.id)!;
     cat.name = modifiedMaincategory.name;
   }
 
@@ -109,7 +111,11 @@ class Budget {
   /// The parent of the SubCategory has to be specified with [categoryId] to be able to
   /// update it's values too.
   void makeSubcategoryChangeBySubcatId(
-      int? subcatId, String? categoryId, String field, String value) {
+    int? subcatId,
+    String? categoryId,
+    String field,
+    String value,
+  ) {
     final SubCategory? oldSubcat = subcategories.singleWhere((subcat) => subcat!.id == subcatId);
 
     switch (field) {

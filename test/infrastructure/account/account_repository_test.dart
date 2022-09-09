@@ -32,9 +32,10 @@ void main() {
     tName = "Test name";
 
     tAccount = Account(
-        id: UniqueId.fromUniqueString(tId.toString()),
-        balance: Amount(tBalance.toString()),
-        name: Name(tName));
+      id: UniqueId.fromUniqueString(tId.toString()),
+      balance: Amount(tBalance.toString()),
+      name: Name(tName),
+    );
 
     accountDTO = AccountDTO.fromDomain(tAccount);
   });

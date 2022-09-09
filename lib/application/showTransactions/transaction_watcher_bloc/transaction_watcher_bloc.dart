@@ -5,16 +5,15 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
+import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
-import '../../../domain/account/i_account_repository.dart';
-import '../../../domain/core/value_failure.dart';
-import '../../../domain/transaction/i_transaction_repository.dart';
 
+part 'transaction_watcher_bloc.freezed.dart';
 part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';
-part 'transaction_watcher_bloc.freezed.dart';
 
 class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
   final ITransactionRepository transactionRepository;
@@ -29,8 +28,10 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
     on<_CycleAccount>(_onCycleAccount);
   }
 
-  _onTransactionWatchStarted(
-      _TransactionWatchStarted event, Emitter<TransactionWatcherState> emit) async {
+  Future<void> _onTransactionWatchStarted(
+    _TransactionWatchStarted event,
+    Emitter<TransactionWatcherState> emit,
+  ) async {
     emit(const TransactionWatcherState.loading());
     await _transactionStreamSubscription?.cancel();
 
@@ -40,18 +41,18 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
         );
   }
 
-  _onTransactionsReceived(
-      _TransactionsReceived event, Emitter<TransactionWatcherState> emit) async {
-    if (event != null) {
-      var newState = event.failureOrTransactions.fold(
-        (f) => TransactionWatcherState.loadFailure(f),
-        (transactions) => TransactionWatcherState.loadSuccess(transactions),
-      );
-      emit(newState);
-    }
+  void _onTransactionsReceived(
+    _TransactionsReceived event,
+    Emitter<TransactionWatcherState> emit,
+  ) {
+    final newState = event.failureOrTransactions.fold(
+      (f) => TransactionWatcherState.loadFailure(f),
+      (transactions) => TransactionWatcherState.loadSuccess(transactions),
+    );
+    emit(newState);
   }
 
-  _onCycleAccount(_CycleAccount event, Emitter<TransactionWatcherState> emit) async {
+  Future<void> _onCycleAccount(_CycleAccount event, Emitter<TransactionWatcherState> emit) async {
     emit(const TransactionWatcherState.loading());
     final failureOrCount = await accountRepository.count();
     failureOrCount.fold(

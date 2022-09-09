@@ -9,14 +9,14 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
-import '../../../application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
-import '../../../appstate.dart';
-import '../../../domain/account/i_account_repository.dart';
-import '../../../domain/transaction/i_transaction_repository.dart';
-import '../../../models/account.dart';
-import '../../../models/constants.dart';
-import '../core/progress_overlay.dart';
-import '../core/transactions/transaction_list.dart';
+import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
+import 'package:your_budget/presentation/pages/core/transactions/transaction_list.dart';
 
 // import '../modifyTransactions/modify_transactions.dart';
 
@@ -26,14 +26,17 @@ class ShowTransactionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<TransactionWatcherBloc>(
-        create: (context) => TransactionWatcherBloc(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<TransactionWatcherBloc>(
+          create: (context) => TransactionWatcherBloc(
             transactionRepository: GetIt.instance<ITransactionRepository>(),
-            accountRepository: GetIt.instance<IAccountRepository>())
-          ..add(const TransactionWatcherEvent.watchTransactionsStarted()),
-      ),
-    ], child: TransactionScaffold(title: title));
+            accountRepository: GetIt.instance<IAccountRepository>(),
+          )..add(const TransactionWatcherEvent.watchTransactionsStarted()),
+        ),
+      ],
+      child: TransactionScaffold(title: title),
+    );
   }
 }
 
@@ -45,38 +48,39 @@ class TransactionScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     bool? isLoading;
     return MultiBlocListener(
-        listeners: [
-          BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
-            listener: (context, state) {
-              isLoading = state.maybeMap(
-                initial: (_) => true,
-                loading: (_) => true,
-                orElse: () => false,
-              );
+      listeners: [
+        BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
+          listener: (context, state) {
+            isLoading = state.maybeMap(
+              initial: (_) => true,
+              loading: (_) => true,
+              orElse: () => false,
+            );
 
-              final String? errorMessage = state.maybeMap(
-                orElse: () => null,
-                loadFailure: (_) => "Failed to load the transactions. Please contact support.",
-              );
+            final String? errorMessage = state.maybeMap(
+              orElse: () => null,
+              loadFailure: (_) => "Failed to load the transactions. Please contact support.",
+            );
 
-              if (errorMessage != null) {
-                // FlushbarHelper.createError(message: errorMessage).show(context);
-              }
-            },
-          )
-        ],
-        child: Scaffold(
-          appBar: getAppbar(title!, () => null),
-          body: Stack(
-            children: [
-              OptionalTransactionList(),
-              InProgressOverlay(
-                showOverlay: isLoading ?? false,
-                textDisplayed: "Loading",
-              )
-            ],
-          ),
-        ));
+            if (errorMessage != null) {
+              // FlushbarHelper.createError(message: errorMessage).show(context);
+            }
+          },
+        )
+      ],
+      child: Scaffold(
+        appBar: getAppbar(title!, () => null),
+        body: Stack(
+          children: [
+            OptionalTransactionList(),
+            InProgressOverlay(
+              showOverlay: isLoading ?? false,
+              textDisplayed: "Loading",
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -125,13 +129,14 @@ class TransactionListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: transactions.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text('Amount: ${transactions[index]} €'),
-          );
-        });
+      padding: const EdgeInsets.all(8),
+      itemCount: transactions.length,
+      itemBuilder: (BuildContext context, int index) {
+        return ListTile(
+          title: Text('Amount: ${transactions[index]} €'),
+        );
+      },
+    );
   }
 }
 
@@ -153,15 +158,16 @@ class EmptyTransactionList extends StatelessWidget {
 
 AppBar getAppbar(String title, Function() handleModifyTransactions) {
   return AppBar(
-      title: Text(title),
-      leading: const Icon(Constants.ALLTRANSACTION_ICON),
-      backgroundColor: Constants.PRIMARY_COLOR,
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(FontAwesomeIcons.checkSquare),
-          onPressed: handleModifyTransactions,
-        ),
-      ]);
+    title: Text(title),
+    leading: const Icon(Constants.ALLTRANSACTION_ICON),
+    backgroundColor: Constants.PRIMARY_COLOR,
+    actions: <Widget>[
+      IconButton(
+        icon: const Icon(FontAwesomeIcons.checkSquare),
+        onPressed: handleModifyTransactions,
+      ),
+    ],
+  );
 }
 
 class AccountButtons extends StatelessWidget {
@@ -169,8 +175,10 @@ class AccountButtons extends StatelessWidget {
 
   const AccountButtons({Key? key, this.accountText}) : super(key: key);
 
-  Future<void> handleButtonOnPressed(
-      {required BuildContext context, required bool increment}) async {
+  Future<void> handleButtonOnPressed({
+    required BuildContext context,
+    required bool increment,
+  }) async {
     context.read<TransactionWatcherBloc>().add(
           TransactionWatcherEvent.cycleAccount(increment: increment),
         );
@@ -184,15 +192,17 @@ class AccountButtons extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => handleButtonOnPressed(context: context, increment: false)),
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => handleButtonOnPressed(context: context, increment: false),
+          ),
           Text(
             accountText!,
             style: const TextStyle(fontSize: 20),
           ),
           IconButton(
-              icon: const Icon(Icons.arrow_forward),
-              onPressed: () => handleButtonOnPressed(context: context, increment: true))
+            icon: const Icon(Icons.arrow_forward),
+            onPressed: () => handleButtonOnPressed(context: context, increment: true),
+          )
         ],
       ),
     );

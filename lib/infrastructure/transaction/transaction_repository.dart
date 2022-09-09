@@ -10,10 +10,10 @@ import 'package:sqflite/sqflite.dart';
 
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
-import '../../domain/core/value_failure.dart';
-import '../../domain/transaction/i_transaction_repository.dart';
-import '../../models/constants.dart';
-import 'transaction_dto.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
 
 class SQFliteTransactionRepository implements ITransactionRepository {
   final Database? database;
@@ -104,7 +104,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
-      int accountID) {
+    int accountID,
+  ) {
     return getAccountTransactions(accountID).asStream();
   }
 }

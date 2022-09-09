@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../appstate.dart';
-import '../../../components/delete_dialog.dart';
-import '../../../components/widgetViewClasses.dart';
-import '../../../models/account.dart';
-import '../../../models/constants.dart';
-import '../core/transactions/transaction_list.dart';
-import 'modify_transaction_state.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/components/delete_dialog.dart';
+import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/core/transactions/transaction_list.dart';
+import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
 
 class ModifyTransactions extends StatefulWidget {
   final Account account;
@@ -48,9 +48,10 @@ class _ModifyTransactionsView
         title: const Text("Modify transactions"),
       ),
       body: Consumer2<AppState, ModifyTransactionsState>(
-          builder: (_, appState, showTransactionsState, __) {
-        return TransactionList(widget.account, appState, true);
-      }),
+        builder: (_, appState, showTransactionsState, __) {
+          return TransactionList(widget.account, appState, true);
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => state.handleDeleteTransactions(context),
         backgroundColor: Constants.RED_COLOR,

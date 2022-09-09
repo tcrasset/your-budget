@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../models/constants.dart';
-import '../../../../models/utils.dart';
-import '../budget_page_state.dart';
-import 'custom_button.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/utils.dart';
+import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
+import 'package:your_budget/presentation/pages/budget/components/custom_button.dart';
 
 class ButtonDial extends StatelessWidget {
   final double height;
@@ -32,44 +32,55 @@ class ButtonDial extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton("7", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton("4", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton("1", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-            ]),
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton("8", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton("5", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton("2", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-            ]),
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              CustomButton("9", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton("6", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-              CustomButton("3", buttonHeight, buttonWidth, Colors.white, buttonPressed),
-            ]),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomButton("7", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+                CustomButton("4", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+                CustomButton("1", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomButton("8", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+                CustomButton("5", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+                CustomButton("2", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CustomButton("9", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+                CustomButton("6", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+                CustomButton("3", buttonHeight, buttonWidth, Colors.white, buttonPressed),
+              ],
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CustomButton(
-                    "Remove",
-                    buttonHeight,
-                    buttonWidth,
-                    Colors.white,
-                    buttonPressed,
-                    const Icon(
-                      Icons.backspace,
-                      color: Constants.SECONDARY_COLOR,
-                    )),
+                  "Remove",
+                  buttonHeight,
+                  buttonWidth,
+                  Colors.white,
+                  buttonPressed,
+                  const Icon(
+                    Icons.backspace,
+                    color: Constants.SECONDARY_COLOR,
+                  ),
+                ),
                 CustomButton(
-                    "Done",
-                    buttonHeight,
-                    buttonWidth,
-                    Colors.white,
-                    buttonPressed,
-                    const Icon(
-                      Icons.done,
-                      color: Constants.SECONDARY_COLOR,
-                    )),
+                  "Done",
+                  buttonHeight,
+                  buttonWidth,
+                  Colors.white,
+                  buttonPressed,
+                  const Icon(
+                    Icons.done,
+                    color: Constants.SECONDARY_COLOR,
+                  ),
+                ),
                 CustomButton("0", buttonHeight, buttonWidth, Colors.white, buttonPressed),
               ],
             ),

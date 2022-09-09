@@ -36,22 +36,26 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
     required this.payeeRepository,
   }) : super(AccountCreatorState.initial()) {
     on<_Initialized>((event, emit) => emit(state));
-    on<_NameChanged>((event, emit) => emit(
-          state.copyWith(
-            account: state.account.copyWith(name: Name(event.name)),
-            saveFailureOrSuccessOption: none(),
-          ),
-        ));
-    on<_BalanceChanged>((event, emit) => emit(
-          state.copyWith(
-            account: state.account.copyWith(balance: Amount(event.balance)),
-            saveFailureOrSuccessOption: none(),
-          ),
-        ));
-    on<_Saved>((event, emit) => _onSaved);
+    on<_NameChanged>(_onNameChanged);
+    on<_BalanceChanged>(_onBalanceChanged);
+    on<_Saved>(_onSaved);
   }
 
-  _onSaved(_Saved event, Emitter<AccountCreatorState> emit) async {
+  void _onBalanceChanged(_BalanceChanged event, Emitter<AccountCreatorState> emit) => emit(
+        state.copyWith(
+          account: state.account.copyWith(balance: Amount(event.balance)),
+          saveFailureOrSuccessOption: none(),
+        ),
+      );
+
+  void _onNameChanged(_NameChanged event, Emitter<AccountCreatorState> emit) => emit(
+        state.copyWith(
+          account: state.account.copyWith(name: Name(event.name)),
+          saveFailureOrSuccessOption: none(),
+        ),
+      );
+
+  Future<void> _onSaved(_Saved event, Emitter<AccountCreatorState> emit) async {
     Either<ValueFailure, Unit>? failureOrSuccess;
 
     emit(state.copyWith(isSaving: true));
@@ -68,10 +72,12 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
       ).create(state.account);
     }
 
-    emit(state.copyWith(
-      isSaving: false,
-      showErrorMessages: true,
-      saveFailureOrSuccessOption: optionOf(failureOrSuccess),
-    ));
+    emit(
+      state.copyWith(
+        isSaving: false,
+        showErrorMessages: true,
+        saveFailureOrSuccessOption: optionOf(failureOrSuccess),
+      ),
+    );
   }
 }

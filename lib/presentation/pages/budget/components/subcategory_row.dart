@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../appstate.dart';
-import '../../../../components/widgetViewClasses.dart';
-import '../../../../models/categories.dart';
-import '../../../../models/constants.dart';
-import '../budget_page_state.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
 
 // Widget containing and displaying the information a subcategory
 
@@ -83,21 +83,23 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
         child: Row(
           children: <Widget>[
             Expanded(
-                child: Text(
-              widget.subcat.name!,
-              style: Constants.SUBCATEGORY_TEXT_STYLE,
-            )),
-            Expanded(
-                child: TextField(
-              readOnly: true,
-              enabled: false, //transparent for taps
-              decoration: const InputDecoration.collapsed(
-                hintText: "",
+              child: Text(
+                widget.subcat.name!,
+                style: Constants.SUBCATEGORY_TEXT_STYLE,
               ),
-              // controller: state._budgetedController,
-              textAlign: TextAlign.right,
-              style: Constants.SUBCATEGORY_TEXT_STYLE,
-            )),
+            ),
+            Expanded(
+              child: TextField(
+                readOnly: true,
+                enabled: false, //transparent for taps
+                decoration: const InputDecoration.collapsed(
+                  hintText: "",
+                ),
+                // controller: state._budgetedController,
+                textAlign: TextAlign.right,
+                style: Constants.SUBCATEGORY_TEXT_STYLE,
+              ),
+            ),
             Flexible(
               child: Align(
                 alignment: Alignment.centerRight,
@@ -109,9 +111,11 @@ class _SubcategoryRowView extends WidgetView<SubcategoryRow, _SubcategoryRowCont
                       Radius.circular(9.0),
                     ),
                   ),
-                  child: Text("${widget.subcat.available!.toStringAsFixed(2)} €",
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(fontSize: 18, color: Colors.white)),
+                  child: Text(
+                    "${widget.subcat.available!.toStringAsFixed(2)} €",
+                    textAlign: TextAlign.right,
+                    style: const TextStyle(fontSize: 18, color: Colors.white),
+                  ),
                 ),
               ),
             )

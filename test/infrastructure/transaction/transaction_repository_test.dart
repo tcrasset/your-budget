@@ -49,17 +49,18 @@ void main() {
     tMemo = "Test memo";
     tMoneyTransactionId = 1;
     transaction = MoneyTransaction(
-        id: UniqueId.fromUniqueInt(1),
-        subcatID: UniqueId.fromUniqueInt(tSubcatId),
-        payeeID: UniqueId.fromUniqueInt(tPayeeId),
-        accountID: UniqueId.fromUniqueInt(tAccountId),
-        accountName: Name("Test account"),
-        payeeName: Name("Test payee"),
-        subcatName: Name("Test subcategory"),
-        payee: Payee(id: UniqueId.fromUniqueInt(tPayeeId), name: Name("Test payee")),
-        amount: Amount(tAmount.toString()),
-        memo: Name(tMemo),
-        date: tDate);
+      id: UniqueId.fromUniqueInt(1),
+      subcatID: UniqueId.fromUniqueInt(tSubcatId),
+      payeeID: UniqueId.fromUniqueInt(tPayeeId),
+      accountID: UniqueId.fromUniqueInt(tAccountId),
+      accountName: Name("Test account"),
+      payeeName: Name("Test payee"),
+      subcatName: Name("Test subcategory"),
+      payee: Payee(id: UniqueId.fromUniqueInt(tPayeeId), name: Name("Test payee")),
+      amount: Amount(tAmount.toString()),
+      memo: Name(tMemo),
+      date: tDate,
+    );
 
     transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
   });
@@ -83,39 +84,47 @@ void main() {
 
   test('verify that db.update is called when updating MoneyTransaction', () async {
     //!Arrange
-    when(mockDatabase.update(
-      DatabaseConstants.moneyTransactionTable,
-      transactionDTO.toJson(),
-      where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
-      whereArgs: [transactionDTO.id],
-    )).thenAnswer((_) async => 1);
+    when(
+      mockDatabase.update(
+        DatabaseConstants.moneyTransactionTable,
+        transactionDTO.toJson(),
+        where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
+        whereArgs: [transactionDTO.id],
+      ),
+    ).thenAnswer((_) async => 1);
 
     //!Act
     await repository.update(transaction);
     //!Assert
-    verify(mockDatabase.update(
-      DatabaseConstants.moneyTransactionTable,
-      transactionDTO.toJson(),
-      where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
-      whereArgs: [transactionDTO.id],
-    ));
+    verify(
+      mockDatabase.update(
+        DatabaseConstants.moneyTransactionTable,
+        transactionDTO.toJson(),
+        where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
+        whereArgs: [transactionDTO.id],
+      ),
+    );
   });
 
   test('verify that db.delete is called when deleting MoneyTransaction', () async {
     //!Arrange
-    when(mockDatabase.delete(
-      DatabaseConstants.moneyTransactionTable,
-      where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
-      whereArgs: [transactionDTO.id],
-    )).thenAnswer((_) async => 1);
+    when(
+      mockDatabase.delete(
+        DatabaseConstants.moneyTransactionTable,
+        where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
+        whereArgs: [transactionDTO.id],
+      ),
+    ).thenAnswer((_) async => 1);
     //!Act
     await repository.delete(transaction);
     //!Assert
-    verify(mockDatabase.delete(
-      DatabaseConstants.moneyTransactionTable,
-      where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
-      whereArgs: [transactionDTO.id],
-    ));
+    verify(
+      mockDatabase.delete(
+        DatabaseConstants.moneyTransactionTable,
+        where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
+        whereArgs: [transactionDTO.id],
+      ),
+    );
   });
 
   test('verify that getAccountTransactions creates the correct raw query', () async {
@@ -142,9 +151,11 @@ void main() {
         ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
-    when(mockDatabase.rawQuery(sql, [id])).thenAnswer((_) async => [
-          transactionDTO.toJson()..addAll({"id": 1})
-        ]);
+    when(mockDatabase.rawQuery(sql, [id])).thenAnswer(
+      (_) async => [
+        transactionDTO.toJson()..addAll({"id": 1})
+      ],
+    );
 
     await repository.getAccountTransactions(id);
 

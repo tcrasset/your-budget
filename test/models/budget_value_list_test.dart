@@ -20,12 +20,13 @@ void main() {
   setUp(() async {
     mockQueries = MockQueries();
     tBudgetValue = BudgetValue(
-        id: testId_1,
-        subcategoryId: tSubcatId,
-        budgeted: 99.99,
-        available: 88.88,
-        month: tMonth,
-        year: tYear);
+      id: testId_1,
+      subcategoryId: tSubcatId,
+      budgeted: 99.99,
+      available: 88.88,
+      month: tMonth,
+      year: tYear,
+    );
 
     budgetValuesList = BudgetValueList(mockQueries, [tBudgetValue]);
   });
@@ -101,7 +102,11 @@ void main() {
     //!Act
 
     budgetValuesList.updateBudgetValue(
-        subcatId: tSubcatId, date: tDate, newBudgeted: tBudgeted, newAvailable: tAvailable);
+      subcatId: tSubcatId,
+      date: tDate,
+      newBudgeted: tBudgeted,
+      newAvailable: tAvailable,
+    );
 
     //!Assert
     verify(mockQueries!.updateBudgetValue(argThat(isA<BudgetValue>())));

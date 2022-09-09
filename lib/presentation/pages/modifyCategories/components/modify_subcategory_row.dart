@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../appstate.dart';
-import '../../../../components/add_dialog.dart';
-import '../../../../models/categories.dart';
-import '../../../../models/constants.dart';
-import '../modify_categories.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/components/add_dialog.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/modifyCategories/modify_categories.dart';
 
 class ModifySubcategoryRow extends StatelessWidget {
   final SubCategory? subcat;
@@ -18,11 +18,12 @@ class ModifySubcategoryRow extends StatelessWidget {
   Future<void> handleSubCategoryNameChange(BuildContext context) async {
     const String hintText = "Modify subcategory name";
     final String? subcategoryName = await addDialog(
-        context: context,
-        title: hintText,
-        hintText: hintText,
-        successButtonName: "Submit",
-        nameValidator: validateCategoryName);
+      context: context,
+      title: hintText,
+      hintText: hintText,
+      successButtonName: "Submit",
+      nameValidator: validateCategoryName,
+    );
     if (subcategoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
       appState.updateSubcategoryName(subcat!.id, subcategoryName);
@@ -77,11 +78,13 @@ class ModifySubcategoryRow extends StatelessWidget {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
-              child: Text(subcat!.name!,
-                  style: TextStyle(
-                    fontSize: Constants.SUBCATEGORY_TEXT_STYLE.fontSize,
-                    fontWeight: Constants.SUBCATEGORY_TEXT_STYLE.fontWeight,
-                  )),
+              child: Text(
+                subcat!.name!,
+                style: TextStyle(
+                  fontSize: Constants.SUBCATEGORY_TEXT_STYLE.fontSize,
+                  fontWeight: Constants.SUBCATEGORY_TEXT_STYLE.fontWeight,
+                ),
+              ),
             )
             // Row(
             //   children: <Widget>[IconButton(icon: Icon(FontAwesomeIcons.bars), onPressed: null)],

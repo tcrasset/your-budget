@@ -69,8 +69,8 @@ class SubcategoryListScaffold extends HookWidget {
       providers: [
         BlocProvider<SubcategoryWatcherBloc>(
           create: (context) => SubcategoryWatcherBloc(
-              subcategoryRepository: GetIt.instance<ISubcategoryRepository>())
-            ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+            subcategoryRepository: GetIt.instance<ISubcategoryRepository>(),
+          )..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
         ),
       ],
       child: Scaffold(
@@ -81,15 +81,16 @@ class SubcategoryListScaffold extends HookWidget {
         body: BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
           builder: (context, state) {
             return state.maybeMap(
-                loadSuccess: (newState) => Column(
-                      children: [
-                        SearchField(searchController: searchController!),
-                        Expanded(child: SubcategoryList(searchController: searchController)),
-                      ],
-                    ),
-                loadFailure: (_) => const Center(child: Text("Failure.")),
-                loading: (_) => const Center(child: CircularProgressIndicator()),
-                orElse: () => Container());
+              loadSuccess: (newState) => Column(
+                children: [
+                  SearchField(searchController: searchController!),
+                  Expanded(child: SubcategoryList(searchController: searchController)),
+                ],
+              ),
+              loadFailure: (_) => const Center(child: Text("Failure.")),
+              loading: (_) => const Center(child: CircularProgressIndicator()),
+              orElse: () => Container(),
+            );
           },
         ),
       ),
@@ -118,12 +119,16 @@ class SubcategoryList extends StatelessWidget {
 
               if (noFilter == true) {
                 return ListTile(
-                    title: Text(name), onTap: () => handlePopContext(context, subcategory));
+                  title: Text(name),
+                  onTap: () => handlePopContext(context, subcategory),
+                );
               } else {
                 // The filter is not empty, we filter by name
                 if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
                   return ListTile(
-                      title: Text(name), onTap: () => handlePopContext(context, subcategory));
+                    title: Text(name),
+                    onTap: () => handlePopContext(context, subcategory),
+                  );
                 }
               }
               return Container();

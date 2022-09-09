@@ -27,13 +27,14 @@ void main() {
     tDate = DateTime.now();
     tMemo = "Test memo";
     creator = MoneyTransactionCreator(
-        queryContext: mockQueries,
-        subcatId: tSubcatId,
-        payeeId: tPayeeId,
-        accountId: tAccountId,
-        amount: tAmount,
-        memo: tMemo,
-        date: tDate);
+      queryContext: mockQueries,
+      subcatId: tSubcatId,
+      payeeId: tPayeeId,
+      accountId: tAccountId,
+      amount: tAmount,
+      memo: tMemo,
+      date: tDate,
+    );
   });
 
   test('when the constructor is called, verify that the arguments are saved', () {

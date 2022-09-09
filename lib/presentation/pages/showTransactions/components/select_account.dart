@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../../appstate.dart';
-import '../../../../models/account.dart';
-import '../../../../models/constants.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/constants.dart';
 
 class SelectAccountPage extends StatelessWidget {
   const SelectAccountPage({Key? key}) : super(key: key);
@@ -22,20 +22,22 @@ class SelectAccountPage extends StatelessWidget {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Select account"),
-          leading: const Icon(Constants.ALLTRANSACTION_ICON),
-          backgroundColor: Constants.PRIMARY_COLOR,
-        ),
-        body: ListView.builder(
-            itemCount: accounts.length,
-            itemBuilder: (context, index) {
-              return GestureDetector(
-                onTap: () => handleOnTap(index),
-                child: ListTile(
-                  title: Text(accounts[index]!.name!),
-                ),
-              );
-            }));
+      appBar: AppBar(
+        title: const Text("Select account"),
+        leading: const Icon(Constants.ALLTRANSACTION_ICON),
+        backgroundColor: Constants.PRIMARY_COLOR,
+      ),
+      body: ListView.builder(
+        itemCount: accounts.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () => handleOnTap(index),
+            child: ListTile(
+              title: Text(accounts[index]!.name!),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

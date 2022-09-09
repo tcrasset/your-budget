@@ -146,7 +146,9 @@ class PayeeList extends StatelessWidget {
                 // The filter is not empty, we filter by name
                 if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
                   return ListTile(
-                      title: Text(name), onTap: () => _handlePopContext(context, payee));
+                    title: Text(name),
+                    onTap: () => _handlePopContext(context, payee),
+                  );
                 }
               }
               return Container();

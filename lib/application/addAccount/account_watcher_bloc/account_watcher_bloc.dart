@@ -25,7 +25,10 @@ class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> 
     on<_AccountsReceived>(_onAccountsReceived);
   }
 
-  _onWatchAccountsStarted(_AccountWatchStarted event, Emitter<AccountWatcherState> emit) async {
+  Future<void> _onWatchAccountsStarted(
+    _AccountWatchStarted event,
+    Emitter<AccountWatcherState> emit,
+  ) async {
     emit(const AccountWatcherState.loading());
     await _accountStreamSubscription?.cancel();
 
@@ -34,7 +37,10 @@ class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> 
         );
   }
 
-  _onAccountsReceived(_AccountsReceived event, Emitter<AccountWatcherState> emit) async {
+  Future<void> _onAccountsReceived(
+    _AccountsReceived event,
+    Emitter<AccountWatcherState> emit,
+  ) async {
     event.failureOrAccounts.fold(
       (f) => emit(AccountWatcherState.loadFailure(f)),
       (accounts) => emit(AccountWatcherState.loadSuccess(accounts)),

@@ -14,9 +14,11 @@ class MemoField extends HookWidget {
   const MemoField({Key? key}) : super(key: key);
 
   void onMemoChange(BuildContext context, String value) {
-    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.memoChanged(
-          value,
-        ));
+    context.read<TransactionCreatorBloc>().add(
+          TransactionCreatorEvent.memoChanged(
+            value,
+          ),
+        );
   }
 
   String? _failNameClosure(dynamic f) {

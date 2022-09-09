@@ -6,13 +6,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../appstate.dart';
-import '../../../components/add_dialog.dart';
-import '../../../components/widgetViewClasses.dart';
-import '../../../models/categories.dart';
-import '../deleteCategories/delete_categories.dart';
-import 'components/modify_maincategory_row.dart';
-import 'components/modify_subcategory_row.dart';
+import 'package:your_budget/appstate.dart';
+import 'package:your_budget/components/add_dialog.dart';
+import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/presentation/pages/deleteCategories/delete_categories.dart';
+import 'package:your_budget/presentation/pages/modifyCategories/components/modify_maincategory_row.dart';
+import 'package:your_budget/presentation/pages/modifyCategories/components/modify_subcategory_row.dart';
 
 class ModifyCategories extends StatefulWidget {
   @override
@@ -25,11 +25,12 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
     const String hintText = "Add new category";
 
     final String? categoryName = await addDialog(
-        context: context,
-        title: hintText,
-        hintText: hintText,
-        nameValidator: validateCategoryName,
-        successButtonName: "Submit");
+      context: context,
+      title: hintText,
+      hintText: hintText,
+      nameValidator: validateCategoryName,
+      successButtonName: "Submit",
+    );
     if (categoryName != null) appState.addCategory(categoryName: categoryName);
   }
 
@@ -55,11 +56,13 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
           title: const Text("Modify categories"),
           actions: <Widget>[
             IconButton(
-                icon: const Icon(FontAwesomeIcons.trash),
-                onPressed: () => state.handleDeleteCategory(context)),
+              icon: const Icon(FontAwesomeIcons.trash),
+              onPressed: () => state.handleDeleteCategory(context),
+            ),
             IconButton(
-                icon: const Icon(FontAwesomeIcons.plus),
-                onPressed: () => state.handleAddCategory(context)),
+              icon: const Icon(FontAwesomeIcons.plus),
+              onPressed: () => state.handleAddCategory(context),
+            ),
           ],
         ),
         body: ListView.builder(

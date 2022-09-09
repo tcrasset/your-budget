@@ -2,9 +2,9 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'categories.dart';
-import 'object_list.dart';
-import 'queries.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/object_list.dart';
+import 'package:your_budget/models/queries.dart';
 
 class BudgetValueList implements ObjectList<BudgetValue> {
   final Queries? queryContext;
@@ -28,10 +28,12 @@ class BudgetValueList implements ObjectList<BudgetValue> {
   }
 
   BudgetValue? getByBudget(DateTime? date, int? subcatId) {
-    return _budgetvalues.singleWhere((budgetValue) =>
-        (budgetValue!.subcategoryId == subcatId) &&
-        (budgetValue.year == date!.year) &&
-        (budgetValue.month == date.month));
+    return _budgetvalues.singleWhere(
+      (budgetValue) =>
+          (budgetValue!.subcategoryId == subcatId) &&
+          (budgetValue.year == date!.year) &&
+          (budgetValue.month == date.month),
+    );
   }
 
   List<BudgetValue?> getAllBySubcatId(int subcatId) {

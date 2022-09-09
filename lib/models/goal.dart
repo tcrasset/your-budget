@@ -3,6 +3,7 @@ import 'constants.dart';
 
 //DO NOT CHANGE THE ORDER OF THE ITEMS IN THE ENUMERATION
 enum GoalType { TargetAmount, TargetAmountByDate, MonthlyGoal }
+
 const List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
 
 /// Class defining a budgeting goal, identified by [id], of type [goalType] and an [amount].
@@ -30,8 +31,14 @@ class Goal {
   //TODO: Check for correct values depending on [goalType]
 
   ///Default constructor for the [Goal].
-  Goal(this.id, this.correspondingSubcategoryId, this.goalType, this.amount,
-      [this.month, this.year]);
+  Goal(
+    this.id,
+    this.correspondingSubcategoryId,
+    this.goalType,
+    this.amount, [
+    this.month,
+    this.year,
+  ]);
 
   /// Constructor building a [Goal] from a [json] representation taken
   /// from a database.

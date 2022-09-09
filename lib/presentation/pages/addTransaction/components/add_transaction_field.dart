@@ -65,10 +65,15 @@ class RowContainer extends StatelessWidget {
           Row(
             children: <Widget>[
               Expanded(
-                child: Text(name,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16.0)),
+                child: Text(
+                  name,
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                  ),
+                ),
               ),
               Expanded(
                 flex: 2,

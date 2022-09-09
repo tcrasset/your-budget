@@ -11,8 +11,8 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
-import 'constants.dart';
-import 'utils.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/utils.dart';
 
 //Global database variable so as not to handle concurrency issues
 Database? db;
@@ -26,10 +26,13 @@ class DatabaseProvider {
   /// Furthermore, either the results [selectQueryResult] of a SELECT query or
   /// the results [insertAndUpdateQueryResult] of an INSERT query are returned.
   /// This depends on what action was taken on the database.
-  static void databaseLog(String functionName, String sql,
-      [List<Map<String, dynamic>>? selectQueryResult,
-      int? insertAndUpdateQueryResult,
-      List<dynamic>? params]) {
+  static void databaseLog(
+    String functionName,
+    String sql, [
+    List<Map<String, dynamic>>? selectQueryResult,
+    int? insertAndUpdateQueryResult,
+    List<dynamic>? params,
+  ]) {
     print("Method called : $functionName");
     print("SQL: $sql");
     if (params != null) {
@@ -236,14 +239,18 @@ class DatabaseProvider {
     /// Create the starting budget date based on the first time the user uses the app
     final String startingDateMillisecondsSinceEpoch =
         getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
-    db.rawInsert(CREATE_CONSTANT,
-        [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch]);
+    db.rawInsert(
+      CREATE_CONSTANT,
+      [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch],
+    );
 
     /// Create the maximum budget date based on current date + Constants.MAX_NB_MONTHS_AHEAD
     final String maxBudgetDateMillisecondsSinceEpoch =
         getMaxBudgetDate().millisecondsSinceEpoch.toString();
     db.rawInsert(
-        CREATE_CONSTANT, [DatabaseConstants.MAX_BUDGET_DATE, maxBudgetDateMillisecondsSinceEpoch]);
+      CREATE_CONSTANT,
+      [DatabaseConstants.MAX_BUDGET_DATE, maxBudgetDateMillisecondsSinceEpoch],
+    );
 
     ///Save account most recently used.
     db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);

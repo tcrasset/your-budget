@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 
 // Project imports:
-import 'account.dart';
-import 'categories.dart';
-import 'categories_model.dart';
-import 'constants.dart';
-import 'database_provider.dart';
-import 'goal.dart';
-import 'goal_model.dart';
-import 'money_transaction.dart';
-import 'payee.dart';
-import 'queries.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/categories_model.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/database_provider.dart';
+import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/goal_model.dart';
+import 'package:your_budget/models/money_transaction.dart';
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/models/queries.dart';
 
 class SQLQueryClass implements Queries {
   final Database? database;

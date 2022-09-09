@@ -24,12 +24,13 @@ void main() {
     tBudgeted = 99.99;
     tAvailable = 50.00;
     creator = BudgetValueCreator(
-        queryContext: mockQueries,
-        subcategoryId: tSubcategoryId,
-        budgeted: tBudgeted,
-        available: tAvailable,
-        month: tMonth,
-        year: tYear);
+      queryContext: mockQueries,
+      subcategoryId: tSubcategoryId,
+      budgeted: tBudgeted,
+      available: tAvailable,
+      month: tMonth,
+      year: tYear,
+    );
   });
 
   test('verify that constructor sets the parameters', () {
@@ -49,7 +50,8 @@ void main() {
     //!Arrange
     const int tId = 25;
 
-    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())!)).thenAnswer((_) async => tId);
+    when(mockQueries.addBudgetValue(argThat(isA<BudgetValueModel>())!))
+        .thenAnswer((_) async => tId);
 
     //!Act
     final BudgetValue budgetValue = await creator.create();

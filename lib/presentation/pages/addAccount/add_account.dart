@@ -14,9 +14,9 @@ import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'components/account_balance.dart';
-import 'components/account_name.dart';
-import 'components/account_row.dart';
+import 'package:your_budget/presentation/pages/addAccount/components/account_balance.dart';
+import 'package:your_budget/presentation/pages/addAccount/components/account_name.dart';
+import 'package:your_budget/presentation/pages/addAccount/components/account_row.dart';
 
 class AddAccountPage extends StatelessWidget {
   final String? title;
@@ -25,20 +25,24 @@ class AddAccountPage extends StatelessWidget {
   @override
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<AccountWatcherBloc>(
-        create: (context) =>
-            AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
-              ..add(const AccountWatcherEvent.watchAccountsStarted()),
-      ),
-      BlocProvider<AccountCreatorBloc>(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AccountWatcherBloc>(
+          create: (context) =>
+              AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
+                ..add(const AccountWatcherEvent.watchAccountsStarted()),
+        ),
+        BlocProvider<AccountCreatorBloc>(
           create: (_) => AccountCreatorBloc(
-                accountRepository: GetIt.instance<IAccountRepository>(),
-                transactionRepository: GetIt.instance<ITransactionRepository>(),
-                subcategoryRepository: GetIt.instance<ISubcategoryRepository>(),
-                payeeRepository: GetIt.instance<IPayeeRepository>(),
-              )..add(const AccountCreatorEvent.initialized())),
-    ], child: AddAccountPageScaffold());
+            accountRepository: GetIt.instance<IAccountRepository>(),
+            transactionRepository: GetIt.instance<ITransactionRepository>(),
+            subcategoryRepository: GetIt.instance<ISubcategoryRepository>(),
+            payeeRepository: GetIt.instance<IPayeeRepository>(),
+          )..add(const AccountCreatorEvent.initialized()),
+        ),
+      ],
+      child: AddAccountPageScaffold(),
+    );
   }
 }
 
@@ -84,6 +88,7 @@ class AddAccountForm extends StatelessWidget {
   final InputDecoration _textBoxDecoration;
 
   Future<void> handleSubmitForm(BuildContext context) async {
+    print("Add account button clicked.");
     context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.saved());
   }
 
@@ -116,27 +121,28 @@ class AddAccountForm extends StatelessWidget {
       buildWhen: (p, c) => p.isSaving != c.isSaving,
       builder: (context, state) {
         return Form(
-            autovalidateMode:
-                state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
-            child: Column(
-              children: <Widget>[
-                AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
-                AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: ElevatedButton(
-                    key: const Key('addAccountButton'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                    ),
-                    onPressed: () => handleSubmitForm(context),
-                    child: const Text(
-                      'Add account',
-                    ),
+          autovalidateMode:
+              state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+          child: Column(
+            children: <Widget>[
+              AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+              AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16.0),
+                child: ElevatedButton(
+                  key: const Key('addAccountButton'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                  ),
+                  onPressed: () => handleSubmitForm(context),
+                  child: const Text(
+                    'Add account',
                   ),
                 ),
-              ],
-            ));
+              ),
+            ],
+          ),
+        );
       },
     );
   }
@@ -154,11 +160,12 @@ class AccountList extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ListView.builder(
-                  padding: const EdgeInsets.all(8),
-                  itemCount: accounts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return AccountRow(account: accounts[index]);
-                  }),
+                padding: const EdgeInsets.all(8),
+                itemCount: accounts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return AccountRow(account: accounts[index]);
+                },
+              ),
             );
           },
           orElse: () => Container(),

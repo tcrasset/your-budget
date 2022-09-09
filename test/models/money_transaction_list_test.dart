@@ -10,7 +10,7 @@ import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}
 
-main() {
+void main() {
   Queries mockQueries;
   MoneyTransaction? tMoneyTransaction;
   MoneyTransaction? tMoneyTransaction2;
@@ -20,21 +20,23 @@ main() {
   setUp(() async {
     mockQueries = MockQueries();
     tMoneyTransaction = MoneyTransaction(
-        id: testId_1,
-        subcatID: tSubcatId,
-        payeeID: 9,
-        accountID: 8,
-        amount: 99.99,
-        memo: "Test memo 1",
-        date: DateTime.now());
+      id: testId_1,
+      subcatID: tSubcatId,
+      payeeID: 9,
+      accountID: 8,
+      amount: 99.99,
+      memo: "Test memo 1",
+      date: DateTime.now(),
+    );
     tMoneyTransaction2 = MoneyTransaction(
-        id: 101,
-        subcatID: 11,
-        payeeID: 90,
-        accountID: 80,
-        amount: 9.99,
-        memo: "Test memo 2",
-        date: DateTime.now());
+      id: 101,
+      subcatID: 11,
+      payeeID: 90,
+      accountID: 80,
+      amount: 9.99,
+      memo: "Test memo 2",
+      date: DateTime.now(),
+    );
     transactionList = MoneyTransactionList(mockQueries, [tMoneyTransaction]);
   });
 
@@ -78,7 +80,7 @@ main() {
     //!Arrange
     transactionList.add(tMoneyTransaction);
     //!Act
-    List<MoneyTransaction?> moneyTransactions = transactionList.getAllBySubcatId(tSubcatId);
+    final List<MoneyTransaction?> moneyTransactions = transactionList.getAllBySubcatId(tSubcatId);
 
     //!Assert
     expect(moneyTransactions, [tMoneyTransaction, tMoneyTransaction]);

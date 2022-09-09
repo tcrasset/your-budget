@@ -21,11 +21,14 @@ class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
   StreamSubscription<List<Payee>>? _payeeStreamSubscription;
 
   PayeeWatcherBloc({required this.payeeRepository}) : super(const PayeeWatcherState.initial()) {
-    on<_PayeeWatchStarted>((event, emit) => _onPayeeWatchStarted);
-    on<_PayeesReceived>((event, emit) => _onPayeesReceived);
+    on<_PayeeWatchStarted>(_onPayeeWatchStarted);
+    on<_PayeesReceived>(_onPayeesReceived);
   }
 
-  _onPayeeWatchStarted(_PayeeWatchStarted event, Emitter<PayeeWatcherState> emit) async {
+  Future<void> _onPayeeWatchStarted(
+    _PayeeWatchStarted event,
+    Emitter<PayeeWatcherState> emit,
+  ) async {
     emit(const PayeeWatcherState.loading());
     await _payeeStreamSubscription?.cancel();
 

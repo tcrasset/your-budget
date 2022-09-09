@@ -9,8 +9,13 @@ class CustomButton extends StatelessWidget {
   final Function handleOnPressed;
   final Widget? child;
   const CustomButton(
-      this.buttonText, this.buttonHeight, this.buttonWidth, this.buttonColor, this.handleOnPressed,
-      [this.child]);
+    this.buttonText,
+    this.buttonHeight,
+    this.buttonWidth,
+    this.buttonColor,
+    this.handleOnPressed, [
+    this.child,
+  ]);
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +23,17 @@ class CustomButton extends StatelessWidget {
       height: buttonHeight,
       width: buttonWidth,
       child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: buttonColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          ),
-          onPressed: () => handleOnPressed(context, buttonText),
-          child: child ??
-              Text(
-                buttonText,
-                style: const TextStyle(fontSize: 20.0),
-              )),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: buttonColor,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+        ),
+        onPressed: () => handleOnPressed(context, buttonText),
+        child: child ??
+            Text(
+              buttonText,
+              style: const TextStyle(fontSize: 20.0),
+            ),
+      ),
     );
   }
 }

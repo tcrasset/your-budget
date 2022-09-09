@@ -8,28 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
 // Project imports:
-import 'appstate_repository.dart';
-import 'models/account.dart';
-import 'models/account_list.dart';
-import 'models/budget.dart';
-import 'models/budget_list.dart';
-import 'models/budget_value_creator.dart';
-import 'models/budget_value_list.dart';
-import 'models/categories.dart';
-import 'models/categories_model.dart';
-import 'models/constants.dart';
-import 'models/goal.dart';
-import 'models/goal_model.dart';
-import 'models/maincategory_creator.dart';
-import 'models/money_transaction.dart';
-import 'models/money_transaction_creator.dart';
-import 'models/money_transaction_list.dart';
-import 'models/payee.dart';
-import 'models/payee_creator.dart';
-import 'models/payee_list.dart';
-import 'models/queries.dart';
-import 'models/subcategory_creator.dart';
-import 'models/utils.dart';
+import 'package:your_budget/appstate_repository.dart';
+import 'package:your_budget/models/account.dart';
+import 'package:your_budget/models/account_list.dart';
+import 'package:your_budget/models/budget.dart';
+import 'package:your_budget/models/budget_list.dart';
+import 'package:your_budget/models/budget_value_creator.dart';
+import 'package:your_budget/models/budget_value_list.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/categories_model.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/goal.dart';
+import 'package:your_budget/models/goal_model.dart';
+import 'package:your_budget/models/maincategory_creator.dart';
+import 'package:your_budget/models/money_transaction.dart';
+import 'package:your_budget/models/money_transaction_creator.dart';
+import 'package:your_budget/models/money_transaction_list.dart';
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/models/payee_creator.dart';
+import 'package:your_budget/models/payee_list.dart';
+import 'package:your_budget/models/queries.dart';
+import 'package:your_budget/models/subcategory_creator.dart';
+import 'package:your_budget/models/utils.dart';
 
 class AppState extends ChangeNotifier implements AppStateRepository {
   // List<SubCategory> _subcategories = [];
@@ -123,19 +123,21 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
   @override
-  Future<void> addSubcategory(
-      {required String subcategoryName, required String maincategoryId}) async {
+  Future<void> addSubcategory({
+    required String subcategoryName,
+    required String maincategoryId,
+  }) async {
     DateTime? newDate = startingBudgetDate;
     final DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime? previousDate;
 
     final SubCategory subcategory = await SubCategoryCreator(
-            queryContext: queryContext,
-            name: subcategoryName,
-            parentId: maincategoryId,
-            budgeted: 0.00,
-            available: 0.00)
-        .create();
+      queryContext: queryContext,
+      name: subcategoryName,
+      parentId: maincategoryId,
+      budgeted: 0.00,
+      available: 0.00,
+    ).create();
 
     budgetList.addSubcategory(subcategory);
 
@@ -218,11 +220,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     final double newAvailableAmount = oldSubcat.available! + transaction.amount!;
     final SubCategory newSubcat = SubCategory(
-        id: oldSubcat.id,
-        parentId: oldSubcat.parentId,
-        name: oldSubcat.name,
-        budgeted: oldSubcat.budgeted,
-        available: newAvailableAmount);
+      id: oldSubcat.id,
+      parentId: oldSubcat.parentId,
+      name: oldSubcat.name,
+      budgeted: oldSubcat.budgeted,
+      available: newAvailableAmount,
+    );
 
     //notifyListeners is called in updateSubcategory
     updateSubcategoryValues(newSubcat, transaction.date);
@@ -254,11 +257,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     required DateTime date,
   }) async {
     final GoalModel goalModel = GoalModel(
-        correspondingSubcategoryId: subcategoryId,
-        goalType: goalType,
-        amount: amount,
-        month: date.month,
-        year: date.year);
+      correspondingSubcategoryId: subcategoryId,
+      goalType: goalType,
+      amount: amount,
+      month: date.month,
+      year: date.year,
+    );
 
     final int goalId = await queryContext!.addGoal(goalModel);
 
@@ -278,7 +282,9 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// in both the state and in the data base.
   @override
   Future<void> updateSubcategoryValues(
-      SubCategory modifiedSubcategory, DateTime? dateMofidied) async {
+    SubCategory modifiedSubcategory,
+    DateTime? dateMofidied,
+  ) async {
     _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
     _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
     await computeToBeBudgeted();
@@ -287,7 +293,9 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   }
 
   void _updateSubcategoryInSubsequentBudgets(
-      SubCategory modifiedSubcategory, DateTime? dateMofidied) {
+    SubCategory modifiedSubcategory,
+    DateTime? dateMofidied,
+  ) {
     double? lastMonthAvailable = modifiedSubcategory.available;
     final DateTime maxBudgetDate = getMaxBudgetDate();
     DateTime date = Jiffy(dateMofidied).add(months: 1).dateTime;
@@ -305,10 +313,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
       final Budget budget = budgetList.getByDate(date)!;
       budget.makeSubcategoryChangeBySubcatId(
-          modifiedSubcategory.id, //
-          modifiedSubcategory.parentId,
-          "available",
-          budgetValue.available.toString());
+        modifiedSubcategory.id, //
+        modifiedSubcategory.parentId,
+        "available",
+        budgetValue.available.toString(),
+      );
 
       date = Jiffy(date).add(months: 1).dateTime;
     }
@@ -318,10 +327,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     currentBudget!.updateSubCategory(modifiedSubcategory);
 
     budgetValueList.updateBudgetValue(
-        subcatId: modifiedSubcategory.id,
-        date: dateMofidied,
-        newBudgeted: modifiedSubcategory.budgeted,
-        newAvailable: modifiedSubcategory.available);
+      subcatId: modifiedSubcategory.id,
+      date: dateMofidied,
+      newBudgeted: modifiedSubcategory.budgeted,
+      newAvailable: modifiedSubcategory.available,
+    );
   }
 
   void updateSubcategoryName(int? id, String newName) {
@@ -485,11 +495,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
     final double newAvailableAmount = oldSubcat.available! - transaction.amount!;
     final SubCategory newSubcat = SubCategory(
-        id: oldSubcat.id,
-        parentId: oldSubcat.parentId,
-        name: oldSubcat.name,
-        budgeted: oldSubcat.budgeted,
-        available: newAvailableAmount);
+      id: oldSubcat.id,
+      parentId: oldSubcat.parentId,
+      name: oldSubcat.name,
+      budgeted: oldSubcat.budgeted,
+      available: newAvailableAmount,
+    );
 
     //notifyListeners is called in updateSubcategory
     updateSubcategoryValues(newSubcat, transaction.date);
@@ -564,7 +575,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           await queryContext!.getSubCategoriesJoined(newDate.year, newDate.month);
 
       final Budget newBudget = Budget(
-          currentMaxBudget.maincategories, updatedSubcategories, newDate.month, newDate.year);
+        currentMaxBudget.maincategories,
+        updatedSubcategories,
+        newDate.month,
+        newDate.year,
+      );
       currentMaxBudget = newBudget;
       budgets.add(newBudget);
     } while (newDate.isBefore(maxBudgetDate));

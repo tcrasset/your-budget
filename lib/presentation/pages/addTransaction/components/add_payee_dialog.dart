@@ -100,9 +100,11 @@ void handleSubmit(BuildContext context) =>
     context.read<PayeeCreatorBloc>().add(const PayeeCreatorEvent.saved());
 
 void onNameChange(BuildContext context, String value) {
-  context.read<PayeeCreatorBloc>().add(PayeeCreatorEvent.nameChanged(
-        value,
-      ));
+  context.read<PayeeCreatorBloc>().add(
+        PayeeCreatorEvent.nameChanged(
+          value,
+        ),
+      );
 }
 
 String? _failNameClosure(dynamic f) {

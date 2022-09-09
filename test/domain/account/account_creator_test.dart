@@ -57,11 +57,12 @@ void main() {
       name: Name("Test payee"),
     );
     tSubcategory = Subcategory(
-        id: UniqueId(),
-        categoryID: UniqueId(),
-        name: Name("Test subcategory"),
-        budgeted: Amount("0"),
-        available: Amount("0"));
+      id: UniqueId(),
+      categoryID: UniqueId(),
+      name: Name("Test subcategory"),
+      budgeted: Amount("0"),
+      available: Amount("0"),
+    );
 
     creator = AccountCreator(
       accountRepository: mockAccountRepo,

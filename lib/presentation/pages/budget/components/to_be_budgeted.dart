@@ -20,25 +20,27 @@ class ToBeBudgeted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        height: 50,
-        child: Row(
-          children: [
-            Expanded(
-                child: Text(
+      height: 50,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
               "To be budgeted",
               style: _textStyle,
-            )),
-            Consumer<AppState>(
-              builder: (context, appState, child) {
-                return Text(
-                  "${appState.toBeBudgeted.toStringAsFixed(2)} €",
-                  style: appState.toBeBudgeted >= 0
-                      ? _positiveAmountTextStyle
-                      : _negativeAmountTextStyle,
-                );
-              },
-            )
-          ],
-        ));
+            ),
+          ),
+          Consumer<AppState>(
+            builder: (context, appState, child) {
+              return Text(
+                "${appState.toBeBudgeted.toStringAsFixed(2)} €",
+                style: appState.toBeBudgeted >= 0
+                    ? _positiveAmountTextStyle
+                    : _negativeAmountTextStyle,
+              );
+            },
+          )
+        ],
+      ),
+    );
   }
 }

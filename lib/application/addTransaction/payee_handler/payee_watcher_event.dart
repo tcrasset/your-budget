@@ -4,5 +4,6 @@ part of 'payee_watcher_bloc.dart';
 class PayeeWatcherEvent with _$PayeeWatcherEvent {
   const factory PayeeWatcherEvent.watchPayeesStarted() = _PayeeWatchStarted;
   const factory PayeeWatcherEvent.payeesReceived(
-      Either<ValueFailure, List<Payee>> failureOrPayees) = _PayeesReceived;
+    Either<ValueFailure, List<Payee>> failureOrPayees,
+  ) = _PayeesReceived;
 }

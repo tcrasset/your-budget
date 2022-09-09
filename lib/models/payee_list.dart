@@ -1,7 +1,7 @@
 // Project imports:
-import 'object_list.dart';
-import 'payee.dart';
-import 'queries.dart';
+import 'package:your_budget/models/object_list.dart';
+import 'package:your_budget/models/payee.dart';
+import 'package:your_budget/models/queries.dart';
 
 class PayeeList implements ObjectList<Payee> {
   final Queries? queryContext;

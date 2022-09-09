@@ -38,67 +38,55 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     on<_Saved>(_onSaved);
   }
 
-  _onAmountChanged(_AmountChanged event, Emitter<TransactionCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        moneyTransaction: state.moneyTransaction.copyWith(amount: Amount(event.amount)),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onAmountChanged(_AmountChanged event, Emitter<TransactionCreatorState> emit) {
+    final newState = state.copyWith(
+      moneyTransaction: state.moneyTransaction.copyWith(amount: Amount(event.amount)),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
-  _onAccountChanged(_AccountChanged event, Emitter<TransactionCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        moneyTransaction: state.moneyTransaction.copyWith(account: event.account),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onAccountChanged(_AccountChanged event, Emitter<TransactionCreatorState> emit) {
+    final newState = state.copyWith(
+      moneyTransaction: state.moneyTransaction.copyWith(account: event.account),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
-  _onPayeeChanged(_PayeeChanged event, Emitter<TransactionCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        moneyTransaction: state.moneyTransaction.copyWith(payee: event.payee),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onPayeeChanged(_PayeeChanged event, Emitter<TransactionCreatorState> emit) {
+    final newState = state.copyWith(
+      moneyTransaction: state.moneyTransaction.copyWith(payee: event.payee),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
-  _onDateChanged(_DateChanged event, Emitter<TransactionCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        moneyTransaction: state.moneyTransaction.copyWith(date: event.date),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onDateChanged(_DateChanged event, Emitter<TransactionCreatorState> emit) {
+    final newState = state.copyWith(
+      moneyTransaction: state.moneyTransaction.copyWith(date: event.date),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
-  _onSubcategoryChanged(_SubcategoryChanged event, Emitter<TransactionCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        moneyTransaction: state.moneyTransaction.copyWith(subcategory: event.subcategory),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onSubcategoryChanged(_SubcategoryChanged event, Emitter<TransactionCreatorState> emit) {
+    final newState = state.copyWith(
+      moneyTransaction: state.moneyTransaction.copyWith(subcategory: event.subcategory),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
-  _onMemoChanged(_MemoChanged event, Emitter<TransactionCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        moneyTransaction: state.moneyTransaction.copyWith(memo: Name(event.memo)),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onMemoChanged(_MemoChanged event, Emitter<TransactionCreatorState> emit) {
+    final newState = state.copyWith(
+      moneyTransaction: state.moneyTransaction.copyWith(memo: Name(event.memo)),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
-  _onSaved(_Saved event, Emitter<TransactionCreatorState> emit) async {
+  Future<void> _onSaved(_Saved event, Emitter<TransactionCreatorState> emit) async {
     Either<ValueFailure, Unit>? failureOrSuccess;
     emit(state.copyWith(isSaving: true));
 
@@ -106,7 +94,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
       failureOrSuccess = await transactionRepository.create(state.moneyTransaction);
     }
 
-    var newState = state.copyWith(
+    final newState = state.copyWith(
       isSaving: false,
       showErrorMessages: true,
       saveFailureOrSuccessOption: optionOf(failureOrSuccess),

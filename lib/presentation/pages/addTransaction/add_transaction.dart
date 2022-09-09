@@ -13,13 +13,13 @@ import 'package:your_budget/application/addTransaction/transaction_creator/trans
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import '../../../models/constants.dart';
-import 'components/account_field.dart';
-import 'components/amount_input_row.dart';
-import 'components/date_field.dart';
-import 'components/memo_field.dart';
-import 'components/payee_field.dart';
-import 'components/subcategory_field.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/account_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/amount_input_row.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/date_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/memo_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/payee_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/subcategory_field.dart';
 
 class AddTransactionStyles {
   static const TextStyle unselected =
@@ -68,36 +68,38 @@ class AddTransactionPage extends StatelessWidget {
           buildWhen: (p, c) => p.isSaving != c.isSaving,
           builder: (context, state) {
             return Form(
-                autovalidateMode:
-                    state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                              child: const AmountInputRow(
-                                onAmountChange: _onAmountChange,
-                                validateAmount: _validateAmount,
-                              )),
-                          const PayeeField(),
-                          const AccountField(),
-                          const SubcategoryField(),
-                          const DateField(),
-                          const MemoField(),
-                        ],
-                      ),
-                      FloatingActionButton(
-                        onPressed: () => context
-                            .read<TransactionCreatorBloc>()
-                            .add(const TransactionCreatorEvent.saved()),
-                        child: const Text("Enter"),
-                      )
-                    ],
-                  ),
-                ));
+              autovalidateMode:
+                  state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: const AmountInputRow(
+                            onAmountChange: _onAmountChange,
+                            validateAmount: _validateAmount,
+                          ),
+                        ),
+                        const PayeeField(),
+                        const AccountField(),
+                        const SubcategoryField(),
+                        const DateField(),
+                        const MemoField(),
+                      ],
+                    ),
+                    FloatingActionButton(
+                      onPressed: () => context
+                          .read<TransactionCreatorBloc>()
+                          .add(const TransactionCreatorEvent.saved()),
+                      child: const Text("Enter"),
+                    )
+                  ],
+                ),
+              ),
+            );
           },
         ),
       ),

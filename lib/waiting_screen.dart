@@ -13,11 +13,13 @@ class WaitingScreen extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-            color: Constants.PRIMARY_COLOR,
-            child: const Center(
-                child: CircularProgressIndicator(
+          color: Constants.PRIMARY_COLOR,
+          child: const Center(
+            child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Constants.SECONDARY_COLOR),
-            ))),
+            ),
+          ),
+        ),
       ),
     );
   }

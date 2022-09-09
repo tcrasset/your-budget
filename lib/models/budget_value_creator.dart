@@ -2,10 +2,10 @@
 import 'package:meta/meta.dart';
 
 // Project imports:
-import 'categories.dart';
-import 'categories_model.dart';
-import 'creator.dart';
-import 'queries.dart';
+import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/models/categories_model.dart';
+import 'package:your_budget/models/creator.dart';
+import 'package:your_budget/models/queries.dart';
 
 class BudgetValueCreator implements Creator<BudgetValue> {
   final Queries? queryContext;
