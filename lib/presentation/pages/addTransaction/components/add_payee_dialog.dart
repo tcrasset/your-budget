@@ -46,11 +46,11 @@ class PayeeNameForm extends HookWidget {
           state.saveFailureOrSuccessOption.fold(
             () /*None*/ {},
             (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
-              (failure) => showErrorFlushbar(failure, context),
+              (failure) => showErrorSnackbar(failure, context),
               (_) /*Success*/ {
                 // Pop context and refetch the payees
-                Navigator.pop(context); //Temporary fix
                 context.read<PayeeWatcherBloc>().add(const PayeeWatcherEvent.watchPayeesStarted());
+                Navigator.pop(context); //Temporary fix
               },
             ),
           );
@@ -124,12 +124,18 @@ String? validateName(BuildContext context) {
       );
 }
 
-Future? showErrorFlushbar(ValueFailure failure, BuildContext context) {
-  // return FlushbarHelper.createError(
-  //   message: failure.maybeMap(
-  //     unexpected: (_) => 'Unexpected error occured, please contact support.',
-  //     uniqueName: (_) => 'You must chose an unique account name.',
-  //     orElse: (() => null) as String Function(),
-  //   ),
-  // ).show(context);
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showErrorSnackbar(
+  ValueFailure failure,
+  BuildContext context,
+) {
+  final message = failure.maybeMap(
+    unexpected: (_) => 'Unexpected error occurred, please contact support.',
+    uniqueName: (_) => 'You must chose an unique account name.',
+    orElse: () => null,
+  );
+
+  if (message == null) return null;
+
+  return ScaffoldMessenger.of(context)
+      .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
 }

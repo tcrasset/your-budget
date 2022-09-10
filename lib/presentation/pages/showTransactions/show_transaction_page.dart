@@ -1,28 +1,22 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
-
-// Project imports:
-import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
-import 'package:your_budget/appstate.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'package:your_budget/models/account.dart';
+// Project imports:
+import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
-import 'package:your_budget/presentation/pages/core/transactions/transaction_list.dart';
 
 // import '../modifyTransactions/modify_transactions.dart';
 
 class ShowTransactionPage extends StatelessWidget {
-  final String? title;
-  const ShowTransactionPage({Key? key, this.title}) : super(key: key);
+  final String title;
+  const ShowTransactionPage({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +35,8 @@ class ShowTransactionPage extends StatelessWidget {
 }
 
 class TransactionScaffold extends StatelessWidget {
-  final String? title;
-  const TransactionScaffold({Key? key, this.title}) : super(key: key);
+  final String title;
+  const TransactionScaffold({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -63,13 +57,14 @@ class TransactionScaffold extends StatelessWidget {
             );
 
             if (errorMessage != null) {
-              // FlushbarHelper.createError(message: errorMessage).show(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(errorMessage), duration: const Duration(seconds: 1)));
             }
           },
         )
       ],
       child: Scaffold(
-        appBar: getAppbar(title!, () => null),
+        appBar: getAppbar(title, () => null),
         body: Stack(
           children: [
             OptionalTransactionList(),

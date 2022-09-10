@@ -92,15 +92,19 @@ class AddAccountForm extends StatelessWidget {
     context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.saved());
   }
 
-  Future? showErrorFlushbar(ValueFailure failure, BuildContext context) {
-    return null;
-    // return FlushbarHelper.createError(
-    //   message: failure.maybeMap(
-    //     unexpected: (_) => 'Unexpected error occured, please contact support.',
-    //     uniqueName: (_) => 'You must chose an unique account name.',
-    //     orElse: (() => null) as String Function(),
-    //   ),
-    // ).show(context);
+  ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showErrorSnackbar(
+      ValueFailure failure, BuildContext context) {
+    // TODO: Use map with an exhaustive list
+    final message = failure.maybeMap(
+      unexpected: (_) => 'Unexpected error occurred, please contact support.',
+      uniqueName: (_) => 'You must chose a unique account name.',
+      orElse: () => null,
+    );
+
+    if (message == null) return null;
+
+    return ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
   }
 
   @override
@@ -111,7 +115,7 @@ class AddAccountForm extends StatelessWidget {
         state.saveFailureOrSuccessOption.fold(
           () /*None*/ {},
           (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
-            (failure) => showErrorFlushbar(failure, context),
+            (failure) => showErrorSnackbar(failure, context),
             (_) /*Success*/ => context
                 .read<AccountWatcherBloc>()
                 .add(const AccountWatcherEvent.watchAccountsStarted()),

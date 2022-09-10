@@ -28,13 +28,14 @@ class AddTransactionStyles {
 }
 
 class AddTransactionPage extends StatelessWidget {
-  Future? showErrorFlushbar(ValueFailure failure, BuildContext context) {
-    debugPrint("Error created. ${failure.toString()}");
-    // return FlushbarHelper.createError(
-    //   message: failure.maybeMap(
-    //     orElse: (() => null) as String Function(),
-    //   ),
-    // ).show(context);
+  void showErrorSnackbar(ValueFailure failure, BuildContext context) {
+    final String? message = failure.maybeMap(
+      orElse: () => null,
+    );
+
+    if (message == null) return;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
   }
 
   @override
@@ -60,7 +61,7 @@ class AddTransactionPage extends StatelessWidget {
             state.saveFailureOrSuccessOption.fold(
               () /*None*/ {},
               (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
-                (failure) => showErrorFlushbar(failure, context),
+                (failure) => showErrorSnackbar(failure, context),
                 (_) /*Success*/ {},
               ),
             );
@@ -83,11 +84,11 @@ class AddTransactionPage extends StatelessWidget {
                             validateAmount: _validateAmount,
                           ),
                         ),
-                        const PayeeField(),
-                        const AccountField(),
-                        const SubcategoryField(),
-                        const DateField(),
-                        const MemoField(),
+                        PayeeField(),
+                        AccountField(),
+                        SubcategoryField(),
+                        DateField(),
+                        MemoField(),
                       ],
                     ),
                     FloatingActionButton(
@@ -112,11 +113,11 @@ void _onAmountChange(BuildContext context, String value) =>
 
 String? _validateAmount(BuildContext context) =>
     context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
-          (f) => _failAccountClosure(f),
+          (f) => _failAmountClosure(f),
           (_) => null,
         );
 
-String? _failAccountClosure(ValueFailure f) {
+String? _failAmountClosure(ValueFailure f) {
   final result = f.maybeMap(
     tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
     invalidAmount: (_) => "Amount is invalid. Use only numerical characters.",

@@ -30,6 +30,7 @@ class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
     Emitter<PayeeWatcherState> emit,
   ) async {
     emit(const PayeeWatcherState.loading());
+
     await _payeeStreamSubscription?.cancel();
 
     payeeRepository.watchAllPayees().listen(

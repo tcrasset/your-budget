@@ -9,15 +9,15 @@ import 'package:bloc/bloc.dart';
 class SimpleBlocObserver extends BlocObserver {
   @override
   void onEvent(Bloc bloc, Object? event) {
-    // log('EVENT: ${bloc.runtimeType} $event');
+    log('EVENT: ${bloc.runtimeType} $event');
     super.onEvent(bloc, event);
   }
 
   @override
   void onChange(BlocBase base, Change change) {
-    // log(
-    //   'CHANGE: ${base.runtimeType} ${change.currentState.runtimeType} --> ${change.nextState.runtimeType} ${change.nextState}',
-    // );
+    log(
+      'CHANGE: ${base.runtimeType} ${change.currentState.runtimeType} --> ${change.nextState.runtimeType} ${change.nextState}',
+    );
     super.onChange(base, change);
   }
 

@@ -25,7 +25,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
   }
 
   void _onInitialized(_Initialized event, Emitter<PayeeCreatorState> emit) {
-    var newState = event.initialNameOption.fold(
+    final newState = event.initialNameOption.fold(
       () => /*No initial name*/ state,
       (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
     );
@@ -33,14 +33,12 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
     emit(newState);
   }
 
-  void _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) async {
-    if (event != null) {
-      var newState = state.copyWith(
-        payee: state.payee.copyWith(name: Name(event.name)),
-        saveFailureOrSuccessOption: none(),
-      );
-      emit(newState);
-    }
+  void _onNameChanged(_NameChanged event, Emitter<PayeeCreatorState> emit) {
+    final newState = state.copyWith(
+      payee: state.payee.copyWith(name: Name(event.name)),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
   }
 
   Future<void> _onSaved(_Saved event, Emitter<PayeeCreatorState> emit) async {
@@ -55,7 +53,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
       failureOrSuccess = await payeeRepository.create(state.payee);
     }
 
-    var newState = state.copyWith(
+    final newState = state.copyWith(
       isSaving: false,
       showErrorMessages: true,
       saveFailureOrSuccessOption: optionOf(failureOrSuccess),
