@@ -66,6 +66,7 @@ class PayeeField extends StatelessWidget {
         ],
         child: AddTransactionField(
           name: "Payee",
+          defaultValue: _DEFAULT_PAYEE,
           nameGetter: getPayeeName,
           onTap: handleOnTap,
         ),

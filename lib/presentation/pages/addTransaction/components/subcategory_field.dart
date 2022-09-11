@@ -56,6 +56,7 @@ class SubcategoryField extends StatelessWidget {
         ],
         child: AddTransactionField(
           name: "Subcategory",
+          defaultValue: _DEFAULT_SUBCATEGORY,
           nameGetter: getSubcategoryName,
           onTap: handleOnTap,
         ),

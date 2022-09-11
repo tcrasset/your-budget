@@ -52,6 +52,7 @@ class AccountField extends StatelessWidget {
         ],
         child: AddTransactionField(
           name: "Account",
+          defaultValue: _DEFAULT_ACCOUNT,
           nameGetter: getAccountName,
           onTap: handleOnTap,
         ),
