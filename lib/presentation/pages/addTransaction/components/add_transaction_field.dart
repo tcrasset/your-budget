@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,40 +8,24 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // Project imports:
 import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
 
+import '../../../../application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+
 class AddTransactionField extends HookWidget {
   final String name;
-  final String defaultValue;
-  final String? Function(BuildContext) validator;
   final String Function(BuildContext) nameGetter;
   final Future<void> Function(BuildContext) onTap;
 
   const AddTransactionField({
     required this.name,
-    required this.defaultValue,
-    required this.validator,
     required this.nameGetter,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController controller = useTextEditingController();
-    controller.text = nameGetter(context);
     return GestureDetector(
       onTap: () => onTap(context), //Tap whole widget, not just textfield
-      child: RowContainer(
-        name: name,
-        childWidget: TextFormField(
-          decoration: const InputDecoration.collapsed(hintText: ""),
-          style: controller.text == defaultValue
-              ? AddTransactionStyles.unselected
-              : AddTransactionStyles.selected,
-          enabled: false,
-          readOnly: true,
-          validator: (_) => validator(context),
-          controller: controller,
-        ),
-      ),
+      child: RowContainer(name: name, childWidget: Text(nameGetter(context))),
     );
   }
 }

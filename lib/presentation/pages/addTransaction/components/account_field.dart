@@ -22,122 +22,104 @@ class AccountField extends StatelessWidget {
   static const String _DEFAULT_ACCOUNT = "Select account";
 
   Future<void> handleOnTap(BuildContext context) async {
-    final Account? account = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AccountListScaffold()),
+    final Account? account = await showSearch<Account?>(
+      context: context,
+      delegate: AccountSearchDelegate(BlocProvider.of<AccountWatcherBloc>(context)
+        ..add(const AccountWatcherEvent.watchAccountsStarted())),
     );
+
     if (account != null) {
       context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.accountChanged(account));
     }
   }
 
-  String getAccountName(BuildContext context) {
-    return context
-        .watch<TransactionCreatorBloc>()
-        .state
-        .moneyTransaction
-        .account
-        .name
-        .value
-        .fold((_) => _DEFAULT_ACCOUNT, (v) => v);
-  }
-
-  String? validateAccount(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.account.name.value.fold(
-            (f) => f.maybeMap(orElse: () => null),
-            (_) => null,
-          );
+  String getAccountName(BuildContext context) => context
+      .watch<TransactionCreatorBloc>()
+      .state
+      .moneyTransaction
+      .account
+      .name
+      .value
+      .fold((_) => _DEFAULT_ACCOUNT, (v) => v);
 
   @override
-  Widget build(BuildContext context) => AddTransactionField(
-        name: "Account",
-        defaultValue: _DEFAULT_ACCOUNT,
-        nameGetter: getAccountName,
-        onTap: handleOnTap,
-        validator: validateAccount,
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<AccountWatcherBloc>(
+            create: (context) =>
+                AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>()),
+          ),
+        ],
+        child: AddTransactionField(
+          name: "Account",
+          nameGetter: getAccountName,
+          onTap: handleOnTap,
+        ),
       );
 }
 
-class AccountListScaffold extends HookWidget {
+class AccountSearchDelegate extends SearchDelegate<Account?> {
+  final AccountWatcherBloc bloc;
+
+  AccountSearchDelegate(this.bloc);
+
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController? searchController = useTextEditingController();
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<AccountWatcherBloc>(
-          create: (context) =>
-              AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
-                ..add(const AccountWatcherEvent.watchAccountsStarted()),
-        ),
-      ],
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text("Choose an account"),
-        ),
-        body: BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
-          builder: (context, state) {
-            return state.maybeMap(
-              loadSuccess: (newState) => Column(
-                children: [
-                  SearchField(searchController: searchController!),
-                  Expanded(child: AccountList(searchController: searchController)),
-                ],
-              ),
-              loadFailure: (_) => const Center(child: Text("Failure.")),
-              loading: (_) => const Center(child: CircularProgressIndicator()),
-              orElse: () => Container(),
-            );
-          },
-        ),
-      ),
+  List<Widget>? buildActions(BuildContext context) => null;
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const BackButtonIcon(),
+      onPressed: () {
+        close(context, null);
+      },
     );
   }
-}
-
-class AccountList extends StatelessWidget {
-  final TextEditingController searchController;
-  const AccountList({required this.searchController});
-
-  void _handlePopContext(BuildContext context, Account account) =>
-      Navigator.of(context).pop(account);
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildSuggestions(BuildContext context) {
     return BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
-      builder: (context, state) {
-        return state.maybeMap(
-          loadSuccess: (newState) => ListView.separated(
-            shrinkWrap: true,
-            itemCount: newState.accounts.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(height: 1, color: Colors.black12),
-            itemBuilder: (BuildContext context, int index) {
-              final account = newState.accounts[index];
-              final String name = account.name.getOrCrash();
-              final bool noFilter = searchController.text == null || searchController.text == "";
+      bloc: bloc,
+      builder: (_, state) {
+        return _build(state);
+      },
+    );
+  }
 
-              if (noFilter == true) {
-                return ListTile(
-                  title: Text(name),
-                  onTap: () => _handlePopContext(context, account),
-                );
-              } else {
-                // The filter is not empty, we filter by name
-                if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
-                  return ListTile(
-                    title: Text(name),
-                    onTap: () => _handlePopContext(context, account),
-                  );
-                }
-              }
-              return Container();
-              // There               });
-            },
-          ),
-          orElse: () => Container(),
+  @override
+  Widget buildResults(BuildContext context) {
+    return BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
+      bloc: bloc,
+      builder: (_, state) {
+        return _build(state);
+      },
+    );
+  }
+
+  Widget _build(AccountWatcherState state) {
+    return state.maybeMap(
+      loadSuccess: (newState) {
+        final accounts = newState.accounts
+            .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+        if (accounts.isEmpty) return Container();
+
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: accounts.length,
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(height: 1, color: Colors.black12),
+          itemBuilder: (BuildContext context, int index) {
+            final account = accounts[index];
+            final String name = account.name.getOrCrash();
+            return ListTile(title: Text(name), onTap: () => close(context, account));
+          },
         );
       },
+      loadFailure: (_) => const Center(child: Text("Failure.")),
+      loading: (_) => const Center(child: CircularProgressIndicator()),
+      orElse: () => const Center(child: Text("Else.")),
     );
   }
 }

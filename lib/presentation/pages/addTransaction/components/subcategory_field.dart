@@ -22,9 +22,12 @@ class SubcategoryField extends StatelessWidget {
   static const String _DEFAULT_SUBCATEGORY = "Select subcategory";
 
   Future<void> handleOnTap(BuildContext context) async {
-    final Subcategory? subcategory = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SubcategoryListScaffold()),
+    final Subcategory? subcategory = await showSearch<Subcategory?>(
+      context: context,
+      delegate: SubcategorySearchDelegate(
+        BlocProvider.of<SubcategoryWatcherBloc>(context)
+          ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+      ),
     );
 
     if (subcategory != null) {
@@ -34,114 +37,93 @@ class SubcategoryField extends StatelessWidget {
     }
   }
 
-  String getSubcategoryName(BuildContext context) {
-    return context
-        .watch<TransactionCreatorBloc>()
-        .state
-        .moneyTransaction
-        .subcategory
-        .name
-        .value
-        .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
-  }
-
-  String? validateSubcategory(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.subcategory.name.value.fold(
-            (f) => f.maybeMap(orElse: () => null),
-            (_) => null,
-          );
+  String getSubcategoryName(BuildContext context) => context
+      .watch<TransactionCreatorBloc>()
+      .state
+      .moneyTransaction
+      .subcategory
+      .name
+      .value
+      .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
 
   @override
-  Widget build(BuildContext context) => AddTransactionField(
-        name: "Subcategory",
-        defaultValue: _DEFAULT_SUBCATEGORY,
-        nameGetter: getSubcategoryName,
-        onTap: handleOnTap,
-        validator: validateSubcategory,
+  Widget build(BuildContext context) => MultiBlocProvider(
+        providers: [
+          BlocProvider<SubcategoryWatcherBloc>(
+            create: (context) => SubcategoryWatcherBloc(
+                subcategoryRepository: GetIt.instance<ISubcategoryRepository>()),
+          ),
+        ],
+        child: AddTransactionField(
+          name: "Subcategory",
+          nameGetter: getSubcategoryName,
+          onTap: handleOnTap,
+        ),
       );
 }
 
-class SubcategoryListScaffold extends HookWidget {
-  @override
-  Widget build(BuildContext context) {
-    final TextEditingController? searchController = useTextEditingController();
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<SubcategoryWatcherBloc>(
-          create: (context) => SubcategoryWatcherBloc(
-            subcategoryRepository: GetIt.instance<ISubcategoryRepository>(),
-          )..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
-        ),
-      ],
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text("Choose a subcategory"),
-        ),
-        body: BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
-          builder: (context, state) {
-            return state.maybeMap(
-              loadSuccess: (newState) => Column(
-                children: [
-                  SearchField(searchController: searchController!),
-                  Expanded(child: SubcategoryList(searchController: searchController)),
-                ],
-              ),
-              loadFailure: (_) => const Center(child: Text("Failure.")),
-              loading: (_) => const Center(child: CircularProgressIndicator()),
-              orElse: () => Container(),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
+class SubcategorySearchDelegate extends SearchDelegate<Subcategory?> {
+  final SubcategoryWatcherBloc bloc;
 
-class SubcategoryList extends StatelessWidget {
-  final TextEditingController searchController;
-  const SubcategoryList({required this.searchController});
+  SubcategorySearchDelegate(this.bloc);
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
-      builder: (context, state) {
-        return state.maybeMap(
-          loadSuccess: (newState) => ListView.separated(
-            shrinkWrap: true,
-            itemCount: newState.subcategories.length,
-            separatorBuilder: (BuildContext context, int index) =>
-                const Divider(height: 1, color: Colors.black12),
-            itemBuilder: (BuildContext context, int index) {
-              final subcategory = newState.subcategories[index];
-              final String name = subcategory.name.getOrCrash();
-              final bool noFilter = searchController.text == null || searchController.text == "";
+  List<Widget>? buildActions(BuildContext context) => null;
 
-              if (noFilter == true) {
-                return ListTile(
-                  title: Text(name),
-                  onTap: () => handlePopContext(context, subcategory),
-                );
-              } else {
-                // The filter is not empty, we filter by name
-                if (name.toLowerCase().contains(searchController.text.toLowerCase()) == true) {
-                  return ListTile(
-                    title: Text(name),
-                    onTap: () => handlePopContext(context, subcategory),
-                  );
-                }
-              }
-              return Container();
-              // There               });
-            },
-          ),
-          orElse: () => Container(),
-        );
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const BackButtonIcon(),
+      onPressed: () {
+        close(context, null);
       },
     );
   }
-}
 
-void handlePopContext(BuildContext context, Subcategory subcategory) {
-  Navigator.of(context).pop(subcategory);
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
+      bloc: bloc,
+      builder: (_, state) {
+        return _build(state);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
+      bloc: bloc,
+      builder: (_, state) {
+        return _build(state);
+      },
+    );
+  }
+
+  Widget _build(SubcategoryWatcherState state) {
+    return state.maybeMap(
+      loadSuccess: (newState) {
+        final subcategories = newState.subcategories
+            .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
+            .toList();
+
+        if (subcategories.isEmpty) return Container();
+
+        return ListView.separated(
+          shrinkWrap: true,
+          itemCount: subcategories.length,
+          separatorBuilder: (BuildContext context, int index) =>
+              const Divider(height: 1, color: Colors.black12),
+          itemBuilder: (BuildContext context, int index) {
+            final payee = subcategories[index];
+            final String name = payee.name.getOrCrash();
+            return ListTile(title: Text(name), onTap: () => close(context, payee));
+          },
+        );
+      },
+      loadFailure: (_) => const Center(child: Text("Failure.")),
+      loading: (_) => const Center(child: CircularProgressIndicator()),
+      orElse: () => const Center(child: Text("Else.")),
+    );
+  }
 }
