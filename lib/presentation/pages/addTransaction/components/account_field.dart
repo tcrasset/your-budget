@@ -33,6 +33,12 @@ class AccountField extends StatelessWidget {
     }
   }
 
+  String? validateAccount(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.account.name.value.fold(
+            (f) => f.maybeMap(emptyName: (_) => "Please select an Account", orElse: () => null),
+            (_) => null,
+          );
+
   String getAccountName(BuildContext context) => context
       .watch<TransactionCreatorBloc>()
       .state
@@ -55,6 +61,7 @@ class AccountField extends StatelessWidget {
           defaultValue: _DEFAULT_ACCOUNT,
           nameGetter: getAccountName,
           onTap: handleOnTap,
+          validator: validateAccount,
         ),
       );
 }

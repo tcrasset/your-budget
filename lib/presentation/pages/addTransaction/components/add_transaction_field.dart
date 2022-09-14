@@ -14,6 +14,7 @@ class AddTransactionField extends StatelessWidget {
   final String name;
   final String defaultValue;
   final String Function(BuildContext) nameGetter;
+  final String? Function(BuildContext) validator;
   final Future<void> Function(BuildContext) onTap;
 
   const AddTransactionField({
@@ -21,6 +22,7 @@ class AddTransactionField extends StatelessWidget {
     required this.defaultValue,
     required this.nameGetter,
     required this.onTap,
+    required this.validator,
   });
 
   @override
@@ -37,7 +39,9 @@ class AddTransactionField extends StatelessWidget {
                 ? AddTransactionStyles.unselected
                 : AddTransactionStyles.selected,
             initialValue: nameGetter(context),
-            enabled: false,
+            validator: (_) => validator(context),
+            onTap: () => onTap(context),
+            enabled: true, // needed to show validation hints
             readOnly: true,
           )),
     );

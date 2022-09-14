@@ -50,11 +50,11 @@ class PayeeField extends StatelessWidget {
         .fold((_) => _DEFAULT_PAYEE, (v) => v);
   }
 
-  // String? validatePayee(BuildContext context) =>
-  //     context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
-  //           (f) => f.maybeMap(orElse: () => null),
-  //           (_) => null,
-  //         );
+  String? validatePayee(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.payee.name.value.fold(
+            (f) => f.maybeMap(emptyName: (_) => "Please select a Payee.", orElse: () => null),
+            (_) => null,
+          );
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
@@ -69,6 +69,7 @@ class PayeeField extends StatelessWidget {
           defaultValue: _DEFAULT_PAYEE,
           nameGetter: getPayeeName,
           onTap: handleOnTap,
+          validator: validatePayee,
         ),
       );
 }

@@ -37,6 +37,12 @@ class SubcategoryField extends StatelessWidget {
     }
   }
 
+  String? validateSubcategory(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.subcategory.name.value.fold(
+            (f) => f.maybeMap(emptyName: (_) => "Please select a Subcategory", orElse: () => null),
+            (_) => null,
+          );
+
   String getSubcategoryName(BuildContext context) => context
       .watch<TransactionCreatorBloc>()
       .state
@@ -59,6 +65,7 @@ class SubcategoryField extends StatelessWidget {
           defaultValue: _DEFAULT_SUBCATEGORY,
           nameGetter: getSubcategoryName,
           onTap: handleOnTap,
+          validator: validateSubcategory,
         ),
       );
 }
