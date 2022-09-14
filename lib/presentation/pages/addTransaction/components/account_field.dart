@@ -22,6 +22,7 @@ class AccountField extends StatelessWidget {
   static const String _DEFAULT_ACCOUNT = "Select account";
 
   Future<void> handleOnTap(BuildContext context) async {
+    final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
     final Account? account = await showSearch<Account?>(
       context: context,
       delegate: AccountSearchDelegate(BlocProvider.of<AccountWatcherBloc>(context)
@@ -29,7 +30,7 @@ class AccountField extends StatelessWidget {
     );
 
     if (account != null) {
-      context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.accountChanged(account));
+      bloc.add(TransactionCreatorEvent.accountChanged(account));
     }
   }
 

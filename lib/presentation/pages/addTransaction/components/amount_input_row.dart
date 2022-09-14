@@ -51,8 +51,10 @@ class AmountInputRow extends HookWidget {
         // Every modification of the amount value (except initialization) gets passed through the bloc
         // Thus, here is the only time where we have to cast from number to String
         // and where we have to change the selection
+        String? amount = _getAmount(state);
+        if (amount == null) return;
         _controller
-          ..text = _getAmount(state)!
+          ..text = amount
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {

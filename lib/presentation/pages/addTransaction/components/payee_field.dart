@@ -25,6 +25,8 @@ class PayeeField extends StatelessWidget {
   static const String _DEFAULT_PAYEE = "Select payee";
 
   Future<void> handleOnTap(BuildContext context) async {
+    final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
+
     final Payee? payee = await showSearch<Payee?>(
       context: context,
       delegate: PayeeSearchDelegate(
@@ -34,7 +36,7 @@ class PayeeField extends StatelessWidget {
     );
 
     if (payee != null) {
-      context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.payeeChanged(payee));
+      bloc.add(TransactionCreatorEvent.payeeChanged(payee));
     }
   }
 

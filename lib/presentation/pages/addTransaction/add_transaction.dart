@@ -58,17 +58,24 @@ class AddTransactionPage extends StatelessWidget {
         body: BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
           listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
           listener: (context, state) {
+            TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
             state.saveFailureOrSuccessOption.fold(
               () /*None*/ {},
               (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
                 (failure) => showErrorSnackbar(failure, context),
-                (_) /*Success*/ {},
+                (_) /*Success*/ {
+                  print("We've added a new transaction!.");
+                  formKey.currentState?.reset();
+
+                  bloc.add(const TransactionCreatorEvent.initialized());
+                },
               ),
             );
           },
           buildWhen: (p, c) => p.isSaving != c.isSaving,
           builder: (context, state) {
             return Form(
+              key: formKey,
               autovalidateMode:
                   state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
               child: SingleChildScrollView(
@@ -120,7 +127,7 @@ String? _validateAmount(BuildContext context) =>
 String? _failAmountClosure(ValueFailure f) {
   final result = f.maybeMap(
     tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
-    invalidAmount: (_) => "Amount is invalid. Use only numerical characters.",
+    invalidAmount: (_) => "Please specify an amount.",
     orElse: () => null,
   );
 

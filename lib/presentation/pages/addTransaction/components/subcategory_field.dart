@@ -22,6 +22,7 @@ class SubcategoryField extends StatelessWidget {
   static const String _DEFAULT_SUBCATEGORY = "Select subcategory";
 
   Future<void> handleOnTap(BuildContext context) async {
+    final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
     final Subcategory? subcategory = await showSearch<Subcategory?>(
       context: context,
       delegate: SubcategorySearchDelegate(
@@ -31,9 +32,7 @@ class SubcategoryField extends StatelessWidget {
     );
 
     if (subcategory != null) {
-      context
-          .read<TransactionCreatorBloc>()
-          .add(TransactionCreatorEvent.subcategoryChanged(subcategory));
+      bloc.add(TransactionCreatorEvent.subcategoryChanged(subcategory));
     }
   }
 

@@ -44,8 +44,10 @@ class MemoField extends HookWidget {
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
       listenWhen: (p, c) => getMemo(p) != getMemo(c),
       listener: (context, state) {
+        String? memo = getMemo(state);
+        if (memo == null) return;
         controller
-          ..text = getMemo(state)!
+          ..text = memo
           ..selection = TextSelection.collapsed(offset: controller.text.length);
       },
       builder: (context, state) {

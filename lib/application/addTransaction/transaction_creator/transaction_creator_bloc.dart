@@ -28,7 +28,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
   TransactionCreatorBloc({
     required this.transactionRepository,
   }) : super(TransactionCreatorState.initial()) {
-    on<_Initialized>((event, emit) => emit(state));
+    on<_Initialized>((event, emit) => emit(TransactionCreatorState.initial()));
     on<_AmountChanged>(_onAmountChanged);
     on<_AccountChanged>(_onAccountChanged);
     on<_PayeeChanged>(_onPayeeChanged);
