@@ -32,10 +32,17 @@ class MemoField extends HookWidget {
   }
 
   String? validateMemo(BuildContext context) {
-    return context.read<TransactionCreatorBloc>().state.moneyTransaction.memo.value.fold(
-          (f) => _failNameClosure(f),
-          (_) => null,
-        );
+    final state = context.read<TransactionCreatorBloc>().state;
+
+    // Don't show error messages after a successful save.
+    if (state.showErrorMessages == false) {
+      return null;
+    }
+
+    return state.moneyTransaction.memo.value.fold(
+      (f) => _failNameClosure(f),
+      (_) => null,
+    );
   }
 
   @override
@@ -45,7 +52,12 @@ class MemoField extends HookWidget {
       listenWhen: (p, c) => getMemo(p) != getMemo(c),
       listener: (context, state) {
         String? memo = getMemo(state);
-        if (memo == null) return;
+        if (memo == null) {
+          // Clear the controller after a successful save.
+          controller.clear();
+          return;
+        }
+
         controller
           ..text = memo
           ..selection = TextSelection.collapsed(offset: controller.text.length);

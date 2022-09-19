@@ -52,7 +52,10 @@ class AmountInputRow extends HookWidget {
         // Thus, here is the only time where we have to cast from number to String
         // and where we have to change the selection
         String? amount = _getAmount(state);
-        if (amount == null) return;
+        if (amount == null) {
+          _controller.text = CurrencyOperations.zero;
+          return;
+        }
         _controller
           ..text = amount
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
@@ -62,7 +65,7 @@ class AmountInputRow extends HookWidget {
           children: [
             Expanded(
               child: AmountInput(
-                key: const Key("AmountInput"),
+                // key: const Key("AmountInput"),
                 isPositive: _isPositive,
                 controller: _controller,
                 changeAmount: onAmountChange,

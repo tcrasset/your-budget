@@ -65,8 +65,6 @@ class AddTransactionPage extends StatelessWidget {
                 (failure) => showErrorSnackbar(failure, context),
                 (_) /*Success*/ {
                   print("We've added a new transaction!.");
-                  formKey.currentState?.reset();
-
                   bloc.add(const TransactionCreatorEvent.initialized());
                 },
               ),
@@ -75,7 +73,6 @@ class AddTransactionPage extends StatelessWidget {
           buildWhen: (p, c) => p.isSaving != c.isSaving,
           builder: (context, state) {
             return Form(
-              key: formKey,
               autovalidateMode:
                   state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
               child: SingleChildScrollView(
@@ -118,11 +115,19 @@ class AddTransactionPage extends StatelessWidget {
 void _onAmountChange(BuildContext context, String value) =>
     context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(value));
 
-String? _validateAmount(BuildContext context) =>
-    context.read<TransactionCreatorBloc>().state.moneyTransaction.amount.value.fold(
-          (f) => _failAmountClosure(f),
-          (_) => null,
-        );
+String? _validateAmount(BuildContext context) {
+  final state = context.read<TransactionCreatorBloc>().state;
+
+  // Don't show error messages after a successful save.
+  if (state.showErrorMessages == false) {
+    return null;
+  }
+
+  return state.moneyTransaction.amount.value.fold(
+    (f) => _failAmountClosure(f),
+    (_) => null,
+  );
+}
 
 String? _failAmountClosure(ValueFailure f) {
   final result = f.maybeMap(
