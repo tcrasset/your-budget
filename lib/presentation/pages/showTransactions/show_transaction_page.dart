@@ -80,15 +80,15 @@ class TransactionScaffold extends StatelessWidget {
 }
 
 class OptionalTransactionList extends StatelessWidget {
+  final Widget emptyAccountList = Column(
+    children: [
+      const AccountButtons(accountText: "No accounts."),
+      const EmptyTransactionList(),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
-    final Widget emptyAccountList = Column(
-      children: [
-        const AccountButtons(accountText: "No accounts."),
-        const EmptyTransactionList(),
-      ],
-    );
-
     return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
       builder: (context, state) {
         return state.maybeMap(
@@ -128,7 +128,21 @@ class TransactionListView extends StatelessWidget {
       itemCount: transactions.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
-          title: Text('Amount: ${transactions[index]} €'),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(transactions[index].memo.getOrCrash()),
+              Text(transactions[index].payee.name.getOrCrash()),
+              Text(transactions[index].subcategory.name.getOrCrash()),
+            ],
+          ),
+          subtitle: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('${transactions[index].amount.getOrCrash()} €'),
+              Text(transactions[index].date.toLocal().toString()),
+            ],
+          ),
         );
       },
     );
