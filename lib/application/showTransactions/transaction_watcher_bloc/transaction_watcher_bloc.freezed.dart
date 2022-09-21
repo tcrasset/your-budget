@@ -23,6 +23,8 @@ mixin _$TransactionWatcherEvent {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
         transactionsReceived,
     required TResult Function(bool increment) cycleAccount,
+    required TResult Function(String id) selectTransaction,
+    required TResult Function() deleteSelectedTransactions,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +34,8 @@ mixin _$TransactionWatcherEvent {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +45,8 @@ mixin _$TransactionWatcherEvent {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -50,6 +56,9 @@ mixin _$TransactionWatcherEvent {
         watchTransactionsStarted,
     required TResult Function(_TransactionsReceived value) transactionsReceived,
     required TResult Function(_CycleAccount value) cycleAccount,
+    required TResult Function(_TransactionSelected value) selectTransaction,
+    required TResult Function(_DeleteSelectedTransactions value)
+        deleteSelectedTransactions,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +66,9 @@ mixin _$TransactionWatcherEvent {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +76,9 @@ mixin _$TransactionWatcherEvent {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -134,6 +149,8 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
         transactionsReceived,
     required TResult Function(bool increment) cycleAccount,
+    required TResult Function(String id) selectTransaction,
+    required TResult Function() deleteSelectedTransactions,
   }) {
     return watchTransactionsStarted();
   }
@@ -146,6 +163,8 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
   }) {
     return watchTransactionsStarted?.call();
   }
@@ -158,6 +177,8 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
     required TResult orElse(),
   }) {
     if (watchTransactionsStarted != null) {
@@ -173,6 +194,9 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
         watchTransactionsStarted,
     required TResult Function(_TransactionsReceived value) transactionsReceived,
     required TResult Function(_CycleAccount value) cycleAccount,
+    required TResult Function(_TransactionSelected value) selectTransaction,
+    required TResult Function(_DeleteSelectedTransactions value)
+        deleteSelectedTransactions,
   }) {
     return watchTransactionsStarted(this);
   }
@@ -183,6 +207,9 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
   }) {
     return watchTransactionsStarted?.call(this);
   }
@@ -193,6 +220,9 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
     required TResult orElse(),
   }) {
     if (watchTransactionsStarted != null) {
@@ -279,6 +309,8 @@ class _$_TransactionsReceived implements _TransactionsReceived {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
         transactionsReceived,
     required TResult Function(bool increment) cycleAccount,
+    required TResult Function(String id) selectTransaction,
+    required TResult Function() deleteSelectedTransactions,
   }) {
     return transactionsReceived(failureOrTransactions);
   }
@@ -291,6 +323,8 @@ class _$_TransactionsReceived implements _TransactionsReceived {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
   }) {
     return transactionsReceived?.call(failureOrTransactions);
   }
@@ -303,6 +337,8 @@ class _$_TransactionsReceived implements _TransactionsReceived {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
     required TResult orElse(),
   }) {
     if (transactionsReceived != null) {
@@ -318,6 +354,9 @@ class _$_TransactionsReceived implements _TransactionsReceived {
         watchTransactionsStarted,
     required TResult Function(_TransactionsReceived value) transactionsReceived,
     required TResult Function(_CycleAccount value) cycleAccount,
+    required TResult Function(_TransactionSelected value) selectTransaction,
+    required TResult Function(_DeleteSelectedTransactions value)
+        deleteSelectedTransactions,
   }) {
     return transactionsReceived(this);
   }
@@ -328,6 +367,9 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
   }) {
     return transactionsReceived?.call(this);
   }
@@ -338,6 +380,9 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
     required TResult orElse(),
   }) {
     if (transactionsReceived != null) {
@@ -428,6 +473,8 @@ class _$_CycleAccount implements _CycleAccount {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
         transactionsReceived,
     required TResult Function(bool increment) cycleAccount,
+    required TResult Function(String id) selectTransaction,
+    required TResult Function() deleteSelectedTransactions,
   }) {
     return cycleAccount(increment);
   }
@@ -440,6 +487,8 @@ class _$_CycleAccount implements _CycleAccount {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
   }) {
     return cycleAccount?.call(increment);
   }
@@ -452,6 +501,8 @@ class _$_CycleAccount implements _CycleAccount {
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
     TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
     required TResult orElse(),
   }) {
     if (cycleAccount != null) {
@@ -467,6 +518,9 @@ class _$_CycleAccount implements _CycleAccount {
         watchTransactionsStarted,
     required TResult Function(_TransactionsReceived value) transactionsReceived,
     required TResult Function(_CycleAccount value) cycleAccount,
+    required TResult Function(_TransactionSelected value) selectTransaction,
+    required TResult Function(_DeleteSelectedTransactions value)
+        deleteSelectedTransactions,
   }) {
     return cycleAccount(this);
   }
@@ -477,6 +531,9 @@ class _$_CycleAccount implements _CycleAccount {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
   }) {
     return cycleAccount?.call(this);
   }
@@ -487,6 +544,9 @@ class _$_CycleAccount implements _CycleAccount {
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
     TResult Function(_TransactionsReceived value)? transactionsReceived,
     TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
     required TResult orElse(),
   }) {
     if (cycleAccount != null) {
@@ -504,6 +564,307 @@ abstract class _CycleAccount implements TransactionWatcherEvent {
   @JsonKey(ignore: true)
   _$$_CycleAccountCopyWith<_$_CycleAccount> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_TransactionSelectedCopyWith<$Res> {
+  factory _$$_TransactionSelectedCopyWith(_$_TransactionSelected value,
+          $Res Function(_$_TransactionSelected) then) =
+      __$$_TransactionSelectedCopyWithImpl<$Res>;
+  $Res call({String id});
+}
+
+/// @nodoc
+class __$$_TransactionSelectedCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    implements _$$_TransactionSelectedCopyWith<$Res> {
+  __$$_TransactionSelectedCopyWithImpl(_$_TransactionSelected _value,
+      $Res Function(_$_TransactionSelected) _then)
+      : super(_value, (v) => _then(v as _$_TransactionSelected));
+
+  @override
+  _$_TransactionSelected get _value => super._value as _$_TransactionSelected;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+  }) {
+    return _then(_$_TransactionSelected(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TransactionSelected implements _TransactionSelected {
+  const _$_TransactionSelected({required this.id});
+
+  @override
+  final String id;
+
+  @override
+  String toString() {
+    return 'TransactionWatcherEvent.selectTransaction(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionSelected &&
+            const DeepCollectionEquality().equals(other.id, id));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TransactionSelectedCopyWith<_$_TransactionSelected> get copyWith =>
+      __$$_TransactionSelectedCopyWithImpl<_$_TransactionSelected>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchTransactionsStarted,
+    required TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
+        transactionsReceived,
+    required TResult Function(bool increment) cycleAccount,
+    required TResult Function(String id) selectTransaction,
+    required TResult Function() deleteSelectedTransactions,
+  }) {
+    return selectTransaction(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
+  }) {
+    return selectTransaction?.call(id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
+    required TResult orElse(),
+  }) {
+    if (selectTransaction != null) {
+      return selectTransaction(id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransactionWatchStarted value)
+        watchTransactionsStarted,
+    required TResult Function(_TransactionsReceived value) transactionsReceived,
+    required TResult Function(_CycleAccount value) cycleAccount,
+    required TResult Function(_TransactionSelected value) selectTransaction,
+    required TResult Function(_DeleteSelectedTransactions value)
+        deleteSelectedTransactions,
+  }) {
+    return selectTransaction(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
+  }) {
+    return selectTransaction?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
+    required TResult orElse(),
+  }) {
+    if (selectTransaction != null) {
+      return selectTransaction(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _TransactionSelected implements TransactionWatcherEvent {
+  const factory _TransactionSelected({required final String id}) =
+      _$_TransactionSelected;
+
+  String get id;
+  @JsonKey(ignore: true)
+  _$$_TransactionSelectedCopyWith<_$_TransactionSelected> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_DeleteSelectedTransactionsCopyWith<$Res> {
+  factory _$$_DeleteSelectedTransactionsCopyWith(
+          _$_DeleteSelectedTransactions value,
+          $Res Function(_$_DeleteSelectedTransactions) then) =
+      __$$_DeleteSelectedTransactionsCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_DeleteSelectedTransactionsCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    implements _$$_DeleteSelectedTransactionsCopyWith<$Res> {
+  __$$_DeleteSelectedTransactionsCopyWithImpl(
+      _$_DeleteSelectedTransactions _value,
+      $Res Function(_$_DeleteSelectedTransactions) _then)
+      : super(_value, (v) => _then(v as _$_DeleteSelectedTransactions));
+
+  @override
+  _$_DeleteSelectedTransactions get _value =>
+      super._value as _$_DeleteSelectedTransactions;
+}
+
+/// @nodoc
+
+class _$_DeleteSelectedTransactions implements _DeleteSelectedTransactions {
+  const _$_DeleteSelectedTransactions();
+
+  @override
+  String toString() {
+    return 'TransactionWatcherEvent.deleteSelectedTransactions()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_DeleteSelectedTransactions);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() watchTransactionsStarted,
+    required TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)
+        transactionsReceived,
+    required TResult Function(bool increment) cycleAccount,
+    required TResult Function(String id) selectTransaction,
+    required TResult Function() deleteSelectedTransactions,
+  }) {
+    return deleteSelectedTransactions();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
+  }) {
+    return deleteSelectedTransactions?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? watchTransactionsStarted,
+    TResult Function(
+            Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
+        transactionsReceived,
+    TResult Function(bool increment)? cycleAccount,
+    TResult Function(String id)? selectTransaction,
+    TResult Function()? deleteSelectedTransactions,
+    required TResult orElse(),
+  }) {
+    if (deleteSelectedTransactions != null) {
+      return deleteSelectedTransactions();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TransactionWatchStarted value)
+        watchTransactionsStarted,
+    required TResult Function(_TransactionsReceived value) transactionsReceived,
+    required TResult Function(_CycleAccount value) cycleAccount,
+    required TResult Function(_TransactionSelected value) selectTransaction,
+    required TResult Function(_DeleteSelectedTransactions value)
+        deleteSelectedTransactions,
+  }) {
+    return deleteSelectedTransactions(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
+  }) {
+    return deleteSelectedTransactions?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult Function(_TransactionsReceived value)? transactionsReceived,
+    TResult Function(_CycleAccount value)? cycleAccount,
+    TResult Function(_TransactionSelected value)? selectTransaction,
+    TResult Function(_DeleteSelectedTransactions value)?
+        deleteSelectedTransactions,
+    required TResult orElse(),
+  }) {
+    if (deleteSelectedTransactions != null) {
+      return deleteSelectedTransactions(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DeleteSelectedTransactions implements TransactionWatcherEvent {
+  const factory _DeleteSelectedTransactions() = _$_DeleteSelectedTransactions;
 }
 
 /// @nodoc

@@ -32,13 +32,12 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> delete(MoneyTransaction transaction) async {
+  Future<Either<ValueFailure, Unit>> delete(String id) async {
     try {
-      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
-        whereArgs: [transactionDTO.id],
+        whereArgs: [id],
       );
       return right(unit);
     } on DatabaseException catch (e) {

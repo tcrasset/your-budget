@@ -21,11 +21,38 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
   StreamSubscription<List<MoneyTransaction>>? _transactionStreamSubscription;
   int currentAccountID = 1; // First ID in database is at 1
 
+  Set<String> selectedTransactions = {};
   TransactionWatcherBloc({required this.transactionRepository, required this.accountRepository})
       : super(const TransactionWatcherState.initial()) {
     on<_TransactionWatchStarted>(_onTransactionWatchStarted);
     on<_TransactionsReceived>(_onTransactionsReceived);
     on<_CycleAccount>(_onCycleAccount);
+    on<_TransactionSelected>(_onTransactionSelected);
+    on<_DeleteSelectedTransactions>(_onDeleteSelectedTransactions);
+  }
+
+  FutureOr<void> _onDeleteSelectedTransactions(
+    _DeleteSelectedTransactions event,
+    Emitter<TransactionWatcherState> emit,
+  ) {
+    emit(const TransactionWatcherState.loading());
+
+    selectedTransactions.forEach((id) => transactionRepository.delete(id));
+    selectedTransactions.clear();
+
+    add(const TransactionWatcherEvent.watchTransactionsStarted());
+  }
+
+  FutureOr<void> _onTransactionSelected(
+    _TransactionSelected event,
+    Emitter<TransactionWatcherState> emit,
+  ) {
+    final String id = event.id;
+    if (selectedTransactions.contains(id)) {
+      selectedTransactions.remove(id);
+    } else {
+      selectedTransactions.add(id);
+    }
   }
 
   Future<void> _onTransactionWatchStarted(

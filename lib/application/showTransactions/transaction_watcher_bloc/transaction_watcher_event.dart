@@ -8,4 +8,7 @@ class TransactionWatcherEvent with _$TransactionWatcherEvent {
   ) = _TransactionsReceived;
 
   const factory TransactionWatcherEvent.cycleAccount({required bool increment}) = _CycleAccount;
+  const factory TransactionWatcherEvent.selectTransaction({required String id}) =
+      _TransactionSelected;
+  const factory TransactionWatcherEvent.deleteSelectedTransactions() = _DeleteSelectedTransactions;
 }
