@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
@@ -41,10 +42,23 @@ class TransactionScaffold extends HookWidget {
   final String title;
   const TransactionScaffold({Key? key, required this.title}) : super(key: key);
 
+  Future<void> handleDeleteTransactions(
+      BuildContext context, ValueNotifier<bool> isModifying) async {
+    // Delete selected transactions and get back to non-modifying screen
+
+    final bloc = context.read<TransactionWatcherBloc>();
+    final String? shouldDelete = await showDeleteDialog(context, 'Delete selected transactions?');
+
+    if (shouldDelete == null) return;
+    bloc.add(const TransactionWatcherEvent.deleteSelectedTransactions());
+
+    isModifying.value = !isModifying.value;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Use ValueNotifier to change the Widget from a ListTile to a CheckboxListTile
-    ValueNotifier<bool> isModifying = useState(false);
+    final ValueNotifier<bool> isModifying = useState(false);
     bool? isLoading;
     return MultiBlocListener(
       listeners: [
@@ -71,16 +85,11 @@ class TransactionScaffold extends HookWidget {
       ],
       child: Scaffold(
         appBar: getAppbar(
+          context,
+          isModifying,
           title,
-          isModifying.value,
+          handleDeleteTransactions,
           () => {isModifying.value = !isModifying.value},
-          () {
-            // Delete selected transactions and get back to non-modifying screen
-            context.read<TransactionWatcherBloc>().add(
-                  const TransactionWatcherEvent.deleteSelectedTransactions(),
-                );
-            isModifying.value = !isModifying.value;
-          },
         ),
         body: Stack(
           children: [
@@ -96,6 +105,31 @@ class TransactionScaffold extends HookWidget {
       ),
     );
   }
+}
+
+AppBar getAppbar(
+  BuildContext context,
+  ValueNotifier<bool> isModifying,
+  String title,
+  Future<void> Function(BuildContext, ValueNotifier<bool>) handleDeleteTransactions,
+  void Function() toggleDeleteTransaction,
+) {
+  return AppBar(
+    title: Text(title),
+    leading: const Icon(Constants.ALLTRANSACTION_ICON),
+    backgroundColor: Constants.PRIMARY_COLOR,
+    actions: <Widget>[
+      if (isModifying.value == true)
+        IconButton(
+          icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
+          onPressed: () => handleDeleteTransactions(context, isModifying),
+        ),
+      IconButton(
+        icon: const Icon(FontAwesomeIcons.checkSquare),
+        onPressed: toggleDeleteTransaction,
+      ),
+    ],
+  );
 }
 
 class OptionalTransactionList extends StatelessWidget {
@@ -126,8 +160,11 @@ class OptionalTransactionList extends StatelessWidget {
                     accountText: accountName,
                   ),
                   Expanded(
-                      child: TransactionListView(
-                          transactions: transactions, isModifying: isModifying)),
+                    child: TransactionListView(
+                      transactions: transactions,
+                      isModifying: isModifying,
+                    ),
+                  ),
                 ],
               ),
             );
@@ -254,26 +291,6 @@ class EmptyTransactionList extends StatelessWidget {
       ),
     );
   }
-}
-
-AppBar getAppbar(String title, bool isModifying, Function() handleModifyTransactions,
-    Function() handleDeleteTransactions) {
-  return AppBar(
-    title: Text(title),
-    leading: const Icon(Constants.ALLTRANSACTION_ICON),
-    backgroundColor: Constants.PRIMARY_COLOR,
-    actions: <Widget>[
-      if (isModifying == true)
-        IconButton(
-          icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
-          onPressed: handleDeleteTransactions,
-        ),
-      IconButton(
-        icon: const Icon(FontAwesomeIcons.checkSquare),
-        onPressed: handleModifyTransactions,
-      ),
-    ],
-  );
 }
 
 class AccountButtons extends StatelessWidget {
