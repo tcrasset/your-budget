@@ -37,12 +37,14 @@ class ShowTransactionPage extends StatelessWidget {
   }
 }
 
-class TransactionScaffold extends StatelessWidget {
+class TransactionScaffold extends HookWidget {
   final String title;
   const TransactionScaffold({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Use ValueNotifier to change the Widget from a ListTile to a CheckboxListTile
+    ValueNotifier<bool> isModifying = useState(false);
     bool? isLoading;
     return MultiBlocListener(
       listeners: [
@@ -70,14 +72,21 @@ class TransactionScaffold extends StatelessWidget {
       child: Scaffold(
         appBar: getAppbar(
           title,
-          () => null,
-          () => context.read<TransactionWatcherBloc>().add(
-                const TransactionWatcherEvent.deleteSelectedTransactions(),
-              ),
+          isModifying.value,
+          () => {isModifying.value = !isModifying.value},
+          () {
+            // Delete selected transactions and get back to non-modifying screen
+            context.read<TransactionWatcherBloc>().add(
+                  const TransactionWatcherEvent.deleteSelectedTransactions(),
+                );
+            isModifying.value = !isModifying.value;
+          },
         ),
         body: Stack(
           children: [
-            OptionalTransactionList(),
+            OptionalTransactionList(
+              isModifying: isModifying.value,
+            ),
             InProgressOverlay(
               showOverlay: isLoading ?? false,
               textDisplayed: "Loading",
@@ -97,6 +106,9 @@ class OptionalTransactionList extends StatelessWidget {
     ],
   );
 
+  final bool isModifying;
+  OptionalTransactionList({required this.isModifying});
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
@@ -104,14 +116,18 @@ class OptionalTransactionList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (newState) {
             final transactions = newState.transactions;
+            final String accountName =
+                transactions.isNotEmpty ? transactions[0].account.name.getOrCrash() : "No accounts";
             return SizedBox(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   AccountButtons(
-                    accountText: transactions[0].account.name.getOrCrash(),
+                    accountText: accountName,
                   ),
-                  Expanded(child: TransactionListView(transactions: transactions)),
+                  Expanded(
+                      child: TransactionListView(
+                          transactions: transactions, isModifying: isModifying)),
                 ],
               ),
             );
@@ -127,11 +143,11 @@ class TransactionListView extends StatelessWidget {
   const TransactionListView({
     Key? key,
     required this.transactions,
-    // required this.transactionTile,
+    required this.isModifying,
   }) : super(key: key);
 
+  final bool isModifying;
   final List<MoneyTransaction> transactions;
-  // final Widget transactionTile;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +156,14 @@ class TransactionListView extends StatelessWidget {
       itemCount: transactions.length,
       itemBuilder: (BuildContext context, int index) {
         final transaction = transactions[index];
-        return TransactionListTile(transaction: transaction);
+        if (isModifying) {
+          return CheckboxTransactionListTile(transaction: transaction);
+        } else {
+          return ListTile(
+            title: TransactionListTileTitle(transaction: transaction),
+            subtitle: TransactionListTileSubtitle(transaction: transaction),
+          );
+        }
       },
     );
   }
@@ -167,8 +190,8 @@ class TransactionListTileTitle extends StatelessWidget {
   }
 }
 
-class TransactionListTile extends HookWidget {
-  const TransactionListTile({
+class CheckboxTransactionListTile extends HookWidget {
+  const CheckboxTransactionListTile({
     Key? key,
     required this.transaction,
   }) : super(key: key);
@@ -233,20 +256,21 @@ class EmptyTransactionList extends StatelessWidget {
   }
 }
 
-AppBar getAppbar(
-    String title, Function() handleModifyTransactions, Function() handleDeleteTransactions) {
+AppBar getAppbar(String title, bool isModifying, Function() handleModifyTransactions,
+    Function() handleDeleteTransactions) {
   return AppBar(
     title: Text(title),
     leading: const Icon(Constants.ALLTRANSACTION_ICON),
     backgroundColor: Constants.PRIMARY_COLOR,
     actions: <Widget>[
+      if (isModifying == true)
+        IconButton(
+          icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
+          onPressed: handleDeleteTransactions,
+        ),
       IconButton(
         icon: const Icon(FontAwesomeIcons.checkSquare),
         onPressed: handleModifyTransactions,
-      ),
-      IconButton(
-        icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
-        onPressed: handleDeleteTransactions,
       ),
     ],
   );
