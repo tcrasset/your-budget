@@ -23,6 +23,19 @@ class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> 
       : super(const AccountWatcherState.initial()) {
     on<_AccountWatchStarted>(_onWatchAccountsStarted);
     on<_AccountsReceived>(_onAccountsReceived);
+    on<_DeleteAccount>(_onDeleteAccount);
+  }
+
+  Future<void> _onDeleteAccount(
+    _DeleteAccount event,
+    Emitter<AccountWatcherState> emit,
+  ) async {
+    emit(const AccountWatcherState.loading());
+
+    final result = await accountRepository.delete(event.id);
+
+    result.fold((f) => print("failure"), (r) => print("deleted"));
+    add(const AccountWatcherEvent.watchAccountsStarted());
   }
 
   Future<void> _onWatchAccountsStarted(

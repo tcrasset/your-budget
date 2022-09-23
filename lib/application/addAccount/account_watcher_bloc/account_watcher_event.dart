@@ -6,4 +6,5 @@ class AccountWatcherEvent with _$AccountWatcherEvent {
   const factory AccountWatcherEvent.accountsReceived(
     Either<ValueFailure, List<Account>> failureOrAccounts,
   ) = _AccountsReceived;
+  const factory AccountWatcherEvent.deleteAccount(String id) = _DeleteAccount;
 }

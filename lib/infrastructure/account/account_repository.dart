@@ -50,6 +50,21 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
+  Future<Either<ValueFailure, Unit>> delete(String id) async {
+    try {
+      final result = await database!.delete(
+        DatabaseConstants.accountTable,
+        where: '${DatabaseConstants.ACCOUNT_ID} = ?',
+        whereArgs: [id],
+      );
+
+      return right(unit);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<ValueFailure, Account>> get(int accountId) async {
     try {
       final rawAccount = await database!.query(
