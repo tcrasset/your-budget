@@ -34,9 +34,9 @@ class AccountCreator {
   Future<Either<ValueFailure, Unit>> create(Account account) async {
     debugPrint(account.toString());
 
-    final Either<ValueFailure, int> failureOrInt = await accountRepository.create(account);
+    final Either<ValueFailure, String> failureOrId = await accountRepository.create(account);
 
-    return failureOrInt.fold(
+    return failureOrId.fold(
       (f) => left(f),
       (accountId) async {
         final Either<ValueFailure, Unit> failureOrUnit =
@@ -51,7 +51,7 @@ class AccountCreator {
   }
 
   Future<Either<ValueFailure, Unit>> _createStartingMoneyTransaction(
-    int accountId,
+    String accountId,
     Amount balance,
   ) async {
     //Create starting money transaction

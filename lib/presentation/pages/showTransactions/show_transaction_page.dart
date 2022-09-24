@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
+import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/domain/account/account.dart';
@@ -26,19 +28,25 @@ class ShowTransactionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<TransactionSelectorBloc>(
+          create: (context) => TransactionSelectorBloc(
+            transactionRepository: GetIt.instance<ITransactionRepository>(),
+          ),
+        ),
         BlocProvider<TransactionWatcherBloc>(
           create: (context) => TransactionWatcherBloc(
             transactionRepository: GetIt.instance<ITransactionRepository>(),
             accountRepository: GetIt.instance<IAccountRepository>(),
+            transactionSelectorBloc: BlocProvider.of<TransactionSelectorBloc>(context),
           )..add(const TransactionWatcherEvent.watchTransactionsStarted()),
-        ),
+        )
       ],
       child: TransactionScaffold(title: title),
     );
   }
 }
 
-class TransactionScaffold extends HookWidget {
+class TransactionScaffold extends StatelessWidget {
   final String title;
   const TransactionScaffold({Key? key, required this.title}) : super(key: key);
 
@@ -46,25 +54,33 @@ class TransactionScaffold extends HookWidget {
       BuildContext context, ValueNotifier<bool> isModifying) async {
     // Delete selected transactions and get back to non-modifying screen
 
-    final bloc = context.read<TransactionWatcherBloc>();
+    final bloc = context.read<TransactionSelectorBloc>();
     final String? shouldDelete = await showDeleteDialog(context, 'Delete selected transactions?');
 
     if (shouldDelete == null) return;
-    bloc.add(const TransactionWatcherEvent.deleteSelectedTransactions());
-
-    isModifying.value = !isModifying.value;
+    bloc.add(const TransactionSelectorEvent.deleteSelected());
   }
 
   @override
   Widget build(BuildContext context) {
     // Use ValueNotifier to change the Widget from a ListTile to a CheckboxListTile
-    final ValueNotifier<bool> isModifying = useState(false);
-    bool? isLoading;
+    bool isSelectorBlocLoading = false;
+    bool isWatcherBlocLoading = false;
+
     return MultiBlocListener(
       listeners: [
+        BlocListener<TransactionSelectorBloc, TransactionSelectorState>(
+          listener: (context, state) {
+            isSelectorBlocLoading = state.maybeMap(
+              initial: (_) => true,
+              loading: (_) => true,
+              orElse: () => false,
+            );
+          },
+        ),
         BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
           listener: (context, state) {
-            isLoading = state.maybeMap(
+            isWatcherBlocLoading = state.maybeMap(
               initial: (_) => true,
               loading: (_) => true,
               orElse: () => false,
@@ -83,53 +99,43 @@ class TransactionScaffold extends HookWidget {
           },
         )
       ],
-      child: Scaffold(
-        appBar: getAppbar(
-          context,
-          isModifying,
-          title,
-          handleDeleteTransactions,
-          () => {isModifying.value = !isModifying.value},
-        ),
-        body: Stack(
-          children: [
-            OptionalTransactionList(
-              isModifying: isModifying.value,
+      child: BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(title),
+              leading: const Icon(Constants.ALLTRANSACTION_ICON),
+              backgroundColor: Constants.PRIMARY_COLOR,
+              actions: <Widget>[
+                if (state == const TransactionSelectorState.modifying())
+                  IconButton(
+                    icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
+                    onPressed: () => context
+                        .read<TransactionSelectorBloc>()
+                        .add(const TransactionSelectorEvent.deleteSelected()),
+                  ),
+                IconButton(
+                  icon: const Icon(FontAwesomeIcons.checkSquare),
+                  onPressed: () => context
+                      .read<TransactionSelectorBloc>()
+                      .add(const TransactionSelectorEvent.toggleModifying()),
+                ),
+              ],
             ),
-            InProgressOverlay(
-              showOverlay: isLoading ?? false,
-              textDisplayed: "Loading",
-            )
-          ],
-        ),
+            body: Stack(
+              children: [
+                OptionalTransactionList(),
+                InProgressOverlay(
+                  showOverlay: isSelectorBlocLoading || isWatcherBlocLoading,
+                  textDisplayed: "Loading",
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
-}
-
-AppBar getAppbar(
-  BuildContext context,
-  ValueNotifier<bool> isModifying,
-  String title,
-  Future<void> Function(BuildContext, ValueNotifier<bool>) handleDeleteTransactions,
-  void Function() toggleDeleteTransaction,
-) {
-  return AppBar(
-    title: Text(title),
-    leading: const Icon(Constants.ALLTRANSACTION_ICON),
-    backgroundColor: Constants.PRIMARY_COLOR,
-    actions: <Widget>[
-      if (isModifying.value == true)
-        IconButton(
-          icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
-          onPressed: () => handleDeleteTransactions(context, isModifying),
-        ),
-      IconButton(
-        icon: const Icon(FontAwesomeIcons.checkSquare),
-        onPressed: toggleDeleteTransaction,
-      ),
-    ],
-  );
 }
 
 class OptionalTransactionList extends StatelessWidget {
@@ -140,8 +146,7 @@ class OptionalTransactionList extends StatelessWidget {
     ],
   );
 
-  final bool isModifying;
-  OptionalTransactionList({required this.isModifying});
+  OptionalTransactionList();
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +167,6 @@ class OptionalTransactionList extends StatelessWidget {
                   Expanded(
                     child: TransactionListView(
                       transactions: transactions,
-                      isModifying: isModifying,
                     ),
                   ),
                 ],
@@ -180,27 +184,29 @@ class TransactionListView extends StatelessWidget {
   const TransactionListView({
     Key? key,
     required this.transactions,
-    required this.isModifying,
   }) : super(key: key);
 
-  final bool isModifying;
   final List<MoneyTransaction> transactions;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: transactions.length,
-      itemBuilder: (BuildContext context, int index) {
-        final transaction = transactions[index];
-        if (isModifying) {
-          return CheckboxTransactionListTile(transaction: transaction);
-        } else {
-          return ListTile(
-            title: TransactionListTileTitle(transaction: transaction),
-            subtitle: TransactionListTileSubtitle(transaction: transaction),
-          );
-        }
+    return BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
+      builder: (context, state) {
+        return ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: transactions.length,
+          itemBuilder: (BuildContext context, int index) {
+            final transaction = transactions[index];
+            if (state is Modifying) {
+              return CheckboxTransactionListTile(transaction: transaction);
+            } else {
+              return ListTile(
+                title: TransactionListTileTitle(transaction: transaction),
+                subtitle: TransactionListTileSubtitle(transaction: transaction),
+              );
+            }
+          },
+        );
       },
     );
   }

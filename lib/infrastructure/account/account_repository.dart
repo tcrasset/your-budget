@@ -11,6 +11,7 @@ import 'package:sqflite/sqflite.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/infrastructure/account/account_dto.dart';
@@ -34,13 +35,12 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
-  Future<Either<ValueFailure, int>> create(Account account) async {
+  Future<Either<ValueFailure, String>> create(Account account) async {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
       final int id = await database!.insert(DatabaseConstants.accountTable, accountDTO.toJson());
 
-      debugPrint(accountDTO.toString());
-      return right(id);
+      return right(id.toString());
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
         return left(ValueFailure.uniqueName(failedValue: e.toString()));
@@ -65,12 +65,12 @@ class SQFliteAccountRepository implements IAccountRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Account>> get(int accountId) async {
+  Future<Either<ValueFailure, Account>> get(String id) async {
     try {
       final rawAccount = await database!.query(
         DatabaseConstants.accountTable,
         where: '${DatabaseConstants.ACCOUNT_ID} = ?',
-        whereArgs: [accountId],
+        whereArgs: [id],
       );
       final AccountDTO accountDTO = AccountDTO.fromJson(rawAccount.first);
       final Account account = accountDTO.toDomain();
