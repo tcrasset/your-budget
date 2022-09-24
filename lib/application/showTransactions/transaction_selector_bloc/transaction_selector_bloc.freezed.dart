@@ -18,24 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TransactionSelectorEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) select,
-    required TResult Function(String id) unselect,
+    required TResult Function(String id) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
@@ -43,24 +40,21 @@ mixin _$TransactionSelectorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Selected value) select,
-    required TResult Function(_Unselected value) unselect,
+    required TResult Function(_ToggleSelected value) toggleSelected,
     required TResult Function(_DeleteSelected value) deleteSelected,
     required TResult Function(_ToggleModifying value) toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
     required TResult orElse(),
@@ -86,29 +80,29 @@ class _$TransactionSelectorEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$_SelectedCopyWith<$Res> {
-  factory _$$_SelectedCopyWith(
-          _$_Selected value, $Res Function(_$_Selected) then) =
-      __$$_SelectedCopyWithImpl<$Res>;
+abstract class _$$_ToggleSelectedCopyWith<$Res> {
+  factory _$$_ToggleSelectedCopyWith(
+          _$_ToggleSelected value, $Res Function(_$_ToggleSelected) then) =
+      __$$_ToggleSelectedCopyWithImpl<$Res>;
   $Res call({String id});
 }
 
 /// @nodoc
-class __$$_SelectedCopyWithImpl<$Res>
+class __$$_ToggleSelectedCopyWithImpl<$Res>
     extends _$TransactionSelectorEventCopyWithImpl<$Res>
-    implements _$$_SelectedCopyWith<$Res> {
-  __$$_SelectedCopyWithImpl(
-      _$_Selected _value, $Res Function(_$_Selected) _then)
-      : super(_value, (v) => _then(v as _$_Selected));
+    implements _$$_ToggleSelectedCopyWith<$Res> {
+  __$$_ToggleSelectedCopyWithImpl(
+      _$_ToggleSelected _value, $Res Function(_$_ToggleSelected) _then)
+      : super(_value, (v) => _then(v as _$_ToggleSelected));
 
   @override
-  _$_Selected get _value => super._value as _$_Selected;
+  _$_ToggleSelected get _value => super._value as _$_ToggleSelected;
 
   @override
   $Res call({
     Object? id = freezed,
   }) {
-    return _then(_$_Selected(
+    return _then(_$_ToggleSelected(
       id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -119,22 +113,22 @@ class __$$_SelectedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Selected implements _Selected {
-  const _$_Selected(this.id);
+class _$_ToggleSelected implements _ToggleSelected {
+  const _$_ToggleSelected(this.id);
 
   @override
   final String id;
 
   @override
   String toString() {
-    return 'TransactionSelectorEvent.select(id: $id)';
+    return 'TransactionSelectorEvent.toggleSelected(id: $id)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Selected &&
+            other is _$_ToggleSelected &&
             const DeepCollectionEquality().equals(other.id, id));
   }
 
@@ -144,42 +138,39 @@ class _$_Selected implements _Selected {
 
   @JsonKey(ignore: true)
   @override
-  _$$_SelectedCopyWith<_$_Selected> get copyWith =>
-      __$$_SelectedCopyWithImpl<_$_Selected>(this, _$identity);
+  _$$_ToggleSelectedCopyWith<_$_ToggleSelected> get copyWith =>
+      __$$_ToggleSelectedCopyWithImpl<_$_ToggleSelected>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) select,
-    required TResult Function(String id) unselect,
+    required TResult Function(String id) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) {
-    return select(id);
+    return toggleSelected(id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) {
-    return select?.call(id);
+    return toggleSelected?.call(id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
   }) {
-    if (select != null) {
-      return select(id);
+    if (toggleSelected != null) {
+      return toggleSelected(id);
     }
     return orElse();
   }
@@ -187,193 +178,44 @@ class _$_Selected implements _Selected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Selected value) select,
-    required TResult Function(_Unselected value) unselect,
+    required TResult Function(_ToggleSelected value) toggleSelected,
     required TResult Function(_DeleteSelected value) deleteSelected,
     required TResult Function(_ToggleModifying value) toggleModifying,
   }) {
-    return select(this);
+    return toggleSelected(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
   }) {
-    return select?.call(this);
+    return toggleSelected?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
     required TResult orElse(),
   }) {
-    if (select != null) {
-      return select(this);
+    if (toggleSelected != null) {
+      return toggleSelected(this);
     }
     return orElse();
   }
 }
 
-abstract class _Selected implements TransactionSelectorEvent {
-  const factory _Selected(final String id) = _$_Selected;
+abstract class _ToggleSelected implements TransactionSelectorEvent {
+  const factory _ToggleSelected(final String id) = _$_ToggleSelected;
 
   String get id;
   @JsonKey(ignore: true)
-  _$$_SelectedCopyWith<_$_Selected> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_UnselectedCopyWith<$Res> {
-  factory _$$_UnselectedCopyWith(
-          _$_Unselected value, $Res Function(_$_Unselected) then) =
-      __$$_UnselectedCopyWithImpl<$Res>;
-  $Res call({String id});
-}
-
-/// @nodoc
-class __$$_UnselectedCopyWithImpl<$Res>
-    extends _$TransactionSelectorEventCopyWithImpl<$Res>
-    implements _$$_UnselectedCopyWith<$Res> {
-  __$$_UnselectedCopyWithImpl(
-      _$_Unselected _value, $Res Function(_$_Unselected) _then)
-      : super(_value, (v) => _then(v as _$_Unselected));
-
-  @override
-  _$_Unselected get _value => super._value as _$_Unselected;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-  }) {
-    return _then(_$_Unselected(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_Unselected implements _Unselected {
-  const _$_Unselected(this.id);
-
-  @override
-  final String id;
-
-  @override
-  String toString() {
-    return 'TransactionSelectorEvent.unselect(id: $id)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Unselected &&
-            const DeepCollectionEquality().equals(other.id, id));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_UnselectedCopyWith<_$_Unselected> get copyWith =>
-      __$$_UnselectedCopyWithImpl<_$_Unselected>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String id) select,
-    required TResult Function(String id) unselect,
-    required TResult Function() deleteSelected,
-    required TResult Function() toggleModifying,
-  }) {
-    return unselect(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
-    TResult Function()? deleteSelected,
-    TResult Function()? toggleModifying,
-  }) {
-    return unselect?.call(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
-    TResult Function()? deleteSelected,
-    TResult Function()? toggleModifying,
-    required TResult orElse(),
-  }) {
-    if (unselect != null) {
-      return unselect(id);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Selected value) select,
-    required TResult Function(_Unselected value) unselect,
-    required TResult Function(_DeleteSelected value) deleteSelected,
-    required TResult Function(_ToggleModifying value) toggleModifying,
-  }) {
-    return unselect(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
-    TResult Function(_DeleteSelected value)? deleteSelected,
-    TResult Function(_ToggleModifying value)? toggleModifying,
-  }) {
-    return unselect?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
-    TResult Function(_DeleteSelected value)? deleteSelected,
-    TResult Function(_ToggleModifying value)? toggleModifying,
-    required TResult orElse(),
-  }) {
-    if (unselect != null) {
-      return unselect(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Unselected implements TransactionSelectorEvent {
-  const factory _Unselected(final String id) = _$_Unselected;
-
-  String get id;
-  @JsonKey(ignore: true)
-  _$$_UnselectedCopyWith<_$_Unselected> get copyWith =>
+  _$$_ToggleSelectedCopyWith<_$_ToggleSelected> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -418,8 +260,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) select,
-    required TResult Function(String id) unselect,
+    required TResult Function(String id) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) {
@@ -429,8 +270,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) {
@@ -440,8 +280,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
@@ -455,8 +294,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Selected value) select,
-    required TResult Function(_Unselected value) unselect,
+    required TResult Function(_ToggleSelected value) toggleSelected,
     required TResult Function(_DeleteSelected value) deleteSelected,
     required TResult Function(_ToggleModifying value) toggleModifying,
   }) {
@@ -466,8 +304,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
   }) {
@@ -477,8 +314,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
     required TResult orElse(),
@@ -535,8 +371,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) select,
-    required TResult Function(String id) unselect,
+    required TResult Function(String id) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) {
@@ -546,8 +381,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) {
@@ -557,8 +391,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? select,
-    TResult Function(String id)? unselect,
+    TResult Function(String id)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
@@ -572,8 +405,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_Selected value) select,
-    required TResult Function(_Unselected value) unselect,
+    required TResult Function(_ToggleSelected value) toggleSelected,
     required TResult Function(_DeleteSelected value) deleteSelected,
     required TResult Function(_ToggleModifying value) toggleModifying,
   }) {
@@ -583,8 +415,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
   }) {
@@ -594,8 +425,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Selected value)? select,
-    TResult Function(_Unselected value)? unselect,
+    TResult Function(_ToggleSelected value)? toggleSelected,
     TResult Function(_DeleteSelected value)? deleteSelected,
     TResult Function(_ToggleModifying value)? toggleModifying,
     required TResult orElse(),
@@ -613,61 +443,15 @@ abstract class _ToggleModifying implements TransactionSelectorEvent {
 
 /// @nodoc
 mixin _$TransactionSelectorState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() deleted,
-    required TResult Function() modifying,
-    required TResult Function() notModifying,
-  }) =>
+  UnmodifiableSetView<dynamic> get selectedTransactions =>
       throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-  }) =>
+  UnmodifiableSetView<dynamic> get deletedTransactions =>
       throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(Deleted value) deleted,
-    required TResult Function(Modifying value) modifying,
-    required TResult Function(NotModifying value) notModifying,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-    required TResult orElse(),
-  }) =>
+  bool get isModifying => throw _privateConstructorUsedError;
+  bool get isDeleting => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TransactionSelectorStateCopyWith<TransactionSelectorState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -676,6 +460,11 @@ abstract class $TransactionSelectorStateCopyWith<$Res> {
   factory $TransactionSelectorStateCopyWith(TransactionSelectorState value,
           $Res Function(TransactionSelectorState) then) =
       _$TransactionSelectorStateCopyWithImpl<$Res>;
+  $Res call(
+      {UnmodifiableSetView<dynamic> selectedTransactions,
+      UnmodifiableSetView<dynamic> deletedTransactions,
+      bool isModifying,
+      bool isDeleting});
 }
 
 /// @nodoc
@@ -686,615 +475,160 @@ class _$TransactionSelectorStateCopyWithImpl<$Res>
   final TransactionSelectorState _value;
   // ignore: unused_field
   final $Res Function(TransactionSelectorState) _then;
-}
-
-/// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$TransactionSelectorStateCopyWithImpl<$Res>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
 
   @override
-  _$_Initial get _value => super._value as _$_Initial;
+  $Res call({
+    Object? selectedTransactions = freezed,
+    Object? deletedTransactions = freezed,
+    Object? isModifying = freezed,
+    Object? isDeleting = freezed,
+  }) {
+    return _then(_value.copyWith(
+      selectedTransactions: selectedTransactions == freezed
+          ? _value.selectedTransactions
+          : selectedTransactions // ignore: cast_nullable_to_non_nullable
+              as UnmodifiableSetView<dynamic>,
+      deletedTransactions: deletedTransactions == freezed
+          ? _value.deletedTransactions
+          : deletedTransactions // ignore: cast_nullable_to_non_nullable
+              as UnmodifiableSetView<dynamic>,
+      isModifying: isModifying == freezed
+          ? _value.isModifying
+          : isModifying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDeleting: isDeleting == freezed
+          ? _value.isDeleting
+          : isDeleting // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_TransactionSelectorStateCopyWith<$Res>
+    implements $TransactionSelectorStateCopyWith<$Res> {
+  factory _$$_TransactionSelectorStateCopyWith(
+          _$_TransactionSelectorState value,
+          $Res Function(_$_TransactionSelectorState) then) =
+      __$$_TransactionSelectorStateCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {UnmodifiableSetView<dynamic> selectedTransactions,
+      UnmodifiableSetView<dynamic> deletedTransactions,
+      bool isModifying,
+      bool isDeleting});
+}
+
+/// @nodoc
+class __$$_TransactionSelectorStateCopyWithImpl<$Res>
+    extends _$TransactionSelectorStateCopyWithImpl<$Res>
+    implements _$$_TransactionSelectorStateCopyWith<$Res> {
+  __$$_TransactionSelectorStateCopyWithImpl(_$_TransactionSelectorState _value,
+      $Res Function(_$_TransactionSelectorState) _then)
+      : super(_value, (v) => _then(v as _$_TransactionSelectorState));
+
+  @override
+  _$_TransactionSelectorState get _value =>
+      super._value as _$_TransactionSelectorState;
+
+  @override
+  $Res call({
+    Object? selectedTransactions = freezed,
+    Object? deletedTransactions = freezed,
+    Object? isModifying = freezed,
+    Object? isDeleting = freezed,
+  }) {
+    return _then(_$_TransactionSelectorState(
+      selectedTransactions: selectedTransactions == freezed
+          ? _value.selectedTransactions
+          : selectedTransactions // ignore: cast_nullable_to_non_nullable
+              as UnmodifiableSetView<dynamic>,
+      deletedTransactions: deletedTransactions == freezed
+          ? _value.deletedTransactions
+          : deletedTransactions // ignore: cast_nullable_to_non_nullable
+              as UnmodifiableSetView<dynamic>,
+      isModifying: isModifying == freezed
+          ? _value.isModifying
+          : isModifying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isDeleting: isDeleting == freezed
+          ? _value.isDeleting
+          : isDeleting // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$_TransactionSelectorState implements _TransactionSelectorState {
+  const _$_TransactionSelectorState(
+      {required this.selectedTransactions,
+      required this.deletedTransactions,
+      required this.isModifying,
+      required this.isDeleting});
+
+  @override
+  final UnmodifiableSetView<dynamic> selectedTransactions;
+  @override
+  final UnmodifiableSetView<dynamic> deletedTransactions;
+  @override
+  final bool isModifying;
+  @override
+  final bool isDeleting;
 
   @override
   String toString() {
-    return 'TransactionSelectorState.initial()';
+    return 'TransactionSelectorState(selectedTransactions: $selectedTransactions, deletedTransactions: $deletedTransactions, isModifying: $isModifying, isDeleting: $isDeleting)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType &&
+            other is _$_TransactionSelectorState &&
+            const DeepCollectionEquality()
+                .equals(other.selectedTransactions, selectedTransactions) &&
+            const DeepCollectionEquality()
+                .equals(other.deletedTransactions, deletedTransactions) &&
+            const DeepCollectionEquality()
+                .equals(other.isModifying, isModifying) &&
+            const DeepCollectionEquality()
+                .equals(other.isDeleting, isDeleting));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(selectedTransactions),
+      const DeepCollectionEquality().hash(deletedTransactions),
+      const DeepCollectionEquality().hash(isModifying),
+      const DeepCollectionEquality().hash(isDeleting));
 
+  @JsonKey(ignore: true)
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() deleted,
-    required TResult Function() modifying,
-    required TResult Function() notModifying,
-  }) {
-    return initial();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-  }) {
-    return initial?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(Deleted value) deleted,
-    required TResult Function(Modifying value) modifying,
-    required TResult Function(NotModifying value) notModifying,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
+  _$$_TransactionSelectorStateCopyWith<_$_TransactionSelectorState>
+      get copyWith => __$$_TransactionSelectorStateCopyWithImpl<
+          _$_TransactionSelectorState>(this, _$identity);
 }
 
-abstract class _Initial implements TransactionSelectorState {
-  const factory _Initial() = _$_Initial;
-}
-
-/// @nodoc
-abstract class _$$_LoadingCopyWith<$Res> {
-  factory _$$_LoadingCopyWith(
-          _$_Loading value, $Res Function(_$_Loading) then) =
-      __$$_LoadingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_LoadingCopyWithImpl<$Res>
-    extends _$TransactionSelectorStateCopyWithImpl<$Res>
-    implements _$$_LoadingCopyWith<$Res> {
-  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
+abstract class _TransactionSelectorState implements TransactionSelectorState {
+  const factory _TransactionSelectorState(
+      {required final UnmodifiableSetView<dynamic> selectedTransactions,
+      required final UnmodifiableSetView<dynamic> deletedTransactions,
+      required final bool isModifying,
+      required final bool isDeleting}) = _$_TransactionSelectorState;
 
   @override
-  _$_Loading get _value => super._value as _$_Loading;
-}
-
-/// @nodoc
-
-class _$_Loading implements _Loading {
-  const _$_Loading();
-
+  UnmodifiableSetView<dynamic> get selectedTransactions;
   @override
-  String toString() {
-    return 'TransactionSelectorState.loading()';
-  }
-
+  UnmodifiableSetView<dynamic> get deletedTransactions;
   @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Loading);
-  }
-
+  bool get isModifying;
   @override
-  int get hashCode => runtimeType.hashCode;
-
+  bool get isDeleting;
   @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() deleted,
-    required TResult Function() modifying,
-    required TResult Function() notModifying,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(Deleted value) deleted,
-    required TResult Function(Modifying value) modifying,
-    required TResult Function(NotModifying value) notModifying,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements TransactionSelectorState {
-  const factory _Loading() = _$_Loading;
-}
-
-/// @nodoc
-abstract class _$$DeletedCopyWith<$Res> {
-  factory _$$DeletedCopyWith(_$Deleted value, $Res Function(_$Deleted) then) =
-      __$$DeletedCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$DeletedCopyWithImpl<$Res>
-    extends _$TransactionSelectorStateCopyWithImpl<$Res>
-    implements _$$DeletedCopyWith<$Res> {
-  __$$DeletedCopyWithImpl(_$Deleted _value, $Res Function(_$Deleted) _then)
-      : super(_value, (v) => _then(v as _$Deleted));
-
-  @override
-  _$Deleted get _value => super._value as _$Deleted;
-}
-
-/// @nodoc
-
-class _$Deleted implements Deleted {
-  const _$Deleted();
-
-  @override
-  String toString() {
-    return 'TransactionSelectorState.deleted()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Deleted);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() deleted,
-    required TResult Function() modifying,
-    required TResult Function() notModifying,
-  }) {
-    return deleted();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-  }) {
-    return deleted?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-    required TResult orElse(),
-  }) {
-    if (deleted != null) {
-      return deleted();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(Deleted value) deleted,
-    required TResult Function(Modifying value) modifying,
-    required TResult Function(NotModifying value) notModifying,
-  }) {
-    return deleted(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-  }) {
-    return deleted?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-    required TResult orElse(),
-  }) {
-    if (deleted != null) {
-      return deleted(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Deleted implements TransactionSelectorState {
-  const factory Deleted() = _$Deleted;
-}
-
-/// @nodoc
-abstract class _$$ModifyingCopyWith<$Res> {
-  factory _$$ModifyingCopyWith(
-          _$Modifying value, $Res Function(_$Modifying) then) =
-      __$$ModifyingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$ModifyingCopyWithImpl<$Res>
-    extends _$TransactionSelectorStateCopyWithImpl<$Res>
-    implements _$$ModifyingCopyWith<$Res> {
-  __$$ModifyingCopyWithImpl(
-      _$Modifying _value, $Res Function(_$Modifying) _then)
-      : super(_value, (v) => _then(v as _$Modifying));
-
-  @override
-  _$Modifying get _value => super._value as _$Modifying;
-}
-
-/// @nodoc
-
-class _$Modifying implements Modifying {
-  const _$Modifying();
-
-  @override
-  String toString() {
-    return 'TransactionSelectorState.modifying()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Modifying);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() deleted,
-    required TResult Function() modifying,
-    required TResult Function() notModifying,
-  }) {
-    return modifying();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-  }) {
-    return modifying?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-    required TResult orElse(),
-  }) {
-    if (modifying != null) {
-      return modifying();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(Deleted value) deleted,
-    required TResult Function(Modifying value) modifying,
-    required TResult Function(NotModifying value) notModifying,
-  }) {
-    return modifying(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-  }) {
-    return modifying?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-    required TResult orElse(),
-  }) {
-    if (modifying != null) {
-      return modifying(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class Modifying implements TransactionSelectorState {
-  const factory Modifying() = _$Modifying;
-}
-
-/// @nodoc
-abstract class _$$NotModifyingCopyWith<$Res> {
-  factory _$$NotModifyingCopyWith(
-          _$NotModifying value, $Res Function(_$NotModifying) then) =
-      __$$NotModifyingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$NotModifyingCopyWithImpl<$Res>
-    extends _$TransactionSelectorStateCopyWithImpl<$Res>
-    implements _$$NotModifyingCopyWith<$Res> {
-  __$$NotModifyingCopyWithImpl(
-      _$NotModifying _value, $Res Function(_$NotModifying) _then)
-      : super(_value, (v) => _then(v as _$NotModifying));
-
-  @override
-  _$NotModifying get _value => super._value as _$NotModifying;
-}
-
-/// @nodoc
-
-class _$NotModifying implements NotModifying {
-  const _$NotModifying();
-
-  @override
-  String toString() {
-    return 'TransactionSelectorState.notModifying()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$NotModifying);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() deleted,
-    required TResult Function() modifying,
-    required TResult Function() notModifying,
-  }) {
-    return notModifying();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-  }) {
-    return notModifying?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? deleted,
-    TResult Function()? modifying,
-    TResult Function()? notModifying,
-    required TResult orElse(),
-  }) {
-    if (notModifying != null) {
-      return notModifying();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initial value) initial,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(Deleted value) deleted,
-    required TResult Function(Modifying value) modifying,
-    required TResult Function(NotModifying value) notModifying,
-  }) {
-    return notModifying(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-  }) {
-    return notModifying?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(Deleted value)? deleted,
-    TResult Function(Modifying value)? modifying,
-    TResult Function(NotModifying value)? notModifying,
-    required TResult orElse(),
-  }) {
-    if (notModifying != null) {
-      return notModifying(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class NotModifying implements TransactionSelectorState {
-  const factory NotModifying() = _$NotModifying;
+  @JsonKey(ignore: true)
+  _$$_TransactionSelectorStateCopyWith<_$_TransactionSelectorState>
+      get copyWith => throw _privateConstructorUsedError;
 }

@@ -6,17 +6,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
-import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/application/showTransactions/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
-import 'package:your_budget/presentation/pages/modifyTransactions/modify_transactions.dart';
 
 // import '../modifyTransactions/modify_transactions.dart';
 
@@ -50,10 +47,8 @@ class TransactionScaffold extends StatelessWidget {
   final String title;
   const TransactionScaffold({Key? key, required this.title}) : super(key: key);
 
-  Future<void> handleDeleteTransactions(
-      BuildContext context, ValueNotifier<bool> isModifying) async {
+  Future<void> handleDeleteTransactions(BuildContext context) async {
     // Delete selected transactions and get back to non-modifying screen
-
     final bloc = context.read<TransactionSelectorBloc>();
     final String? shouldDelete = await showDeleteDialog(context, 'Delete selected transactions?');
 
@@ -63,29 +58,11 @@ class TransactionScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Use ValueNotifier to change the Widget from a ListTile to a CheckboxListTile
-    bool isSelectorBlocLoading = false;
     bool isWatcherBlocLoading = false;
-
     return MultiBlocListener(
       listeners: [
-        BlocListener<TransactionSelectorBloc, TransactionSelectorState>(
-          listener: (context, state) {
-            isSelectorBlocLoading = state.maybeMap(
-              initial: (_) => true,
-              loading: (_) => true,
-              orElse: () => false,
-            );
-          },
-        ),
         BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
           listener: (context, state) {
-            isWatcherBlocLoading = state.maybeMap(
-              initial: (_) => true,
-              loading: (_) => true,
-              orElse: () => false,
-            );
-
             final String? errorMessage = state.maybeMap(
               orElse: () => null,
               loadFailure: (_) => "Failed to load the transactions. Please contact support.",
@@ -99,40 +76,52 @@ class TransactionScaffold extends StatelessWidget {
           },
         )
       ],
-      child: BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
-        builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(title),
-              leading: const Icon(Constants.ALLTRANSACTION_ICON),
-              backgroundColor: Constants.PRIMARY_COLOR,
-              actions: <Widget>[
-                if (state == const TransactionSelectorState.modifying())
-                  IconButton(
-                    icon: const Icon(FontAwesomeIcons.trashCan, color: Constants.RED_COLOR),
-                    onPressed: () => context
-                        .read<TransactionSelectorBloc>()
-                        .add(const TransactionSelectorEvent.deleteSelected()),
-                  ),
-                IconButton(
-                  icon: const Icon(FontAwesomeIcons.checkSquare),
-                  onPressed: () => context
-                      .read<TransactionSelectorBloc>()
-                      .add(const TransactionSelectorEvent.toggleModifying()),
-                ),
-              ],
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(title),
+          leading: const Icon(Constants.ALLTRANSACTION_ICON),
+          backgroundColor: Constants.PRIMARY_COLOR,
+          actions: <Widget>[
+            BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
+              builder: (context, state) {
+                if (!state.isModifying) {
+                  return Container();
+                }
+                return IconButton(
+                    icon: Icon(FontAwesomeIcons.trashCan,
+                        color:
+                            state.selectedTransactions.isEmpty ? Colors.grey : Constants.RED_COLOR),
+                    onPressed: () => state.selectedTransactions.isEmpty
+                        ? null
+                        : handleDeleteTransactions(context));
+              },
             ),
-            body: Stack(
-              children: [
-                OptionalTransactionList(),
-                InProgressOverlay(
-                  showOverlay: isSelectorBlocLoading || isWatcherBlocLoading,
+            IconButton(
+              icon: const Icon(FontAwesomeIcons.squareCheck),
+              onPressed: () => context
+                  .read<TransactionSelectorBloc>()
+                  .add(const TransactionSelectorEvent.toggleModifying()),
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            OptionalTransactionList(),
+            BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
+              builder: (context, state) {
+                bool isLoading = state.maybeMap(
+                  initial: (_) => true,
+                  loading: (_) => true,
+                  orElse: () => false,
+                );
+                return InProgressOverlay(
+                  showOverlay: isLoading,
                   textDisplayed: "Loading",
-                )
-              ],
-            ),
-          );
-        },
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
@@ -151,6 +140,8 @@ class OptionalTransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
+      // Build the whole TransactionList once we successfully load the transactions
+      // from the database.
       builder: (context, state) {
         return state.maybeMap(
           loadSuccess: (newState) {
@@ -180,7 +171,7 @@ class OptionalTransactionList extends StatelessWidget {
   }
 }
 
-class TransactionListView extends StatelessWidget {
+class TransactionListView extends HookWidget {
   const TransactionListView({
     Key? key,
     required this.transactions,
@@ -191,16 +182,20 @@ class TransactionListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
+      // Rebuild all the tiles when we toggle the modifying button.
+      buildWhen: (p, c) => p.isModifying != c.isModifying,
       builder: (context, state) {
         return ListView.builder(
           padding: const EdgeInsets.all(8),
           itemCount: transactions.length,
           itemBuilder: (BuildContext context, int index) {
             final transaction = transactions[index];
-            if (state is Modifying) {
-              return CheckboxTransactionListTile(transaction: transaction);
+            if (state.isModifying) {
+              return CheckboxTransactionListTile(
+                  key: Key(transaction.id.getOrCrash()), transaction: transaction);
             } else {
               return ListTile(
+                key: Key(transaction.id.getOrCrash()),
                 title: TransactionListTileTitle(transaction: transaction),
                 subtitle: TransactionListTileSubtitle(transaction: transaction),
               );
@@ -233,36 +228,39 @@ class TransactionListTileTitle extends StatelessWidget {
   }
 }
 
-class CheckboxTransactionListTile extends HookWidget {
+class CheckboxTransactionListTile extends StatelessWidget {
   const CheckboxTransactionListTile({
     Key? key,
     required this.transaction,
+    // required this.isSelected,
   }) : super(key: key);
 
   final MoneyTransaction transaction;
+  // final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
-    final ValueNotifier<bool> isSelected = useState(false);
-    return CheckboxListTile(
-      onChanged: (_) => _onChanged(context, isSelected),
-      value: isSelected.value,
-      dense: true,
-      selected: isSelected.value,
-      controlAffinity: ListTileControlAffinity.leading,
-      title: TransactionListTileTitle(transaction: transaction),
-      subtitle: TransactionListTileSubtitle(transaction: transaction),
-    );
-  }
-
-  void _onChanged(BuildContext context, ValueNotifier<bool> isSelected) {
     final String id = transaction.id.getOrCrash();
-    final TransactionSelectorEvent event = isSelected.value
-        ? TransactionSelectorEvent.unselect(id)
-        : TransactionSelectorEvent.select(id);
 
-    isSelected.value = !isSelected.value;
-    context.read<TransactionSelectorBloc>().add(event);
+    return BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
+      // Only rebuild a single CheckBoxTile when that particular tile is unselected.
+      buildWhen: (p, c) =>
+          p.selectedTransactions.contains(id) != c.selectedTransactions.contains(id),
+      builder: (context, state) {
+        final bool isSelected = state.selectedTransactions.contains(id);
+        return CheckboxListTile(
+          onChanged: (_) => context
+              .read<TransactionSelectorBloc>()
+              .add(TransactionSelectorEvent.toggleSelected(transaction.id.getOrCrash())),
+          value: isSelected,
+          dense: true,
+          selected: isSelected,
+          controlAffinity: ListTileControlAffinity.leading,
+          title: TransactionListTileTitle(transaction: transaction),
+          subtitle: TransactionListTileSubtitle(transaction: transaction),
+        );
+      },
+    );
   }
 }
 

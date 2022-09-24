@@ -12,7 +12,7 @@ class UniqueId extends ValueObject<String> {
 
   factory UniqueId() {
     return UniqueId._(
-      right(const Uuid().v1()),
+      right(const Uuid().v4()),
     );
   }
 
