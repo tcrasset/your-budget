@@ -256,10 +256,13 @@ class CheckboxTransactionListTile extends HookWidget {
   }
 
   void _onChanged(BuildContext context, ValueNotifier<bool> isSelected) {
+    final String id = transaction.id.getOrCrash();
+    final TransactionSelectorEvent event = isSelected.value
+        ? TransactionSelectorEvent.unselect(id)
+        : TransactionSelectorEvent.select(id);
+
     isSelected.value = !isSelected.value;
-    context.read<TransactionWatcherBloc>().add(
-          TransactionWatcherEvent.selectTransaction(id: transaction.id.getOrCrash()),
-        );
+    context.read<TransactionSelectorBloc>().add(event);
   }
 }
 

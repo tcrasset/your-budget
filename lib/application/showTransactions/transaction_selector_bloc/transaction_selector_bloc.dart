@@ -35,6 +35,13 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     Emitter<TransactionSelectorState> emit,
   ) {
     emit(const TransactionSelectorState.loading());
+
+    int previousLength = selectedTransactions.length;
+
+    if (previousLength == 0) {
+      emit(const TransactionSelectorState.notModifying());
+      return;
+    }
     selectedTransactions.forEach((id) => transactionRepository.delete(id));
     selectedTransactions.clear();
     emit(const TransactionSelectorState.deleted());

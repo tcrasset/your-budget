@@ -64,7 +64,6 @@ class AddTransactionPage extends StatelessWidget {
               (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
                 (failure) => showErrorSnackbar(failure, context),
                 (_) /*Success*/ {
-                  print("We've added a new transaction!.");
                   bloc.add(const TransactionCreatorEvent.initialized());
                 },
               ),

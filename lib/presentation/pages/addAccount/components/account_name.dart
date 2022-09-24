@@ -18,7 +18,6 @@ class AccountName extends HookWidget {
   });
 
   void onNameChange(BuildContext context, String value) {
-    print("onNameChange in widget: ${value}");
     context.read<AccountCreatorBloc>().add(
           AccountCreatorEvent.nameChanged(
             value,

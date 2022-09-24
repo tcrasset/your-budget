@@ -69,7 +69,6 @@ class SelectValuePageState extends State<SelectValuePage> {
     );
 
     if (payeeName != null) {
-      print("Created payee $payeeName");
       final Payee payee = await appState.addPayee(payeeName: payeeName);
       handlePopContext(payee);
     }

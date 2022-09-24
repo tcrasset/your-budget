@@ -19,7 +19,6 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
     // TODO: Create generic function for insert
     try {
-      print("to insert: ${transaction}");
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database!.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
 
@@ -32,11 +31,12 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   @override
   Future<Either<ValueFailure, Unit>> delete(String id) async {
     try {
-      await database!.delete(
+      var result = database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
         whereArgs: [id],
       );
+
       return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));

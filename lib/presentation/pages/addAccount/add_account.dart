@@ -88,7 +88,6 @@ class AddAccountForm extends StatelessWidget {
   final InputDecoration _textBoxDecoration;
 
   Future<void> handleSubmitForm(BuildContext context) async {
-    print("Add account button clicked.");
     context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.saved());
   }
 
