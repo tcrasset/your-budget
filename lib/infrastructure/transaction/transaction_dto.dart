@@ -36,6 +36,8 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
         required String memo,
     @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
         required int dateInMillisecondsSinceEpoch,
+    @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
+        required bool isInitialTransaction,
     @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
         required String subcatID,
     @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -63,6 +65,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       id: transaction.id.getOrCrash(),
       amount: transaction.amount.getOrCrash(),
       memo: transaction.memo.getOrCrash(),
+      isInitialTransaction: transaction.isInitialTransaction,
       dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
       subcatID: transaction.subcategory.id.getOrCrash(),
       subcatName: transaction.subcategory.name.getOrCrash(),
@@ -83,6 +86,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       amount: Amount(amount.toString()),
       memo: Name(memo),
       date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
+      isInitialTransaction: isInitialTransaction,
       subcategory: Subcategory(
         id: UniqueId.fromUniqueString(subcatID),
         categoryID: UniqueId.fromUniqueString(subcatCategoryId),

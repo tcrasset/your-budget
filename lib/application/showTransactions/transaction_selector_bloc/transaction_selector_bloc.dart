@@ -60,6 +60,8 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     }
 
     emit(state.copyWith(isDeleting: true));
+
+    //TODO: Prevent deletion of initial transaction
     await Future.forEach(selected, (String id) async => transactionRepository.delete(id));
 
     // We have to create a new Set to prevent the one in the state from being modified by reference.

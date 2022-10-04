@@ -28,6 +28,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
     required Amount amount,
     required Name memo,
     required DateTime date,
+    @Default(false) bool isInitialTransaction,
   }) = _MoneyTransaction;
 
   const MoneyTransaction._();

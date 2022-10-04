@@ -23,6 +23,7 @@ mixin _$MoneyTransaction {
   Amount get amount => throw _privateConstructorUsedError;
   Name get memo => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
+  bool get isInitialTransaction => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MoneyTransactionCopyWith<MoneyTransaction> get copyWith =>
@@ -41,7 +42,8 @@ abstract class $MoneyTransactionCopyWith<$Res> {
       Account account,
       Amount amount,
       Name memo,
-      DateTime date});
+      DateTime date,
+      bool isInitialTransaction});
 
   $SubcategoryCopyWith<$Res> get subcategory;
   $PayeeCopyWith<$Res> get payee;
@@ -66,6 +68,7 @@ class _$MoneyTransactionCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? memo = freezed,
     Object? date = freezed,
+    Object? isInitialTransaction = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -96,6 +99,10 @@ class _$MoneyTransactionCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isInitialTransaction: isInitialTransaction == freezed
+          ? _value.isInitialTransaction
+          : isInitialTransaction // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 
@@ -135,7 +142,8 @@ abstract class _$$_MoneyTransactionCopyWith<$Res>
       Account account,
       Amount amount,
       Name memo,
-      DateTime date});
+      DateTime date,
+      bool isInitialTransaction});
 
   @override
   $SubcategoryCopyWith<$Res> get subcategory;
@@ -165,6 +173,7 @@ class __$$_MoneyTransactionCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? memo = freezed,
     Object? date = freezed,
+    Object? isInitialTransaction = freezed,
   }) {
     return _then(_$_MoneyTransaction(
       id: id == freezed
@@ -195,6 +204,10 @@ class __$$_MoneyTransactionCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isInitialTransaction: isInitialTransaction == freezed
+          ? _value.isInitialTransaction
+          : isInitialTransaction // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -209,7 +222,8 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       required this.account,
       required this.amount,
       required this.memo,
-      required this.date})
+      required this.date,
+      this.isInitialTransaction = false})
       : super._();
 
   @override
@@ -226,10 +240,13 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   final Name memo;
   @override
   final DateTime date;
+  @override
+  @JsonKey()
+  final bool isInitialTransaction;
 
   @override
   String toString() {
-    return 'MoneyTransaction(id: $id, subcategory: $subcategory, payee: $payee, account: $account, amount: $amount, memo: $memo, date: $date)';
+    return 'MoneyTransaction(id: $id, subcategory: $subcategory, payee: $payee, account: $account, amount: $amount, memo: $memo, date: $date, isInitialTransaction: $isInitialTransaction)';
   }
 
   @override
@@ -244,7 +261,9 @@ class _$_MoneyTransaction extends _MoneyTransaction {
             const DeepCollectionEquality().equals(other.account, account) &&
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality().equals(other.memo, memo) &&
-            const DeepCollectionEquality().equals(other.date, date));
+            const DeepCollectionEquality().equals(other.date, date) &&
+            const DeepCollectionEquality()
+                .equals(other.isInitialTransaction, isInitialTransaction));
   }
 
   @override
@@ -256,7 +275,8 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       const DeepCollectionEquality().hash(account),
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(memo),
-      const DeepCollectionEquality().hash(date));
+      const DeepCollectionEquality().hash(date),
+      const DeepCollectionEquality().hash(isInitialTransaction));
 
   @JsonKey(ignore: true)
   @override
@@ -272,7 +292,8 @@ abstract class _MoneyTransaction extends MoneyTransaction {
       required final Account account,
       required final Amount amount,
       required final Name memo,
-      required final DateTime date}) = _$_MoneyTransaction;
+      required final DateTime date,
+      final bool isInitialTransaction}) = _$_MoneyTransaction;
   const _MoneyTransaction._() : super._();
 
   @override
@@ -289,6 +310,8 @@ abstract class _MoneyTransaction extends MoneyTransaction {
   Name get memo;
   @override
   DateTime get date;
+  @override
+  bool get isInitialTransaction;
   @override
   @JsonKey(ignore: true)
   _$$_MoneyTransactionCopyWith<_$_MoneyTransaction> get copyWith =>
