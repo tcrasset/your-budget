@@ -873,7 +873,9 @@ mixin _$TransactionWatcherState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MoneyTransaction> transactions) loadSuccess,
+    required TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)
+        loadSuccess,
     required TResult Function(ValueFailure<dynamic> transactionFailure)
         loadFailure,
   }) =>
@@ -882,7 +884,9 @@ mixin _$TransactionWatcherState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
@@ -890,7 +894,9 @@ mixin _$TransactionWatcherState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
     required TResult orElse(),
   }) =>
@@ -981,7 +987,9 @@ class _$_Initial implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MoneyTransaction> transactions) loadSuccess,
+    required TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)
+        loadSuccess,
     required TResult Function(ValueFailure<dynamic> transactionFailure)
         loadFailure,
   }) {
@@ -993,7 +1001,9 @@ class _$_Initial implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return initial?.call();
@@ -1004,7 +1014,9 @@ class _$_Initial implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -1098,7 +1110,9 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MoneyTransaction> transactions) loadSuccess,
+    required TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)
+        loadSuccess,
     required TResult Function(ValueFailure<dynamic> transactionFailure)
         loadFailure,
   }) {
@@ -1110,7 +1124,9 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return loading?.call();
@@ -1121,7 +1137,9 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
     required TResult orElse(),
   }) {
@@ -1178,7 +1196,9 @@ abstract class _$$_TransactionLoadSuccessCopyWith<$Res> {
   factory _$$_TransactionLoadSuccessCopyWith(_$_TransactionLoadSuccess value,
           $Res Function(_$_TransactionLoadSuccess) then) =
       __$$_TransactionLoadSuccessCopyWithImpl<$Res>;
-  $Res call({List<MoneyTransaction> transactions});
+  $Res call({List<MoneyTransaction> transactions, Account? currentAccount});
+
+  $AccountCopyWith<$Res>? get currentAccount;
 }
 
 /// @nodoc
@@ -1196,20 +1216,37 @@ class __$$_TransactionLoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? transactions = freezed,
+    Object? currentAccount = freezed,
   }) {
     return _then(_$_TransactionLoadSuccess(
       transactions == freezed
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<MoneyTransaction>,
+      currentAccount == freezed
+          ? _value.currentAccount
+          : currentAccount // ignore: cast_nullable_to_non_nullable
+              as Account?,
     ));
+  }
+
+  @override
+  $AccountCopyWith<$Res>? get currentAccount {
+    if (_value.currentAccount == null) {
+      return null;
+    }
+
+    return $AccountCopyWith<$Res>(_value.currentAccount!, (value) {
+      return _then(_value.copyWith(currentAccount: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
-  const _$_TransactionLoadSuccess(final List<MoneyTransaction> transactions)
+  const _$_TransactionLoadSuccess(
+      final List<MoneyTransaction> transactions, this.currentAccount)
       : _transactions = transactions;
 
   final List<MoneyTransaction> _transactions;
@@ -1220,8 +1257,11 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   }
 
   @override
+  final Account? currentAccount;
+
+  @override
   String toString() {
-    return 'TransactionWatcherState.loadSuccess(transactions: $transactions)';
+    return 'TransactionWatcherState.loadSuccess(transactions: $transactions, currentAccount: $currentAccount)';
   }
 
   @override
@@ -1230,12 +1270,16 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
         (other.runtimeType == runtimeType &&
             other is _$_TransactionLoadSuccess &&
             const DeepCollectionEquality()
-                .equals(other._transactions, _transactions));
+                .equals(other._transactions, _transactions) &&
+            const DeepCollectionEquality()
+                .equals(other.currentAccount, currentAccount));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_transactions));
+      runtimeType,
+      const DeepCollectionEquality().hash(_transactions),
+      const DeepCollectionEquality().hash(currentAccount));
 
   @JsonKey(ignore: true)
   @override
@@ -1248,11 +1292,13 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MoneyTransaction> transactions) loadSuccess,
+    required TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)
+        loadSuccess,
     required TResult Function(ValueFailure<dynamic> transactionFailure)
         loadFailure,
   }) {
-    return loadSuccess(transactions);
+    return loadSuccess(transactions, currentAccount);
   }
 
   @override
@@ -1260,10 +1306,12 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
-    return loadSuccess?.call(transactions);
+    return loadSuccess?.call(transactions, currentAccount);
   }
 
   @override
@@ -1271,12 +1319,14 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(transactions);
+      return loadSuccess(transactions, currentAccount);
     }
     return orElse();
   }
@@ -1321,9 +1371,11 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
 
 abstract class _TransactionLoadSuccess implements TransactionWatcherState {
   const factory _TransactionLoadSuccess(
-      final List<MoneyTransaction> transactions) = _$_TransactionLoadSuccess;
+      final List<MoneyTransaction> transactions,
+      final Account? currentAccount) = _$_TransactionLoadSuccess;
 
   List<MoneyTransaction> get transactions;
+  Account? get currentAccount;
   @JsonKey(ignore: true)
   _$$_TransactionLoadSuccessCopyWith<_$_TransactionLoadSuccess> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1409,7 +1461,9 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(List<MoneyTransaction> transactions) loadSuccess,
+    required TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)
+        loadSuccess,
     required TResult Function(ValueFailure<dynamic> transactionFailure)
         loadFailure,
   }) {
@@ -1421,7 +1475,9 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return loadFailure?.call(transactionFailure);
@@ -1432,7 +1488,9 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(List<MoneyTransaction> transactions)? loadSuccess,
+    TResult Function(
+            List<MoneyTransaction> transactions, Account? currentAccount)?
+        loadSuccess,
     TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
     required TResult orElse(),
   }) {

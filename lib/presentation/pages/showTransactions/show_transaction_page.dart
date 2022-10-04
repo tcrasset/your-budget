@@ -147,8 +147,7 @@ class OptionalTransactionList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (newState) {
             final transactions = newState.transactions;
-            final String accountName =
-                transactions.isNotEmpty ? transactions[0].account.name.getOrCrash() : "No accounts";
+            final String accountName = newState.currentAccount?.name.getOrCrash() ?? "No accounts";
             return SizedBox(
               child: Column(
                 mainAxisSize: MainAxisSize.min,

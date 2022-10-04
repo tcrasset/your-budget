@@ -6,6 +6,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
@@ -70,7 +71,8 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
   ) {
     final newState = event.failureOrTransactions.fold(
       (f) => TransactionWatcherState.loadFailure(f),
-      (transactions) => TransactionWatcherState.loadSuccess(transactions),
+      (transactions) => TransactionWatcherState.loadSuccess(
+          transactions, transactions.isNotEmpty ? transactions[0].account : null),
     );
     emit(newState);
   }
@@ -80,7 +82,12 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
 
     failureOrCount.fold((f) => null, (numberOfAccounts) {
       if (numberOfAccounts != null && numberOfAccounts != 0) {
-        currentIndex = currentIndex++ % numberOfAccounts;
+        if (event.increment) {
+          currentIndex = (currentIndex + 1) % numberOfAccounts;
+        } else {
+          currentIndex = (currentIndex - 1) % numberOfAccounts;
+        }
+        print("currentIndex : $currentIndex");
         add(const TransactionWatcherEvent.watchTransactionsStarted());
       }
     });
