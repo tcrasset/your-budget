@@ -18,26 +18,35 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     on<_DeleteSelected>(_onDeleteSelectedTransactions);
   }
 
-  FutureOr<void> _onToggleModifying(event, emit) {
+  void _onToggleModifying(
+    _ToggleModifying event,
+    Emitter<TransactionSelectorState> emit,
+  ) {
     emit(
       state.copyWith(
         isModifying: !state.isModifying,
-        selectedTransactions: UnmodifiableSetView({}),
+        // selectedTransactions: UnmodifiableSetView({}),
       ),
     );
   }
 
-  FutureOr<void> _onToggleSelected(
+  void _onToggleSelected(
     _ToggleSelected event,
     Emitter<TransactionSelectorState> emit,
   ) {
+    // We have to create a new Set to prevent the one in the state from being modified by reference.
+    final previousSelected = Set.from(selected);
+
     if (selected.contains(event.id)) {
-      selected.remove(event.id);
+      previousSelected.remove(event.id);
     } else {
-      selected.add(event.id);
+      previousSelected.add(event.id);
     }
-    final newState = state.copyWith(selectedTransactions: UnmodifiableSetView(selected));
-    print(newState);
+
+    final newState = state.copyWith(selectedTransactions: UnmodifiableSetView(previousSelected));
+
+    // After the newState is created, we can make the switch back
+    selected = Set.from(previousSelected);
     emit(newState);
   }
 
@@ -54,8 +63,9 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     selected.forEach((id) => transactionRepository.delete(id));
 
     emit(state.copyWith(
-        selectedTransactions: UnmodifiableSetView({}),
+        // selectedTransactions: UnmodifiableSetView({}),
         deletedTransactions: UnmodifiableSetView(selected)));
     emit(TransactionSelectorState.initial());
+    selected.clear();
   }
 }

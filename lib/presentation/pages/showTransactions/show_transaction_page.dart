@@ -139,6 +139,7 @@ class OptionalTransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("Building OptionalTransactionList");
     return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
       // Build the whole TransactionList once we successfully load the transactions
       // from the database.
@@ -191,8 +192,7 @@ class TransactionListView extends HookWidget {
           itemBuilder: (BuildContext context, int index) {
             final transaction = transactions[index];
             if (state.isModifying) {
-              return CheckboxTransactionListTile(
-                  key: Key(transaction.id.getOrCrash()), transaction: transaction);
+              return CheckboxTransactionListTile(transaction: transaction);
             } else {
               return ListTile(
                 key: Key(transaction.id.getOrCrash()),
@@ -241,25 +241,20 @@ class CheckboxTransactionListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String id = transaction.id.getOrCrash();
+    // Only rebuild the Widget when the transaction is selected
+    final isSelected = context.select<TransactionSelectorBloc, bool>(
+        (bloc) => bloc.state.selectedTransactions.contains(id));
 
-    return BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
-      // Only rebuild a single CheckBoxTile when that particular tile is unselected.
-      buildWhen: (p, c) =>
-          p.selectedTransactions.contains(id) != c.selectedTransactions.contains(id),
-      builder: (context, state) {
-        final bool isSelected = state.selectedTransactions.contains(id);
-        return CheckboxListTile(
-          onChanged: (_) => context
-              .read<TransactionSelectorBloc>()
-              .add(TransactionSelectorEvent.toggleSelected(transaction.id.getOrCrash())),
-          value: isSelected,
-          dense: true,
-          selected: isSelected,
-          controlAffinity: ListTileControlAffinity.leading,
-          title: TransactionListTileTitle(transaction: transaction),
-          subtitle: TransactionListTileSubtitle(transaction: transaction),
-        );
-      },
+    return CheckboxListTile(
+      onChanged: (_) => context
+          .read<TransactionSelectorBloc>()
+          .add(TransactionSelectorEvent.toggleSelected(transaction.id.getOrCrash())),
+      value: isSelected,
+      dense: true,
+      selected: isSelected,
+      controlAffinity: ListTileControlAffinity.leading,
+      title: TransactionListTileTitle(transaction: transaction),
+      subtitle: TransactionListTileSubtitle(transaction: transaction),
     );
   }
 }
