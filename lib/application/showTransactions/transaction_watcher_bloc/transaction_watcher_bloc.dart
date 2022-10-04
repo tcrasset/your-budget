@@ -32,9 +32,10 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
     // Listening to TransactionSelectorBloc for deletion state to fetch
     // the new transactions from the database.
     transactionSelectorBloc.stream.listen(
-      (state) => {
-        if (state.deletedTransactions.isNotEmpty)
-          {add(const TransactionWatcherEvent.watchTransactionsStarted())}
+      (state) {
+        if (state.deletedTransactions.isNotEmpty) {
+          add(const TransactionWatcherEvent.watchTransactionsStarted());
+        }
       },
     );
 

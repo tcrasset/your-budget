@@ -25,7 +25,7 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     emit(
       state.copyWith(
         isModifying: !state.isModifying,
-        // selectedTransactions: UnmodifiableSetView({}),
+        selectedTransactions: UnmodifiableSetView({}),
       ),
     );
   }
@@ -50,21 +50,25 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     emit(newState);
   }
 
-  void _onDeleteSelectedTransactions(
+  Future<void> _onDeleteSelectedTransactions(
     _DeleteSelected event,
     Emitter<TransactionSelectorState> emit,
-  ) {
+  ) async {
     if (selected.isEmpty) {
       emit(state.copyWith(isModifying: false, isDeleting: false));
       return;
     }
 
     emit(state.copyWith(isDeleting: true));
-    selected.forEach((id) => transactionRepository.delete(id));
+    await Future.forEach(selected, (String id) async => transactionRepository.delete(id));
 
-    emit(state.copyWith(
-        // selectedTransactions: UnmodifiableSetView({}),
-        deletedTransactions: UnmodifiableSetView(selected)));
+    // We have to create a new Set to prevent the one in the state from being modified by reference.
+    final newState = state.copyWith(
+        selectedTransactions: UnmodifiableSetView({}),
+        deletedTransactions: UnmodifiableSetView(Set.from(selected)));
+    // The TransactionWatcherBloc is listening to this state and checks deletedTransactions
+    emit(newState);
+
     emit(TransactionSelectorState.initial());
     selected.clear();
   }
