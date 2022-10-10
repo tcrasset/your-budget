@@ -47,6 +47,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
         memo: Name(""),
         amount: Amount(""),
         date: DateTime.now(),
+        isInitialTransaction: false,
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

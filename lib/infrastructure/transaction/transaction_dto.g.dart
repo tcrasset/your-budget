@@ -12,7 +12,7 @@ _$_TransactionDTO _$$_TransactionDTOFromJson(Map<String, dynamic> json) =>
       amount: (json['amount'] as num).toDouble(),
       memo: json['memo'] as String,
       dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
-      isInitialTransaction: json['isInitialTransaction'] as bool,
+      isInitialTransaction: json['isInitialTransaction'] as int,
       subcatID: json['subcatID'] as String,
       subcatName: json['subcategoryName'] as String,
       subcatCategoryId: json['categoryID'] as String,

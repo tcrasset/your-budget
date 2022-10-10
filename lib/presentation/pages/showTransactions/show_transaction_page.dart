@@ -251,6 +251,7 @@ class CheckboxTransactionListTile extends StatelessWidget {
       value: isSelected,
       dense: true,
       selected: isSelected,
+      enabled: !transaction.isInitialTransaction,
       controlAffinity: ListTileControlAffinity.leading,
       title: TransactionListTileTitle(transaction: transaction),
       subtitle: TransactionListTileSubtitle(transaction: transaction),

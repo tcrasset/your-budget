@@ -123,6 +123,7 @@ class DatabaseProvider {
                         ${DatabaseConstants.MONEYTRANSACTION_AMOUNT} FLOAT NOT NULL,
                         ${DatabaseConstants.MONEYTRANSACTION_MEMO} TEXT,
                         ${DatabaseConstants.MONEYTRANSACTION_DATE} INTEGER NOT NULL,
+                        ${DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION} INTEGER NOT NULL,
                         FOREIGN KEY (${DatabaseConstants.SUBCAT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.subcategoryTable}(${DatabaseConstants.SUBCAT_ID}),
                         FOREIGN KEY (${DatabaseConstants.PAYEE_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.payeeTable}(${DatabaseConstants.PAYEE_ID}),
                         FOREIGN KEY (${DatabaseConstants.ACCOUNT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.accountTable}(${DatabaseConstants.ACCOUNT_ID})

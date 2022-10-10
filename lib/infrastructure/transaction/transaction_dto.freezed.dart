@@ -33,7 +33,7 @@ mixin _$MoneyTransactionDTO {
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
   int get dateInMillisecondsSinceEpoch => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-  bool get isInitialTransaction => throw _privateConstructorUsedError;
+  int get isInitialTransaction => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   String get subcatID => throw _privateConstructorUsedError;
   @JsonKey(
@@ -87,7 +87,7 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           int dateInMillisecondsSinceEpoch,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          bool isInitialTransaction,
+          int isInitialTransaction,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -157,7 +157,7 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
       isInitialTransaction: isInitialTransaction == freezed
           ? _value.isInitialTransaction
           : isInitialTransaction // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as int,
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
@@ -219,7 +219,7 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           int dateInMillisecondsSinceEpoch,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          bool isInitialTransaction,
+          int isInitialTransaction,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -291,7 +291,7 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
       isInitialTransaction: isInitialTransaction == freezed
           ? _value.isInitialTransaction
           : isInitialTransaction // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as int,
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
@@ -393,7 +393,7 @@ class _$_TransactionDTO extends _TransactionDTO {
   final int dateInMillisecondsSinceEpoch;
   @override
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-  final bool isInitialTransaction;
+  final int isInitialTransaction;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   final String subcatID;
@@ -516,7 +516,7 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           required final int dateInMillisecondsSinceEpoch,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          required final bool isInitialTransaction,
+          required final int isInitialTransaction,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           required final String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -560,7 +560,7 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   int get dateInMillisecondsSinceEpoch;
   @override
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-  bool get isInitialTransaction;
+  int get isInitialTransaction;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   String get subcatID;
