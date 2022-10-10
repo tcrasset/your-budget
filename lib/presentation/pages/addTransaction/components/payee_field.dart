@@ -1,21 +1,15 @@
 // Flutter imports:
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
-
 // Project imports:
 import 'package:your_budget/application/addTransaction/payee_handler/payee_watcher_bloc.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
-import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
-import 'add_payee_dialog.dart';
-import 'add_transaction_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/add_payee_dialog.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
 class PayeeField extends StatelessWidget {
   const PayeeField({
@@ -30,8 +24,7 @@ class PayeeField extends StatelessWidget {
     final Payee? payee = await showSearch<Payee?>(
       context: context,
       delegate: PayeeSearchDelegate(
-        BlocProvider.of<PayeeWatcherBloc>(context)
-          ..add(const PayeeWatcherEvent.watchPayeesStarted()),
+        superContext: context,
       ),
     );
 
@@ -77,9 +70,10 @@ class PayeeField extends StatelessWidget {
 }
 
 class PayeeSearchDelegate extends SearchDelegate<Payee?> {
-  final PayeeWatcherBloc bloc;
-
-  PayeeSearchDelegate(this.bloc);
+  // Pass the callers context down the tree to get the Bloc
+  // as SearchDelegate does not have an ancestor widget per se.
+  final BuildContext superContext;
+  PayeeSearchDelegate({required this.superContext});
 
   @override
   List<Widget>? buildActions(BuildContext context) => null;
@@ -95,49 +89,54 @@ class PayeeSearchDelegate extends SearchDelegate<Payee?> {
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
-    return BlocBuilder<PayeeWatcherBloc, PayeeWatcherState>(
-      bloc: bloc,
-      builder: (_, state) {
-        return _build(state);
-      },
-    );
-  }
+  Widget buildSuggestions(BuildContext context) => _build(context);
 
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildResults(BuildContext context) => _build(context);
+
+  Widget _build(BuildContext context) {
     return BlocBuilder<PayeeWatcherBloc, PayeeWatcherState>(
-      bloc: bloc,
-      builder: (_, state) {
-        return _build(state);
-      },
-    );
-  }
+      bloc: BlocProvider.of<PayeeWatcherBloc>(superContext)
+        ..add(const PayeeWatcherEvent.watchPayeesStarted()),
+      builder: (context, state) {
+        final Widget createPayeeWidget = ListTile(
+            title: Text(
+              "Add ${query == '' ? "a new payee" : "'${query}'"}",
+              style: const TextStyle(fontStyle: FontStyle.italic),
+            ),
+            onTap: () {
+              addPayeeDialog(superContext: superContext, defaultValue: query);
+            });
 
-  Widget _build(PayeeWatcherState state) {
-    return state.maybeMap(
-      loadSuccess: (newState) {
-        final payees = newState.payees
-            .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
-            .toList();
+        return state.maybeMap(
+          loadSuccess: (newState) {
+            final payees = newState.payees
+                .where((p) => p.name.getOrCrash().toLowerCase().contains(query.toLowerCase()))
+                .toList();
 
-        if (payees.isEmpty) return Container();
+            if (payees.isEmpty) return createPayeeWidget;
 
-        return ListView.separated(
-          shrinkWrap: true,
-          itemCount: payees.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(height: 1, color: Colors.black12),
-          itemBuilder: (BuildContext context, int index) {
-            final payee = payees[index];
-            final String name = payee.name.getOrCrash();
-            return ListTile(title: Text(name), onTap: () => close(context, payee));
+            return ListView.separated(
+              shrinkWrap: true,
+              itemCount: payees.length + 1, // +1 for createPayee
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(height: 1, color: Colors.black12),
+              itemBuilder: (BuildContext context, int index) {
+                if (index == 0) {
+                  return createPayeeWidget;
+                }
+
+                final payee = payees[index - 1]; // -1 because createPayeeWidget is at 0
+                final String name = payee.name.getOrCrash();
+                return ListTile(title: Text(name), onTap: () => close(context, payee));
+              },
+            );
           },
+          loadFailure: (_) => const Center(child: Text("Failure.")),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
+          orElse: () => const Center(child: Text("Else.")),
         );
       },
-      loadFailure: (_) => const Center(child: Text("Failure.")),
-      loading: (_) => const Center(child: CircularProgressIndicator()),
-      orElse: () => const Center(child: Text("Else.")),
     );
   }
 }

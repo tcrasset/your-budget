@@ -14,12 +14,12 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 
-Future<String?> addPayeeDialog({required BuildContext context, String? defaultValue}) {
+Future<String?> addPayeeDialog({required BuildContext superContext, String? defaultValue}) {
   return showDialog(
-    context: context,
+    context: superContext,
     builder: (_) => // Provide the existing BLoC instance to the new route (the dialog)
         BlocProvider<PayeeWatcherBloc>.value(
-      value: BlocProvider.of<PayeeWatcherBloc>(context), //
+      value: BlocProvider.of<PayeeWatcherBloc>(superContext), //
       child: PayeeNameForm(defaultValue: defaultValue!),
     ),
   );
@@ -37,7 +37,7 @@ class PayeeNameForm extends HookWidget {
     final TextEditingController _textController = useTextEditingController();
     _textController.text = _nameIsValid(defaultValue) ? defaultValue : "";
 
-    return BlocProvider(
+    return BlocProvider<PayeeCreatorBloc>(
       create: (context) => PayeeCreatorBloc(payeeRepository: GetIt.instance<IPayeeRepository>())
         ..add(PayeeCreatorEvent.initialized(optionOf(_getDefaultName(defaultValue)))),
       child: BlocConsumer<PayeeCreatorBloc, PayeeCreatorState>(

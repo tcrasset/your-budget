@@ -41,7 +41,10 @@ class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
   void _onPayeesReceived(_PayeesReceived event, Emitter<PayeeWatcherState> emit) {
     var newState = event.failureOrPayees.fold(
       (f) => PayeeWatcherState.loadFailure(f),
-      (payees) => PayeeWatcherState.loadSuccess(payees),
+      (payees) {
+        payees.sort((a, b) => a.name.getOrCrash().compareTo(b.name.getOrCrash()));
+        return PayeeWatcherState.loadSuccess(payees);
+      },
     );
 
     emit(newState);
