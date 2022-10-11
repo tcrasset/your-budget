@@ -1,7 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
+import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
 
 // Project imports:

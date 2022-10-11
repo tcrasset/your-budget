@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 // Project imports:
-import 'package:your_budget/application/addTransaction/payee_handler/payee_watcher_bloc.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+import 'package:your_budget/application/core/payee_watcher/payee_watcher_bloc.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_payee_dialog.dart';

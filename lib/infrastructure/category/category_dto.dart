@@ -3,10 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/domain/category/category.dart';
 
 // Project imports:
-import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
-import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 

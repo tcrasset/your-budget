@@ -7,8 +7,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:your_budget/application/addAccount/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';

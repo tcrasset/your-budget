@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/payee_creator/payee_creator_bloc.dart';
-import 'package:your_budget/application/addTransaction/payee_handler/payee_watcher_bloc.dart';
+import 'package:your_budget/application/core/payee_watcher/payee_watcher_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';

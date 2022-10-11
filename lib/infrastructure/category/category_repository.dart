@@ -10,7 +10,6 @@ import 'package:your_budget/domain/category/i_category_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 // Project imports:
 import 'package:your_budget/infrastructure/category/category_dto.dart';
-import 'package:your_budget/infrastructure/subcategory/subcategory_dto.dart';
 import 'package:your_budget/models/constants.dart';
 
 // import 'package:your_budget/domain/subcategory/subcategory.dart';
