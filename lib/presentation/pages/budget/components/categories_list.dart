@@ -33,22 +33,18 @@ class _CategoriesListState extends State<CategoriesList> {
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      isAlwaysShown: true,
       controller: _scrollController,
       child: SingleChildScrollView(
         controller: _scrollController,
-        child: Consumer<AppState>(
-          builder: (_, appState, __) => Column(
-            children: _buildList(appState),
-          ),
+        child: Column(
+          children: _buildList([]),
         ),
       ),
     );
   }
 }
 
-List<Widget> _buildList(AppState appState) {
-  final List<Category?> categories = appState.allCategories;
+List<Widget> _buildList(List<Category> categories) {
   final List<Widget> widgetList = [];
 
   const Divider divider = Divider(height: 1, color: Colors.black12);

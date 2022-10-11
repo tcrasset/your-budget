@@ -12,6 +12,7 @@ import 'package:your_budget/injection_container.dart' as injections;
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
 import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
+import 'package:your_budget/presentation/pages/budget/budget_page.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
 import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
 import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
@@ -23,32 +24,16 @@ Future<void> main() async {
   runApp(MyBudget());
 }
 
-class MyBudget extends StatelessWidget {
+class MyBudget extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        // ChangeNotifierProvider<AppState?>.value(value: GetIt.instance<AppState>()),
-        // ChangeNotifierProvider<BudgetPageState>(create: (_) => BudgetPageState())
-        ChangeNotifierProvider<ModifyTransactionsState>(create: (_) => ModifyTransactionsState()),
-        ChangeNotifierProvider<DeleteCategoriesState>(create: (_) => DeleteCategoriesState()),
-      ],
-      child: HomeScreen(),
-    );
-  }
+  MyBudgetState createState() => MyBudgetState();
 }
 
-class HomeScreen extends StatefulWidget {
-  @override
-  HomeScreenState createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
+class MyBudgetState extends State<MyBudget> {
   int _currentTab = 0;
 
   final List<Widget> _tabs = [
-    // ChangeNotifierProvider(
-    //     create: (_) => BudgetPageState(), child: const BudgetPage(title: 'Bugdet Page')),
+    BudgetPage(title: 'Bugdet Page'),
     const AddAccountPage(title: 'Accounts'),
     AddTransactionPage(),
     const ShowTransactionPage(title: "Transactions")
@@ -78,10 +63,10 @@ class HomeScreenState extends State<HomeScreen> {
           unselectedItemColor: Colors.grey[500],
           onTap: _onItemTapped,
           items: [
-            // const BottomNavigationBarItem(
-            //   icon: FaIcon(Constants.BUDGET_ICON),
-            //   label: "Budget",
-            // ),
+            const BottomNavigationBarItem(
+              icon: FaIcon(Constants.BUDGET_ICON),
+              label: "Budget",
+            ),
             const BottomNavigationBarItem(
               icon: FaIcon(Constants.ACCOUNT_ICON),
               label: "Accounts",

@@ -29,15 +29,11 @@ class ToBeBudgeted extends StatelessWidget {
               style: _textStyle,
             ),
           ),
-          Consumer<AppState>(
-            builder: (context, appState, child) {
-              return Text(
-                "${appState.toBeBudgeted.toStringAsFixed(2)} €",
-                style: appState.toBeBudgeted >= 0
-                    ? _positiveAmountTextStyle
-                    : _negativeAmountTextStyle,
-              );
-            },
+          Expanded(
+            child: Text(
+              "1000 €",
+              style: 1000 >= 0 ? _positiveAmountTextStyle : _negativeAmountTextStyle,
+            ),
           )
         ],
       ),
