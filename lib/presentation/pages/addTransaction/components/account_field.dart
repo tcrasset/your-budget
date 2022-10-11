@@ -25,8 +25,7 @@ class AccountField extends StatelessWidget {
     final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
     final Account? account = await showSearch<Account?>(
       context: context,
-      delegate: AccountSearchDelegate(BlocProvider.of<AccountWatcherBloc>(context)
-        ..add(const AccountWatcherEvent.watchAccountsStarted())),
+      delegate: AccountSearchDelegate(superContext: context),
     );
 
     if (account != null) {
@@ -68,9 +67,10 @@ class AccountField extends StatelessWidget {
 }
 
 class AccountSearchDelegate extends SearchDelegate<Account?> {
-  final AccountWatcherBloc bloc;
-
-  AccountSearchDelegate(this.bloc);
+  // Pass the callers context down the tree to get the Bloc
+  // as SearchDelegate does not have an ancestor widget per se.
+  final BuildContext superContext;
+  AccountSearchDelegate({required this.superContext});
 
   @override
   List<Widget>? buildActions(BuildContext context) => null;
@@ -86,49 +86,41 @@ class AccountSearchDelegate extends SearchDelegate<Account?> {
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
-    return BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
-      bloc: bloc,
-      builder: (_, state) {
-        return _build(state);
-      },
-    );
-  }
+  Widget buildSuggestions(BuildContext context) => _build(context);
 
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildResults(BuildContext context) => _build(context);
+
+  Widget _build(BuildContext context) {
     return BlocBuilder<AccountWatcherBloc, AccountWatcherState>(
-      bloc: bloc,
-      builder: (_, state) {
-        return _build(state);
-      },
-    );
-  }
+      bloc: BlocProvider.of<AccountWatcherBloc>(superContext)
+        ..add(const AccountWatcherEvent.watchAccountsStarted()),
+      builder: (context, state) {
+        return state.maybeMap(
+          loadSuccess: (newState) {
+            final accounts = newState.accounts
+                .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
+                .toList();
 
-  Widget _build(AccountWatcherState state) {
-    return state.maybeMap(
-      loadSuccess: (newState) {
-        final accounts = newState.accounts
-            .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
-            .toList();
+            if (accounts.isEmpty) return Container();
 
-        if (accounts.isEmpty) return Container();
-
-        return ListView.separated(
-          shrinkWrap: true,
-          itemCount: accounts.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(height: 1, color: Colors.black12),
-          itemBuilder: (BuildContext context, int index) {
-            final account = accounts[index];
-            final String name = account.name.getOrCrash();
-            return ListTile(title: Text(name), onTap: () => close(context, account));
+            return ListView.separated(
+              shrinkWrap: true,
+              itemCount: accounts.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(height: 1, color: Colors.black12),
+              itemBuilder: (BuildContext context, int index) {
+                final account = accounts[index];
+                final String name = account.name.getOrCrash();
+                return ListTile(title: Text(name), onTap: () => close(context, account));
+              },
+            );
           },
+          loadFailure: (_) => const Center(child: Text("Failure.")),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
+          orElse: () => const Center(child: Text("Else.")),
         );
       },
-      loadFailure: (_) => const Center(child: Text("Failure.")),
-      loading: (_) => const Center(child: CircularProgressIndicator()),
-      orElse: () => const Center(child: Text("Else.")),
     );
   }
 }
