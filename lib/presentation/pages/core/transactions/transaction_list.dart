@@ -49,7 +49,7 @@ class _TransactionListState extends State<TransactionList> {
           return Card(
             child: TransactionRow(
               transactionsOfAccount[index]!,
-              widget.appState.allCategories as UnmodifiableListView<Category>,
+              widget.appState.allCategories as UnmodifiableListView<CategoryLegacy>,
               widget.isEditable,
             ),
           );

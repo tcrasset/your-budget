@@ -8,13 +8,13 @@ import 'constants.dart';
 /// A category is represented an unique [id], a [name],
 /// the value [budgeted] is the money budgeted for the month and
 /// the value [available] is the money left to be spent for the month.
-abstract class Category {
+abstract class CategoryLegacy {
   int? id;
   String? name;
   double? budgeted;
   double? available;
 
-  Category({
+  CategoryLegacy({
     required this.id,
     required this.name,
     required this.budgeted,
@@ -22,8 +22,8 @@ abstract class Category {
   });
 }
 
-/// Budgeting [Category] that will be a child of a [MainCategory] instance specified by [parentId]
-class SubCategory extends Category {
+/// Budgeting [CategoryLegacy] that will be a child of a [MainCategory] instance specified by [parentId]
+class SubCategory extends CategoryLegacy {
   final String? parentId;
 
   /// Default SubCategory constructor
@@ -104,8 +104,8 @@ class SubCategory extends Category {
   }
 }
 
-/// Budgeting [Category] that is a parent of one or multiple [SubCategory]'s
-class MainCategory extends Category {
+/// Budgeting [CategoryLegacy] that is a parent of one or multiple [SubCategory]'s
+class MainCategory extends CategoryLegacy {
   List<SubCategory?> _subcategories = [];
 
   /// Default [MainCategory] constructor, which sets the budgeted and available values to 0.00

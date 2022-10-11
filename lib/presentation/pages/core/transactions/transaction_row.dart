@@ -17,7 +17,7 @@ import 'package:your_budget/presentation/pages/core/transactions/unchecked_row.d
 
 class TransactionRow extends StatefulWidget {
   final MoneyTransaction moneyTransaction;
-  final UnmodifiableListView<Category> categories;
+  final UnmodifiableListView<CategoryLegacy> categories;
   final bool isEditable;
 
   const TransactionRow(this.moneyTransaction, this.categories, this.isEditable);

@@ -50,7 +50,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Budget? currentBudget;
 
   /// An unmodifiable view of the information in the data base.
-  UnmodifiableListView<Category?> get allCategories {
+  UnmodifiableListView<CategoryLegacy?> get allCategories {
     if (currentBudget != null) {
       return UnmodifiableListView(currentBudget!.allcategories!);
     }

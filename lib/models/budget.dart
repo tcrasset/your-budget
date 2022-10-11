@@ -13,7 +13,7 @@ class Budget {
   //TODO: Refactor budget
   List<MainCategory?> maincategories = [];
   List<SubCategory?> subcategories = [];
-  List<Category?>? _allcategories;
+  List<CategoryLegacy?>? _allcategories;
   int? month;
   int? year;
   double totalBudgeted = 0;
@@ -47,7 +47,7 @@ class Budget {
   }
 
   /// The updated list of [_allcategories].
-  List<Category?>? get allcategories {
+  List<CategoryLegacy?>? get allcategories {
     _updateAllcategories();
     return _allcategories;
   }

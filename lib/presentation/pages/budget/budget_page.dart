@@ -42,14 +42,6 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final BudgetPageState buttonDialState = Provider.of<BudgetPageState>(context);
-    // final ButtonDial? buttonDial = buttonDialState.showButtonDial
-    //     ? ButtonDial(
-    //         MediaQuery.of(context).size.height * 0.3,
-    //         MediaQuery.of(context).size.width * 0.6,
-    //       )
-    //     : null;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),

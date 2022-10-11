@@ -4,14 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/models/categories.dart';
-import 'package:your_budget/presentation/pages/budget/components/maincategory_row.dart';
 import 'package:your_budget/presentation/pages/budget/components/subcategory_row.dart';
 
 class CategoriesList extends HookWidget {

@@ -1,0 +1,41 @@
+// Package imports:
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:your_budget/domain/category/category.dart';
+
+// Project imports:
+import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/utils.dart';
+
+part 'category_dto.freezed.dart';
+part 'category_dto.g.dart';
+
+@freezed
+abstract class CategoryDTO implements _$CategoryDTO {
+  const CategoryDTO._();
+
+  const factory CategoryDTO({
+    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+        required String id, //Do not use id in database
+    @JsonKey(name: DatabaseConstants.CATEGORY_NAME) required String name,
+  }) = _CategoryDTO;
+
+  factory CategoryDTO.fromDomain(Category category) {
+    return CategoryDTO(
+      id: category.id.getOrCrash(), //Not used in database
+      name: category.name.getOrCrash(),
+    );
+  }
+
+  Category toDomain() {
+    return Category(
+      id: UniqueId.fromUniqueString(id),
+      name: Name(name),
+    );
+  }
+
+  factory CategoryDTO.fromJson(Map<String, dynamic> json) => _$CategoryDTOFromJson(json);
+}

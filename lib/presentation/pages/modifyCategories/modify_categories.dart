@@ -49,7 +49,7 @@ class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategori
   Widget build(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
 
-    final List<Category?> categories = appState.allCategories;
+    final List<CategoryLegacy?> categories = appState.allCategories;
     if (categories.isNotEmpty) {
       return Scaffold(
         appBar: AppBar(
