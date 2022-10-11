@@ -50,7 +50,6 @@ class _BudgetPageState extends State<BudgetPage> {
     //       )
     //     : null;
 
-    print("Budget page build");
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title!),

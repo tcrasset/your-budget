@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -34,6 +36,15 @@ abstract class Subcategory implements _$Subcategory {
         name: Name(""),
         budgeted: Amount(""),
         available: Amount(""),
+      );
+
+  // Used for testing
+  factory Subcategory.random() => Subcategory(
+        id: UniqueId(),
+        categoryID: UniqueId(),
+        name: Name("Bobby_${Random().nextInt(25)}"),
+        budgeted: Amount((Random().nextDouble() * 1000).toString()),
+        available: Amount((Random().nextDouble() * 100).toString()),
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

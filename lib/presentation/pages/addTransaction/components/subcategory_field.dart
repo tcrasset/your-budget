@@ -43,7 +43,7 @@ class SubcategoryField extends StatelessWidget {
           );
 
   String getSubcategoryName(BuildContext context) => context
-      .watch<TransactionCreatorBloc>()
+      .watch<TransactionCreatorBloc>() // watch is necessary here
       .state
       .moneyTransaction
       .subcategory
@@ -52,20 +52,12 @@ class SubcategoryField extends StatelessWidget {
       .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
 
   @override
-  Widget build(BuildContext context) => MultiBlocProvider(
-        providers: [
-          BlocProvider<SubcategoryWatcherBloc>(
-            create: (context) => SubcategoryWatcherBloc(
-                subcategoryRepository: GetIt.instance<ISubcategoryRepository>()),
-          ),
-        ],
-        child: AddTransactionField(
-          name: "Subcategory",
-          defaultValue: _DEFAULT_SUBCATEGORY,
-          nameGetter: getSubcategoryName,
-          onTap: handleOnTap,
-          validator: validateSubcategory,
-        ),
+  Widget build(BuildContext context) => AddTransactionField(
+        name: "Subcategory",
+        defaultValue: _DEFAULT_SUBCATEGORY,
+        nameGetter: getSubcategoryName,
+        onTap: handleOnTap,
+        validator: validateSubcategory,
       );
 }
 

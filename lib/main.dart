@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/application/core/bloc_observer.dart';
+import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/injection_container.dart' as injections;
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
@@ -16,6 +18,8 @@ import 'package:your_budget/presentation/pages/budget/budget_page.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
 import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
 import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
+
+import 'domain/subcategory/i_subcategory_repository.dart';
 
 Future<void> main() async {
   Bloc.observer = SimpleBlocObserver();
@@ -33,7 +37,7 @@ class MyBudgetState extends State<MyBudget> {
   int _currentTab = 0;
 
   final List<Widget> _tabs = [
-    BudgetPage(title: 'Bugdet Page'),
+    const BudgetPage(title: 'Bugdet Page'),
     const AddAccountPage(title: 'Accounts'),
     AddTransactionPage(),
     const ShowTransactionPage(title: "Transactions")
@@ -55,31 +59,40 @@ class MyBudgetState extends State<MyBudget> {
         primaryColor: Constants.PRIMARY_COLOR,
         accentColor: Constants.SECONDARY_COLOR,
       ),
-      home: Scaffold(
-        body: _tabs[_currentTab],
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _currentTab,
-          unselectedItemColor: Colors.grey[500],
-          onTap: _onItemTapped,
-          items: [
-            const BottomNavigationBarItem(
-              icon: FaIcon(Constants.BUDGET_ICON),
-              label: "Budget",
-            ),
-            const BottomNavigationBarItem(
-              icon: FaIcon(Constants.ACCOUNT_ICON),
-              label: "Accounts",
-            ),
-            const BottomNavigationBarItem(
-              icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
-              label: "Add transaction",
-            ),
-            const BottomNavigationBarItem(
-              icon: FaIcon(Constants.ALLTRANSACTION_ICON),
-              label: "Transactions",
-            ),
-          ],
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<SubcategoryWatcherBloc>(
+            create: (context) => SubcategoryWatcherBloc(
+                subcategoryRepository: GetIt.instance<ISubcategoryRepository>())
+              ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+          ),
+        ],
+        child: Scaffold(
+          body: _tabs[_currentTab],
+          bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _currentTab,
+            unselectedItemColor: Colors.grey[500],
+            onTap: _onItemTapped,
+            items: [
+              const BottomNavigationBarItem(
+                icon: FaIcon(Constants.BUDGET_ICON),
+                label: "Budget",
+              ),
+              const BottomNavigationBarItem(
+                icon: FaIcon(Constants.ACCOUNT_ICON),
+                label: "Accounts",
+              ),
+              const BottomNavigationBarItem(
+                icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
+                label: "Add transaction",
+              ),
+              const BottomNavigationBarItem(
+                icon: FaIcon(Constants.ALLTRANSACTION_ICON),
+                label: "Transactions",
+              ),
+            ],
+          ),
         ),
       ),
     );
