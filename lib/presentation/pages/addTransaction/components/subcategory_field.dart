@@ -25,10 +25,7 @@ class SubcategoryField extends StatelessWidget {
     final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
     final Subcategory? subcategory = await showSearch<Subcategory?>(
       context: context,
-      delegate: SubcategorySearchDelegate(
-        BlocProvider.of<SubcategoryWatcherBloc>(context)
-          ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
-      ),
+      delegate: SubcategorySearchDelegate(superContext: context),
     );
 
     if (subcategory != null) {
@@ -62,9 +59,10 @@ class SubcategoryField extends StatelessWidget {
 }
 
 class SubcategorySearchDelegate extends SearchDelegate<Subcategory?> {
-  final SubcategoryWatcherBloc bloc;
-
-  SubcategorySearchDelegate(this.bloc);
+  // Pass the callers context down the tree to get the Bloc
+  // as SearchDelegate does not have an ancestor widget per se.
+  final BuildContext superContext;
+  SubcategorySearchDelegate({required this.superContext});
 
   @override
   List<Widget>? buildActions(BuildContext context) => null;
@@ -80,49 +78,41 @@ class SubcategorySearchDelegate extends SearchDelegate<Subcategory?> {
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
-    return BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
-      bloc: bloc,
-      builder: (_, state) {
-        return _build(state);
-      },
-    );
-  }
+  Widget buildSuggestions(BuildContext context) => _build(context);
 
   @override
-  Widget buildResults(BuildContext context) {
+  Widget buildResults(BuildContext context) => _build(context);
+
+  Widget _build(BuildContext context) {
     return BlocBuilder<SubcategoryWatcherBloc, SubcategoryWatcherState>(
-      bloc: bloc,
-      builder: (_, state) {
-        return _build(state);
-      },
-    );
-  }
+      bloc: BlocProvider.of<SubcategoryWatcherBloc>(superContext)
+        ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+      builder: (context, state) {
+        return state.maybeMap(
+          loadSuccess: (newState) {
+            final subcategories = newState.subcategories
+                .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
+                .toList();
 
-  Widget _build(SubcategoryWatcherState state) {
-    return state.maybeMap(
-      loadSuccess: (newState) {
-        final subcategories = newState.subcategories
-            .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
-            .toList();
+            if (subcategories.isEmpty) return Container();
 
-        if (subcategories.isEmpty) return Container();
-
-        return ListView.separated(
-          shrinkWrap: true,
-          itemCount: subcategories.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(height: 1, color: Colors.black12),
-          itemBuilder: (BuildContext context, int index) {
-            final payee = subcategories[index];
-            final String name = payee.name.getOrCrash();
-            return ListTile(title: Text(name), onTap: () => close(context, payee));
+            return ListView.separated(
+              shrinkWrap: true,
+              itemCount: subcategories.length,
+              separatorBuilder: (BuildContext context, int index) =>
+                  const Divider(height: 1, color: Colors.black12),
+              itemBuilder: (BuildContext context, int index) {
+                final payee = subcategories[index];
+                final String name = payee.name.getOrCrash();
+                return ListTile(title: Text(name), onTap: () => close(context, payee));
+              },
+            );
           },
+          loadFailure: (_) => const Center(child: Text("Failure.")),
+          loading: (_) => const Center(child: CircularProgressIndicator()),
+          orElse: () => const Center(child: Text("Else.")),
         );
       },
-      loadFailure: (_) => const Center(child: Text("Failure.")),
-      loading: (_) => const Center(child: CircularProgressIndicator()),
-      orElse: () => const Center(child: Text("Else.")),
     );
   }
 }
