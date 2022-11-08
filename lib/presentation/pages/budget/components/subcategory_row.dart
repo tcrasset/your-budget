@@ -1,37 +1,17 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:provider/provider.dart';
-
-// Project imports:
-import 'package:your_budget/appstate.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
 
 // Widget containing and displaying the information a subcategory
 
-class SubcategoryRow extends StatefulWidget {
+class SubcategoryRow extends HookWidget {
   final Subcategory subcat;
   const SubcategoryRow({Key? key, required this.subcat}) : super(key: key);
 
-  @override
-  _SubcategoryRowState createState() => _SubcategoryRowState();
-}
-
-class _SubcategoryRowState extends State<SubcategoryRow> {
-  AppState? appState;
-  // MoneyMaskedTextController? _budgetedController;
-  late BudgetPageState buttonDialState;
-
-  void handleOnTap() {
-    // if (!buttonDialState.isSelected(widget.subcat.id.getOrCrash())) {
-    //   // buttonDialState.budgetedController = _budgetedController;
-    // }
-    // buttonDialState.toggleButtonDial(widget.subcat.id.getOrCrash());
-    // buttonDialState.updateIsSelected(widget.subcat.id.getOrCrash());
-  }
+  void handleOnTap() {}
 
   Color? setColor(double availableAmount) {
     if (availableAmount > 0) {
@@ -45,7 +25,13 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
 
   @override
   Widget build(BuildContext context) {
-    // state._budgetedController!.updateValue(widget.subcat.budgeted!);
+    final double budgeted = subcat.budgeted.getOrCrash();
+    final double available = subcat.available.getOrCrash();
+    final TextEditingController _budgetedController =
+        useTextEditingController(text: Constants.CURRENCY_FORMAT.format(budgeted));
+
+    final budgetedText = _budgetedController.text;
+    final availableText = Constants.CURRENCY_FORMAT.format(available);
 
     return GestureDetector(
       onTap: handleOnTap,
@@ -57,7 +43,7 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
           children: <Widget>[
             Expanded(
               child: Text(
-                widget.subcat.name.getOrCrash(),
+                subcat.name.getOrCrash(),
                 style: Constants.SUBCATEGORY_TEXT_STYLE,
               ),
             ),
@@ -79,13 +65,13 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: setColor(widget.subcat.available.getOrCrash()),
+                    color: setColor(budgeted),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(9.0),
                     ),
                   ),
                   child: Text(
-                    "${widget.subcat.budgeted.getOrCrash().toStringAsFixed(2)} €",
+                    budgetedText,
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
                   ),
@@ -98,13 +84,13 @@ class _SubcategoryRowState extends State<SubcategoryRow> {
                 child: Container(
                   padding: const EdgeInsets.all(2),
                   decoration: BoxDecoration(
-                    color: setColor(widget.subcat.available.getOrCrash()),
+                    color: setColor(available),
                     borderRadius: const BorderRadius.all(
                       Radius.circular(9.0),
                     ),
                   ),
                   child: Text(
-                    "${widget.subcat.available.getOrCrash().toStringAsFixed(2)} €",
+                    availableText,
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
                   ),

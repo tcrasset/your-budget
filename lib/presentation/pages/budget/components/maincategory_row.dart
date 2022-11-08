@@ -49,7 +49,7 @@ class MainCategoryRow extends StatelessWidget {
                       style: Constants.CATEGORY_TEXT_STYLE,
                     ),
                     Text(
-                      budgeted.toStringAsFixed(2),
+                      Constants.CURRENCY_FORMAT.format(budgeted),
                       textAlign: TextAlign.right,
                       style: Constants.CATEGORY_TEXT_STYLE,
                     )
@@ -67,7 +67,7 @@ class MainCategoryRow extends StatelessWidget {
                       style: Constants.CATEGORY_TEXT_STYLE,
                     ),
                     Text(
-                      available.toStringAsFixed(2),
+                      Constants.CURRENCY_FORMAT.format(available),
                       textAlign: TextAlign.right,
                       style: Constants.CATEGORY_TEXT_STYLE,
                     )
