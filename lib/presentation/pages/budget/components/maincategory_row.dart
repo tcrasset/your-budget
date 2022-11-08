@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:your_budget/domain/category/category.dart';
 
 // Project imports:
 import 'package:your_budget/models/categories.dart';
@@ -7,8 +8,11 @@ import 'package:your_budget/models/constants.dart';
 
 // Widget containing and displaying the information of a category
 class MainCategoryRow extends StatelessWidget {
-  final MainCategory cat;
-  MainCategoryRow({Key? key, required this.cat}) : super(key: key);
+  final String name;
+  final double budgeted;
+  final double available;
+  MainCategoryRow({Key? key, required this.name, required this.budgeted, required this.available})
+      : super(key: key);
 
   final mainCategoryDivider = SizedBox(
     height: 8.0,
@@ -30,7 +34,7 @@ class MainCategoryRow extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  cat.name!,
+                  name,
                   style: Constants.CATEGORY_TEXT_STYLE,
                 ),
               ),
@@ -45,7 +49,7 @@ class MainCategoryRow extends StatelessWidget {
                       style: Constants.CATEGORY_TEXT_STYLE,
                     ),
                     Text(
-                      cat.budgeted!.toStringAsFixed(2),
+                      budgeted.toStringAsFixed(2),
                       textAlign: TextAlign.right,
                       style: Constants.CATEGORY_TEXT_STYLE,
                     )
@@ -63,7 +67,7 @@ class MainCategoryRow extends StatelessWidget {
                       style: Constants.CATEGORY_TEXT_STYLE,
                     ),
                     Text(
-                      cat.available!.toStringAsFixed(2),
+                      available.toStringAsFixed(2),
                       textAlign: TextAlign.right,
                       style: Constants.CATEGORY_TEXT_STYLE,
                     )

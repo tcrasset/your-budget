@@ -1,19 +1,14 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
-
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/about/about_screen.dart';
-import 'package:your_budget/presentation/pages/modifyCategories/modify_categories.dart';
-import 'package:your_budget/presentation/pages/budget/budget_page_state.dart';
-import 'package:your_budget/presentation/pages/budget/components/button_dial.dart';
 import 'package:your_budget/presentation/pages/budget/components/categories_list.dart';
 import 'package:your_budget/presentation/pages/budget/components/date_button.dart';
 import 'package:your_budget/presentation/pages/budget/components/to_be_budgeted.dart';
+import 'package:your_budget/presentation/pages/modifyCategories/modify_categories.dart';
 
 class BudgetPage extends StatefulWidget {
   final String? title;

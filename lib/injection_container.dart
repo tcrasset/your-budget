@@ -8,10 +8,12 @@ import 'package:sqflite/sqflite.dart';
 // Project imports:
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/category/i_category_repository.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/infrastructure/account/account_repository.dart';
+import 'package:your_budget/infrastructure/category/category_repository.dart';
 import 'package:your_budget/infrastructure/payee/payee_repository.dart';
 import 'package:your_budget/infrastructure/subcategory/subcategory_repository.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_repository.dart';
@@ -38,6 +40,9 @@ Future<void> init() async {
   sl.registerSingleton<IPayeeRepository>(SQFlitePayeeRepository(database: sl<Database>()));
   sl.registerSingleton<ISubcategoryRepository>(
     SQFliteSubcategoryRepository(database: sl<Database>()),
+  );
+  sl.registerSingleton<ICategoryRepository>(
+    SQFliteCategoryRepository(database: sl<Database>()),
   );
 
   // final AppState appState = AppState(queryContext: sl());

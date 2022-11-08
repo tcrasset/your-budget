@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:your_budget/application/budget/category_watcher_bloc/category_watcher_bloc.dart';
 
 // Project imports:
 import 'package:your_budget/application/core/bloc_observer.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
+import 'package:your_budget/domain/category/i_category_repository.dart';
 import 'package:your_budget/injection_container.dart' as injections;
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
@@ -65,6 +67,11 @@ class MyBudgetState extends State<MyBudget> {
             create: (context) => SubcategoryWatcherBloc(
                 subcategoryRepository: GetIt.instance<ISubcategoryRepository>())
               ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+          ),
+          BlocProvider<CategoryWatcherBloc>(
+            create: (context) =>
+                CategoryWatcherBloc(categoryRepository: GetIt.instance<ICategoryRepository>())
+                  ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
           ),
         ],
         child: Scaffold(
