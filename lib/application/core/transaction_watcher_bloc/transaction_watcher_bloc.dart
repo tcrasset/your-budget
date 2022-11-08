@@ -57,6 +57,7 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
       (f) => TransactionWatcherState.loadFailure(f),
       (accounts) {
         if (accounts.isEmpty) {
+          add(TransactionWatcherEvent.transactionsReceived(right([])));
           return;
         }
         final String id = accounts[currentIndex].id.getOrCrash();
