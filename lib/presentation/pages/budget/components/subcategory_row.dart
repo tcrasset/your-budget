@@ -32,9 +32,12 @@ class SubcategoryRow extends HookWidget {
 
     final budgetedText = _budgetedController.text;
     final availableText = Constants.CURRENCY_FORMAT.format(available);
+    final FocusNode budgetedFocusNode = useFocusNode();
 
     return GestureDetector(
-      onTap: handleOnTap,
+      onTap: () => budgetedFocusNode.hasFocus
+          ? budgetedFocusNode.unfocus()
+          : FocusScope.of(context).requestFocus(budgetedFocusNode),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 10),
@@ -70,8 +73,11 @@ class SubcategoryRow extends HookWidget {
                       Radius.circular(9.0),
                     ),
                   ),
-                  child: Text(
-                    budgetedText,
+                  child: TextField(
+                    controller: _budgetedController,
+                    decoration: const InputDecoration.collapsed(hintText: ""),
+                    focusNode: budgetedFocusNode,
+                    readOnly: false,
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
                   ),

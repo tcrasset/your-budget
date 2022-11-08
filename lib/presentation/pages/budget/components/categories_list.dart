@@ -23,6 +23,7 @@ class CategoriesList extends HookWidget {
       controller: scrollController,
       child: SingleChildScrollView(
         controller: scrollController,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: Builder(
           builder: (context) {
             final subcategoryBlocState = context.watch<SubcategoryWatcherBloc>().state;
@@ -84,6 +85,8 @@ List<Widget> _buildList(
 
     correspondingSubcategories.forEach((subcat) {
       widgetList.add(divider);
+      widgetList.add(SubcategoryRow(subcat: subcat));
+      widgetList.add(SubcategoryRow(subcat: subcat));
       widgetList.add(SubcategoryRow(subcat: subcat));
     });
   }
