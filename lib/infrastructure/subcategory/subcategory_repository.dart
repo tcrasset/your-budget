@@ -32,12 +32,33 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
   }
 
   @override
-  Future<Either<ValueFailure, int>> create(Subcategory subcategory) async {
+  Future<Either<ValueFailure, Unit>> create(Subcategory subcategory) async {
     try {
       final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
-      final int id =
-          await database!.insert(DatabaseConstants.subcategoryTable, subcategoryDTO.toJson());
-      return right(id);
+      await database!.insert(DatabaseConstants.subcategoryTable, subcategoryDTO.toJson());
+      return right(unit);
+    } on DatabaseException catch (e) {
+      if (e.isUniqueConstraintError()) {
+        return left(ValueFailure.uniqueName(failedValue: e.toString()));
+      }
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ValueFailure, Unit>> update(Subcategory subcategory) async {
+    try {
+      final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
+      final Map<String, dynamic> values = subcategoryDTO.toJson();
+      final id = values.remove("id");
+
+      await database!.update(
+        DatabaseConstants.subcategoryTable,
+        values,
+        where: '${DatabaseConstants.SUBCAT_ID} = ?',
+        whereArgs: [id],
+      );
+      return right(unit);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
         return left(ValueFailure.uniqueName(failedValue: e.toString()));
