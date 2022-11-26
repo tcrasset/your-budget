@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/utils/currency.dart' as currency_utils;
 import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
 
 // Widget containing and displaying the information a subcategory
@@ -28,10 +29,15 @@ class SubcategoryRow extends HookWidget {
     final double budgeted = subcat.budgeted.getOrCrash();
     final double available = subcat.available.getOrCrash();
     final TextEditingController _budgetedController =
-        useTextEditingController(text: Constants.CURRENCY_FORMAT.format(budgeted));
+        useTextEditingController(text: Constants.CURRENCY_FORMAT.format(budgeted).trim());
+    _budgetedController.selection =
+        TextSelection.collapsed(offset: _budgetedController.text.length);
 
+    useEffect(() {
+      context.read<SubcategoryCreatorBloc>().setSubcategory(subcat);
+    }, []);
     final budgetedText = _budgetedController.text;
-    final availableText = Constants.CURRENCY_FORMAT.format(available);
+    final availableText = Constants.CURRENCY_FORMAT.format(available).trim();
     final FocusNode budgetedFocusNode = useFocusNode();
 
     return GestureDetector(
@@ -74,12 +80,21 @@ class SubcategoryRow extends HookWidget {
                     ),
                   ),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     controller: _budgetedController,
                     decoration: const InputDecoration.collapsed(hintText: ""),
                     focusNode: budgetedFocusNode,
-                    readOnly: false,
+                    inputFormatters: [
+                      CurrencyInputFormatter(Constants.CURRENCY_FORMAT, true),
+                    ],
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
+                    onSubmitted: (submitted) => context
+                        .read<SubcategoryCreatorBloc>()
+                        .add(SubcategoryCreatorEvent.budgetedChanged(
+                          subcat.id,
+                          currency_utils.parse(submitted).toString(),
+                        )),
                   ),
                 ),
               ),
