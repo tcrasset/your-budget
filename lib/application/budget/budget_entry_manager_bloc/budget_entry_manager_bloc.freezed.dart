@@ -24,8 +24,8 @@ mixin _$BudgetEntryManagerEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
-    TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
+    TResult Function()? initialized,
+    TResult Function(UniqueId id, String budgeted)? budgetedChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$BudgetEntryManagerEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_BudgetedChanged value)? budgetedChanged,
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_BudgetedChanged value)? budgetedChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,19 +60,17 @@ mixin _$BudgetEntryManagerEvent {
 abstract class $BudgetEntryManagerEventCopyWith<$Res> {
   factory $BudgetEntryManagerEventCopyWith(BudgetEntryManagerEvent value,
           $Res Function(BudgetEntryManagerEvent) then) =
-      _$BudgetEntryManagerEventCopyWithImpl<$Res, BudgetEntryManagerEvent>;
+      _$BudgetEntryManagerEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$BudgetEntryManagerEventCopyWithImpl<$Res,
-        $Val extends BudgetEntryManagerEvent>
+class _$BudgetEntryManagerEventCopyWithImpl<$Res>
     implements $BudgetEntryManagerEventCopyWith<$Res> {
   _$BudgetEntryManagerEventCopyWithImpl(this._value, this._then);
 
+  final BudgetEntryManagerEvent _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(BudgetEntryManagerEvent) _then;
 }
 
 /// @nodoc
@@ -84,11 +82,14 @@ abstract class _$$_InitializedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitializedCopyWithImpl<$Res>
-    extends _$BudgetEntryManagerEventCopyWithImpl<$Res, _$_Initialized>
+    extends _$BudgetEntryManagerEventCopyWithImpl<$Res>
     implements _$$_InitializedCopyWith<$Res> {
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_Initialized));
+
+  @override
+  _$_Initialized get _value => super._value as _$_Initialized;
 }
 
 /// @nodoc
@@ -122,8 +123,8 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
-    TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
+    TResult Function()? initialized,
+    TResult Function(UniqueId id, String budgeted)? budgetedChanged,
   }) {
     return initialized?.call();
   }
@@ -153,8 +154,8 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_BudgetedChanged value)? budgetedChanged,
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_BudgetedChanged value)? budgetedChanged,
   }) {
     return initialized?.call(this);
   }
@@ -182,30 +183,31 @@ abstract class _$$_BudgetedChangedCopyWith<$Res> {
   factory _$$_BudgetedChangedCopyWith(
           _$_BudgetedChanged value, $Res Function(_$_BudgetedChanged) then) =
       __$$_BudgetedChangedCopyWithImpl<$Res>;
-  @useResult
   $Res call({UniqueId id, String budgeted});
 }
 
 /// @nodoc
 class __$$_BudgetedChangedCopyWithImpl<$Res>
-    extends _$BudgetEntryManagerEventCopyWithImpl<$Res, _$_BudgetedChanged>
+    extends _$BudgetEntryManagerEventCopyWithImpl<$Res>
     implements _$$_BudgetedChangedCopyWith<$Res> {
   __$$_BudgetedChangedCopyWithImpl(
       _$_BudgetedChanged _value, $Res Function(_$_BudgetedChanged) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_BudgetedChanged));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_BudgetedChanged get _value => super._value as _$_BudgetedChanged;
+
   @override
   $Res call({
-    Object? id = null,
-    Object? budgeted = null,
+    Object? id = freezed,
+    Object? budgeted = freezed,
   }) {
     return _then(_$_BudgetedChanged(
-      null == id
+      id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      null == budgeted
+      budgeted == freezed
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as String,
@@ -233,17 +235,18 @@ class _$_BudgetedChanged implements _BudgetedChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BudgetedChanged &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.budgeted, budgeted) ||
-                other.budgeted == budgeted));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.budgeted, budgeted));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, budgeted);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(budgeted));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_BudgetedChangedCopyWith<_$_BudgetedChanged> get copyWith =>
       __$$_BudgetedChangedCopyWithImpl<_$_BudgetedChanged>(this, _$identity);
 
@@ -259,8 +262,8 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
-    TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
+    TResult Function()? initialized,
+    TResult Function(UniqueId id, String budgeted)? budgetedChanged,
   }) {
     return budgetedChanged?.call(id, budgeted);
   }
@@ -290,8 +293,8 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_BudgetedChanged value)? budgetedChanged,
+    TResult Function(_Initialized value)? initialized,
+    TResult Function(_BudgetedChanged value)? budgetedChanged,
   }) {
     return budgetedChanged?.call(this);
   }
@@ -335,33 +338,29 @@ mixin _$BudgetEntryManagerState {
 abstract class $BudgetEntryManagerStateCopyWith<$Res> {
   factory $BudgetEntryManagerStateCopyWith(BudgetEntryManagerState value,
           $Res Function(BudgetEntryManagerState) then) =
-      _$BudgetEntryManagerStateCopyWithImpl<$Res, BudgetEntryManagerState>;
-  @useResult
+      _$BudgetEntryManagerStateCopyWithImpl<$Res>;
   $Res call({bool wasModified});
 }
 
 /// @nodoc
-class _$BudgetEntryManagerStateCopyWithImpl<$Res,
-        $Val extends BudgetEntryManagerState>
+class _$BudgetEntryManagerStateCopyWithImpl<$Res>
     implements $BudgetEntryManagerStateCopyWith<$Res> {
   _$BudgetEntryManagerStateCopyWithImpl(this._value, this._then);
 
+  final BudgetEntryManagerState _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(BudgetEntryManagerState) _then;
 
-  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? wasModified = null,
+    Object? wasModified = freezed,
   }) {
     return _then(_value.copyWith(
-      wasModified: null == wasModified
+      wasModified: wasModified == freezed
           ? _value.wasModified
           : wasModified // ignore: cast_nullable_to_non_nullable
               as bool,
-    ) as $Val);
+    ));
   }
 }
 
@@ -372,26 +371,27 @@ abstract class _$$_BudgetEntryManagerStateCopyWith<$Res>
           $Res Function(_$_BudgetEntryManagerState) then) =
       __$$_BudgetEntryManagerStateCopyWithImpl<$Res>;
   @override
-  @useResult
   $Res call({bool wasModified});
 }
 
 /// @nodoc
 class __$$_BudgetEntryManagerStateCopyWithImpl<$Res>
-    extends _$BudgetEntryManagerStateCopyWithImpl<$Res,
-        _$_BudgetEntryManagerState>
+    extends _$BudgetEntryManagerStateCopyWithImpl<$Res>
     implements _$$_BudgetEntryManagerStateCopyWith<$Res> {
   __$$_BudgetEntryManagerStateCopyWithImpl(_$_BudgetEntryManagerState _value,
       $Res Function(_$_BudgetEntryManagerState) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_BudgetEntryManagerState));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_BudgetEntryManagerState get _value =>
+      super._value as _$_BudgetEntryManagerState;
+
   @override
   $Res call({
-    Object? wasModified = null,
+    Object? wasModified = freezed,
   }) {
     return _then(_$_BudgetEntryManagerState(
-      wasModified: null == wasModified
+      wasModified: wasModified == freezed
           ? _value.wasModified
           : wasModified // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -418,16 +418,16 @@ class _$_BudgetEntryManagerState implements _BudgetEntryManagerState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BudgetEntryManagerState &&
-            (identical(other.wasModified, wasModified) ||
-                other.wasModified == wasModified));
+            const DeepCollectionEquality()
+                .equals(other.wasModified, wasModified));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, wasModified);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(wasModified));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_BudgetEntryManagerStateCopyWith<_$_BudgetEntryManagerState>
       get copyWith =>
           __$$_BudgetEntryManagerStateCopyWithImpl<_$_BudgetEntryManagerState>(

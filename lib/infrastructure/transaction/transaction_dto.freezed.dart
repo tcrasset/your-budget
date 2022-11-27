@@ -72,8 +72,7 @@ mixin _$MoneyTransactionDTO {
 abstract class $MoneyTransactionDTOCopyWith<$Res> {
   factory $MoneyTransactionDTOCopyWith(
           MoneyTransactionDTO value, $Res Function(MoneyTransactionDTO) then) =
-      _$MoneyTransactionDTOCopyWithImpl<$Res, MoneyTransactionDTO>;
-  @useResult
+      _$MoneyTransactionDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
           String id,
@@ -104,86 +103,84 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyTransactionDTOCopyWithImpl<$Res, $Val extends MoneyTransactionDTO>
+class _$MoneyTransactionDTOCopyWithImpl<$Res>
     implements $MoneyTransactionDTOCopyWith<$Res> {
   _$MoneyTransactionDTOCopyWithImpl(this._value, this._then);
 
+  final MoneyTransactionDTO _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(MoneyTransactionDTO) _then;
 
-  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? amount = null,
-    Object? memo = null,
-    Object? dateInMillisecondsSinceEpoch = null,
-    Object? isInitialTransaction = null,
-    Object? subcatID = null,
-    Object? subcatName = null,
-    Object? subcatCategoryId = null,
-    Object? payeeID = null,
-    Object? payeeName = null,
-    Object? accountID = null,
-    Object? accountName = null,
-    Object? accountBalance = null,
+    Object? id = freezed,
+    Object? amount = freezed,
+    Object? memo = freezed,
+    Object? dateInMillisecondsSinceEpoch = freezed,
+    Object? isInitialTransaction = freezed,
+    Object? subcatID = freezed,
+    Object? subcatName = freezed,
+    Object? subcatCategoryId = freezed,
+    Object? payeeID = freezed,
+    Object? payeeName = freezed,
+    Object? accountID = freezed,
+    Object? accountName = freezed,
+    Object? accountBalance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: null == amount
+      amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      memo: null == memo
+      memo: memo == freezed
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String,
-      dateInMillisecondsSinceEpoch: null == dateInMillisecondsSinceEpoch
+      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
           ? _value.dateInMillisecondsSinceEpoch
           : dateInMillisecondsSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int,
-      isInitialTransaction: null == isInitialTransaction
+      isInitialTransaction: isInitialTransaction == freezed
           ? _value.isInitialTransaction
           : isInitialTransaction // ignore: cast_nullable_to_non_nullable
               as int,
-      subcatID: null == subcatID
+      subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatName: null == subcatName
+      subcatName: subcatName == freezed
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatCategoryId: null == subcatCategoryId
+      subcatCategoryId: subcatCategoryId == freezed
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeID: null == payeeID
+      payeeID: payeeID == freezed
           ? _value.payeeID
           : payeeID // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeName: null == payeeName
+      payeeName: payeeName == freezed
           ? _value.payeeName
           : payeeName // ignore: cast_nullable_to_non_nullable
               as String,
-      accountID: null == accountID
+      accountID: accountID == freezed
           ? _value.accountID
           : accountID // ignore: cast_nullable_to_non_nullable
               as String,
-      accountName: null == accountName
+      accountName: accountName == freezed
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
               as String,
-      accountBalance: null == accountBalance
+      accountBalance: accountBalance == freezed
           ? _value.accountBalance
           : accountBalance // ignore: cast_nullable_to_non_nullable
               as double,
-    ) as $Val);
+    ));
   }
 }
 
@@ -194,7 +191,6 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
           _$_TransactionDTO value, $Res Function(_$_TransactionDTO) then) =
       __$$_TransactionDTOCopyWithImpl<$Res>;
   @override
-  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
           String id,
@@ -226,79 +222,81 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_TransactionDTOCopyWithImpl<$Res>
-    extends _$MoneyTransactionDTOCopyWithImpl<$Res, _$_TransactionDTO>
+    extends _$MoneyTransactionDTOCopyWithImpl<$Res>
     implements _$$_TransactionDTOCopyWith<$Res> {
   __$$_TransactionDTOCopyWithImpl(
       _$_TransactionDTO _value, $Res Function(_$_TransactionDTO) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_TransactionDTO));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_TransactionDTO get _value => super._value as _$_TransactionDTO;
+
   @override
   $Res call({
-    Object? id = null,
-    Object? amount = null,
-    Object? memo = null,
-    Object? dateInMillisecondsSinceEpoch = null,
-    Object? isInitialTransaction = null,
-    Object? subcatID = null,
-    Object? subcatName = null,
-    Object? subcatCategoryId = null,
-    Object? payeeID = null,
-    Object? payeeName = null,
-    Object? accountID = null,
-    Object? accountName = null,
-    Object? accountBalance = null,
+    Object? id = freezed,
+    Object? amount = freezed,
+    Object? memo = freezed,
+    Object? dateInMillisecondsSinceEpoch = freezed,
+    Object? isInitialTransaction = freezed,
+    Object? subcatID = freezed,
+    Object? subcatName = freezed,
+    Object? subcatCategoryId = freezed,
+    Object? payeeID = freezed,
+    Object? payeeName = freezed,
+    Object? accountID = freezed,
+    Object? accountName = freezed,
+    Object? accountBalance = freezed,
   }) {
     return _then(_$_TransactionDTO(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: null == amount
+      amount: amount == freezed
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      memo: null == memo
+      memo: memo == freezed
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String,
-      dateInMillisecondsSinceEpoch: null == dateInMillisecondsSinceEpoch
+      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
           ? _value.dateInMillisecondsSinceEpoch
           : dateInMillisecondsSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int,
-      isInitialTransaction: null == isInitialTransaction
+      isInitialTransaction: isInitialTransaction == freezed
           ? _value.isInitialTransaction
           : isInitialTransaction // ignore: cast_nullable_to_non_nullable
               as int,
-      subcatID: null == subcatID
+      subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatName: null == subcatName
+      subcatName: subcatName == freezed
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatCategoryId: null == subcatCategoryId
+      subcatCategoryId: subcatCategoryId == freezed
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeID: null == payeeID
+      payeeID: payeeID == freezed
           ? _value.payeeID
           : payeeID // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeName: null == payeeName
+      payeeName: payeeName == freezed
           ? _value.payeeName
           : payeeName // ignore: cast_nullable_to_non_nullable
               as String,
-      accountID: null == accountID
+      accountID: accountID == freezed
           ? _value.accountID
           : accountID // ignore: cast_nullable_to_non_nullable
               as String,
-      accountName: null == accountName
+      accountName: accountName == freezed
           ? _value.accountName
           : accountName // ignore: cast_nullable_to_non_nullable
               as String,
-      accountBalance: null == accountBalance
+      accountBalance: accountBalance == freezed
           ? _value.accountBalance
           : accountBalance // ignore: cast_nullable_to_non_nullable
               as double,
@@ -406,53 +404,48 @@ class _$_TransactionDTO extends _TransactionDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionDTO &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.amount, amount) || other.amount == amount) &&
-            (identical(other.memo, memo) || other.memo == memo) &&
-            (identical(other.dateInMillisecondsSinceEpoch,
-                    dateInMillisecondsSinceEpoch) ||
-                other.dateInMillisecondsSinceEpoch ==
-                    dateInMillisecondsSinceEpoch) &&
-            (identical(other.isInitialTransaction, isInitialTransaction) ||
-                other.isInitialTransaction == isInitialTransaction) &&
-            (identical(other.subcatID, subcatID) ||
-                other.subcatID == subcatID) &&
-            (identical(other.subcatName, subcatName) ||
-                other.subcatName == subcatName) &&
-            (identical(other.subcatCategoryId, subcatCategoryId) ||
-                other.subcatCategoryId == subcatCategoryId) &&
-            (identical(other.payeeID, payeeID) || other.payeeID == payeeID) &&
-            (identical(other.payeeName, payeeName) ||
-                other.payeeName == payeeName) &&
-            (identical(other.accountID, accountID) ||
-                other.accountID == accountID) &&
-            (identical(other.accountName, accountName) ||
-                other.accountName == accountName) &&
-            (identical(other.accountBalance, accountBalance) ||
-                other.accountBalance == accountBalance));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.amount, amount) &&
+            const DeepCollectionEquality().equals(other.memo, memo) &&
+            const DeepCollectionEquality().equals(
+                other.dateInMillisecondsSinceEpoch,
+                dateInMillisecondsSinceEpoch) &&
+            const DeepCollectionEquality()
+                .equals(other.isInitialTransaction, isInitialTransaction) &&
+            const DeepCollectionEquality().equals(other.subcatID, subcatID) &&
+            const DeepCollectionEquality()
+                .equals(other.subcatName, subcatName) &&
+            const DeepCollectionEquality()
+                .equals(other.subcatCategoryId, subcatCategoryId) &&
+            const DeepCollectionEquality().equals(other.payeeID, payeeID) &&
+            const DeepCollectionEquality().equals(other.payeeName, payeeName) &&
+            const DeepCollectionEquality().equals(other.accountID, accountID) &&
+            const DeepCollectionEquality()
+                .equals(other.accountName, accountName) &&
+            const DeepCollectionEquality()
+                .equals(other.accountBalance, accountBalance));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      id,
-      amount,
-      memo,
-      dateInMillisecondsSinceEpoch,
-      isInitialTransaction,
-      subcatID,
-      subcatName,
-      subcatCategoryId,
-      payeeID,
-      payeeName,
-      accountID,
-      accountName,
-      accountBalance);
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(amount),
+      const DeepCollectionEquality().hash(memo),
+      const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch),
+      const DeepCollectionEquality().hash(isInitialTransaction),
+      const DeepCollectionEquality().hash(subcatID),
+      const DeepCollectionEquality().hash(subcatName),
+      const DeepCollectionEquality().hash(subcatCategoryId),
+      const DeepCollectionEquality().hash(payeeID),
+      const DeepCollectionEquality().hash(payeeName),
+      const DeepCollectionEquality().hash(accountID),
+      const DeepCollectionEquality().hash(accountName),
+      const DeepCollectionEquality().hash(accountBalance));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_TransactionDTOCopyWith<_$_TransactionDTO> get copyWith =>
       __$$_TransactionDTOCopyWithImpl<_$_TransactionDTO>(this, _$identity);
 

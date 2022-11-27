@@ -26,8 +26,8 @@ mixin _$SubcategoryWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? watchSubcategoriesStarted,
-    TResult? Function(
+    TResult Function()? watchSubcategoriesStarted,
+    TResult Function(
             Either<ValueFailure, List<Subcategory>> failureOrSubcategories)?
         subcategoriesReceived,
   }) =>
@@ -51,9 +51,8 @@ mixin _$SubcategoryWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SubcategoryWatchStarted value)?
-        watchSubcategoriesStarted,
-    TResult? Function(_SubcategoriesReceived value)? subcategoriesReceived,
+    TResult Function(_SubcategoryWatchStarted value)? watchSubcategoriesStarted,
+    TResult Function(_SubcategoriesReceived value)? subcategoriesReceived,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,19 +68,17 @@ mixin _$SubcategoryWatcherEvent {
 abstract class $SubcategoryWatcherEventCopyWith<$Res> {
   factory $SubcategoryWatcherEventCopyWith(SubcategoryWatcherEvent value,
           $Res Function(SubcategoryWatcherEvent) then) =
-      _$SubcategoryWatcherEventCopyWithImpl<$Res, SubcategoryWatcherEvent>;
+      _$SubcategoryWatcherEventCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SubcategoryWatcherEventCopyWithImpl<$Res,
-        $Val extends SubcategoryWatcherEvent>
+class _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements $SubcategoryWatcherEventCopyWith<$Res> {
   _$SubcategoryWatcherEventCopyWithImpl(this._value, this._then);
 
+  final SubcategoryWatcherEvent _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(SubcategoryWatcherEvent) _then;
 }
 
 /// @nodoc
@@ -93,12 +90,15 @@ abstract class _$$_SubcategoryWatchStartedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SubcategoryWatchStartedCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherEventCopyWithImpl<$Res,
-        _$_SubcategoryWatchStarted>
+    extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements _$$_SubcategoryWatchStartedCopyWith<$Res> {
   __$$_SubcategoryWatchStartedCopyWithImpl(_$_SubcategoryWatchStarted _value,
       $Res Function(_$_SubcategoryWatchStarted) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_SubcategoryWatchStarted));
+
+  @override
+  _$_SubcategoryWatchStarted get _value =>
+      super._value as _$_SubcategoryWatchStarted;
 }
 
 /// @nodoc
@@ -135,8 +135,8 @@ class _$_SubcategoryWatchStarted implements _SubcategoryWatchStarted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? watchSubcategoriesStarted,
-    TResult? Function(
+    TResult Function()? watchSubcategoriesStarted,
+    TResult Function(
             Either<ValueFailure, List<Subcategory>> failureOrSubcategories)?
         subcategoriesReceived,
   }) {
@@ -172,9 +172,8 @@ class _$_SubcategoryWatchStarted implements _SubcategoryWatchStarted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SubcategoryWatchStarted value)?
-        watchSubcategoriesStarted,
-    TResult? Function(_SubcategoriesReceived value)? subcategoriesReceived,
+    TResult Function(_SubcategoryWatchStarted value)? watchSubcategoriesStarted,
+    TResult Function(_SubcategoriesReceived value)? subcategoriesReceived,
   }) {
     return watchSubcategoriesStarted?.call(this);
   }
@@ -202,26 +201,27 @@ abstract class _$$_SubcategoriesReceivedCopyWith<$Res> {
   factory _$$_SubcategoriesReceivedCopyWith(_$_SubcategoriesReceived value,
           $Res Function(_$_SubcategoriesReceived) then) =
       __$$_SubcategoriesReceivedCopyWithImpl<$Res>;
-  @useResult
   $Res call({Either<ValueFailure, List<Subcategory>> failureOrSubcategories});
 }
 
 /// @nodoc
 class __$$_SubcategoriesReceivedCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherEventCopyWithImpl<$Res,
-        _$_SubcategoriesReceived>
+    extends _$SubcategoryWatcherEventCopyWithImpl<$Res>
     implements _$$_SubcategoriesReceivedCopyWith<$Res> {
   __$$_SubcategoriesReceivedCopyWithImpl(_$_SubcategoriesReceived _value,
       $Res Function(_$_SubcategoriesReceived) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_SubcategoriesReceived));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_SubcategoriesReceived get _value =>
+      super._value as _$_SubcategoriesReceived;
+
   @override
   $Res call({
-    Object? failureOrSubcategories = null,
+    Object? failureOrSubcategories = freezed,
   }) {
     return _then(_$_SubcategoriesReceived(
-      null == failureOrSubcategories
+      failureOrSubcategories == freezed
           ? _value.failureOrSubcategories
           : failureOrSubcategories // ignore: cast_nullable_to_non_nullable
               as Either<ValueFailure, List<Subcategory>>,
@@ -247,16 +247,16 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SubcategoriesReceived &&
-            (identical(other.failureOrSubcategories, failureOrSubcategories) ||
-                other.failureOrSubcategories == failureOrSubcategories));
+            const DeepCollectionEquality()
+                .equals(other.failureOrSubcategories, failureOrSubcategories));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, failureOrSubcategories);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(failureOrSubcategories));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_SubcategoriesReceivedCopyWith<_$_SubcategoriesReceived> get copyWith =>
       __$$_SubcategoriesReceivedCopyWithImpl<_$_SubcategoriesReceived>(
           this, _$identity);
@@ -275,8 +275,8 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? watchSubcategoriesStarted,
-    TResult? Function(
+    TResult Function()? watchSubcategoriesStarted,
+    TResult Function(
             Either<ValueFailure, List<Subcategory>> failureOrSubcategories)?
         subcategoriesReceived,
   }) {
@@ -312,9 +312,8 @@ class _$_SubcategoriesReceived implements _SubcategoriesReceived {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_SubcategoryWatchStarted value)?
-        watchSubcategoriesStarted,
-    TResult? Function(_SubcategoriesReceived value)? subcategoriesReceived,
+    TResult Function(_SubcategoryWatchStarted value)? watchSubcategoriesStarted,
+    TResult Function(_SubcategoriesReceived value)? subcategoriesReceived,
   }) {
     return subcategoriesReceived?.call(this);
   }
@@ -357,10 +356,10 @@ mixin _$SubcategoryWatcherState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Subcategory> subcategories)? loadSuccess,
-    TResult? Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -382,10 +381,10 @@ mixin _$SubcategoryWatcherState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_SubcategoryLoadSuccess value)? loadSuccess,
-    TResult? Function(_SubcategoryLoadFailure value)? loadFailure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -403,19 +402,17 @@ mixin _$SubcategoryWatcherState {
 abstract class $SubcategoryWatcherStateCopyWith<$Res> {
   factory $SubcategoryWatcherStateCopyWith(SubcategoryWatcherState value,
           $Res Function(SubcategoryWatcherState) then) =
-      _$SubcategoryWatcherStateCopyWithImpl<$Res, SubcategoryWatcherState>;
+      _$SubcategoryWatcherStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$SubcategoryWatcherStateCopyWithImpl<$Res,
-        $Val extends SubcategoryWatcherState>
+class _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements $SubcategoryWatcherStateCopyWith<$Res> {
   _$SubcategoryWatcherStateCopyWithImpl(this._value, this._then);
 
+  final SubcategoryWatcherState _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(SubcategoryWatcherState) _then;
 }
 
 /// @nodoc
@@ -427,10 +424,13 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherStateCopyWithImpl<$Res, _$_Initial>
+    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_Initial));
+
+  @override
+  _$_Initial get _value => super._value as _$_Initial;
 }
 
 /// @nodoc
@@ -467,10 +467,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Subcategory> subcategories)? loadSuccess,
-    TResult? Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
   }) {
     return initial?.call();
   }
@@ -504,10 +504,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_SubcategoryLoadSuccess value)? loadSuccess,
-    TResult? Function(_SubcategoryLoadFailure value)? loadFailure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
   }) {
     return initial?.call(this);
   }
@@ -541,10 +541,13 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherStateCopyWithImpl<$Res, _$_Loading>
+    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_Loading));
+
+  @override
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
@@ -581,10 +584,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Subcategory> subcategories)? loadSuccess,
-    TResult? Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
   }) {
     return loading?.call();
   }
@@ -618,10 +621,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_SubcategoryLoadSuccess value)? loadSuccess,
-    TResult? Function(_SubcategoryLoadFailure value)? loadFailure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
   }) {
     return loading?.call(this);
   }
@@ -651,26 +654,27 @@ abstract class _$$_SubcategoryLoadSuccessCopyWith<$Res> {
   factory _$$_SubcategoryLoadSuccessCopyWith(_$_SubcategoryLoadSuccess value,
           $Res Function(_$_SubcategoryLoadSuccess) then) =
       __$$_SubcategoryLoadSuccessCopyWithImpl<$Res>;
-  @useResult
   $Res call({List<Subcategory> subcategories});
 }
 
 /// @nodoc
 class __$$_SubcategoryLoadSuccessCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherStateCopyWithImpl<$Res,
-        _$_SubcategoryLoadSuccess>
+    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$$_SubcategoryLoadSuccessCopyWith<$Res> {
   __$$_SubcategoryLoadSuccessCopyWithImpl(_$_SubcategoryLoadSuccess _value,
       $Res Function(_$_SubcategoryLoadSuccess) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_SubcategoryLoadSuccess));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_SubcategoryLoadSuccess get _value =>
+      super._value as _$_SubcategoryLoadSuccess;
+
   @override
   $Res call({
-    Object? subcategories = null,
+    Object? subcategories = freezed,
   }) {
     return _then(_$_SubcategoryLoadSuccess(
-      null == subcategories
+      subcategories == freezed
           ? _value._subcategories
           : subcategories // ignore: cast_nullable_to_non_nullable
               as List<Subcategory>,
@@ -711,7 +715,6 @@ class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_SubcategoryLoadSuccessCopyWith<_$_SubcategoryLoadSuccess> get copyWith =>
       __$$_SubcategoryLoadSuccessCopyWithImpl<_$_SubcategoryLoadSuccess>(
           this, _$identity);
@@ -731,10 +734,10 @@ class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Subcategory> subcategories)? loadSuccess,
-    TResult? Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
   }) {
     return loadSuccess?.call(subcategories);
   }
@@ -768,10 +771,10 @@ class _$_SubcategoryLoadSuccess implements _SubcategoryLoadSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_SubcategoryLoadSuccess value)? loadSuccess,
-    TResult? Function(_SubcategoryLoadFailure value)? loadFailure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
   }) {
     return loadSuccess?.call(this);
   }
@@ -807,7 +810,6 @@ abstract class _$$_SubcategoryLoadFailureCopyWith<$Res> {
   factory _$$_SubcategoryLoadFailureCopyWith(_$_SubcategoryLoadFailure value,
           $Res Function(_$_SubcategoryLoadFailure) then) =
       __$$_SubcategoryLoadFailureCopyWithImpl<$Res>;
-  @useResult
   $Res call({ValueFailure<dynamic> subcategoryFailure});
 
   $ValueFailureCopyWith<dynamic, $Res> get subcategoryFailure;
@@ -815,20 +817,22 @@ abstract class _$$_SubcategoryLoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SubcategoryLoadFailureCopyWithImpl<$Res>
-    extends _$SubcategoryWatcherStateCopyWithImpl<$Res,
-        _$_SubcategoryLoadFailure>
+    extends _$SubcategoryWatcherStateCopyWithImpl<$Res>
     implements _$$_SubcategoryLoadFailureCopyWith<$Res> {
   __$$_SubcategoryLoadFailureCopyWithImpl(_$_SubcategoryLoadFailure _value,
       $Res Function(_$_SubcategoryLoadFailure) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_SubcategoryLoadFailure));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_SubcategoryLoadFailure get _value =>
+      super._value as _$_SubcategoryLoadFailure;
+
   @override
   $Res call({
-    Object? subcategoryFailure = null,
+    Object? subcategoryFailure = freezed,
   }) {
     return _then(_$_SubcategoryLoadFailure(
-      null == subcategoryFailure
+      subcategoryFailure == freezed
           ? _value.subcategoryFailure
           : subcategoryFailure // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>,
@@ -836,7 +840,6 @@ class __$$_SubcategoryLoadFailureCopyWithImpl<$Res>
   }
 
   @override
-  @pragma('vm:prefer-inline')
   $ValueFailureCopyWith<dynamic, $Res> get subcategoryFailure {
     return $ValueFailureCopyWith<dynamic, $Res>(_value.subcategoryFailure,
         (value) {
@@ -863,16 +866,16 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SubcategoryLoadFailure &&
-            (identical(other.subcategoryFailure, subcategoryFailure) ||
-                other.subcategoryFailure == subcategoryFailure));
+            const DeepCollectionEquality()
+                .equals(other.subcategoryFailure, subcategoryFailure));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, subcategoryFailure);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(subcategoryFailure));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_SubcategoryLoadFailureCopyWith<_$_SubcategoryLoadFailure> get copyWith =>
       __$$_SubcategoryLoadFailureCopyWithImpl<_$_SubcategoryLoadFailure>(
           this, _$identity);
@@ -892,10 +895,10 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(List<Subcategory> subcategories)? loadSuccess,
-    TResult? Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(List<Subcategory> subcategories)? loadSuccess,
+    TResult Function(ValueFailure<dynamic> subcategoryFailure)? loadFailure,
   }) {
     return loadFailure?.call(subcategoryFailure);
   }
@@ -929,10 +932,10 @@ class _$_SubcategoryLoadFailure implements _SubcategoryLoadFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initial value)? initial,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_SubcategoryLoadSuccess value)? loadSuccess,
-    TResult? Function(_SubcategoryLoadFailure value)? loadFailure,
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_SubcategoryLoadSuccess value)? loadSuccess,
+    TResult Function(_SubcategoryLoadFailure value)? loadFailure,
   }) {
     return loadFailure?.call(this);
   }

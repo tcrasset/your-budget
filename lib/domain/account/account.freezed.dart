@@ -27,42 +27,38 @@ mixin _$Account {
 /// @nodoc
 abstract class $AccountCopyWith<$Res> {
   factory $AccountCopyWith(Account value, $Res Function(Account) then) =
-      _$AccountCopyWithImpl<$Res, Account>;
-  @useResult
+      _$AccountCopyWithImpl<$Res>;
   $Res call({UniqueId id, Name name, Amount balance});
 }
 
 /// @nodoc
-class _$AccountCopyWithImpl<$Res, $Val extends Account>
-    implements $AccountCopyWith<$Res> {
+class _$AccountCopyWithImpl<$Res> implements $AccountCopyWith<$Res> {
   _$AccountCopyWithImpl(this._value, this._then);
 
+  final Account _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(Account) _then;
 
-  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? balance = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: null == name
+      name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-      balance: null == balance
+      balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as Amount,
-    ) as $Val);
+    ));
   }
 }
 
@@ -72,34 +68,34 @@ abstract class _$$_AccountCopyWith<$Res> implements $AccountCopyWith<$Res> {
           _$_Account value, $Res Function(_$_Account) then) =
       __$$_AccountCopyWithImpl<$Res>;
   @override
-  @useResult
   $Res call({UniqueId id, Name name, Amount balance});
 }
 
 /// @nodoc
-class __$$_AccountCopyWithImpl<$Res>
-    extends _$AccountCopyWithImpl<$Res, _$_Account>
+class __$$_AccountCopyWithImpl<$Res> extends _$AccountCopyWithImpl<$Res>
     implements _$$_AccountCopyWith<$Res> {
   __$$_AccountCopyWithImpl(_$_Account _value, $Res Function(_$_Account) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_Account));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_Account get _value => super._value as _$_Account;
+
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? balance = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_$_Account(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: null == name
+      name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-      balance: null == balance
+      balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as Amount,
@@ -131,17 +127,20 @@ class _$_Account extends _Account {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Account &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.balance, balance) || other.balance == balance));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.balance, balance));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, balance);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(balance));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_AccountCopyWith<_$_Account> get copyWith =>
       __$$_AccountCopyWithImpl<_$_Account>(this, _$identity);
 }

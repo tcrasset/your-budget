@@ -38,8 +38,7 @@ mixin _$AccountDTO {
 abstract class $AccountDTOCopyWith<$Res> {
   factory $AccountDTOCopyWith(
           AccountDTO value, $Res Function(AccountDTO) then) =
-      _$AccountDTOCopyWithImpl<$Res, AccountDTO>;
-  @useResult
+      _$AccountDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -50,36 +49,33 @@ abstract class $AccountDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountDTOCopyWithImpl<$Res, $Val extends AccountDTO>
-    implements $AccountDTOCopyWith<$Res> {
+class _$AccountDTOCopyWithImpl<$Res> implements $AccountDTOCopyWith<$Res> {
   _$AccountDTOCopyWithImpl(this._value, this._then);
 
+  final AccountDTO _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(AccountDTO) _then;
 
-  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? balance = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
+      name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      balance: null == balance
+      balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double,
-    ) as $Val);
+    ));
   }
 }
 
@@ -90,7 +86,6 @@ abstract class _$$_AccountDTOCopyWith<$Res>
           _$_AccountDTO value, $Res Function(_$_AccountDTO) then) =
       __$$_AccountDTOCopyWithImpl<$Res>;
   @override
-  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -101,30 +96,31 @@ abstract class _$$_AccountDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AccountDTOCopyWithImpl<$Res>
-    extends _$AccountDTOCopyWithImpl<$Res, _$_AccountDTO>
+class __$$_AccountDTOCopyWithImpl<$Res> extends _$AccountDTOCopyWithImpl<$Res>
     implements _$$_AccountDTOCopyWith<$Res> {
   __$$_AccountDTOCopyWithImpl(
       _$_AccountDTO _value, $Res Function(_$_AccountDTO) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_AccountDTO));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_AccountDTO get _value => super._value as _$_AccountDTO;
+
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? balance = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? balance = freezed,
   }) {
     return _then(_$_AccountDTO(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
+      name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      balance: null == balance
+      balance: balance == freezed
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as double,
@@ -168,18 +164,21 @@ class _$_AccountDTO extends _AccountDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountDTO &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.balance, balance) || other.balance == balance));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality().equals(other.name, name) &&
+            const DeepCollectionEquality().equals(other.balance, balance));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, balance);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(name),
+      const DeepCollectionEquality().hash(balance));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_AccountDTOCopyWith<_$_AccountDTO> get copyWith =>
       __$$_AccountDTOCopyWithImpl<_$_AccountDTO>(this, _$identity);
 

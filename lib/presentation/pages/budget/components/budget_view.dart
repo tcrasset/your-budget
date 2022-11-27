@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/budget/budget_entry.dart';
 import 'package:your_budget/application/budget/budget_entry_manager_bloc/budget_entry_manager_bloc.dart';
+import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/budget/category_watcher_bloc/category_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 
@@ -27,11 +28,21 @@ class BudgetView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final ScrollController scrollController = useScrollController();
-    return BlocProvider<BudgetEntryManagerBloc>(
-      create: (context) => BudgetEntryManagerBloc(
-        budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
-        budgetDateCubit: context.read<BudgetDateCubit>(),
-      )..add(const BudgetEntryManagerEvent.initialized()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BudgetEntryManagerBloc>(
+          create: (context) => BudgetEntryManagerBloc(
+            budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
+            budgetDateCubit: context.read<BudgetDateCubit>(),
+          )..add(const BudgetEntryManagerEvent.initialized()),
+        ),
+        BlocProvider<BudgetValueWatcherBloc>(
+          create: (context) => BudgetValueWatcherBloc(
+              budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
+              budgetDateCubit: context.read<BudgetDateCubit>())
+            ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(DateTime.now())),
+        ),
+      ],
       child: Scrollbar(
         controller: scrollController,
         child: SingleChildScrollView(
@@ -40,7 +51,7 @@ class BudgetView extends HookWidget {
           child: Builder(
             builder: (context) {
               final subcategoryBlocState = context.watch<SubcategoryWatcherBloc>().state;
-              // final budgetValueState = context.watch<BudgetValueWatcher>().state;
+              final budgetValueState = context.watch<BudgetValueWatcherBloc>().state;
               final categoryBlocState = context.watch<CategoryWatcherBloc>().state;
               final budgetDate = context.watch<BudgetDateCubit>().state;
 

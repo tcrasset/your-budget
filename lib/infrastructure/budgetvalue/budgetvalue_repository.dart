@@ -69,13 +69,20 @@ class SQFliteBudgetValueRepository implements IBudgetValueRepository {
     }
   }
 
-  Future<Either<ValueFailure, List<BudgetValue>>> getAllBudgetValues() async {
+  @override
+  Future<Either<ValueFailure, List<BudgetValue>>> getAllBudgetValues(
+      {required int year, required int month}) async {
     try {
-      const sql = """SELECT * FROM ${DatabaseConstants.budgetValueTable};""";
+      final result = await database!.query(
+        DatabaseConstants.budgetValueTable,
+        where:
+            '${DatabaseConstants.BUDGET_VALUE_YEAR} = ? and ${DatabaseConstants.BUDGET_VALUE_MONTH} = ?',
+        whereArgs: [year, month],
+      );
 
-      final data = await database!.rawQuery(sql);
       final List<BudgetValue> budgetvalues = [];
-      for (final rawBudgetValue in data) {
+
+      for (final rawBudgetValue in result) {
         final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromJson(rawBudgetValue);
         budgetvalues.add(budgetvalueDTO.toDomain());
       }
@@ -87,8 +94,9 @@ class SQFliteBudgetValueRepository implements IBudgetValueRepository {
   }
 
   @override
-  Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues() {
-    return getAllBudgetValues().asStream();
+  Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues(
+      {required int year, required int month}) {
+    return getAllBudgetValues(year: year, month: month).asStream();
   }
 
   // @override

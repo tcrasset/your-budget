@@ -29,42 +29,38 @@ mixin _$Subcategory {
 abstract class $SubcategoryCopyWith<$Res> {
   factory $SubcategoryCopyWith(
           Subcategory value, $Res Function(Subcategory) then) =
-      _$SubcategoryCopyWithImpl<$Res, Subcategory>;
-  @useResult
+      _$SubcategoryCopyWithImpl<$Res>;
   $Res call({UniqueId id, UniqueId categoryID, Name name});
 }
 
 /// @nodoc
-class _$SubcategoryCopyWithImpl<$Res, $Val extends Subcategory>
-    implements $SubcategoryCopyWith<$Res> {
+class _$SubcategoryCopyWithImpl<$Res> implements $SubcategoryCopyWith<$Res> {
   _$SubcategoryCopyWithImpl(this._value, this._then);
 
+  final Subcategory _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(Subcategory) _then;
 
-  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? categoryID = null,
-    Object? name = null,
+    Object? id = freezed,
+    Object? categoryID = freezed,
+    Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      categoryID: null == categoryID
+      categoryID: categoryID == freezed
           ? _value.categoryID
           : categoryID // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: null == name
+      name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-    ) as $Val);
+    ));
   }
 }
 
@@ -75,35 +71,35 @@ abstract class _$$_SubcategoryCopyWith<$Res>
           _$_Subcategory value, $Res Function(_$_Subcategory) then) =
       __$$_SubcategoryCopyWithImpl<$Res>;
   @override
-  @useResult
   $Res call({UniqueId id, UniqueId categoryID, Name name});
 }
 
 /// @nodoc
-class __$$_SubcategoryCopyWithImpl<$Res>
-    extends _$SubcategoryCopyWithImpl<$Res, _$_Subcategory>
+class __$$_SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
     implements _$$_SubcategoryCopyWith<$Res> {
   __$$_SubcategoryCopyWithImpl(
       _$_Subcategory _value, $Res Function(_$_Subcategory) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_Subcategory));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_Subcategory get _value => super._value as _$_Subcategory;
+
   @override
   $Res call({
-    Object? id = null,
-    Object? categoryID = null,
-    Object? name = null,
+    Object? id = freezed,
+    Object? categoryID = freezed,
+    Object? name = freezed,
   }) {
     return _then(_$_Subcategory(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      categoryID: null == categoryID
+      categoryID: categoryID == freezed
           ? _value.categoryID
           : categoryID // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: null == name
+      name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
@@ -135,18 +131,21 @@ class _$_Subcategory extends _Subcategory {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Subcategory &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.categoryID, categoryID) ||
-                other.categoryID == categoryID) &&
-            (identical(other.name, name) || other.name == name));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.categoryID, categoryID) &&
+            const DeepCollectionEquality().equals(other.name, name));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, categoryID, name);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(categoryID),
+      const DeepCollectionEquality().hash(name));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_SubcategoryCopyWith<_$_Subcategory> get copyWith =>
       __$$_SubcategoryCopyWithImpl<_$_Subcategory>(this, _$identity);
 }

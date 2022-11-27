@@ -132,7 +132,7 @@ class DatabaseProvider {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.budgetValueTable} (
                         ${DatabaseConstants.BUDGET_VALUE_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
-                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} TEXT NOT NULL,
                         ${DatabaseConstants.BUDGET_VALUE_BUDGETED} FLOAT DEFAULT 0.00,
                         ${DatabaseConstants.BUDGET_VALUE_AVAILABLE} FLOAT DEFAULT 0.00,
                         ${DatabaseConstants.BUDGET_VALUE_YEAR} INTEGER NOT NULL,
@@ -142,7 +142,7 @@ class DatabaseProvider {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.goalTable} (
                         ${DatabaseConstants.GOAL_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
-                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} INTEGER NOT NULL,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} TEXT NOT NULL,
                         ${DatabaseConstants.GOAL_TYPE} INTEGER NOT NULL,
                         ${DatabaseConstants.GOAL_AMOUNT} FLOAT NOT NULL,
                         ${DatabaseConstants.GOAL_YEAR} INTEGER,
@@ -163,13 +163,11 @@ class DatabaseProvider {
   /// their budgetValues.
   Future<void> _createBasicCategories(Database db) async {
     final int categoryId = await _populateCategories(db);
-    final List<int> subcategoryIds =
-        await _populateSubcategories(db, categoryId);
+    final List<int> subcategoryIds = await _populateSubcategories(db, categoryId);
     await _populateBudgetValues(subcategoryIds, db);
   }
 
-  Future<void> _populateBudgetValues(
-      List<int> subcategoryIds, Database db) async {
+  Future<void> _populateBudgetValues(List<int> subcategoryIds, Database db) async {
     const String CREATE_BUDGETVALUE = '''
     INSERT INTO ${DatabaseConstants.budgetValueTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
@@ -186,8 +184,7 @@ class DatabaseProvider {
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
-      final DateTime newDate =
-          Jiffy(startingDate).add(months: monthDifference).dateTime;
+      final DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
       for (final int subcatId in subcategoryIds) {
         await db.rawInsert(CREATE_BUDGETVALUE, [
           subcatId,
@@ -227,8 +224,8 @@ class DatabaseProvider {
 
     final List<int> subcategoryIds = [];
     for (int i = 0; i < subcategoryNames.length; i++) {
-      final int subcategoryId = await db.rawInsert(
-          CREATE_SUBCATEGORY, [categoryId.toString(), subcategoryNames[i]]);
+      final int subcategoryId =
+          await db.rawInsert(CREATE_SUBCATEGORY, [categoryId.toString(), subcategoryNames[i]]);
       subcategoryIds.add(subcategoryId);
     }
     return subcategoryIds;
@@ -245,10 +242,7 @@ class DatabaseProvider {
         getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
     db.rawInsert(
       CREATE_CONSTANT,
-      [
-        DatabaseConstants.STARTING_BUDGET_DATE,
-        startingDateMillisecondsSinceEpoch
-      ],
+      [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch],
     );
 
     /// Create the maximum budget date based on current date + Constants.MAX_NB_MONTHS_AHEAD
@@ -279,8 +273,7 @@ class DatabaseProvider {
 
     if (oldVersion == 1) {
       ///Save account most recently used.
-      db.rawInsert(
-          CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
+      db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
       print("Upgrading from version 1 to version 2");
     }
   }

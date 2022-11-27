@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/budget/category_watcher_bloc/category_watcher_bloc.dart';
 
 // Project imports:
@@ -70,9 +71,9 @@ class MyBudgetState extends State<MyBudget> {
               ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
           ),
           BlocProvider<CategoryWatcherBloc>(
-            create: (context) => CategoryWatcherBloc(
-                categoryRepository: GetIt.instance<ICategoryRepository>())
-              ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
+            create: (context) =>
+                CategoryWatcherBloc(categoryRepository: GetIt.instance<ICategoryRepository>())
+                  ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
           ),
           BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
         ],

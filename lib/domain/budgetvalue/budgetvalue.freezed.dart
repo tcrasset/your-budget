@@ -31,8 +31,7 @@ mixin _$BudgetValue {
 abstract class $BudgetValueCopyWith<$Res> {
   factory $BudgetValueCopyWith(
           BudgetValue value, $Res Function(BudgetValue) then) =
-      _$BudgetValueCopyWithImpl<$Res, BudgetValue>;
-  @useResult
+      _$BudgetValueCopyWithImpl<$Res>;
   $Res call(
       {UniqueId id,
       UniqueId subcategoryId,
@@ -42,46 +41,43 @@ abstract class $BudgetValueCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BudgetValueCopyWithImpl<$Res, $Val extends BudgetValue>
-    implements $BudgetValueCopyWith<$Res> {
+class _$BudgetValueCopyWithImpl<$Res> implements $BudgetValueCopyWith<$Res> {
   _$BudgetValueCopyWithImpl(this._value, this._then);
 
+  final BudgetValue _value;
   // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final $Res Function(BudgetValue) _then;
 
-  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? subcategoryId = null,
-    Object? budgeted = null,
-    Object? available = null,
-    Object? date = null,
+    Object? id = freezed,
+    Object? subcategoryId = freezed,
+    Object? budgeted = freezed,
+    Object? available = freezed,
+    Object? date = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      subcategoryId: null == subcategoryId
+      subcategoryId: subcategoryId == freezed
           ? _value.subcategoryId
           : subcategoryId // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      budgeted: null == budgeted
+      budgeted: budgeted == freezed
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as Amount,
-      available: null == available
+      available: available == freezed
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as Amount,
-      date: null == date
+      date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-    ) as $Val);
+    ));
   }
 }
 
@@ -92,7 +88,6 @@ abstract class _$$_BudgetValueCopyWith<$Res>
           _$_BudgetValue value, $Res Function(_$_BudgetValue) then) =
       __$$_BudgetValueCopyWithImpl<$Res>;
   @override
-  @useResult
   $Res call(
       {UniqueId id,
       UniqueId subcategoryId,
@@ -102,40 +97,41 @@ abstract class _$$_BudgetValueCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BudgetValueCopyWithImpl<$Res>
-    extends _$BudgetValueCopyWithImpl<$Res, _$_BudgetValue>
+class __$$_BudgetValueCopyWithImpl<$Res> extends _$BudgetValueCopyWithImpl<$Res>
     implements _$$_BudgetValueCopyWith<$Res> {
   __$$_BudgetValueCopyWithImpl(
       _$_BudgetValue _value, $Res Function(_$_BudgetValue) _then)
-      : super(_value, _then);
+      : super(_value, (v) => _then(v as _$_BudgetValue));
 
-  @pragma('vm:prefer-inline')
+  @override
+  _$_BudgetValue get _value => super._value as _$_BudgetValue;
+
   @override
   $Res call({
-    Object? id = null,
-    Object? subcategoryId = null,
-    Object? budgeted = null,
-    Object? available = null,
-    Object? date = null,
+    Object? id = freezed,
+    Object? subcategoryId = freezed,
+    Object? budgeted = freezed,
+    Object? available = freezed,
+    Object? date = freezed,
   }) {
     return _then(_$_BudgetValue(
-      id: null == id
+      id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      subcategoryId: null == subcategoryId
+      subcategoryId: subcategoryId == freezed
           ? _value.subcategoryId
           : subcategoryId // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      budgeted: null == budgeted
+      budgeted: budgeted == freezed
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as Amount,
-      available: null == available
+      available: available == freezed
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as Amount,
-      date: null == date
+      date: date == freezed
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -175,23 +171,25 @@ class _$_BudgetValue extends _BudgetValue {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BudgetValue &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.subcategoryId, subcategoryId) ||
-                other.subcategoryId == subcategoryId) &&
-            (identical(other.budgeted, budgeted) ||
-                other.budgeted == budgeted) &&
-            (identical(other.available, available) ||
-                other.available == available) &&
-            (identical(other.date, date) || other.date == date));
+            const DeepCollectionEquality().equals(other.id, id) &&
+            const DeepCollectionEquality()
+                .equals(other.subcategoryId, subcategoryId) &&
+            const DeepCollectionEquality().equals(other.budgeted, budgeted) &&
+            const DeepCollectionEquality().equals(other.available, available) &&
+            const DeepCollectionEquality().equals(other.date, date));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, subcategoryId, budgeted, available, date);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(id),
+      const DeepCollectionEquality().hash(subcategoryId),
+      const DeepCollectionEquality().hash(budgeted),
+      const DeepCollectionEquality().hash(available),
+      const DeepCollectionEquality().hash(date));
 
   @JsonKey(ignore: true)
   @override
-  @pragma('vm:prefer-inline')
   _$$_BudgetValueCopyWith<_$_BudgetValue> get copyWith =>
       __$$_BudgetValueCopyWithImpl<_$_BudgetValue>(this, _$identity);
 }
