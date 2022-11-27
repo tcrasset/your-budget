@@ -10,6 +10,7 @@ import 'package:your_budget/application/budget/category_watcher_bloc/category_wa
 
 // Project imports:
 import 'package:your_budget/application/core/bloc_observer.dart';
+import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/category/i_category_repository.dart';
 import 'package:your_budget/injection_container.dart' as injections;
@@ -73,6 +74,7 @@ class MyBudgetState extends State<MyBudget> {
                 CategoryWatcherBloc(categoryRepository: GetIt.instance<ICategoryRepository>())
                   ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
           ),
+          BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
         ],
         child: Scaffold(
           body: _tabs[_currentTab],
