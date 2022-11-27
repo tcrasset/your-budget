@@ -23,7 +23,8 @@ part 'account_creator_event.dart';
 part 'account_creator_state.dart';
 part 'account_creator_bloc.freezed.dart';
 
-class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> {
+class AccountCreatorBloc
+    extends Bloc<AccountCreatorEvent, AccountCreatorState> {
   final IAccountRepository accountRepository;
   final ITransactionRepository transactionRepository;
   final ISubcategoryRepository subcategoryRepository;
@@ -40,14 +41,17 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
     on<_Saved>(_onSaved);
   }
 
-  void _onBalanceChanged(_BalanceChanged event, Emitter<AccountCreatorState> emit) => emit(
+  void _onBalanceChanged(
+          _BalanceChanged event, Emitter<AccountCreatorState> emit) =>
+      emit(
         state.copyWith(
           account: state.account.copyWith(balance: Amount(event.balance)),
           saveFailureOrSuccessOption: none(),
         ),
       );
 
-  void _onNameChanged(_NameChanged event, Emitter<AccountCreatorState> emit) => emit(
+  void _onNameChanged(_NameChanged event, Emitter<AccountCreatorState> emit) =>
+      emit(
         state.copyWith(
           account: state.account.copyWith(name: Name(event.name)),
           saveFailureOrSuccessOption: none(),

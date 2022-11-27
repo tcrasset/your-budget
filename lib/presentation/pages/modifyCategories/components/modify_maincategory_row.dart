@@ -28,7 +28,8 @@ class ModifyMainCategoryRow extends StatelessWidget {
     );
     if (subcategoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.addSubcategory(subcategoryName: subcategoryName, maincategoryId: cat!.id.toString());
+      appState.addSubcategory(
+          subcategoryName: subcategoryName, maincategoryId: cat!.id.toString());
     }
   }
 
@@ -43,7 +44,8 @@ class ModifyMainCategoryRow extends StatelessWidget {
     );
     if (categoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.updateCategoryName(MainCategory(id: cat!.id, name: categoryName));
+      appState
+          .updateCategoryName(MainCategory(id: cat!.id, name: categoryName));
     }
   }
 

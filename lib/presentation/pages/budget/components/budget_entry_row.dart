@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:your_budget/application/budget/budget_entry.dart';
 import 'package:your_budget/application/budget/budget_entry_manager_bloc/budget_entry_manager_bloc.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
@@ -12,8 +13,8 @@ import 'package:your_budget/presentation/pages/addTransaction/components/currenc
 // Widget containing and displaying the information a subcategory
 
 class BudgetEntryRow extends HookWidget {
-  final Subcategory subcat;
-  const BudgetEntryRow({Key? key, required this.subcat}) : super(key: key);
+  final BudgetEntry entry;
+  const BudgetEntryRow({Key? key, required this.entry}) : super(key: key);
 
   Color? setColor(double availableAmount) {
     if (availableAmount > 0) {
@@ -27,15 +28,15 @@ class BudgetEntryRow extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double budgeted = subcat.budgeted.getOrCrash();
-    final double available = subcat.available.getOrCrash();
+    final double budgeted = entry.budgeted.getOrCrash();
+    final double available = entry.available.getOrCrash();
     final TextEditingController _budgetedController =
         useTextEditingController(text: Constants.CURRENCY_FORMAT.format(budgeted).trim());
     _budgetedController.selection =
         TextSelection.collapsed(offset: _budgetedController.text.length);
 
     useEffect(() {
-      context.read<BudgetEntryManagerBloc>().setSubcategory(subcat);
+      context.read<BudgetEntryManagerBloc>().setBudgetValue(entry);
     }, []);
     final budgetedText = _budgetedController.text;
     final availableText = Constants.CURRENCY_FORMAT.format(available).trim();
@@ -53,7 +54,7 @@ class BudgetEntryRow extends HookWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                subcat.name.getOrCrash(),
+                entry.name.getOrCrash(),
                 style: Constants.SUBCATEGORY_TEXT_STYLE,
               ),
             ),
@@ -90,12 +91,12 @@ class BudgetEntryRow extends HookWidget {
                     ],
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
-                    onSubmitted: (submitted) => context
-                        .read<BudgetEntryManagerBloc>()
-                        .add(BudgetEntryManagerEvent.budgetedChanged(
-                          subcat.id,
-                          currency_utils.parse(submitted).toString(),
-                        )),
+                    onSubmitted: (submitted) => context.read<BudgetEntryManagerBloc>().add(
+                          BudgetEntryManagerEvent.budgetedChanged(
+                            entry.id,
+                            currency_utils.parse(submitted).toString(),
+                          ),
+                        ),
                   ),
                 ),
               ),

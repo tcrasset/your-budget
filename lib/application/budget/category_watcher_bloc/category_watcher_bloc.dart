@@ -12,7 +12,8 @@ part 'category_watcher_event.dart';
 part 'category_watcher_state.dart';
 part 'category_watcher_bloc.freezed.dart';
 
-class CategoryWatcherBloc extends Bloc<CategoryWatcherEvent, CategoryWatcherState> {
+class CategoryWatcherBloc
+    extends Bloc<CategoryWatcherEvent, CategoryWatcherState> {
   final ICategoryRepository categoryRepository;
   StreamSubscription<List<Category>>? _categoryStreamSubscription;
 

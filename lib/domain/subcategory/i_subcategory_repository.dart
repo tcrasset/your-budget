@@ -8,6 +8,7 @@ import 'package:your_budget/domain/core/value_failure.dart';
 // import 'package:your_budget/models/account.dart';
 
 abstract class ISubcategoryRepository {
+  Future<Either<ValueFailure, Subcategory>> get(int id);
   Future<Either<ValueFailure, Unit>> create(Subcategory subcategory);
   Future<Either<ValueFailure, Unit>> update(Subcategory subcategory);
   // Future<Either<ValueFailure, Unit>> delete(NewAccount account);

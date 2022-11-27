@@ -49,11 +49,13 @@ double _parseCurrency(String input) {
   final String absoluteInput = _cleanInput(input);
 
   try {
-    tryParsedAmount = Constants.CURRENCY_FORMAT.parse(absoluteInput); //Can't parse negative amounts
+    tryParsedAmount = Constants.CURRENCY_FORMAT
+        .parse(absoluteInput); //Can't parse negative amounts
   } on FormatException {}
 
   // Use tryParsedAmount if it didn't throw an exception, else use absolute input
-  final String inputToParse = tryParsedAmount != null ? tryParsedAmount.toString() : absoluteInput;
+  final String inputToParse =
+      tryParsedAmount != null ? tryParsedAmount.toString() : absoluteInput;
   return double.tryParse(inputToParse)!;
 }
 

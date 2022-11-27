@@ -32,6 +32,28 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
   }
 
   @override
+  Future<Either<ValueFailure, Subcategory>> get(int id) async {
+    try {
+      final result = await database!.query(
+        DatabaseConstants.subcategoryTable,
+        where: '${DatabaseConstants.SUBCAT_ID} = ?',
+        whereArgs: [id],
+      );
+
+      if (result == null) {
+        return left(ValueFailure.unexpected(message: "Subcategory with id $id not found"));
+      }
+
+      final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromJson(result.first);
+      final Subcategory subcategory = subcategoryDTO.toDomain();
+
+      return right(subcategory);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<ValueFailure, Unit>> create(Subcategory subcategory) async {
     try {
       final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);

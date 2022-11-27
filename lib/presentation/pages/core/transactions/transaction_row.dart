@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:collection/collection.dart' show IterableExtension, UnmodifiableListView;
+import 'package:collection/collection.dart'
+    show IterableExtension, UnmodifiableListView;
 import 'package:provider/provider.dart';
 
 // Project imports:
@@ -29,22 +30,23 @@ class TransactionRow extends StatefulWidget {
 class _TransactionRowState extends State<TransactionRow> {
   @override
   Widget build(BuildContext context) {
-    const TextStyle memoStyle =
-        TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: Colors.grey);
+    const TextStyle memoStyle = TextStyle(
+        fontSize: 16, fontStyle: FontStyle.italic, color: Colors.grey);
 
-    const TextStyle dateStyle =
-        TextStyle(fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
+    const TextStyle dateStyle = TextStyle(
+        fontSize: 14.0, fontStyle: FontStyle.italic, color: Colors.black);
 
-    const TextStyle subcategoryStyle =
-        TextStyle(fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
+    const TextStyle subcategoryStyle = TextStyle(
+        fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.black);
 
     String? subcategoryName = "";
     String? payeeName;
     final TextStyle amountStyle = TextStyle(
       fontSize: 22.0,
       fontWeight: FontWeight.w600,
-      color:
-          widget.moneyTransaction.amount!.isNegative ? Constants.RED_COLOR : Constants.GREEN_COLOR,
+      color: widget.moneyTransaction.amount!.isNegative
+          ? Constants.RED_COLOR
+          : Constants.GREEN_COLOR,
     );
     final AppState appState = Provider.of<AppState>(context, listen: false);
 
@@ -95,14 +97,17 @@ class _TransactionRowState extends State<TransactionRow> {
     final correspondingSubcategory = widget.categories.singleWhereOrNull(
       (cat) => cat is SubCategory && cat.id == widget.moneyTransaction.subcatID,
     );
-    return correspondingSubcategory != null ? correspondingSubcategory.name : "";
+    return correspondingSubcategory != null
+        ? correspondingSubcategory.name
+        : "";
   }
 
   String? _setPayeeName(AppState appState) {
     if (appState.payees.isNotEmpty) {
       // orElse is for starting balance
-      final Payee? payee = appState.payees
-          .singleWhere((payee) => payee!.id == widget.moneyTransaction.payeeID, orElse: () => null);
+      final Payee? payee = appState.payees.singleWhere(
+          (payee) => payee!.id == widget.moneyTransaction.payeeID,
+          orElse: () => null);
 
       return payee != null ? payee.name : "";
     }

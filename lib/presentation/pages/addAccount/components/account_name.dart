@@ -51,7 +51,8 @@ class AccountName extends HookWidget {
       listener: (context, state) {
         _controller
           ..text = getName(state)!
-          ..selection = TextSelection.collapsed(offset: _controller.text.length);
+          ..selection =
+              TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
         return Column(

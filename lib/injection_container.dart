@@ -34,12 +34,15 @@ Future<void> init() async {
   }
   // debugDatabase(database);
   sl.registerSingleton<Database>(database);
-  sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
+  sl.registerLazySingleton<Queries>(
+      () => SQLQueryClass(database: sl<Database>()));
   sl.registerSingleton<ITransactionRepository>(
     SQFliteTransactionRepository(database: sl<Database>()),
   );
-  sl.registerSingleton<IAccountRepository>(SQFliteAccountRepository(database: sl<Database>()));
-  sl.registerSingleton<IPayeeRepository>(SQFlitePayeeRepository(database: sl<Database>()));
+  sl.registerSingleton<IAccountRepository>(
+      SQFliteAccountRepository(database: sl<Database>()));
+  sl.registerSingleton<IPayeeRepository>(
+      SQFlitePayeeRepository(database: sl<Database>()));
   sl.registerSingleton<ISubcategoryRepository>(
     SQFliteSubcategoryRepository(database: sl<Database>()),
   );
@@ -56,7 +59,8 @@ Future<void> init() async {
 }
 
 Future<void> debugDatabase(Database database) async {
-  (await database.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+  (await database.query('sqlite_master', columns: ['type', 'name']))
+      .forEach((row) {
     debugPrint(row.values.toString());
   });
 }

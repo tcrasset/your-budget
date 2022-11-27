@@ -39,8 +39,6 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
           id: UniqueId(),
           categoryID: UniqueId(),
           name: Name(""),
-          budgeted: Amount(""),
-          available: Amount(""),
         ),
         account: Account(id: UniqueId(), name: Name(""), balance: Amount("")),
         payee: Payee(id: UniqueId(), name: Name("")),

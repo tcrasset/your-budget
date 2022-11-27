@@ -35,5 +35,6 @@ abstract class CategoryDTO implements _$CategoryDTO {
     );
   }
 
-  factory CategoryDTO.fromJson(Map<String, dynamic> json) => _$CategoryDTOFromJson(json);
+  factory CategoryDTO.fromJson(Map<String, dynamic> json) =>
+      _$CategoryDTOFromJson(json);
 }

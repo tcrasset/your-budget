@@ -11,7 +11,11 @@ class MainCategoryRow extends StatelessWidget {
   final String name;
   final double budgeted;
   final double available;
-  MainCategoryRow({Key? key, required this.name, required this.budgeted, required this.available})
+  MainCategoryRow(
+      {Key? key,
+      required this.name,
+      required this.budgeted,
+      required this.available})
       : super(key: key);
 
   final mainCategoryDivider = SizedBox(

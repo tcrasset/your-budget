@@ -14,10 +14,12 @@ import 'currency_input_formatter.dart';
 // ignore: avoid_classes_with_only_static_members
 class CurrencyOperations {
   static String addMinusSign(String amount) => "-$amount";
-  static String removeMinusSign(String amount) => amount.replaceAll("-", "").trim();
+  static String removeMinusSign(String amount) =>
+      amount.replaceAll("-", "").trim();
   static String removeSymbol(String amount) =>
       amount.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "").trim();
-  static String formatAmount(double amount) => Constants.CURRENCY_FORMAT.format(amount).trim();
+  static String formatAmount(double amount) =>
+      Constants.CURRENCY_FORMAT.format(amount).trim();
   static final zero = Constants.CURRENCY_FORMAT.format(0);
 }
 
@@ -58,7 +60,8 @@ class AmountInputRow extends HookWidget {
         }
         _controller
           ..text = amount
-          ..selection = TextSelection.collapsed(offset: _controller.text.length);
+          ..selection =
+              TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
         return Row(
@@ -159,7 +162,9 @@ class AmountInput extends StatelessWidget {
       ],
       textInputAction: TextInputAction.done,
       textAlign: TextAlign.right,
-      style: isPositive.value ? _positiveAmountTextStyle : _negativeAmountTextStyle,
+      style: isPositive.value
+          ? _positiveAmountTextStyle
+          : _negativeAmountTextStyle,
       validator: (_) => validateAmount(context),
       onChanged: (value) => changeAmount(context, value),
       onTap: () => changeAmount(context, CurrencyOperations.zero),

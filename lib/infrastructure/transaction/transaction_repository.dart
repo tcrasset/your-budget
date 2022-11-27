@@ -16,11 +16,14 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   SQFliteTransactionRepository({required this.database});
 
   @override
-  Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
+  Future<Either<ValueFailure, Unit>> create(
+      MoneyTransaction transaction) async {
     // TODO: Create generic function for insert
     try {
-      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
-      await database!.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
+      final MoneyTransactionDTO transactionDTO =
+          MoneyTransactionDTO.fromDomain(transaction);
+      await database!.insert(
+          DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
 
       return right(unit);
     } on DatabaseException catch (e) {
@@ -44,9 +47,11 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction) async {
+  Future<Either<ValueFailure, Unit>> update(
+      MoneyTransaction transaction) async {
     try {
-      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
+      final MoneyTransactionDTO transactionDTO =
+          MoneyTransactionDTO.fromDomain(transaction);
       await database!.update(
         DatabaseConstants.moneyTransactionTable,
         transactionDTO.toJson(),
@@ -60,7 +65,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(String id) async {
+  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(
+      String id) async {
     try {
       const sql = """
         SELECT
@@ -91,7 +97,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
 
       final List<MoneyTransaction> transactions = [];
       for (final rawTransaction in data) {
-        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromJson(rawTransaction);
+        final MoneyTransactionDTO transactionDTO =
+            MoneyTransactionDTO.fromJson(rawTransaction);
         transactions.add(transactionDTO.toDomain());
       }
 
@@ -102,7 +109,8 @@ class SQFliteTransactionRepository implements ITransactionRepository {
   }
 
   @override
-  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
+  Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>
+      watchAccountTransactions(
     String accountID,
   ) {
     return getAccountTransactions(accountID).asStream();

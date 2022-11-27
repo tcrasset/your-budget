@@ -21,8 +21,6 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
         required String id, //Do not use id in database
     @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE) required String categoryID,
     @JsonKey(name: DatabaseConstants.SUBCAT_NAME) required String name,
-    @Default(0.00) double budgeted,
-    @Default(0.00) double available,
   }) = _SubcategoryDTO;
 
   factory SubcategoryDTO.fromDomain(Subcategory subcategory) {
@@ -30,8 +28,6 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
       id: subcategory.id.getOrCrash(), //Not used in database
       categoryID: subcategory.categoryID.getOrCrash(),
       name: subcategory.name.getOrCrash(),
-      budgeted: subcategory.budgeted.getOrCrash(),
-      available: subcategory.available.getOrCrash(),
     );
   }
 
@@ -40,8 +36,6 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
       id: UniqueId.fromUniqueString(id),
       categoryID: UniqueId.fromUniqueString(categoryID),
       name: Name(name),
-      budgeted: Amount(budgeted.toString()),
-      available: Amount(available.toString()),
     );
   }
 

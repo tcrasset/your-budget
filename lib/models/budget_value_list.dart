@@ -19,8 +19,9 @@ class BudgetValueList implements ObjectList<BudgetValueLegacy> {
   }
 
   void removeBySubcatId(int? subcatId) {
-    final List<BudgetValueLegacy?> toRemove =
-        _budgetvalues.where((budgetvalue) => budgetvalue!.subcategoryId == subcatId).toList();
+    final List<BudgetValueLegacy?> toRemove = _budgetvalues
+        .where((budgetvalue) => budgetvalue!.subcategoryId == subcatId)
+        .toList();
     toRemove.forEach((budgetvalue) {
       queryContext!.deleteBudgetValue(budgetvalue!.id);
       _budgetvalues.remove(budgetvalue);
@@ -37,7 +38,9 @@ class BudgetValueList implements ObjectList<BudgetValueLegacy> {
   }
 
   List<BudgetValueLegacy?> getAllBySubcatId(int subcatId) {
-    return _budgetvalues.where((budgetvalue) => budgetvalue!.subcategoryId == subcatId).toList();
+    return _budgetvalues
+        .where((budgetvalue) => budgetvalue!.subcategoryId == subcatId)
+        .toList();
   }
 
   void updateBudgetValue({

@@ -38,7 +38,8 @@ class SQFliteAccountRepository implements IAccountRepository {
   Future<Either<ValueFailure, String>> create(Account account) async {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
-      final int id = await database!.insert(DatabaseConstants.accountTable, accountDTO.toJson());
+      final int id = await database!
+          .insert(DatabaseConstants.accountTable, accountDTO.toJson());
 
       return right(id.toString());
     } on DatabaseException catch (e) {

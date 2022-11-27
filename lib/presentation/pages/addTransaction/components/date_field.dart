@@ -20,14 +20,16 @@ class DateField extends StatelessWidget {
   /// Defaults to the current day-year-month.
   Future<void> handleOnTapDate(BuildContext context) async {
     final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
-    final previousDate = context.read<TransactionCreatorBloc>().state.moneyTransaction.date;
+    final previousDate =
+        context.read<TransactionCreatorBloc>().state.moneyTransaction.date;
     final DateTime? picked = await _pickDate(context, previousDate);
     if (picked != null && picked != previousDate) {
       bloc.add(TransactionCreatorEvent.dateChanged(picked));
     }
   }
 
-  Future<DateTime?> _pickDate(BuildContext context, DateTime previousDate) async {
+  Future<DateTime?> _pickDate(
+      BuildContext context, DateTime previousDate) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: getDateYMD(previousDate),

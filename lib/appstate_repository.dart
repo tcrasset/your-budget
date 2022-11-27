@@ -20,7 +20,8 @@ abstract class AppStateRepository {
   /// ,to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory({required String subcategoryName, required String maincategoryId});
+  void addSubcategory(
+      {required String subcategoryName, required String maincategoryId});
 
   /// Add the [transaction] to the [_transactions] list, persist it to
   /// the database and add the transaction amount to the corresponding subcategory.
@@ -44,7 +45,8 @@ abstract class AppStateRepository {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  void updateSubcategoryValues(SubCategory modifiedSubcategory, DateTime dateMofidied);
+  void updateSubcategoryValues(
+      SubCategory modifiedSubcategory, DateTime dateMofidied);
 
   void removeSubcategory(int subcategoryId);
 

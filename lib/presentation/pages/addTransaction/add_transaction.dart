@@ -22,9 +22,10 @@ import 'package:your_budget/presentation/pages/addTransaction/components/payee_f
 import 'package:your_budget/presentation/pages/addTransaction/components/subcategory_field.dart';
 
 class AddTransactionStyles {
-  static const TextStyle unselected =
-      TextStyle(color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
-  static const TextStyle selected = TextStyle(color: Colors.black, fontSize: 16.0);
+  static const TextStyle unselected = TextStyle(
+      color: Colors.grey, fontStyle: FontStyle.italic, fontSize: 16.0);
+  static const TextStyle selected =
+      TextStyle(color: Colors.black, fontSize: 16.0);
 }
 
 class AddTransactionPage extends StatelessWidget {
@@ -34,8 +35,8 @@ class AddTransactionPage extends StatelessWidget {
     );
 
     if (message == null) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
   }
 
   @override
@@ -56,9 +57,11 @@ class AddTransactionPage extends StatelessWidget {
           ],
         ),
         body: BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
-          listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+          listenWhen: (p, c) =>
+              p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
           listener: (context, state) {
-            TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
+            TransactionCreatorBloc bloc =
+                context.read<TransactionCreatorBloc>();
             state.saveFailureOrSuccessOption.fold(
               () /*None*/ {},
               (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
@@ -72,8 +75,9 @@ class AddTransactionPage extends StatelessWidget {
           buildWhen: (p, c) => p.isSaving != c.isSaving,
           builder: (context, state) {
             return Form(
-              autovalidateMode:
-                  state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+              autovalidateMode: state.showErrorMessages
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
               child: SingleChildScrollView(
                 child: Column(
                   children: [
@@ -111,8 +115,9 @@ class AddTransactionPage extends StatelessWidget {
   }
 }
 
-void _onAmountChange(BuildContext context, String value) =>
-    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(value));
+void _onAmountChange(BuildContext context, String value) => context
+    .read<TransactionCreatorBloc>()
+    .add(TransactionCreatorEvent.amountChanged(value));
 
 String? _validateAmount(BuildContext context) {
   final state = context.read<TransactionCreatorBloc>().state;

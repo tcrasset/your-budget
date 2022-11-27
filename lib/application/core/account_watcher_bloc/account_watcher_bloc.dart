@@ -15,7 +15,8 @@ part 'account_watcher_event.dart';
 part 'account_watcher_state.dart';
 part 'account_watcher_bloc.freezed.dart';
 
-class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> {
+class AccountWatcherBloc
+    extends Bloc<AccountWatcherEvent, AccountWatcherState> {
   final IAccountRepository accountRepository;
   StreamSubscription<List<Account>>? _accountStreamSubscription;
 
@@ -46,7 +47,8 @@ class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> 
     await _accountStreamSubscription?.cancel();
 
     accountRepository.watchAllAccounts().listen(
-          (failureOrAccounts) => add(AccountWatcherEvent.accountsReceived(failureOrAccounts)),
+          (failureOrAccounts) =>
+              add(AccountWatcherEvent.accountsReceived(failureOrAccounts)),
         );
   }
 

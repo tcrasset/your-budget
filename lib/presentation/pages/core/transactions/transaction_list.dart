@@ -49,7 +49,8 @@ class _TransactionListState extends State<TransactionList> {
           return Card(
             child: TransactionRow(
               transactionsOfAccount[index]!,
-              widget.appState.allCategories as UnmodifiableListView<CategoryLegacy>,
+              widget.appState.allCategories
+                  as UnmodifiableListView<CategoryLegacy>,
               widget.isEditable,
             ),
           );
@@ -69,8 +70,10 @@ List<MoneyTransaction?> _getMoneyTransactions(
   for (final transaction in transactions) {
     final bool isAccountPayee = transaction!.payeeID! < 0;
 
-    final bool currentAccountIsPayeeAccount = -transaction.payeeID! == currentAccountId;
-    final bool currentAccountIsStandardAccount = transaction.accountID == currentAccountId;
+    final bool currentAccountIsPayeeAccount =
+        -transaction.payeeID! == currentAccountId;
+    final bool currentAccountIsStandardAccount =
+        transaction.accountID == currentAccountId;
 
     if ((currentAccountIsStandardAccount && !isAccountPayee) ||
         (currentAccountIsPayeeAccount && isAccountPayee)) {

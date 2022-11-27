@@ -19,56 +19,38 @@ mixin _$BudgetEntryManagerEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
-    required TResult Function(Subcategory subcat) add,
-    required TResult Function(UniqueId id, String name) nameChanged,
     required TResult Function(UniqueId id, String budgeted) budgetedChanged,
-    required TResult Function(UniqueId id, String available) availableChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialized,
-    TResult? Function(Subcategory subcat)? add,
-    TResult? Function(UniqueId id, String name)? nameChanged,
     TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult? Function(UniqueId id, String available)? availableChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(Subcategory subcat)? add,
-    TResult Function(UniqueId id, String name)? nameChanged,
     TResult Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult Function(UniqueId id, String available)? availableChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
-    required TResult Function(_SubcategoryAdded value) add,
-    required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_BudgetedChanged value) budgetedChanged,
-    required TResult Function(_AvailableChanged value) availableChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_SubcategoryAdded value)? add,
-    TResult? Function(_NameChanged value)? nameChanged,
     TResult? Function(_BudgetedChanged value)? budgetedChanged,
-    TResult? Function(_AvailableChanged value)? availableChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
-    TResult Function(_SubcategoryAdded value)? add,
-    TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_BudgetedChanged value)? budgetedChanged,
-    TResult Function(_AvailableChanged value)? availableChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -132,10 +114,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
-    required TResult Function(Subcategory subcat) add,
-    required TResult Function(UniqueId id, String name) nameChanged,
     required TResult Function(UniqueId id, String budgeted) budgetedChanged,
-    required TResult Function(UniqueId id, String available) availableChanged,
   }) {
     return initialized();
   }
@@ -144,10 +123,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialized,
-    TResult? Function(Subcategory subcat)? add,
-    TResult? Function(UniqueId id, String name)? nameChanged,
     TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult? Function(UniqueId id, String available)? availableChanged,
   }) {
     return initialized?.call();
   }
@@ -156,10 +132,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(Subcategory subcat)? add,
-    TResult Function(UniqueId id, String name)? nameChanged,
     TResult Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult Function(UniqueId id, String available)? availableChanged,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -172,10 +145,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
-    required TResult Function(_SubcategoryAdded value) add,
-    required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_BudgetedChanged value) budgetedChanged,
-    required TResult Function(_AvailableChanged value) availableChanged,
   }) {
     return initialized(this);
   }
@@ -184,10 +154,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_SubcategoryAdded value)? add,
-    TResult? Function(_NameChanged value)? nameChanged,
     TResult? Function(_BudgetedChanged value)? budgetedChanged,
-    TResult? Function(_AvailableChanged value)? availableChanged,
   }) {
     return initialized?.call(this);
   }
@@ -196,10 +163,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
-    TResult Function(_SubcategoryAdded value)? add,
-    TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_BudgetedChanged value)? budgetedChanged,
-    TResult Function(_AvailableChanged value)? availableChanged,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -211,329 +175,6 @@ class _$_Initialized implements _Initialized {
 
 abstract class _Initialized implements BudgetEntryManagerEvent {
   const factory _Initialized() = _$_Initialized;
-}
-
-/// @nodoc
-abstract class _$$_SubcategoryAddedCopyWith<$Res> {
-  factory _$$_SubcategoryAddedCopyWith(
-          _$_SubcategoryAdded value, $Res Function(_$_SubcategoryAdded) then) =
-      __$$_SubcategoryAddedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Subcategory subcat});
-
-  $SubcategoryCopyWith<$Res> get subcat;
-}
-
-/// @nodoc
-class __$$_SubcategoryAddedCopyWithImpl<$Res>
-    extends _$BudgetEntryManagerEventCopyWithImpl<$Res, _$_SubcategoryAdded>
-    implements _$$_SubcategoryAddedCopyWith<$Res> {
-  __$$_SubcategoryAddedCopyWithImpl(
-      _$_SubcategoryAdded _value, $Res Function(_$_SubcategoryAdded) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? subcat = null,
-  }) {
-    return _then(_$_SubcategoryAdded(
-      null == subcat
-          ? _value.subcat
-          : subcat // ignore: cast_nullable_to_non_nullable
-              as Subcategory,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $SubcategoryCopyWith<$Res> get subcat {
-    return $SubcategoryCopyWith<$Res>(_value.subcat, (value) {
-      return _then(_value.copyWith(subcat: value));
-    });
-  }
-}
-
-/// @nodoc
-
-class _$_SubcategoryAdded implements _SubcategoryAdded {
-  const _$_SubcategoryAdded(this.subcat);
-
-  @override
-  final Subcategory subcat;
-
-  @override
-  String toString() {
-    return 'BudgetEntryManagerEvent.add(subcat: $subcat)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_SubcategoryAdded &&
-            (identical(other.subcat, subcat) || other.subcat == subcat));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, subcat);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_SubcategoryAddedCopyWith<_$_SubcategoryAdded> get copyWith =>
-      __$$_SubcategoryAddedCopyWithImpl<_$_SubcategoryAdded>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
-    required TResult Function(Subcategory subcat) add,
-    required TResult Function(UniqueId id, String name) nameChanged,
-    required TResult Function(UniqueId id, String budgeted) budgetedChanged,
-    required TResult Function(UniqueId id, String available) availableChanged,
-  }) {
-    return add(subcat);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
-    TResult? Function(Subcategory subcat)? add,
-    TResult? Function(UniqueId id, String name)? nameChanged,
-    TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult? Function(UniqueId id, String available)? availableChanged,
-  }) {
-    return add?.call(subcat);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(Subcategory subcat)? add,
-    TResult Function(UniqueId id, String name)? nameChanged,
-    TResult Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult Function(UniqueId id, String available)? availableChanged,
-    required TResult orElse(),
-  }) {
-    if (add != null) {
-      return add(subcat);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initialized value) initialized,
-    required TResult Function(_SubcategoryAdded value) add,
-    required TResult Function(_NameChanged value) nameChanged,
-    required TResult Function(_BudgetedChanged value) budgetedChanged,
-    required TResult Function(_AvailableChanged value) availableChanged,
-  }) {
-    return add(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_SubcategoryAdded value)? add,
-    TResult? Function(_NameChanged value)? nameChanged,
-    TResult? Function(_BudgetedChanged value)? budgetedChanged,
-    TResult? Function(_AvailableChanged value)? availableChanged,
-  }) {
-    return add?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_SubcategoryAdded value)? add,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BudgetedChanged value)? budgetedChanged,
-    TResult Function(_AvailableChanged value)? availableChanged,
-    required TResult orElse(),
-  }) {
-    if (add != null) {
-      return add(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _SubcategoryAdded implements BudgetEntryManagerEvent {
-  const factory _SubcategoryAdded(final Subcategory subcat) =
-      _$_SubcategoryAdded;
-
-  Subcategory get subcat;
-  @JsonKey(ignore: true)
-  _$$_SubcategoryAddedCopyWith<_$_SubcategoryAdded> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_NameChangedCopyWith<$Res> {
-  factory _$$_NameChangedCopyWith(
-          _$_NameChanged value, $Res Function(_$_NameChanged) then) =
-      __$$_NameChangedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({UniqueId id, String name});
-}
-
-/// @nodoc
-class __$$_NameChangedCopyWithImpl<$Res>
-    extends _$BudgetEntryManagerEventCopyWithImpl<$Res, _$_NameChanged>
-    implements _$$_NameChangedCopyWith<$Res> {
-  __$$_NameChangedCopyWithImpl(
-      _$_NameChanged _value, $Res Function(_$_NameChanged) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? name = null,
-  }) {
-    return _then(_$_NameChanged(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UniqueId,
-      null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_NameChanged implements _NameChanged {
-  const _$_NameChanged(this.id, this.name);
-
-  @override
-  final UniqueId id;
-  @override
-  final String name;
-
-  @override
-  String toString() {
-    return 'BudgetEntryManagerEvent.nameChanged(id: $id, name: $name)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_NameChanged &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id, name);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_NameChangedCopyWith<_$_NameChanged> get copyWith =>
-      __$$_NameChangedCopyWithImpl<_$_NameChanged>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
-    required TResult Function(Subcategory subcat) add,
-    required TResult Function(UniqueId id, String name) nameChanged,
-    required TResult Function(UniqueId id, String budgeted) budgetedChanged,
-    required TResult Function(UniqueId id, String available) availableChanged,
-  }) {
-    return nameChanged(id, name);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
-    TResult? Function(Subcategory subcat)? add,
-    TResult? Function(UniqueId id, String name)? nameChanged,
-    TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult? Function(UniqueId id, String available)? availableChanged,
-  }) {
-    return nameChanged?.call(id, name);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(Subcategory subcat)? add,
-    TResult Function(UniqueId id, String name)? nameChanged,
-    TResult Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult Function(UniqueId id, String available)? availableChanged,
-    required TResult orElse(),
-  }) {
-    if (nameChanged != null) {
-      return nameChanged(id, name);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initialized value) initialized,
-    required TResult Function(_SubcategoryAdded value) add,
-    required TResult Function(_NameChanged value) nameChanged,
-    required TResult Function(_BudgetedChanged value) budgetedChanged,
-    required TResult Function(_AvailableChanged value) availableChanged,
-  }) {
-    return nameChanged(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_SubcategoryAdded value)? add,
-    TResult? Function(_NameChanged value)? nameChanged,
-    TResult? Function(_BudgetedChanged value)? budgetedChanged,
-    TResult? Function(_AvailableChanged value)? availableChanged,
-  }) {
-    return nameChanged?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_SubcategoryAdded value)? add,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BudgetedChanged value)? budgetedChanged,
-    TResult Function(_AvailableChanged value)? availableChanged,
-    required TResult orElse(),
-  }) {
-    if (nameChanged != null) {
-      return nameChanged(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _NameChanged implements BudgetEntryManagerEvent {
-  const factory _NameChanged(final UniqueId id, final String name) =
-      _$_NameChanged;
-
-  UniqueId get id;
-  String get name;
-  @JsonKey(ignore: true)
-  _$$_NameChangedCopyWith<_$_NameChanged> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -610,10 +251,7 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
-    required TResult Function(Subcategory subcat) add,
-    required TResult Function(UniqueId id, String name) nameChanged,
     required TResult Function(UniqueId id, String budgeted) budgetedChanged,
-    required TResult Function(UniqueId id, String available) availableChanged,
   }) {
     return budgetedChanged(id, budgeted);
   }
@@ -622,10 +260,7 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialized,
-    TResult? Function(Subcategory subcat)? add,
-    TResult? Function(UniqueId id, String name)? nameChanged,
     TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult? Function(UniqueId id, String available)? availableChanged,
   }) {
     return budgetedChanged?.call(id, budgeted);
   }
@@ -634,10 +269,7 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(Subcategory subcat)? add,
-    TResult Function(UniqueId id, String name)? nameChanged,
     TResult Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult Function(UniqueId id, String available)? availableChanged,
     required TResult orElse(),
   }) {
     if (budgetedChanged != null) {
@@ -650,10 +282,7 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
-    required TResult Function(_SubcategoryAdded value) add,
-    required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_BudgetedChanged value) budgetedChanged,
-    required TResult Function(_AvailableChanged value) availableChanged,
   }) {
     return budgetedChanged(this);
   }
@@ -662,10 +291,7 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_SubcategoryAdded value)? add,
-    TResult? Function(_NameChanged value)? nameChanged,
     TResult? Function(_BudgetedChanged value)? budgetedChanged,
-    TResult? Function(_AvailableChanged value)? availableChanged,
   }) {
     return budgetedChanged?.call(this);
   }
@@ -674,10 +300,7 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
-    TResult Function(_SubcategoryAdded value)? add,
-    TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_BudgetedChanged value)? budgetedChanged,
-    TResult Function(_AvailableChanged value)? availableChanged,
     required TResult orElse(),
   }) {
     if (budgetedChanged != null) {
@@ -695,168 +318,6 @@ abstract class _BudgetedChanged implements BudgetEntryManagerEvent {
   String get budgeted;
   @JsonKey(ignore: true)
   _$$_BudgetedChangedCopyWith<_$_BudgetedChanged> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_AvailableChangedCopyWith<$Res> {
-  factory _$$_AvailableChangedCopyWith(
-          _$_AvailableChanged value, $Res Function(_$_AvailableChanged) then) =
-      __$$_AvailableChangedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({UniqueId id, String available});
-}
-
-/// @nodoc
-class __$$_AvailableChangedCopyWithImpl<$Res>
-    extends _$BudgetEntryManagerEventCopyWithImpl<$Res, _$_AvailableChanged>
-    implements _$$_AvailableChangedCopyWith<$Res> {
-  __$$_AvailableChangedCopyWithImpl(
-      _$_AvailableChanged _value, $Res Function(_$_AvailableChanged) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? available = null,
-  }) {
-    return _then(_$_AvailableChanged(
-      null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as UniqueId,
-      null == available
-          ? _value.available
-          : available // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_AvailableChanged implements _AvailableChanged {
-  const _$_AvailableChanged(this.id, this.available);
-
-  @override
-  final UniqueId id;
-  @override
-  final String available;
-
-  @override
-  String toString() {
-    return 'BudgetEntryManagerEvent.availableChanged(id: $id, available: $available)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_AvailableChanged &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.available, available) ||
-                other.available == available));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, id, available);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_AvailableChangedCopyWith<_$_AvailableChanged> get copyWith =>
-      __$$_AvailableChangedCopyWithImpl<_$_AvailableChanged>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
-    required TResult Function(Subcategory subcat) add,
-    required TResult Function(UniqueId id, String name) nameChanged,
-    required TResult Function(UniqueId id, String budgeted) budgetedChanged,
-    required TResult Function(UniqueId id, String available) availableChanged,
-  }) {
-    return availableChanged(id, available);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
-    TResult? Function(Subcategory subcat)? add,
-    TResult? Function(UniqueId id, String name)? nameChanged,
-    TResult? Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult? Function(UniqueId id, String available)? availableChanged,
-  }) {
-    return availableChanged?.call(id, available);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(Subcategory subcat)? add,
-    TResult Function(UniqueId id, String name)? nameChanged,
-    TResult Function(UniqueId id, String budgeted)? budgetedChanged,
-    TResult Function(UniqueId id, String available)? availableChanged,
-    required TResult orElse(),
-  }) {
-    if (availableChanged != null) {
-      return availableChanged(id, available);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Initialized value) initialized,
-    required TResult Function(_SubcategoryAdded value) add,
-    required TResult Function(_NameChanged value) nameChanged,
-    required TResult Function(_BudgetedChanged value) budgetedChanged,
-    required TResult Function(_AvailableChanged value) availableChanged,
-  }) {
-    return availableChanged(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Initialized value)? initialized,
-    TResult? Function(_SubcategoryAdded value)? add,
-    TResult? Function(_NameChanged value)? nameChanged,
-    TResult? Function(_BudgetedChanged value)? budgetedChanged,
-    TResult? Function(_AvailableChanged value)? availableChanged,
-  }) {
-    return availableChanged?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_SubcategoryAdded value)? add,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BudgetedChanged value)? budgetedChanged,
-    TResult Function(_AvailableChanged value)? availableChanged,
-    required TResult orElse(),
-  }) {
-    if (availableChanged != null) {
-      return availableChanged(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _AvailableChanged implements BudgetEntryManagerEvent {
-  const factory _AvailableChanged(final UniqueId id, final String available) =
-      _$_AvailableChanged;
-
-  UniqueId get id;
-  String get available;
-  @JsonKey(ignore: true)
-  _$$_AvailableChangedCopyWith<_$_AvailableChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

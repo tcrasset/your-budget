@@ -23,7 +23,8 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<void> debugDatabase() async {
-    (await database!.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+    (await database!.query('sqlite_master', columns: ['type', 'name']))
+        .forEach((row) {
       debugPrint(row.values.toString());
     });
   }
@@ -167,7 +168,8 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<MoneyTransaction> getFirstTransactionOfAccount(int accountId) async {
-    final String sql = '''SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+    final String sql =
+        '''SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
                           WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == $accountId
                           ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} ASC LIMIT 1;''';
     final data = await database!.rawQuery(sql);
@@ -301,7 +303,8 @@ class SQLQueryClass implements Queries {
   ///
 
   @override
-  Future<int> addMoneyTransaction(MoneyTransactionModel moneyTransactionModel) async {
+  Future<int> addMoneyTransaction(
+      MoneyTransactionModel moneyTransactionModel) async {
     final sql = '''INSERT INTO ${DatabaseConstants.moneyTransactionTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
         ${DatabaseConstants.PAYEE_ID_OUTSIDE},
@@ -370,7 +373,8 @@ class SQLQueryClass implements Queries {
 
     final List<dynamic> params = [subcategoryID];
     final result = await database!.rawDelete(sql, params);
-    DatabaseProvider.databaseLog('Delete subcategory', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Delete subcategory', sql, null, result, params);
   }
 
   /// Deletes the [account] of id [account.id] from the database.
@@ -403,7 +407,8 @@ class SQLQueryClass implements Queries {
 
     final List<dynamic> params = [moneytransactionId];
     final result = await database!.rawDelete(sql, params);
-    DatabaseProvider.databaseLog('Delete moneyTransaction', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Delete moneyTransaction', sql, null, result, params);
   }
 
   /// Deletes the [budgetValue] of id [budgetValue.id] from the database.
@@ -414,7 +419,8 @@ class SQLQueryClass implements Queries {
 
     final List<dynamic> params = [budgetValueId];
     final result = await database!.rawDelete(sql, params);
-    DatabaseProvider.databaseLog('Delete budgetvalue', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Delete budgetvalue', sql, null, result, params);
   }
 
   //TODO: Implements other SQL queries
@@ -444,7 +450,8 @@ class SQLQueryClass implements Queries {
 
     final List<dynamic> params = [newName, id];
     final result = await database!.rawUpdate(sql, params);
-    DatabaseProvider.databaseLog('Update subcategory name', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Update subcategory name', sql, null, result, params);
   }
 
   /// Update account with id [account.id] in the database.
@@ -498,7 +505,8 @@ class SQLQueryClass implements Queries {
     ];
 
     final result = await database!.rawUpdate(sql, params);
-    DatabaseProvider.databaseLog('Update budgetValue', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Update budgetValue', sql, null, result, params);
   }
 
   @override
@@ -508,8 +516,10 @@ class SQLQueryClass implements Queries {
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.STARTING_BUDGET_DATE}';''';
 
     final data = await database!.rawQuery(sql);
-    int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
-    return DateTime.fromMillisecondsSinceEpoch(startingBudgetDateMillisecondsSinceEpoch);
+    int startingBudgetDateMillisecondsSinceEpoch =
+        int.parse(data[0]['value'].toString());
+    return DateTime.fromMillisecondsSinceEpoch(
+        startingBudgetDateMillisecondsSinceEpoch);
   }
 
   @override
@@ -519,8 +529,10 @@ class SQLQueryClass implements Queries {
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MAX_BUDGET_DATE}';''';
 
     final data = await database!.rawQuery(sql);
-    final int maxBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
-    return DateTime.fromMillisecondsSinceEpoch(maxBudgetDateMillisecondsSinceEpoch);
+    final int maxBudgetDateMillisecondsSinceEpoch =
+        int.parse(data[0]['value'].toString());
+    return DateTime.fromMillisecondsSinceEpoch(
+        maxBudgetDateMillisecondsSinceEpoch);
   }
 
   @override
@@ -532,7 +544,8 @@ class SQLQueryClass implements Queries {
 
     final List<dynamic> params = [newMaxBudgetDate.millisecondsSinceEpoch];
     final result = await database!.rawUpdate(sql, params);
-    DatabaseProvider.databaseLog('Update maxBudgetDate', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Update maxBudgetDate', sql, null, result, params);
   }
 
   @override
@@ -546,7 +559,8 @@ class SQLQueryClass implements Queries {
 
     final List<dynamic> params = [accountId.toString()];
     final result = await database!.rawUpdate(sql, params);
-    DatabaseProvider.databaseLog('Update most recent account used', sql, null, result, params);
+    DatabaseProvider.databaseLog(
+        'Update most recent account used', sql, null, result, params);
   }
 
   @override

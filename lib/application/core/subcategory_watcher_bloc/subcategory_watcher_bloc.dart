@@ -15,7 +15,8 @@ part 'subcategory_watcher_event.dart';
 part 'subcategory_watcher_state.dart';
 part 'subcategory_watcher_bloc.freezed.dart';
 
-class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWatcherState> {
+class SubcategoryWatcherBloc
+    extends Bloc<SubcategoryWatcherEvent, SubcategoryWatcherState> {
   final ISubcategoryRepository subcategoryRepository;
   StreamSubscription<List<Subcategory>>? _subcategoryStreamSubscription;
 
@@ -33,8 +34,9 @@ class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWa
     await _subcategoryStreamSubscription?.cancel();
 
     subcategoryRepository.watchAllSubcategories().listen(
-          (failureOrSubcategories) =>
-              add(SubcategoryWatcherEvent.subcategoriesReceived(failureOrSubcategories)),
+          (failureOrSubcategories) => add(
+              SubcategoryWatcherEvent.subcategoriesReceived(
+                  failureOrSubcategories)),
         );
   }
 

@@ -18,7 +18,8 @@ part 'payee_creator_bloc.freezed.dart';
 
 class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
   final IPayeeRepository payeeRepository;
-  PayeeCreatorBloc({required this.payeeRepository}) : super(PayeeCreatorState.initial()) {
+  PayeeCreatorBloc({required this.payeeRepository})
+      : super(PayeeCreatorState.initial()) {
     on<_Initialized>(_onInitialized);
     on<_NameChanged>(_onNameChanged);
     on<_Saved>(_onSaved);
@@ -27,7 +28,8 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
   void _onInitialized(_Initialized event, Emitter<PayeeCreatorState> emit) {
     final newState = event.initialNameOption.fold(
       () => /*No initial name*/ state,
-      (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
+      (initialName) =>
+          state.copyWith(payee: state.payee.copyWith(name: initialName)),
     );
 
     emit(newState);

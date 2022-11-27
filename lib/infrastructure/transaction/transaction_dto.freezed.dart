@@ -44,10 +44,6 @@ mixin _$MoneyTransactionDTO {
       includeIfNull: false,
       name: DatabaseConstants.CAT_ID_OUTSIDE)
   String get subcatCategoryId => throw _privateConstructorUsedError;
-  @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  double get subcatBudgeted => throw _privateConstructorUsedError;
-  @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  double get subcatAvailable => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
   String get payeeID => throw _privateConstructorUsedError;
   @JsonKey(
@@ -95,10 +91,6 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
           String subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
           String subcatCategoryId,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          double subcatBudgeted,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          double subcatAvailable,
       @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
           String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
@@ -132,8 +124,6 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res, $Val extends MoneyTransactionDTO>
     Object? subcatID = null,
     Object? subcatName = null,
     Object? subcatCategoryId = null,
-    Object? subcatBudgeted = null,
-    Object? subcatAvailable = null,
     Object? payeeID = null,
     Object? payeeName = null,
     Object? accountID = null,
@@ -173,14 +163,6 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res, $Val extends MoneyTransactionDTO>
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatBudgeted: null == subcatBudgeted
-          ? _value.subcatBudgeted
-          : subcatBudgeted // ignore: cast_nullable_to_non_nullable
-              as double,
-      subcatAvailable: null == subcatAvailable
-          ? _value.subcatAvailable
-          : subcatAvailable // ignore: cast_nullable_to_non_nullable
-              as double,
       payeeID: null == payeeID
           ? _value.payeeID
           : payeeID // ignore: cast_nullable_to_non_nullable
@@ -230,10 +212,6 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
           String subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
           String subcatCategoryId,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          double subcatBudgeted,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          double subcatAvailable,
       @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
           String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
@@ -265,8 +243,6 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
     Object? subcatID = null,
     Object? subcatName = null,
     Object? subcatCategoryId = null,
-    Object? subcatBudgeted = null,
-    Object? subcatAvailable = null,
     Object? payeeID = null,
     Object? payeeName = null,
     Object? accountID = null,
@@ -306,14 +282,6 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatBudgeted: null == subcatBudgeted
-          ? _value.subcatBudgeted
-          : subcatBudgeted // ignore: cast_nullable_to_non_nullable
-              as double,
-      subcatAvailable: null == subcatAvailable
-          ? _value.subcatAvailable
-          : subcatAvailable // ignore: cast_nullable_to_non_nullable
-              as double,
       payeeID: null == payeeID
           ? _value.payeeID
           : payeeID // ignore: cast_nullable_to_non_nullable
@@ -358,10 +326,6 @@ class _$_TransactionDTO extends _TransactionDTO {
           required this.subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
           required this.subcatCategoryId,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required this.subcatBudgeted,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required this.subcatAvailable,
       @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
           required this.payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
@@ -410,12 +374,6 @@ class _$_TransactionDTO extends _TransactionDTO {
       name: DatabaseConstants.CAT_ID_OUTSIDE)
   final String subcatCategoryId;
   @override
-  @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  final double subcatBudgeted;
-  @override
-  @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  final double subcatAvailable;
-  @override
   @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
   final String payeeID;
   @override
@@ -440,7 +398,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch, isInitialTransaction: $isInitialTransaction, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, subcatBudgeted: $subcatBudgeted, subcatAvailable: $subcatAvailable, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance)';
+    return 'MoneyTransactionDTO(id: $id, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch, isInitialTransaction: $isInitialTransaction, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance)';
   }
 
   @override
@@ -463,10 +421,6 @@ class _$_TransactionDTO extends _TransactionDTO {
                 other.subcatName == subcatName) &&
             (identical(other.subcatCategoryId, subcatCategoryId) ||
                 other.subcatCategoryId == subcatCategoryId) &&
-            (identical(other.subcatBudgeted, subcatBudgeted) ||
-                other.subcatBudgeted == subcatBudgeted) &&
-            (identical(other.subcatAvailable, subcatAvailable) ||
-                other.subcatAvailable == subcatAvailable) &&
             (identical(other.payeeID, payeeID) || other.payeeID == payeeID) &&
             (identical(other.payeeName, payeeName) ||
                 other.payeeName == payeeName) &&
@@ -490,8 +444,6 @@ class _$_TransactionDTO extends _TransactionDTO {
       subcatID,
       subcatName,
       subcatCategoryId,
-      subcatBudgeted,
-      subcatAvailable,
       payeeID,
       payeeName,
       accountID,
@@ -530,10 +482,6 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
           required final String subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
           required final String subcatCategoryId,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required final double subcatBudgeted,
-      @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-          required final double subcatAvailable,
       @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
           required final String payeeID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
@@ -581,12 +529,6 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       includeIfNull: false,
       name: DatabaseConstants.CAT_ID_OUTSIDE)
   String get subcatCategoryId;
-  @override
-  @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  double get subcatBudgeted;
-  @override
-  @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-  double get subcatAvailable;
   @override
   @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
   String get payeeID;

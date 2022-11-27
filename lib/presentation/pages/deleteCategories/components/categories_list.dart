@@ -25,7 +25,8 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   Widget build(BuildContext context) {
-    final List<CategoryLegacy?> categories = Provider.of<AppState>(context).allCategories;
+    final List<CategoryLegacy?> categories =
+        Provider.of<AppState>(context).allCategories;
     return Scrollbar(
       isAlwaysShown: true,
       controller: _scrollController,

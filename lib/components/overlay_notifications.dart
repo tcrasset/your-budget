@@ -15,7 +15,8 @@ Future<void> showOverlayNotification(BuildContext context, String text) async {
           color: Colors.grey[700]!.withOpacity(0.5),
         ),
         child: Center(
-          child: Text(text, style: const TextStyle(fontSize: 12.0, color: Colors.white)),
+          child: Text(text,
+              style: const TextStyle(fontSize: 12.0, color: Colors.white)),
         ),
       ),
     ),

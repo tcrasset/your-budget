@@ -77,7 +77,8 @@ class MemoField extends HookWidget {
   }
 }
 
-String? getMemo(TransactionCreatorState state) => state.moneyTransaction.memo.value.fold(
+String? getMemo(TransactionCreatorState state) =>
+    state.moneyTransaction.memo.value.fold(
       (_) => null,
       (v) => v,
     );

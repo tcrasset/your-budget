@@ -16,8 +16,6 @@ _$_TransactionDTO _$$_TransactionDTOFromJson(Map<String, dynamic> json) =>
       subcatID: json['subcatID'] as String,
       subcatName: json['subcategoryName'] as String,
       subcatCategoryId: json['categoryID'] as String,
-      subcatBudgeted: (json['subcatBudgeted'] as num?)?.toDouble() ?? 0.0,
-      subcatAvailable: (json['subcatAvailable'] as num?)?.toDouble() ?? 0.0,
       payeeID: json['payeeID'] as String,
       payeeName: json['payeeName'] as String,
       accountID: json['accountID'] as String,
@@ -42,8 +40,6 @@ Map<String, dynamic> _$$_TransactionDTOToJson(_$_TransactionDTO instance) {
   val['subcatID'] = instance.subcatID;
   writeNotNull('subcategoryName', ignore(instance.subcatName));
   writeNotNull('categoryID', ignore(instance.subcatCategoryId));
-  writeNotNull('subcatBudgeted', ignore(instance.subcatBudgeted));
-  writeNotNull('subcatAvailable', ignore(instance.subcatAvailable));
   val['payeeID'] = instance.payeeID;
   writeNotNull('payeeName', ignore(instance.payeeName));
   val['accountID'] = instance.accountID;

@@ -19,8 +19,6 @@ mixin _$Subcategory {
   UniqueId get id => throw _privateConstructorUsedError;
   UniqueId get categoryID => throw _privateConstructorUsedError;
   Name get name => throw _privateConstructorUsedError;
-  Amount get budgeted => throw _privateConstructorUsedError;
-  Amount get available => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SubcategoryCopyWith<Subcategory> get copyWith =>
@@ -33,12 +31,7 @@ abstract class $SubcategoryCopyWith<$Res> {
           Subcategory value, $Res Function(Subcategory) then) =
       _$SubcategoryCopyWithImpl<$Res, Subcategory>;
   @useResult
-  $Res call(
-      {UniqueId id,
-      UniqueId categoryID,
-      Name name,
-      Amount budgeted,
-      Amount available});
+  $Res call({UniqueId id, UniqueId categoryID, Name name});
 }
 
 /// @nodoc
@@ -57,8 +50,6 @@ class _$SubcategoryCopyWithImpl<$Res, $Val extends Subcategory>
     Object? id = null,
     Object? categoryID = null,
     Object? name = null,
-    Object? budgeted = null,
-    Object? available = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -73,14 +64,6 @@ class _$SubcategoryCopyWithImpl<$Res, $Val extends Subcategory>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-      budgeted: null == budgeted
-          ? _value.budgeted
-          : budgeted // ignore: cast_nullable_to_non_nullable
-              as Amount,
-      available: null == available
-          ? _value.available
-          : available // ignore: cast_nullable_to_non_nullable
-              as Amount,
     ) as $Val);
   }
 }
@@ -93,12 +76,7 @@ abstract class _$$_SubcategoryCopyWith<$Res>
       __$$_SubcategoryCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {UniqueId id,
-      UniqueId categoryID,
-      Name name,
-      Amount budgeted,
-      Amount available});
+  $Res call({UniqueId id, UniqueId categoryID, Name name});
 }
 
 /// @nodoc
@@ -115,8 +93,6 @@ class __$$_SubcategoryCopyWithImpl<$Res>
     Object? id = null,
     Object? categoryID = null,
     Object? name = null,
-    Object? budgeted = null,
-    Object? available = null,
   }) {
     return _then(_$_Subcategory(
       id: null == id
@@ -131,14 +107,6 @@ class __$$_SubcategoryCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-      budgeted: null == budgeted
-          ? _value.budgeted
-          : budgeted // ignore: cast_nullable_to_non_nullable
-              as Amount,
-      available: null == available
-          ? _value.available
-          : available // ignore: cast_nullable_to_non_nullable
-              as Amount,
     ));
   }
 }
@@ -147,11 +115,7 @@ class __$$_SubcategoryCopyWithImpl<$Res>
 
 class _$_Subcategory extends _Subcategory {
   const _$_Subcategory(
-      {required this.id,
-      required this.categoryID,
-      required this.name,
-      required this.budgeted,
-      required this.available})
+      {required this.id, required this.categoryID, required this.name})
       : super._();
 
   @override
@@ -160,14 +124,10 @@ class _$_Subcategory extends _Subcategory {
   final UniqueId categoryID;
   @override
   final Name name;
-  @override
-  final Amount budgeted;
-  @override
-  final Amount available;
 
   @override
   String toString() {
-    return 'Subcategory(id: $id, categoryID: $categoryID, name: $name, budgeted: $budgeted, available: $available)';
+    return 'Subcategory(id: $id, categoryID: $categoryID, name: $name)';
   }
 
   @override
@@ -178,16 +138,11 @@ class _$_Subcategory extends _Subcategory {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.categoryID, categoryID) ||
                 other.categoryID == categoryID) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.budgeted, budgeted) ||
-                other.budgeted == budgeted) &&
-            (identical(other.available, available) ||
-                other.available == available));
+            (identical(other.name, name) || other.name == name));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, categoryID, name, budgeted, available);
+  int get hashCode => Object.hash(runtimeType, id, categoryID, name);
 
   @JsonKey(ignore: true)
   @override
@@ -200,9 +155,7 @@ abstract class _Subcategory extends Subcategory {
   const factory _Subcategory(
       {required final UniqueId id,
       required final UniqueId categoryID,
-      required final Name name,
-      required final Amount budgeted,
-      required final Amount available}) = _$_Subcategory;
+      required final Name name}) = _$_Subcategory;
   const _Subcategory._() : super._();
 
   @override
@@ -211,10 +164,6 @@ abstract class _Subcategory extends Subcategory {
   UniqueId get categoryID;
   @override
   Name get name;
-  @override
-  Amount get budgeted;
-  @override
-  Amount get available;
   @override
   @JsonKey(ignore: true)
   _$$_SubcategoryCopyWith<_$_Subcategory> get copyWith =>

@@ -72,7 +72,8 @@ class UncheckedRow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(getDatePhrase(date), textAlign: TextAlign.right, style: dateStyle),
+              Text(getDatePhrase(date),
+                  textAlign: TextAlign.right, style: dateStyle),
               Text(payeeName!)
             ],
           ),

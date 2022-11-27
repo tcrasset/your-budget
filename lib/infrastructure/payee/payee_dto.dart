@@ -35,5 +35,6 @@ abstract class PayeeDTO implements _$PayeeDTO {
     );
   }
 
-  factory PayeeDTO.fromJson(Map<String, dynamic> json) => _$PayeeDTOFromJson(json);
+  factory PayeeDTO.fromJson(Map<String, dynamic> json) =>
+      _$PayeeDTOFromJson(json);
 }

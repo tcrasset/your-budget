@@ -20,7 +20,8 @@ class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
   final IPayeeRepository payeeRepository;
   StreamSubscription<List<Payee>>? _payeeStreamSubscription;
 
-  PayeeWatcherBloc({required this.payeeRepository}) : super(const PayeeWatcherState.initial()) {
+  PayeeWatcherBloc({required this.payeeRepository})
+      : super(const PayeeWatcherState.initial()) {
     on<_PayeeWatchStarted>(_onPayeeWatchStarted);
     on<_PayeesReceived>(_onPayeesReceived);
   }
@@ -34,15 +35,18 @@ class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
     await _payeeStreamSubscription?.cancel();
 
     payeeRepository.watchAllPayees().listen(
-          (failureOrPayees) => add(PayeeWatcherEvent.payeesReceived(failureOrPayees)),
+          (failureOrPayees) =>
+              add(PayeeWatcherEvent.payeesReceived(failureOrPayees)),
         );
   }
 
-  void _onPayeesReceived(_PayeesReceived event, Emitter<PayeeWatcherState> emit) {
+  void _onPayeesReceived(
+      _PayeesReceived event, Emitter<PayeeWatcherState> emit) {
     var newState = event.failureOrPayees.fold(
       (f) => PayeeWatcherState.loadFailure(f),
       (payees) {
-        payees.sort((a, b) => a.name.getOrCrash().compareTo(b.name.getOrCrash()));
+        payees
+            .sort((a, b) => a.name.getOrCrash().compareTo(b.name.getOrCrash()));
         return PayeeWatcherState.loadSuccess(payees);
       },
     );

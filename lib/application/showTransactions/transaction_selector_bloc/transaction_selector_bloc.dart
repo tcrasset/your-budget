@@ -8,7 +8,8 @@ part 'transaction_selector_event.dart';
 part 'transaction_selector_state.dart';
 part 'transaction_selector_bloc.freezed.dart';
 
-class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, TransactionSelectorState> {
+class TransactionSelectorBloc
+    extends Bloc<TransactionSelectorEvent, TransactionSelectorState> {
   final ITransactionRepository transactionRepository;
   Set<String> selected = {};
   TransactionSelectorBloc({required this.transactionRepository})
@@ -43,7 +44,8 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
       previousSelected.add(event.id);
     }
 
-    final newState = state.copyWith(selectedTransactions: UnmodifiableSetView(previousSelected));
+    final newState = state.copyWith(
+        selectedTransactions: UnmodifiableSetView(previousSelected));
 
     // After the newState is created, we can make the switch back
     selected = Set.from(previousSelected);
@@ -61,7 +63,8 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
 
     emit(state.copyWith(isDeleting: true));
 
-    await Future.forEach(selected, (String id) async => transactionRepository.delete(id));
+    await Future.forEach(
+        selected, (String id) async => transactionRepository.delete(id));
 
     // We have to create a new Set to prevent the one in the state from being modified by reference.
     final newState = state.copyWith(

@@ -32,7 +32,8 @@ class _AboutPageView extends WidgetView<AboutPage, _AboutPageController> {
         title: const Text('About'),
       ),
       body: FutureBuilder<PackageInfo>(
-        future: PackageInfo.fromPlatform(), // a previously-obtained Future<String> or null
+        future: PackageInfo
+            .fromPlatform(), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
           if (snapshot.hasData) {
             return Column(

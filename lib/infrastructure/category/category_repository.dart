@@ -36,7 +36,8 @@ class SQFliteCategoryRepository implements ICategoryRepository {
   Future<Either<ValueFailure, int>> create(Category category) async {
     try {
       final CategoryDTO categoryDTO = CategoryDTO.fromDomain(category);
-      final int id = await database!.insert(DatabaseConstants.categoryTable, categoryDTO.toJson());
+      final int id = await database!
+          .insert(DatabaseConstants.categoryTable, categoryDTO.toJson());
       return right(id);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {

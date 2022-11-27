@@ -38,7 +38,9 @@ class Account {
   }
 
   bool hasSameValues(Account account) {
-    return account.id == id && account.name == name && account.balance == balance;
+    return account.id == id &&
+        account.name == name &&
+        account.balance == balance;
   }
 
   @override

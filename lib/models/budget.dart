@@ -29,12 +29,13 @@ class Budget {
   ///
   /// The contents of MainCategory.subcategories of each MainCategory passed in [maincategories] is not taken
   /// into account and replaced with the corresponding [subcategories] .
-  Budget(
-      List<MainCategory?> maincategories, List<SubCategory?> subcategories, int? month, int? year) {
+  Budget(List<MainCategory?> maincategories, List<SubCategory?> subcategories,
+      int? month, int? year) {
     for (final MainCategory? cat in maincategories) {
       final MainCategory newCat = cat!.copy();
-      final List<SubCategory?> correspondingSubcats =
-          subcategories.where((subcat) => subcat!.parentId == cat.id.toString()).toList();
+      final List<SubCategory?> correspondingSubcats = subcategories
+          .where((subcat) => subcat!.parentId == cat.id.toString())
+          .toList();
       //TODO: Investigate why We make copies of maincategories, but not of subcategories.
       newCat.addMultipleSubcategories(correspondingSubcats);
       this.maincategories.add(newCat);
@@ -61,8 +62,8 @@ class Budget {
   void addSubcategory(SubCategory newSubcat) {
     final SubCategory subcat = newSubcat.copy();
     this.subcategories.add(subcat);
-    final MainCategory cat =
-        maincategories.singleWhere((cat) => cat!.id.toString() == newSubcat.parentId)!;
+    final MainCategory cat = maincategories
+        .singleWhere((cat) => cat!.id.toString() == newSubcat.parentId)!;
     if (!_subcatAlreadyPresentIn(cat, newSubcat)) {
       cat.addSubcategory(subcat);
     }
@@ -74,8 +75,9 @@ class Budget {
   }
 
   bool _subcatAlreadyPresentIn(MainCategory cat, SubCategory subcat) {
-    final SubCategory? presentSubCat = cat.subcategories
-        .singleWhere((thissubcat) => thissubcat!.id == subcat.id, orElse: () => null);
+    final SubCategory? presentSubCat = cat.subcategories.singleWhere(
+        (thissubcat) => thissubcat!.id == subcat.id,
+        orElse: () => null);
     if (presentSubCat == null) return false;
     return true;
   }
@@ -84,26 +86,27 @@ class Budget {
   /// the values of [modifiedSubcategory].
   void updateSubCategory(SubCategory modifiedSubcategory) {
     // Modify subcategory in this.subcategories
-    final SubCategory oldSubcat =
-        subcategories.singleWhere((subcat) => modifiedSubcategory.id == subcat!.id)!;
+    final SubCategory oldSubcat = subcategories
+        .singleWhere((subcat) => modifiedSubcategory.id == subcat!.id)!;
     oldSubcat.update(modifiedSubcategory);
 
     // Update the values inside the corresponding maincategory
-    final MainCategory cat =
-        maincategories.singleWhere((cat) => modifiedSubcategory.parentId == cat!.id.toString())!;
+    final MainCategory cat = maincategories.singleWhere(
+        (cat) => modifiedSubcategory.parentId == cat!.id.toString())!;
 
     cat.updateFields();
     _updateTotalBudgeted();
   }
 
   void updateSubCategoryName({required int? id, required String newName}) {
-    final SubCategory subcat = subcategories.singleWhere((subcat) => subcat!.id == id)!;
+    final SubCategory subcat =
+        subcategories.singleWhere((subcat) => subcat!.id == id)!;
     subcat.name = newName;
   }
 
   void updateMaincategory(MainCategory modifiedMaincategory) {
-    final MainCategory cat =
-        maincategories.singleWhere((cat) => cat!.id == modifiedMaincategory.id)!;
+    final MainCategory cat = maincategories
+        .singleWhere((cat) => cat!.id == modifiedMaincategory.id)!;
     cat.name = modifiedMaincategory.name;
   }
 
@@ -116,7 +119,8 @@ class Budget {
     String field,
     String value,
   ) {
-    final SubCategory? oldSubcat = subcategories.singleWhere((subcat) => subcat!.id == subcatId);
+    final SubCategory? oldSubcat =
+        subcategories.singleWhere((subcat) => subcat!.id == subcatId);
 
     switch (field) {
       case "budgeted":
@@ -134,7 +138,8 @@ class Budget {
         throw Exception();
     }
 
-    final MainCategory cat = maincategories.singleWhere((cat) => cat!.id.toString() == categoryId)!;
+    final MainCategory cat =
+        maincategories.singleWhere((cat) => cat!.id.toString() == categoryId)!;
     cat.updateFields();
     _updateTotalBudgeted();
   }
@@ -175,8 +180,8 @@ class Budget {
   /// Deletes the [deletedSubcategory] from the current Budget.
   void removeSubcategory(int? subcatId, String? catId) {
     subcategories.removeWhere((subcat) => subcat!.id == subcatId);
-    final MainCategory? cat =
-        maincategories.singleWhere((cat) => cat!.id.toString() == catId, orElse: () => null);
+    final MainCategory? cat = maincategories
+        .singleWhere((cat) => cat!.id.toString() == catId, orElse: () => null);
     cat?.removeSubcategory(subcatId);
     _updateTotalBudgeted();
   }

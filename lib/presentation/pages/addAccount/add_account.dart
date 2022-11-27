@@ -27,9 +27,9 @@ class AddAccountPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AccountWatcherBloc>(
-          create: (context) =>
-              AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
-                ..add(const AccountWatcherEvent.watchAccountsStarted()),
+          create: (context) => AccountWatcherBloc(
+              accountRepository: GetIt.instance<IAccountRepository>())
+            ..add(const AccountWatcherEvent.watchAccountsStarted()),
         ),
         BlocProvider<AccountCreatorBloc>(
           create: (_) => AccountCreatorBloc(
@@ -65,7 +65,9 @@ class AddAccountPageScaffold extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            AddAccountForm(textBoxStyle: _textBoxStyle, textBoxDecoration: _textBoxDecoration),
+            AddAccountForm(
+                textBoxStyle: _textBoxStyle,
+                textBoxDecoration: _textBoxDecoration),
             SizedBox(height: 200, child: AccountList()),
           ],
         ),
@@ -101,14 +103,15 @@ class AddAccountForm extends StatelessWidget {
 
     if (message == null) return null;
 
-    return ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
+    return ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
-      listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+      listenWhen: (p, c) =>
+          p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
       listener: (context, state) {
         state.saveFailureOrSuccessOption.fold(
           () /*None*/ {},
@@ -123,12 +126,15 @@ class AddAccountForm extends StatelessWidget {
       buildWhen: (p, c) => p.isSaving != c.isSaving,
       builder: (context, state) {
         return Form(
-          autovalidateMode:
-              state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: state.showErrorMessages
+              ? AutovalidateMode.always
+              : AutovalidateMode.disabled,
           child: Column(
             children: <Widget>[
-              AccountName(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
-              AccountBalance(textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+              AccountName(
+                  textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
+              AccountBalance(
+                  textStyle: _textBoxStyle, boxDecoration: _textBoxDecoration),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(

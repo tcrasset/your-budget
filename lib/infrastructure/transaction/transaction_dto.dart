@@ -44,10 +44,6 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
         required String subcatName,
     @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
         required String subcatCategoryId,
-    @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-        required double subcatBudgeted,
-    @JsonKey(toJson: ignore, includeIfNull: false, defaultValue: 0.00)
-        required double subcatAvailable,
     @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
         required String payeeID,
     @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
@@ -70,8 +66,6 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
       subcatID: transaction.subcategory.id.getOrCrash(),
       subcatName: transaction.subcategory.name.getOrCrash(),
       subcatCategoryId: transaction.subcategory.categoryID.getOrCrash(),
-      subcatBudgeted: transaction.subcategory.budgeted.getOrCrash(),
-      subcatAvailable: transaction.subcategory.available.getOrCrash(),
       payeeID: transaction.payee.id.getOrCrash(),
       payeeName: transaction.payee.name.getOrCrash(),
       accountID: transaction.account.id.getOrCrash(),
@@ -91,8 +85,6 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
         id: UniqueId.fromUniqueString(subcatID),
         categoryID: UniqueId.fromUniqueString(subcatCategoryId),
         name: Name(subcatName),
-        budgeted: Amount(subcatBudgeted.toString()),
-        available: Amount(subcatAvailable.toString()),
       ),
       payee: Payee(
         id: UniqueId.fromUniqueString(payeeID),

@@ -62,7 +62,8 @@ bool isSameMonth(DateTime date1, DateTime date2) {
 
 DateTime addExactEntryTime(DateTime date) {
   final DateTime now = DateTime.now();
-  return DateTime(date.year, date.month, date.day, now.hour, now.minute, now.second);
+  return DateTime(
+      date.year, date.month, date.day, now.hour, now.minute, now.second);
 }
 
 /// Returns whether [s] is a string representation of a number or not.

@@ -55,7 +55,12 @@ class SubCategory extends CategoryLegacy {
 
   /// Creates a copy of this with zero money budgeted.
   SubCategory blank() {
-    return SubCategory(id: id, parentId: parentId, name: name, budgeted: 0.0, available: available);
+    return SubCategory(
+        id: id,
+        parentId: parentId,
+        name: name,
+        budgeted: 0.0,
+        available: available);
   }
 
   /// Creates an exact copy of this.

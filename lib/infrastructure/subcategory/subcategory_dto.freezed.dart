@@ -27,8 +27,6 @@ mixin _$SubcategoryDTO {
   String get categoryID => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
   String get name => throw _privateConstructorUsedError;
-  double get budgeted => throw _privateConstructorUsedError;
-  double get available => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,9 +46,7 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
       @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
           String categoryID,
       @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          String name,
-      double budgeted,
-      double available});
+          String name});
 }
 
 /// @nodoc
@@ -69,8 +65,6 @@ class _$SubcategoryDTOCopyWithImpl<$Res, $Val extends SubcategoryDTO>
     Object? id = null,
     Object? categoryID = null,
     Object? name = null,
-    Object? budgeted = null,
-    Object? available = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -85,14 +79,6 @@ class _$SubcategoryDTOCopyWithImpl<$Res, $Val extends SubcategoryDTO>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      budgeted: null == budgeted
-          ? _value.budgeted
-          : budgeted // ignore: cast_nullable_to_non_nullable
-              as double,
-      available: null == available
-          ? _value.available
-          : available // ignore: cast_nullable_to_non_nullable
-              as double,
     ) as $Val);
   }
 }
@@ -111,9 +97,7 @@ abstract class _$$_SubcategoryDTOCopyWith<$Res>
       @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
           String categoryID,
       @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          String name,
-      double budgeted,
-      double available});
+          String name});
 }
 
 /// @nodoc
@@ -130,8 +114,6 @@ class __$$_SubcategoryDTOCopyWithImpl<$Res>
     Object? id = null,
     Object? categoryID = null,
     Object? name = null,
-    Object? budgeted = null,
-    Object? available = null,
   }) {
     return _then(_$_SubcategoryDTO(
       id: null == id
@@ -146,14 +128,6 @@ class __$$_SubcategoryDTOCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      budgeted: null == budgeted
-          ? _value.budgeted
-          : budgeted // ignore: cast_nullable_to_non_nullable
-              as double,
-      available: null == available
-          ? _value.available
-          : available // ignore: cast_nullable_to_non_nullable
-              as double,
     ));
   }
 }
@@ -167,9 +141,7 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
       @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
           required this.categoryID,
       @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          required this.name,
-      this.budgeted = 0.00,
-      this.available = 0.00})
+          required this.name})
       : super._();
 
   factory _$_SubcategoryDTO.fromJson(Map<String, dynamic> json) =>
@@ -185,16 +157,10 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
   final String name;
-  @override
-  @JsonKey()
-  final double budgeted;
-  @override
-  @JsonKey()
-  final double available;
 
   @override
   String toString() {
-    return 'SubcategoryDTO(id: $id, categoryID: $categoryID, name: $name, budgeted: $budgeted, available: $available)';
+    return 'SubcategoryDTO(id: $id, categoryID: $categoryID, name: $name)';
   }
 
   @override
@@ -205,17 +171,12 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.categoryID, categoryID) ||
                 other.categoryID == categoryID) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.budgeted, budgeted) ||
-                other.budgeted == budgeted) &&
-            (identical(other.available, available) ||
-                other.available == available));
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, categoryID, name, budgeted, available);
+  int get hashCode => Object.hash(runtimeType, id, categoryID, name);
 
   @JsonKey(ignore: true)
   @override
@@ -238,9 +199,7 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
       @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
           required final String categoryID,
       @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          required final String name,
-      final double budgeted,
-      final double available}) = _$_SubcategoryDTO;
+          required final String name}) = _$_SubcategoryDTO;
   const _SubcategoryDTO._() : super._();
 
   factory _SubcategoryDTO.fromJson(Map<String, dynamic> json) =
@@ -255,10 +214,6 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
   String get name;
-  @override
-  double get budgeted;
-  @override
-  double get available;
   @override
   @JsonKey(ignore: true)
   _$$_SubcategoryDTOCopyWith<_$_SubcategoryDTO> get copyWith =>

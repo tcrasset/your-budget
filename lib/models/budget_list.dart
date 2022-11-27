@@ -22,7 +22,8 @@ class BudgetList implements ObjectList<Budget> {
   }
 
   Budget? getByDate(DateTime? date) {
-    return _budgets.singleWhere((budget) => isSameMonth(budget!.date, date!), orElse: () => null);
+    return _budgets.singleWhere((budget) => isSameMonth(budget!.date, date!),
+        orElse: () => null);
   }
 
   void addMaincategory(MainCategory? maincat) {
@@ -72,8 +73,8 @@ class BudgetList implements ObjectList<Budget> {
     int nbNonZero = 0;
 
     _budgets.forEach((budget) {
-      final SubCategory subcat =
-          budget!.subcategories.singleWhere((subcat) => subcat!.id == subcatId)!;
+      final SubCategory subcat = budget!.subcategories
+          .singleWhere((subcat) => subcat!.id == subcatId)!;
       if (subcat.budgeted != 0.00) {
         nbNonZero++;
       }

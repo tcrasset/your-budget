@@ -39,5 +39,6 @@ abstract class AccountDTO implements _$AccountDTO {
     );
   }
 
-  factory AccountDTO.fromJson(Map<String, dynamic> json) => _$AccountDTOFromJson(json);
+  factory AccountDTO.fromJson(Map<String, dynamic> json) =>
+      _$AccountDTOFromJson(json);
 }

@@ -5,12 +5,14 @@ class BudgetDateCubit extends Cubit<DateTime> {
 
   void increment() {
     // ignore: avoid_redundant_argument_values
-    if (state.month == DateTime.december) emit(DateTime(state.year + 1, DateTime.january));
+    if (state.month == DateTime.december)
+      emit(DateTime(state.year + 1, DateTime.january));
     emit(DateTime(state.year, state.month + 1));
   }
 
   void decrement() {
-    if (state.month == DateTime.january) emit(DateTime(state.year - 1, DateTime.december));
+    if (state.month == DateTime.january)
+      emit(DateTime(state.year - 1, DateTime.december));
     emit(DateTime(state.year, state.month - 1));
   }
 }

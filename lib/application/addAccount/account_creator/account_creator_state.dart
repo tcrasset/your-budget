@@ -7,7 +7,8 @@ class AccountCreatorState with _$AccountCreatorState {
     /*required*/ required bool showErrorMessages,
     /*required*/ required bool isSaving,
     /*required*/ required bool isEditing,
-    /*required*/ required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption,
+    /*required*/ required Option<Either<ValueFailure, Unit>>
+        saveFailureOrSuccessOption,
   }) = _AccountCreatorState;
 
   factory AccountCreatorState.initial() => AccountCreatorState(

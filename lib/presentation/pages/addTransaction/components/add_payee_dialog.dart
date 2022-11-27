@@ -14,11 +14,13 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 
-Future<String?> addPayeeDialog({required BuildContext superContext, String? defaultValue}) {
+Future<String?> addPayeeDialog(
+    {required BuildContext superContext, String? defaultValue}) {
   return showDialog(
     context: superContext,
-    builder: (_) => // Provide the existing BLoC instance to the new route (the dialog)
-        BlocProvider<PayeeWatcherBloc>.value(
+    builder:
+        (_) => // Provide the existing BLoC instance to the new route (the dialog)
+            BlocProvider<PayeeWatcherBloc>.value(
       value: BlocProvider.of<PayeeWatcherBloc>(superContext), //
       child: PayeeNameForm(defaultValue: defaultValue!),
     ),
@@ -38,10 +40,13 @@ class PayeeNameForm extends HookWidget {
     _textController.text = _nameIsValid(defaultValue) ? defaultValue : "";
 
     return BlocProvider<PayeeCreatorBloc>(
-      create: (context) => PayeeCreatorBloc(payeeRepository: GetIt.instance<IPayeeRepository>())
-        ..add(PayeeCreatorEvent.initialized(optionOf(_getDefaultName(defaultValue)))),
+      create: (context) =>
+          PayeeCreatorBloc(payeeRepository: GetIt.instance<IPayeeRepository>())
+            ..add(PayeeCreatorEvent.initialized(
+                optionOf(_getDefaultName(defaultValue)))),
       child: BlocConsumer<PayeeCreatorBloc, PayeeCreatorState>(
-        listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+        listenWhen: (p, c) =>
+            p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
         listener: (context, state) {
           state.saveFailureOrSuccessOption.fold(
             () /*None*/ {},
@@ -49,7 +54,9 @@ class PayeeNameForm extends HookWidget {
               (failure) => showErrorSnackbar(failure, context),
               (_) /*Success*/ {
                 // Pop context and refetch the payees
-                context.read<PayeeWatcherBloc>().add(const PayeeWatcherEvent.watchPayeesStarted());
+                context
+                    .read<PayeeWatcherBloc>()
+                    .add(const PayeeWatcherEvent.watchPayeesStarted());
                 Navigator.pop(context); //Temporary fix
               },
             ),
@@ -61,8 +68,9 @@ class PayeeNameForm extends HookWidget {
           return AlertDialog(
             title: const Text("Add new payee"),
             content: Form(
-              autovalidateMode:
-                  state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+              autovalidateMode: state.showErrorMessages
+                  ? AutovalidateMode.always
+                  : AutovalidateMode.disabled,
               child: TextFormField(
                 decoration: InputDecoration(
                   hintText: "Name",
@@ -87,7 +95,8 @@ class PayeeNameForm extends HookWidget {
   }
 }
 
-bool _nameIsValid(String defaultValue) => defaultValue != null && defaultValue.trim() != "";
+bool _nameIsValid(String defaultValue) =>
+    defaultValue != null && defaultValue.trim() != "";
 
 Name? _getDefaultName(String defaultValue) {
   if (_nameIsValid(defaultValue)) {
@@ -136,6 +145,6 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showErrorSnackbar(
 
   if (message == null) return null;
 
-  return ScaffoldMessenger.of(context)
-      .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
+  return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
 }

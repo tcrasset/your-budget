@@ -60,7 +60,8 @@ class BudgetPageState extends ChangeNotifier {
 
   void addDigit(String digit) {
     budgetedText += digit;
-    final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
+    final double amount =
+        CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
     // budgetedController!.updateValue(amount);
     print(budgetedText);
   }
@@ -68,7 +69,8 @@ class BudgetPageState extends ChangeNotifier {
   void removeDigit() {
     try {
       budgetedText = budgetedText.substring(0, budgetedText.length - 1);
-      final double amount = CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
+      final double amount =
+          CurrencyInputFormatter.formatCurrencyToDouble(budgetedText, true);
       // budgetedController!.updateValue(amount);
       print(budgetedText);
     } on RangeError {
@@ -81,8 +83,8 @@ class BudgetPageState extends ChangeNotifier {
     /// but also the available value.
     final AppState appState = Provider.of<AppState>(context, listen: false);
 
-    final SubCategory selectedSubcategory =
-        appState.subcategories.singleWhere((subcat) => subcat!.id == selectedId)!;
+    final SubCategory selectedSubcategory = appState.subcategories
+        .singleWhere((subcat) => subcat!.id == selectedId)!;
 
     // if (budgetedController!.numberValue != selectedSubcategory.budgeted) {
     // final double beforeAfterDifference =

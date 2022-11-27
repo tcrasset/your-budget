@@ -34,7 +34,8 @@ class ShowTransactionPage extends StatelessWidget {
           create: (context) => TransactionWatcherBloc(
             transactionRepository: GetIt.instance<ITransactionRepository>(),
             accountRepository: GetIt.instance<IAccountRepository>(),
-            transactionSelectorBloc: BlocProvider.of<TransactionSelectorBloc>(context),
+            transactionSelectorBloc:
+                BlocProvider.of<TransactionSelectorBloc>(context),
           )..add(const TransactionWatcherEvent.watchTransactionsStarted()),
         )
       ],
@@ -50,7 +51,8 @@ class TransactionScaffold extends StatelessWidget {
   Future<void> handleDeleteTransactions(BuildContext context) async {
     // Delete selected transactions and get back to non-modifying screen
     final bloc = context.read<TransactionSelectorBloc>();
-    final String? shouldDelete = await showDeleteDialog(context, 'Delete selected transactions?');
+    final String? shouldDelete =
+        await showDeleteDialog(context, 'Delete selected transactions?');
 
     if (shouldDelete == null) return;
     bloc.add(const TransactionSelectorEvent.deleteSelected());
@@ -65,12 +67,15 @@ class TransactionScaffold extends StatelessWidget {
           listener: (context, state) {
             final String? errorMessage = state.maybeMap(
               orElse: () => null,
-              loadFailure: (_) => "Failed to load the transactions. Please contact support.",
+              loadFailure: (_) =>
+                  "Failed to load the transactions. Please contact support.",
             );
 
             if (errorMessage != null) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(errorMessage), duration: const Duration(seconds: 1)),
+                SnackBar(
+                    content: Text(errorMessage),
+                    duration: const Duration(seconds: 1)),
               );
             }
           },
@@ -89,8 +94,9 @@ class TransactionScaffold extends StatelessWidget {
                 }
                 return IconButton(
                     icon: Icon(FontAwesomeIcons.trashCan,
-                        color:
-                            state.selectedTransactions.isEmpty ? Colors.grey : Constants.RED_COLOR),
+                        color: state.selectedTransactions.isEmpty
+                            ? Colors.grey
+                            : Constants.RED_COLOR),
                     onPressed: () => state.selectedTransactions.isEmpty
                         ? null
                         : handleDeleteTransactions(context));
@@ -147,7 +153,8 @@ class OptionalTransactionList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (newState) {
             final transactions = newState.transactions;
-            final String accountName = newState.currentAccount?.name.getOrCrash() ?? "No accounts";
+            final String accountName =
+                newState.currentAccount?.name.getOrCrash() ?? "No accounts";
             return SizedBox(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -245,9 +252,8 @@ class CheckboxTransactionListTile extends StatelessWidget {
         (bloc) => bloc.state.selectedTransactions.contains(id));
 
     return CheckboxListTile(
-      onChanged: (_) => context
-          .read<TransactionSelectorBloc>()
-          .add(TransactionSelectorEvent.toggleSelected(transaction.id.getOrCrash())),
+      onChanged: (_) => context.read<TransactionSelectorBloc>().add(
+          TransactionSelectorEvent.toggleSelected(transaction.id.getOrCrash())),
       value: isSelected,
       dense: true,
       selected: isSelected,
@@ -289,7 +295,8 @@ class EmptyTransactionList extends StatelessWidget {
     return const Center(
       child: Text(
         "No transactions logged. Please choose an account.",
-        style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+        style: TextStyle(
+            color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
       ),
     );
   }
@@ -318,7 +325,8 @@ class AccountButtons extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back),
-            onPressed: () => handleButtonOnPressed(context: context, increment: false),
+            onPressed: () =>
+                handleButtonOnPressed(context: context, increment: false),
           ),
           Text(
             accountText,
@@ -326,7 +334,8 @@ class AccountButtons extends StatelessWidget {
           ),
           IconButton(
             icon: const Icon(Icons.arrow_forward),
-            onPressed: () => handleButtonOnPressed(context: context, increment: true),
+            onPressed: () =>
+                handleButtonOnPressed(context: context, increment: true),
           )
         ],
       ),

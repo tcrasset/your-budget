@@ -33,7 +33,8 @@ class AddTransactionField extends StatelessWidget {
       child: RowContainer(
           name: name,
           childWidget: TextFormField(
-            key: Key(value), // hack to rebuild widget if value changes. Can't use controller
+            key: Key(
+                value), // hack to rebuild widget if value changes. Can't use controller
             decoration: const InputDecoration.collapsed(hintText: ""),
             style: value == defaultValue
                 ? AddTransactionStyles.unselected
@@ -83,7 +84,10 @@ class RowContainer extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Expanded(child: childWidget),
-                    if (name == "Date") const Icon(Icons.date_range) else const Icon(Icons.edit),
+                    if (name == "Date")
+                      const Icon(Icons.date_range)
+                    else
+                      const Icon(Icons.edit),
                   ],
                 ),
               ),

@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:your_budget/application/budget/budget_entry.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
+import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/errors.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
@@ -14,65 +17,40 @@ part 'budget_entry_manager_state.dart';
 part 'budget_entry_manager_bloc.freezed.dart';
 
 class BudgetEntryManagerBloc extends Bloc<BudgetEntryManagerEvent, BudgetEntryManagerState> {
-  final ISubcategoryRepository subcategoryRepository;
   final IBudgetValueRepository budgetvalueRepository;
   final BudgetDateCubit budgetDateCubit;
-  Map<UniqueId, Subcategory> subcategories = {};
+  Map<UniqueId, BudgetEntry> budgetentries = {};
 
-  BudgetEntryManagerBloc(
-      {required this.subcategoryRepository,
-      required this.budgetvalueRepository,
-      required this.budgetDateCubit})
+  BudgetEntryManagerBloc({required this.budgetvalueRepository, required this.budgetDateCubit})
       : super(BudgetEntryManagerState._initial()) {
     on<_Initialized>((event, emit) => emit(state));
-    on<_NameChanged>(_onNameChanged);
-    on<_SubcategoryAdded>(_onSubcategoryAdded);
     on<_BudgetedChanged>(_onBudgetedChanged);
-    on<_AvailableChanged>(_onAvailableChanged);
   }
 
-  void setSubcategory(Subcategory subcategory) {
-    subcategories[subcategory.id] = subcategory;
+  void setBudgetValue(BudgetEntry entry) {
+    budgetentries[entry.id] = entry;
   }
 
   void _onBudgetedChanged(_BudgetedChanged event, Emitter<BudgetEntryManagerState> emit) {
-    final Subcategory? newSubcat =
-        subcategories[event.id]?.copyWith(budgeted: Amount(event.budgeted));
-
-    if (newSubcat != null) {
-      subcategoryRepository.update(newSubcat);
-      subcategories[event.id] = newSubcat;
-      emit(state.copyWith(wasModified: true));
-      emit(state.copyWith(wasModified: false));
+    if (!budgetentries.containsKey(event.id)) {
+      throw Exception("Expected ${event.id.getOrCrash()} to be in budgetvalues, not found.");
     }
-  }
 
-  void _onSubcategoryAdded(_SubcategoryAdded event, Emitter<BudgetEntryManagerState> emit) {
-    subcategoryRepository.create(event.subcat);
-    subcategories[event.subcat.id] = event.subcat;
+    final BudgetEntry entry = budgetentries[event.id] as BudgetEntry;
+
+    final newBudgetValue = BudgetValue(
+      id: entry.id,
+      subcategoryId: entry.subcategoryId,
+      budgeted: Amount(event.budgeted),
+      available: entry.available,
+      date: entry.date,
+    );
+
+    budgetvalueRepository.update(newBudgetValue);
+
+    budgetentries[event.id] = entry.copyWith(budgetValue: newBudgetValue);
+
     emit(state.copyWith(wasModified: true));
     emit(state.copyWith(wasModified: false));
-  }
-
-  void _onAvailableChanged(_AvailableChanged event, Emitter<BudgetEntryManagerState> emit) {
-    final Subcategory? newSubcat =
-        subcategories[event.id]?.copyWith(available: Amount(event.available));
-
-    if (newSubcat != null) {
-      subcategoryRepository.update(newSubcat);
-      subcategories[event.id] = newSubcat;
-      emit(state.copyWith(wasModified: true));
-      emit(state.copyWith(wasModified: false));
-    }
-  }
-
-  void _onNameChanged(_NameChanged event, Emitter<BudgetEntryManagerState> emit) {
-    final Subcategory? newSubcat = subcategories[event.id]?.copyWith(name: Name(event.name));
-    if (newSubcat != null) {
-      subcategoryRepository.update(newSubcat);
-      subcategories[event.id] = newSubcat;
-      emit(state.copyWith(wasModified: true));
-      emit(state.copyWith(wasModified: false));
-    }
   }
 }

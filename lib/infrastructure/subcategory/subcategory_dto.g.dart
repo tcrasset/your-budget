@@ -11,8 +11,6 @@ _$_SubcategoryDTO _$$_SubcategoryDTOFromJson(Map<String, dynamic> json) =>
       id: convertToString(json['id'] as int),
       categoryID: json['categoryID'] as String,
       name: json['subcategoryName'] as String,
-      budgeted: (json['budgeted'] as num?)?.toDouble() ?? 0.00,
-      available: (json['available'] as num?)?.toDouble() ?? 0.00,
     );
 
 Map<String, dynamic> _$$_SubcategoryDTOToJson(_$_SubcategoryDTO instance) {
@@ -27,7 +25,5 @@ Map<String, dynamic> _$$_SubcategoryDTOToJson(_$_SubcategoryDTO instance) {
   writeNotNull('id', ignore(instance.id));
   val['categoryID'] = instance.categoryID;
   val['subcategoryName'] = instance.name;
-  val['budgeted'] = instance.budgeted;
-  val['available'] = instance.available;
   return val;
 }

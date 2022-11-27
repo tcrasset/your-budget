@@ -70,9 +70,9 @@ class MyBudgetState extends State<MyBudget> {
               ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
           ),
           BlocProvider<CategoryWatcherBloc>(
-            create: (context) =>
-                CategoryWatcherBloc(categoryRepository: GetIt.instance<ICategoryRepository>())
-                  ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
+            create: (context) => CategoryWatcherBloc(
+                categoryRepository: GetIt.instance<ICategoryRepository>())
+              ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
           ),
           BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
         ],

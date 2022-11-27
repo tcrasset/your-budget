@@ -1,7 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
-Future<String?> showDeleteDialog(BuildContext context, String warningText) async {
+Future<String?> showDeleteDialog(
+    BuildContext context, String warningText) async {
   return showDialog<String>(
     context: context,
     barrierDismissible: false, // user must tap button!
