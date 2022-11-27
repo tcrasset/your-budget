@@ -65,7 +65,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       UnmodifiableListView(transactionList.transactions);
   UnmodifiableListView<Budget?> get budgets => UnmodifiableListView(budgetList.budgets);
   UnmodifiableListView<Goal> get goals => UnmodifiableListView(_goals);
-  UnmodifiableListView<BudgetValue?> get budgetValues =>
+  UnmodifiableListView<BudgetValueLegacy?> get budgetValues =>
       UnmodifiableListView(budgetValueList.budgetvalues);
   Future<Account?> get mostRecentAccount => accountList.getMostRecentAccount();
   Future<Account?> get nextMostRecentAccount async {
@@ -303,7 +303,8 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     ///TODO: THink about removing BudgetValue from appState and only storing it in Budgets
 
     while (date.isBefore(maxBudgetDate)) {
-      final BudgetValue budgetValue = budgetValueList.getByBudget(date, modifiedSubcategory.id)!;
+      final BudgetValueLegacy budgetValue =
+          budgetValueList.getByBudget(date, modifiedSubcategory.id)!;
 
       // Combine the total available money from month to month
       budgetValue.available = lastMonthAvailable! + budgetValue.budgeted!;

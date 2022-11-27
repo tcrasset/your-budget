@@ -7,7 +7,7 @@ import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/creator.dart';
 import 'package:your_budget/models/queries.dart';
 
-class BudgetValueCreator implements Creator<BudgetValue> {
+class BudgetValueCreator implements Creator<BudgetValueLegacy> {
   final Queries? queryContext;
   final int? subcategoryId;
   final double budgeted;
@@ -25,7 +25,7 @@ class BudgetValueCreator implements Creator<BudgetValue> {
   });
 
   @override
-  Future<BudgetValue> create() async {
+  Future<BudgetValueLegacy> create() async {
     final BudgetValueModel budgetValueModel = BudgetValueModel(
       subcategoryId: subcategoryId,
       budgeted: budgeted,
@@ -35,7 +35,7 @@ class BudgetValueCreator implements Creator<BudgetValue> {
     );
 
     final int id = await queryContext!.addBudgetValue(budgetValueModel);
-    return BudgetValue(
+    return BudgetValueLegacy(
       id: id,
       subcategoryId: subcategoryId,
       budgeted: budgeted,

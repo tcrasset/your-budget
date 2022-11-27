@@ -52,12 +52,17 @@ class SQFliteSubcategoryRepository implements ISubcategoryRepository {
       final Map<String, dynamic> values = subcategoryDTO.toJson();
       final id = values.remove("id");
 
-      await database!.update(
+      final result = await database!.update(
         DatabaseConstants.subcategoryTable,
         values,
         where: '${DatabaseConstants.SUBCAT_ID} = ?',
         whereArgs: [id],
       );
+
+      if (result == 0) {
+        return left(ValueFailure.unexpected(message: "Subcategory with id $id not found"));
+      }
+
       return right(unit);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {

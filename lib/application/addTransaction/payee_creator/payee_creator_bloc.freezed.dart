@@ -25,9 +25,9 @@ mixin _$PayeeCreatorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function()? saved,
+    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function()? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$PayeeCreatorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_Saved value)? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,18 @@ mixin _$PayeeCreatorEvent {
 abstract class $PayeeCreatorEventCopyWith<$Res> {
   factory $PayeeCreatorEventCopyWith(
           PayeeCreatorEvent value, $Res Function(PayeeCreatorEvent) then) =
-      _$PayeeCreatorEventCopyWithImpl<$Res>;
+      _$PayeeCreatorEventCopyWithImpl<$Res, PayeeCreatorEvent>;
 }
 
 /// @nodoc
-class _$PayeeCreatorEventCopyWithImpl<$Res>
+class _$PayeeCreatorEventCopyWithImpl<$Res, $Val extends PayeeCreatorEvent>
     implements $PayeeCreatorEventCopyWith<$Res> {
   _$PayeeCreatorEventCopyWithImpl(this._value, this._then);
 
-  final PayeeCreatorEvent _value;
   // ignore: unused_field
-  final $Res Function(PayeeCreatorEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -84,26 +85,25 @@ abstract class _$$_InitializedCopyWith<$Res> {
   factory _$$_InitializedCopyWith(
           _$_Initialized value, $Res Function(_$_Initialized) then) =
       __$$_InitializedCopyWithImpl<$Res>;
+  @useResult
   $Res call({Option<Name> initialNameOption});
 }
 
 /// @nodoc
 class __$$_InitializedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res>
+    extends _$PayeeCreatorEventCopyWithImpl<$Res, _$_Initialized>
     implements _$$_InitializedCopyWith<$Res> {
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
-      : super(_value, (v) => _then(v as _$_Initialized));
+      : super(_value, _then);
 
-  @override
-  _$_Initialized get _value => super._value as _$_Initialized;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? initialNameOption = freezed,
+    Object? initialNameOption = null,
   }) {
     return _then(_$_Initialized(
-      initialNameOption == freezed
+      null == initialNameOption
           ? _value.initialNameOption
           : initialNameOption // ignore: cast_nullable_to_non_nullable
               as Option<Name>,
@@ -129,16 +129,16 @@ class _$_Initialized implements _Initialized {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Initialized &&
-            const DeepCollectionEquality()
-                .equals(other.initialNameOption, initialNameOption));
+            (identical(other.initialNameOption, initialNameOption) ||
+                other.initialNameOption == initialNameOption));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(initialNameOption));
+  int get hashCode => Object.hash(runtimeType, initialNameOption);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InitializedCopyWith<_$_Initialized> get copyWith =>
       __$$_InitializedCopyWithImpl<_$_Initialized>(this, _$identity);
 
@@ -155,9 +155,9 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function()? saved,
+    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function()? saved,
   }) {
     return initialized?.call(initialNameOption);
   }
@@ -189,9 +189,9 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return initialized?.call(this);
   }
@@ -226,26 +226,25 @@ abstract class _$$_NameChangedCopyWith<$Res> {
   factory _$$_NameChangedCopyWith(
           _$_NameChanged value, $Res Function(_$_NameChanged) then) =
       __$$_NameChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String name});
 }
 
 /// @nodoc
 class __$$_NameChangedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res>
+    extends _$PayeeCreatorEventCopyWithImpl<$Res, _$_NameChanged>
     implements _$$_NameChangedCopyWith<$Res> {
   __$$_NameChangedCopyWithImpl(
       _$_NameChanged _value, $Res Function(_$_NameChanged) _then)
-      : super(_value, (v) => _then(v as _$_NameChanged));
+      : super(_value, _then);
 
-  @override
-  _$_NameChanged get _value => super._value as _$_NameChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
   }) {
     return _then(_$_NameChanged(
-      name == freezed
+      null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -271,15 +270,15 @@ class _$_NameChanged implements _NameChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NameChanged &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.name, name) || other.name == name));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NameChangedCopyWith<_$_NameChanged> get copyWith =>
       __$$_NameChangedCopyWithImpl<_$_NameChanged>(this, _$identity);
 
@@ -296,9 +295,9 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function()? saved,
+    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function()? saved,
   }) {
     return nameChanged?.call(name);
   }
@@ -330,9 +329,9 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return nameChanged?.call(this);
   }
@@ -368,13 +367,11 @@ abstract class _$$_SavedCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SavedCopyWithImpl<$Res> extends _$PayeeCreatorEventCopyWithImpl<$Res>
+class __$$_SavedCopyWithImpl<$Res>
+    extends _$PayeeCreatorEventCopyWithImpl<$Res, _$_Saved>
     implements _$$_SavedCopyWith<$Res> {
   __$$_SavedCopyWithImpl(_$_Saved _value, $Res Function(_$_Saved) _then)
-      : super(_value, (v) => _then(v as _$_Saved));
-
-  @override
-  _$_Saved get _value => super._value as _$_Saved;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -409,9 +406,9 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function()? saved,
+    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function()? saved,
   }) {
     return saved?.call();
   }
@@ -443,9 +440,9 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return saved?.call(this);
   }
@@ -487,7 +484,8 @@ mixin _$PayeeCreatorState {
 abstract class $PayeeCreatorStateCopyWith<$Res> {
   factory $PayeeCreatorStateCopyWith(
           PayeeCreatorState value, $Res Function(PayeeCreatorState) then) =
-      _$PayeeCreatorStateCopyWithImpl<$Res>;
+      _$PayeeCreatorStateCopyWithImpl<$Res, PayeeCreatorState>;
+  @useResult
   $Res call(
       {Payee payee,
       bool showErrorMessages,
@@ -499,50 +497,53 @@ abstract class $PayeeCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeCreatorStateCopyWithImpl<$Res>
+class _$PayeeCreatorStateCopyWithImpl<$Res, $Val extends PayeeCreatorState>
     implements $PayeeCreatorStateCopyWith<$Res> {
   _$PayeeCreatorStateCopyWithImpl(this._value, this._then);
 
-  final PayeeCreatorState _value;
   // ignore: unused_field
-  final $Res Function(PayeeCreatorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payee = freezed,
-    Object? showErrorMessages = freezed,
-    Object? isSaving = freezed,
-    Object? isEditing = freezed,
-    Object? saveFailureOrSuccessOption = freezed,
+    Object? payee = null,
+    Object? showErrorMessages = null,
+    Object? isSaving = null,
+    Object? isEditing = null,
+    Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_value.copyWith(
-      payee: payee == freezed
+      payee: null == payee
           ? _value.payee
           : payee // ignore: cast_nullable_to_non_nullable
               as Payee,
-      showErrorMessages: showErrorMessages == freezed
+      showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSaving: isSaving == freezed
+      isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-      saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
+      saveFailureOrSuccessOption: null == saveFailureOrSuccessOption
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<ValueFailure, Unit>>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PayeeCopyWith<$Res> get payee {
     return $PayeeCopyWith<$Res>(_value.payee, (value) {
-      return _then(_value.copyWith(payee: value));
+      return _then(_value.copyWith(payee: value) as $Val);
     });
   }
 }
@@ -554,6 +555,7 @@ abstract class _$$_PayeeCreatorStateCopyWith<$Res>
           $Res Function(_$_PayeeCreatorState) then) =
       __$$_PayeeCreatorStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Payee payee,
       bool showErrorMessages,
@@ -567,41 +569,39 @@ abstract class _$$_PayeeCreatorStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_PayeeCreatorStateCopyWithImpl<$Res>
-    extends _$PayeeCreatorStateCopyWithImpl<$Res>
+    extends _$PayeeCreatorStateCopyWithImpl<$Res, _$_PayeeCreatorState>
     implements _$$_PayeeCreatorStateCopyWith<$Res> {
   __$$_PayeeCreatorStateCopyWithImpl(
       _$_PayeeCreatorState _value, $Res Function(_$_PayeeCreatorState) _then)
-      : super(_value, (v) => _then(v as _$_PayeeCreatorState));
+      : super(_value, _then);
 
-  @override
-  _$_PayeeCreatorState get _value => super._value as _$_PayeeCreatorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payee = freezed,
-    Object? showErrorMessages = freezed,
-    Object? isSaving = freezed,
-    Object? isEditing = freezed,
-    Object? saveFailureOrSuccessOption = freezed,
+    Object? payee = null,
+    Object? showErrorMessages = null,
+    Object? isSaving = null,
+    Object? isEditing = null,
+    Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_$_PayeeCreatorState(
-      payee: payee == freezed
+      payee: null == payee
           ? _value.payee
           : payee // ignore: cast_nullable_to_non_nullable
               as Payee,
-      showErrorMessages: showErrorMessages == freezed
+      showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSaving: isSaving == freezed
+      isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-      saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
+      saveFailureOrSuccessOption: null == saveFailureOrSuccessOption
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<ValueFailure, Unit>>,
@@ -640,26 +640,26 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PayeeCreatorState &&
-            const DeepCollectionEquality().equals(other.payee, payee) &&
-            const DeepCollectionEquality()
-                .equals(other.showErrorMessages, showErrorMessages) &&
-            const DeepCollectionEquality().equals(other.isSaving, isSaving) &&
-            const DeepCollectionEquality().equals(other.isEditing, isEditing) &&
-            const DeepCollectionEquality().equals(
-                other.saveFailureOrSuccessOption, saveFailureOrSuccessOption));
+            (identical(other.payee, payee) || other.payee == payee) &&
+            (identical(other.showErrorMessages, showErrorMessages) ||
+                other.showErrorMessages == showErrorMessages) &&
+            (identical(other.isSaving, isSaving) ||
+                other.isSaving == isSaving) &&
+            (identical(other.isEditing, isEditing) ||
+                other.isEditing == isEditing) &&
+            (identical(other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption) ||
+                other.saveFailureOrSuccessOption ==
+                    saveFailureOrSuccessOption));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(payee),
-      const DeepCollectionEquality().hash(showErrorMessages),
-      const DeepCollectionEquality().hash(isSaving),
-      const DeepCollectionEquality().hash(isEditing),
-      const DeepCollectionEquality().hash(saveFailureOrSuccessOption));
+  int get hashCode => Object.hash(runtimeType, payee, showErrorMessages,
+      isSaving, isEditing, saveFailureOrSuccessOption);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PayeeCreatorStateCopyWith<_$_PayeeCreatorState> get copyWith =>
       __$$_PayeeCreatorStateCopyWithImpl<_$_PayeeCreatorState>(
           this, _$identity);

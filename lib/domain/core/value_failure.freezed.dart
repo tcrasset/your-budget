@@ -29,13 +29,13 @@ mixin _$ValueFailure<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,13 +63,13 @@ mixin _$ValueFailure<T> {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -90,17 +90,18 @@ mixin _$ValueFailure<T> {
 abstract class $ValueFailureCopyWith<T, $Res> {
   factory $ValueFailureCopyWith(
           ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
-      _$ValueFailureCopyWithImpl<T, $Res>;
+      _$ValueFailureCopyWithImpl<T, $Res, ValueFailure<T>>;
 }
 
 /// @nodoc
-class _$ValueFailureCopyWithImpl<T, $Res>
+class _$ValueFailureCopyWithImpl<T, $Res, $Val extends ValueFailure<T>>
     implements $ValueFailureCopyWith<T, $Res> {
   _$ValueFailureCopyWithImpl(this._value, this._then);
 
-  final ValueFailure<T> _value;
   // ignore: unused_field
-  final $Res Function(ValueFailure<T>) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -108,26 +109,25 @@ abstract class _$$InvalidTransactionCopyWith<T, $Res> {
   factory _$$InvalidTransactionCopyWith(_$InvalidTransaction<T> value,
           $Res Function(_$InvalidTransaction<T>) then) =
       __$$InvalidTransactionCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$InvalidTransactionCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$InvalidTransaction<T>>
     implements _$$InvalidTransactionCopyWith<T, $Res> {
   __$$InvalidTransactionCopyWithImpl(_$InvalidTransaction<T> _value,
       $Res Function(_$InvalidTransaction<T>) _then)
-      : super(_value, (v) => _then(v as _$InvalidTransaction<T>));
+      : super(_value, _then);
 
-  @override
-  _$InvalidTransaction<T> get _value => super._value as _$InvalidTransaction<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$InvalidTransaction<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -153,16 +153,16 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InvalidTransaction<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$InvalidTransactionCopyWith<T, _$InvalidTransaction<T>> get copyWith =>
       __$$InvalidTransactionCopyWithImpl<T, _$InvalidTransaction<T>>(
           this, _$identity);
@@ -184,13 +184,13 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return invalidTransaction?.call(failedValue);
   }
@@ -230,13 +230,13 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return invalidTransaction?.call(this);
   }
@@ -275,26 +275,25 @@ abstract class _$$UnexpectedCopyWith<T, $Res> {
   factory _$$UnexpectedCopyWith(
           _$Unexpected<T> value, $Res Function(_$Unexpected<T>) then) =
       __$$UnexpectedCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
 class __$$UnexpectedCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$Unexpected<T>>
     implements _$$UnexpectedCopyWith<T, $Res> {
   __$$UnexpectedCopyWithImpl(
       _$Unexpected<T> _value, $Res Function(_$Unexpected<T>) _then)
-      : super(_value, (v) => _then(v as _$Unexpected<T>));
+      : super(_value, _then);
 
-  @override
-  _$Unexpected<T> get _value => super._value as _$Unexpected<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$Unexpected<T>(
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -320,15 +319,15 @@ class _$Unexpected<T> implements Unexpected<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Unexpected<T> &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UnexpectedCopyWith<T, _$Unexpected<T>> get copyWith =>
       __$$UnexpectedCopyWithImpl<T, _$Unexpected<T>>(this, _$identity);
 
@@ -349,13 +348,13 @@ class _$Unexpected<T> implements Unexpected<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return unexpected?.call(message);
   }
@@ -395,13 +394,13 @@ class _$Unexpected<T> implements Unexpected<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return unexpected?.call(this);
   }
@@ -439,26 +438,25 @@ abstract class _$$_LongNameCopyWith<T, $Res> {
   factory _$$_LongNameCopyWith(
           _$_LongName<T> value, $Res Function(_$_LongName<T>) then) =
       __$$_LongNameCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_LongNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_LongName<T>>
     implements _$$_LongNameCopyWith<T, $Res> {
   __$$_LongNameCopyWithImpl(
       _$_LongName<T> _value, $Res Function(_$_LongName<T>) _then)
-      : super(_value, (v) => _then(v as _$_LongName<T>));
+      : super(_value, _then);
 
-  @override
-  _$_LongName<T> get _value => super._value as _$_LongName<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_LongName<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -484,16 +482,16 @@ class _$_LongName<T> implements _LongName<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LongName<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LongNameCopyWith<T, _$_LongName<T>> get copyWith =>
       __$$_LongNameCopyWithImpl<T, _$_LongName<T>>(this, _$identity);
 
@@ -514,13 +512,13 @@ class _$_LongName<T> implements _LongName<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return longName?.call(failedValue);
   }
@@ -560,13 +558,13 @@ class _$_LongName<T> implements _LongName<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return longName?.call(this);
   }
@@ -604,26 +602,25 @@ abstract class _$$_EmptyNameCopyWith<T, $Res> {
   factory _$$_EmptyNameCopyWith(
           _$_EmptyName<T> value, $Res Function(_$_EmptyName<T>) then) =
       __$$_EmptyNameCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_EmptyNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_EmptyName<T>>
     implements _$$_EmptyNameCopyWith<T, $Res> {
   __$$_EmptyNameCopyWithImpl(
       _$_EmptyName<T> _value, $Res Function(_$_EmptyName<T>) _then)
-      : super(_value, (v) => _then(v as _$_EmptyName<T>));
+      : super(_value, _then);
 
-  @override
-  _$_EmptyName<T> get _value => super._value as _$_EmptyName<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_EmptyName<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -649,16 +646,16 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EmptyName<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EmptyNameCopyWith<T, _$_EmptyName<T>> get copyWith =>
       __$$_EmptyNameCopyWithImpl<T, _$_EmptyName<T>>(this, _$identity);
 
@@ -679,13 +676,13 @@ class _$_EmptyName<T> implements _EmptyName<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return emptyName?.call(failedValue);
   }
@@ -725,13 +722,13 @@ class _$_EmptyName<T> implements _EmptyName<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return emptyName?.call(this);
   }
@@ -770,26 +767,25 @@ abstract class _$$_UniqueNameCopyWith<T, $Res> {
   factory _$$_UniqueNameCopyWith(
           _$_UniqueName<T> value, $Res Function(_$_UniqueName<T>) then) =
       __$$_UniqueNameCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_UniqueNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_UniqueName<T>>
     implements _$$_UniqueNameCopyWith<T, $Res> {
   __$$_UniqueNameCopyWithImpl(
       _$_UniqueName<T> _value, $Res Function(_$_UniqueName<T>) _then)
-      : super(_value, (v) => _then(v as _$_UniqueName<T>));
+      : super(_value, _then);
 
-  @override
-  _$_UniqueName<T> get _value => super._value as _$_UniqueName<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_UniqueName<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -815,16 +811,16 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UniqueName<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UniqueNameCopyWith<T, _$_UniqueName<T>> get copyWith =>
       __$$_UniqueNameCopyWithImpl<T, _$_UniqueName<T>>(this, _$identity);
 
@@ -845,13 +841,13 @@ class _$_UniqueName<T> implements _UniqueName<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return uniqueName?.call(failedValue);
   }
@@ -891,13 +887,13 @@ class _$_UniqueName<T> implements _UniqueName<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return uniqueName?.call(this);
   }
@@ -936,26 +932,25 @@ abstract class _$$_InvalidAmountCopyWith<T, $Res> {
   factory _$$_InvalidAmountCopyWith(
           _$_InvalidAmount<T> value, $Res Function(_$_InvalidAmount<T>) then) =
       __$$_InvalidAmountCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_InvalidAmountCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_InvalidAmount<T>>
     implements _$$_InvalidAmountCopyWith<T, $Res> {
   __$$_InvalidAmountCopyWithImpl(
       _$_InvalidAmount<T> _value, $Res Function(_$_InvalidAmount<T>) _then)
-      : super(_value, (v) => _then(v as _$_InvalidAmount<T>));
+      : super(_value, _then);
 
-  @override
-  _$_InvalidAmount<T> get _value => super._value as _$_InvalidAmount<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_InvalidAmount<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -981,16 +976,16 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InvalidAmount<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InvalidAmountCopyWith<T, _$_InvalidAmount<T>> get copyWith =>
       __$$_InvalidAmountCopyWithImpl<T, _$_InvalidAmount<T>>(this, _$identity);
 
@@ -1011,13 +1006,13 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return invalidAmount?.call(failedValue);
   }
@@ -1057,13 +1052,13 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return invalidAmount?.call(this);
   }
@@ -1102,26 +1097,25 @@ abstract class _$$_TooLargeAmountCopyWith<T, $Res> {
   factory _$$_TooLargeAmountCopyWith(_$_TooLargeAmount<T> value,
           $Res Function(_$_TooLargeAmount<T>) then) =
       __$$_TooLargeAmountCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_TooLargeAmountCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_TooLargeAmount<T>>
     implements _$$_TooLargeAmountCopyWith<T, $Res> {
   __$$_TooLargeAmountCopyWithImpl(
       _$_TooLargeAmount<T> _value, $Res Function(_$_TooLargeAmount<T>) _then)
-      : super(_value, (v) => _then(v as _$_TooLargeAmount<T>));
+      : super(_value, _then);
 
-  @override
-  _$_TooLargeAmount<T> get _value => super._value as _$_TooLargeAmount<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_TooLargeAmount<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1147,16 +1141,16 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TooLargeAmount<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TooLargeAmountCopyWith<T, _$_TooLargeAmount<T>> get copyWith =>
       __$$_TooLargeAmountCopyWithImpl<T, _$_TooLargeAmount<T>>(
           this, _$identity);
@@ -1178,13 +1172,13 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
   }) {
     return tooBigAmount?.call(failedValue);
   }
@@ -1224,13 +1218,13 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
   }) {
     return tooBigAmount?.call(this);
   }

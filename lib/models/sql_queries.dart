@@ -103,15 +103,15 @@ class SQLQueryClass implements Queries {
     return transactions;
   }
 
-  /// Returns the list of all [BudgetValue] in the database.
+  /// Returns the list of all [BudgetValueLegacy] in the database.
   @override
-  Future<List<BudgetValue>> getBudgetValues() async {
+  Future<List<BudgetValueLegacy>> getBudgetValues() async {
     final sql = '''SELECT * FROM ${DatabaseConstants.budgetValueTable};''';
     final data = await database!.rawQuery(sql);
 
-    final List<BudgetValue> budgetvalues = [];
+    final List<BudgetValueLegacy> budgetvalues = [];
     for (final node in data) {
-      final budgetvalue = BudgetValue.fromJson(node);
+      final budgetvalue = BudgetValueLegacy.fromJson(node);
       budgetvalues.add(budgetvalue);
     }
 
@@ -252,7 +252,7 @@ class SQLQueryClass implements Queries {
     return id;
   }
 
-  /// Adds the [budgetvalue] of type [BudgetValue] to the database.
+  /// Adds the [budgetvalue] of type [BudgetValueLegacy] to the database.
   @override
   Future<int> addBudgetValue(BudgetValueModel budgetValueModel) async {
     final sql = '''INSERT INTO ${DatabaseConstants.budgetValueTable}
@@ -484,7 +484,7 @@ class SQLQueryClass implements Queries {
   /// Fields that can be updated are [budgetValue.budgeted]
   /// and [budgetValue.available]
   @override
-  Future<void> updateBudgetValue(BudgetValue? budgetValue) async {
+  Future<void> updateBudgetValue(BudgetValueLegacy? budgetValue) async {
     final sql = '''UPDATE ${DatabaseConstants.budgetValueTable}
                 SET ${DatabaseConstants.BUDGET_VALUE_BUDGETED} = ?,
                 ${DatabaseConstants.BUDGET_VALUE_AVAILABLE} = ?

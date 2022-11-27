@@ -35,7 +35,8 @@ mixin _$PayeeDTO {
 /// @nodoc
 abstract class $PayeeDTOCopyWith<$Res> {
   factory $PayeeDTOCopyWith(PayeeDTO value, $Res Function(PayeeDTO) then) =
-      _$PayeeDTOCopyWithImpl<$Res>;
+      _$PayeeDTOCopyWithImpl<$Res, PayeeDTO>;
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -44,28 +45,31 @@ abstract class $PayeeDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PayeeDTOCopyWithImpl<$Res> implements $PayeeDTOCopyWith<$Res> {
+class _$PayeeDTOCopyWithImpl<$Res, $Val extends PayeeDTO>
+    implements $PayeeDTOCopyWith<$Res> {
   _$PayeeDTOCopyWithImpl(this._value, this._then);
 
-  final PayeeDTO _value;
   // ignore: unused_field
-  final $Res Function(PayeeDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -75,6 +79,7 @@ abstract class _$$_PayeeDTOCopyWith<$Res> implements $PayeeDTOCopyWith<$Res> {
           _$_PayeeDTO value, $Res Function(_$_PayeeDTO) then) =
       __$$_PayeeDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -83,26 +88,25 @@ abstract class _$$_PayeeDTOCopyWith<$Res> implements $PayeeDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_PayeeDTOCopyWithImpl<$Res> extends _$PayeeDTOCopyWithImpl<$Res>
+class __$$_PayeeDTOCopyWithImpl<$Res>
+    extends _$PayeeDTOCopyWithImpl<$Res, _$_PayeeDTO>
     implements _$$_PayeeDTOCopyWith<$Res> {
   __$$_PayeeDTOCopyWithImpl(
       _$_PayeeDTO _value, $Res Function(_$_PayeeDTO) _then)
-      : super(_value, (v) => _then(v as _$_PayeeDTO));
+      : super(_value, _then);
 
-  @override
-  _$_PayeeDTO get _value => super._value as _$_PayeeDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
   }) {
     return _then(_$_PayeeDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -141,19 +145,17 @@ class _$_PayeeDTO extends _PayeeDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_PayeeDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PayeeDTOCopyWith<_$_PayeeDTO> get copyWith =>
       __$$_PayeeDTOCopyWithImpl<_$_PayeeDTO>(this, _$identity);
 

@@ -31,7 +31,8 @@ mixin _$Subcategory {
 abstract class $SubcategoryCopyWith<$Res> {
   factory $SubcategoryCopyWith(
           Subcategory value, $Res Function(Subcategory) then) =
-      _$SubcategoryCopyWithImpl<$Res>;
+      _$SubcategoryCopyWithImpl<$Res, Subcategory>;
+  @useResult
   $Res call(
       {UniqueId id,
       UniqueId categoryID,
@@ -41,43 +42,46 @@ abstract class $SubcategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SubcategoryCopyWithImpl<$Res> implements $SubcategoryCopyWith<$Res> {
+class _$SubcategoryCopyWithImpl<$Res, $Val extends Subcategory>
+    implements $SubcategoryCopyWith<$Res> {
   _$SubcategoryCopyWithImpl(this._value, this._then);
 
-  final Subcategory _value;
   // ignore: unused_field
-  final $Res Function(Subcategory) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? categoryID = freezed,
-    Object? name = freezed,
-    Object? budgeted = freezed,
-    Object? available = freezed,
+    Object? id = null,
+    Object? categoryID = null,
+    Object? name = null,
+    Object? budgeted = null,
+    Object? available = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      categoryID: categoryID == freezed
+      categoryID: null == categoryID
           ? _value.categoryID
           : categoryID // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-      budgeted: budgeted == freezed
+      budgeted: null == budgeted
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as Amount,
-      available: available == freezed
+      available: null == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as Amount,
-    ));
+    ) as $Val);
   }
 }
 
@@ -88,6 +92,7 @@ abstract class _$$_SubcategoryCopyWith<$Res>
           _$_Subcategory value, $Res Function(_$_Subcategory) then) =
       __$$_SubcategoryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {UniqueId id,
       UniqueId categoryID,
@@ -97,41 +102,40 @@ abstract class _$$_SubcategoryCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_SubcategoryCopyWithImpl<$Res> extends _$SubcategoryCopyWithImpl<$Res>
+class __$$_SubcategoryCopyWithImpl<$Res>
+    extends _$SubcategoryCopyWithImpl<$Res, _$_Subcategory>
     implements _$$_SubcategoryCopyWith<$Res> {
   __$$_SubcategoryCopyWithImpl(
       _$_Subcategory _value, $Res Function(_$_Subcategory) _then)
-      : super(_value, (v) => _then(v as _$_Subcategory));
+      : super(_value, _then);
 
-  @override
-  _$_Subcategory get _value => super._value as _$_Subcategory;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? categoryID = freezed,
-    Object? name = freezed,
-    Object? budgeted = freezed,
-    Object? available = freezed,
+    Object? id = null,
+    Object? categoryID = null,
+    Object? name = null,
+    Object? budgeted = null,
+    Object? available = null,
   }) {
     return _then(_$_Subcategory(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      categoryID: categoryID == freezed
+      categoryID: null == categoryID
           ? _value.categoryID
           : categoryID // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-      budgeted: budgeted == freezed
+      budgeted: null == budgeted
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as Amount,
-      available: available == freezed
+      available: null == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as Amount,
@@ -171,25 +175,23 @@ class _$_Subcategory extends _Subcategory {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Subcategory &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryID, categoryID) &&
-            const DeepCollectionEquality().equals(other.name, name) &&
-            const DeepCollectionEquality().equals(other.budgeted, budgeted) &&
-            const DeepCollectionEquality().equals(other.available, available));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.categoryID, categoryID) ||
+                other.categoryID == categoryID) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.budgeted, budgeted) ||
+                other.budgeted == budgeted) &&
+            (identical(other.available, available) ||
+                other.available == available));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(categoryID),
-      const DeepCollectionEquality().hash(name),
-      const DeepCollectionEquality().hash(budgeted),
-      const DeepCollectionEquality().hash(available));
+  int get hashCode =>
+      Object.hash(runtimeType, id, categoryID, name, budgeted, available);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SubcategoryCopyWith<_$_Subcategory> get copyWith =>
       __$$_SubcategoryCopyWithImpl<_$_Subcategory>(this, _$identity);
 }

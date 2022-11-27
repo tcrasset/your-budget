@@ -29,13 +29,13 @@ mixin _$TransactionWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
-    TResult Function(
+    TResult? Function()? watchTransactionsStarted,
+    TResult? Function(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
-    TResult Function(bool increment)? cycleAccount,
-    TResult Function(String id)? selectTransaction,
-    TResult Function()? deleteSelectedTransactions,
+    TResult? Function(bool increment)? cycleAccount,
+    TResult? Function(String id)? selectTransaction,
+    TResult? Function()? deleteSelectedTransactions,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,11 +63,11 @@ mixin _$TransactionWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_TransactionsReceived value)? transactionsReceived,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    TResult Function(_TransactionSelected value)? selectTransaction,
-    TResult Function(_DeleteSelectedTransactions value)?
+    TResult? Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult? Function(_TransactionsReceived value)? transactionsReceived,
+    TResult? Function(_CycleAccount value)? cycleAccount,
+    TResult? Function(_TransactionSelected value)? selectTransaction,
+    TResult? Function(_DeleteSelectedTransactions value)?
         deleteSelectedTransactions,
   }) =>
       throw _privateConstructorUsedError;
@@ -88,17 +88,19 @@ mixin _$TransactionWatcherEvent {
 abstract class $TransactionWatcherEventCopyWith<$Res> {
   factory $TransactionWatcherEventCopyWith(TransactionWatcherEvent value,
           $Res Function(TransactionWatcherEvent) then) =
-      _$TransactionWatcherEventCopyWithImpl<$Res>;
+      _$TransactionWatcherEventCopyWithImpl<$Res, TransactionWatcherEvent>;
 }
 
 /// @nodoc
-class _$TransactionWatcherEventCopyWithImpl<$Res>
+class _$TransactionWatcherEventCopyWithImpl<$Res,
+        $Val extends TransactionWatcherEvent>
     implements $TransactionWatcherEventCopyWith<$Res> {
   _$TransactionWatcherEventCopyWithImpl(this._value, this._then);
 
-  final TransactionWatcherEvent _value;
   // ignore: unused_field
-  final $Res Function(TransactionWatcherEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -110,15 +112,12 @@ abstract class _$$_TransactionWatchStartedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionWatchStartedCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res,
+        _$_TransactionWatchStarted>
     implements _$$_TransactionWatchStartedCopyWith<$Res> {
   __$$_TransactionWatchStartedCopyWithImpl(_$_TransactionWatchStarted _value,
       $Res Function(_$_TransactionWatchStarted) _then)
-      : super(_value, (v) => _then(v as _$_TransactionWatchStarted));
-
-  @override
-  _$_TransactionWatchStarted get _value =>
-      super._value as _$_TransactionWatchStarted;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -158,13 +157,13 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
-    TResult Function(
+    TResult? Function()? watchTransactionsStarted,
+    TResult? Function(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
-    TResult Function(bool increment)? cycleAccount,
-    TResult Function(String id)? selectTransaction,
-    TResult Function()? deleteSelectedTransactions,
+    TResult? Function(bool increment)? cycleAccount,
+    TResult? Function(String id)? selectTransaction,
+    TResult? Function()? deleteSelectedTransactions,
   }) {
     return watchTransactionsStarted?.call();
   }
@@ -204,11 +203,11 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_TransactionsReceived value)? transactionsReceived,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    TResult Function(_TransactionSelected value)? selectTransaction,
-    TResult Function(_DeleteSelectedTransactions value)?
+    TResult? Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult? Function(_TransactionsReceived value)? transactionsReceived,
+    TResult? Function(_CycleAccount value)? cycleAccount,
+    TResult? Function(_TransactionSelected value)? selectTransaction,
+    TResult? Function(_DeleteSelectedTransactions value)?
         deleteSelectedTransactions,
   }) {
     return watchTransactionsStarted?.call(this);
@@ -241,27 +240,26 @@ abstract class _$$_TransactionsReceivedCopyWith<$Res> {
   factory _$$_TransactionsReceivedCopyWith(_$_TransactionsReceived value,
           $Res Function(_$_TransactionsReceived) then) =
       __$$_TransactionsReceivedCopyWithImpl<$Res>;
+  @useResult
   $Res call(
       {Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions});
 }
 
 /// @nodoc
 class __$$_TransactionsReceivedCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res, _$_TransactionsReceived>
     implements _$$_TransactionsReceivedCopyWith<$Res> {
   __$$_TransactionsReceivedCopyWithImpl(_$_TransactionsReceived _value,
       $Res Function(_$_TransactionsReceived) _then)
-      : super(_value, (v) => _then(v as _$_TransactionsReceived));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionsReceived get _value => super._value as _$_TransactionsReceived;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failureOrTransactions = freezed,
+    Object? failureOrTransactions = null,
   }) {
     return _then(_$_TransactionsReceived(
-      failureOrTransactions == freezed
+      null == failureOrTransactions
           ? _value.failureOrTransactions
           : failureOrTransactions // ignore: cast_nullable_to_non_nullable
               as Either<ValueFailure, List<MoneyTransaction>>,
@@ -287,16 +285,16 @@ class _$_TransactionsReceived implements _TransactionsReceived {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionsReceived &&
-            const DeepCollectionEquality()
-                .equals(other.failureOrTransactions, failureOrTransactions));
+            (identical(other.failureOrTransactions, failureOrTransactions) ||
+                other.failureOrTransactions == failureOrTransactions));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failureOrTransactions));
+  int get hashCode => Object.hash(runtimeType, failureOrTransactions);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionsReceivedCopyWith<_$_TransactionsReceived> get copyWith =>
       __$$_TransactionsReceivedCopyWithImpl<_$_TransactionsReceived>(
           this, _$identity);
@@ -318,13 +316,13 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
-    TResult Function(
+    TResult? Function()? watchTransactionsStarted,
+    TResult? Function(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
-    TResult Function(bool increment)? cycleAccount,
-    TResult Function(String id)? selectTransaction,
-    TResult Function()? deleteSelectedTransactions,
+    TResult? Function(bool increment)? cycleAccount,
+    TResult? Function(String id)? selectTransaction,
+    TResult? Function()? deleteSelectedTransactions,
   }) {
     return transactionsReceived?.call(failureOrTransactions);
   }
@@ -364,11 +362,11 @@ class _$_TransactionsReceived implements _TransactionsReceived {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_TransactionsReceived value)? transactionsReceived,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    TResult Function(_TransactionSelected value)? selectTransaction,
-    TResult Function(_DeleteSelectedTransactions value)?
+    TResult? Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult? Function(_TransactionsReceived value)? transactionsReceived,
+    TResult? Function(_CycleAccount value)? cycleAccount,
+    TResult? Function(_TransactionSelected value)? selectTransaction,
+    TResult? Function(_DeleteSelectedTransactions value)?
         deleteSelectedTransactions,
   }) {
     return transactionsReceived?.call(this);
@@ -408,26 +406,25 @@ abstract class _$$_CycleAccountCopyWith<$Res> {
   factory _$$_CycleAccountCopyWith(
           _$_CycleAccount value, $Res Function(_$_CycleAccount) then) =
       __$$_CycleAccountCopyWithImpl<$Res>;
+  @useResult
   $Res call({bool increment});
 }
 
 /// @nodoc
 class __$$_CycleAccountCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res, _$_CycleAccount>
     implements _$$_CycleAccountCopyWith<$Res> {
   __$$_CycleAccountCopyWithImpl(
       _$_CycleAccount _value, $Res Function(_$_CycleAccount) _then)
-      : super(_value, (v) => _then(v as _$_CycleAccount));
+      : super(_value, _then);
 
-  @override
-  _$_CycleAccount get _value => super._value as _$_CycleAccount;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? increment = freezed,
+    Object? increment = null,
   }) {
     return _then(_$_CycleAccount(
-      increment: increment == freezed
+      increment: null == increment
           ? _value.increment
           : increment // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -453,15 +450,16 @@ class _$_CycleAccount implements _CycleAccount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_CycleAccount &&
-            const DeepCollectionEquality().equals(other.increment, increment));
+            (identical(other.increment, increment) ||
+                other.increment == increment));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(increment));
+  int get hashCode => Object.hash(runtimeType, increment);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_CycleAccountCopyWith<_$_CycleAccount> get copyWith =>
       __$$_CycleAccountCopyWithImpl<_$_CycleAccount>(this, _$identity);
 
@@ -482,13 +480,13 @@ class _$_CycleAccount implements _CycleAccount {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
-    TResult Function(
+    TResult? Function()? watchTransactionsStarted,
+    TResult? Function(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
-    TResult Function(bool increment)? cycleAccount,
-    TResult Function(String id)? selectTransaction,
-    TResult Function()? deleteSelectedTransactions,
+    TResult? Function(bool increment)? cycleAccount,
+    TResult? Function(String id)? selectTransaction,
+    TResult? Function()? deleteSelectedTransactions,
   }) {
     return cycleAccount?.call(increment);
   }
@@ -528,11 +526,11 @@ class _$_CycleAccount implements _CycleAccount {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_TransactionsReceived value)? transactionsReceived,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    TResult Function(_TransactionSelected value)? selectTransaction,
-    TResult Function(_DeleteSelectedTransactions value)?
+    TResult? Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult? Function(_TransactionsReceived value)? transactionsReceived,
+    TResult? Function(_CycleAccount value)? cycleAccount,
+    TResult? Function(_TransactionSelected value)? selectTransaction,
+    TResult? Function(_DeleteSelectedTransactions value)?
         deleteSelectedTransactions,
   }) {
     return cycleAccount?.call(this);
@@ -571,26 +569,25 @@ abstract class _$$_TransactionSelectedCopyWith<$Res> {
   factory _$$_TransactionSelectedCopyWith(_$_TransactionSelected value,
           $Res Function(_$_TransactionSelected) then) =
       __$$_TransactionSelectedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String id});
 }
 
 /// @nodoc
 class __$$_TransactionSelectedCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res, _$_TransactionSelected>
     implements _$$_TransactionSelectedCopyWith<$Res> {
   __$$_TransactionSelectedCopyWithImpl(_$_TransactionSelected _value,
       $Res Function(_$_TransactionSelected) _then)
-      : super(_value, (v) => _then(v as _$_TransactionSelected));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionSelected get _value => super._value as _$_TransactionSelected;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
   }) {
     return _then(_$_TransactionSelected(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
@@ -616,15 +613,15 @@ class _$_TransactionSelected implements _TransactionSelected {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionSelected &&
-            const DeepCollectionEquality().equals(other.id, id));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+  int get hashCode => Object.hash(runtimeType, id);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionSelectedCopyWith<_$_TransactionSelected> get copyWith =>
       __$$_TransactionSelectedCopyWithImpl<_$_TransactionSelected>(
           this, _$identity);
@@ -646,13 +643,13 @@ class _$_TransactionSelected implements _TransactionSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
-    TResult Function(
+    TResult? Function()? watchTransactionsStarted,
+    TResult? Function(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
-    TResult Function(bool increment)? cycleAccount,
-    TResult Function(String id)? selectTransaction,
-    TResult Function()? deleteSelectedTransactions,
+    TResult? Function(bool increment)? cycleAccount,
+    TResult? Function(String id)? selectTransaction,
+    TResult? Function()? deleteSelectedTransactions,
   }) {
     return selectTransaction?.call(id);
   }
@@ -692,11 +689,11 @@ class _$_TransactionSelected implements _TransactionSelected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_TransactionsReceived value)? transactionsReceived,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    TResult Function(_TransactionSelected value)? selectTransaction,
-    TResult Function(_DeleteSelectedTransactions value)?
+    TResult? Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult? Function(_TransactionsReceived value)? transactionsReceived,
+    TResult? Function(_CycleAccount value)? cycleAccount,
+    TResult? Function(_TransactionSelected value)? selectTransaction,
+    TResult? Function(_DeleteSelectedTransactions value)?
         deleteSelectedTransactions,
   }) {
     return selectTransaction?.call(this);
@@ -740,16 +737,13 @@ abstract class _$$_DeleteSelectedTransactionsCopyWith<$Res> {
 
 /// @nodoc
 class __$$_DeleteSelectedTransactionsCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
+    extends _$TransactionWatcherEventCopyWithImpl<$Res,
+        _$_DeleteSelectedTransactions>
     implements _$$_DeleteSelectedTransactionsCopyWith<$Res> {
   __$$_DeleteSelectedTransactionsCopyWithImpl(
       _$_DeleteSelectedTransactions _value,
       $Res Function(_$_DeleteSelectedTransactions) _then)
-      : super(_value, (v) => _then(v as _$_DeleteSelectedTransactions));
-
-  @override
-  _$_DeleteSelectedTransactions get _value =>
-      super._value as _$_DeleteSelectedTransactions;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -789,13 +783,13 @@ class _$_DeleteSelectedTransactions implements _DeleteSelectedTransactions {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
-    TResult Function(
+    TResult? Function()? watchTransactionsStarted,
+    TResult? Function(
             Either<ValueFailure, List<MoneyTransaction>> failureOrTransactions)?
         transactionsReceived,
-    TResult Function(bool increment)? cycleAccount,
-    TResult Function(String id)? selectTransaction,
-    TResult Function()? deleteSelectedTransactions,
+    TResult? Function(bool increment)? cycleAccount,
+    TResult? Function(String id)? selectTransaction,
+    TResult? Function()? deleteSelectedTransactions,
   }) {
     return deleteSelectedTransactions?.call();
   }
@@ -835,11 +829,11 @@ class _$_DeleteSelectedTransactions implements _DeleteSelectedTransactions {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_TransactionsReceived value)? transactionsReceived,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    TResult Function(_TransactionSelected value)? selectTransaction,
-    TResult Function(_DeleteSelectedTransactions value)?
+    TResult? Function(_TransactionWatchStarted value)? watchTransactionsStarted,
+    TResult? Function(_TransactionsReceived value)? transactionsReceived,
+    TResult? Function(_CycleAccount value)? cycleAccount,
+    TResult? Function(_TransactionSelected value)? selectTransaction,
+    TResult? Function(_DeleteSelectedTransactions value)?
         deleteSelectedTransactions,
   }) {
     return deleteSelectedTransactions?.call(this);
@@ -882,12 +876,12 @@ mixin _$TransactionWatcherState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
             List<MoneyTransaction> transactions, Account? currentAccount)?
         loadSuccess,
-    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+    TResult? Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -911,10 +905,10 @@ mixin _$TransactionWatcherState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
-    TResult Function(_TransactionLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult? Function(_TransactionLoadFailure value)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -932,17 +926,19 @@ mixin _$TransactionWatcherState {
 abstract class $TransactionWatcherStateCopyWith<$Res> {
   factory $TransactionWatcherStateCopyWith(TransactionWatcherState value,
           $Res Function(TransactionWatcherState) then) =
-      _$TransactionWatcherStateCopyWithImpl<$Res>;
+      _$TransactionWatcherStateCopyWithImpl<$Res, TransactionWatcherState>;
 }
 
 /// @nodoc
-class _$TransactionWatcherStateCopyWithImpl<$Res>
+class _$TransactionWatcherStateCopyWithImpl<$Res,
+        $Val extends TransactionWatcherState>
     implements $TransactionWatcherStateCopyWith<$Res> {
   _$TransactionWatcherStateCopyWithImpl(this._value, this._then);
 
-  final TransactionWatcherState _value;
   // ignore: unused_field
-  final $Res Function(TransactionWatcherState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -954,13 +950,10 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$TransactionWatcherStateCopyWithImpl<$Res>
+    extends _$TransactionWatcherStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -999,12 +992,12 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
             List<MoneyTransaction> transactions, Account? currentAccount)?
         loadSuccess,
-    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+    TResult? Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return initial?.call();
   }
@@ -1040,10 +1033,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
-    TResult Function(_TransactionLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult? Function(_TransactionLoadFailure value)? loadFailure,
   }) {
     return initial?.call(this);
   }
@@ -1077,13 +1070,10 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$TransactionWatcherStateCopyWithImpl<$Res>
+    extends _$TransactionWatcherStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
-
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1122,12 +1112,12 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
             List<MoneyTransaction> transactions, Account? currentAccount)?
         loadSuccess,
-    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+    TResult? Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return loading?.call();
   }
@@ -1163,10 +1153,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
-    TResult Function(_TransactionLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult? Function(_TransactionLoadFailure value)? loadFailure,
   }) {
     return loading?.call(this);
   }
@@ -1196,6 +1186,7 @@ abstract class _$$_TransactionLoadSuccessCopyWith<$Res> {
   factory _$$_TransactionLoadSuccessCopyWith(_$_TransactionLoadSuccess value,
           $Res Function(_$_TransactionLoadSuccess) then) =
       __$$_TransactionLoadSuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<MoneyTransaction> transactions, Account? currentAccount});
 
   $AccountCopyWith<$Res>? get currentAccount;
@@ -1203,27 +1194,25 @@ abstract class _$$_TransactionLoadSuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionLoadSuccessCopyWithImpl<$Res>
-    extends _$TransactionWatcherStateCopyWithImpl<$Res>
+    extends _$TransactionWatcherStateCopyWithImpl<$Res,
+        _$_TransactionLoadSuccess>
     implements _$$_TransactionLoadSuccessCopyWith<$Res> {
   __$$_TransactionLoadSuccessCopyWithImpl(_$_TransactionLoadSuccess _value,
       $Res Function(_$_TransactionLoadSuccess) _then)
-      : super(_value, (v) => _then(v as _$_TransactionLoadSuccess));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionLoadSuccess get _value =>
-      super._value as _$_TransactionLoadSuccess;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactions = freezed,
+    Object? transactions = null,
     Object? currentAccount = freezed,
   }) {
     return _then(_$_TransactionLoadSuccess(
-      transactions == freezed
+      null == transactions
           ? _value._transactions
           : transactions // ignore: cast_nullable_to_non_nullable
               as List<MoneyTransaction>,
-      currentAccount == freezed
+      freezed == currentAccount
           ? _value.currentAccount
           : currentAccount // ignore: cast_nullable_to_non_nullable
               as Account?,
@@ -1231,6 +1220,7 @@ class __$$_TransactionLoadSuccessCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AccountCopyWith<$Res>? get currentAccount {
     if (_value.currentAccount == null) {
       return null;
@@ -1271,18 +1261,17 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
             other is _$_TransactionLoadSuccess &&
             const DeepCollectionEquality()
                 .equals(other._transactions, _transactions) &&
-            const DeepCollectionEquality()
-                .equals(other.currentAccount, currentAccount));
+            (identical(other.currentAccount, currentAccount) ||
+                other.currentAccount == currentAccount));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_transactions),
-      const DeepCollectionEquality().hash(currentAccount));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_transactions), currentAccount);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionLoadSuccessCopyWith<_$_TransactionLoadSuccess> get copyWith =>
       __$$_TransactionLoadSuccessCopyWithImpl<_$_TransactionLoadSuccess>(
           this, _$identity);
@@ -1304,12 +1293,12 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
             List<MoneyTransaction> transactions, Account? currentAccount)?
         loadSuccess,
-    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+    TResult? Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return loadSuccess?.call(transactions, currentAccount);
   }
@@ -1345,10 +1334,10 @@ class _$_TransactionLoadSuccess implements _TransactionLoadSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
-    TResult Function(_TransactionLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult? Function(_TransactionLoadFailure value)? loadFailure,
   }) {
     return loadSuccess?.call(this);
   }
@@ -1386,6 +1375,7 @@ abstract class _$$_TransactionLoadFailureCopyWith<$Res> {
   factory _$$_TransactionLoadFailureCopyWith(_$_TransactionLoadFailure value,
           $Res Function(_$_TransactionLoadFailure) then) =
       __$$_TransactionLoadFailureCopyWithImpl<$Res>;
+  @useResult
   $Res call({ValueFailure<dynamic> transactionFailure});
 
   $ValueFailureCopyWith<dynamic, $Res> get transactionFailure;
@@ -1393,22 +1383,20 @@ abstract class _$$_TransactionLoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$$_TransactionLoadFailureCopyWithImpl<$Res>
-    extends _$TransactionWatcherStateCopyWithImpl<$Res>
+    extends _$TransactionWatcherStateCopyWithImpl<$Res,
+        _$_TransactionLoadFailure>
     implements _$$_TransactionLoadFailureCopyWith<$Res> {
   __$$_TransactionLoadFailureCopyWithImpl(_$_TransactionLoadFailure _value,
       $Res Function(_$_TransactionLoadFailure) _then)
-      : super(_value, (v) => _then(v as _$_TransactionLoadFailure));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionLoadFailure get _value =>
-      super._value as _$_TransactionLoadFailure;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactionFailure = freezed,
+    Object? transactionFailure = null,
   }) {
     return _then(_$_TransactionLoadFailure(
-      transactionFailure == freezed
+      null == transactionFailure
           ? _value.transactionFailure
           : transactionFailure // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>,
@@ -1416,6 +1404,7 @@ class __$$_TransactionLoadFailureCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ValueFailureCopyWith<dynamic, $Res> get transactionFailure {
     return $ValueFailureCopyWith<dynamic, $Res>(_value.transactionFailure,
         (value) {
@@ -1442,16 +1431,16 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionLoadFailure &&
-            const DeepCollectionEquality()
-                .equals(other.transactionFailure, transactionFailure));
+            (identical(other.transactionFailure, transactionFailure) ||
+                other.transactionFailure == transactionFailure));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(transactionFailure));
+  int get hashCode => Object.hash(runtimeType, transactionFailure);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionLoadFailureCopyWith<_$_TransactionLoadFailure> get copyWith =>
       __$$_TransactionLoadFailureCopyWithImpl<_$_TransactionLoadFailure>(
           this, _$identity);
@@ -1473,12 +1462,12 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(
             List<MoneyTransaction> transactions, Account? currentAccount)?
         loadSuccess,
-    TResult Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
+    TResult? Function(ValueFailure<dynamic> transactionFailure)? loadFailure,
   }) {
     return loadFailure?.call(transactionFailure);
   }
@@ -1514,10 +1503,10 @@ class _$_TransactionLoadFailure implements _TransactionLoadFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_TransactionLoadSuccess value)? loadSuccess,
-    TResult Function(_TransactionLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_TransactionLoadSuccess value)? loadSuccess,
+    TResult? Function(_TransactionLoadFailure value)? loadFailure,
   }) {
     return loadFailure?.call(this);
   }

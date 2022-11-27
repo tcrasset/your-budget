@@ -221,7 +221,7 @@ class MainCategory extends CategoryLegacy {
 
 /// Class representing the values tied to a SubCategory, represented by [subcategoryId], for a
 /// particular month set by [month] and [year].
-class BudgetValue {
+class BudgetValueLegacy {
   int? id;
   int? subcategoryId;
   double? budgeted;
@@ -229,7 +229,7 @@ class BudgetValue {
   int? month;
   int? year;
 
-  BudgetValue({
+  BudgetValueLegacy({
     required this.id,
     required this.subcategoryId,
     required this.budgeted,
@@ -240,7 +240,7 @@ class BudgetValue {
 
   /// Constructor building a BudgetValue from a [json] representation taken
   /// from a database.
-  BudgetValue.fromJson(Map<String, dynamic> json)
+  BudgetValueLegacy.fromJson(Map<String, dynamic> json)
       : id = json[DatabaseConstants.BUDGET_VALUE_ID] as int?, //
         subcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int?,
         budgeted = json[DatabaseConstants.BUDGET_VALUE_BUDGETED] as double?,
@@ -254,7 +254,7 @@ class BudgetValue {
         """ {id: $id, subcategoryId: $subcategoryId, available: $available, budgeted: $budgeted, year: $year, month:$month}\n""";
   }
 
-  bool hasSameValues(BudgetValue budgetValue) {
+  bool hasSameValues(BudgetValueLegacy budgetValue) {
     return id == budgetValue.id &&
         subcategoryId == budgetValue.subcategoryId &&
         budgeted == budgetValue.budgeted &&
@@ -263,7 +263,7 @@ class BudgetValue {
         month == budgetValue.month;
   }
 
-  BudgetValue copyWith({
+  BudgetValueLegacy copyWith({
     int? id,
     int? subcategoryId,
     double? budgeted,
@@ -271,7 +271,7 @@ class BudgetValue {
     int? month,
     int? year,
   }) {
-    return BudgetValue(
+    return BudgetValueLegacy(
       id: id ?? this.id,
       subcategoryId: subcategoryId ?? this.subcategoryId,
       budgeted: budgeted ?? this.budgeted,

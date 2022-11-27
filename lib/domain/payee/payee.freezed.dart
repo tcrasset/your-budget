@@ -26,33 +26,37 @@ mixin _$Payee {
 /// @nodoc
 abstract class $PayeeCopyWith<$Res> {
   factory $PayeeCopyWith(Payee value, $Res Function(Payee) then) =
-      _$PayeeCopyWithImpl<$Res>;
+      _$PayeeCopyWithImpl<$Res, Payee>;
+  @useResult
   $Res call({UniqueId id, Name name});
 }
 
 /// @nodoc
-class _$PayeeCopyWithImpl<$Res> implements $PayeeCopyWith<$Res> {
+class _$PayeeCopyWithImpl<$Res, $Val extends Payee>
+    implements $PayeeCopyWith<$Res> {
   _$PayeeCopyWithImpl(this._value, this._then);
 
-  final Payee _value;
   // ignore: unused_field
-  final $Res Function(Payee) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
-    ));
+    ) as $Val);
   }
 }
 
@@ -61,29 +65,28 @@ abstract class _$$_PayeeCopyWith<$Res> implements $PayeeCopyWith<$Res> {
   factory _$$_PayeeCopyWith(_$_Payee value, $Res Function(_$_Payee) then) =
       __$$_PayeeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({UniqueId id, Name name});
 }
 
 /// @nodoc
-class __$$_PayeeCopyWithImpl<$Res> extends _$PayeeCopyWithImpl<$Res>
+class __$$_PayeeCopyWithImpl<$Res> extends _$PayeeCopyWithImpl<$Res, _$_Payee>
     implements _$$_PayeeCopyWith<$Res> {
   __$$_PayeeCopyWithImpl(_$_Payee _value, $Res Function(_$_Payee) _then)
-      : super(_value, (v) => _then(v as _$_Payee));
+      : super(_value, _then);
 
-  @override
-  _$_Payee get _value => super._value as _$_Payee;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? name = null,
   }) {
     return _then(_$_Payee(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as Name,
@@ -111,18 +114,16 @@ class _$_Payee extends _Payee {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Payee &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PayeeCopyWith<_$_Payee> get copyWith =>
       __$$_PayeeCopyWithImpl<_$_Payee>(this, _$identity);
 }

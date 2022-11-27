@@ -6,20 +6,20 @@ import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/object_list.dart';
 import 'package:your_budget/models/queries.dart';
 
-class BudgetValueList implements ObjectList<BudgetValue> {
+class BudgetValueList implements ObjectList<BudgetValueLegacy> {
   final Queries? queryContext;
-  final List<BudgetValue?> _budgetvalues;
-  List<BudgetValue?> get budgetvalues => _budgetvalues;
+  final List<BudgetValueLegacy?> _budgetvalues;
+  List<BudgetValueLegacy?> get budgetvalues => _budgetvalues;
 
   BudgetValueList(this.queryContext, this._budgetvalues);
 
   @override
-  void add(BudgetValue? budgetValue) {
+  void add(BudgetValueLegacy? budgetValue) {
     _budgetvalues.add(budgetValue);
   }
 
   void removeBySubcatId(int? subcatId) {
-    final List<BudgetValue?> toRemove =
+    final List<BudgetValueLegacy?> toRemove =
         _budgetvalues.where((budgetvalue) => budgetvalue!.subcategoryId == subcatId).toList();
     toRemove.forEach((budgetvalue) {
       queryContext!.deleteBudgetValue(budgetvalue!.id);
@@ -27,7 +27,7 @@ class BudgetValueList implements ObjectList<BudgetValue> {
     });
   }
 
-  BudgetValue? getByBudget(DateTime? date, int? subcatId) {
+  BudgetValueLegacy? getByBudget(DateTime? date, int? subcatId) {
     return _budgetvalues.singleWhere(
       (budgetValue) =>
           (budgetValue!.subcategoryId == subcatId) &&
@@ -36,7 +36,7 @@ class BudgetValueList implements ObjectList<BudgetValue> {
     );
   }
 
-  List<BudgetValue?> getAllBySubcatId(int subcatId) {
+  List<BudgetValueLegacy?> getAllBySubcatId(int subcatId) {
     return _budgetvalues.where((budgetvalue) => budgetvalue!.subcategoryId == subcatId).toList();
   }
 
@@ -46,7 +46,7 @@ class BudgetValueList implements ObjectList<BudgetValue> {
     required double? newBudgeted,
     required double? newAvailable,
   }) {
-    final BudgetValue budgetValue = getByBudget(date, subcatId)!;
+    final BudgetValueLegacy budgetValue = getByBudget(date, subcatId)!;
     budgetValue.budgeted = newBudgeted;
     budgetValue.available = newAvailable;
     queryContext!.updateBudgetValue(budgetValue);

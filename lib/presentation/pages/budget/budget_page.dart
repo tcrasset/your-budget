@@ -70,7 +70,7 @@ class _BudgetPageState extends State<BudgetPage> {
         children: <Widget>[
           DateButtons(), //
           ToBeBudgeted(),
-          Expanded(child: CategoriesList()),
+          Expanded(child: BudgetView()),
           // if (buttonDial != null) buttonDial
         ],
       ),

@@ -25,8 +25,8 @@ abstract class Queries {
   /// Returns the list of all [MoneyTransaction] in the database.
   Future<List<MoneyTransaction>> getMoneyTransactions();
 
-  /// Returns the list of all [BudgetValue] in the database.
-  Future<List<BudgetValue>> getBudgetValues();
+  /// Returns the list of all [BudgetValueLegacy] in the database.
+  Future<List<BudgetValueLegacy>> getBudgetValues();
 
   Future<List<Goal>> getGoals();
 
@@ -55,7 +55,7 @@ abstract class Queries {
   /// The [Account] is specified using [account.id] and [account.name]
   Future<int> addAccount(AccountModel accountModel);
 
-  /// Adds the [budgetvalue] of type [BudgetValue] to the database.
+  /// Adds the [budgetvalue] of type [BudgetValueLegacy] to the database.
   Future<int> addBudgetValue(BudgetValueModel budgetValueModel);
 
   /// Adds the [moneyTransaction] of type [MoneyTransaction] to the database.
@@ -130,7 +130,7 @@ abstract class Queries {
   ///
   /// Fields that can be updated are [budgetValue.budgeted]
   /// and [budgetValue.available]
-  Future<void> updateBudgetValue(BudgetValue? budgetValue);
+  Future<void> updateBudgetValue(BudgetValueLegacy? budgetValue);
 
   Future<DateTime> getStartingBudgetDateConstant();
 

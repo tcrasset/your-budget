@@ -27,10 +27,10 @@ mixin _$AccountWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
+    TResult? Function()? watchAccountsStarted,
+    TResult? Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
         accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult? Function(String id)? deleteAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,9 +51,9 @@ mixin _$AccountWatcherEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
-    TResult Function(_DeleteAccount value)? deleteAccount,
+    TResult? Function(_AccountWatchStarted value)? watchAccountsStarted,
+    TResult? Function(_AccountsReceived value)? accountsReceived,
+    TResult? Function(_DeleteAccount value)? deleteAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -70,17 +70,18 @@ mixin _$AccountWatcherEvent {
 abstract class $AccountWatcherEventCopyWith<$Res> {
   factory $AccountWatcherEventCopyWith(
           AccountWatcherEvent value, $Res Function(AccountWatcherEvent) then) =
-      _$AccountWatcherEventCopyWithImpl<$Res>;
+      _$AccountWatcherEventCopyWithImpl<$Res, AccountWatcherEvent>;
 }
 
 /// @nodoc
-class _$AccountWatcherEventCopyWithImpl<$Res>
+class _$AccountWatcherEventCopyWithImpl<$Res, $Val extends AccountWatcherEvent>
     implements $AccountWatcherEventCopyWith<$Res> {
   _$AccountWatcherEventCopyWithImpl(this._value, this._then);
 
-  final AccountWatcherEvent _value;
   // ignore: unused_field
-  final $Res Function(AccountWatcherEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -92,14 +93,11 @@ abstract class _$$_AccountWatchStartedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AccountWatchStartedCopyWithImpl<$Res>
-    extends _$AccountWatcherEventCopyWithImpl<$Res>
+    extends _$AccountWatcherEventCopyWithImpl<$Res, _$_AccountWatchStarted>
     implements _$$_AccountWatchStartedCopyWith<$Res> {
   __$$_AccountWatchStartedCopyWithImpl(_$_AccountWatchStarted _value,
       $Res Function(_$_AccountWatchStarted) _then)
-      : super(_value, (v) => _then(v as _$_AccountWatchStarted));
-
-  @override
-  _$_AccountWatchStarted get _value => super._value as _$_AccountWatchStarted;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -136,10 +134,10 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
+    TResult? Function()? watchAccountsStarted,
+    TResult? Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
         accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult? Function(String id)? deleteAccount,
   }) {
     return watchAccountsStarted?.call();
   }
@@ -172,9 +170,9 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
-    TResult Function(_DeleteAccount value)? deleteAccount,
+    TResult? Function(_AccountWatchStarted value)? watchAccountsStarted,
+    TResult? Function(_AccountsReceived value)? accountsReceived,
+    TResult? Function(_DeleteAccount value)? deleteAccount,
   }) {
     return watchAccountsStarted?.call(this);
   }
@@ -203,26 +201,25 @@ abstract class _$$_AccountsReceivedCopyWith<$Res> {
   factory _$$_AccountsReceivedCopyWith(
           _$_AccountsReceived value, $Res Function(_$_AccountsReceived) then) =
       __$$_AccountsReceivedCopyWithImpl<$Res>;
+  @useResult
   $Res call({Either<ValueFailure, List<Account>> failureOrAccounts});
 }
 
 /// @nodoc
 class __$$_AccountsReceivedCopyWithImpl<$Res>
-    extends _$AccountWatcherEventCopyWithImpl<$Res>
+    extends _$AccountWatcherEventCopyWithImpl<$Res, _$_AccountsReceived>
     implements _$$_AccountsReceivedCopyWith<$Res> {
   __$$_AccountsReceivedCopyWithImpl(
       _$_AccountsReceived _value, $Res Function(_$_AccountsReceived) _then)
-      : super(_value, (v) => _then(v as _$_AccountsReceived));
+      : super(_value, _then);
 
-  @override
-  _$_AccountsReceived get _value => super._value as _$_AccountsReceived;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failureOrAccounts = freezed,
+    Object? failureOrAccounts = null,
   }) {
     return _then(_$_AccountsReceived(
-      failureOrAccounts == freezed
+      null == failureOrAccounts
           ? _value.failureOrAccounts
           : failureOrAccounts // ignore: cast_nullable_to_non_nullable
               as Either<ValueFailure, List<Account>>,
@@ -248,16 +245,16 @@ class _$_AccountsReceived implements _AccountsReceived {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountsReceived &&
-            const DeepCollectionEquality()
-                .equals(other.failureOrAccounts, failureOrAccounts));
+            (identical(other.failureOrAccounts, failureOrAccounts) ||
+                other.failureOrAccounts == failureOrAccounts));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failureOrAccounts));
+  int get hashCode => Object.hash(runtimeType, failureOrAccounts);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AccountsReceivedCopyWith<_$_AccountsReceived> get copyWith =>
       __$$_AccountsReceivedCopyWithImpl<_$_AccountsReceived>(this, _$identity);
 
@@ -276,10 +273,10 @@ class _$_AccountsReceived implements _AccountsReceived {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
+    TResult? Function()? watchAccountsStarted,
+    TResult? Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
         accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult? Function(String id)? deleteAccount,
   }) {
     return accountsReceived?.call(failureOrAccounts);
   }
@@ -312,9 +309,9 @@ class _$_AccountsReceived implements _AccountsReceived {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
-    TResult Function(_DeleteAccount value)? deleteAccount,
+    TResult? Function(_AccountWatchStarted value)? watchAccountsStarted,
+    TResult? Function(_AccountsReceived value)? accountsReceived,
+    TResult? Function(_DeleteAccount value)? deleteAccount,
   }) {
     return accountsReceived?.call(this);
   }
@@ -350,26 +347,25 @@ abstract class _$$_DeleteAccountCopyWith<$Res> {
   factory _$$_DeleteAccountCopyWith(
           _$_DeleteAccount value, $Res Function(_$_DeleteAccount) then) =
       __$$_DeleteAccountCopyWithImpl<$Res>;
+  @useResult
   $Res call({String id});
 }
 
 /// @nodoc
 class __$$_DeleteAccountCopyWithImpl<$Res>
-    extends _$AccountWatcherEventCopyWithImpl<$Res>
+    extends _$AccountWatcherEventCopyWithImpl<$Res, _$_DeleteAccount>
     implements _$$_DeleteAccountCopyWith<$Res> {
   __$$_DeleteAccountCopyWithImpl(
       _$_DeleteAccount _value, $Res Function(_$_DeleteAccount) _then)
-      : super(_value, (v) => _then(v as _$_DeleteAccount));
+      : super(_value, _then);
 
-  @override
-  _$_DeleteAccount get _value => super._value as _$_DeleteAccount;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
   }) {
     return _then(_$_DeleteAccount(
-      id == freezed
+      null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
@@ -395,15 +391,15 @@ class _$_DeleteAccount implements _DeleteAccount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeleteAccount &&
-            const DeepCollectionEquality().equals(other.id, id));
+            (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+  int get hashCode => Object.hash(runtimeType, id);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DeleteAccountCopyWith<_$_DeleteAccount> get copyWith =>
       __$$_DeleteAccountCopyWithImpl<_$_DeleteAccount>(this, _$identity);
 
@@ -422,10 +418,10 @@ class _$_DeleteAccount implements _DeleteAccount {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
+    TResult? Function()? watchAccountsStarted,
+    TResult? Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
         accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult? Function(String id)? deleteAccount,
   }) {
     return deleteAccount?.call(id);
   }
@@ -458,9 +454,9 @@ class _$_DeleteAccount implements _DeleteAccount {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
-    TResult Function(_DeleteAccount value)? deleteAccount,
+    TResult? Function(_AccountWatchStarted value)? watchAccountsStarted,
+    TResult? Function(_AccountsReceived value)? accountsReceived,
+    TResult? Function(_DeleteAccount value)? deleteAccount,
   }) {
     return deleteAccount?.call(this);
   }
@@ -501,10 +497,10 @@ mixin _$AccountWatcherState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Account> accounts)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> accountFailure)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Account> accounts)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> accountFailure)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -526,10 +522,10 @@ mixin _$AccountWatcherState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_AccountLoadSuccess value)? loadSuccess,
-    TResult Function(_AccountLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_AccountLoadSuccess value)? loadSuccess,
+    TResult? Function(_AccountLoadFailure value)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -547,17 +543,18 @@ mixin _$AccountWatcherState {
 abstract class $AccountWatcherStateCopyWith<$Res> {
   factory $AccountWatcherStateCopyWith(
           AccountWatcherState value, $Res Function(AccountWatcherState) then) =
-      _$AccountWatcherStateCopyWithImpl<$Res>;
+      _$AccountWatcherStateCopyWithImpl<$Res, AccountWatcherState>;
 }
 
 /// @nodoc
-class _$AccountWatcherStateCopyWithImpl<$Res>
+class _$AccountWatcherStateCopyWithImpl<$Res, $Val extends AccountWatcherState>
     implements $AccountWatcherStateCopyWith<$Res> {
   _$AccountWatcherStateCopyWithImpl(this._value, this._then);
 
-  final AccountWatcherState _value;
   // ignore: unused_field
-  final $Res Function(AccountWatcherState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -569,13 +566,10 @@ abstract class _$$_InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+    extends _$AccountWatcherStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -611,10 +605,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Account> accounts)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> accountFailure)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Account> accounts)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> accountFailure)? loadFailure,
   }) {
     return initial?.call();
   }
@@ -648,10 +642,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_AccountLoadSuccess value)? loadSuccess,
-    TResult Function(_AccountLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_AccountLoadSuccess value)? loadSuccess,
+    TResult? Function(_AccountLoadFailure value)? loadFailure,
   }) {
     return initial?.call(this);
   }
@@ -685,13 +679,10 @@ abstract class _$$_LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+    extends _$AccountWatcherStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
-
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -727,10 +718,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Account> accounts)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> accountFailure)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Account> accounts)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> accountFailure)? loadFailure,
   }) {
     return loading?.call();
   }
@@ -764,10 +755,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_AccountLoadSuccess value)? loadSuccess,
-    TResult Function(_AccountLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_AccountLoadSuccess value)? loadSuccess,
+    TResult? Function(_AccountLoadFailure value)? loadFailure,
   }) {
     return loading?.call(this);
   }
@@ -797,26 +788,25 @@ abstract class _$$_AccountLoadSuccessCopyWith<$Res> {
   factory _$$_AccountLoadSuccessCopyWith(_$_AccountLoadSuccess value,
           $Res Function(_$_AccountLoadSuccess) then) =
       __$$_AccountLoadSuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({List<Account> accounts});
 }
 
 /// @nodoc
 class __$$_AccountLoadSuccessCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+    extends _$AccountWatcherStateCopyWithImpl<$Res, _$_AccountLoadSuccess>
     implements _$$_AccountLoadSuccessCopyWith<$Res> {
   __$$_AccountLoadSuccessCopyWithImpl(
       _$_AccountLoadSuccess _value, $Res Function(_$_AccountLoadSuccess) _then)
-      : super(_value, (v) => _then(v as _$_AccountLoadSuccess));
+      : super(_value, _then);
 
-  @override
-  _$_AccountLoadSuccess get _value => super._value as _$_AccountLoadSuccess;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accounts = freezed,
+    Object? accounts = null,
   }) {
     return _then(_$_AccountLoadSuccess(
-      accounts == freezed
+      null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<Account>,
@@ -856,6 +846,7 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AccountLoadSuccessCopyWith<_$_AccountLoadSuccess> get copyWith =>
       __$$_AccountLoadSuccessCopyWithImpl<_$_AccountLoadSuccess>(
           this, _$identity);
@@ -874,10 +865,10 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Account> accounts)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> accountFailure)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Account> accounts)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> accountFailure)? loadFailure,
   }) {
     return loadSuccess?.call(accounts);
   }
@@ -911,10 +902,10 @@ class _$_AccountLoadSuccess implements _AccountLoadSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_AccountLoadSuccess value)? loadSuccess,
-    TResult Function(_AccountLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_AccountLoadSuccess value)? loadSuccess,
+    TResult? Function(_AccountLoadFailure value)? loadFailure,
   }) {
     return loadSuccess?.call(this);
   }
@@ -950,6 +941,7 @@ abstract class _$$_AccountLoadFailureCopyWith<$Res> {
   factory _$$_AccountLoadFailureCopyWith(_$_AccountLoadFailure value,
           $Res Function(_$_AccountLoadFailure) then) =
       __$$_AccountLoadFailureCopyWithImpl<$Res>;
+  @useResult
   $Res call({ValueFailure<dynamic> accountFailure});
 
   $ValueFailureCopyWith<dynamic, $Res> get accountFailure;
@@ -957,21 +949,19 @@ abstract class _$$_AccountLoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AccountLoadFailureCopyWithImpl<$Res>
-    extends _$AccountWatcherStateCopyWithImpl<$Res>
+    extends _$AccountWatcherStateCopyWithImpl<$Res, _$_AccountLoadFailure>
     implements _$$_AccountLoadFailureCopyWith<$Res> {
   __$$_AccountLoadFailureCopyWithImpl(
       _$_AccountLoadFailure _value, $Res Function(_$_AccountLoadFailure) _then)
-      : super(_value, (v) => _then(v as _$_AccountLoadFailure));
+      : super(_value, _then);
 
-  @override
-  _$_AccountLoadFailure get _value => super._value as _$_AccountLoadFailure;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? accountFailure = freezed,
+    Object? accountFailure = null,
   }) {
     return _then(_$_AccountLoadFailure(
-      accountFailure == freezed
+      null == accountFailure
           ? _value.accountFailure
           : accountFailure // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>,
@@ -979,6 +969,7 @@ class __$$_AccountLoadFailureCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ValueFailureCopyWith<dynamic, $Res> get accountFailure {
     return $ValueFailureCopyWith<dynamic, $Res>(_value.accountFailure, (value) {
       return _then(_value.copyWith(accountFailure: value));
@@ -1004,16 +995,16 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountLoadFailure &&
-            const DeepCollectionEquality()
-                .equals(other.accountFailure, accountFailure));
+            (identical(other.accountFailure, accountFailure) ||
+                other.accountFailure == accountFailure));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(accountFailure));
+  int get hashCode => Object.hash(runtimeType, accountFailure);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AccountLoadFailureCopyWith<_$_AccountLoadFailure> get copyWith =>
       __$$_AccountLoadFailureCopyWithImpl<_$_AccountLoadFailure>(
           this, _$identity);
@@ -1032,10 +1023,10 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(List<Account> accounts)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> accountFailure)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(List<Account> accounts)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> accountFailure)? loadFailure,
   }) {
     return loadFailure?.call(accountFailure);
   }
@@ -1069,10 +1060,10 @@ class _$_AccountLoadFailure implements _AccountLoadFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_AccountLoadSuccess value)? loadSuccess,
-    TResult Function(_AccountLoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_AccountLoadSuccess value)? loadSuccess,
+    TResult? Function(_AccountLoadFailure value)? loadFailure,
   }) {
     return loadFailure?.call(this);
   }

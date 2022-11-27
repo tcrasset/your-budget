@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:your_budget/application/budget/budget_entry_manager_bloc/budget_entry_manager_bloc.dart';
+import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/utils/currency.dart' as currency_utils;
@@ -8,11 +11,9 @@ import 'package:your_budget/presentation/pages/addTransaction/components/currenc
 
 // Widget containing and displaying the information a subcategory
 
-class SubcategoryRow extends HookWidget {
+class BudgetEntryRow extends HookWidget {
   final Subcategory subcat;
-  const SubcategoryRow({Key? key, required this.subcat}) : super(key: key);
-
-  void handleOnTap() {}
+  const BudgetEntryRow({Key? key, required this.subcat}) : super(key: key);
 
   Color? setColor(double availableAmount) {
     if (availableAmount > 0) {
@@ -34,7 +35,7 @@ class SubcategoryRow extends HookWidget {
         TextSelection.collapsed(offset: _budgetedController.text.length);
 
     useEffect(() {
-      context.read<SubcategoryCreatorBloc>().setSubcategory(subcat);
+      context.read<BudgetEntryManagerBloc>().setSubcategory(subcat);
     }, []);
     final budgetedText = _budgetedController.text;
     final availableText = Constants.CURRENCY_FORMAT.format(available).trim();
@@ -90,8 +91,8 @@ class SubcategoryRow extends HookWidget {
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
                     onSubmitted: (submitted) => context
-                        .read<SubcategoryCreatorBloc>()
-                        .add(SubcategoryCreatorEvent.budgetedChanged(
+                        .read<BudgetEntryManagerBloc>()
+                        .add(BudgetEntryManagerEvent.budgetedChanged(
                           subcat.id,
                           currency_utils.parse(submitted).toString(),
                         )),
