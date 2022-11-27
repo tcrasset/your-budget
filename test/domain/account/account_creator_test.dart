@@ -60,8 +60,6 @@ void main() {
       id: UniqueId(),
       categoryID: UniqueId(),
       name: Name("Test subcategory"),
-      budgeted: Amount("0"),
-      available: Amount("0"),
     );
 
     creator = AccountCreator(

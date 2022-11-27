@@ -51,9 +51,8 @@ class BudgetView extends HookWidget {
           child: Builder(
             builder: (context) {
               final subcategoryBlocState = context.watch<SubcategoryWatcherBloc>().state;
-              final budgetValueState = context.watch<BudgetValueWatcherBloc>().state;
+              final budgetvalueWatcherState = context.watch<BudgetValueWatcherBloc>().state;
               final categoryBlocState = context.watch<CategoryWatcherBloc>().state;
-              final budgetDate = context.watch<BudgetDateCubit>().state;
 
               final Option<List<Subcategory>> subcategoriesOption = subcategoryBlocState.maybeMap(
                 loadSuccess: (state) => some(state.subcategories),
@@ -65,6 +64,11 @@ class BudgetView extends HookWidget {
                 orElse: () => none(),
               );
 
+              final Option<List<BudgetValue>> budgetvaluesOption = budgetvalueWatcherState.maybeMap(
+                loadSuccess: (state) => some(state.budgetvalues),
+                orElse: () => none(),
+              );
+
               if (categoriesOption.isNone()) {
                 return categoryBlocState.maybeMap(
                     loadFailure: (_) => const Center(child: Text("Failure.")),
@@ -73,18 +77,18 @@ class BudgetView extends HookWidget {
                 return subcategoryBlocState.maybeMap(
                     loadFailure: (_) => const Center(child: Text("Failure.")),
                     orElse: () => const CircularProgressIndicator());
+              } else if (budgetvaluesOption.isNone()) {
+                return budgetvalueWatcherState.maybeMap(
+                    loadFailure: (_) => const Center(child: Text("Failure.")),
+                    orElse: () => const CircularProgressIndicator());
               } else {
                 final subcategories = subcategoriesOption.getOrElse(() => throw Exception());
+                final budgetvalues = budgetvaluesOption.getOrElse(() => throw Exception());
                 List<BudgetEntry> entries = [];
 
                 for (final Subcategory subcat in subcategories) {
-                  final BudgetValue budgetValue = BudgetValue(
-                      available: Amount("0"),
-                      budgeted: Amount("0"),
-                      date: budgetDate,
-                      id: UniqueId(),
-                      subcategoryId: subcat.id);
-
+                  final BudgetValue budgetValue =
+                      budgetvalues.firstWhere((element) => element.subcategoryId == subcat.id);
                   entries.add(BudgetEntry(subcategory: subcat, budgetValue: budgetValue));
                 }
                 return Column(
@@ -123,8 +127,6 @@ List<Widget> _buildList({required List<BudgetEntry> entries, required List<Categ
 
     for (final BudgetEntry entry in correspondingEntries) {
       widgetList.add(divider);
-      widgetList.add(BudgetEntryRow(entry: entry));
-      widgetList.add(BudgetEntryRow(entry: entry));
       widgetList.add(BudgetEntryRow(entry: entry));
     }
   }

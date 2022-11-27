@@ -49,8 +49,9 @@ class SQFliteBudgetValueRepository implements IBudgetValueRepository {
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
     try {
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
+      String id = budgetvalueDTO.id;
       final Map<String, dynamic> values = budgetvalueDTO.toJson();
-      final id = values.remove("id");
+      values.remove("id");
 
       final result = await database!.update(
         DatabaseConstants.budgetValueTable,

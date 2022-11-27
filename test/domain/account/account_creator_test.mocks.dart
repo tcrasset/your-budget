@@ -64,26 +64,26 @@ class MockTransactionRepository extends _i1.Mock
           .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>);
   @override
   _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>> delete(
-          _i6.MoneyTransaction? transaction) =>
-      (super.noSuchMethod(Invocation.method(#delete, [transaction]),
+          String? id) =>
+      (super.noSuchMethod(Invocation.method(#delete, [id]),
           returnValue:
               _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>.value(
                   _FakeEither_0<_i5.ValueFailure<dynamic>, _i2.Unit>(
-                      this, Invocation.method(#delete, [transaction])))) as _i4
+                      this, Invocation.method(#delete, [id])))) as _i4
           .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>);
   @override
   _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>>
-      getAccountTransactions(int? accountID) => (super.noSuchMethod(
-          Invocation.method(#getAccountTransactions, [accountID]),
+      getAccountTransactions(String? id) => (super.noSuchMethod(
+          Invocation.method(#getAccountTransactions, [id]),
           returnValue:
               _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>>.value(
                   _FakeEither_0<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>(
-                      this, Invocation.method(#getAccountTransactions, [accountID])))) as _i4
+                      this, Invocation.method(#getAccountTransactions, [id])))) as _i4
           .Future<_i2.Either<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>>);
   @override
   _i4.Stream<_i2.Either<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>>
-      watchAccountTransactions(int? accountID) => (super.noSuchMethod(
-          Invocation.method(#watchAccountTransactions, [accountID]),
+      watchAccountTransactions(String? id) => (super.noSuchMethod(
+          Invocation.method(#watchAccountTransactions, [id]),
           returnValue: _i4.Stream<
               _i2.Either<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>>.empty()) as _i4
           .Stream<_i2.Either<_i5.ValueFailure<dynamic>, List<_i6.MoneyTransaction>>>);
@@ -98,22 +98,31 @@ class MockAccountRepository extends _i1.Mock implements _i7.IAccountRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, int>> create(
+  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, String>> create(
           _i8.Account? account) =>
       (super.noSuchMethod(Invocation.method(#create, [account]),
-              returnValue:
-                  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, int>>.value(
-                      _FakeEither_0<_i5.ValueFailure<dynamic>, int>(
-                          this, Invocation.method(#create, [account]))))
-          as _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, int>>);
+          returnValue:
+              _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, String>>.value(
+                  _FakeEither_0<_i5.ValueFailure<dynamic>, String>(
+                      this, Invocation.method(#create, [account])))) as _i4
+          .Future<_i2.Either<_i5.ValueFailure<dynamic>, String>>);
+  @override
+  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>> delete(
+          String? id) =>
+      (super.noSuchMethod(Invocation.method(#delete, [id]),
+          returnValue:
+              _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>.value(
+                  _FakeEither_0<_i5.ValueFailure<dynamic>, _i2.Unit>(
+                      this, Invocation.method(#delete, [id])))) as _i4
+          .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>);
   @override
   _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i8.Account>> get(
-          int? accountId) =>
-      (super.noSuchMethod(Invocation.method(#get, [accountId]),
+          String? id) =>
+      (super.noSuchMethod(Invocation.method(#get, [id]),
           returnValue:
               _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i8.Account>>.value(
                   _FakeEither_0<_i5.ValueFailure<dynamic>, _i8.Account>(
-                      this, Invocation.method(#get, [accountId])))) as _i4
+                      this, Invocation.method(#get, [id])))) as _i4
           .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i8.Account>>);
   @override
   _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, List<_i8.Account>>>
@@ -152,14 +161,32 @@ class MockSubcategoryRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, int>> create(
+  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i10.Subcategory>> get(
+          int? id) =>
+      (super.noSuchMethod(Invocation.method(#get, [id]),
+          returnValue:
+              _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i10.Subcategory>>.value(
+                  _FakeEither_0<_i5.ValueFailure<dynamic>, _i10.Subcategory>(
+                      this, Invocation.method(#get, [id])))) as _i4
+          .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i10.Subcategory>>);
+  @override
+  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>> create(
           _i10.Subcategory? subcategory) =>
       (super.noSuchMethod(Invocation.method(#create, [subcategory]),
-              returnValue:
-                  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, int>>.value(
-                      _FakeEither_0<_i5.ValueFailure<dynamic>, int>(
-                          this, Invocation.method(#create, [subcategory]))))
-          as _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, int>>);
+          returnValue:
+              _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>.value(
+                  _FakeEither_0<_i5.ValueFailure<dynamic>, _i2.Unit>(
+                      this, Invocation.method(#create, [subcategory])))) as _i4
+          .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>);
+  @override
+  _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>> update(
+          _i10.Subcategory? subcategory) =>
+      (super.noSuchMethod(Invocation.method(#update, [subcategory]),
+          returnValue:
+              _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>.value(
+                  _FakeEither_0<_i5.ValueFailure<dynamic>, _i2.Unit>(
+                      this, Invocation.method(#update, [subcategory])))) as _i4
+          .Future<_i2.Either<_i5.ValueFailure<dynamic>, _i2.Unit>>);
   @override
   _i4.Future<_i2.Either<_i5.ValueFailure<dynamic>, List<_i10.Subcategory>>>
       getAllSubcategories() => (super.noSuchMethod(

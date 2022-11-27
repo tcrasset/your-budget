@@ -27,16 +27,8 @@ class BudgetEntryManagerBloc extends Bloc<BudgetEntryManagerEvent, BudgetEntryMa
     on<_BudgetedChanged>(_onBudgetedChanged);
   }
 
-  void setBudgetValue(BudgetEntry entry) {
-    budgetentries[entry.id] = entry;
-  }
-
   void _onBudgetedChanged(_BudgetedChanged event, Emitter<BudgetEntryManagerState> emit) {
-    if (!budgetentries.containsKey(event.id)) {
-      throw Exception("Expected ${event.id.getOrCrash()} to be in budgetvalues, not found.");
-    }
-
-    final BudgetEntry entry = budgetentries[event.id] as BudgetEntry;
+    final BudgetEntry entry = event.entry;
 
     final newBudgetValue = BudgetValue(
       id: entry.id,
@@ -47,8 +39,6 @@ class BudgetEntryManagerBloc extends Bloc<BudgetEntryManagerEvent, BudgetEntryMa
     );
 
     budgetvalueRepository.update(newBudgetValue);
-
-    budgetentries[event.id] = entry.copyWith(budgetValue: newBudgetValue);
 
     emit(state.copyWith(wasModified: true));
     emit(state.copyWith(wasModified: false));

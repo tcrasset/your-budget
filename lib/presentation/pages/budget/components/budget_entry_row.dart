@@ -93,7 +93,7 @@ class BudgetEntryRow extends HookWidget {
                     style: const TextStyle(fontSize: 18, color: Colors.white),
                     onSubmitted: (submitted) => context.read<BudgetEntryManagerBloc>().add(
                           BudgetEntryManagerEvent.budgetedChanged(
-                            entry.id,
+                            entry,
                             currency_utils.parse(submitted).toString(),
                           ),
                         ),
