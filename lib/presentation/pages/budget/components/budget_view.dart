@@ -9,20 +9,15 @@ import 'package:your_budget/application/budget/budget_entry_manager_bloc/budget_
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/budget/category_watcher_bloc/category_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
-
 // Package imports:
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/category/category.dart';
-import 'package:your_budget/domain/core/amount.dart';
-import 'package:your_budget/domain/core/unique_id.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
-
 // Project imports:
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/presentation/pages/budget/components/maincategory_row.dart';
 import 'package:your_budget/presentation/pages/budget/components/budget_entry_row.dart';
+import 'package:your_budget/presentation/pages/budget/components/maincategory_row.dart';
 
 class BudgetView extends HookWidget {
   @override
