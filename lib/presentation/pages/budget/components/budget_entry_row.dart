@@ -79,6 +79,8 @@ class BudgetEntryRow extends HookWidget {
                     ),
                   ),
                   child: TextField(
+                    onTap: () => _budgetedController.selection =
+                        TextSelection.collapsed(offset: _budgetedController.text.length),
                     keyboardType: TextInputType.number,
                     controller: _budgetedController,
                     decoration: const InputDecoration.collapsed(hintText: ""),
