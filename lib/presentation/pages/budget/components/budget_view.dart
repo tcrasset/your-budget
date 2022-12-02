@@ -27,109 +27,111 @@ import 'package:your_budget/presentation/pages/budget/components/budget_entry_ro
 class BudgetView extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = useScrollController();
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<BudgetEntryManagerBloc>(
-          create: (context) => BudgetEntryManagerBloc(
-            budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
-            budgetDateCubit: context.read<BudgetDateCubit>(),
-          )..add(const BudgetEntryManagerEvent.initialized()),
-        ),
-        BlocProvider<BudgetValueWatcherBloc>(
-          create: (context) => BudgetValueWatcherBloc(
-              budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
-              budgetDateCubit: context.read<BudgetDateCubit>())
-            ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(DateTime.now())),
-        ),
-      ],
-      child: Scrollbar(
-        controller: scrollController,
-        child: SingleChildScrollView(
-          controller: scrollController,
-          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-          child: Builder(
-            builder: (context) {
-              final subcategoryBlocState = context.watch<SubcategoryWatcherBloc>().state;
-              final budgetvalueWatcherState = context.watch<BudgetValueWatcherBloc>().state;
-              final categoryBlocState = context.watch<CategoryWatcherBloc>().state;
-
-              final Option<List<Subcategory>> subcategoriesOption = subcategoryBlocState.maybeMap(
-                loadSuccess: (state) => some(state.subcategories),
-                orElse: () => none(),
-              );
-
-              final Option<List<Category>> categoriesOption = categoryBlocState.maybeMap(
-                loadSuccess: (state) => some(state.categories),
-                orElse: () => none(),
-              );
-
-              final Option<List<BudgetValue>> budgetvaluesOption = budgetvalueWatcherState.maybeMap(
-                loadSuccess: (state) => some(state.budgetvalues),
-                orElse: () => none(),
-              );
-
-              if (categoriesOption.isNone()) {
-                return categoryBlocState.maybeMap(
-                    loadFailure: (_) => const Center(child: Text("Failure.")),
-                    orElse: () => const CircularProgressIndicator());
-              } else if (subcategoriesOption.isNone()) {
-                return subcategoryBlocState.maybeMap(
-                    loadFailure: (_) => const Center(child: Text("Failure.")),
-                    orElse: () => const CircularProgressIndicator());
-              } else if (budgetvaluesOption.isNone()) {
-                return budgetvalueWatcherState.maybeMap(
-                    loadFailure: (_) => const Center(child: Text("Failure.")),
-                    orElse: () => const CircularProgressIndicator());
-              } else {
-                final subcategories = subcategoriesOption.getOrElse(() => throw Exception());
-                final budgetvalues = budgetvaluesOption.getOrElse(() => throw Exception());
-                List<BudgetEntry> entries = [];
-
-                for (final Subcategory subcat in subcategories) {
-                  final BudgetValue budgetValue =
-                      budgetvalues.firstWhere((element) => element.subcategoryId == subcat.id);
-                  entries.add(BudgetEntry(subcategory: subcat, budgetValue: budgetValue));
-                }
-                return Column(
-                  children: _buildList(
-                      categories: categoriesOption.getOrElse(() => throw Exception()),
-                      entries: entries),
-                );
-              }
-            },
-          ),
-        ),
+    return MultiBlocProvider(providers: [
+      BlocProvider<BudgetEntryManagerBloc>(
+        create: (context) => BudgetEntryManagerBloc(
+          budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
+          budgetDateCubit: context.read<BudgetDateCubit>(),
+        )..add(const BudgetEntryManagerEvent.initialized()),
       ),
-    );
+      BlocProvider<BudgetValueWatcherBloc>(
+        create: (context) => BudgetValueWatcherBloc(
+            budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
+            budgetDateCubit: context.read<BudgetDateCubit>())
+          ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(DateTime.now())),
+      ),
+    ], child: const BudgetEntries());
   }
 }
 
-List<Widget> _buildList({required List<BudgetEntry> entries, required List<Category> categories}) {
-  final List<Widget> widgetList = [];
+class BudgetEntries extends StatelessWidget {
+  const BudgetEntries({
+    Key? key,
+  }) : super(key: key);
 
-  const Divider divider = Divider(height: 1, color: Colors.red);
+  @override
+  Widget build(BuildContext context) {
+    final subcategoryBlocState = context.watch<SubcategoryWatcherBloc>().state;
+    final budgetvalueWatcherState = context.watch<BudgetValueWatcherBloc>().state;
+    final categoryBlocState = context.watch<CategoryWatcherBloc>().state;
 
-  for (final Category category in categories) {
-    final correspondingEntries = entries.where((entry) => entry.categoryId == category.id);
-    final budgeted =
-        correspondingEntries.fold<double>(0, (total, entry) => total + entry.budgeted.getOrCrash());
-    final available = correspondingEntries.fold<double>(
-        0, (total, entry) => total + entry.available.getOrCrash());
+    final Option<List<Subcategory>> subcategoriesOption = subcategoryBlocState.maybeMap(
+      loadSuccess: (state) => some(state.subcategories),
+      orElse: () => none(),
+    );
 
-    widgetList.add(MainCategoryRow(
-      name: category.name.getOrCrash(),
-      budgeted: budgeted,
-      available: available,
-    ));
+    final Option<List<Category>> categoriesOption = categoryBlocState.maybeMap(
+      loadSuccess: (state) => some(state.categories),
+      orElse: () => none(),
+    );
 
-    widgetList.add(divider);
+    final Option<List<BudgetValue>> budgetvaluesOption = budgetvalueWatcherState.maybeMap(
+      loadSuccess: (state) => some(state.budgetvalues),
+      orElse: () => none(),
+    );
 
-    for (final BudgetEntry entry in correspondingEntries) {
-      widgetList.add(divider);
-      widgetList.add(BudgetEntryRow(entry: entry));
+    if (categoriesOption.isNone()) {
+      return categoryBlocState.maybeMap(
+          loadFailure: (_) => const Center(child: Text("Failure.")),
+          orElse: () => const CircularProgressIndicator());
+    } else if (subcategoriesOption.isNone()) {
+      return subcategoryBlocState.maybeMap(
+          loadFailure: (_) => const Center(child: Text("Failure.")),
+          orElse: () => const CircularProgressIndicator());
+    } else if (budgetvaluesOption.isNone()) {
+      return budgetvalueWatcherState.maybeMap(
+          loadFailure: (_) => const Center(child: Text("Failure.")),
+          orElse: () => const CircularProgressIndicator());
+    } else {
+      final subcategories = subcategoriesOption.getOrElse(() => throw Exception());
+      final budgetvalues = budgetvaluesOption.getOrElse(() => throw Exception());
+      final categories = categoriesOption.getOrElse(() => throw Exception());
+      List<BudgetEntry> entries = [];
+
+      for (final Subcategory subcat in subcategories) {
+        final BudgetValue budgetValue =
+            budgetvalues.firstWhere((element) => element.subcategoryId == subcat.id);
+        entries.add(BudgetEntry(subcategory: subcat, budgetValue: budgetValue));
+      }
+      final List sortedList = [];
+      for (final Category category in categories) {
+        final correspondingEntries = entries.where((entry) => entry.categoryId == category.id);
+        final budgeted = correspondingEntries.fold<double>(
+            0, (total, entry) => total + entry.budgeted.getOrCrash());
+        final available = correspondingEntries.fold<double>(
+            0, (total, entry) => total + entry.available.getOrCrash());
+
+        sortedList.add(MainCategoryRow(
+          name: category.name.getOrCrash(),
+          budgeted: budgeted,
+          available: available,
+        ));
+
+        for (final BudgetEntry entry in correspondingEntries) {
+          sortedList.add(BudgetEntryRow(entry: entry));
+        }
+      }
+      return Center(
+        child: Scrollbar(
+          child: ListView.separated(
+            itemBuilder: (BuildContext context, int index) {
+              final item = sortedList[index];
+
+              if (item is MainCategoryRow) {
+                return MainCategoryRow(
+                    available: item.available, name: item.name, budgeted: item.budgeted);
+              } else if (item is BudgetEntryRow) {
+                return BudgetEntryRow(key: Key(item.entry.id.getOrCrash()), entry: item.entry);
+              } else {
+                return Container();
+              }
+            },
+            itemCount: sortedList.length,
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(height: 1, color: Colors.red),
+          ),
+        ),
+      );
     }
   }
-
-  return widgetList;
 }

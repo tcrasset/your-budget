@@ -35,9 +35,6 @@ class BudgetEntryRow extends HookWidget {
     _budgetedController.selection =
         TextSelection.collapsed(offset: _budgetedController.text.length);
 
-    useEffect(() {
-      context.read<BudgetEntryManagerBloc>().setBudgetValue(entry);
-    }, []);
     final budgetedText = _budgetedController.text;
     final availableText = Constants.CURRENCY_FORMAT.format(available).trim();
     final FocusNode budgetedFocusNode = useFocusNode();
