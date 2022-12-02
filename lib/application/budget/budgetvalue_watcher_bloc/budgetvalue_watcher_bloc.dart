@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:your_budget/application/budget/budget_entry_manager_bloc/budget_entry_manager_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
@@ -15,12 +16,24 @@ part 'budgetvalue_watcher_bloc.freezed.dart';
 class BudgetValueWatcherBloc extends Bloc<BudgetValueWatcherEvent, BudgetValueWatcherState> {
   final IBudgetValueRepository budgetvalueRepository;
   final BudgetDateCubit budgetDateCubit;
+  final BudgetEntryManagerBloc budgetManagerBloc;
   StreamSubscription<List<BudgetValue>>? _budgetvalueStreamSubscription;
 
-  BudgetValueWatcherBloc({required this.budgetvalueRepository, required this.budgetDateCubit})
+  BudgetValueWatcherBloc(
+      {required this.budgetvalueRepository,
+      required this.budgetManagerBloc,
+      required this.budgetDateCubit})
       : super(const BudgetValueWatcherState.initial()) {
     budgetDateCubit.stream.listen((budgetDate) {
-      add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDate));
+      if (!isClosed) {
+        add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDate));
+      }
+    });
+    budgetManagerBloc.stream.listen((state) {
+      if (state.wasModified) {
+        final DateTime budgetDate = budgetDateCubit.state;
+        add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDate));
+      }
     });
 
     on<_BudgetValueWatchStarted>(_onBudgetValueWatchStarted);
