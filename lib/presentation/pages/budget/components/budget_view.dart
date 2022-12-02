@@ -39,7 +39,8 @@ class BudgetView extends HookWidget {
             budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
             budgetManagerBloc: context.read<BudgetEntryManagerBloc>(),
             budgetDateCubit: context.read<BudgetDateCubit>())
-          ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(DateTime.now())),
+          ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(
+              context.read<BudgetDateCubit>().state)),
       ),
     ], child: const BudgetEntries());
   }
