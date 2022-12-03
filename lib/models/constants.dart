@@ -101,7 +101,7 @@ class DatabaseConstants {
   static const String SUBCAT_ID_OUTSIDE = 'subcatID';
   static const String PAYEE_ID_OUTSIDE = 'payeeID';
   static const String ACCOUNT_ID_OUTSIDE = 'accountID';
-  static const String BUDGET_VALUE_OUTSIDE = 'budgetvalueID';
+  static const String BUDGET_VALUE_ID_OUTSIDE = 'budgetvalueID';
   static const String GOAL_ID_OUTSIDE = 'goalID';
 
   /// Constants

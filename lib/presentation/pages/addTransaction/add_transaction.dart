@@ -137,7 +137,7 @@ String? _validateAmount(BuildContext context) {
 
 String? _failAmountClosure(ValueFailure f) {
   final result = f.maybeMap(
-    tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
+    tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
     invalidAmount: (_) => "Please specify an amount.",
     orElse: () => null,
   );
