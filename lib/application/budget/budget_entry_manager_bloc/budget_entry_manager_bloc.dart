@@ -14,7 +14,6 @@ part 'budget_entry_manager_bloc.freezed.dart';
 class BudgetEntryManagerBloc extends Bloc<BudgetEntryManagerEvent, BudgetEntryManagerState> {
   final IBudgetValueRepository budgetvalueRepository;
   final BudgetDateCubit budgetDateCubit;
-  Map<UniqueId, BudgetEntry> budgetentries = {};
 
   BudgetEntryManagerBloc({required this.budgetvalueRepository, required this.budgetDateCubit})
       : super(BudgetEntryManagerState._initial()) {
@@ -25,11 +24,15 @@ class BudgetEntryManagerBloc extends Bloc<BudgetEntryManagerEvent, BudgetEntryMa
   void _onBudgetedChanged(_BudgetedChanged event, Emitter<BudgetEntryManagerState> emit) {
     final BudgetEntry entry = event.entry;
 
+    Amount previousBudgeted = entry.budgeted;
+    Amount newBudgeted = Amount(event.newBudgetedValue);
+    Amount newAvailable = event.entry.available + (newBudgeted - previousBudgeted);
+
     final newBudgetValue = BudgetValue(
       id: entry.id,
       subcategoryId: entry.subcategoryId,
-      budgeted: Amount(event.budgeted),
-      available: entry.available,
+      budgeted: newBudgeted,
+      available: newAvailable,
       date: entry.date,
     );
 

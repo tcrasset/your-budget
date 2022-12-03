@@ -19,20 +19,22 @@ mixin _$BudgetEntryManagerEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
-    required TResult Function(BudgetEntry entry, String budgeted)
+    required TResult Function(BudgetEntry entry, String newBudgetedValue)
         budgetedChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(BudgetEntry entry, String budgeted)? budgetedChanged,
+    TResult Function(BudgetEntry entry, String newBudgetedValue)?
+        budgetedChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(BudgetEntry entry, String budgeted)? budgetedChanged,
+    TResult Function(BudgetEntry entry, String newBudgetedValue)?
+        budgetedChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -116,7 +118,7 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
-    required TResult Function(BudgetEntry entry, String budgeted)
+    required TResult Function(BudgetEntry entry, String newBudgetedValue)
         budgetedChanged,
   }) {
     return initialized();
@@ -126,7 +128,8 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(BudgetEntry entry, String budgeted)? budgetedChanged,
+    TResult Function(BudgetEntry entry, String newBudgetedValue)?
+        budgetedChanged,
   }) {
     return initialized?.call();
   }
@@ -135,7 +138,8 @@ class _$_Initialized implements _Initialized {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(BudgetEntry entry, String budgeted)? budgetedChanged,
+    TResult Function(BudgetEntry entry, String newBudgetedValue)?
+        budgetedChanged,
     required TResult orElse(),
   }) {
     if (initialized != null) {
@@ -185,7 +189,7 @@ abstract class _$$_BudgetedChangedCopyWith<$Res> {
   factory _$$_BudgetedChangedCopyWith(
           _$_BudgetedChanged value, $Res Function(_$_BudgetedChanged) then) =
       __$$_BudgetedChangedCopyWithImpl<$Res>;
-  $Res call({BudgetEntry entry, String budgeted});
+  $Res call({BudgetEntry entry, String newBudgetedValue});
 
   $BudgetEntryCopyWith<$Res> get entry;
 }
@@ -204,16 +208,16 @@ class __$$_BudgetedChangedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? entry = freezed,
-    Object? budgeted = freezed,
+    Object? newBudgetedValue = freezed,
   }) {
     return _then(_$_BudgetedChanged(
       entry == freezed
           ? _value.entry
           : entry // ignore: cast_nullable_to_non_nullable
               as BudgetEntry,
-      budgeted == freezed
-          ? _value.budgeted
-          : budgeted // ignore: cast_nullable_to_non_nullable
+      newBudgetedValue == freezed
+          ? _value.newBudgetedValue
+          : newBudgetedValue // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -229,16 +233,16 @@ class __$$_BudgetedChangedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_BudgetedChanged implements _BudgetedChanged {
-  const _$_BudgetedChanged(this.entry, this.budgeted);
+  const _$_BudgetedChanged(this.entry, this.newBudgetedValue);
 
   @override
   final BudgetEntry entry;
   @override
-  final String budgeted;
+  final String newBudgetedValue;
 
   @override
   String toString() {
-    return 'BudgetEntryManagerEvent.budgetedChanged(entry: $entry, budgeted: $budgeted)';
+    return 'BudgetEntryManagerEvent.budgetedChanged(entry: $entry, newBudgetedValue: $newBudgetedValue)';
   }
 
   @override
@@ -247,14 +251,15 @@ class _$_BudgetedChanged implements _BudgetedChanged {
         (other.runtimeType == runtimeType &&
             other is _$_BudgetedChanged &&
             const DeepCollectionEquality().equals(other.entry, entry) &&
-            const DeepCollectionEquality().equals(other.budgeted, budgeted));
+            const DeepCollectionEquality()
+                .equals(other.newBudgetedValue, newBudgetedValue));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(entry),
-      const DeepCollectionEquality().hash(budgeted));
+      const DeepCollectionEquality().hash(newBudgetedValue));
 
   @JsonKey(ignore: true)
   @override
@@ -265,30 +270,32 @@ class _$_BudgetedChanged implements _BudgetedChanged {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
-    required TResult Function(BudgetEntry entry, String budgeted)
+    required TResult Function(BudgetEntry entry, String newBudgetedValue)
         budgetedChanged,
   }) {
-    return budgetedChanged(entry, budgeted);
+    return budgetedChanged(entry, newBudgetedValue);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(BudgetEntry entry, String budgeted)? budgetedChanged,
+    TResult Function(BudgetEntry entry, String newBudgetedValue)?
+        budgetedChanged,
   }) {
-    return budgetedChanged?.call(entry, budgeted);
+    return budgetedChanged?.call(entry, newBudgetedValue);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
-    TResult Function(BudgetEntry entry, String budgeted)? budgetedChanged,
+    TResult Function(BudgetEntry entry, String newBudgetedValue)?
+        budgetedChanged,
     required TResult orElse(),
   }) {
     if (budgetedChanged != null) {
-      return budgetedChanged(entry, budgeted);
+      return budgetedChanged(entry, newBudgetedValue);
     }
     return orElse();
   }
@@ -327,10 +334,11 @@ class _$_BudgetedChanged implements _BudgetedChanged {
 
 abstract class _BudgetedChanged implements BudgetEntryManagerEvent {
   const factory _BudgetedChanged(
-      final BudgetEntry entry, final String budgeted) = _$_BudgetedChanged;
+          final BudgetEntry entry, final String newBudgetedValue) =
+      _$_BudgetedChanged;
 
   BudgetEntry get entry;
-  String get budgeted;
+  String get newBudgetedValue;
   @JsonKey(ignore: true)
   _$$_BudgetedChangedCopyWith<_$_BudgetedChanged> get copyWith =>
       throw _privateConstructorUsedError;
