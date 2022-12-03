@@ -6,6 +6,7 @@ import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 // Project imports:
@@ -65,6 +66,27 @@ class SQFliteBudgetValueRepository implements IBudgetValueRepository {
       }
 
       return right(unit);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ValueFailure, BudgetValue>> get({
+    required int year,
+    required int month,
+    required UniqueId subcategoryId,
+  }) async {
+    try {
+      final result = await database!.query(
+        DatabaseConstants.budgetValueTable,
+        where:
+            '${DatabaseConstants.BUDGET_VALUE_YEAR} = ? and ${DatabaseConstants.BUDGET_VALUE_MONTH} = ? and ${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ?',
+        whereArgs: [year, month, subcategoryId.getOrCrash()],
+      );
+
+      final BudgetValueDTO budgetValueDTO = BudgetValueDTO.fromJson(result.first);
+      return right(budgetValueDTO.toDomain());
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }

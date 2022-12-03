@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
@@ -44,6 +45,7 @@ class AddTransactionPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => TransactionCreatorBloc(
         transactionRepository: GetIt.instance<ITransactionRepository>(),
+        budgetValueRepository: GetIt.instance<IBudgetValueRepository>(),
       )..add(const TransactionCreatorEvent.initialized()),
       child: Scaffold(
         appBar: AppBar(
