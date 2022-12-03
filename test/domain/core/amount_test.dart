@@ -20,7 +20,7 @@ void main() {
 
   test('verify that a too big amount returns a ValueFailure.tooBigAmount', () {
     //!Arrange
-    final String tAmount = "1${Amount.maxValue}"; //Appending 1 to largest number
+    final String tAmount = "1${Amount.MAX_VALUE}"; //Appending 1 to largest number
     final tFailure = ValueFailure<String>.tooBigAmount(failedValue: tAmount);
     //!Act
     final result = Amount(tAmount);

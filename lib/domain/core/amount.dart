@@ -15,13 +15,25 @@ class Amount extends ValueObject<double> {
   @override
   final Either<ValueFailure<String>, double> value;
 
-  static const maxValue = 999999999.99;
+  static const MAX_VALUE = 999999999.99;
 
   factory Amount(String input) {
     return Amount._(_validateAmount(input));
   }
 
-  const Amount._(this.value) : assert(value != null);
+  factory Amount.fromDouble(double input) {
+    Either<ValueFailure<String>, double> failureOrAmount;
+    if (input >= Amount.MAX_VALUE) {
+      failureOrAmount = left(ValueFailure<String>.tooBigAmount(failedValue: input.toString()));
+    } else {
+      failureOrAmount = right(input);
+    }
+    return Amount._(failureOrAmount);
+  }
+  const Amount._(this.value);
+
+  Amount operator +(Amount other) => Amount.fromDouble(getOrCrash() + other.getOrCrash());
+  Amount operator -(Amount other) => Amount.fromDouble(getOrCrash() - other.getOrCrash());
 }
 
 Either<ValueFailure<String>, double> _validateAmount(String input) {
@@ -29,12 +41,12 @@ Either<ValueFailure<String>, double> _validateAmount(String input) {
     return left(ValueFailure<String>.invalidAmount(failedValue: input));
   }
 
-  final double amount = _formatFromCurrency(input);
+  final double value = _formatFromCurrency(input);
 
-  if (amount >= Amount.maxValue) {
+  if (value >= Amount.MAX_VALUE) {
     return left(ValueFailure<String>.tooBigAmount(failedValue: input));
   } else {
-    return right(amount);
+    return right(value);
   }
 }
 
@@ -49,13 +61,11 @@ double _parseCurrency(String input) {
   final String absoluteInput = _cleanInput(input);
 
   try {
-    tryParsedAmount = Constants.CURRENCY_FORMAT
-        .parse(absoluteInput); //Can't parse negative amounts
+    tryParsedAmount = Constants.CURRENCY_FORMAT.parse(absoluteInput); //Can't parse negative amounts
   } on FormatException {}
 
   // Use tryParsedAmount if it didn't throw an exception, else use absolute input
-  final String inputToParse =
-      tryParsedAmount != null ? tryParsedAmount.toString() : absoluteInput;
+  final String inputToParse = tryParsedAmount != null ? tryParsedAmount.toString() : absoluteInput;
   return double.tryParse(inputToParse)!;
 }
 

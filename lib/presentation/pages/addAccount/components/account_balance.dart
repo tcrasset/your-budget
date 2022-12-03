@@ -23,15 +23,13 @@ class AccountBalance extends HookWidget {
   });
 
   void onBalanceChanged(BuildContext context, String value) {
-    context
-        .read<AccountCreatorBloc>()
-        .add(AccountCreatorEvent.balanceChanged(value));
+    context.read<AccountCreatorBloc>().add(AccountCreatorEvent.balanceChanged(value));
   }
 
   String? _failNameClosure(dynamic f) {
     final result = f.maybeMap(
       invalidAmount: (_) => "Must be a valid amount",
-      tooBigAmount: (_) => "Must be smaller than ${Amount.maxValue}",
+      tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
       orElse: () => null,
     );
 
