@@ -5,6 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/application/budget/budget_entry_manager_bloc/budget_entry_manager_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
+import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
@@ -29,9 +31,11 @@ class BudgetValueWatcherBloc extends Bloc<BudgetValueWatcherEvent, BudgetValueWa
         add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDate));
       }
     });
+
+    final DateTime budgetDate = budgetDateCubit.state;
+
     budgetManagerBloc.stream.listen((state) {
       if (state.wasModified) {
-        final DateTime budgetDate = budgetDateCubit.state;
         add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDate));
       }
     });

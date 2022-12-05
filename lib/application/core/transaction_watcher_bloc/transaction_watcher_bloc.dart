@@ -17,8 +17,7 @@ part 'transaction_watcher_bloc.freezed.dart';
 part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';
 
-class TransactionWatcherBloc
-    extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
+class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
   final ITransactionRepository transactionRepository;
   final IAccountRepository accountRepository;
   final TransactionSelectorBloc transactionSelectorBloc;
@@ -63,9 +62,8 @@ class TransactionWatcherBloc
         }
         final String id = accounts[currentIndex].id.getOrCrash();
         transactionRepository.watchAccountTransactions(id).listen(
-              (failureOrTransactions) => add(
-                  TransactionWatcherEvent.transactionsReceived(
-                      failureOrTransactions)),
+              (failureOrTransactions) =>
+                  add(TransactionWatcherEvent.transactionsReceived(failureOrTransactions)),
             );
       },
     );
@@ -77,14 +75,13 @@ class TransactionWatcherBloc
   ) {
     final newState = event.failureOrTransactions.fold(
       (f) => TransactionWatcherState.loadFailure(f),
-      (transactions) => TransactionWatcherState.loadSuccess(transactions,
-          transactions.isNotEmpty ? transactions[0].account : null),
+      (transactions) => TransactionWatcherState.loadSuccess(
+          transactions, transactions.isNotEmpty ? transactions[0].account : null),
     );
     emit(newState);
   }
 
-  Future<void> _onCycleAccount(
-      _CycleAccount event, Emitter<TransactionWatcherState> emit) async {
+  Future<void> _onCycleAccount(_CycleAccount event, Emitter<TransactionWatcherState> emit) async {
     final failureOrCount = await accountRepository.count();
 
     failureOrCount.fold((f) => null, (numberOfAccounts) {

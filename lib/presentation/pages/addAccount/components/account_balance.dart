@@ -62,8 +62,7 @@ class AccountBalance extends HookWidget {
       listener: (context, state) {
         _controller
           ..text = getBalance(state)!
-          ..selection =
-              TextSelection.collapsed(offset: _controller.text.length);
+          ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
         return Column(
@@ -86,8 +85,7 @@ class AccountBalance extends HookWidget {
                   textAlign: TextAlign.center,
                   validator: (_) => validateBalance(context),
                   onChanged: (value) => onBalanceChanged(context, value),
-                  onTap: () =>
-                      onBalanceChanged(context, CurrencyOperations.zero),
+                  onTap: () => onBalanceChanged(context, CurrencyOperations.zero),
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp("[0-9]")),
@@ -104,8 +102,7 @@ class AccountBalance extends HookWidget {
   }
 }
 
-String? getBalance(AccountCreatorState state) =>
-    state.account.balance.value.fold(
+String? getBalance(AccountCreatorState state) => state.account.balance.value.fold(
       (_) => null,
       (v) => CurrencyOperations.formatAmount(v),
     );

@@ -22,22 +22,7 @@ import 'package:your_budget/presentation/pages/budget/components/maincategory_ro
 class BudgetView extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<BudgetEntryManagerBloc>(
-        create: (context) => BudgetEntryManagerBloc(
-          budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
-          budgetDateCubit: context.read<BudgetDateCubit>(),
-        )..add(const BudgetEntryManagerEvent.initialized()),
-      ),
-      BlocProvider<BudgetValueWatcherBloc>(
-        create: (context) => BudgetValueWatcherBloc(
-            budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
-            budgetManagerBloc: context.read<BudgetEntryManagerBloc>(),
-            budgetDateCubit: context.read<BudgetDateCubit>())
-          ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(
-              context.read<BudgetDateCubit>().state)),
-      ),
-    ], child: const BudgetEntries());
+    return const BudgetEntries();
   }
 }
 

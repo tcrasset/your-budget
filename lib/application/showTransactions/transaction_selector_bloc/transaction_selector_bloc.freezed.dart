@@ -18,21 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TransactionSelectorEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) toggleSelected,
+    required TResult Function(MoneyTransaction transaction) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
@@ -84,7 +84,9 @@ abstract class _$$_ToggleSelectedCopyWith<$Res> {
   factory _$$_ToggleSelectedCopyWith(
           _$_ToggleSelected value, $Res Function(_$_ToggleSelected) then) =
       __$$_ToggleSelectedCopyWithImpl<$Res>;
-  $Res call({String id});
+  $Res call({MoneyTransaction transaction});
+
+  $MoneyTransactionCopyWith<$Res> get transaction;
 }
 
 /// @nodoc
@@ -100,28 +102,35 @@ class __$$_ToggleSelectedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? transaction = freezed,
   }) {
     return _then(_$_ToggleSelected(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      transaction == freezed
+          ? _value.transaction
+          : transaction // ignore: cast_nullable_to_non_nullable
+              as MoneyTransaction,
     ));
+  }
+
+  @override
+  $MoneyTransactionCopyWith<$Res> get transaction {
+    return $MoneyTransactionCopyWith<$Res>(_value.transaction, (value) {
+      return _then(_value.copyWith(transaction: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_ToggleSelected implements _ToggleSelected {
-  const _$_ToggleSelected(this.id);
+  const _$_ToggleSelected(this.transaction);
 
   @override
-  final String id;
+  final MoneyTransaction transaction;
 
   @override
   String toString() {
-    return 'TransactionSelectorEvent.toggleSelected(id: $id)';
+    return 'TransactionSelectorEvent.toggleSelected(transaction: $transaction)';
   }
 
   @override
@@ -129,12 +138,13 @@ class _$_ToggleSelected implements _ToggleSelected {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ToggleSelected &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality()
+                .equals(other.transaction, transaction));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(transaction));
 
   @JsonKey(ignore: true)
   @override
@@ -144,33 +154,33 @@ class _$_ToggleSelected implements _ToggleSelected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) toggleSelected,
+    required TResult Function(MoneyTransaction transaction) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) {
-    return toggleSelected(id);
+    return toggleSelected(transaction);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) {
-    return toggleSelected?.call(id);
+    return toggleSelected?.call(transaction);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
   }) {
     if (toggleSelected != null) {
-      return toggleSelected(id);
+      return toggleSelected(transaction);
     }
     return orElse();
   }
@@ -211,9 +221,10 @@ class _$_ToggleSelected implements _ToggleSelected {
 }
 
 abstract class _ToggleSelected implements TransactionSelectorEvent {
-  const factory _ToggleSelected(final String id) = _$_ToggleSelected;
+  const factory _ToggleSelected(final MoneyTransaction transaction) =
+      _$_ToggleSelected;
 
-  String get id;
+  MoneyTransaction get transaction;
   @JsonKey(ignore: true)
   _$$_ToggleSelectedCopyWith<_$_ToggleSelected> get copyWith =>
       throw _privateConstructorUsedError;
@@ -260,7 +271,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) toggleSelected,
+    required TResult Function(MoneyTransaction transaction) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) {
@@ -270,7 +281,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) {
@@ -280,7 +291,7 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),
@@ -371,7 +382,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id) toggleSelected,
+    required TResult Function(MoneyTransaction transaction) toggleSelected,
     required TResult Function() deleteSelected,
     required TResult Function() toggleModifying,
   }) {
@@ -381,7 +392,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
   }) {
@@ -391,7 +402,7 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String id)? toggleSelected,
+    TResult Function(MoneyTransaction transaction)? toggleSelected,
     TResult Function()? deleteSelected,
     TResult Function()? toggleModifying,
     required TResult orElse(),

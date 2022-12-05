@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
+import 'package:your_budget/application/core/budget_date_cubit.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
@@ -28,9 +30,14 @@ part 'transaction_creator_bloc.freezed.dart';
 class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCreatorState> {
   final ITransactionRepository transactionRepository;
   final IBudgetValueRepository budgetValueRepository;
+  final BudgetDateCubit budgetDateCubit;
+  final BudgetValueWatcherBloc budgetValueWatcherBloc;
+
   TransactionCreatorBloc({
     required this.transactionRepository,
     required this.budgetValueRepository,
+    required this.budgetValueWatcherBloc,
+    required this.budgetDateCubit,
   }) : super(TransactionCreatorState.initial()) {
     on<_Initialized>((event, emit) => emit(TransactionCreatorState.initial()));
     on<_AmountChanged>(_onAmountChanged);
@@ -42,18 +49,15 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     on<_Saved>(_onSaved);
   }
 
-  void _onAmountChanged(
-      _AmountChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onAmountChanged(_AmountChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
-      moneyTransaction:
-          state.moneyTransaction.copyWith(amount: Amount(event.amount)),
+      moneyTransaction: state.moneyTransaction.copyWith(amount: Amount(event.amount)),
       saveFailureOrSuccessOption: none(),
     );
     emit(newState);
   }
 
-  void _onAccountChanged(
-      _AccountChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onAccountChanged(_AccountChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
       moneyTransaction: state.moneyTransaction.copyWith(account: event.account),
       saveFailureOrSuccessOption: none(),
@@ -61,8 +65,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     emit(newState);
   }
 
-  void _onPayeeChanged(
-      _PayeeChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onPayeeChanged(_PayeeChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
       moneyTransaction: state.moneyTransaction.copyWith(payee: event.payee),
       saveFailureOrSuccessOption: none(),
@@ -70,8 +73,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     emit(newState);
   }
 
-  void _onDateChanged(
-      _DateChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onDateChanged(_DateChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
       moneyTransaction: state.moneyTransaction.copyWith(date: event.date),
       saveFailureOrSuccessOption: none(),
@@ -79,18 +81,15 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     emit(newState);
   }
 
-  void _onSubcategoryChanged(
-      _SubcategoryChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onSubcategoryChanged(_SubcategoryChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
-      moneyTransaction:
-          state.moneyTransaction.copyWith(subcategory: event.subcategory),
+      moneyTransaction: state.moneyTransaction.copyWith(subcategory: event.subcategory),
       saveFailureOrSuccessOption: none(),
     );
     emit(newState);
   }
 
-  void _onMemoChanged(
-      _MemoChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onMemoChanged(_MemoChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
       moneyTransaction: state.moneyTransaction.copyWith(memo: Name(event.memo)),
       saveFailureOrSuccessOption: none(),
@@ -105,6 +104,11 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
 
     if (transaction.failureOption.isNone()) {
       failureOrSuccess = await _createTransactionAndUpdateBudgetValue(transaction);
+      if (failureOrSuccess.isRight()) {
+        print("adding watch budget values after adding transaction");
+        budgetValueWatcherBloc
+            .add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDateCubit.state));
+      }
     }
 
     final newState = state.copyWith(
@@ -129,7 +133,8 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
 
       return await failureOrBudgetvalue.fold((l) => left(l), (budgetValue) async {
         final previousAvailable = budgetValue.available;
-        final newAvailable = previousAvailable - transaction.amount;
+        // '+' because transaction amount is negative
+        final newAvailable = previousAvailable + transaction.amount;
         final newBudgetValue = budgetValue.copyWith(available: newAvailable);
         Either<ValueFailure, Unit> failureOrUnit =
             await budgetValueRepository.update(newBudgetValue);
