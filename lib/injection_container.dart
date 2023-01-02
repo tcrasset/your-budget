@@ -10,12 +10,14 @@ import 'package:your_budget/appstate.dart';
 import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/category/i_category_repository.dart';
+import 'package:your_budget/domain/constants/i_constants_repository.dart';
 import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/infrastructure/account/account_repository.dart';
 import 'package:your_budget/infrastructure/budgetvalue/budgetvalue_repository.dart';
 import 'package:your_budget/infrastructure/category/category_repository.dart';
+import 'package:your_budget/infrastructure/constants/constants_repository.dart';
 import 'package:your_budget/infrastructure/payee/payee_repository.dart';
 import 'package:your_budget/infrastructure/subcategory/subcategory_repository.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_repository.dart';
@@ -34,15 +36,12 @@ Future<void> init() async {
   }
   // debugDatabase(database);
   sl.registerSingleton<Database>(database);
-  sl.registerLazySingleton<Queries>(
-      () => SQLQueryClass(database: sl<Database>()));
+  sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
   sl.registerSingleton<ITransactionRepository>(
     SQFliteTransactionRepository(database: sl<Database>()),
   );
-  sl.registerSingleton<IAccountRepository>(
-      SQFliteAccountRepository(database: sl<Database>()));
-  sl.registerSingleton<IPayeeRepository>(
-      SQFlitePayeeRepository(database: sl<Database>()));
+  sl.registerSingleton<IAccountRepository>(SQFliteAccountRepository(database: sl<Database>()));
+  sl.registerSingleton<IPayeeRepository>(SQFlitePayeeRepository(database: sl<Database>()));
   sl.registerSingleton<ISubcategoryRepository>(
     SQFliteSubcategoryRepository(database: sl<Database>()),
   );
@@ -53,14 +52,17 @@ Future<void> init() async {
     SQFliteCategoryRepository(database: sl<Database>()),
   );
 
+  sl.registerSingleton<IConstantsRepository>(
+    SQFliteConstantsRepository(database: sl<Database>()),
+  );
+
   // final AppState appState = AppState(queryContext: sl());
   // await appState.loadStateFromDatabase();
   // sl.registerLazySingleton(() => appState);
 }
 
 Future<void> debugDatabase(Database database) async {
-  (await database.query('sqlite_master', columns: ['type', 'name']))
-      .forEach((row) {
+  (await database.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
     debugPrint(row.values.toString());
   });
 }
