@@ -1,22 +1,44 @@
 import 'package:bloc/bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:your_budget/domain/constants/i_constants_repository.dart';
+import 'package:your_budget/models/utils.dart';
 
 class BudgetDateCubit extends Cubit<DateTime> {
-  BudgetDateCubit() : super(DateTime.now());
+  BudgetDateCubit() : super(getDateFromMonthStart(DateTime.now()));
 
   void increment() {
     // ignore: avoid_redundant_argument_values
+    DateTime newDate;
+    final DateTime maxBudgetDate = getMaxBudgetDate();
     if (state.month == DateTime.december) {
-      emit(DateTime(state.year + 1, DateTime.january));
+      newDate = DateTime(state.year + 1);
     } else {
-      emit(DateTime(state.year, state.month + 1));
+      newDate = DateTime(state.year, state.month + 1);
     }
+
+    if (newDate.isAfter(maxBudgetDate)) {
+      return;
+    }
+
+    emit(newDate);
   }
 
-  void decrement() {
+  Future<void> decrement() async {
+    DateTime newDate;
+    final failureOrDate = await GetIt.instance<IConstantsRepository>().getStartingBudgetDate();
+
+    final minBudgetDate = failureOrDate
+        .getOrElse(() => throw Exception("Could not reach database for starting budget date"));
     if (state.month == DateTime.january) {
-      emit(DateTime(state.year - 1, DateTime.december));
+      newDate = DateTime(state.year - 1, DateTime.december);
     } else {
-      emit(DateTime(state.year, state.month - 1));
+      newDate = DateTime(state.year, state.month - 1);
     }
+
+    if (newDate.isBefore(minBudgetDate)) {
+      return;
+    }
+
+    emit(newDate);
   }
 }

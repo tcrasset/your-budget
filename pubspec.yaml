@@ -41,6 +41,7 @@ dependencies:
   sqflite: ^2.0.0+3
   uuid: ^3.0.4
   collection: ^1.15.0-nullsafety.4
+  bloc: ^8.1.0
 
 dev_dependencies:
   flutter_test:
