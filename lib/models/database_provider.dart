@@ -239,7 +239,7 @@ class DatabaseProvider {
 
     /// Create the starting budget date based on the first time the user uses the app
     final String startingDateMillisecondsSinceEpoch =
-        getDateYMD(DateTime.now()).millisecondsSinceEpoch.toString();
+        getDateFromMonthStart(DateTime.now()).millisecondsSinceEpoch.toString();
     db.rawInsert(
       CREATE_CONSTANT,
       [DatabaseConstants.STARTING_BUDGET_DATE, startingDateMillisecondsSinceEpoch],

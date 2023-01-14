@@ -26,7 +26,6 @@ class BudgetDateCubit extends Cubit<DateTime> {
   Future<void> decrement() async {
     DateTime newDate;
     final failureOrDate = await GetIt.instance<IConstantsRepository>().getStartingBudgetDate();
-
     final minBudgetDate = failureOrDate
         .getOrElse(() => throw Exception("Could not reach database for starting budget date"));
     if (state.month == DateTime.january) {

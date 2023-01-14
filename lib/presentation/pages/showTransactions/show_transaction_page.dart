@@ -145,7 +145,6 @@ class OptionalTransactionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Building OptionalTransactionList");
     return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
       // Build the whole TransactionList once we successfully load the transactions
       // from the database.

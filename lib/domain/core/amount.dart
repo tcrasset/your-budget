@@ -30,6 +30,7 @@ class Amount extends ValueObject<double> {
     }
     return Amount._(failureOrAmount);
   }
+
   const Amount._(this.value);
 
   Amount operator +(Amount other) => Amount.fromDouble(getOrCrash() + other.getOrCrash());

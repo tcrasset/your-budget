@@ -16,6 +16,7 @@ import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/category/i_category_repository.dart';
+import 'package:your_budget/startup.dart' as startup;
 import 'package:your_budget/injection_container.dart' as injections;
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addAccount/add_account.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
   Bloc.observer = SimpleBlocObserver();
   WidgetsFlutterBinding.ensureInitialized();
   await injections.init();
+  await startup.addBudgetsUntilMaxDate();
   runApp(MyBudget());
 }
 
