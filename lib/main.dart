@@ -26,7 +26,7 @@ import 'package:your_budget/presentation/pages/deleteCategories/delete_categorie
 import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
 import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
 
-import 'domain/subcategory/i_subcategory_repository.dart';
+import 'domain/subcategory/i_subcategory_provider.dart';
 
 Future<void> main() async {
   Bloc.observer = SimpleBlocObserver();
@@ -71,7 +71,7 @@ class MyBudgetState extends State<MyBudget> {
         providers: [
           BlocProvider<SubcategoryWatcherBloc>(
             create: (context) => SubcategoryWatcherBloc(
-                subcategoryRepository: GetIt.instance<ISubcategoryRepository>())
+                subcategoryRepository: GetIt.instance<ISubcategoryProvider>())
               ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
           ),
           BlocProvider<CategoryWatcherBloc>(

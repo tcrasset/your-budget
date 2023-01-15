@@ -14,7 +14,7 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/models/queries.dart';
@@ -25,7 +25,7 @@ import 'account_creator_test.mocks.dart';
   customMocks: [
     MockSpec<ITransactionRepository>(as: #MockTransactionRepository),
     MockSpec<IAccountRepository>(as: #MockAccountRepository),
-    MockSpec<ISubcategoryRepository>(as: #MockSubcategoryRepository),
+    MockSpec<ISubcategoryProvider>(as: #MockSubcategoryRepository),
     MockSpec<IPayeeProvider>(as: #MockPayeeRepository),
   ],
 )

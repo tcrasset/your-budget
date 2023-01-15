@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'add_transaction_field.dart';
 import 'search_field.dart';

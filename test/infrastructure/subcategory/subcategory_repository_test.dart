@@ -9,14 +9,14 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/infrastructure/subcategory/subcategory_dto.dart';
-import 'package:your_budget/infrastructure/subcategory/subcategory_repository.dart';
+import 'package:your_budget/infrastructure/subcategory/subcategory_provider.dart';
 import 'package:your_budget/models/constants.dart';
 
 class MockDatabase extends Mock implements Database {}
 
 void main() {
   late Database mockDatabase;
-  late SQFliteSubcategoryRepository repository;
+  late SQFliteSubcategoryProvider repository;
   int tId;
   int tParentID;
   double budgeted;
@@ -26,7 +26,7 @@ void main() {
   late SubcategoryDTO subcategoryDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
-    repository = SQFliteSubcategoryRepository(database: mockDatabase);
+    repository = SQFliteSubcategoryProvider(database: mockDatabase);
 
     tId = 99;
     tParentID = 888;

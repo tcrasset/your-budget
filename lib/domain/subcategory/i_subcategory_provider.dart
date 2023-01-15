@@ -7,7 +7,7 @@ import 'package:your_budget/domain/core/value_failure.dart';
 
 // import 'package:your_budget/models/account.dart';
 
-abstract class ISubcategoryRepository {
+abstract class ISubcategoryProvider {
   Future<Either<ValueFailure, Subcategory>> get(int id);
   Future<Either<ValueFailure, Unit>> create(Subcategory subcategory);
   Future<Either<ValueFailure, Unit>> update(Subcategory subcategory);

@@ -8,7 +8,7 @@ import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/infrastructure/budgetvalue/bugetvalue_dto.dart';

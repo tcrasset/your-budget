@@ -8,16 +8,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 
 part 'subcategory_watcher_event.dart';
 part 'subcategory_watcher_state.dart';
 part 'subcategory_watcher_bloc.freezed.dart';
 
-class SubcategoryWatcherBloc
-    extends Bloc<SubcategoryWatcherEvent, SubcategoryWatcherState> {
-  final ISubcategoryRepository subcategoryRepository;
+class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWatcherState> {
+  final ISubcategoryProvider subcategoryRepository;
   StreamSubscription<List<Subcategory>>? _subcategoryStreamSubscription;
 
   SubcategoryWatcherBloc({required this.subcategoryRepository})
@@ -34,9 +33,8 @@ class SubcategoryWatcherBloc
     await _subcategoryStreamSubscription?.cancel();
 
     subcategoryRepository.watchAllSubcategories().listen(
-          (failureOrSubcategories) => add(
-              SubcategoryWatcherEvent.subcategoriesReceived(
-                  failureOrSubcategories)),
+          (failureOrSubcategories) =>
+              add(SubcategoryWatcherEvent.subcategoriesReceived(failureOrSubcategories)),
         );
   }
 

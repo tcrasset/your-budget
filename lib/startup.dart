@@ -5,7 +5,7 @@ import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
 import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
+import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
@@ -16,7 +16,7 @@ Future<void> addBudgetsUntilMaxDate() async {
   print("currentDate: $currentDate");
   final IConstantsProvider constantProvider = GetIt.instance<IConstantsProvider>();
   final IBudgetValueRepository budgetValueRepository = GetIt.instance<IBudgetValueRepository>();
-  final ISubcategoryRepository subcategoryRepository = GetIt.instance<ISubcategoryRepository>();
+  final ISubcategoryProvider subcategoryRepository = GetIt.instance<ISubcategoryProvider>();
   final storedMaxBudgetDate = (await constantProvider.getMaxBudgetDate())
       .getOrElse(() => throw Exception("Could not get stored max budget date;"));
   print("storedMaxBudgetDate: $storedMaxBudgetDate");

@@ -12,7 +12,7 @@ import 'package:your_budget/domain/account/i_account_repository.dart' as _i7;
 import 'package:your_budget/domain/core/value_failure.dart' as _i5;
 import 'package:your_budget/domain/payee/i_payee_provider.dart' as _i11;
 import 'package:your_budget/domain/payee/payee.dart' as _i12;
-import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart' as _i9;
+import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart' as _i9;
 import 'package:your_budget/domain/subcategory/subcategory.dart' as _i10;
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart' as _i3;
 import 'package:your_budget/domain/transaction/transaction.dart' as _i6;
@@ -134,7 +134,7 @@ class MockAccountRepository extends _i1.Mock implements _i7.IAccountRepository {
 /// A class which mocks [ISubcategoryRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockSubcategoryRepository extends _i1.Mock implements _i9.ISubcategoryRepository {
+class MockSubcategoryRepository extends _i1.Mock implements _i9.ISubcategoryProvider {
   MockSubcategoryRepository() {
     _i1.throwOnMissingStub(this);
   }
