@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 
@@ -15,7 +15,7 @@ part 'transaction_selector_bloc.freezed.dart';
 
 class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, TransactionSelectorState> {
   final ITransactionRepository transactionRepository;
-  final IBudgetValueRepository budgetValueRepository;
+  final IBudgetValueProvider budgetValueRepository;
   final BudgetValueWatcherBloc budgetValueWatcherBloc;
   final BudgetDateCubit budgetDateCubit;
   Set<MoneyTransaction> selected = {};

@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
@@ -46,7 +46,7 @@ class AddTransactionPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => TransactionCreatorBloc(
         transactionRepository: GetIt.instance<ITransactionRepository>(),
-        budgetValueRepository: GetIt.instance<IBudgetValueRepository>(),
+        budgetValueRepository: GetIt.instance<IBudgetValueProvider>(),
         budgetDateCubit: context.read<BudgetDateCubit>(),
         budgetValueWatcherBloc: context.read<BudgetValueWatcherBloc>(),
       )..add(const TransactionCreatorEvent.initialized()),

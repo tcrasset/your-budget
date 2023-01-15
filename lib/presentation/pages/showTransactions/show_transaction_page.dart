@@ -10,8 +10,8 @@ import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
@@ -31,7 +31,7 @@ class ShowTransactionPage extends StatelessWidget {
         BlocProvider<TransactionSelectorBloc>(
           create: (context) => TransactionSelectorBloc(
             transactionRepository: GetIt.instance<ITransactionRepository>(),
-            budgetValueRepository: GetIt.instance<IBudgetValueRepository>(),
+            budgetValueRepository: GetIt.instance<IBudgetValueProvider>(),
             budgetDateCubit: context.read<BudgetDateCubit>(),
             budgetValueWatcherBloc: context.read<BudgetValueWatcherBloc>(),
           ),

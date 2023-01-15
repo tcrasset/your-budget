@@ -5,7 +5,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
@@ -17,9 +17,9 @@ import 'package:your_budget/models/constants.dart';
 
 // import 'package:your_budget/domain/subcategory/subcategory.dart';
 
-class SQFliteBudgetValueRepository implements IBudgetValueRepository {
+class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   final Database? database;
-  SQFliteBudgetValueRepository({required this.database});
+  SQFliteBudgetValueProvider({required this.database});
 
   @override
   Future<Either<ValueFailure, int?>> count() async {

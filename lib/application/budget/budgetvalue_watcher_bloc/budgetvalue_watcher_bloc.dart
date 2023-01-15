@@ -8,7 +8,7 @@ import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
 part 'budgetvalue_watcher_event.dart';
@@ -16,7 +16,7 @@ part 'budgetvalue_watcher_state.dart';
 part 'budgetvalue_watcher_bloc.freezed.dart';
 
 class BudgetValueWatcherBloc extends Bloc<BudgetValueWatcherEvent, BudgetValueWatcherState> {
-  final IBudgetValueRepository budgetvalueRepository;
+  final IBudgetValueProvider budgetvalueRepository;
   final BudgetDateCubit budgetDateCubit;
   final BudgetEntryManagerBloc budgetManagerBloc;
   StreamSubscription<List<BudgetValue>>? _budgetvalueStreamSubscription;

@@ -7,15 +7,15 @@ import 'package:sqflite/sqflite.dart';
 
 // Project imports:
 import 'package:your_budget/appstate.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
 import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 import 'package:your_budget/infrastructure/account/account_provider.dart';
-import 'package:your_budget/infrastructure/budgetvalue/budgetvalue_repository.dart';
+import 'package:your_budget/infrastructure/budgetvalue/budgetvalue_provider.dart';
 import 'package:your_budget/infrastructure/category/category_provider.dart';
 import 'package:your_budget/infrastructure/constants/constants_provider.dart';
 import 'package:your_budget/infrastructure/payee/payee_provider.dart';
@@ -45,8 +45,8 @@ Future<void> init() async {
   sl.registerSingleton<ISubcategoryProvider>(
     SQFliteSubcategoryProvider(database: sl<Database>()),
   );
-  sl.registerSingleton<IBudgetValueRepository>(
-    SQFliteBudgetValueRepository(database: sl<Database>()),
+  sl.registerSingleton<IBudgetValueProvider>(
+    SQFliteBudgetValueProvider(database: sl<Database>()),
   );
   sl.registerSingleton<ICategoryProvider>(
     SQFliteCategoryProvider(database: sl<Database>()),

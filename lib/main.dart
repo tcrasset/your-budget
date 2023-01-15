@@ -14,7 +14,7 @@ import 'package:your_budget/application/budget/category_watcher_bloc/category_wa
 import 'package:your_budget/application/core/bloc_observer.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
 import 'package:your_budget/startup.dart' as startup;
 import 'package:your_budget/injection_container.dart' as injections;
@@ -82,13 +82,13 @@ class MyBudgetState extends State<MyBudget> {
           BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
           BlocProvider<BudgetEntryManagerBloc>(
             create: (context) => BudgetEntryManagerBloc(
-              budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
+              budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
               budgetDateCubit: context.read<BudgetDateCubit>(),
             )..add(const BudgetEntryManagerEvent.initialized()),
           ),
           BlocProvider<BudgetValueWatcherBloc>(
             create: (context) => BudgetValueWatcherBloc(
-                budgetvalueRepository: GetIt.instance<IBudgetValueRepository>(),
+                budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
                 budgetManagerBloc: context.read<BudgetEntryManagerBloc>(),
                 budgetDateCubit: context.read<BudgetDateCubit>())
               ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(

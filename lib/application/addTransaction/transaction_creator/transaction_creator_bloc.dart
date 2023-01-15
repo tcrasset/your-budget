@@ -14,7 +14,7 @@ import 'package:your_budget/application/core/budget_date_cubit.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_repository.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
@@ -29,7 +29,7 @@ part 'transaction_creator_bloc.freezed.dart';
 
 class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCreatorState> {
   final ITransactionRepository transactionRepository;
-  final IBudgetValueRepository budgetValueRepository;
+  final IBudgetValueProvider budgetValueRepository;
   final BudgetDateCubit budgetDateCubit;
   final BudgetValueWatcherBloc budgetValueWatcherBloc;
 

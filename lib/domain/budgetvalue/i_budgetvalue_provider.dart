@@ -6,7 +6,7 @@ import 'package:your_budget/domain/core/unique_id.dart';
 // Project imports:
 import 'package:your_budget/domain/core/value_failure.dart';
 
-abstract class IBudgetValueRepository {
+abstract class IBudgetValueProvider {
   Future<Either<ValueFailure, Unit>> create(BudgetValue budgetvalue);
   Future<Either<ValueFailure, BudgetValue>> get(
       {required int year, required int month, required UniqueId subcategoryId});
