@@ -11,7 +11,7 @@ import 'package:sqflite/sqflite.dart';
 // Project imports:
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/infrastructure/payee/payee_dto.dart';
 

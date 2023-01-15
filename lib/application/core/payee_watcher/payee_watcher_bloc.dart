@@ -9,7 +9,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 
 part 'payee_watcher_event.dart';

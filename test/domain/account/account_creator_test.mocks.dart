@@ -10,7 +10,7 @@ import 'package:mockito/mockito.dart' as _i1;
 import 'package:your_budget/domain/account/account.dart' as _i8;
 import 'package:your_budget/domain/account/i_account_repository.dart' as _i7;
 import 'package:your_budget/domain/core/value_failure.dart' as _i5;
-import 'package:your_budget/domain/payee/i_payee_repository.dart' as _i11;
+import 'package:your_budget/domain/payee/i_payee_provider.dart' as _i11;
 import 'package:your_budget/domain/payee/payee.dart' as _i12;
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart' as _i9;
 import 'package:your_budget/domain/subcategory/subcategory.dart' as _i10;

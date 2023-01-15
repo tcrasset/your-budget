@@ -15,7 +15,7 @@ import 'package:your_budget/domain/account/i_account_repository.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
 

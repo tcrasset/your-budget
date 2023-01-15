@@ -6,7 +6,7 @@ import 'package:your_budget/domain/category/category.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
-abstract class ICategoryRepository {
+abstract class ICategoryProvider {
   Future<Either<ValueFailure, int>> create(Category Category);
   // Future<Either<ValueFailure, Unit>> update(NewAccount account);
   // Future<Either<ValueFailure, Unit>> delete(NewAccount account);

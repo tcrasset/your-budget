@@ -8,7 +8,7 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/infrastructure/payee/payee_dto.dart';
-import 'package:your_budget/infrastructure/payee/payee_repository.dart';
+import 'package:your_budget/infrastructure/payee/payee_provider.dart';
 import 'package:your_budget/models/constants.dart';
 
 class MockDatabase extends Mock implements Database {}

@@ -12,7 +12,7 @@ import 'package:your_budget/application/addTransaction/payee_creator/payee_creat
 import 'package:your_budget/application/core/payee_watcher/payee_watcher_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/payee/i_payee_repository.dart';
+import 'package:your_budget/domain/payee/i_payee_provider.dart';
 
 Future<String?> addPayeeDialog({required BuildContext superContext, String? defaultValue}) {
   return showDialog(
