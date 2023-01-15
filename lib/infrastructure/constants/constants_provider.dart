@@ -1,12 +1,12 @@
 import 'package:dartz/dartz.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:your_budget/domain/constants/i_constants_repository.dart';
+import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/models/constants.dart';
 
-class SQFliteConstantsRepository implements IConstantsRepository {
+class SQFliteConstantsProvider implements IConstantsProvider {
   final Database? database;
-  SQFliteConstantsRepository({required this.database});
+  SQFliteConstantsProvider({required this.database});
 
   @override
   Future<Either<ValueFailure, DateTime>> getStartingBudgetDate() async {

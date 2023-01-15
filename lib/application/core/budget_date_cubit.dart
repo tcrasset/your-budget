@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:your_budget/domain/constants/i_constants_repository.dart';
+import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/models/utils.dart';
 
 class BudgetDateCubit extends Cubit<DateTime> {
@@ -25,7 +25,7 @@ class BudgetDateCubit extends Cubit<DateTime> {
 
   Future<void> decrement() async {
     DateTime newDate;
-    final failureOrDate = await GetIt.instance<IConstantsRepository>().getStartingBudgetDate();
+    final failureOrDate = await GetIt.instance<IConstantsProvider>().getStartingBudgetDate();
     final minBudgetDate = failureOrDate
         .getOrElse(() => throw Exception("Could not reach database for starting budget date"));
     if (state.month == DateTime.january) {
