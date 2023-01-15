@@ -19,7 +19,7 @@ import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
 
 class AccountCreator {
-  final IAccountRepository accountRepository;
+  final IAccountProvider accountRepository;
   final ITransactionRepository transactionRepository;
   final ISubcategoryProvider subcategoryRepository;
   final IPayeeProvider payeeProvider;

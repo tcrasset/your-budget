@@ -24,7 +24,7 @@ part 'account_creator_state.dart';
 part 'account_creator_bloc.freezed.dart';
 
 class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> {
-  final IAccountRepository accountRepository;
+  final IAccountProvider accountRepository;
   final ITransactionRepository transactionRepository;
   final ISubcategoryProvider subcategoryRepository;
   final IPayeeProvider payeeProvider;

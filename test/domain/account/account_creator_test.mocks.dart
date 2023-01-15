@@ -84,7 +84,7 @@ class MockTransactionRepository extends _i1.Mock implements _i3.ITransactionRepo
 /// A class which mocks [IAccountRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAccountRepository extends _i1.Mock implements _i7.IAccountRepository {
+class MockAccountRepository extends _i1.Mock implements _i7.IAccountProvider {
   MockAccountRepository() {
     _i1.throwOnMissingStub(this);
   }

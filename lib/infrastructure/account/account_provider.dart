@@ -16,9 +16,9 @@ import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/infrastructure/account/account_dto.dart';
 
-class SQFliteAccountRepository implements IAccountRepository {
+class SQFliteAccountProvider implements IAccountProvider {
   final Database? database;
-  SQFliteAccountRepository({required this.database});
+  SQFliteAccountProvider({required this.database});
 
   @override
   Future<Either<ValueFailure, int?>> count() async {
@@ -38,8 +38,7 @@ class SQFliteAccountRepository implements IAccountRepository {
   Future<Either<ValueFailure, String>> create(Account account) async {
     try {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
-      final int id = await database!
-          .insert(DatabaseConstants.accountTable, accountDTO.toJson());
+      final int id = await database!.insert(DatabaseConstants.accountTable, accountDTO.toJson());
 
       return right(id.toString());
     } on DatabaseException catch (e) {

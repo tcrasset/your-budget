@@ -19,7 +19,7 @@ part 'transaction_watcher_state.dart';
 
 class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
   final ITransactionRepository transactionRepository;
-  final IAccountRepository accountRepository;
+  final IAccountProvider accountRepository;
   final TransactionSelectorBloc transactionSelectorBloc;
   StreamSubscription<List<MoneyTransaction>>? _transactionStreamSubscription;
   int currentIndex = 0;

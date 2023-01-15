@@ -14,7 +14,7 @@ import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
-import 'package:your_budget/infrastructure/account/account_repository.dart';
+import 'package:your_budget/infrastructure/account/account_provider.dart';
 import 'package:your_budget/infrastructure/budgetvalue/budgetvalue_repository.dart';
 import 'package:your_budget/infrastructure/category/category_provider.dart';
 import 'package:your_budget/infrastructure/constants/constants_provider.dart';
@@ -40,7 +40,7 @@ Future<void> init() async {
   sl.registerSingleton<ITransactionRepository>(
     SQFliteTransactionRepository(database: sl<Database>()),
   );
-  sl.registerSingleton<IAccountRepository>(SQFliteAccountRepository(database: sl<Database>()));
+  sl.registerSingleton<IAccountProvider>(SQFliteAccountProvider(database: sl<Database>()));
   sl.registerSingleton<IPayeeProvider>(SQFlitePayeeProvider(database: sl<Database>()));
   sl.registerSingleton<ISubcategoryProvider>(
     SQFliteSubcategoryProvider(database: sl<Database>()),

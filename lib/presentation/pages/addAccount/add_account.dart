@@ -28,12 +28,12 @@ class AddAccountPage extends StatelessWidget {
       providers: [
         BlocProvider<AccountWatcherBloc>(
           create: (context) =>
-              AccountWatcherBloc(accountRepository: GetIt.instance<IAccountRepository>())
+              AccountWatcherBloc(accountRepository: GetIt.instance<IAccountProvider>())
                 ..add(const AccountWatcherEvent.watchAccountsStarted()),
         ),
         BlocProvider<AccountCreatorBloc>(
           create: (_) => AccountCreatorBloc(
-            accountRepository: GetIt.instance<IAccountRepository>(),
+            accountRepository: GetIt.instance<IAccountProvider>(),
             transactionRepository: GetIt.instance<ITransactionRepository>(),
             subcategoryRepository: GetIt.instance<ISubcategoryProvider>(),
             payeeProvider: GetIt.instance<IPayeeProvider>(),

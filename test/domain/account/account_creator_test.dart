@@ -24,7 +24,7 @@ import 'account_creator_test.mocks.dart';
   [],
   customMocks: [
     MockSpec<ITransactionRepository>(as: #MockTransactionRepository),
-    MockSpec<IAccountRepository>(as: #MockAccountRepository),
+    MockSpec<IAccountProvider>(as: #MockAccountRepository),
     MockSpec<ISubcategoryProvider>(as: #MockSubcategoryRepository),
     MockSpec<IPayeeProvider>(as: #MockPayeeRepository),
   ],

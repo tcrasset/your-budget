@@ -39,7 +39,7 @@ class ShowTransactionPage extends StatelessWidget {
         BlocProvider<TransactionWatcherBloc>(
           create: (context) => TransactionWatcherBloc(
             transactionRepository: GetIt.instance<ITransactionRepository>(),
-            accountRepository: GetIt.instance<IAccountRepository>(),
+            accountRepository: GetIt.instance<IAccountProvider>(),
             transactionSelectorBloc: BlocProvider.of<TransactionSelectorBloc>(context),
           )..add(const TransactionWatcherEvent.watchTransactionsStarted()),
         )

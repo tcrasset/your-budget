@@ -33,18 +33,11 @@ class AccountField extends StatelessWidget {
     }
   }
 
-  String? validateAccount(BuildContext context) => context
-      .read<TransactionCreatorBloc>()
-      .state
-      .moneyTransaction
-      .account
-      .name
-      .value
-      .fold(
-        (f) => f.maybeMap(
-            emptyName: (_) => "Please select an Account", orElse: () => null),
-        (_) => null,
-      );
+  String? validateAccount(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.account.name.value.fold(
+            (f) => f.maybeMap(emptyName: (_) => "Please select an Account", orElse: () => null),
+            (_) => null,
+          );
 
   String getAccountName(BuildContext context) => context
       .watch<TransactionCreatorBloc>()
@@ -59,8 +52,8 @@ class AccountField extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider<AccountWatcherBloc>(
-            create: (context) => AccountWatcherBloc(
-                accountRepository: GetIt.instance<IAccountRepository>()),
+            create: (context) =>
+                AccountWatcherBloc(accountRepository: GetIt.instance<IAccountProvider>()),
           ),
         ],
         child: AddTransactionField(
@@ -106,10 +99,7 @@ class AccountSearchDelegate extends SearchDelegate<Account?> {
         return state.maybeMap(
           loadSuccess: (newState) {
             final accounts = newState.accounts
-                .where((p) => p.name
-                    .toString()
-                    .toLowerCase()
-                    .contains(query.toLowerCase()))
+                .where((p) => p.name.toString().toLowerCase().contains(query.toLowerCase()))
                 .toList();
 
             if (accounts.isEmpty) return Container();
@@ -122,8 +112,7 @@ class AccountSearchDelegate extends SearchDelegate<Account?> {
               itemBuilder: (BuildContext context, int index) {
                 final account = accounts[index];
                 final String name = account.name.getOrCrash();
-                return ListTile(
-                    title: Text(name), onTap: () => close(context, account));
+                return ListTile(title: Text(name), onTap: () => close(context, account));
               },
             );
           },
