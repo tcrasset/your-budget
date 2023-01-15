@@ -8,11 +8,11 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_balance.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_name.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_row.dart';
@@ -34,7 +34,7 @@ class AddAccountPage extends StatelessWidget {
         BlocProvider<AccountCreatorBloc>(
           create: (_) => AccountCreatorBloc(
             accountRepository: GetIt.instance<IAccountProvider>(),
-            transactionRepository: GetIt.instance<ITransactionRepository>(),
+            transactionRepository: GetIt.instance<ITransactionProvider>(),
             subcategoryRepository: GetIt.instance<ISubcategoryProvider>(),
             payeeProvider: GetIt.instance<IPayeeProvider>(),
           )..add(const AccountCreatorEvent.initialized()),

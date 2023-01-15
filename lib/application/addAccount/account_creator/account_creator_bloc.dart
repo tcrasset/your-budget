@@ -11,13 +11,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/account_creator.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 
 part 'account_creator_event.dart';
 part 'account_creator_state.dart';
@@ -25,7 +25,7 @@ part 'account_creator_bloc.freezed.dart';
 
 class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> {
   final IAccountProvider accountRepository;
-  final ITransactionRepository transactionRepository;
+  final ITransactionProvider transactionRepository;
   final ISubcategoryProvider subcategoryRepository;
   final IPayeeProvider payeeProvider;
   AccountCreatorBloc({

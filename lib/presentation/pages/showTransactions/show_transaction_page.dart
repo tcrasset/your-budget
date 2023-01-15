@@ -12,7 +12,7 @@ import 'package:your_budget/application/showTransactions/transaction_selector_bl
 import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
@@ -30,7 +30,7 @@ class ShowTransactionPage extends StatelessWidget {
       providers: [
         BlocProvider<TransactionSelectorBloc>(
           create: (context) => TransactionSelectorBloc(
-            transactionRepository: GetIt.instance<ITransactionRepository>(),
+            transactionRepository: GetIt.instance<ITransactionProvider>(),
             budgetValueRepository: GetIt.instance<IBudgetValueProvider>(),
             budgetDateCubit: context.read<BudgetDateCubit>(),
             budgetValueWatcherBloc: context.read<BudgetValueWatcherBloc>(),
@@ -38,7 +38,7 @@ class ShowTransactionPage extends StatelessWidget {
         ),
         BlocProvider<TransactionWatcherBloc>(
           create: (context) => TransactionWatcherBloc(
-            transactionRepository: GetIt.instance<ITransactionRepository>(),
+            transactionRepository: GetIt.instance<ITransactionProvider>(),
             accountRepository: GetIt.instance<IAccountProvider>(),
             transactionSelectorBloc: BlocProvider.of<TransactionSelectorBloc>(context),
           )..add(const TransactionWatcherEvent.watchTransactionsStarted()),

@@ -7,7 +7,7 @@ import 'package:test/test.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/account_creator.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
@@ -16,14 +16,14 @@ import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/models/queries.dart';
 import 'account_creator_test.mocks.dart';
 
 @GenerateMocks(
   [],
   customMocks: [
-    MockSpec<ITransactionRepository>(as: #MockTransactionRepository),
+    MockSpec<ITransactionProvider>(as: #MockTransactionRepository),
     MockSpec<IAccountProvider>(as: #MockAccountRepository),
     MockSpec<ISubcategoryProvider>(as: #MockSubcategoryRepository),
     MockSpec<IPayeeProvider>(as: #MockPayeeRepository),

@@ -7,9 +7,9 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
 
@@ -18,7 +18,7 @@ part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';
 
 class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
-  final ITransactionRepository transactionRepository;
+  final ITransactionProvider transactionRepository;
   final IAccountProvider accountRepository;
   final TransactionSelectorBloc transactionSelectorBloc;
   StreamSubscription<List<MoneyTransaction>>? _transactionStreamSubscription;

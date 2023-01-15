@@ -20,7 +20,7 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 
 part 'transaction_creator_event.dart';
@@ -28,7 +28,7 @@ part 'transaction_creator_state.dart';
 part 'transaction_creator_bloc.freezed.dart';
 
 class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCreatorState> {
-  final ITransactionRepository transactionRepository;
+  final ITransactionProvider transactionRepository;
   final IBudgetValueProvider budgetValueRepository;
   final BudgetDateCubit budgetDateCubit;
   final BudgetValueWatcherBloc budgetValueWatcherBloc;

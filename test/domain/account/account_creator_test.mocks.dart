@@ -8,13 +8,13 @@ import 'dart:async' as _i4;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:your_budget/domain/account/account.dart' as _i8;
-import 'package:your_budget/domain/account/i_account_repository.dart' as _i7;
+import 'package:your_budget/domain/account/i_account_provider.dart' as _i7;
 import 'package:your_budget/domain/core/value_failure.dart' as _i5;
 import 'package:your_budget/domain/payee/i_payee_provider.dart' as _i11;
 import 'package:your_budget/domain/payee/payee.dart' as _i12;
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart' as _i9;
 import 'package:your_budget/domain/subcategory/subcategory.dart' as _i10;
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart' as _i3;
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart' as _i3;
 import 'package:your_budget/domain/transaction/transaction.dart' as _i6;
 
 // ignore_for_file: type=lint
@@ -35,7 +35,7 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 /// A class which mocks [ITransactionRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockTransactionRepository extends _i1.Mock implements _i3.ITransactionRepository {
+class MockTransactionRepository extends _i1.Mock implements _i3.ITransactionProvider {
   MockTransactionRepository() {
     _i1.throwOnMissingStub(this);
   }

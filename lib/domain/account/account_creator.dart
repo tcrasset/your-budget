@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
@@ -14,13 +14,13 @@ import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
 
 class AccountCreator {
   final IAccountProvider accountRepository;
-  final ITransactionRepository transactionRepository;
+  final ITransactionProvider transactionRepository;
   final ISubcategoryProvider subcategoryRepository;
   final IPayeeProvider payeeProvider;
 

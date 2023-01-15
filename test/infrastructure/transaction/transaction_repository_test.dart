@@ -15,7 +15,7 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
-import 'package:your_budget/infrastructure/transaction/transaction_repository.dart';
+import 'package:your_budget/infrastructure/transaction/transaction_provider.dart';
 import 'package:your_budget/models/constants.dart';
 import 'transaction_repository_test.mocks.dart';
 
@@ -27,7 +27,7 @@ import 'transaction_repository_test.mocks.dart';
 )
 void main() {
   late MockDatabase mockDatabase;
-  late SQFliteTransactionRepository repository;
+  late SQFliteTransactionProvider repository;
   late int tPayeeId;
   late int tMoneyTransactionId;
   late int tAccountId;
@@ -39,7 +39,7 @@ void main() {
   late MoneyTransactionDTO transactionDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
-    repository = SQFliteTransactionRepository(database: mockDatabase);
+    repository = SQFliteTransactionProvider(database: mockDatabase);
 
     tPayeeId = 99;
     tAccountId = 88;

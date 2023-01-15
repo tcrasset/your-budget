@@ -6,7 +6,7 @@ import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetva
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
-import 'package:your_budget/domain/transaction/i_transaction_repository.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 
 part 'transaction_selector_event.dart';
@@ -14,7 +14,7 @@ part 'transaction_selector_state.dart';
 part 'transaction_selector_bloc.freezed.dart';
 
 class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, TransactionSelectorState> {
-  final ITransactionRepository transactionRepository;
+  final ITransactionProvider transactionRepository;
   final IBudgetValueProvider budgetValueRepository;
   final BudgetValueWatcherBloc budgetValueWatcherBloc;
   final BudgetDateCubit budgetDateCubit;
