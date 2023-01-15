@@ -15,9 +15,9 @@ import 'package:your_budget/domain/payee/i_payee_repository.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/infrastructure/payee/payee_dto.dart';
 
-class SQFlitePayeeRepository implements IPayeeRepository {
+class SQFlitePayeeProvider implements IPayeeProvider {
   final Database? database;
-  SQFlitePayeeRepository({required this.database});
+  SQFlitePayeeProvider({required this.database});
 
   @override
   Future<Either<ValueFailure, int?>> count() async {

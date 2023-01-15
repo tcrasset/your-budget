@@ -26,7 +26,7 @@ import 'account_creator_test.mocks.dart';
     MockSpec<ITransactionRepository>(as: #MockTransactionRepository),
     MockSpec<IAccountRepository>(as: #MockAccountRepository),
     MockSpec<ISubcategoryRepository>(as: #MockSubcategoryRepository),
-    MockSpec<IPayeeRepository>(as: #MockPayeeRepository),
+    MockSpec<IPayeeProvider>(as: #MockPayeeRepository),
   ],
 )
 void main() {
@@ -66,7 +66,7 @@ void main() {
       accountRepository: mockAccountRepo,
       transactionRepository: mockTransactionRepo,
       subcategoryRepository: mockSubcategoryRepo,
-      payeeRepository: mockPayeeRepo,
+      payeeProvider: mockPayeeRepo,
     );
   });
   test('when the constructor is called, assign the correct values to instance', () {
@@ -78,7 +78,7 @@ void main() {
     expect(creator.accountRepository, mockAccountRepo);
     expect(creator.transactionRepository, mockTransactionRepo);
     expect(creator.subcategoryRepository, mockSubcategoryRepo);
-    expect(creator.payeeRepository, mockPayeeRepo);
+    expect(creator.payeeProvider, mockPayeeRepo);
   });
 
   test('when the create() method is called, verify that a call to the database was made', () async {

@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 

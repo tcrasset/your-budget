@@ -15,14 +15,14 @@ class MockDatabase extends Mock implements Database {}
 
 void main() {
   late Database mockDatabase;
-  late SQFlitePayeeRepository repository;
+  late SQFlitePayeeProvider repository;
   int tId;
   String tName;
   late Payee tPayee;
   late PayeeDTO payeeDTO;
   setUp(() async {
     mockDatabase = MockDatabase();
-    repository = SQFlitePayeeRepository(database: mockDatabase);
+    repository = SQFlitePayeeProvider(database: mockDatabase);
 
     tId = 99;
     tName = "Test name";

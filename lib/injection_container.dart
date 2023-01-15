@@ -41,7 +41,7 @@ Future<void> init() async {
     SQFliteTransactionRepository(database: sl<Database>()),
   );
   sl.registerSingleton<IAccountRepository>(SQFliteAccountRepository(database: sl<Database>()));
-  sl.registerSingleton<IPayeeRepository>(SQFlitePayeeRepository(database: sl<Database>()));
+  sl.registerSingleton<IPayeeProvider>(SQFlitePayeeProvider(database: sl<Database>()));
   sl.registerSingleton<ISubcategoryRepository>(
     SQFliteSubcategoryRepository(database: sl<Database>()),
   );

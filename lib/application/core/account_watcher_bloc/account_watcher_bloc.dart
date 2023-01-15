@@ -8,7 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
 part 'account_watcher_event.dart';

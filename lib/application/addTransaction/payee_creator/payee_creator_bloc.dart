@@ -17,9 +17,8 @@ part 'payee_creator_state.dart';
 part 'payee_creator_bloc.freezed.dart';
 
 class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
-  final IPayeeRepository payeeRepository;
-  PayeeCreatorBloc({required this.payeeRepository})
-      : super(PayeeCreatorState.initial()) {
+  final IPayeeProvider payeeProvider;
+  PayeeCreatorBloc({required this.payeeProvider}) : super(PayeeCreatorState.initial()) {
     on<_Initialized>(_onInitialized);
     on<_NameChanged>(_onNameChanged);
     on<_Saved>(_onSaved);
@@ -28,8 +27,7 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
   void _onInitialized(_Initialized event, Emitter<PayeeCreatorState> emit) {
     final newState = event.initialNameOption.fold(
       () => /*No initial name*/ state,
-      (initialName) =>
-          state.copyWith(payee: state.payee.copyWith(name: initialName)),
+      (initialName) => state.copyWith(payee: state.payee.copyWith(name: initialName)),
     );
 
     emit(newState);
@@ -50,9 +48,9 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
 
     if (state.payee.failureOption.isNone()) {
       // failureOrSuccess = state.isEditing
-      //     ? await payeeRepository.update(state.payee)
-      //     : await payeeRepository.create(state.payee);
-      failureOrSuccess = await payeeRepository.create(state.payee);
+      //     ? await payeeProvider.update(state.payee)
+      //     : await payeeProvider.create(state.payee);
+      failureOrSuccess = await payeeProvider.create(state.payee);
     }
 
     final newState = state.copyWith(

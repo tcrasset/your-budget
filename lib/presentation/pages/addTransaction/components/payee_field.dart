@@ -45,25 +45,17 @@ class PayeeField extends StatelessWidget {
         .fold((_) => _DEFAULT_PAYEE, (v) => v);
   }
 
-  String? validatePayee(BuildContext context) => context
-      .read<TransactionCreatorBloc>()
-      .state
-      .moneyTransaction
-      .payee
-      .name
-      .value
-      .fold(
-        (f) => f.maybeMap(
-            emptyName: (_) => "Please select a Payee.", orElse: () => null),
-        (_) => null,
-      );
+  String? validatePayee(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.payee.name.value.fold(
+            (f) => f.maybeMap(emptyName: (_) => "Please select a Payee.", orElse: () => null),
+            (_) => null,
+          );
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider<PayeeWatcherBloc>(
-            create: (context) => PayeeWatcherBloc(
-                payeeRepository: GetIt.instance<IPayeeRepository>()),
+            create: (context) => PayeeWatcherBloc(payeeProvider: GetIt.instance<IPayeeProvider>()),
           ),
         ],
         child: AddTransactionField(
@@ -118,10 +110,7 @@ class PayeeSearchDelegate extends SearchDelegate<Payee?> {
         return state.maybeMap(
           loadSuccess: (newState) {
             final payees = newState.payees
-                .where((p) => p.name
-                    .getOrCrash()
-                    .toLowerCase()
-                    .contains(query.toLowerCase()))
+                .where((p) => p.name.getOrCrash().toLowerCase().contains(query.toLowerCase()))
                 .toList();
 
             if (payees.isEmpty) return createPayeeWidget;
@@ -136,11 +125,9 @@ class PayeeSearchDelegate extends SearchDelegate<Payee?> {
                   return createPayeeWidget;
                 }
 
-                final payee =
-                    payees[index - 1]; // -1 because createPayeeWidget is at 0
+                final payee = payees[index - 1]; // -1 because createPayeeWidget is at 0
                 final String name = payee.name.getOrCrash();
-                return ListTile(
-                    title: Text(name), onTap: () => close(context, payee));
+                return ListTile(title: Text(name), onTap: () => close(context, payee));
               },
             );
           },

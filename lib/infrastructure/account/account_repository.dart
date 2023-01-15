@@ -10,7 +10,7 @@ import 'package:sqflite/sqflite.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/models/constants.dart';

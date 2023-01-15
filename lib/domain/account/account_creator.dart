@@ -22,13 +22,13 @@ class AccountCreator {
   final IAccountRepository accountRepository;
   final ITransactionRepository transactionRepository;
   final ISubcategoryRepository subcategoryRepository;
-  final IPayeeRepository payeeRepository;
+  final IPayeeProvider payeeProvider;
 
   AccountCreator({
     required this.accountRepository,
     required this.transactionRepository,
     required this.subcategoryRepository,
-    required this.payeeRepository,
+    required this.payeeProvider,
   });
 
   Future<Either<ValueFailure, Unit>> create(Account account) async {
@@ -60,7 +60,7 @@ class AccountCreator {
     final Either<ValueFailure, Account> failureOrAccount = await accountRepository.get(accountId);
     final Either<ValueFailure, Subcategory> failureOrSubcategory =
         await subcategoryRepository.getToBeBudgetedSubcategory();
-    final Either<ValueFailure, Payee> failureOrPayee = await payeeRepository.getToBeBudgetedPayee();
+    final Either<ValueFailure, Payee> failureOrPayee = await payeeProvider.getToBeBudgetedPayee();
     return failureOrAccount.fold(
       (l) => left(l),
       (account) => failureOrSubcategory.fold(
