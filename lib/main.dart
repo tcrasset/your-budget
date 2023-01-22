@@ -13,6 +13,7 @@ import 'package:your_budget/application/budget/category_watcher_bloc/category_wa
 import 'package:your_budget/application/core/bloc_observer.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
+import 'package:your_budget/domain/budget/budget_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
 import 'package:your_budget/startup.dart' as startup;
@@ -59,59 +60,66 @@ class MyBudgetState extends State<MyBudget> {
   @override
   Widget build(BuildContext context) {
     // final AppState appState = Provider.of<AppState>(context);
-    return MaterialApp(
-      theme: ThemeData(
-        // Define the default brightness and colors.
-        brightness: Brightness.light,
-        primaryColor: Constants.PRIMARY_COLOR,
-        accentColor: Constants.SECONDARY_COLOR,
+    return RepositoryProvider(
+      create: (context) => BudgetRepository(
+        budgetvalueProvider: GetIt.instance<IBudgetValueProvider>(),
+        categoryProvider: GetIt.instance<ICategoryProvider>(),
+        subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
       ),
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<SubcategoryWatcherBloc>(
-            create: (context) => SubcategoryWatcherBloc(
-                subcategoryRepository: GetIt.instance<ISubcategoryProvider>())
-              ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
-          ),
-          BlocProvider<CategoryWatcherBloc>(
-            create: (context) =>
-                CategoryWatcherBloc(categoryProvider: GetIt.instance<ICategoryProvider>())
-                  ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
-          ),
-          BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
-          BlocProvider<BudgetValueWatcherBloc>(
-            create: (context) => BudgetValueWatcherBloc(
-                budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
-                budgetDateCubit: context.read<BudgetDateCubit>())
-              ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(
-                  context.read<BudgetDateCubit>().state)),
-          ),
-        ],
-        child: Scaffold(
-          body: _tabs[_currentTab],
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _currentTab,
-            unselectedItemColor: Colors.grey[500],
-            onTap: _onItemTapped,
-            items: [
-              const BottomNavigationBarItem(
-                icon: FaIcon(Constants.BUDGET_ICON),
-                label: "Budget",
-              ),
-              const BottomNavigationBarItem(
-                icon: FaIcon(Constants.ACCOUNT_ICON),
-                label: "Accounts",
-              ),
-              const BottomNavigationBarItem(
-                icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
-                label: "Add transaction",
-              ),
-              const BottomNavigationBarItem(
-                icon: FaIcon(Constants.ALLTRANSACTION_ICON),
-                label: "Transactions",
-              ),
-            ],
+      child: MaterialApp(
+        theme: ThemeData(
+          // Define the default brightness and colors.
+          brightness: Brightness.light,
+          primaryColor: Constants.PRIMARY_COLOR,
+          accentColor: Constants.SECONDARY_COLOR,
+        ),
+        home: MultiBlocProvider(
+          providers: [
+            BlocProvider<SubcategoryWatcherBloc>(
+              create: (context) => SubcategoryWatcherBloc(
+                  subcategoryRepository: GetIt.instance<ISubcategoryProvider>())
+                ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+            ),
+            BlocProvider<CategoryWatcherBloc>(
+              create: (context) =>
+                  CategoryWatcherBloc(categoryProvider: GetIt.instance<ICategoryProvider>())
+                    ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
+            ),
+            BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
+            BlocProvider<BudgetValueWatcherBloc>(
+              create: (context) => BudgetValueWatcherBloc(
+                  budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
+                  budgetDateCubit: context.read<BudgetDateCubit>())
+                ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(
+                    context.read<BudgetDateCubit>().state)),
+            ),
+          ],
+          child: Scaffold(
+            body: _tabs[_currentTab],
+            bottomNavigationBar: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: _currentTab,
+              unselectedItemColor: Colors.grey[500],
+              onTap: _onItemTapped,
+              items: [
+                const BottomNavigationBarItem(
+                  icon: FaIcon(Constants.BUDGET_ICON),
+                  label: "Budget",
+                ),
+                const BottomNavigationBarItem(
+                  icon: FaIcon(Constants.ACCOUNT_ICON),
+                  label: "Accounts",
+                ),
+                const BottomNavigationBarItem(
+                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
+                  label: "Add transaction",
+                ),
+                const BottomNavigationBarItem(
+                  icon: FaIcon(Constants.ALLTRANSACTION_ICON),
+                  label: "Transactions",
+                ),
+              ],
+            ),
           ),
         ),
       ),

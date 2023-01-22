@@ -1,7 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
+import 'package:your_budget/domain/budget/budget_repository.dart';
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/about/about_screen.dart';
@@ -37,42 +40,46 @@ class _BudgetPageState extends State<BudgetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-        backgroundColor: Constants.PRIMARY_COLOR,
-        leading: const Icon(Constants.BUDGET_ICON),
-        actions: <Widget>[
-          SizedBox(
-            width: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(FontAwesomeIcons.checkSquare),
-                  onPressed: handleModifyCategories,
-                ),
-                PopupMenuButton(
-                  onSelected: handlePopUpMenuButtonSelected,
-                  itemBuilder: (context) => [
-                    const PopupMenuItem<String>(
-                      value: "About",
-                      child: Text("About"),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          DateButtons(), //
-          ToBeBudgeted(),
-          Expanded(child: BudgetView()),
-          // if (buttonDial != null) buttonDial
-        ],
+    return BlocProvider(
+      create: (context) => BudgetBloc(budgetRepository: context.read<BudgetRepository>())
+        ..add(BudgetEvent.NewBudgetRequested(DateTime.now())),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title!),
+          backgroundColor: Constants.PRIMARY_COLOR,
+          leading: const Icon(Constants.BUDGET_ICON),
+          actions: <Widget>[
+            SizedBox(
+              width: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  IconButton(
+                    icon: const Icon(FontAwesomeIcons.checkSquare),
+                    onPressed: handleModifyCategories,
+                  ),
+                  PopupMenuButton(
+                    onSelected: handlePopUpMenuButtonSelected,
+                    itemBuilder: (context) => [
+                      const PopupMenuItem<String>(
+                        value: "About",
+                        child: Text("About"),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            DateButtons(), //
+            ToBeBudgeted(),
+            Expanded(child: BudgetView()),
+            // if (buttonDial != null) buttonDial
+          ],
+        ),
       ),
     );
   }

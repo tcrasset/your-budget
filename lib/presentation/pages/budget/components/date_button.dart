@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
+import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 
 // Project imports:
@@ -18,15 +19,16 @@ class DateButtons extends StatelessWidget {
       children: [
         IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.read<BudgetDateCubit>().decrement(),
-        ),
-        BlocBuilder<BudgetDateCubit, DateTime>(
-          builder: (context, state) {
-            return Text(
-              DateFormat.yMMMM().format(state),
-              style: const TextStyle(fontSize: 20),
-            );
+          onPressed: () {
+            context.read<BudgetDateCubit>().decrement();
           },
+        ),
+        BlocConsumer<BudgetDateCubit, DateTime>(
+          listener: (context, state) => context.read<BudgetBloc>().add(NewBudgetRequested(state)),
+          builder: (context, state) => Text(
+            DateFormat.yMMMM().format(state),
+            style: const TextStyle(fontSize: 20),
+          ),
         ),
         IconButton(
           icon: const Icon(Icons.arrow_forward),
