@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
@@ -15,7 +16,16 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   final Database? database;
-  SQFliteSubcategoryProvider({required this.database});
+  SQFliteSubcategoryProvider({required this.database}) {
+    _init();
+  }
+
+  void _init() async {
+    _subcategoryStreamController.add(await getAllSubcategories());
+  }
+
+  final _subcategoryStreamController =
+      BehaviorSubject<Either<ValueFailure, List<Subcategory>>>.seeded(const Right([]));
 
   @override
   Future<Either<ValueFailure, int?>> count() async {
@@ -56,8 +66,14 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   @override
   Future<Either<ValueFailure, Unit>> create(Subcategory subcategory) async {
     try {
+      final subcategories = [..._subcategoryStreamController.value!.getOrElse(() => [])];
+
       final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
       await database!.insert(DatabaseConstants.subcategoryTable, subcategoryDTO.toJson());
+
+      subcategories.add(subcategory);
+      _subcategoryStreamController.add(Right(subcategories));
+
       return right(unit);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
@@ -70,6 +86,15 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   @override
   Future<Either<ValueFailure, Unit>> update(Subcategory subcategory) async {
     try {
+      final subcategories = [..._subcategoryStreamController.value!.getOrElse(() => [])];
+      final index = subcategories.indexWhere((t) => t.id == subcategory.id);
+      if (index >= 0) {
+        subcategories[index] = subcategory;
+        _subcategoryStreamController.add(Right(subcategories));
+      } else {
+        return left(ValueFailure.unexpected(message: "Subcategory not in current stream."));
+      }
+
       final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
       final Map<String, dynamic> values = subcategoryDTO.toJson();
       final id = values.remove("id");
@@ -82,7 +107,8 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
       );
 
       if (result == 0) {
-        return left(ValueFailure.unexpected(message: "Subcategory with id $id not found"));
+        return left(
+            ValueFailure.unexpected(message: "Subcategory with id $id not found in database."));
       }
 
       return right(unit);
@@ -114,7 +140,7 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> watchAllSubcategories() {
-    return getAllSubcategories().asStream();
+    return _subcategoryStreamController.asBroadcastStream();
   }
 
   @override

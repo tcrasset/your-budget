@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
@@ -14,12 +15,22 @@ import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/infrastructure/budgetvalue/bugetvalue_dto.dart';
 import 'package:your_budget/infrastructure/subcategory/subcategory_dto.dart';
 import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/models/utils.dart';
 
 // import 'package:your_budget/domain/subcategory/subcategory.dart';
 
 class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   final Database? database;
-  SQFliteBudgetValueProvider({required this.database});
+  SQFliteBudgetValueProvider({required this.database}) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    _budgetvalueStreamController.add(await getAllBudgetValues());
+  }
+
+  final _budgetvalueStreamController =
+      BehaviorSubject<Either<ValueFailure, List<BudgetValue>>>.seeded(const Right([]));
 
   @override
   Future<Either<ValueFailure, int?>> count() async {
@@ -38,8 +49,14 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   @override
   Future<Either<ValueFailure, Unit>> create(BudgetValue budgetvalue) async {
     try {
+      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
       await database!.insert(DatabaseConstants.budgetValueTable, budgetvalueDTO.toJson());
+
+      budgetvalues.add(budgetvalue);
+      _budgetvalueStreamController.add(Right(budgetvalues));
+
       return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -49,6 +66,15 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   @override
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
     try {
+      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+      final index = budgetvalues.indexWhere((t) => t.id == budgetvalue.id);
+      if (index >= 0) {
+        budgetvalues[index] = budgetvalue;
+        _budgetvalueStreamController.add(Right(budgetvalues));
+      } else {
+        return left(ValueFailure.unexpected(message: "BudgetValue not in current stream."));
+      }
+
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
       String id = budgetvalueDTO.id;
       final Map<String, dynamic> values = budgetvalueDTO.toJson();
@@ -77,24 +103,36 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     required int month,
     required UniqueId subcategoryId,
   }) async {
-    try {
-      final result = await database!.query(
-        DatabaseConstants.budgetValueTable,
-        where:
-            '${DatabaseConstants.BUDGET_VALUE_YEAR} = ? and ${DatabaseConstants.BUDGET_VALUE_MONTH} = ? and ${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ?',
-        whereArgs: [year, month, subcategoryId.getOrCrash()],
-      );
-
-      final BudgetValueDTO budgetValueDTO = BudgetValueDTO.fromJson(result.first);
-      return right(budgetValueDTO.toDomain());
-    } on DatabaseException catch (e) {
-      return left(ValueFailure.unexpected(message: e.toString()));
+    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final index = budgetvalues.indexWhere(
+      (t) => t.subcategoryId == subcategoryId && t.date.year == year && t.date.month == month,
+    );
+    if (index >= 0) {
+      return right(budgetvalues[index]);
+    } else {
+      return left(ValueFailure.unexpected(message: "BudgetValue not in current stream."));
     }
+
+    // try {
+    //   final result = await database!.query(
+    //     DatabaseConstants.budgetValueTable,
+    //     where:
+    //         '${DatabaseConstants.BUDGET_VALUE_YEAR} = ? and ${DatabaseConstants.BUDGET_VALUE_MONTH} = ? and ${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ?',
+    //     whereArgs: [year, month, subcategoryId.getOrCrash()],
+    //   );
+
+    //   final BudgetValueDTO budgetValueDTO = BudgetValueDTO.fromJson(result.first);
+    //   return right(budgetValueDTO.toDomain());
+    // } on DatabaseException catch (e) {
+    //   return left(ValueFailure.unexpected(message: e.toString()));
+    // }
   }
 
   @override
-  Future<Either<ValueFailure, List<BudgetValue>>> getAllBudgetValues(
-      {required int year, required int month}) async {
+  Future<Either<ValueFailure, List<BudgetValue>>> getBudgetValuesByDate({
+    required int year,
+    required int month,
+  }) async {
     try {
       final result = await database!.query(
         DatabaseConstants.budgetValueTable,
@@ -117,9 +155,33 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   }
 
   @override
-  Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues(
-      {required int year, required int month}) {
-    return getAllBudgetValues(year: year, month: month).asStream();
+  Future<Either<ValueFailure, List<BudgetValue>>> getAllBudgetValues() async {
+    try {
+      return right(
+        (await database!.query(DatabaseConstants.budgetValueTable))
+            .map((e) => BudgetValueDTO.fromJson(e).toDomain())
+            .toList(),
+      );
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
+  Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues({
+    required int year,
+    required int month,
+  }) {
+    return _budgetvalueStreamController.asBroadcastStream().map(
+          (event) => event.fold(
+            (l) => left(l),
+            (r) => right(
+              r
+                  .where((element) => element.date.year == year && element.date.month == month)
+                  .toList(),
+            ),
+          ),
+        );
   }
 
   // @override

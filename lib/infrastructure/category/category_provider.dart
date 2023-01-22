@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:rxdart/rxdart.dart';
 // Flutter imports:
 import 'package:sqflite/sqflite.dart';
 import 'package:your_budget/domain/category/category.dart';
@@ -16,7 +17,16 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteCategoryProvider implements ICategoryProvider {
   final Database? database;
-  SQFliteCategoryProvider({required this.database});
+  SQFliteCategoryProvider({required this.database}) {
+    _init();
+  }
+
+  void _init() async {
+    _categoryStreamController.add(await getAllCategories());
+  }
+
+  final _categoryStreamController =
+      BehaviorSubject<Either<ValueFailure, List<Category>>>.seeded(const Right([]));
 
   @override
   Future<Either<ValueFailure, int?>> count() async {
@@ -35,8 +45,11 @@ class SQFliteCategoryProvider implements ICategoryProvider {
   @override
   Future<Either<ValueFailure, int>> create(Category category) async {
     try {
+      final categories = [..._categoryStreamController.value!.getOrElse(() => [])];
       final CategoryDTO categoryDTO = CategoryDTO.fromDomain(category);
       final int id = await database!.insert(DatabaseConstants.categoryTable, categoryDTO.toJson());
+      categories.add(category);
+      _categoryStreamController.add(Right(categories));
       return right(id);
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
@@ -66,6 +79,6 @@ class SQFliteCategoryProvider implements ICategoryProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Category>>> watchAllCategories() {
-    return getAllCategories().asStream();
+    return _categoryStreamController.asBroadcastStream();
   }
 }

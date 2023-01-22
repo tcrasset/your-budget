@@ -13,8 +13,9 @@ abstract class IBudgetValueProvider {
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue);
   Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues(
       {required int year, required int month});
+  Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getAllBudgetValues();
 
-  Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getAllBudgetValues(
+  Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getBudgetValuesByDate(
       {required int year, required int month});
   Future<Either<ValueFailure, int?>> count();
 }
