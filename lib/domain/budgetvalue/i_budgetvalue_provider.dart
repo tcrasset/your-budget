@@ -15,6 +15,9 @@ abstract class IBudgetValueProvider {
       {required int year, required int month});
   Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getAllBudgetValues();
 
+  Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getBudgetValuesBySubcategory(
+      {required UniqueId subcategoryId});
+
   Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getBudgetValuesByDate(
       {required int year, required int month});
   Future<Either<ValueFailure, int?>> count();

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:dartz/dartz.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:your_budget/domain/budget/budget.dart';
 import 'package:your_budget/domain/budget/budget_entry.dart';
@@ -30,8 +31,6 @@ class BudgetRepository {
     required this.budgetvalueProvider,
   });
 
-  // final _budgetStreamController = BehaviorSubject<List<Todo>>.seeded(const []);
-
   Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> get _subcategories =>
       subcategoryProvider.watchAllSubcategories();
 
@@ -40,6 +39,43 @@ class BudgetRepository {
 
   Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> _budgetvalues(int year, int month) =>
       budgetvalueProvider.watchAllBudgetValues(year: year, month: month);
+
+  Future<Either<ValueFailure<dynamic>, Unit>> updateBudgetValue(BudgetValue value) async {
+    Amount lastMonthAvailable = value.available;
+
+    // TODO: Fix computation of available. Needs to be av + (new_budg - prev_budg)
+    final updated = value.copyWith(available: value.available + (value.budgeted));
+    budgetvalueProvider.update(updated);
+
+    final DateTime maxBudgetDate = getMaxBudgetDate();
+    DateTime date = Jiffy(value.date).add(months: 1).dateTime;
+    final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
+        await budgetvalueProvider.getBudgetValuesBySubcategory(subcategoryId: value.subcategoryId);
+
+    if (failureOrBudgetvalues.isLeft()) {
+      return left(failureOrBudgetvalues as ValueFailure);
+    }
+
+    List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
+
+    while (date.isBefore(maxBudgetDate)) {
+      final stored = budgetvalues.singleWhere((element) => element.id == value.id);
+
+      // Combine the total available money from month to month
+      final to_update = stored.copyWith(available: lastMonthAvailable + value.budgeted);
+      lastMonthAvailable = to_update.available;
+
+      final result = await budgetvalueProvider.update(to_update);
+
+      if (result.isLeft()) {
+        return left(result as ValueFailure);
+      }
+
+      date = Jiffy(date).add(months: 1).dateTime;
+    }
+
+    return right(unit);
+  }
 
   Stream<Either<ValueFailure<dynamic>, Budget>> getBudgetByDate(int year, int month) =>
       Rx.combineLatest3(

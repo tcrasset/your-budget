@@ -155,6 +155,14 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   }
 
   @override
+  Future<Either<ValueFailure, List<BudgetValue>>> getBudgetValuesBySubcategory({
+    required UniqueId subcategoryId,
+  }) async {
+    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    return right(budgetvalues.where((t) => t.subcategoryId == subcategoryId).toList());
+  }
+
+  @override
   Future<Either<ValueFailure, List<BudgetValue>>> getAllBudgetValues() async {
     try {
       return right(
