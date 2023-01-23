@@ -75,8 +75,8 @@ class _BudgetPageState extends State<BudgetPage> {
         body: Column(
           children: <Widget>[
             DateButtons(), //
-            ToBeBudgeted(),
-            Expanded(child: BudgetView()),
+            // ToBeBudgeted(),
+            const Expanded(child: BudgetEntries()),
             // if (buttonDial != null) buttonDial
           ],
         ),
