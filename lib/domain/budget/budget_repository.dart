@@ -43,8 +43,11 @@ class BudgetRepository {
   Future<Either<ValueFailure<dynamic>, Unit>> updateBudgetValue(BudgetValue value) async {
     Amount lastMonthAvailable = value.available;
 
-    // TODO: Fix computation of available. Needs to be av + (new_budg - prev_budg)
-    final updated = value.copyWith(available: value.available + (value.budgeted));
+    final failureOrPrevious =
+        (await budgetvalueProvider.getById(id: value.id)).getOrElse(() => throw Exception());
+
+    final updated =
+        value.copyWith(available: value.available + (value.budgeted - failureOrPrevious.budgeted));
     budgetvalueProvider.update(updated);
 
     final DateTime maxBudgetDate = getMaxBudgetDate();
@@ -59,11 +62,12 @@ class BudgetRepository {
     List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
 
     while (date.isBefore(maxBudgetDate)) {
-      final stored = budgetvalues.singleWhere((element) => element.id == value.id);
+      final stored = budgetvalues.singleWhere(
+          (element) => element.date == date && element.subcategoryId == value.subcategoryId);
 
       // Combine the total available money from month to month
+      lastMonthAvailable = stored.available;
       final to_update = stored.copyWith(available: lastMonthAvailable + value.budgeted);
-      lastMonthAvailable = to_update.available;
 
       final result = await budgetvalueProvider.update(to_update);
 

@@ -129,6 +129,19 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   }
 
   @override
+  Future<Either<ValueFailure, BudgetValue>> getById({
+    required UniqueId id,
+  }) async {
+    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final index = budgetvalues.indexWhere((t) => t.id == id);
+    if (index >= 0) {
+      return right(budgetvalues[index]);
+    } else {
+      return left(ValueFailure.unexpected(message: "BudgetValue not in current stream."));
+    }
+  }
+
+  @override
   Future<Either<ValueFailure, List<BudgetValue>>> getBudgetValuesByDate({
     required int year,
     required int month,

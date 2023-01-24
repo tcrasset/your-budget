@@ -10,6 +10,8 @@ abstract class IBudgetValueProvider {
   Future<Either<ValueFailure, Unit>> create(BudgetValue budgetvalue);
   Future<Either<ValueFailure, BudgetValue>> get(
       {required int year, required int month, required UniqueId subcategoryId});
+  Future<Either<ValueFailure, BudgetValue>> getById({required UniqueId id});
+
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue);
   Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues(
       {required int year, required int month});
