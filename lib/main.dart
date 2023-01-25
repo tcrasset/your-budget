@@ -72,8 +72,9 @@ class MyBudgetState extends State<MyBudget> {
           ),
         ),
         RepositoryProvider(
-          create: (context) =>
-              TransactionRepository(transactionProvider: GetIt.instance<ITransactionProvider>()),
+          create: (context) => TransactionRepository(
+              transactionProvider: GetIt.instance<ITransactionProvider>(),
+              budgetValueProvider: GetIt.instance<IBudgetValueProvider>()),
         ),
       ],
       child: MaterialApp(

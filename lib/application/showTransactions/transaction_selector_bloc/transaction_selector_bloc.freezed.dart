@@ -459,7 +459,8 @@ mixin _$TransactionSelectorState {
   UnmodifiableSetView<dynamic> get deletedTransactions =>
       throw _privateConstructorUsedError;
   bool get isModifying => throw _privateConstructorUsedError;
-  bool get isDeleting => throw _privateConstructorUsedError;
+  TransactionDeletionStatus get status => throw _privateConstructorUsedError;
+  ValueFailure<dynamic>? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $TransactionSelectorStateCopyWith<TransactionSelectorState> get copyWith =>
@@ -475,7 +476,10 @@ abstract class $TransactionSelectorStateCopyWith<$Res> {
       {UnmodifiableSetView<dynamic> selectedTransactions,
       UnmodifiableSetView<dynamic> deletedTransactions,
       bool isModifying,
-      bool isDeleting});
+      TransactionDeletionStatus status,
+      ValueFailure<dynamic>? error});
+
+  $ValueFailureCopyWith<dynamic, $Res>? get error;
 }
 
 /// @nodoc
@@ -492,7 +496,8 @@ class _$TransactionSelectorStateCopyWithImpl<$Res>
     Object? selectedTransactions = freezed,
     Object? deletedTransactions = freezed,
     Object? isModifying = freezed,
-    Object? isDeleting = freezed,
+    Object? status = freezed,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
       selectedTransactions: selectedTransactions == freezed
@@ -507,11 +512,26 @@ class _$TransactionSelectorStateCopyWithImpl<$Res>
           ? _value.isModifying
           : isModifying // ignore: cast_nullable_to_non_nullable
               as bool,
-      isDeleting: isDeleting == freezed
-          ? _value.isDeleting
-          : isDeleting // ignore: cast_nullable_to_non_nullable
-              as bool,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as TransactionDeletionStatus,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as ValueFailure<dynamic>?,
     ));
+  }
+
+  @override
+  $ValueFailureCopyWith<dynamic, $Res>? get error {
+    if (_value.error == null) {
+      return null;
+    }
+
+    return $ValueFailureCopyWith<dynamic, $Res>(_value.error!, (value) {
+      return _then(_value.copyWith(error: value));
+    });
   }
 }
 
@@ -527,7 +547,11 @@ abstract class _$$_TransactionSelectorStateCopyWith<$Res>
       {UnmodifiableSetView<dynamic> selectedTransactions,
       UnmodifiableSetView<dynamic> deletedTransactions,
       bool isModifying,
-      bool isDeleting});
+      TransactionDeletionStatus status,
+      ValueFailure<dynamic>? error});
+
+  @override
+  $ValueFailureCopyWith<dynamic, $Res>? get error;
 }
 
 /// @nodoc
@@ -547,7 +571,8 @@ class __$$_TransactionSelectorStateCopyWithImpl<$Res>
     Object? selectedTransactions = freezed,
     Object? deletedTransactions = freezed,
     Object? isModifying = freezed,
-    Object? isDeleting = freezed,
+    Object? status = freezed,
+    Object? error = freezed,
   }) {
     return _then(_$_TransactionSelectorState(
       selectedTransactions: selectedTransactions == freezed
@@ -562,10 +587,14 @@ class __$$_TransactionSelectorStateCopyWithImpl<$Res>
           ? _value.isModifying
           : isModifying // ignore: cast_nullable_to_non_nullable
               as bool,
-      isDeleting: isDeleting == freezed
-          ? _value.isDeleting
-          : isDeleting // ignore: cast_nullable_to_non_nullable
-              as bool,
+      status: status == freezed
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as TransactionDeletionStatus,
+      error: error == freezed
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as ValueFailure<dynamic>?,
     ));
   }
 }
@@ -577,7 +606,8 @@ class _$_TransactionSelectorState implements _TransactionSelectorState {
       {required this.selectedTransactions,
       required this.deletedTransactions,
       required this.isModifying,
-      required this.isDeleting});
+      required this.status,
+      this.error});
 
   @override
   final UnmodifiableSetView<dynamic> selectedTransactions;
@@ -586,11 +616,13 @@ class _$_TransactionSelectorState implements _TransactionSelectorState {
   @override
   final bool isModifying;
   @override
-  final bool isDeleting;
+  final TransactionDeletionStatus status;
+  @override
+  final ValueFailure<dynamic>? error;
 
   @override
   String toString() {
-    return 'TransactionSelectorState(selectedTransactions: $selectedTransactions, deletedTransactions: $deletedTransactions, isModifying: $isModifying, isDeleting: $isDeleting)';
+    return 'TransactionSelectorState(selectedTransactions: $selectedTransactions, deletedTransactions: $deletedTransactions, isModifying: $isModifying, status: $status, error: $error)';
   }
 
   @override
@@ -604,8 +636,8 @@ class _$_TransactionSelectorState implements _TransactionSelectorState {
                 .equals(other.deletedTransactions, deletedTransactions) &&
             const DeepCollectionEquality()
                 .equals(other.isModifying, isModifying) &&
-            const DeepCollectionEquality()
-                .equals(other.isDeleting, isDeleting));
+            const DeepCollectionEquality().equals(other.status, status) &&
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
@@ -614,7 +646,8 @@ class _$_TransactionSelectorState implements _TransactionSelectorState {
       const DeepCollectionEquality().hash(selectedTransactions),
       const DeepCollectionEquality().hash(deletedTransactions),
       const DeepCollectionEquality().hash(isModifying),
-      const DeepCollectionEquality().hash(isDeleting));
+      const DeepCollectionEquality().hash(status),
+      const DeepCollectionEquality().hash(error));
 
   @JsonKey(ignore: true)
   @override
@@ -628,7 +661,8 @@ abstract class _TransactionSelectorState implements TransactionSelectorState {
       {required final UnmodifiableSetView<dynamic> selectedTransactions,
       required final UnmodifiableSetView<dynamic> deletedTransactions,
       required final bool isModifying,
-      required final bool isDeleting}) = _$_TransactionSelectorState;
+      required final TransactionDeletionStatus status,
+      final ValueFailure<dynamic>? error}) = _$_TransactionSelectorState;
 
   @override
   UnmodifiableSetView<dynamic> get selectedTransactions;
@@ -637,7 +671,9 @@ abstract class _TransactionSelectorState implements TransactionSelectorState {
   @override
   bool get isModifying;
   @override
-  bool get isDeleting;
+  TransactionDeletionStatus get status;
+  @override
+  ValueFailure<dynamic>? get error;
   @override
   @JsonKey(ignore: true)
   _$$_TransactionSelectorStateCopyWith<_$_TransactionSelectorState>

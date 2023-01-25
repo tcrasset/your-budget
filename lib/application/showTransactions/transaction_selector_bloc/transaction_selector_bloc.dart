@@ -1,20 +1,23 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/domain/transaction/transaction_repository.dart';
 
 part 'transaction_selector_event.dart';
 part 'transaction_selector_state.dart';
 part 'transaction_selector_bloc.freezed.dart';
 
 class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, TransactionSelectorState> {
-  final ITransactionProvider transactionRepository;
+  final TransactionRepository transactionRepository;
   final IBudgetValueProvider budgetValueRepository;
   final BudgetValueWatcherBloc budgetValueWatcherBloc;
   final BudgetDateCubit budgetDateCubit;
@@ -67,38 +70,41 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
     Emitter<TransactionSelectorState> emit,
   ) async {
     if (selected.isEmpty) {
-      emit(state.copyWith(isModifying: false, isDeleting: false));
+      emit(state.copyWith(isModifying: false, status: TransactionDeletionStatus.success));
       return;
     }
 
-    emit(state.copyWith(isDeleting: true));
+    emit(state.copyWith(status: TransactionDeletionStatus.deleting));
+    Option<ValueFailure> failureDuringLoop = none();
+    for (final transaction in selected) {
+      final failureOrUnit = await transactionRepository.deleteTransaction(transaction);
 
-    await Future.forEach(selected, (MoneyTransaction transaction) async {
-      final failureOrBudgetvalue = await budgetValueRepository.get(
-          year: transaction.date.year,
-          month: transaction.date.month,
-          subcategoryId: transaction.subcategory.id);
-      BudgetValue oldBudgetvalue =
-          failureOrBudgetvalue.getOrElse(() => throw Exception("Error during get budget value"));
+      if (failureOrUnit.isLeft()) {
+        failureDuringLoop = some((failureOrUnit as Left).value as ValueFailure);
+        break;
+      }
+    }
 
-      BudgetValue updatedBudgetvalue =
-          oldBudgetvalue.copyWith(available: oldBudgetvalue.available - transaction.amount);
-      budgetValueRepository.update(updatedBudgetvalue);
-
-      transactionRepository.delete(transaction.id.getOrCrash());
-    });
-
-    // We have to create a new Set to prevent the one in the state from being modified by reference.
-    final newState = state.copyWith(
+    if (failureDuringLoop.isSome()) {
+      final newState = state.copyWith(
         selectedTransactions: UnmodifiableSetView({}),
-        deletedTransactions: UnmodifiableSetView(Set.from(selected)));
+        status: TransactionDeletionStatus.failure,
+        error: failureDuringLoop.toNullable(),
+        isModifying: false, // remove selectionability as something went wrong
+      );
+      emit(newState);
+    } else {
+      // We have to create a new Set to prevent the one in the state from being modified by reference.
+      final newState = state.copyWith(
+        selectedTransactions: UnmodifiableSetView({}),
+        isModifying: true, // keep the Transactions selectable so that we can delete more
+        deletedTransactions: UnmodifiableSetView(Set.from(selected)),
+        status: TransactionDeletionStatus.success,
+      );
 
-    budgetValueWatcherBloc
-        .add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDateCubit.state));
-    // The TransactionWatcherBloc is listening to this state and checks deletedTransactions
-    emit(newState);
-
-    emit(TransactionSelectorState.initial());
+      emit(newState);
+    }
+    // Reset the state and clear the selection either way
     selected.clear();
   }
 }

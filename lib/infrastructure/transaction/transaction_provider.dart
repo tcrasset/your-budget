@@ -53,6 +53,9 @@ class SQFliteTransactionProvider implements ITransactionProvider {
   @override
   Future<Either<ValueFailure, Unit>> delete(String id) async {
     try {
+      //TODO: verify why delete does not work. Might have something to do with the id being
+      // used not being an actual UUID but rather a monotonically increase int
+      // and the passed `id` is just a randomly generated id for the transaction
       final result = await database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
