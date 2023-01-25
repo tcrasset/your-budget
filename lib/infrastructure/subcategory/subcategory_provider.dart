@@ -86,15 +86,6 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   @override
   Future<Either<ValueFailure, Unit>> update(Subcategory subcategory) async {
     try {
-      final subcategories = [..._subcategoryStreamController.value!.getOrElse(() => [])];
-      final index = subcategories.indexWhere((t) => t.id == subcategory.id);
-      if (index >= 0) {
-        subcategories[index] = subcategory;
-        _subcategoryStreamController.add(Right(subcategories));
-      } else {
-        return left(ValueFailure.unexpected(message: "Subcategory not in current stream."));
-      }
-
       final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
       final Map<String, dynamic> values = subcategoryDTO.toJson();
       final id = values.remove("id");
@@ -109,6 +100,15 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
       if (result == 0) {
         return left(
             ValueFailure.unexpected(message: "Subcategory with id $id not found in database."));
+      }
+
+      final subcategories = [..._subcategoryStreamController.value!.getOrElse(() => [])];
+      final index = subcategories.indexWhere((t) => t.id == subcategory.id);
+      if (index >= 0) {
+        subcategories[index] = subcategory;
+        _subcategoryStreamController.add(Right(subcategories));
+      } else {
+        return left(ValueFailure.unexpected(message: "Subcategory not in current stream."));
       }
 
       return right(unit);

@@ -16,6 +16,8 @@ import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategor
 import 'package:your_budget/domain/budget/budget_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
+import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
+import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/startup.dart' as startup;
 import 'package:your_budget/injection_container.dart' as injections;
 import 'package:your_budget/models/constants.dart';
@@ -60,12 +62,20 @@ class MyBudgetState extends State<MyBudget> {
   @override
   Widget build(BuildContext context) {
     // final AppState appState = Provider.of<AppState>(context);
-    return RepositoryProvider(
-      create: (context) => BudgetRepository(
-        budgetvalueProvider: GetIt.instance<IBudgetValueProvider>(),
-        categoryProvider: GetIt.instance<ICategoryProvider>(),
-        subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
-      ),
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => BudgetRepository(
+            budgetvalueProvider: GetIt.instance<IBudgetValueProvider>(),
+            categoryProvider: GetIt.instance<ICategoryProvider>(),
+            subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (context) =>
+              TransactionRepository(transactionProvider: GetIt.instance<ITransactionProvider>()),
+        ),
+      ],
       child: MaterialApp(
         theme: ThemeData(
           // Define the default brightness and colors.

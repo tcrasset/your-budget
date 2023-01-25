@@ -8,19 +8,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/domain/transaction/transaction_repository.dart';
 
 part 'transaction_watcher_bloc.freezed.dart';
 part 'transaction_watcher_event.dart';
 part 'transaction_watcher_state.dart';
 
 class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
-  final ITransactionProvider transactionRepository;
+  final TransactionRepository transactionRepository;
   final IAccountProvider accountRepository;
-  final TransactionSelectorBloc transactionSelectorBloc;
   StreamSubscription<List<MoneyTransaction>>? _transactionStreamSubscription;
   int currentIndex = 0;
 
@@ -28,20 +29,8 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
   TransactionWatcherBloc({
     required this.transactionRepository,
     required this.accountRepository,
-    required this.transactionSelectorBloc,
   }) : super(const TransactionWatcherState.initial()) {
-    // Listening to TransactionSelectorBloc for deletion state to fetch
-    // the new transactions from the database.
-    transactionSelectorBloc.stream.listen(
-      (state) {
-        if (state.deletedTransactions.isNotEmpty) {
-          add(const TransactionWatcherEvent.watchTransactionsStarted());
-        }
-      },
-    );
-
     on<_TransactionWatchStarted>(_onTransactionWatchStarted);
-    on<_TransactionsReceived>(_onTransactionsReceived);
     on<_CycleAccount>(_onCycleAccount);
   }
 
@@ -50,35 +39,23 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
     Emitter<TransactionWatcherState> emit,
   ) async {
     emit(const TransactionWatcherState.loading());
-    await _transactionStreamSubscription?.cancel();
+
+    //TODO: use a cubit so store the selected account
     final failureOrAccounts = await accountRepository.getAllAccounts();
 
-    failureOrAccounts.fold(
-      (f) => TransactionWatcherState.loadFailure(f),
-      (accounts) {
-        if (accounts.isEmpty) {
-          add(TransactionWatcherEvent.transactionsReceived(right([])));
-          return;
-        }
-        final String id = accounts[currentIndex].id.getOrCrash();
-        transactionRepository.watchAccountTransactions(id).listen(
-              (failureOrTransactions) =>
-                  add(TransactionWatcherEvent.transactionsReceived(failureOrTransactions)),
-            );
-      },
-    );
-  }
+    if (failureOrAccounts.isLeft()) {
+      emit(TransactionWatcherState.loadFailure(failureOrAccounts as ValueFailure));
+    }
+    final Account account = ((failureOrAccounts as Right).value as List<Account>)[currentIndex];
+    transactionRepository.getTransactionsByAccount(account.id);
 
-  void _onTransactionsReceived(
-    _TransactionsReceived event,
-    Emitter<TransactionWatcherState> emit,
-  ) {
-    final newState = event.failureOrTransactions.fold(
-      (f) => TransactionWatcherState.loadFailure(f),
-      (transactions) => TransactionWatcherState.loadSuccess(
-          transactions, transactions.isNotEmpty ? transactions[0].account : null),
+    await emit.forEach<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>(
+      transactionRepository.getTransactionsByAccount(account.id),
+      onData: (failureOrTransactions) => failureOrTransactions.fold(
+        (l) => TransactionWatcherState.loadFailure(l),
+        (r) => TransactionWatcherState.loadSuccess(r, account),
+      ),
     );
-    emit(newState);
   }
 
   Future<void> _onCycleAccount(_CycleAccount event, Emitter<TransactionWatcherState> emit) async {

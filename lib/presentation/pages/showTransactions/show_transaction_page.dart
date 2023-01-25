@@ -15,6 +15,7 @@ import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 
@@ -38,9 +39,8 @@ class ShowTransactionPage extends StatelessWidget {
         ),
         BlocProvider<TransactionWatcherBloc>(
           create: (context) => TransactionWatcherBloc(
-            transactionRepository: GetIt.instance<ITransactionProvider>(),
+            transactionRepository: context.read<TransactionRepository>(),
             accountRepository: GetIt.instance<IAccountProvider>(),
-            transactionSelectorBloc: BlocProvider.of<TransactionSelectorBloc>(context),
           )..add(const TransactionWatcherEvent.watchTransactionsStarted()),
         )
       ],
