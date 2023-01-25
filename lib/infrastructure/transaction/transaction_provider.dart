@@ -3,8 +3,11 @@ import 'dart:async';
 
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
@@ -13,16 +16,35 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteTransactionProvider implements ITransactionProvider {
   final Database? database;
-  SQFliteTransactionProvider({required this.database});
+  SQFliteTransactionProvider({required this.database}) {
+    _init();
+  }
+
+  void _init() async {
+    _transactionStreamController.add(await getAllTransactions());
+  }
+
+  final _transactionStreamController =
+      BehaviorSubject<Either<ValueFailure, List<MoneyTransaction>>>.seeded(const Right([]));
 
   @override
   Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
-    // TODO: Create generic function for insert
     try {
-      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
-      await database!.insert(DatabaseConstants.moneyTransactionTable, transactionDTO.toJson());
+      try {
+        final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
 
-      return right(unit);
+        await database!.insert(
+          DatabaseConstants.moneyTransactionTable,
+          MoneyTransactionDTO.fromDomain(transaction).toJson(),
+        );
+
+        transactions.add(transaction);
+        _transactionStreamController.add(Right(transactions));
+
+        return right(unit);
+      } on DatabaseException catch (e) {
+        return left(ValueFailure.unexpected(message: e.toString()));
+      }
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
@@ -31,11 +53,23 @@ class SQFliteTransactionProvider implements ITransactionProvider {
   @override
   Future<Either<ValueFailure, Unit>> delete(String id) async {
     try {
-      var result = database!.delete(
+      final result = await database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
         whereArgs: [id],
       );
+
+      if (result == 0) {
+        return left(ValueFailure.unexpected(message: "Could not delete MoneyTransaction $id"));
+      }
+
+      final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
+
+      final index = transactions.indexWhere((t) => t.id.toString() == id);
+      if (index >= 0) {
+        transactions.removeAt(index);
+        _transactionStreamController.add(Right(transactions));
+      }
 
       return right(unit);
     } on DatabaseException catch (e) {
@@ -46,6 +80,15 @@ class SQFliteTransactionProvider implements ITransactionProvider {
   @override
   Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction) async {
     try {
+      final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
+      final index = transactions.indexWhere((t) => t.id == transaction.id);
+      if (index >= 0) {
+        transactions[index] = transaction;
+        _transactionStreamController.add(Right(transactions));
+      } else {
+        return left(ValueFailure.unexpected(message: "Subcategory not in current stream."));
+      }
+
       final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database!.update(
         DatabaseConstants.moneyTransactionTable,
@@ -59,8 +102,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
     }
   }
 
-  @override
-  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(String id) async {
+  Future<Either<ValueFailure, List<MoneyTransaction>>> getAllTransactions() async {
     try {
       const sql = """
         SELECT
@@ -82,29 +124,38 @@ class SQFliteTransactionProvider implements ITransactionProvider {
         JOIN ${DatabaseConstants.accountTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.ACCOUNT_ID_OUTSIDE} = ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_ID}
         JOIN ${DatabaseConstants.payeeTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.PAYEE_ID_OUTSIDE} = ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_ID}
         JOIN ${DatabaseConstants.subcategoryTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID}
-        WHERE ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} == ?
         ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
-      final args = [id];
-      final data = await database!.rawQuery(sql, args);
+      final data = await database!.rawQuery(sql);
 
-      final List<MoneyTransaction> transactions = [];
-      for (final rawTransaction in data) {
-        final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromJson(rawTransaction);
-        transactions.add(transactionDTO.toDomain());
-      }
-
-      return right(transactions);
+      return right(
+        data
+            .map((transaction) => MoneyTransactionDTO.fromJson(transaction))
+            .map((transaction) => transaction.toDomain())
+            .toList(),
+      );
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
   }
 
   @override
+  Either<ValueFailure, List<MoneyTransaction>> getAccountTransactions(String id) {
+    final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
+
+    return right(transactions.where((t) => t.account.id.toString() == id).toList());
+  }
+
+  @override
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
     String accountID,
   ) {
-    return getAccountTransactions(accountID).asStream();
+    return _transactionStreamController.asBroadcastStream().map(
+          (event) => event.fold(
+            (l) => left(l),
+            (r) => right(r.where((element) => element.account.id.toString() == accountID).toList()),
+          ),
+        );
   }
 }

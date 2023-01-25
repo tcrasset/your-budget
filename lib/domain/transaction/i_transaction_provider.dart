@@ -8,7 +8,7 @@ abstract class ITransactionProvider {
   Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction);
   Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction);
   Future<Either<ValueFailure, Unit>> delete(String id);
-  Future<Either<ValueFailure, List<MoneyTransaction>>> getAccountTransactions(String id);
+  Either<ValueFailure, List<MoneyTransaction>> getAccountTransactions(String id);
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
     String id,
   );
