@@ -13,6 +13,9 @@ import 'package:your_budget/application/budget/category_watcher_bloc/category_wa
 import 'package:your_budget/application/core/bloc_observer.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
+import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
+import 'package:your_budget/domain/account/account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budget/budget_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
@@ -76,6 +79,11 @@ class MyBudgetState extends State<MyBudget> {
               transactionProvider: GetIt.instance<ITransactionProvider>(),
               budgetValueProvider: GetIt.instance<IBudgetValueProvider>()),
         ),
+        RepositoryProvider(
+          create: (context) => AccountRepository(
+            accountProvider: GetIt.instance<IAccountProvider>(),
+          ),
+        ),
       ],
       child: MaterialApp(
         theme: ThemeData(
@@ -97,6 +105,12 @@ class MyBudgetState extends State<MyBudget> {
                     ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
             ),
             BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
+            BlocProvider<SelectedAccountCubit>(
+              create: (_) => SelectedAccountCubit(
+                accountRepository: context.read<AccountRepository>(),
+                selected: null,
+              ),
+            ),
             BlocProvider<BudgetValueWatcherBloc>(
               create: (context) => BudgetValueWatcherBloc(
                   budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),

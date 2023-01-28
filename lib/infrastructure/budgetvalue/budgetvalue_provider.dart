@@ -33,17 +33,9 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
       BehaviorSubject<Either<ValueFailure, List<BudgetValue>>>.seeded(const Right([]));
 
   @override
-  Future<Either<ValueFailure, int?>> count() async {
-    try {
-      const sql = """
-        SELECT COUNT(*) FROM ${DatabaseConstants.budgetValueTable};
-        """;
-      final data = await database!.rawQuery(sql);
-
-      return right(Sqflite.firstIntValue(data));
-    } on DatabaseException catch (e) {
-      return left(ValueFailure.unexpected(message: e.toString()));
-    }
+  Future<Either<ValueFailure, int>> count() async {
+    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    return right(budgetvalues.length);
   }
 
   @override
@@ -52,9 +44,15 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
       final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
 
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
-      await database!.insert(DatabaseConstants.budgetValueTable, budgetvalueDTO.toJson());
+      final id =
+          await database!.insert(DatabaseConstants.budgetValueTable, budgetvalueDTO.toJson());
 
-      budgetvalues.add(budgetvalue);
+      if (id == 0) {
+        return left(ValueFailure.unexpected(
+            message: "BudgetValue with id ${budgetvalue.id} could not be created."));
+      }
+
+      budgetvalues.add(budgetvalue.copyWith(id: UniqueId.fromUniqueInt(id)));
       _budgetvalueStreamController.add(Right(budgetvalues));
 
       return right(unit);
@@ -66,15 +64,6 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   @override
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
     try {
-      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
-      final index = budgetvalues.indexWhere((t) => t.id == budgetvalue.id);
-      if (index >= 0) {
-        budgetvalues[index] = budgetvalue;
-        _budgetvalueStreamController.add(Right(budgetvalues));
-      } else {
-        return left(ValueFailure.unexpected(message: "BudgetValue not in current stream."));
-      }
-
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
       String id = budgetvalueDTO.id;
       final Map<String, dynamic> values = budgetvalueDTO.toJson();
@@ -88,10 +77,19 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
       );
 
       if (result == 0) {
-        return left(ValueFailure.unexpected(message: "BudgetValue with id $id not found"));
+        return left(ValueFailure.unexpected(
+            message: "BudgetValue with id $id not found. Could not update."));
       }
 
-      return right(unit);
+      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+      final index = budgetvalues.indexWhere((t) => t.id == budgetvalue.id);
+      if (index >= 0) {
+        budgetvalues[index] = budgetvalue;
+        _budgetvalueStreamController.add(Right(budgetvalues));
+        return right(unit);
+      }
+
+      return left(const ValueFailure.unexpected(message: "BudgetValue not in current stream."));
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
@@ -110,22 +108,8 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     if (index >= 0) {
       return right(budgetvalues[index]);
     } else {
-      return left(ValueFailure.unexpected(message: "BudgetValue not in current stream."));
+      return left(const ValueFailure.unexpected(message: "BudgetValue not in current stream."));
     }
-
-    // try {
-    //   final result = await database!.query(
-    //     DatabaseConstants.budgetValueTable,
-    //     where:
-    //         '${DatabaseConstants.BUDGET_VALUE_YEAR} = ? and ${DatabaseConstants.BUDGET_VALUE_MONTH} = ? and ${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ?',
-    //     whereArgs: [year, month, subcategoryId.getOrCrash()],
-    //   );
-
-    //   final BudgetValueDTO budgetValueDTO = BudgetValueDTO.fromJson(result.first);
-    //   return right(budgetValueDTO.toDomain());
-    // } on DatabaseException catch (e) {
-    //   return left(ValueFailure.unexpected(message: e.toString()));
-    // }
   }
 
   @override
@@ -137,7 +121,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     if (index >= 0) {
       return right(budgetvalues[index]);
     } else {
-      return left(ValueFailure.unexpected(message: "BudgetValue not in current stream."));
+      return left(const ValueFailure.unexpected(message: "BudgetValue not in current stream."));
     }
   }
 

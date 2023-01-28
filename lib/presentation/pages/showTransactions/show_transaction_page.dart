@@ -8,8 +8,10 @@ import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
+import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
@@ -41,7 +43,8 @@ class ShowTransactionPage extends StatelessWidget {
           create: (context) => TransactionWatcherBloc(
             transactionRepository: context.read<TransactionRepository>(),
             accountRepository: GetIt.instance<IAccountProvider>(),
-          )..add(const TransactionWatcherEvent.watchTransactionsStarted()),
+          )..add(TransactionWatcherEvent.watchTransactionsStarted(
+              account: context.read<SelectedAccountCubit>().state)),
         )
       ],
       child: TransactionScaffold(title: title),

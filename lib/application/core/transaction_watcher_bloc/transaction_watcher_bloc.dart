@@ -22,7 +22,6 @@ part 'transaction_watcher_state.dart';
 class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
   final TransactionRepository transactionRepository;
   final IAccountProvider accountRepository;
-  StreamSubscription<List<MoneyTransaction>>? _transactionStreamSubscription;
   int currentIndex = 0;
 
   Set<String> selectedTransactions = {};
@@ -40,6 +39,10 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
   ) async {
     emit(const TransactionWatcherState.loading());
 
+    if (event.account == null) {
+      emit(const TransactionWatcherState.loadSuccess([], null));
+      return;
+    }
     //TODO: use a cubit so store the selected account
     final failureOrAccounts = await accountRepository.getAllAccounts();
 
@@ -68,7 +71,6 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
         } else {
           currentIndex = (currentIndex - 1) % numberOfAccounts;
         }
-        print("currentIndex : $currentIndex");
         add(const TransactionWatcherEvent.watchTransactionsStarted());
       }
     });

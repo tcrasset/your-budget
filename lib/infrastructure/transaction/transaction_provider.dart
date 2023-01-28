@@ -29,80 +29,83 @@ class SQFliteTransactionProvider implements ITransactionProvider {
 
   @override
   Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction) async {
+    late int id;
     try {
-      try {
-        final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
-
-        await database!.insert(
-          DatabaseConstants.moneyTransactionTable,
-          MoneyTransactionDTO.fromDomain(transaction).toJson(),
-        );
-
-        transactions.add(transaction);
-        _transactionStreamController.add(Right(transactions));
-
-        return right(unit);
-      } on DatabaseException catch (e) {
-        return left(ValueFailure.unexpected(message: e.toString()));
-      }
+      id = await database!.insert(
+        DatabaseConstants.moneyTransactionTable,
+        MoneyTransactionDTO.fromDomain(transaction).toJson(),
+      );
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    if (id == 0) {
+      return left(ValueFailure.unexpected(
+          message: "MoneyTransaction with id ${transaction.id} could not be created."));
+    }
+
+    final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
+    transactions.add(transaction.copyWith(id: UniqueId.fromUniqueInt(id)));
+    _transactionStreamController.add(Right(transactions));
+
+    return right(unit);
   }
 
   @override
   Future<Either<ValueFailure, Unit>> delete(String id) async {
+    late int result;
     try {
       //TODO: verify why delete does not work. Might have something to do with the id being
       // used not being an actual UUID but rather a monotonically increase int
       // and the passed `id` is just a randomly generated id for the transaction
-      final result = await database!.delete(
+      result = await database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
         whereArgs: [id],
       );
-
-      if (result == 0) {
-        return left(ValueFailure.unexpected(message: "Could not delete MoneyTransaction $id"));
-      }
-
-      final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
-
-      final index = transactions.indexWhere((t) => t.id.toString() == id);
-      if (index >= 0) {
-        transactions.removeAt(index);
-        _transactionStreamController.add(Right(transactions));
-      }
-
-      return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    if (result == 0) {
+      return left(ValueFailure.unexpected(message: "Could not delete MoneyTransaction $id"));
+    }
+
+    final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
+
+    final index = transactions.indexWhere((t) => t.id.toString() == id);
+    if (index >= 0) {
+      transactions.removeAt(index);
+      _transactionStreamController.add(Right(transactions));
+    }
+
+    return right(unit);
   }
 
   @override
   Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction) async {
+    final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
     try {
-      final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
-      final index = transactions.indexWhere((t) => t.id == transaction.id);
-      if (index >= 0) {
-        transactions[index] = transaction;
-        _transactionStreamController.add(Right(transactions));
-      } else {
-        return left(ValueFailure.unexpected(message: "Subcategory not in current stream."));
-      }
-
-      final MoneyTransactionDTO transactionDTO = MoneyTransactionDTO.fromDomain(transaction);
       await database!.update(
         DatabaseConstants.moneyTransactionTable,
         transactionDTO.toJson(),
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
         whereArgs: [transactionDTO.id],
       );
-      return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
+    final index = transactions.indexWhere((t) => t.id == transaction.id);
+    if (index >= 0) {
+      transactions[index] = transaction;
+      _transactionStreamController.add(Right(transactions));
+    } else {
+      return left(
+          const ValueFailure.unexpected(message: "MoneyTransaction not in current stream."));
+    }
+    return right(unit);
   }
 
   Future<Either<ValueFailure, List<MoneyTransaction>>> getAllTransactions() async {

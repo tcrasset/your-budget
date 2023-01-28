@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TransactionWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() watchTransactionsStarted,
+    required TResult Function(Account? account) watchTransactionsStarted,
     required TResult Function(bool increment) cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
+    TResult Function(Account? account)? watchTransactionsStarted,
     TResult Function(bool increment)? cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
+    TResult Function(Account? account)? watchTransactionsStarted,
     TResult Function(bool increment)? cycleAccount,
     required TResult orElse(),
   }) =>
@@ -79,6 +79,9 @@ abstract class _$$_TransactionWatchStartedCopyWith<$Res> {
   factory _$$_TransactionWatchStartedCopyWith(_$_TransactionWatchStarted value,
           $Res Function(_$_TransactionWatchStarted) then) =
       __$$_TransactionWatchStartedCopyWithImpl<$Res>;
+  $Res call({Account? account});
+
+  $AccountCopyWith<$Res>? get account;
 }
 
 /// @nodoc
@@ -92,55 +95,90 @@ class __$$_TransactionWatchStartedCopyWithImpl<$Res>
   @override
   _$_TransactionWatchStarted get _value =>
       super._value as _$_TransactionWatchStarted;
+
+  @override
+  $Res call({
+    Object? account = freezed,
+  }) {
+    return _then(_$_TransactionWatchStarted(
+      account: account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account?,
+    ));
+  }
+
+  @override
+  $AccountCopyWith<$Res>? get account {
+    if (_value.account == null) {
+      return null;
+    }
+
+    return $AccountCopyWith<$Res>(_value.account!, (value) {
+      return _then(_value.copyWith(account: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$_TransactionWatchStarted implements _TransactionWatchStarted {
-  const _$_TransactionWatchStarted();
+  const _$_TransactionWatchStarted({required this.account});
+
+  @override
+  final Account? account;
 
   @override
   String toString() {
-    return 'TransactionWatcherEvent.watchTransactionsStarted()';
+    return 'TransactionWatcherEvent.watchTransactionsStarted(account: $account)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TransactionWatchStarted);
+            other is _$_TransactionWatchStarted &&
+            const DeepCollectionEquality().equals(other.account, account));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(account));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TransactionWatchStartedCopyWith<_$_TransactionWatchStarted>
+      get copyWith =>
+          __$$_TransactionWatchStartedCopyWithImpl<_$_TransactionWatchStarted>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() watchTransactionsStarted,
+    required TResult Function(Account? account) watchTransactionsStarted,
     required TResult Function(bool increment) cycleAccount,
   }) {
-    return watchTransactionsStarted();
+    return watchTransactionsStarted(account);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
+    TResult Function(Account? account)? watchTransactionsStarted,
     TResult Function(bool increment)? cycleAccount,
   }) {
-    return watchTransactionsStarted?.call();
+    return watchTransactionsStarted?.call(account);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
+    TResult Function(Account? account)? watchTransactionsStarted,
     TResult Function(bool increment)? cycleAccount,
     required TResult orElse(),
   }) {
     if (watchTransactionsStarted != null) {
-      return watchTransactionsStarted();
+      return watchTransactionsStarted(account);
     }
     return orElse();
   }
@@ -179,7 +217,13 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
 }
 
 abstract class _TransactionWatchStarted implements TransactionWatcherEvent {
-  const factory _TransactionWatchStarted() = _$_TransactionWatchStarted;
+  const factory _TransactionWatchStarted({required final Account? account}) =
+      _$_TransactionWatchStarted;
+
+  Account? get account;
+  @JsonKey(ignore: true)
+  _$$_TransactionWatchStartedCopyWith<_$_TransactionWatchStarted>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -247,7 +291,7 @@ class _$_CycleAccount implements _CycleAccount {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() watchTransactionsStarted,
+    required TResult Function(Account? account) watchTransactionsStarted,
     required TResult Function(bool increment) cycleAccount,
   }) {
     return cycleAccount(increment);
@@ -256,7 +300,7 @@ class _$_CycleAccount implements _CycleAccount {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
+    TResult Function(Account? account)? watchTransactionsStarted,
     TResult Function(bool increment)? cycleAccount,
   }) {
     return cycleAccount?.call(increment);
@@ -265,7 +309,7 @@ class _$_CycleAccount implements _CycleAccount {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? watchTransactionsStarted,
+    TResult Function(Account? account)? watchTransactionsStarted,
     TResult Function(bool increment)? cycleAccount,
     required TResult orElse(),
   }) {
