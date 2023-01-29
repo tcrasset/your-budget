@@ -43,8 +43,10 @@ class ShowTransactionPage extends StatelessWidget {
           create: (context) => TransactionWatcherBloc(
             transactionRepository: context.read<TransactionRepository>(),
             accountRepository: GetIt.instance<IAccountProvider>(),
-          )..add(TransactionWatcherEvent.watchTransactionsStarted(
-              account: context.read<SelectedAccountCubit>().state)),
+          )..add(
+              TransactionWatcherEvent.watchTransactionsStarted(
+                  account: context.read<SelectedAccountCubit>().account),
+            ),
         )
       ],
       child: TransactionScaffold(title: title),
@@ -155,7 +157,9 @@ class OptionalTransactionList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (newState) {
             final transactions = newState.transactions;
-            final String accountName = newState.currentAccount?.name.getOrCrash() ?? "No accounts";
+            // Rebuild and refetch the transactions if the selected account changes
+            final String accountName =
+                context.watch<SelectedAccountCubit>().state?.name.getOrCrash() ?? "No accounts";
             return SizedBox(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -311,9 +315,12 @@ class AccountButtons extends StatelessWidget {
     required BuildContext context,
     required bool increment,
   }) async {
-    context.read<TransactionWatcherBloc>().add(
-          TransactionWatcherEvent.cycleAccount(increment: increment),
-        );
+    final cubit = context.read<SelectedAccountCubit>();
+    if (increment) {
+      await cubit.selectNext();
+    } else {
+      await cubit.selectPrevious();
+    }
   }
 
   @override

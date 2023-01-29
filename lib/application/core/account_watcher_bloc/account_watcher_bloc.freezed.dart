@@ -19,47 +19,37 @@ mixin _$AccountWatcherEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() watchAccountsStarted,
-    required TResult Function(
-            Either<ValueFailure, List<Account>> failureOrAccounts)
-        accountsReceived,
-    required TResult Function(String id) deleteAccount,
+    required TResult Function(Account account) deleteAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult Function(Account account)? deleteAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult Function(Account account)? deleteAccount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AccountWatchStarted value) watchAccountsStarted,
-    required TResult Function(_AccountsReceived value) accountsReceived,
     required TResult Function(_DeleteAccount value) deleteAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
     TResult Function(_DeleteAccount value)? deleteAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
     TResult Function(_DeleteAccount value)? deleteAccount,
     required TResult orElse(),
   }) =>
@@ -125,10 +115,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() watchAccountsStarted,
-    required TResult Function(
-            Either<ValueFailure, List<Account>> failureOrAccounts)
-        accountsReceived,
-    required TResult Function(String id) deleteAccount,
+    required TResult Function(Account account) deleteAccount,
   }) {
     return watchAccountsStarted();
   }
@@ -137,9 +124,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult Function(Account account)? deleteAccount,
   }) {
     return watchAccountsStarted?.call();
   }
@@ -148,9 +133,7 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult Function(Account account)? deleteAccount,
     required TResult orElse(),
   }) {
     if (watchAccountsStarted != null) {
@@ -163,7 +146,6 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AccountWatchStarted value) watchAccountsStarted,
-    required TResult Function(_AccountsReceived value) accountsReceived,
     required TResult Function(_DeleteAccount value) deleteAccount,
   }) {
     return watchAccountsStarted(this);
@@ -173,7 +155,6 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
     TResult Function(_DeleteAccount value)? deleteAccount,
   }) {
     return watchAccountsStarted?.call(this);
@@ -183,7 +164,6 @@ class _$_AccountWatchStarted implements _AccountWatchStarted {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
     TResult Function(_DeleteAccount value)? deleteAccount,
     required TResult orElse(),
   }) {
@@ -199,158 +179,13 @@ abstract class _AccountWatchStarted implements AccountWatcherEvent {
 }
 
 /// @nodoc
-abstract class _$$_AccountsReceivedCopyWith<$Res> {
-  factory _$$_AccountsReceivedCopyWith(
-          _$_AccountsReceived value, $Res Function(_$_AccountsReceived) then) =
-      __$$_AccountsReceivedCopyWithImpl<$Res>;
-  $Res call({Either<ValueFailure, List<Account>> failureOrAccounts});
-}
-
-/// @nodoc
-class __$$_AccountsReceivedCopyWithImpl<$Res>
-    extends _$AccountWatcherEventCopyWithImpl<$Res>
-    implements _$$_AccountsReceivedCopyWith<$Res> {
-  __$$_AccountsReceivedCopyWithImpl(
-      _$_AccountsReceived _value, $Res Function(_$_AccountsReceived) _then)
-      : super(_value, (v) => _then(v as _$_AccountsReceived));
-
-  @override
-  _$_AccountsReceived get _value => super._value as _$_AccountsReceived;
-
-  @override
-  $Res call({
-    Object? failureOrAccounts = freezed,
-  }) {
-    return _then(_$_AccountsReceived(
-      failureOrAccounts == freezed
-          ? _value.failureOrAccounts
-          : failureOrAccounts // ignore: cast_nullable_to_non_nullable
-              as Either<ValueFailure, List<Account>>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_AccountsReceived implements _AccountsReceived {
-  const _$_AccountsReceived(this.failureOrAccounts);
-
-  @override
-  final Either<ValueFailure, List<Account>> failureOrAccounts;
-
-  @override
-  String toString() {
-    return 'AccountWatcherEvent.accountsReceived(failureOrAccounts: $failureOrAccounts)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_AccountsReceived &&
-            const DeepCollectionEquality()
-                .equals(other.failureOrAccounts, failureOrAccounts));
-  }
-
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failureOrAccounts));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_AccountsReceivedCopyWith<_$_AccountsReceived> get copyWith =>
-      __$$_AccountsReceivedCopyWithImpl<_$_AccountsReceived>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() watchAccountsStarted,
-    required TResult Function(
-            Either<ValueFailure, List<Account>> failureOrAccounts)
-        accountsReceived,
-    required TResult Function(String id) deleteAccount,
-  }) {
-    return accountsReceived(failureOrAccounts);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
-  }) {
-    return accountsReceived?.call(failureOrAccounts);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
-    required TResult orElse(),
-  }) {
-    if (accountsReceived != null) {
-      return accountsReceived(failureOrAccounts);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_AccountWatchStarted value) watchAccountsStarted,
-    required TResult Function(_AccountsReceived value) accountsReceived,
-    required TResult Function(_DeleteAccount value) deleteAccount,
-  }) {
-    return accountsReceived(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
-    TResult Function(_DeleteAccount value)? deleteAccount,
-  }) {
-    return accountsReceived?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
-    TResult Function(_DeleteAccount value)? deleteAccount,
-    required TResult orElse(),
-  }) {
-    if (accountsReceived != null) {
-      return accountsReceived(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _AccountsReceived implements AccountWatcherEvent {
-  const factory _AccountsReceived(
-          final Either<ValueFailure, List<Account>> failureOrAccounts) =
-      _$_AccountsReceived;
-
-  Either<ValueFailure, List<Account>> get failureOrAccounts;
-  @JsonKey(ignore: true)
-  _$$_AccountsReceivedCopyWith<_$_AccountsReceived> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 abstract class _$$_DeleteAccountCopyWith<$Res> {
   factory _$$_DeleteAccountCopyWith(
           _$_DeleteAccount value, $Res Function(_$_DeleteAccount) then) =
       __$$_DeleteAccountCopyWithImpl<$Res>;
-  $Res call({String id});
+  $Res call({Account account});
+
+  $AccountCopyWith<$Res> get account;
 }
 
 /// @nodoc
@@ -366,28 +201,35 @@ class __$$_DeleteAccountCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
+    Object? account = freezed,
   }) {
     return _then(_$_DeleteAccount(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
+      account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account,
     ));
+  }
+
+  @override
+  $AccountCopyWith<$Res> get account {
+    return $AccountCopyWith<$Res>(_value.account, (value) {
+      return _then(_value.copyWith(account: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_DeleteAccount implements _DeleteAccount {
-  const _$_DeleteAccount(this.id);
+  const _$_DeleteAccount(this.account);
 
   @override
-  final String id;
+  final Account account;
 
   @override
   String toString() {
-    return 'AccountWatcherEvent.deleteAccount(id: $id)';
+    return 'AccountWatcherEvent.deleteAccount(account: $account)';
   }
 
   @override
@@ -395,12 +237,12 @@ class _$_DeleteAccount implements _DeleteAccount {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DeleteAccount &&
-            const DeepCollectionEquality().equals(other.id, id));
+            const DeepCollectionEquality().equals(other.account, account));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(id));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(account));
 
   @JsonKey(ignore: true)
   @override
@@ -411,36 +253,29 @@ class _$_DeleteAccount implements _DeleteAccount {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() watchAccountsStarted,
-    required TResult Function(
-            Either<ValueFailure, List<Account>> failureOrAccounts)
-        accountsReceived,
-    required TResult Function(String id) deleteAccount,
+    required TResult Function(Account account) deleteAccount,
   }) {
-    return deleteAccount(id);
+    return deleteAccount(account);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult Function(Account account)? deleteAccount,
   }) {
-    return deleteAccount?.call(id);
+    return deleteAccount?.call(account);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? watchAccountsStarted,
-    TResult Function(Either<ValueFailure, List<Account>> failureOrAccounts)?
-        accountsReceived,
-    TResult Function(String id)? deleteAccount,
+    TResult Function(Account account)? deleteAccount,
     required TResult orElse(),
   }) {
     if (deleteAccount != null) {
-      return deleteAccount(id);
+      return deleteAccount(account);
     }
     return orElse();
   }
@@ -449,7 +284,6 @@ class _$_DeleteAccount implements _DeleteAccount {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_AccountWatchStarted value) watchAccountsStarted,
-    required TResult Function(_AccountsReceived value) accountsReceived,
     required TResult Function(_DeleteAccount value) deleteAccount,
   }) {
     return deleteAccount(this);
@@ -459,7 +293,6 @@ class _$_DeleteAccount implements _DeleteAccount {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
     TResult Function(_DeleteAccount value)? deleteAccount,
   }) {
     return deleteAccount?.call(this);
@@ -469,7 +302,6 @@ class _$_DeleteAccount implements _DeleteAccount {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_AccountWatchStarted value)? watchAccountsStarted,
-    TResult Function(_AccountsReceived value)? accountsReceived,
     TResult Function(_DeleteAccount value)? deleteAccount,
     required TResult orElse(),
   }) {
@@ -481,9 +313,9 @@ class _$_DeleteAccount implements _DeleteAccount {
 }
 
 abstract class _DeleteAccount implements AccountWatcherEvent {
-  const factory _DeleteAccount(final String id) = _$_DeleteAccount;
+  const factory _DeleteAccount(final Account account) = _$_DeleteAccount;
 
-  String get id;
+  Account get account;
   @JsonKey(ignore: true)
   _$$_DeleteAccountCopyWith<_$_DeleteAccount> get copyWith =>
       throw _privateConstructorUsedError;

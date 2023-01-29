@@ -16,22 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TransactionWatcherEvent {
+  Account? get account => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Account? account) watchTransactionsStarted,
-    required TResult Function(bool increment) cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Account? account)? watchTransactionsStarted,
-    TResult Function(bool increment)? cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Account? account)? watchTransactionsStarted,
-    TResult Function(bool increment)? cycleAccount,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -39,21 +37,22 @@ mixin _$TransactionWatcherEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionWatchStarted value)
         watchTransactionsStarted,
-    required TResult Function(_CycleAccount value) cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_CycleAccount value)? cycleAccount,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_CycleAccount value)? cycleAccount,
     required TResult orElse(),
   }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TransactionWatcherEventCopyWith<TransactionWatcherEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -62,6 +61,9 @@ abstract class $TransactionWatcherEventCopyWith<$Res> {
   factory $TransactionWatcherEventCopyWith(TransactionWatcherEvent value,
           $Res Function(TransactionWatcherEvent) then) =
       _$TransactionWatcherEventCopyWithImpl<$Res>;
+  $Res call({Account? account});
+
+  $AccountCopyWith<$Res>? get account;
 }
 
 /// @nodoc
@@ -72,15 +74,41 @@ class _$TransactionWatcherEventCopyWithImpl<$Res>
   final TransactionWatcherEvent _value;
   // ignore: unused_field
   final $Res Function(TransactionWatcherEvent) _then;
+
+  @override
+  $Res call({
+    Object? account = freezed,
+  }) {
+    return _then(_value.copyWith(
+      account: account == freezed
+          ? _value.account
+          : account // ignore: cast_nullable_to_non_nullable
+              as Account?,
+    ));
+  }
+
+  @override
+  $AccountCopyWith<$Res>? get account {
+    if (_value.account == null) {
+      return null;
+    }
+
+    return $AccountCopyWith<$Res>(_value.account!, (value) {
+      return _then(_value.copyWith(account: value));
+    });
+  }
 }
 
 /// @nodoc
-abstract class _$$_TransactionWatchStartedCopyWith<$Res> {
+abstract class _$$_TransactionWatchStartedCopyWith<$Res>
+    implements $TransactionWatcherEventCopyWith<$Res> {
   factory _$$_TransactionWatchStartedCopyWith(_$_TransactionWatchStarted value,
           $Res Function(_$_TransactionWatchStarted) then) =
       __$$_TransactionWatchStartedCopyWithImpl<$Res>;
+  @override
   $Res call({Account? account});
 
+  @override
   $AccountCopyWith<$Res>? get account;
 }
 
@@ -106,17 +134,6 @@ class __$$_TransactionWatchStartedCopyWithImpl<$Res>
           : account // ignore: cast_nullable_to_non_nullable
               as Account?,
     ));
-  }
-
-  @override
-  $AccountCopyWith<$Res>? get account {
-    if (_value.account == null) {
-      return null;
-    }
-
-    return $AccountCopyWith<$Res>(_value.account!, (value) {
-      return _then(_value.copyWith(account: value));
-    });
   }
 }
 
@@ -156,7 +173,6 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Account? account) watchTransactionsStarted,
-    required TResult Function(bool increment) cycleAccount,
   }) {
     return watchTransactionsStarted(account);
   }
@@ -165,7 +181,6 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function(Account? account)? watchTransactionsStarted,
-    TResult Function(bool increment)? cycleAccount,
   }) {
     return watchTransactionsStarted?.call(account);
   }
@@ -174,7 +189,6 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Account? account)? watchTransactionsStarted,
-    TResult Function(bool increment)? cycleAccount,
     required TResult orElse(),
   }) {
     if (watchTransactionsStarted != null) {
@@ -188,7 +202,6 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   TResult map<TResult extends Object?>({
     required TResult Function(_TransactionWatchStarted value)
         watchTransactionsStarted,
-    required TResult Function(_CycleAccount value) cycleAccount,
   }) {
     return watchTransactionsStarted(this);
   }
@@ -197,7 +210,6 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_CycleAccount value)? cycleAccount,
   }) {
     return watchTransactionsStarted?.call(this);
   }
@@ -206,7 +218,6 @@ class _$_TransactionWatchStarted implements _TransactionWatchStarted {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_CycleAccount value)? cycleAccount,
     required TResult orElse(),
   }) {
     if (watchTransactionsStarted != null) {
@@ -220,146 +231,12 @@ abstract class _TransactionWatchStarted implements TransactionWatcherEvent {
   const factory _TransactionWatchStarted({required final Account? account}) =
       _$_TransactionWatchStarted;
 
+  @override
   Account? get account;
+  @override
   @JsonKey(ignore: true)
   _$$_TransactionWatchStartedCopyWith<_$_TransactionWatchStarted>
       get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$_CycleAccountCopyWith<$Res> {
-  factory _$$_CycleAccountCopyWith(
-          _$_CycleAccount value, $Res Function(_$_CycleAccount) then) =
-      __$$_CycleAccountCopyWithImpl<$Res>;
-  $Res call({bool increment});
-}
-
-/// @nodoc
-class __$$_CycleAccountCopyWithImpl<$Res>
-    extends _$TransactionWatcherEventCopyWithImpl<$Res>
-    implements _$$_CycleAccountCopyWith<$Res> {
-  __$$_CycleAccountCopyWithImpl(
-      _$_CycleAccount _value, $Res Function(_$_CycleAccount) _then)
-      : super(_value, (v) => _then(v as _$_CycleAccount));
-
-  @override
-  _$_CycleAccount get _value => super._value as _$_CycleAccount;
-
-  @override
-  $Res call({
-    Object? increment = freezed,
-  }) {
-    return _then(_$_CycleAccount(
-      increment: increment == freezed
-          ? _value.increment
-          : increment // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_CycleAccount implements _CycleAccount {
-  const _$_CycleAccount({required this.increment});
-
-  @override
-  final bool increment;
-
-  @override
-  String toString() {
-    return 'TransactionWatcherEvent.cycleAccount(increment: $increment)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_CycleAccount &&
-            const DeepCollectionEquality().equals(other.increment, increment));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(increment));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_CycleAccountCopyWith<_$_CycleAccount> get copyWith =>
-      __$$_CycleAccountCopyWithImpl<_$_CycleAccount>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Account? account) watchTransactionsStarted,
-    required TResult Function(bool increment) cycleAccount,
-  }) {
-    return cycleAccount(increment);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(Account? account)? watchTransactionsStarted,
-    TResult Function(bool increment)? cycleAccount,
-  }) {
-    return cycleAccount?.call(increment);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Account? account)? watchTransactionsStarted,
-    TResult Function(bool increment)? cycleAccount,
-    required TResult orElse(),
-  }) {
-    if (cycleAccount != null) {
-      return cycleAccount(increment);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TransactionWatchStarted value)
-        watchTransactionsStarted,
-    required TResult Function(_CycleAccount value) cycleAccount,
-  }) {
-    return cycleAccount(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_CycleAccount value)? cycleAccount,
-  }) {
-    return cycleAccount?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TransactionWatchStarted value)? watchTransactionsStarted,
-    TResult Function(_CycleAccount value)? cycleAccount,
-    required TResult orElse(),
-  }) {
-    if (cycleAccount != null) {
-      return cycleAccount(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _CycleAccount implements TransactionWatcherEvent {
-  const factory _CycleAccount({required final bool increment}) =
-      _$_CycleAccount;
-
-  bool get increment;
-  @JsonKey(ignore: true)
-  _$$_CycleAccountCopyWith<_$_CycleAccount> get copyWith =>
-      throw _privateConstructorUsedError;
 }
 
 /// @nodoc

@@ -11,6 +11,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/account_creator.dart';
+import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
@@ -24,15 +25,9 @@ part 'account_creator_state.dart';
 part 'account_creator_bloc.freezed.dart';
 
 class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> {
-  final IAccountProvider accountRepository;
-  final ITransactionProvider transactionRepository;
-  final ISubcategoryProvider subcategoryRepository;
-  final IPayeeProvider payeeProvider;
+  final AccountRepository accountRepository;
   AccountCreatorBloc({
     required this.accountRepository,
-    required this.transactionRepository,
-    required this.subcategoryRepository,
-    required this.payeeProvider,
   }) : super(AccountCreatorState.initial()) {
     on<_Initialized>((event, emit) => emit(state));
     on<_NameChanged>(_onNameChanged);
@@ -63,12 +58,7 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
       // failureOrSuccess = state.isEditing
       //     ? await accountRepository.update(state.account)
       //     : await accountRepository.create(state.account);
-      failureOrSuccess = await AccountCreator(
-        accountRepository: accountRepository,
-        transactionRepository: transactionRepository,
-        subcategoryRepository: subcategoryRepository,
-        payeeProvider: payeeProvider,
-      ).create(state.account);
+      failureOrSuccess = await accountRepository.createAccount(state.account);
     }
 
     emit(

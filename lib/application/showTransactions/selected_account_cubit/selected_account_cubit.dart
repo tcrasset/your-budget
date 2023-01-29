@@ -8,18 +8,18 @@ import 'package:your_budget/models/utils.dart';
 
 class SelectedAccountCubit extends Cubit<Account?> {
   final AccountRepository accountRepository;
-  Account? selected;
-  int selectedIndex = -1;
 
-  SelectedAccountCubit({required this.accountRepository, required this.selected}) : super(selected);
+  SelectedAccountCubit({required this.accountRepository}) : super(null);
 
-  Account? get account => selected;
+  Account? get account => state;
 
   Future<void> selectNext() async {
-    selected = await accountRepository.getNextAccount(selected);
+    final newState = await accountRepository.getNextAccount(state);
+    emit(newState);
   }
 
   Future<void> selectPrevious() async {
-    selected = await accountRepository.getPreviousAccount(selected);
+    final newState = await accountRepository.getNextAccount(state);
+    emit(newState);
   }
 }

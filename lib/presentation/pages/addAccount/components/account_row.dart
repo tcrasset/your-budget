@@ -19,22 +19,19 @@ class AccountRow extends StatelessWidget {
   Future<void> handleOnLongPress(BuildContext context, Account account) async {
     final bloc = context.read<AccountWatcherBloc>();
 
-    final String? shouldDelete =
-        await showDeleteDialog(context, 'Delete account?');
+    final String? shouldDelete = await showDeleteDialog(context, 'Delete account?');
 
     if (shouldDelete == null) return;
-
-    bloc.add(AccountWatcherEvent.deleteAccount(account.id.getOrCrash()));
+    //TODO: fix account deletion
+    bloc.add(AccountWatcherEvent.deleteAccount(account));
   }
 
   @override
   Widget build(BuildContext context) {
     const TextStyle positiveAmountTextStyle =
         TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-    const TextStyle negativeAmountTextStyle =
-        TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
-    const TextStyle accountNameStyle =
-        TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
+    const TextStyle negativeAmountTextStyle = TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
+    const TextStyle accountNameStyle = TextStyle(fontSize: 25, fontStyle: FontStyle.italic);
 
     return GestureDetector(
       onLongPress: () => handleOnLongPress(context, account),

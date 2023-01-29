@@ -30,7 +30,6 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
     required this.accountRepository,
   }) : super(const TransactionWatcherState.initial()) {
     on<_TransactionWatchStarted>(_onTransactionWatchStarted);
-    on<_CycleAccount>(_onCycleAccount);
   }
 
   Future<void> _onTransactionWatchStarted(
@@ -59,20 +58,5 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
         (r) => TransactionWatcherState.loadSuccess(r, account),
       ),
     );
-  }
-
-  Future<void> _onCycleAccount(_CycleAccount event, Emitter<TransactionWatcherState> emit) async {
-    final failureOrCount = await accountRepository.count();
-
-    failureOrCount.fold((f) => null, (numberOfAccounts) {
-      if (numberOfAccounts != null && numberOfAccounts != 0) {
-        if (event.increment) {
-          currentIndex = (currentIndex + 1) % numberOfAccounts;
-        } else {
-          currentIndex = (currentIndex - 1) % numberOfAccounts;
-        }
-        add(const TransactionWatcherEvent.watchTransactionsStarted());
-      }
-    });
   }
 }

@@ -19,6 +19,7 @@ import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budget/budget_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
+import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/startup.dart' as startup;
@@ -76,77 +77,87 @@ class MyBudgetState extends State<MyBudget> {
         ),
         RepositoryProvider(
           create: (context) => TransactionRepository(
-              transactionProvider: GetIt.instance<ITransactionProvider>(),
-              budgetValueProvider: GetIt.instance<IBudgetValueProvider>()),
+            transactionProvider: GetIt.instance<ITransactionProvider>(),
+            budgetValueProvider: GetIt.instance<IBudgetValueProvider>(),
+          ),
         ),
         RepositoryProvider(
           create: (context) => AccountRepository(
             accountProvider: GetIt.instance<IAccountProvider>(),
+            transactionProvider: GetIt.instance<ITransactionProvider>(),
+            subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
+            payeeProvider: GetIt.instance<IPayeeProvider>(),
           ),
         ),
       ],
-      child: MaterialApp(
-        theme: ThemeData(
-          // Define the default brightness and colors.
-          brightness: Brightness.light,
-          primaryColor: Constants.PRIMARY_COLOR,
-          accentColor: Constants.SECONDARY_COLOR,
-        ),
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider<SubcategoryWatcherBloc>(
-              create: (context) => SubcategoryWatcherBloc(
-                  subcategoryRepository: GetIt.instance<ISubcategoryProvider>())
-                ..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            theme: ThemeData(
+              // Define the default brightness and colors.
+              brightness: Brightness.light,
+              primaryColor: Constants.PRIMARY_COLOR,
+              accentColor: Constants.SECONDARY_COLOR,
             ),
-            BlocProvider<CategoryWatcherBloc>(
-              create: (context) =>
-                  CategoryWatcherBloc(categoryProvider: GetIt.instance<ICategoryProvider>())
-                    ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
-            ),
-            BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
-            BlocProvider<SelectedAccountCubit>(
-              create: (_) => SelectedAccountCubit(
-                accountRepository: context.read<AccountRepository>(),
-                selected: null,
-              ),
-            ),
-            BlocProvider<BudgetValueWatcherBloc>(
-              create: (context) => BudgetValueWatcherBloc(
-                  budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
-                  budgetDateCubit: context.read<BudgetDateCubit>())
-                ..add(BudgetValueWatcherEvent.watchBudgetValuesStarted(
-                    context.read<BudgetDateCubit>().state)),
-            ),
-          ],
-          child: Scaffold(
-            body: _tabs[_currentTab],
-            bottomNavigationBar: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              currentIndex: _currentTab,
-              unselectedItemColor: Colors.grey[500],
-              onTap: _onItemTapped,
-              items: [
-                const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.BUDGET_ICON),
-                  label: "Budget",
+            home: MultiBlocProvider(
+              providers: [
+                BlocProvider<SubcategoryWatcherBloc>(
+                  create: (context) => SubcategoryWatcherBloc(
+                    subcategoryRepository: GetIt.instance<ISubcategoryProvider>(),
+                  )..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
                 ),
-                const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ACCOUNT_ICON),
-                  label: "Accounts",
+                BlocProvider<CategoryWatcherBloc>(
+                  create: (context) =>
+                      CategoryWatcherBloc(categoryProvider: GetIt.instance<ICategoryProvider>())
+                        ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
                 ),
-                const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
-                  label: "Add transaction",
+                BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
+                BlocProvider<SelectedAccountCubit>(
+                  create: (_) => SelectedAccountCubit(
+                    accountRepository: context.read<AccountRepository>(),
+                  ),
                 ),
-                const BottomNavigationBarItem(
-                  icon: FaIcon(Constants.ALLTRANSACTION_ICON),
-                  label: "Transactions",
+                BlocProvider<BudgetValueWatcherBloc>(
+                  create: (context) => BudgetValueWatcherBloc(
+                    budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
+                    budgetDateCubit: context.read<BudgetDateCubit>(),
+                  )..add(
+                      BudgetValueWatcherEvent.watchBudgetValuesStarted(
+                        context.read<BudgetDateCubit>().state,
+                      ),
+                    ),
                 ),
               ],
+              child: Scaffold(
+                body: _tabs[_currentTab],
+                bottomNavigationBar: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  currentIndex: _currentTab,
+                  unselectedItemColor: Colors.grey[500],
+                  onTap: _onItemTapped,
+                  items: [
+                    const BottomNavigationBarItem(
+                      icon: FaIcon(Constants.BUDGET_ICON),
+                      label: "Budget",
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: FaIcon(Constants.ACCOUNT_ICON),
+                      label: "Accounts",
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: FaIcon(Constants.ADD_TRANSACTION_ICON),
+                      label: "Add transaction",
+                    ),
+                    const BottomNavigationBarItem(
+                      icon: FaIcon(Constants.ALLTRANSACTION_ICON),
+                      label: "Transactions",
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
 

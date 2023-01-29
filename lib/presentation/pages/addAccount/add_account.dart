@@ -7,7 +7,11 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
+import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
+import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
+import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
+import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
@@ -22,21 +26,17 @@ class AddAccountPage extends StatelessWidget {
 
   const AddAccountPage({Key? key, this.title}) : super(key: key);
   @override
-  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AccountWatcherBloc>(
           create: (context) =>
-              AccountWatcherBloc(accountRepository: GetIt.instance<IAccountProvider>())
+              AccountWatcherBloc(accountRepository: context.read<AccountRepository>())
                 ..add(const AccountWatcherEvent.watchAccountsStarted()),
         ),
         BlocProvider<AccountCreatorBloc>(
           create: (_) => AccountCreatorBloc(
-            accountRepository: GetIt.instance<IAccountProvider>(),
-            transactionRepository: GetIt.instance<ITransactionProvider>(),
-            subcategoryRepository: GetIt.instance<ISubcategoryProvider>(),
-            payeeProvider: GetIt.instance<IPayeeProvider>(),
+            accountRepository: context.read<AccountRepository>(),
           )..add(const AccountCreatorEvent.initialized()),
         ),
       ],

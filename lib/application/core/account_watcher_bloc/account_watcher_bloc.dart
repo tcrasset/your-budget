@@ -8,7 +8,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_provider.dart';
+import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 
 part 'account_watcher_event.dart';
@@ -16,13 +16,10 @@ part 'account_watcher_state.dart';
 part 'account_watcher_bloc.freezed.dart';
 
 class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> {
-  final IAccountProvider accountRepository;
-  StreamSubscription<List<Account>>? _accountStreamSubscription;
-
+  final AccountRepository accountRepository;
   AccountWatcherBloc({required this.accountRepository})
       : super(const AccountWatcherState.initial()) {
     on<_AccountWatchStarted>(_onWatchAccountsStarted);
-    on<_AccountsReceived>(_onAccountsReceived);
     on<_DeleteAccount>(_onDeleteAccount);
   }
 
@@ -31,11 +28,7 @@ class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> 
     Emitter<AccountWatcherState> emit,
   ) async {
     emit(const AccountWatcherState.loading());
-
-    final result = await accountRepository.delete(event.id);
-
-    result.fold((f) => print("failure"), (r) => print("deleted"));
-    add(const AccountWatcherEvent.watchAccountsStarted());
+    await accountRepository.deleteAccount(event.account);
   }
 
   Future<void> _onWatchAccountsStarted(
@@ -43,20 +36,13 @@ class AccountWatcherBloc extends Bloc<AccountWatcherEvent, AccountWatcherState> 
     Emitter<AccountWatcherState> emit,
   ) async {
     emit(const AccountWatcherState.loading());
-    await _accountStreamSubscription?.cancel();
 
-    accountRepository.watchAllAccounts().listen(
-          (failureOrAccounts) => add(AccountWatcherEvent.accountsReceived(failureOrAccounts)),
-        );
-  }
-
-  Future<void> _onAccountsReceived(
-    _AccountsReceived event,
-    Emitter<AccountWatcherState> emit,
-  ) async {
-    event.failureOrAccounts.fold(
-      (f) => emit(AccountWatcherState.loadFailure(f)),
-      (accounts) => emit(AccountWatcherState.loadSuccess(accounts)),
+    await emit.forEach<Either<ValueFailure<dynamic>, List<Account>>>(
+      accountRepository.getAccounts(),
+      onData: (failureOrAccounts) => failureOrAccounts.fold(
+        (l) => AccountWatcherState.loadFailure(l),
+        (accounts) => AccountWatcherState.loadSuccess(accounts),
+      ),
     );
   }
 }
