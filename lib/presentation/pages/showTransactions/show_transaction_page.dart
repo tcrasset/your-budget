@@ -11,10 +11,8 @@ import 'package:your_budget/application/core/transaction_watcher_bloc/transactio
 import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
-import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
@@ -29,6 +27,11 @@ class ShowTransactionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<SelectedAccountCubit>();
+    // Select an account if None has been selected.
+    if (cubit.account == null) {
+      cubit.selectNext();
+    }
     return MultiBlocProvider(
       providers: [
         BlocProvider<TransactionSelectorBloc>(
@@ -43,10 +46,7 @@ class ShowTransactionPage extends StatelessWidget {
           create: (context) => TransactionWatcherBloc(
             transactionRepository: context.read<TransactionRepository>(),
             accountRepository: GetIt.instance<IAccountProvider>(),
-          )..add(
-              TransactionWatcherEvent.watchTransactionsStarted(
-                  account: context.read<SelectedAccountCubit>().account),
-            ),
+          ),
         )
       ],
       child: TransactionScaffold(title: title),
@@ -69,7 +69,11 @@ class TransactionScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isWatcherBlocLoading = false;
+    print('before context');
+    context.read<TransactionWatcherBloc>().add(
+          TransactionWatcherEvent.watchTransactionsStarted(
+              account: context.read<SelectedAccountCubit>().account),
+        );
     return MultiBlocListener(
       listeners: [
         BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
@@ -316,10 +320,13 @@ class AccountButtons extends StatelessWidget {
     required bool increment,
   }) async {
     final cubit = context.read<SelectedAccountCubit>();
+    final bloc = context.read<TransactionWatcherBloc>();
     if (increment) {
       await cubit.selectNext();
+      bloc.add(TransactionWatcherEvent.watchTransactionsStarted(account: cubit.account));
     } else {
       await cubit.selectPrevious();
+      bloc.add(TransactionWatcherEvent.watchTransactionsStarted(account: cubit.account));
     }
   }
 

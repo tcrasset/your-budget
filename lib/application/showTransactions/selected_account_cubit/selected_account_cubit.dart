@@ -19,7 +19,7 @@ class SelectedAccountCubit extends Cubit<Account?> {
   }
 
   Future<void> selectPrevious() async {
-    final newState = await accountRepository.getNextAccount(state);
+    final newState = await accountRepository.getPreviousAccount(state);
     emit(newState);
   }
 }

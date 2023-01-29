@@ -38,17 +38,14 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
   ) async {
     emit(const TransactionWatcherState.loading());
 
+    print('event.account is ${event.account}');
+
     if (event.account == null) {
       emit(const TransactionWatcherState.loadSuccess([], null));
       return;
     }
-    //TODO: use a cubit so store the selected account
-    final failureOrAccounts = await accountRepository.getAllAccounts();
 
-    if (failureOrAccounts.isLeft()) {
-      emit(TransactionWatcherState.loadFailure(failureOrAccounts as ValueFailure));
-    }
-    final Account account = ((failureOrAccounts as Right).value as List<Account>)[currentIndex];
+    Account account = event.account!;
     transactionRepository.getTransactionsByAccount(account.id);
 
     await emit.forEach<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>(
