@@ -52,7 +52,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> delete(String id) async {
+  Future<Either<ValueFailure, Unit>> delete(UniqueId id) async {
     late int result;
     try {
       //TODO: verify why delete does not work. Might have something to do with the id being
@@ -61,7 +61,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
       result = await database!.delete(
         DatabaseConstants.moneyTransactionTable,
         where: '${DatabaseConstants.MONEYTRANSACTION_ID} = ?',
-        whereArgs: [id],
+        whereArgs: [id.getOrCrash()],
       );
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -73,7 +73,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
 
     final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
 
-    final index = transactions.indexWhere((t) => t.id.toString() == id);
+    final index = transactions.indexWhere((t) => t.id == id);
     if (index >= 0) {
       transactions.removeAt(index);
       _transactionStreamController.add(Right(transactions));
@@ -147,20 +147,20 @@ class SQFliteTransactionProvider implements ITransactionProvider {
   }
 
   @override
-  Either<ValueFailure, List<MoneyTransaction>> getAccountTransactions(String id) {
+  Either<ValueFailure, List<MoneyTransaction>> getAccountTransactions(UniqueId id) {
     final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
 
-    return right(transactions.where((t) => t.account.id.toString() == id).toList());
+    return right(transactions.where((t) => t.account.id == id).toList());
   }
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
-    String accountID,
+    UniqueId accountID,
   ) {
     return _transactionStreamController.asBroadcastStream().map(
           (event) => event.fold(
             (l) => left(l),
-            (r) => right(r.where((element) => element.account.id.toString() == accountID).toList()),
+            (r) => right(r.where((element) => element.account.id == accountID).toList()),
           ),
         );
   }

@@ -77,7 +77,7 @@ class SQFliteAccountProvider implements IAccountProvider {
 
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
 
-    final index = accounts.indexWhere((t) => t.id.toString() == id);
+    final index = accounts.indexWhere((t) => t.id.getOrCrash() == id);
     if (index >= 0) {
       accounts.removeAt(index);
       _accountStreamController.add(Right(accounts));
@@ -89,7 +89,7 @@ class SQFliteAccountProvider implements IAccountProvider {
   @override
   Future<Either<ValueFailure, Account>> get(String id) async {
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
-    final index = accounts.indexWhere((account) => account.id.toString() == id);
+    final index = accounts.indexWhere((account) => account.id.getOrCrash() == id);
     if (index >= 0) {
       return right(accounts[index]);
     } else {

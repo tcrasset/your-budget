@@ -13,7 +13,7 @@ class TransactionRepository {
   TransactionRepository({required this.transactionProvider, required this.budgetValueProvider});
 
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> _transactions(UniqueId accountId) =>
-      transactionProvider.watchAccountTransactions(accountId.toString());
+      transactionProvider.watchAccountTransactions(accountId);
 
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> getTransactionsByAccount(
           UniqueId accountId) =>
@@ -21,16 +21,17 @@ class TransactionRepository {
 
   Future<Either<ValueFailure, Unit>> deleteTransaction(MoneyTransaction transaction) async {
     final failureOrBudgetvalue = await budgetValueProvider.get(
-        year: transaction.date.year,
-        month: transaction.date.month,
-        subcategoryId: transaction.subcategory.id);
+      year: transaction.date.year,
+      month: transaction.date.month,
+      subcategoryId: transaction.subcategory.id,
+    );
 
     // TODO: We have to update the available  value of the budget values in the future.
-    // I don't know if that is the responsability of the BudgetRepository, or the TransactionRepository
+    // I don't know if that is the responsibility of the BudgetRepository, or the TransactionRepository
     return failureOrBudgetvalue.fold((l) => left(l), (stored) async {
       BudgetValue toUpdate = stored.copyWith(available: stored.available - transaction.amount);
       await budgetValueProvider.update(toUpdate);
-      await transactionProvider.delete(transaction.id.getOrCrash());
+      await transactionProvider.delete(transaction.id);
       return right(unit);
     });
   }
