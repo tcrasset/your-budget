@@ -59,8 +59,7 @@ class AccountRepository {
     //Create starting money transaction
     //TODO: Use real names
 
-    final Either<ValueFailure, Account> failureOrAccount =
-        await accountProvider.get(accountId.toString());
+    final Either<ValueFailure, Account> failureOrAccount = await accountProvider.get(accountId);
     final Either<ValueFailure, Subcategory> failureOrSubcategory =
         await subcategoryProvider.getToBeBudgetedSubcategory();
     final Either<ValueFailure, Payee> failureOrPayee = await payeeProvider.getToBeBudgetedPayee();
@@ -90,8 +89,7 @@ class AccountRepository {
   }
 
   Future<Either<ValueFailure<dynamic>, Unit>> deleteAccount(Account account) async {
-    return (await accountProvider.delete(account.id.toString()))
-        .fold((l) => left(l), (r) => right(unit));
+    return (await accountProvider.delete(account.id)).fold((l) => left(l), (r) => right(unit));
   }
 
   Future<Account?> getNextAccount(Account? account) async {

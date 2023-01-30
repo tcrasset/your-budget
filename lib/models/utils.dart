@@ -60,10 +60,21 @@ bool isSameMonth(DateTime date1, DateTime date2) {
   return date1.month == date2.month && date1.year == date2.year;
 }
 
+bool isMonthBetweenInclusive({
+  required DateTime query,
+  required DateTime lowerBound,
+  required DateTime upperBound,
+}) {
+  final _lower = getDateFromMonthStart(lowerBound);
+  final _upper = getDateFromMonthStart(upperBound);
+  final _query = getDateFromMonthStart(query);
+  return (_query.isAtSameMomentAs(_lower) || _query.isAfter(_lower)) &&
+      (_query.isAtSameMomentAs(_upper) || _query.isBefore(_upper));
+}
+
 DateTime addExactEntryTime(DateTime date) {
   final DateTime now = DateTime.now();
-  return DateTime(
-      date.year, date.month, date.day, now.hour, now.minute, now.second);
+  return DateTime(date.year, date.month, date.day, now.hour, now.minute, now.second);
 }
 
 /// Returns whether [s] is a string representation of a number or not.

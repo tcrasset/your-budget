@@ -58,14 +58,14 @@ class SQFliteAccountProvider implements IAccountProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> delete(String id) async {
+  Future<Either<ValueFailure, Unit>> delete(UniqueId id) async {
     late int result;
 
     try {
       result = await database!.delete(
         DatabaseConstants.accountTable,
         where: '${DatabaseConstants.ACCOUNT_ID} = ?',
-        whereArgs: [id],
+        whereArgs: [id.getOrCrash()],
       );
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -77,7 +77,7 @@ class SQFliteAccountProvider implements IAccountProvider {
 
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
 
-    final index = accounts.indexWhere((t) => t.id.getOrCrash() == id);
+    final index = accounts.indexWhere((t) => t.id == id);
     if (index >= 0) {
       accounts.removeAt(index);
       _accountStreamController.add(Right(accounts));
@@ -87,9 +87,9 @@ class SQFliteAccountProvider implements IAccountProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Account>> get(String id) async {
+  Future<Either<ValueFailure, Account>> get(UniqueId id) async {
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
-    final index = accounts.indexWhere((account) => account.id.getOrCrash() == id);
+    final index = accounts.indexWhere((account) => account.id == id);
     if (index >= 0) {
       return right(accounts[index]);
     } else {

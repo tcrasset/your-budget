@@ -22,22 +22,17 @@ import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/domain/transaction/transaction_repository.dart';
 
 part 'transaction_creator_event.dart';
 part 'transaction_creator_state.dart';
 part 'transaction_creator_bloc.freezed.dart';
 
 class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCreatorState> {
-  final ITransactionProvider transactionRepository;
-  final IBudgetValueProvider budgetValueRepository;
-  final BudgetDateCubit budgetDateCubit;
-  final BudgetValueWatcherBloc budgetValueWatcherBloc;
+  final TransactionRepository transactionRepository;
 
   TransactionCreatorBloc({
     required this.transactionRepository,
-    required this.budgetValueRepository,
-    required this.budgetValueWatcherBloc,
-    required this.budgetDateCubit,
   }) : super(TransactionCreatorState.initial()) {
     on<_Initialized>((event, emit) => emit(TransactionCreatorState.initial()));
     on<_AmountChanged>(_onAmountChanged);
@@ -103,12 +98,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     emit(state.copyWith(isSaving: true));
 
     if (transaction.failureOption.isNone()) {
-      failureOrSuccess = await _createTransactionAndUpdateBudgetValue(transaction);
-      if (failureOrSuccess.isRight()) {
-        print("adding watch budget values after adding transaction");
-        budgetValueWatcherBloc
-            .add(BudgetValueWatcherEvent.watchBudgetValuesStarted(budgetDateCubit.state));
-      }
+      failureOrSuccess = await transactionRepository.createTransaction(transaction);
     }
 
     final newState = state.copyWith(
@@ -118,29 +108,5 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     );
 
     emit(newState);
-  }
-
-  Future<Either<ValueFailure<dynamic>, Unit>> _createTransactionAndUpdateBudgetValue(
-      MoneyTransaction transaction) async {
-    // TODO: Implement SQL transactions and rollback on error
-    Either<ValueFailure, Unit>? failureOrSuccess = await transactionRepository.create(transaction);
-
-    return await failureOrSuccess.fold((l) => left(l), (_) async {
-      Either<ValueFailure, BudgetValue> failureOrBudgetvalue = await budgetValueRepository.get(
-          year: transaction.date.year,
-          month: transaction.date.month,
-          subcategoryId: transaction.subcategory.id);
-
-      return await failureOrBudgetvalue.fold((l) => left(l), (budgetValue) async {
-        final previousAvailable = budgetValue.available;
-        // '+' because transaction amount is negative
-        final newAvailable = previousAvailable + transaction.amount;
-        final newBudgetValue = budgetValue.copyWith(available: newAvailable);
-        Either<ValueFailure, Unit> failureOrUnit =
-            await budgetValueRepository.update(newBudgetValue);
-
-        return failureOrUnit.fold((l) => left(l), (r) => right(unit));
-      });
-    });
   }
 }

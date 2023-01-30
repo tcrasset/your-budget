@@ -46,12 +46,10 @@ class BudgetRepository {
     final failureOrPrevious =
         (await budgetvalueProvider.getById(id: value.id)).getOrElse(() => throw Exception());
 
-    final updated =
-        value.copyWith(available: value.available + (value.budgeted - failureOrPrevious.budgeted));
+    final difference = value.budgeted - failureOrPrevious.budgeted;
+    final updated = value.copyWith(available: value.available + difference);
     budgetvalueProvider.update(updated);
 
-    final DateTime maxBudgetDate = getMaxBudgetDate();
-    DateTime date = Jiffy(value.date).add(months: 1).dateTime;
     final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
         await budgetvalueProvider.getBudgetValuesBySubcategory(subcategoryId: value.subcategoryId);
 
@@ -59,24 +57,22 @@ class BudgetRepository {
       return left(failureOrBudgetvalues as ValueFailure);
     }
 
+    DateTime nextBudgetDate = Jiffy(value.date).add(months: 1).dateTime;
     List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
+    // TODO: return error values if one fails using functional programming
 
-    while (date.isBefore(maxBudgetDate)) {
-      final stored = budgetvalues.singleWhere(
-          (element) => element.date == date && element.subcategoryId == value.subcategoryId);
-
-      // Combine the total available money from month to month
-      lastMonthAvailable = stored.available;
-      final to_update = stored.copyWith(available: lastMonthAvailable + value.budgeted);
-
-      final result = await budgetvalueProvider.update(to_update);
-
-      if (result.isLeft()) {
-        return left(result as ValueFailure);
-      }
-
-      date = Jiffy(date).add(months: 1).dateTime;
-    }
+    budgetvalues
+        .where(
+          (element) =>
+              isMonthBetweenInclusive(
+                query: element.date,
+                lowerBound: nextBudgetDate,
+                upperBound: getMaxBudgetDate(),
+              ) &&
+              element.subcategoryId == value.subcategoryId,
+        )
+        .map((value) => value.copyWith(available: value.available + difference))
+        .forEach((element) async => budgetvalueProvider.update(element));
 
     return right(unit);
   }
