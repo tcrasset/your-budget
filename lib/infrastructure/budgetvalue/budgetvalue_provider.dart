@@ -61,6 +61,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     }
   }
 
+  //TODO: Add updateAll so that there are less re-renders on the page
   @override
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
     try {

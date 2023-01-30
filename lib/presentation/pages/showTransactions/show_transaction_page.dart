@@ -69,7 +69,6 @@ class TransactionScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('before context');
     context.read<TransactionWatcherBloc>().add(
           TransactionWatcherEvent.watchTransactionsStarted(
               account: context.read<SelectedAccountCubit>().account),
@@ -171,11 +170,14 @@ class OptionalTransactionList extends StatelessWidget {
                   AccountButtons(
                     accountText: accountName,
                   ),
-                  Expanded(
-                    child: TransactionListView(
-                      transactions: transactions,
+                  if (transactions.isEmpty)
+                    EmptyTransactionList()
+                  else
+                    Expanded(
+                      child: TransactionListView(
+                        transactions: transactions,
+                      ),
                     ),
-                  ),
                 ],
               ),
             );
@@ -303,7 +305,7 @@ class EmptyTransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: Text(
-        "No transactions logged. Please choose an account.",
+        "No transactions logged for this account.",
         style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
       ),
     );
