@@ -115,11 +115,6 @@ class MyBudgetState extends State<MyBudget> {
                     subcategoryRepository: GetIt.instance<ISubcategoryProvider>(),
                   )..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
                 ),
-                BlocProvider<CategoryWatcherBloc>(
-                  create: (context) =>
-                      CategoryWatcherBloc(categoryProvider: GetIt.instance<ICategoryProvider>())
-                        ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
-                ),
                 BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
                 BlocProvider<ToBeBudgetedCubit>(
                   create: (_) => ToBeBudgetedCubit(
@@ -131,16 +126,6 @@ class MyBudgetState extends State<MyBudget> {
                   create: (_) => SelectedAccountCubit(
                     accountRepository: context.read<AccountRepository>(),
                   ),
-                ),
-                BlocProvider<BudgetValueWatcherBloc>(
-                  create: (context) => BudgetValueWatcherBloc(
-                    budgetvalueRepository: GetIt.instance<IBudgetValueProvider>(),
-                    budgetDateCubit: context.read<BudgetDateCubit>(),
-                  )..add(
-                      BudgetValueWatcherEvent.watchBudgetValuesStarted(
-                        context.read<BudgetDateCubit>().state,
-                      ),
-                    ),
                 ),
               ],
               child: Scaffold(
