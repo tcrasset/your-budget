@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // Package imports:
 import 'package:provider/provider.dart';
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
+import 'package:your_budget/application/budget/to_be_budgeted_cubit.dart';
+import 'package:your_budget/domain/core/amount.dart';
 
 // Project imports:
 import '../../../../appstate.dart';
@@ -32,15 +34,10 @@ class ToBeBudgeted extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: BlocBuilder<BudgetValueWatcherBloc, BudgetValueWatcherState>(
-              builder: (context, state) => state.map(
-                initial: (_) => const CircularProgressIndicator(),
-                loading: (_) => const CircularProgressIndicator(),
-                loadFailure: (_) => const Text("Failed to load."),
-                loadSuccess: (instance) => Text("1000€"),
-              ),
+            child: BlocBuilder<ToBeBudgetedCubit, Amount>(
+              builder: (context, state) => Text(state.getOrCrash().toString()),
             ),
-          )
+          ),
         ],
       ),
     );

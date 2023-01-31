@@ -18,15 +18,9 @@ part 'transaction_selector_bloc.freezed.dart';
 
 class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, TransactionSelectorState> {
   final TransactionRepository transactionRepository;
-  final IBudgetValueProvider budgetValueRepository;
-  final BudgetValueWatcherBloc budgetValueWatcherBloc;
-  final BudgetDateCubit budgetDateCubit;
   Set<MoneyTransaction> selected = {};
   TransactionSelectorBloc({
     required this.transactionRepository,
-    required this.budgetValueRepository,
-    required this.budgetValueWatcherBloc,
-    required this.budgetDateCubit,
   }) : super(TransactionSelectorState.initial()) {
     on<_ToggleSelected>(_onToggleSelected);
     on<_ToggleModifying>(_onToggleModifying);

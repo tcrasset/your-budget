@@ -37,9 +37,6 @@ class ShowTransactionPage extends StatelessWidget {
         BlocProvider<TransactionSelectorBloc>(
           create: (context) => TransactionSelectorBloc(
             transactionRepository: context.read<TransactionRepository>(),
-            budgetValueRepository: GetIt.instance<IBudgetValueProvider>(),
-            budgetDateCubit: context.read<BudgetDateCubit>(),
-            budgetValueWatcherBloc: context.read<BudgetValueWatcherBloc>(),
           ),
         ),
         BlocProvider<TransactionWatcherBloc>(

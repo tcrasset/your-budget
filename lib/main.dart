@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/budget/category_watcher_bloc/category_watcher_bloc.dart';
+import 'package:your_budget/application/budget/to_be_budgeted_cubit.dart';
 
 // Project imports:
 import 'package:your_budget/application/core/bloc_observer.dart';
@@ -17,8 +18,10 @@ import 'package:your_budget/application/showTransactions/selected_account_cubit/
 import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budget/budget_repository.dart';
+import 'package:your_budget/domain/budget/to_be_budgeted_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
+import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
@@ -76,6 +79,12 @@ class MyBudgetState extends State<MyBudget> {
           ),
         ),
         RepositoryProvider(
+          create: (context) => ToBeBudgetedRepository(
+            subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
+            transactionProvider: GetIt.instance<ITransactionProvider>(),
+          ),
+        ),
+        RepositoryProvider(
           create: (context) => TransactionRepository(
             transactionProvider: GetIt.instance<ITransactionProvider>(),
             budgetValueProvider: GetIt.instance<IBudgetValueProvider>(),
@@ -112,6 +121,12 @@ class MyBudgetState extends State<MyBudget> {
                         ..add(const CategoryWatcherEvent.watchCategoriesStarted()),
                 ),
                 BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
+                BlocProvider<ToBeBudgetedCubit>(
+                  create: (_) => ToBeBudgetedCubit(
+                    initialAmount: Amount.fromDouble(0),
+                    toBeBudgetedRepository: context.read<ToBeBudgetedRepository>(),
+                  )..update(),
+                ),
                 BlocProvider<SelectedAccountCubit>(
                   create: (_) => SelectedAccountCubit(
                     accountRepository: context.read<AccountRepository>(),
