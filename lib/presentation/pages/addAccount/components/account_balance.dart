@@ -61,7 +61,7 @@ class AccountBalance extends HookWidget {
       listenWhen: (p, c) => getBalance(p) != getBalance(c),
       listener: (context, state) {
         _controller
-          ..text = getBalance(state)!
+          ..text = getBalance(state)
           ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
@@ -102,7 +102,7 @@ class AccountBalance extends HookWidget {
   }
 }
 
-String? getBalance(AccountCreatorState state) => state.account.balance.value.fold(
-      (_) => null,
+String getBalance(AccountCreatorState state) => state.account.balance.value.fold(
+      (_) => CurrencyOperations.formatAmount(0.0),
       (v) => CurrencyOperations.formatAmount(v),
     );

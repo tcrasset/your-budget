@@ -112,15 +112,16 @@ class AddAccountForm extends StatelessWidget {
       listener: (context, state) {
         state.saveFailureOrSuccessOption.fold(
           () /*None*/ {},
-          (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
-            (failure) => showErrorSnackbar(failure, context),
-            (_) /*Success*/ => context
+          (failureOrSuccess) /* Some*/ =>
+              failureOrSuccess.fold((failure) => showErrorSnackbar(failure, context), (_) {
+            context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.initialized());
+
+            context
                 .read<AccountWatcherBloc>()
-                .add(const AccountWatcherEvent.watchAccountsStarted()),
-          ),
+                .add(const AccountWatcherEvent.watchAccountsStarted());
+          }),
         );
       },
-      buildWhen: (p, c) => p.isSaving != c.isSaving,
       builder: (context, state) {
         return Form(
           autovalidateMode:

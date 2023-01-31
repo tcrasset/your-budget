@@ -24,7 +24,7 @@ class AccountCreatorBloc extends Bloc<AccountCreatorEvent, AccountCreatorState> 
   AccountCreatorBloc({
     required this.accountRepository,
   }) : super(AccountCreatorState.initial()) {
-    on<_Initialized>((event, emit) => emit(state));
+    on<_Initialized>((event, emit) => emit(AccountCreatorState.initial()));
     on<_NameChanged>(_onNameChanged);
     on<_BalanceChanged>(_onBalanceChanged);
     on<_Saved>(_onSaved);

@@ -47,12 +47,12 @@ class AccountName extends HookWidget {
     final TextEditingController _controller = useTextEditingController();
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
-      listenWhen: (p, c) => getName(p) != getName(c),
+      // listenWhen: (p, c) => getName(p) != getName(c),
       listener: (context, state) {
+        print("state in account_name ${state}");
         _controller
-          ..text = getName(state)!
-          ..selection =
-              TextSelection.collapsed(offset: _controller.text.length);
+          ..text = getName(state)
+          ..selection = TextSelection.collapsed(offset: _controller.text.length);
       },
       builder: (context, state) {
         return Column(
@@ -90,8 +90,8 @@ class AccountName extends HookWidget {
   }
 }
 
-String? getName(AccountCreatorState state) => state.account.name.value.fold(
-      (_) => null,
+String getName(AccountCreatorState state) => state.account.name.value.fold(
+      (_) => "",
       (v) {
         return v;
       },
