@@ -9,7 +9,7 @@ class BudgetEntryGroups {
   Amount get totalBudgeted =>
       entries.fold(Amount.fromDouble(0.0), (budgeted, entry) => budgeted += entry.budgeted);
   Amount get totalAvailable =>
-      entries.fold(Amount.fromDouble(0.0), (available, entry) => available += entry.budgeted);
+      entries.fold(Amount.fromDouble(0.0), (available, entry) => available += entry.available);
 
   BudgetEntryGroups({required this.category, required this.entries});
 }
