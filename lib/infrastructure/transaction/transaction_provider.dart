@@ -119,7 +119,6 @@ class SQFliteTransactionProvider implements ITransactionProvider {
           ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
           ${DatabaseConstants.MONEYTRANSACTION_MEMO},
           ${DatabaseConstants.MONEYTRANSACTION_DATE},
-          ${DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION},
           ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_NAME},
           ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_BALANCE},
           ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_NAME},

@@ -78,7 +78,7 @@ class AccountRepository {
               amount: balance,
               memo: Name("Starting balance"),
               date: DateTime.now(),
-              isInitialTransaction: true,
+              type: MoneyTransactionType.initial,
             );
 
             return transactionProvider.create(transaction);

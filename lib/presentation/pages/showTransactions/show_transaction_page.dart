@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
@@ -265,7 +264,7 @@ class CheckboxTransactionListTile extends StatelessWidget {
       value: isSelected,
       dense: true,
       selected: isSelected,
-      enabled: !transaction.isInitialTransaction,
+      enabled: transaction.type != MoneyTransactionType.initial,
       controlAffinity: ListTileControlAffinity.leading,
       title: TransactionListTileTitle(transaction: transaction),
       subtitle: TransactionListTileSubtitle(transaction: transaction),

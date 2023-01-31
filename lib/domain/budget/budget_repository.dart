@@ -121,17 +121,4 @@ class BudgetRepository {
           },
         ),
       );
-
-  Either<ValueFailure<dynamic>, List<T>> _getValueFromStream<T>(
-      Stream<Either<ValueFailure<dynamic>, List<T>>> stream) {
-    Option<Either<ValueFailure<dynamic>, List<T>>> subscription = stream.listen(
-      (data) => some(data),
-      onError: (_) => none(),
-    ) as Option<Either<ValueFailure<dynamic>, List<T>>>;
-
-    return subscription.fold(
-      () => left(ValueFailure.unexpected(message: "Could not listen to stream of $T.")),
-      (a) => a,
-    );
-  }
 }

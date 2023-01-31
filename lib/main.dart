@@ -6,8 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:your_budget/application/budget/budgetvalue_watcher_bloc/budgetvalue_watcher_bloc.dart';
-import 'package:your_budget/application/budget/category_watcher_bloc/category_watcher_bloc.dart';
 import 'package:your_budget/application/budget/to_be_budgeted_cubit.dart';
 
 // Project imports:
@@ -21,6 +19,7 @@ import 'package:your_budget/domain/budget/budget_repository.dart';
 import 'package:your_budget/domain/budget/to_be_budgeted_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
+import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
@@ -82,12 +81,14 @@ class MyBudgetState extends State<MyBudget> {
           create: (context) => ToBeBudgetedRepository(
             subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
             transactionProvider: GetIt.instance<ITransactionProvider>(),
+            constantsProvider: GetIt.instance<IConstantsProvider>(),
           ),
         ),
         RepositoryProvider(
           create: (context) => TransactionRepository(
             transactionProvider: GetIt.instance<ITransactionProvider>(),
             budgetValueProvider: GetIt.instance<IBudgetValueProvider>(),
+            constantsProvider: GetIt.instance<IConstantsProvider>(),
           ),
         ),
         RepositoryProvider(

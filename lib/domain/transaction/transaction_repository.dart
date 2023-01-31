@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
+import 'package:your_budget/domain/category/i_category_provider.dart';
+import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
@@ -12,8 +14,12 @@ import 'package:your_budget/models/utils.dart';
 class TransactionRepository {
   final ITransactionProvider transactionProvider;
   final IBudgetValueProvider budgetValueProvider;
-
-  TransactionRepository({required this.transactionProvider, required this.budgetValueProvider});
+  final IConstantsProvider constantsProvider;
+  TransactionRepository({
+    required this.transactionProvider,
+    required this.budgetValueProvider,
+    required this.constantsProvider,
+  });
 
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> _transactions(UniqueId accountId) =>
       transactionProvider.watchAccountTransactions(accountId);
@@ -39,23 +45,16 @@ class TransactionRepository {
 
       List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
 
-      // Update the budgeted value of the current budget value
-      int currentIndex = budgetvalues.indexWhere((element) =>
-          getDateFromMonthStart(element.date) == getDateFromMonthStart(transaction.date));
-      final updated = budgetvalues[currentIndex]
-          .copyWith(budgeted: budgetvalues[currentIndex].budgeted + transaction.amount);
-      budgetvalues[currentIndex] = updated;
-      budgetValueProvider.update(updated);
-
       // Remove the transaction amount to each budget value's available field
       // TODO: return error values if one fails using functional programming
       final toUpdate = budgetvalues
           .where(
             (element) =>
                 isMonthBetweenInclusive(
-                    query: element.date,
-                    lowerBound: transaction.date,
-                    upperBound: getMaxBudgetDate()) &&
+                  query: element.date,
+                  lowerBound: transaction.date,
+                  upperBound: getMaxBudgetDate(),
+                ) &&
                 element.subcategoryId == transaction.subcategory.id,
           )
           .map((value) => value.copyWith(available: value.available + transaction.amount))
@@ -103,5 +102,16 @@ class TransactionRepository {
 
       return failureOrUnit.fold((l) => left(l), (_) => right(unit));
     });
+  }
+
+  Future<Either<ValueFailure<dynamic>, Amount>> _getToBeBudgeted() async {
+    return (await constantsProvider.getToBeBudgeted()).flatMap((a) => right(Amount.fromDouble(a)));
+  }
+
+  Future<Either<ValueFailure, Unit>> _setToBeBudgeted(Amount toBeBudgeted) async {
+    return toBeBudgeted.value.fold(
+      (l) => left(l),
+      (r) async => (await constantsProvider.setToBeBudgeted(r)).flatMap((a) => right(unit)),
+    );
   }
 }

@@ -33,6 +33,24 @@ class SQFliteConstantsProvider implements IConstantsProvider {
   }
 
   @override
+  Future<Either<ValueFailure, double>> getToBeBudgeted() async {
+    final failureOrData = await _get(DatabaseConstants.TO_BE_BUDGETED);
+
+    return failureOrData.fold(
+      (l) => left(l),
+      (r) => optionOf(double.tryParse(r)).fold(
+        () => left(const ValueFailure.unexpected(message: "Could not load to be budgeted")),
+        (a) => right(a),
+      ),
+    );
+  }
+
+  @override
+  Future<Either<ValueFailure, Unit>> setToBeBudgeted(double toBeBudgeted) async {
+    return _update(DatabaseConstants.TO_BE_BUDGETED, toBeBudgeted.toStringAsPrecision(2));
+  }
+
+  @override
   Future<Either<ValueFailure, Unit>> setMaxBudgetDate(DateTime newMaxBudgetDate) async {
     final failureOrUnit = await _update(
       DatabaseConstants.MAX_BUDGET_DATE,
@@ -60,7 +78,8 @@ class SQFliteConstantsProvider implements IConstantsProvider {
 
     if (updateCount != 1) {
       return left(
-          ValueFailure.unexpected(message: "Could not update constant $name with value $value"));
+        ValueFailure.unexpected(message: "Could not update constant $name with value $value"),
+      );
     }
 
     return right(unit);
@@ -102,7 +121,8 @@ class SQFliteConstantsProvider implements IConstantsProvider {
 
     if (result == 0) {
       return left(
-          ValueFailure.unexpected(message: "Could not create constant $name with value $value"));
+        ValueFailure.unexpected(message: "Could not create constant $name with value $value"),
+      );
     }
 
     return right(unit);

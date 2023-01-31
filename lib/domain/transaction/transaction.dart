@@ -10,8 +10,24 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
 
 part 'transaction.freezed.dart';
+
+enum MoneyTransactionType {
+  initial("initial"),
+  subcategory("subcategory"),
+  betweenAccount("betweenAccount"),
+  toBeBudgeted("toBeBudgeted");
+
+  const MoneyTransactionType(this.value);
+
+  factory MoneyTransactionType.fromValue(String value) {
+    return values.firstWhere((e) => e.value == value);
+  }
+
+  final String value;
+}
 
 /// Class that defines a MoneyTransaction between the user and another entity.
 /// The [amount] is transfered between the user and the entity specified by [payeeID] at the given
@@ -28,7 +44,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
     required Amount amount,
     required Name memo,
     required DateTime date,
-    @Default(false) bool isInitialTransaction,
+    required MoneyTransactionType type,
   }) = _MoneyTransaction;
 
   const MoneyTransaction._();
@@ -45,7 +61,7 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
         memo: Name(""),
         amount: Amount(""),
         date: DateTime.now(),
-        isInitialTransaction: false,
+        type: MoneyTransactionType.subcategory,
       );
 
   Option<ValueFailure<dynamic>> get failureOption {

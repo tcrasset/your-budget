@@ -23,7 +23,7 @@ mixin _$MoneyTransaction {
   Amount get amount => throw _privateConstructorUsedError;
   Name get memo => throw _privateConstructorUsedError;
   DateTime get date => throw _privateConstructorUsedError;
-  bool get isInitialTransaction => throw _privateConstructorUsedError;
+  MoneyTransactionType get type => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MoneyTransactionCopyWith<MoneyTransaction> get copyWith =>
@@ -43,7 +43,7 @@ abstract class $MoneyTransactionCopyWith<$Res> {
       Amount amount,
       Name memo,
       DateTime date,
-      bool isInitialTransaction});
+      MoneyTransactionType type});
 
   $SubcategoryCopyWith<$Res> get subcategory;
   $PayeeCopyWith<$Res> get payee;
@@ -68,7 +68,7 @@ class _$MoneyTransactionCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? memo = freezed,
     Object? date = freezed,
-    Object? isInitialTransaction = freezed,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -99,10 +99,10 @@ class _$MoneyTransactionCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      isInitialTransaction: isInitialTransaction == freezed
-          ? _value.isInitialTransaction
-          : isInitialTransaction // ignore: cast_nullable_to_non_nullable
-              as bool,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MoneyTransactionType,
     ));
   }
 
@@ -143,7 +143,7 @@ abstract class _$$_MoneyTransactionCopyWith<$Res>
       Amount amount,
       Name memo,
       DateTime date,
-      bool isInitialTransaction});
+      MoneyTransactionType type});
 
   @override
   $SubcategoryCopyWith<$Res> get subcategory;
@@ -173,7 +173,7 @@ class __$$_MoneyTransactionCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? memo = freezed,
     Object? date = freezed,
-    Object? isInitialTransaction = freezed,
+    Object? type = freezed,
   }) {
     return _then(_$_MoneyTransaction(
       id: id == freezed
@@ -204,10 +204,10 @@ class __$$_MoneyTransactionCopyWithImpl<$Res>
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      isInitialTransaction: isInitialTransaction == freezed
-          ? _value.isInitialTransaction
-          : isInitialTransaction // ignore: cast_nullable_to_non_nullable
-              as bool,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as MoneyTransactionType,
     ));
   }
 }
@@ -223,7 +223,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       required this.amount,
       required this.memo,
       required this.date,
-      this.isInitialTransaction = false})
+      required this.type})
       : super._();
 
   @override
@@ -241,12 +241,11 @@ class _$_MoneyTransaction extends _MoneyTransaction {
   @override
   final DateTime date;
   @override
-  @JsonKey()
-  final bool isInitialTransaction;
+  final MoneyTransactionType type;
 
   @override
   String toString() {
-    return 'MoneyTransaction(id: $id, subcategory: $subcategory, payee: $payee, account: $account, amount: $amount, memo: $memo, date: $date, isInitialTransaction: $isInitialTransaction)';
+    return 'MoneyTransaction(id: $id, subcategory: $subcategory, payee: $payee, account: $account, amount: $amount, memo: $memo, date: $date, type: $type)';
   }
 
   @override
@@ -262,8 +261,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
             const DeepCollectionEquality().equals(other.amount, amount) &&
             const DeepCollectionEquality().equals(other.memo, memo) &&
             const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality()
-                .equals(other.isInitialTransaction, isInitialTransaction));
+            const DeepCollectionEquality().equals(other.type, type));
   }
 
   @override
@@ -276,7 +274,7 @@ class _$_MoneyTransaction extends _MoneyTransaction {
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(memo),
       const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(isInitialTransaction));
+      const DeepCollectionEquality().hash(type));
 
   @JsonKey(ignore: true)
   @override
@@ -293,7 +291,7 @@ abstract class _MoneyTransaction extends MoneyTransaction {
       required final Amount amount,
       required final Name memo,
       required final DateTime date,
-      final bool isInitialTransaction}) = _$_MoneyTransaction;
+      required final MoneyTransactionType type}) = _$_MoneyTransaction;
   const _MoneyTransaction._() : super._();
 
   @override
@@ -311,7 +309,7 @@ abstract class _MoneyTransaction extends MoneyTransaction {
   @override
   DateTime get date;
   @override
-  bool get isInitialTransaction;
+  MoneyTransactionType get type;
   @override
   @JsonKey(ignore: true)
   _$$_MoneyTransactionCopyWith<_$_MoneyTransaction> get copyWith =>

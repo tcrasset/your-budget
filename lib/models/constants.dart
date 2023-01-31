@@ -72,8 +72,8 @@ class DatabaseConstants {
   static const String MONEYTRANSACTION_ID = 'id';
   static const String MONEYTRANSACTION_AMOUNT = 'amount';
   static const String MONEYTRANSACTION_MEMO = 'memo';
-  static const String MONEYTRANSACTION_IS_INITIAL_TRANSACTION = 'isInitialTransaction';
   static const String MONEYTRANSACTION_DATE = 'dateInMillisecondsSinceEpoch';
+  static const String MONEYTRANSACTION_TYPE = "type";
 
   /// Field names of the [budgetValueTable]
   static const BUDGET_VALUE_ID = 'id';

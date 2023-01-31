@@ -12,7 +12,7 @@ _$_TransactionDTO _$$_TransactionDTOFromJson(Map<String, dynamic> json) =>
       amount: (json['amount'] as num).toDouble(),
       memo: json['memo'] as String,
       dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
-      isInitialTransaction: json['isInitialTransaction'] as int,
+      type: json['type'] as String,
       subcatID: json['subcatID'] as String,
       subcatName: json['subcategoryName'] as String,
       subcatCategoryId: json['categoryID'] as String,
@@ -36,7 +36,7 @@ Map<String, dynamic> _$$_TransactionDTOToJson(_$_TransactionDTO instance) {
   val['amount'] = instance.amount;
   val['memo'] = instance.memo;
   val['dateInMillisecondsSinceEpoch'] = instance.dateInMillisecondsSinceEpoch;
-  val['isInitialTransaction'] = instance.isInitialTransaction;
+  val['type'] = instance.type;
   val['subcatID'] = instance.subcatID;
   writeNotNull('subcategoryName', ignore(instance.subcatName));
   writeNotNull('categoryID', ignore(instance.subcatCategoryId));

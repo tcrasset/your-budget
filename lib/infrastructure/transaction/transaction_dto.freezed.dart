@@ -32,8 +32,8 @@ mixin _$MoneyTransactionDTO {
   String get memo => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
   int get dateInMillisecondsSinceEpoch => throw _privateConstructorUsedError;
-  @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-  int get isInitialTransaction => throw _privateConstructorUsedError;
+  @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+  String get type => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   String get subcatID => throw _privateConstructorUsedError;
   @JsonKey(
@@ -82,8 +82,8 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
           String memo,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           int dateInMillisecondsSinceEpoch,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          int isInitialTransaction,
+      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+          String type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -117,7 +117,7 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? memo = freezed,
     Object? dateInMillisecondsSinceEpoch = freezed,
-    Object? isInitialTransaction = freezed,
+    Object? type = freezed,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
     Object? subcatCategoryId = freezed,
@@ -144,10 +144,10 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
           ? _value.dateInMillisecondsSinceEpoch
           : dateInMillisecondsSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int,
-      isInitialTransaction: isInitialTransaction == freezed
-          ? _value.isInitialTransaction
-          : isInitialTransaction // ignore: cast_nullable_to_non_nullable
-              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
@@ -200,8 +200,8 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
           String memo,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           int dateInMillisecondsSinceEpoch,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          int isInitialTransaction,
+      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+          String type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -237,7 +237,7 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
     Object? amount = freezed,
     Object? memo = freezed,
     Object? dateInMillisecondsSinceEpoch = freezed,
-    Object? isInitialTransaction = freezed,
+    Object? type = freezed,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
     Object? subcatCategoryId = freezed,
@@ -264,10 +264,10 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
           ? _value.dateInMillisecondsSinceEpoch
           : dateInMillisecondsSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int,
-      isInitialTransaction: isInitialTransaction == freezed
-          ? _value.isInitialTransaction
-          : isInitialTransaction // ignore: cast_nullable_to_non_nullable
-              as int,
+      type: type == freezed
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
@@ -316,8 +316,8 @@ class _$_TransactionDTO extends _TransactionDTO {
           required this.memo,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           required this.dateInMillisecondsSinceEpoch,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          required this.isInitialTransaction,
+      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+          required this.type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           required this.subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -356,8 +356,8 @@ class _$_TransactionDTO extends _TransactionDTO {
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
   final int dateInMillisecondsSinceEpoch;
   @override
-  @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-  final int isInitialTransaction;
+  @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+  final String type;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   final String subcatID;
@@ -396,7 +396,7 @@ class _$_TransactionDTO extends _TransactionDTO {
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch, isInitialTransaction: $isInitialTransaction, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance)';
+    return 'MoneyTransactionDTO(id: $id, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch, type: $type, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance)';
   }
 
   @override
@@ -410,8 +410,7 @@ class _$_TransactionDTO extends _TransactionDTO {
             const DeepCollectionEquality().equals(
                 other.dateInMillisecondsSinceEpoch,
                 dateInMillisecondsSinceEpoch) &&
-            const DeepCollectionEquality()
-                .equals(other.isInitialTransaction, isInitialTransaction) &&
+            const DeepCollectionEquality().equals(other.type, type) &&
             const DeepCollectionEquality().equals(other.subcatID, subcatID) &&
             const DeepCollectionEquality()
                 .equals(other.subcatName, subcatName) &&
@@ -434,7 +433,7 @@ class _$_TransactionDTO extends _TransactionDTO {
       const DeepCollectionEquality().hash(amount),
       const DeepCollectionEquality().hash(memo),
       const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch),
-      const DeepCollectionEquality().hash(isInitialTransaction),
+      const DeepCollectionEquality().hash(type),
       const DeepCollectionEquality().hash(subcatID),
       const DeepCollectionEquality().hash(subcatName),
       const DeepCollectionEquality().hash(subcatCategoryId),
@@ -467,8 +466,8 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
           required final String memo,
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
           required final int dateInMillisecondsSinceEpoch,
-      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-          required final int isInitialTransaction,
+      @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+          required final String type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           required final String subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
@@ -507,8 +506,8 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_DATE)
   int get dateInMillisecondsSinceEpoch;
   @override
-  @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_IS_INITIAL_TRANSACTION)
-  int get isInitialTransaction;
+  @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
+  String get type;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   String get subcatID;
