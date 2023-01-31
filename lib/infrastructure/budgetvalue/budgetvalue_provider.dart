@@ -63,6 +63,42 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
 
   //TODO: Add updateAll so that there are less re-renders on the page
   @override
+  Future<Either<ValueFailure, Unit>> updateAll(List<BudgetValue> toUpdate) async {
+    try {
+      final bvMap = {for (var item in toUpdate) item.id: BudgetValueDTO.fromDomain(item).toJson()};
+
+      int totalUpdated = 0;
+      for (final entry in bvMap.entries) {
+        final int result = await database!.update(
+          DatabaseConstants.budgetValueTable,
+          entry.value,
+          where: '${DatabaseConstants.BUDGET_VALUE_ID} = ?',
+          whereArgs: [entry.key.getOrCrash()],
+        );
+        totalUpdated = totalUpdated + result;
+      }
+
+      if (totalUpdated != toUpdate.length) {
+        return left(const ValueFailure.unexpected(message: "Not all budgetdvalues where updated."));
+      }
+
+      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+      final indices = toUpdate
+          .map((value) => budgetvalues.indexWhere((stored) => stored.id == value.id))
+          .toList();
+
+      indices.asMap().forEach((currentIndex, savingIndex) {
+        budgetvalues[savingIndex] = toUpdate[currentIndex];
+      });
+
+      _budgetvalueStreamController.add(Right(budgetvalues));
+      return right(unit);
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+  }
+
+  @override
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
     try {
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);

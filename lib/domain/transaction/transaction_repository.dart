@@ -49,7 +49,7 @@ class TransactionRepository {
 
       // Remove the transaction amount to each budget value's available field
       // TODO: return error values if one fails using functional programming
-      budgetvalues
+      final toUpdate = budgetvalues
           .where(
             (element) =>
                 isMonthBetweenInclusive(
@@ -59,9 +59,14 @@ class TransactionRepository {
                 element.subcategoryId == transaction.subcategory.id,
           )
           .map((value) => value.copyWith(available: value.available + transaction.amount))
-          .forEach((element) async => budgetValueProvider.update(element));
+          .toList();
 
-      return right(unit);
+      final failureOrUnit = await budgetValueProvider.updateAll(toUpdate);
+
+      return failureOrUnit.fold(
+        (l) => left(failureOrUnit as ValueFailure),
+        (r) => right(unit),
+      );
     });
   }
 
@@ -82,7 +87,7 @@ class TransactionRepository {
 
       // Add transaction amount to each budget value's available field
       // TODO: return error values if one fails using functional programming
-      budgetvalues
+      final toUpdate = budgetvalues
           .where(
             (element) =>
                 isMonthBetweenInclusive(
@@ -92,9 +97,11 @@ class TransactionRepository {
                 element.subcategoryId == transaction.subcategory.id,
           )
           .map((value) => value.copyWith(available: value.available - transaction.amount))
-          .forEach((element) async => budgetValueProvider.update(element));
+          .toList();
 
-      return right(unit);
+      final failureOrUnit = await budgetValueProvider.updateAll(toUpdate);
+
+      return failureOrUnit.fold((l) => left(l), (_) => right(unit));
     });
   }
 }

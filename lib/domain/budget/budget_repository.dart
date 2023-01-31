@@ -61,7 +61,7 @@ class BudgetRepository {
     List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
     // TODO: return error values if one fails using functional programming
 
-    budgetvalues
+    final toUpdate = budgetvalues
         .where(
           (element) =>
               isMonthBetweenInclusive(
@@ -72,9 +72,14 @@ class BudgetRepository {
               element.subcategoryId == value.subcategoryId,
         )
         .map((value) => value.copyWith(available: value.available + difference))
-        .forEach((element) async => budgetvalueProvider.update(element));
+        .toList();
 
-    return right(unit);
+    final failureOrUnit = await budgetvalueProvider.updateAll(toUpdate);
+
+    return failureOrUnit.fold(
+      (l) => left(l),
+      (_) => right(unit),
+    );
   }
 
   Stream<Either<ValueFailure<dynamic>, Budget>> getBudgetByDate(int year, int month) =>
