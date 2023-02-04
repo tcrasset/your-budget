@@ -66,43 +66,43 @@ class AccountRepository {
       (l) => left(l),
       (account) => failureOrPayee.fold(
         (l) => left(l),
-        (payee) => failureOrPayee.fold(
-          (l) => left(l),
-          (payee) async {
-            final MoneyTransaction transaction = MoneyTransaction(
-              id: UniqueId(),
-              subcategory: null,
-              giver: left(payee),
-              receiver: right(account),
-              amount: balance,
-              memo: Name("Starting balance"),
-              date: DateTime.now(),
-              type: MoneyTransactionType.initial,
-            );
+        (payee) async {
+          final MoneyTransaction transaction = MoneyTransaction(
+            id: UniqueId(),
+            subcategory: null,
+            giver: left(payee),
+            receiver: right(account),
+            amount: balance,
+            memo: Name("Starting balance"),
+            date: DateTime.now(),
+            type: MoneyTransactionType.initial,
+          );
 
-            final Either<ValueFailure, Unit> failureOrSuccess =
-                await transactionProvider.create(transaction);
+          final Either<ValueFailure, Unit> failureOrSuccess =
+              await transactionProvider.create(transaction);
 
-            return failureOrSuccess.fold((l) => left(l), (_) async {
-              final tobeBudgeted = accountProvider.getToBeBudgeted();
-              // Most transactions do not update the budget values
+          return failureOrSuccess.fold((l) => left(l), (_) async {
+            final tobeBudgeted = accountProvider.getToBeBudgeted();
+            // Most transactions do not update the budget values
 
-              return await tobeBudgeted.fold(
-                (l) => left(l),
-                (account) async => (await transactionProvider.create(
-                  transaction.copyWith(
-                    receiver: right(account),
-                    type: MoneyTransactionType.toBeBudgeted,
-                  ),
-                ))
-                    .fold(
-                  (l) => left(l),
-                  (r) => right(unit),
+            return await tobeBudgeted.fold(
+              (l) => left(l),
+              (account) async => (await transactionProvider.create(
+                transaction.copyWith(
+                  receiver: right(account),
+                  type: MoneyTransactionType.toBeBudgeted,
                 ),
-              );
-            });
-          },
-        ),
+              ))
+                  .fold(
+                (l) => left(l),
+                (r) {
+                  accountProvider.update(account.copyWith(balance: account.balance + balance));
+                  return right(unit);
+                },
+              ),
+            );
+          });
+        },
       ),
     );
   }

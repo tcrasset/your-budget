@@ -128,4 +128,41 @@ class SQFliteAccountProvider implements IAccountProvider {
       return left(const ValueFailure.unexpected(message: "Account not in current stream."));
     }
   }
+
+  @override
+  Future<Either<ValueFailure, Unit>> update(Account account) async {
+    {
+      final AccountDTO accountDTO = AccountDTO.fromDomain(account);
+      String id = accountDTO.id;
+      final Map<String, dynamic> values = accountDTO.toJson();
+      values.remove("id");
+
+      late int result;
+      try {
+        result = await database!.update(
+          DatabaseConstants.accountTable,
+          values,
+          where: '${DatabaseConstants.ACCOUNT_ID} = ?',
+          whereArgs: [id],
+        );
+      } on DatabaseException catch (e) {
+        return left(ValueFailure.unexpected(message: e.toString()));
+      }
+
+      if (result == 0) {
+        return left(
+            ValueFailure.unexpected(message: "Account with id $id not found. Could not update."));
+      }
+
+      final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
+      final index = accounts.indexWhere((t) => t.id == account.id);
+      if (index >= 0) {
+        accounts[index] = account;
+        _accountStreamController.add(Right(accounts));
+        return right(unit);
+      }
+
+      return left(const ValueFailure.unexpected(message: "Account not in current stream."));
+    }
+  }
 }

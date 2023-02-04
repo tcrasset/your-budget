@@ -1,17 +1,13 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
-import 'package:your_budget/domain/category/i_category_provider.dart';
-import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
-import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/utils.dart';
 
 class TransactionRepository {
@@ -34,24 +30,13 @@ class TransactionRepository {
 
   Future<Either<ValueFailure, Unit>> createTransaction(MoneyTransaction transaction) async {
     // TODO: Implement SQL transactions and rollback on error
+
+    if (transaction.type == MoneyTransactionType.initial) {
+      throw Exception("Initial transactions are only created in AccountRepository.");
+    }
     Either<ValueFailure, Unit> failureOrSuccess = await transactionProvider.create(transaction);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
-      // Most transactions do not update the budget values
-      if (transaction.type == MoneyTransactionType.initial) {
-        final tobeBudgeted = accountProvider.getToBeBudgeted();
-
-        return await tobeBudgeted.fold(
-          (l) => left(l),
-          (account) async =>
-              (await transactionProvider.create(transaction.copyWith(receiver: right(account))))
-                  .fold(
-            (l) => left(l),
-            (r) => right(unit),
-          ),
-        );
-      }
-
       if (transaction.type == MoneyTransactionType.betweenAccount ||
           transaction.type == MoneyTransactionType.toBeBudgeted) {
         return right(unit);
@@ -66,27 +51,12 @@ class TransactionRepository {
   }
 
   Future<Either<ValueFailure, Unit>> deleteTransaction(MoneyTransaction transaction) async {
+    if (transaction.type == MoneyTransactionType.initial) {
+      throw Exception("Initial transactions are only deleted in AccountRepository.");
+    }
     Either<ValueFailure, Unit>? failureOrSuccess = await transactionProvider.delete(transaction.id);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
-      if (transaction.type == MoneyTransactionType.initial) {
-        // Even though the user is not supposed to be able to call this function
-        // directly through the transactions page, he can delete accounts
-        // which will indirectly call this.
-        // Delete the TBB transaction that was added alongside the transaction to the account
-        final tobeBudgetedAccount = accountProvider.getToBeBudgeted();
-        accountProvider
-            .getToBeBudgeted()
-            .flatMap((a) => transactionProvider.getAccountTransactions(a.id))
-            .fold((l) => left(l), (tobeBudgetedTransactions) async {
-          final tbbtransaction =
-              tobeBudgetedTransactions.firstWhere((t) => t.date == transaction.date);
-          return (await transactionProvider.delete(tbbtransaction.id)).fold(
-            (l) => left(l),
-            (r) => right(unit),
-          );
-        });
-      }
       // Most transactions do not update the budget values
       if (transaction.type == MoneyTransactionType.betweenAccount ||
           transaction.type == MoneyTransactionType.toBeBudgeted) {

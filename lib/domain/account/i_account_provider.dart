@@ -12,6 +12,7 @@ abstract class IAccountProvider {
   Future<Either<ValueFailure, String>> create(Account account);
   // Future<Either<ValueFailure, Unit>> update(NewAccount account);
   Future<Either<ValueFailure, Unit>> delete(UniqueId id);
+  Future<Either<ValueFailure, Unit>> update(Account account);
   Either<ValueFailure, Account> get(UniqueId id);
   Either<ValueFailure, Account> getToBeBudgeted();
   Future<Either<ValueFailure, List<Account>>> getAllAccounts();
