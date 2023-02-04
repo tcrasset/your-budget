@@ -234,8 +234,12 @@ class TransactionListTileTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(child: Text(transaction.memo.getOrCrash())),
-        Expanded(child: Text(transaction.payee.name.getOrCrash())),
-        Expanded(child: Text(transaction.subcategory.name.getOrCrash())),
+        Expanded(child: Text(transaction.giverName.getOrCrash())),
+        Expanded(
+          child: transaction.subcategory == null
+              ? Text(transaction.receiverName.getOrCrash())
+              : Text(transaction.subcategory!.name.getOrCrash()),
+        )
       ],
     );
   }

@@ -12,11 +12,12 @@ import 'package:your_budget/application/core/account_watcher_bloc/account_watche
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 
-class AccountField extends StatelessWidget {
-  const AccountField({
+class GiverField extends StatelessWidget {
+  const GiverField({
     Key? key,
   }) : super(key: key);
 
@@ -34,20 +35,28 @@ class AccountField extends StatelessWidget {
     }
   }
 
-  String? validateAccount(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.account.name.value.fold(
-            (f) => f.maybeMap(emptyName: (_) => "Please select an Account", orElse: () => null),
-            (_) => null,
+  String? validateGiver(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.giver.fold(
+            (l) /* Payee */ => "Transaction should have an Account as a Giver, not a Payee.",
+            (r) /* Account */ => r.name.value.fold(
+              (f) => f.maybeMap(
+                emptyName: (_) => "Please select an Account",
+                orElse: () => null,
+              ),
+              (_) => null,
+            ),
           );
 
-  String getAccountName(BuildContext context) => context
-      .watch<TransactionCreatorBloc>()
-      .state
-      .moneyTransaction
-      .account
-      .name
-      .value
-      .fold((_) => _DEFAULT_ACCOUNT, (v) => v);
+  String getGiverName(BuildContext context) =>
+      //TODO: Handle errors
+
+      context.watch<TransactionCreatorBloc>().state.moneyTransaction.giver.fold(
+            (l) => "",
+            (r) => r.name.value.fold(
+              (_) => _DEFAULT_ACCOUNT,
+              (v) => v,
+            ),
+          );
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
@@ -59,9 +68,9 @@ class AccountField extends StatelessWidget {
         child: AddTransactionField(
           name: "Account",
           defaultValue: _DEFAULT_ACCOUNT,
-          nameGetter: getAccountName,
+          nameGetter: getGiverName,
           onTap: handleOnTap,
-          validator: validateAccount,
+          validator: validateGiver,
         ),
       );
 }

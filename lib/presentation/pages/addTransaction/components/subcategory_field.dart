@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -34,19 +35,23 @@ class SubcategoryField extends StatelessWidget {
   }
 
   String? validateSubcategory(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.subcategory.name.value.fold(
-            (f) => f.maybeMap(emptyName: (_) => "Please select a Subcategory", orElse: () => null),
-            (_) => null,
-          );
+      optionOf(context.read<TransactionCreatorBloc>().state.moneyTransaction.subcategory).fold(
+        () => null,
+        (subcategory) => subcategory.name.value.fold(
+          (f) => f.maybeMap(emptyName: (_) => "Please select a Subcategory", orElse: () => null),
+          (_) => null,
+        ),
+      );
 
-  String getSubcategoryName(BuildContext context) => context
-      .watch<TransactionCreatorBloc>() // watch is necessary here
-      .state
-      .moneyTransaction
-      .subcategory
-      .name
-      .value
-      .fold((_) => _DEFAULT_SUBCATEGORY, (v) => v);
+  String getSubcategoryName(BuildContext context) => optionOf(context
+              .watch<TransactionCreatorBloc>() // watch is necessary here
+              .state
+              .moneyTransaction
+              .subcategory)
+          .fold(
+        () => throw Exception("Expected Subcategory, got none() instead."),
+        (subcategory) => subcategory.name.value.fold((_) => _DEFAULT_SUBCATEGORY, (v) => v),
+      );
 
   @override
   Widget build(BuildContext context) => AddTransactionField(

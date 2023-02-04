@@ -205,7 +205,7 @@ class DatabaseProvider {
     INSERT INTO ${DatabaseConstants.payeeTable}
       (${DatabaseConstants.PAYEE_NAME})
       VALUES(?);''';
-    return db.rawInsert(CREATE_PAYEE, ["Starting balance"]);
+    return db.rawInsert(CREATE_PAYEE, [DatabaseConstants.STARTING_BALANCE_PAYEE_NAME]);
   }
 
   Future<List<int>> _populateSubcategories(Database db, int categoryId) async {

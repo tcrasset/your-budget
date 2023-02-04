@@ -53,7 +53,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
 
   void _onAccountChanged(_AccountChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
-      moneyTransaction: state.moneyTransaction.copyWith(account: event.account),
+      moneyTransaction: state.moneyTransaction.copyWith(giver: right(event.account)),
       saveFailureOrSuccessOption: none(),
     );
     emit(newState);
@@ -61,7 +61,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
 
   void _onPayeeChanged(_PayeeChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
-      moneyTransaction: state.moneyTransaction.copyWith(payee: event.payee),
+      moneyTransaction: state.moneyTransaction.copyWith(receiver: left(event.payee)),
       saveFailureOrSuccessOption: none(),
     );
     emit(newState);

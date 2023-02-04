@@ -1,4 +1,7 @@
 // Flutter imports:
+// ignore_for_file: invalid_annotation_target
+
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -39,63 +42,162 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
     @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
         required String type,
     @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-        required String subcatID,
+        required String? subcatID, // optional because most transactions do not have subcategory
     @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-        required String subcatName,
+        required String? subcatName, // optional because most transactions do not have subcategory
     @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
-        required String subcatCategoryId,
-    @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-        required String payeeID,
-    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-        required String payeeName,
-    @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-        required String accountID,
-    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-        required String accountName,
-    @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-        required double accountBalance,
+        required String? subcatCategoryId, // optional because most transactions do not have subcat
+    @JsonKey(toJson: ignore, includeIfNull: false)
+        required String receiverName,
+    @JsonKey(toJson: ignore, includeIfNull: false)
+        required double? receiverBalance, // optional because payee does not have balance
+    required String receiverId,
+    @JsonKey(toJson: ignore, includeIfNull: false)
+        required String giverName,
+    @JsonKey(toJson: ignore, includeIfNull: false)
+        required double? giverBalance, // optional because payee does not have balance
+    required String giverId,
   }) = _TransactionDTO;
 
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {
-    return MoneyTransactionDTO(
-      id: transaction.id.getOrCrash(),
-      amount: transaction.amount.getOrCrash(),
-      memo: transaction.memo.getOrCrash(),
-      type: transaction.type.value,
-      dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
-      subcatID: transaction.subcategory.id.getOrCrash(),
-      subcatName: transaction.subcategory.name.getOrCrash(),
-      subcatCategoryId: transaction.subcategory.categoryID.getOrCrash(),
-      payeeID: transaction.payee.id.getOrCrash(),
-      payeeName: transaction.payee.name.getOrCrash(),
-      accountID: transaction.account.id.getOrCrash(),
-      accountName: transaction.account.name.getOrCrash(),
-      accountBalance: transaction.account.balance.getOrCrash(),
-    );
+    switch (transaction.type) {
+      case MoneyTransactionType.toBeBudgeted:
+      // fall through to initial
+      case MoneyTransactionType.initial:
+        return MoneyTransactionDTO(
+          id: transaction.id.getOrCrash(),
+          amount: transaction.amount.getOrCrash(),
+          memo: transaction.memo.getOrCrash(),
+          type: transaction.type.value,
+          dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
+          subcatID: null,
+          subcatName: null,
+          subcatCategoryId: null,
+          receiverId: transaction.receiverId.getOrCrash(),
+          receiverName: transaction.receiverName.getOrCrash(),
+          receiverBalance:
+              transaction.receiverBalance.fold(() => throw Exception, (a) => a.getOrCrash()),
+          giverId: transaction.giverId.getOrCrash(),
+          giverName: transaction.giverName.getOrCrash(),
+          giverBalance: null,
+        );
+      case MoneyTransactionType.subcategory:
+        return MoneyTransactionDTO(
+          id: transaction.id.getOrCrash(),
+          amount: transaction.amount.getOrCrash(),
+          memo: transaction.memo.getOrCrash(),
+          type: transaction.type.value,
+          dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
+          subcatID: transaction.subcategory!.id.getOrCrash(),
+          subcatName: transaction.subcategory!.name.getOrCrash(),
+          subcatCategoryId: transaction.subcategory!.categoryID.getOrCrash(),
+          receiverId: transaction.receiverId.getOrCrash(),
+          receiverName: transaction.receiverName.getOrCrash(),
+          receiverBalance: null,
+          giverId: transaction.giverId.getOrCrash(),
+          giverName: transaction.giverName.getOrCrash(),
+          giverBalance: transaction.giverBalance.fold(() => throw Exception, (a) => a.getOrCrash()),
+        );
+      case MoneyTransactionType.betweenAccount:
+        return MoneyTransactionDTO(
+          id: transaction.id.getOrCrash(),
+          amount: transaction.amount.getOrCrash(),
+          memo: transaction.memo.getOrCrash(),
+          type: transaction.type.value,
+          dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
+          subcatID: transaction.subcategory!.id.getOrCrash(),
+          subcatName: transaction.subcategory!.name.getOrCrash(),
+          subcatCategoryId: transaction.subcategory!.categoryID.getOrCrash(),
+          receiverId: transaction.receiverId.getOrCrash(),
+          receiverName: transaction.receiverName.getOrCrash(),
+          receiverBalance:
+              transaction.receiverBalance.fold(() => throw Exception, (a) => a.getOrCrash()),
+          giverId: transaction.giverId.getOrCrash(),
+          giverName: transaction.giverName.getOrCrash(),
+          giverBalance: transaction.giverBalance.fold(() => throw Exception, (a) => a.getOrCrash()),
+        );
+      default:
+        throw Exception("Invalid MoneyTransactionType ${transaction.type}");
+    }
   }
 
   MoneyTransaction toDomain() {
-    return MoneyTransaction(
-      id: UniqueId.fromUniqueString(id),
-      amount: Amount(amount.toString()),
-      memo: Name(memo),
-      date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
-      type: MoneyTransactionType.fromValue(type),
-      subcategory: Subcategory(
-        id: UniqueId.fromUniqueString(subcatID),
-        categoryID: UniqueId.fromUniqueString(subcatCategoryId),
-        name: Name(subcatName),
-      ),
-      payee: Payee(
-        id: UniqueId.fromUniqueString(payeeID),
-        name: Name(payeeName),
-      ),
-      account: Account(
-        id: UniqueId.fromUniqueString(accountID),
-        name: Name(accountName),
-        balance: Amount(accountBalance.toString()),
-      ),
-    );
+    final Subcategory? subcategory = subcatID == null
+        ? null
+        : Subcategory(
+            id: UniqueId.fromUniqueString(subcatID!),
+            categoryID: UniqueId.fromUniqueString(subcatCategoryId!),
+            name: Name(subcatName!),
+          );
+
+    switch (MoneyTransactionType.fromValue(type)) {
+      case MoneyTransactionType.toBeBudgeted:
+      case MoneyTransactionType.initial:
+        return MoneyTransaction(
+          id: UniqueId.fromUniqueString(this.id),
+          amount: Amount(amount.toString()),
+          memo: Name(memo),
+          date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
+          type: MoneyTransactionType.fromValue(type),
+          subcategory: subcategory,
+          giver: Left(Payee(
+            id: UniqueId.fromUniqueString(giverId),
+            name: Name(giverName),
+          )),
+          receiver: Right(
+            Account(
+              id: UniqueId.fromUniqueString(receiverId),
+              name: Name(receiverName),
+              balance: Amount.fromDouble(receiverBalance!),
+            ),
+          ),
+        );
+      case MoneyTransactionType.subcategory:
+        return MoneyTransaction(
+          id: UniqueId.fromUniqueString(this.id),
+          amount: Amount(amount.toString()),
+          memo: Name(memo),
+          date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
+          type: MoneyTransactionType.fromValue(type),
+          subcategory: subcategory,
+          receiver: Left(Payee(
+            id: UniqueId.fromUniqueString(receiverId),
+            name: Name(receiverName),
+          )),
+          giver: Right(
+            Account(
+              id: UniqueId.fromUniqueString(giverId),
+              name: Name(giverName),
+              balance: Amount.fromDouble(giverBalance!),
+            ),
+          ),
+        );
+      case MoneyTransactionType.betweenAccount:
+        return MoneyTransaction(
+          id: UniqueId.fromUniqueString(this.id),
+          amount: Amount(amount.toString()),
+          memo: Name(memo),
+          date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
+          type: MoneyTransactionType.fromValue(type),
+          subcategory: subcategory,
+          receiver: Right(
+            Account(
+              id: UniqueId.fromUniqueString(receiverId),
+              name: Name(receiverName),
+              balance: Amount.fromDouble(receiverBalance!),
+            ),
+          ),
+          giver: Right(
+            Account(
+              id: UniqueId.fromUniqueString(giverId),
+              name: Name(giverName),
+              balance: Amount.fromDouble(giverBalance!),
+            ),
+          ),
+        );
+      default:
+        throw Exception("Invalid MoneyTransactionType ${type}");
+    }
   }
 
   factory MoneyTransactionDTO.fromJson(Map<String, dynamic> json) =>

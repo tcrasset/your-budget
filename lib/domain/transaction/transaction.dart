@@ -35,12 +35,12 @@ enum MoneyTransactionType {
 /// by [subcategoryID].
 /// A [memo] detailing the transaction is added as well.
 @freezed
-abstract class MoneyTransaction implements _$MoneyTransaction {
+class MoneyTransaction with _$MoneyTransaction {
   const factory MoneyTransaction({
     required UniqueId id,
-    required Subcategory subcategory,
-    required Payee payee,
-    required Account account,
+    required Subcategory? subcategory,
+    required Either<Payee, Account> receiver,
+    required Either<Payee, Account> giver,
     required Amount amount,
     required Name memo,
     required DateTime date,
@@ -56,8 +56,8 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
           categoryID: UniqueId(),
           name: Name(""),
         ),
-        account: Account(id: UniqueId(), name: Name(""), balance: Amount("")),
-        payee: Payee(id: UniqueId(), name: Name("")),
+        giver: Right(Account(id: UniqueId(), name: Name(""), balance: Amount(""))),
+        receiver: Left(Payee(id: UniqueId(), name: Name(""))),
         memo: Name(""),
         amount: Amount(""),
         date: DateTime.now(),
@@ -70,4 +70,17 @@ abstract class MoneyTransaction implements _$MoneyTransaction {
           (_) => none(),
         );
   }
+
+  Name get receiverName => receiver.fold((payee) => payee.name, (account) => account.name);
+  Name get giverName => giver.fold((payee) => payee.name, (account) => account.name);
+  UniqueId get receiverId => receiver.fold((payee) => payee.id, (account) => account.id);
+  UniqueId get giverId => giver.fold((payee) => payee.id, (account) => account.id);
+  Option<Amount> get receiverBalance => receiver.fold(
+        (payee) => none(),
+        (account) => some(account.balance),
+      );
+  Option<Amount> get giverBalance => giver.fold(
+        (payee) => none(),
+        (account) => some(account.balance),
+      );
 }

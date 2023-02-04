@@ -12,7 +12,7 @@ abstract class IPayeeProvider {
   // Future<Either<ValueFailure, Unit>> update(NewPayee payee);
   // Future<Either<ValueFailure, Unit>> delete(NewPayee payee);
   Future<Either<ValueFailure, List<Payee>>> getAllPayees();
-  Future<Either<ValueFailure, Payee>> getToBeBudgetedPayee();
+  Future<Either<ValueFailure, Payee>> getStartingBalancePayee();
   Stream<Either<ValueFailure<dynamic>, List<Payee>>> watchAllPayees();
   Future<Either<ValueFailure, int?>> count();
 }

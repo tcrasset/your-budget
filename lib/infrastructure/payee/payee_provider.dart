@@ -74,11 +74,11 @@ class SQFlitePayeeProvider implements IPayeeProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Payee>> getToBeBudgetedPayee() async {
+  Future<Either<ValueFailure, Payee>> getStartingBalancePayee() async {
     try {
       const sql = """
         SELECT * FROM ${DatabaseConstants.payeeTable}
-        WHERE ${DatabaseConstants.PAYEE_NAME}  = '${DatabaseConstants.TO_BE_BUDGETED}';
+        WHERE ${DatabaseConstants.PAYEE_NAME}  = '${DatabaseConstants.STARTING_BALANCE_PAYEE_NAME}';
         """;
 
       final data = await database!.rawQuery(sql);

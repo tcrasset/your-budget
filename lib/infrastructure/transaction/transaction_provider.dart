@@ -5,10 +5,10 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:your_budget/domain/budget/to_be_budgeted_repository.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
@@ -126,12 +126,12 @@ class SQFliteTransactionProvider implements ITransactionProvider {
             ${DatabaseConstants.CAT_ID_OUTSIDE},
 
             giver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
-            giver.${DatabaseConstants.ACCOUNT_NAME} as giver_name,
-            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giver_balance,
+            giver.${DatabaseConstants.ACCOUNT_NAME} as giverName,
+            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giverBalance,
 
             receiver.${DatabaseConstants.PAYEE_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
-            receiver.${DatabaseConstants.PAYEE_NAME} as receiver_name,
-            NULL as receiver_balance
+            receiver.${DatabaseConstants.PAYEE_NAME} as receiverName,
+            NULL as receiverBalance
 
           FROM ${DatabaseConstants.moneyTransactionTable}
           JOIN ${DatabaseConstants.accountTable} AS giver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} = giver.${DatabaseConstants.ACCOUNT_ID}
@@ -152,12 +152,12 @@ class SQFliteTransactionProvider implements ITransactionProvider {
             NULL as ${DatabaseConstants.CAT_ID_OUTSIDE},
 
             receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
-            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiver_name,
-            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiver_balance,
+            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiverName,
+            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiverBalance,
 
             giver.${DatabaseConstants.PAYEE_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
-            giver.${DatabaseConstants.PAYEE_NAME} as giver_name,
-            NULL as giver_balance
+            giver.${DatabaseConstants.PAYEE_NAME} as giverName,
+            NULL as giverBalance
 
           FROM ${DatabaseConstants.moneyTransactionTable}
           JOIN ${DatabaseConstants.accountTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.ACCOUNT_ID}
@@ -177,12 +177,12 @@ class SQFliteTransactionProvider implements ITransactionProvider {
             NULL as ${DatabaseConstants.CAT_ID_OUTSIDE},
 
             receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
-            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiver_name,
-            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiver_balance,
+            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiverName,
+            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiverBalance,
 
             giver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
-            giver.${DatabaseConstants.ACCOUNT_NAME} as giver_name,
-            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giver_balance
+            giver.${DatabaseConstants.ACCOUNT_NAME} as giverName,
+            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giverBalance
 
           FROM ${DatabaseConstants.moneyTransactionTable}
           JOIN ${DatabaseConstants.accountTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.ACCOUNT_ID}
@@ -209,7 +209,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
   Either<ValueFailure, List<MoneyTransaction>> getAccountTransactions(UniqueId id) {
     final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
 
-    return right(transactions.where((t) => t.account.id == id).toList());
+    return right(transactions.where((t) => _isAccountId(t, id)).toList());
   }
 
   @override
@@ -219,8 +219,15 @@ class SQFliteTransactionProvider implements ITransactionProvider {
     return _transactionStreamController.asBroadcastStream().map(
           (event) => event.fold(
             (l) => left(l),
-            (r) => right(r.where((element) => element.account.id == accountID).toList()),
+            (r) => right(r.where((element) => _isAccountId(element, accountID)).toList()),
           ),
         );
   }
+
+  bool _isAccountId(
+    MoneyTransaction t,
+    UniqueId id,
+  ) =>
+      _getId(t.receiver) == id || _getId(t.giver) == id;
+  UniqueId _getId(Either<Payee, Account> item) => item.fold((l) => l.id, (r) => r.id);
 }

@@ -13,14 +13,15 @@ _$_TransactionDTO _$$_TransactionDTOFromJson(Map<String, dynamic> json) =>
       memo: json['memo'] as String,
       dateInMillisecondsSinceEpoch: json['dateInMillisecondsSinceEpoch'] as int,
       type: json['type'] as String,
-      subcatID: json['subcatID'] as String,
-      subcatName: json['subcategoryName'] as String,
-      subcatCategoryId: json['categoryID'] as String,
-      payeeID: json['payeeID'] as String,
-      payeeName: json['payeeName'] as String,
-      accountID: json['accountID'] as String,
-      accountName: json['accountName'] as String,
-      accountBalance: (json['balance'] as num).toDouble(),
+      subcatID: json['subcatID'] as String?,
+      subcatName: json['subcategoryName'] as String?,
+      subcatCategoryId: json['categoryID'] as String?,
+      receiverName: json['receiverName'] as String,
+      receiverBalance: (json['receiverBalance'] as num?)?.toDouble(),
+      receiverId: json['receiverId'] as String,
+      giverName: json['giverName'] as String,
+      giverBalance: (json['giverBalance'] as num?)?.toDouble(),
+      giverId: json['giverId'] as String,
     );
 
 Map<String, dynamic> _$$_TransactionDTOToJson(_$_TransactionDTO instance) {
@@ -40,10 +41,11 @@ Map<String, dynamic> _$$_TransactionDTOToJson(_$_TransactionDTO instance) {
   val['subcatID'] = instance.subcatID;
   writeNotNull('subcategoryName', ignore(instance.subcatName));
   writeNotNull('categoryID', ignore(instance.subcatCategoryId));
-  val['payeeID'] = instance.payeeID;
-  writeNotNull('payeeName', ignore(instance.payeeName));
-  val['accountID'] = instance.accountID;
-  writeNotNull('accountName', ignore(instance.accountName));
-  writeNotNull('balance', ignore(instance.accountBalance));
+  writeNotNull('receiverName', ignore(instance.receiverName));
+  writeNotNull('receiverBalance', ignore(instance.receiverBalance));
+  val['receiverId'] = instance.receiverId;
+  writeNotNull('giverName', ignore(instance.giverName));
+  writeNotNull('giverBalance', ignore(instance.giverBalance));
+  val['giverId'] = instance.giverId;
   return val;
 }

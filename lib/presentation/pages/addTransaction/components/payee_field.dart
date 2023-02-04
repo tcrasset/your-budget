@@ -11,8 +11,8 @@ import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_payee_dialog.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
-class PayeeField extends StatelessWidget {
-  const PayeeField({
+class ReceiverName extends StatelessWidget {
+  const ReceiverName({
     Key? key,
   }) : super(key: key);
 
@@ -33,22 +33,26 @@ class PayeeField extends StatelessWidget {
     }
   }
 
-  String getPayeeName(BuildContext context) {
-    //TODO: Handle errors
-    return context
-        .watch<TransactionCreatorBloc>()
-        .state
-        .moneyTransaction
-        .payee
-        .name
-        .value
-        .fold((_) => _DEFAULT_PAYEE, (v) => v);
-  }
+  String getReceiverName(BuildContext context) =>
+      //TODO: Handle errors
+      context.watch<TransactionCreatorBloc>().state.moneyTransaction.receiver.fold(
+            (l) => l.name.value.fold(
+              (_) => _DEFAULT_PAYEE,
+              (v) => v,
+            ),
+            (r) => "",
+          );
 
-  String? validatePayee(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.payee.name.value.fold(
-            (f) => f.maybeMap(emptyName: (_) => "Please select a Payee.", orElse: () => null),
-            (_) => null,
+  String? validateReceiver(BuildContext context) =>
+      context.read<TransactionCreatorBloc>().state.moneyTransaction.receiver.fold(
+            (l) /* Payee */ => l.name.value.fold(
+              (f) => f.maybeMap(
+                emptyName: (_) => "Please select a Payee",
+                orElse: () => null,
+              ),
+              (_) => null,
+            ),
+            (r) /* Account */ => "Transaction should have a Payee as a Receiver, not an Account.",
           );
 
   @override
@@ -61,9 +65,9 @@ class PayeeField extends StatelessWidget {
         child: AddTransactionField(
           name: "Payee",
           defaultValue: _DEFAULT_PAYEE,
-          nameGetter: getPayeeName,
+          nameGetter: getReceiverName,
           onTap: handleOnTap,
-          validator: validatePayee,
+          validator: validateReceiver,
         ),
       );
 }

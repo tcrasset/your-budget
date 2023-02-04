@@ -87,7 +87,7 @@ class SQFliteAccountProvider implements IAccountProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Account>> get(UniqueId id) async {
+  Either<ValueFailure, Account> get(UniqueId id) {
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
     final index = accounts.indexWhere((account) => account.id == id);
     if (index >= 0) {
@@ -115,5 +115,17 @@ class SQFliteAccountProvider implements IAccountProvider {
   @override
   Stream<Either<ValueFailure<dynamic>, List<Account>>> watchAllAccounts() {
     return _accountStreamController.asBroadcastStream();
+  }
+
+  @override
+  Either<ValueFailure, Account> getToBeBudgeted() {
+    final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
+    final index =
+        accounts.indexWhere((account) => account.name == DatabaseConstants.TO_BE_BUDGETED);
+    if (index >= 0) {
+      return right(accounts[index]);
+    } else {
+      return left(const ValueFailure.unexpected(message: "Account not in current stream."));
+    }
   }
 }

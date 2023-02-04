@@ -59,22 +59,21 @@ class AccountRepository {
     //Create starting money transaction
     //TODO: Use real names
 
-    final Either<ValueFailure, Account> failureOrAccount = await accountProvider.get(accountId);
-    final Either<ValueFailure, Subcategory> failureOrSubcategory =
-        await subcategoryProvider.getToBeBudgetedSubcategory();
-    final Either<ValueFailure, Payee> failureOrPayee = await payeeProvider.getToBeBudgetedPayee();
+    final Either<ValueFailure, Account> failureOrAccount = accountProvider.get(accountId);
+    final Either<ValueFailure, Payee> failureOrPayee =
+        await payeeProvider.getStartingBalancePayee();
     return failureOrAccount.fold(
       (l) => left(l),
-      (account) => failureOrSubcategory.fold(
+      (account) => failureOrPayee.fold(
         (l) => left(l),
-        (subcategory) => failureOrPayee.fold(
+        (payee) => failureOrPayee.fold(
           (l) => left(l),
           (payee) {
             final MoneyTransaction transaction = MoneyTransaction(
               id: UniqueId(),
-              subcategory: subcategory,
-              payee: payee,
-              account: account,
+              subcategory: null,
+              giver: left(payee),
+              receiver: right(account),
               amount: balance,
               memo: Name("Starting balance"),
               date: DateTime.now(),

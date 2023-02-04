@@ -80,6 +80,7 @@ class DatabaseConstants {
   static const String MONEYTRANSACTION_RECEIVER_ID = "receiverId";
 
   static const String TO_BE_BUDGETED_ID = "deadbeef-0000-1111-0000-0000deafbeef";
+  static const String STARTING_BALANCE_PAYEE_NAME = "Starting balance";
 
   /// Field names of the [budgetValueTable]
   static const BUDGET_VALUE_ID = 'id';

@@ -35,32 +35,30 @@ mixin _$MoneyTransactionDTO {
   @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
   String get type => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-  String get subcatID => throw _privateConstructorUsedError;
+  String? get subcatID =>
+      throw _privateConstructorUsedError; // optional because most transactions do not have subcategory
   @JsonKey(
       toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-  String get subcatName => throw _privateConstructorUsedError;
+  String? get subcatName =>
+      throw _privateConstructorUsedError; // optional because most transactions do not have subcategory
   @JsonKey(
       toJson: ignore,
       includeIfNull: false,
       name: DatabaseConstants.CAT_ID_OUTSIDE)
-  String get subcatCategoryId => throw _privateConstructorUsedError;
-  @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-  String get payeeID => throw _privateConstructorUsedError;
-  @JsonKey(
-      toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-  String get payeeName => throw _privateConstructorUsedError;
-  @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-  String get accountID => throw _privateConstructorUsedError;
-  @JsonKey(
-      toJson: ignore,
-      includeIfNull: false,
-      name: DatabaseConstants.ACCOUNT_NAME)
-  String get accountName => throw _privateConstructorUsedError;
-  @JsonKey(
-      toJson: ignore,
-      includeIfNull: false,
-      name: DatabaseConstants.ACCOUNT_BALANCE)
-  double get accountBalance => throw _privateConstructorUsedError;
+  String? get subcatCategoryId =>
+      throw _privateConstructorUsedError; // optional because most transactions do not have subcat
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get receiverName => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  double? get receiverBalance =>
+      throw _privateConstructorUsedError; // optional because payee does not have balance
+  String get receiverId => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get giverName => throw _privateConstructorUsedError;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  double? get giverBalance =>
+      throw _privateConstructorUsedError; // optional because payee does not have balance
+  String get giverId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -85,21 +83,21 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
           String type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          String subcatID,
+          String? subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-          String subcatName,
+          String? subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
-          String subcatCategoryId,
-      @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-          String payeeID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-          String payeeName,
-      @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-          String accountID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-          String accountName,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-          double accountBalance});
+          String? subcatCategoryId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String receiverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          double? receiverBalance,
+      String receiverId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String giverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          double? giverBalance,
+      String giverId});
 }
 
 /// @nodoc
@@ -121,11 +119,12 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
     Object? subcatID = freezed,
     Object? subcatName = freezed,
     Object? subcatCategoryId = freezed,
-    Object? payeeID = freezed,
-    Object? payeeName = freezed,
-    Object? accountID = freezed,
-    Object? accountName = freezed,
-    Object? accountBalance = freezed,
+    Object? receiverName = freezed,
+    Object? receiverBalance = freezed,
+    Object? receiverId = freezed,
+    Object? giverName = freezed,
+    Object? giverBalance = freezed,
+    Object? giverId = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -151,35 +150,39 @@ class _$MoneyTransactionDTOCopyWithImpl<$Res>
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       subcatName: subcatName == freezed
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       subcatCategoryId: subcatCategoryId == freezed
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receiverName: receiverName == freezed
+          ? _value.receiverName
+          : receiverName // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeID: payeeID == freezed
-          ? _value.payeeID
-          : payeeID // ignore: cast_nullable_to_non_nullable
+      receiverBalance: receiverBalance == freezed
+          ? _value.receiverBalance
+          : receiverBalance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      receiverId: receiverId == freezed
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeName: payeeName == freezed
-          ? _value.payeeName
-          : payeeName // ignore: cast_nullable_to_non_nullable
+      giverName: giverName == freezed
+          ? _value.giverName
+          : giverName // ignore: cast_nullable_to_non_nullable
               as String,
-      accountID: accountID == freezed
-          ? _value.accountID
-          : accountID // ignore: cast_nullable_to_non_nullable
+      giverBalance: giverBalance == freezed
+          ? _value.giverBalance
+          : giverBalance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      giverId: giverId == freezed
+          ? _value.giverId
+          : giverId // ignore: cast_nullable_to_non_nullable
               as String,
-      accountName: accountName == freezed
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountBalance: accountBalance == freezed
-          ? _value.accountBalance
-          : accountBalance // ignore: cast_nullable_to_non_nullable
-              as double,
     ));
   }
 }
@@ -203,21 +206,21 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
           String type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          String subcatID,
+          String? subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-          String subcatName,
+          String? subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
-          String subcatCategoryId,
-      @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-          String payeeID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-          String payeeName,
-      @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-          String accountID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-          String accountName,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-          double accountBalance});
+          String? subcatCategoryId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String receiverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          double? receiverBalance,
+      String receiverId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          String giverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          double? giverBalance,
+      String giverId});
 }
 
 /// @nodoc
@@ -241,11 +244,12 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
     Object? subcatID = freezed,
     Object? subcatName = freezed,
     Object? subcatCategoryId = freezed,
-    Object? payeeID = freezed,
-    Object? payeeName = freezed,
-    Object? accountID = freezed,
-    Object? accountName = freezed,
-    Object? accountBalance = freezed,
+    Object? receiverName = freezed,
+    Object? receiverBalance = freezed,
+    Object? receiverId = freezed,
+    Object? giverName = freezed,
+    Object? giverBalance = freezed,
+    Object? giverId = freezed,
   }) {
     return _then(_$_TransactionDTO(
       id: id == freezed
@@ -271,35 +275,39 @@ class __$$_TransactionDTOCopyWithImpl<$Res>
       subcatID: subcatID == freezed
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       subcatName: subcatName == freezed
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       subcatCategoryId: subcatCategoryId == freezed
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receiverName: receiverName == freezed
+          ? _value.receiverName
+          : receiverName // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeID: payeeID == freezed
-          ? _value.payeeID
-          : payeeID // ignore: cast_nullable_to_non_nullable
+      receiverBalance: receiverBalance == freezed
+          ? _value.receiverBalance
+          : receiverBalance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      receiverId: receiverId == freezed
+          ? _value.receiverId
+          : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      payeeName: payeeName == freezed
-          ? _value.payeeName
-          : payeeName // ignore: cast_nullable_to_non_nullable
+      giverName: giverName == freezed
+          ? _value.giverName
+          : giverName // ignore: cast_nullable_to_non_nullable
               as String,
-      accountID: accountID == freezed
-          ? _value.accountID
-          : accountID // ignore: cast_nullable_to_non_nullable
+      giverBalance: giverBalance == freezed
+          ? _value.giverBalance
+          : giverBalance // ignore: cast_nullable_to_non_nullable
+              as double?,
+      giverId: giverId == freezed
+          ? _value.giverId
+          : giverId // ignore: cast_nullable_to_non_nullable
               as String,
-      accountName: accountName == freezed
-          ? _value.accountName
-          : accountName // ignore: cast_nullable_to_non_nullable
-              as String,
-      accountBalance: accountBalance == freezed
-          ? _value.accountBalance
-          : accountBalance // ignore: cast_nullable_to_non_nullable
-              as double,
     ));
   }
 }
@@ -324,16 +332,16 @@ class _$_TransactionDTO extends _TransactionDTO {
           required this.subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
           required this.subcatCategoryId,
-      @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-          required this.payeeID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-          required this.payeeName,
-      @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-          required this.accountID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-          required this.accountName,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-          required this.accountBalance})
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.receiverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.receiverBalance,
+      required this.receiverId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.giverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required this.giverBalance,
+      required this.giverId})
       : super._();
 
   factory _$_TransactionDTO.fromJson(Map<String, dynamic> json) =>
@@ -360,43 +368,42 @@ class _$_TransactionDTO extends _TransactionDTO {
   final String type;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-  final String subcatID;
+  final String? subcatID;
+// optional because most transactions do not have subcategory
   @override
   @JsonKey(
       toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-  final String subcatName;
+  final String? subcatName;
+// optional because most transactions do not have subcategory
   @override
   @JsonKey(
       toJson: ignore,
       includeIfNull: false,
       name: DatabaseConstants.CAT_ID_OUTSIDE)
-  final String subcatCategoryId;
+  final String? subcatCategoryId;
+// optional because most transactions do not have subcat
   @override
-  @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-  final String payeeID;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final String receiverName;
   @override
-  @JsonKey(
-      toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-  final String payeeName;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final double? receiverBalance;
+// optional because payee does not have balance
   @override
-  @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-  final String accountID;
+  final String receiverId;
   @override
-  @JsonKey(
-      toJson: ignore,
-      includeIfNull: false,
-      name: DatabaseConstants.ACCOUNT_NAME)
-  final String accountName;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final String giverName;
   @override
-  @JsonKey(
-      toJson: ignore,
-      includeIfNull: false,
-      name: DatabaseConstants.ACCOUNT_BALANCE)
-  final double accountBalance;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  final double? giverBalance;
+// optional because payee does not have balance
+  @override
+  final String giverId;
 
   @override
   String toString() {
-    return 'MoneyTransactionDTO(id: $id, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch, type: $type, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, payeeID: $payeeID, payeeName: $payeeName, accountID: $accountID, accountName: $accountName, accountBalance: $accountBalance)';
+    return 'MoneyTransactionDTO(id: $id, amount: $amount, memo: $memo, dateInMillisecondsSinceEpoch: $dateInMillisecondsSinceEpoch, type: $type, subcatID: $subcatID, subcatName: $subcatName, subcatCategoryId: $subcatCategoryId, receiverName: $receiverName, receiverBalance: $receiverBalance, receiverId: $receiverId, giverName: $giverName, giverBalance: $giverBalance, giverId: $giverId)';
   }
 
   @override
@@ -416,13 +423,16 @@ class _$_TransactionDTO extends _TransactionDTO {
                 .equals(other.subcatName, subcatName) &&
             const DeepCollectionEquality()
                 .equals(other.subcatCategoryId, subcatCategoryId) &&
-            const DeepCollectionEquality().equals(other.payeeID, payeeID) &&
-            const DeepCollectionEquality().equals(other.payeeName, payeeName) &&
-            const DeepCollectionEquality().equals(other.accountID, accountID) &&
             const DeepCollectionEquality()
-                .equals(other.accountName, accountName) &&
+                .equals(other.receiverName, receiverName) &&
             const DeepCollectionEquality()
-                .equals(other.accountBalance, accountBalance));
+                .equals(other.receiverBalance, receiverBalance) &&
+            const DeepCollectionEquality()
+                .equals(other.receiverId, receiverId) &&
+            const DeepCollectionEquality().equals(other.giverName, giverName) &&
+            const DeepCollectionEquality()
+                .equals(other.giverBalance, giverBalance) &&
+            const DeepCollectionEquality().equals(other.giverId, giverId));
   }
 
   @JsonKey(ignore: true)
@@ -437,11 +447,12 @@ class _$_TransactionDTO extends _TransactionDTO {
       const DeepCollectionEquality().hash(subcatID),
       const DeepCollectionEquality().hash(subcatName),
       const DeepCollectionEquality().hash(subcatCategoryId),
-      const DeepCollectionEquality().hash(payeeID),
-      const DeepCollectionEquality().hash(payeeName),
-      const DeepCollectionEquality().hash(accountID),
-      const DeepCollectionEquality().hash(accountName),
-      const DeepCollectionEquality().hash(accountBalance));
+      const DeepCollectionEquality().hash(receiverName),
+      const DeepCollectionEquality().hash(receiverBalance),
+      const DeepCollectionEquality().hash(receiverId),
+      const DeepCollectionEquality().hash(giverName),
+      const DeepCollectionEquality().hash(giverBalance),
+      const DeepCollectionEquality().hash(giverId));
 
   @JsonKey(ignore: true)
   @override
@@ -469,21 +480,21 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
       @JsonKey(name: DatabaseConstants.MONEYTRANSACTION_TYPE)
           required final String type,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          required final String subcatID,
+          required final String? subcatID,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-          required final String subcatName,
+          required final String? subcatName,
       @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.CAT_ID_OUTSIDE)
-          required final String subcatCategoryId,
-      @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-          required final String payeeID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-          required final String payeeName,
-      @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-          required final String accountID,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_NAME)
-          required final String accountName,
-      @JsonKey(toJson: ignore, includeIfNull: false, name: DatabaseConstants.ACCOUNT_BALANCE)
-          required final double accountBalance}) = _$_TransactionDTO;
+          required final String? subcatCategoryId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required final String receiverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required final double? receiverBalance,
+      required final String receiverId,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required final String giverName,
+      @JsonKey(toJson: ignore, includeIfNull: false)
+          required final double? giverBalance,
+      required final String giverId}) = _$_TransactionDTO;
   const _TransactionDTO._() : super._();
 
   factory _TransactionDTO.fromJson(Map<String, dynamic> json) =
@@ -510,39 +521,33 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   String get type;
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-  String get subcatID;
-  @override
+  String? get subcatID;
+  @override // optional because most transactions do not have subcategory
   @JsonKey(
       toJson: ignore, includeIfNull: false, name: DatabaseConstants.SUBCAT_NAME)
-  String get subcatName;
-  @override
+  String? get subcatName;
+  @override // optional because most transactions do not have subcategory
   @JsonKey(
       toJson: ignore,
       includeIfNull: false,
       name: DatabaseConstants.CAT_ID_OUTSIDE)
-  String get subcatCategoryId;
+  String? get subcatCategoryId;
+  @override // optional because most transactions do not have subcat
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get receiverName;
   @override
-  @JsonKey(name: DatabaseConstants.PAYEE_ID_OUTSIDE)
-  String get payeeID;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  double? get receiverBalance;
+  @override // optional because payee does not have balance
+  String get receiverId;
   @override
-  @JsonKey(
-      toJson: ignore, includeIfNull: false, name: DatabaseConstants.PAYEE_NAME)
-  String get payeeName;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  String get giverName;
   @override
-  @JsonKey(name: DatabaseConstants.ACCOUNT_ID_OUTSIDE)
-  String get accountID;
-  @override
-  @JsonKey(
-      toJson: ignore,
-      includeIfNull: false,
-      name: DatabaseConstants.ACCOUNT_NAME)
-  String get accountName;
-  @override
-  @JsonKey(
-      toJson: ignore,
-      includeIfNull: false,
-      name: DatabaseConstants.ACCOUNT_BALANCE)
-  double get accountBalance;
+  @JsonKey(toJson: ignore, includeIfNull: false)
+  double? get giverBalance;
+  @override // optional because payee does not have balance
+  String get giverId;
   @override
   @JsonKey(ignore: true)
   _$$_TransactionDTOCopyWith<_$_TransactionDTO> get copyWith =>
