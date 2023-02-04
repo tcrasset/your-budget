@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';

@@ -75,6 +75,12 @@ class DatabaseConstants {
   static const String MONEYTRANSACTION_DATE = 'dateInMillisecondsSinceEpoch';
   static const String MONEYTRANSACTION_TYPE = "type";
 
+  //accounts or payees, depending on transaction
+  static const String MONEYTRANSACTION_GIVER_ID = "giverId";
+  static const String MONEYTRANSACTION_RECEIVER_ID = "receiverId";
+
+  static const String TO_BE_BUDGETED_ID = "deadbeef-0000-1111-0000-0000deafbeef";
+
   /// Field names of the [budgetValueTable]
   static const BUDGET_VALUE_ID = 'id';
   static const BUDGET_VALUE_BUDGETED = 'budgeted';

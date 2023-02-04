@@ -65,14 +65,11 @@ class DatabaseProvider {
   /// and the version number.
   Future<Database?> open() async {
     final path = await getDatabasePath('budgetDB');
-    db = await openDatabase(
+    return await openDatabase(
       path,
-      version: 2,
+      version: 1,
       onCreate: _onCreate,
-      onUpgrade: _onUpgrade,
     );
-
-    return db;
   }
 
   /// Creates the database by creating the different tables
@@ -82,6 +79,7 @@ class DatabaseProvider {
     await _createConstants(db);
     await _createBasicCategories(db);
     await _populatePayees(db);
+    await _populateAccounts(db);
   }
 
   /// Creates the table of the database. These are [categoryTable], [subcategoryTable],
@@ -117,16 +115,13 @@ class DatabaseProvider {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.moneyTransactionTable} (
                         ${DatabaseConstants.MONEYTRANSACTION_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
-                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} TEXT NOT NULL,
-                        ${DatabaseConstants.PAYEE_ID_OUTSIDE} TEXT NOT NULL,
-                        ${DatabaseConstants.ACCOUNT_ID_OUTSIDE} TEXT NOT NULL,
+                        ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} TEXT NOT NULL,
+                        ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} TEXT NOT NULL,
+                        ${DatabaseConstants.SUBCAT_ID_OUTSIDE} TEXT DEFAULT NULL,
                         ${DatabaseConstants.MONEYTRANSACTION_AMOUNT} FLOAT NOT NULL,
                         ${DatabaseConstants.MONEYTRANSACTION_MEMO} TEXT,
                         ${DatabaseConstants.MONEYTRANSACTION_DATE} INTEGER NOT NULL,
-                        ${DatabaseConstants.MONEYTRANSACTION_TYPE} TEXT NOT NULL,
-                        FOREIGN KEY (${DatabaseConstants.SUBCAT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.subcategoryTable}(${DatabaseConstants.SUBCAT_ID}),
-                        FOREIGN KEY (${DatabaseConstants.PAYEE_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.payeeTable}(${DatabaseConstants.PAYEE_ID}),
-                        FOREIGN KEY (${DatabaseConstants.ACCOUNT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.accountTable}(${DatabaseConstants.ACCOUNT_ID})
+                        ${DatabaseConstants.MONEYTRANSACTION_TYPE} TEXT NOT NULL
                     );''');
 
     await db.execute('''
@@ -205,6 +200,14 @@ class DatabaseProvider {
     return db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
   }
 
+  Future<int> _populatePayees(Database db) async {
+    const String CREATE_PAYEE = '''
+    INSERT INTO ${DatabaseConstants.payeeTable}
+      (${DatabaseConstants.PAYEE_NAME})
+      VALUES(?);''';
+    return db.rawInsert(CREATE_PAYEE, ["Starting balance"]);
+  }
+
   Future<List<int>> _populateSubcategories(Database db, int categoryId) async {
     const String CREATE_SUBCATEGORY = '''
     INSERT INTO ${DatabaseConstants.subcategoryTable}
@@ -257,24 +260,11 @@ class DatabaseProvider {
     db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
   }
 
-  Future<void> _populatePayees(Database db) async {
-    const String CREATE_PAYEE = '''
-    INSERT INTO ${DatabaseConstants.payeeTable}
-      (${DatabaseConstants.PAYEE_NAME})
-      VALUES(?);''';
-    await db.rawInsert(CREATE_PAYEE, [DatabaseConstants.TO_BE_BUDGETED]);
-  }
-
-  FutureOr<void> _onUpgrade(Database db, int oldVersion, int newVersion) {
-    const String CREATE_CONSTANT = '''
-    INSERT INTO ${DatabaseConstants.constantsTable}
-      (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
+  Future<void> _populateAccounts(Database db) async {
+    const String CREATE_ACCOUNT = '''
+    INSERT INTO ${DatabaseConstants.accountTable}
+      (${DatabaseConstants.ACCOUNT_NAME}, ${DatabaseConstants.ACCOUNT_BALANCE})
       VALUES(?, ?);''';
-
-    if (oldVersion == 1) {
-      ///Save account most recently used.
-      db.rawInsert(CREATE_CONSTANT, [DatabaseConstants.MOST_RECENT_ACCOUNT, "0"]);
-      print("Upgrading from version 1 to version 2");
-    }
+    await db.rawInsert(CREATE_ACCOUNT, [DatabaseConstants.TO_BE_BUDGETED, 0.00]);
   }
 }

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:your_budget/domain/budget/to_be_budgeted_repository.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
@@ -110,26 +111,85 @@ class SQFliteTransactionProvider implements ITransactionProvider {
 
   Future<Either<ValueFailure, List<MoneyTransaction>>> getAllTransactions() async {
     try {
-      const sql = """
-        SELECT
-          ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_ID},
-          ${DatabaseConstants.PAYEE_ID_OUTSIDE},
-          ${DatabaseConstants.ACCOUNT_ID_OUTSIDE},
-          ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
-          ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
-          ${DatabaseConstants.MONEYTRANSACTION_MEMO},
-          ${DatabaseConstants.MONEYTRANSACTION_DATE},
-          ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_NAME},
-          ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_BALANCE},
-          ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_NAME},
-          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_NAME} ,
-          ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.CAT_ID_OUTSIDE}
+      final sql = """
+  
+        WITH standard_transactions as (
+          SELECT
+            ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_ID},
+            ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
+            ${DatabaseConstants.MONEYTRANSACTION_MEMO},
+            ${DatabaseConstants.MONEYTRANSACTION_DATE},
+            ${DatabaseConstants.MONEYTRANSACTION_TYPE},
 
-        FROM ${DatabaseConstants.moneyTransactionTable}
-        JOIN ${DatabaseConstants.accountTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.ACCOUNT_ID_OUTSIDE} = ${DatabaseConstants.accountTable}.${DatabaseConstants.ACCOUNT_ID}
-        JOIN ${DatabaseConstants.payeeTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.PAYEE_ID_OUTSIDE} = ${DatabaseConstants.payeeTable}.${DatabaseConstants.PAYEE_ID}
-        JOIN ${DatabaseConstants.subcategoryTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID}
-        ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
+            ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+            ${DatabaseConstants.SUBCAT_NAME},
+            ${DatabaseConstants.CAT_ID_OUTSIDE},
+
+            giver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
+            giver.${DatabaseConstants.ACCOUNT_NAME} as giver_name,
+            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giver_balance,
+
+            receiver.${DatabaseConstants.PAYEE_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
+            receiver.${DatabaseConstants.PAYEE_NAME} as receiver_name,
+            NULL as receiver_balance
+
+          FROM ${DatabaseConstants.moneyTransactionTable}
+          JOIN ${DatabaseConstants.accountTable} AS giver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} = giver.${DatabaseConstants.ACCOUNT_ID}
+          JOIN ${DatabaseConstants.payeeTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.PAYEE_ID}
+          JOIN ${DatabaseConstants.subcategoryTable} ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.SUBCAT_ID_OUTSIDE} = ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID}
+          WHERE ${DatabaseConstants.MONEYTRANSACTION_TYPE} = '${MoneyTransactionType.subcategory.value}'
+        ),
+        inflowTransactions as (
+          SELECT
+            ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_ID},
+            ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
+            ${DatabaseConstants.MONEYTRANSACTION_MEMO},
+            ${DatabaseConstants.MONEYTRANSACTION_DATE},
+            ${DatabaseConstants.MONEYTRANSACTION_TYPE},
+
+            NULL as ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+            NULL as ${DatabaseConstants.SUBCAT_NAME},
+            NULL as ${DatabaseConstants.CAT_ID_OUTSIDE},
+
+            receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
+            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiver_name,
+            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiver_balance,
+
+            giver.${DatabaseConstants.PAYEE_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
+            giver.${DatabaseConstants.PAYEE_NAME} as giver_name,
+            NULL as giver_balance
+
+          FROM ${DatabaseConstants.moneyTransactionTable}
+          JOIN ${DatabaseConstants.accountTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.ACCOUNT_ID}
+          JOIN ${DatabaseConstants.payeeTable} AS giver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} = giver.${DatabaseConstants.PAYEE_ID}
+          WHERE ${DatabaseConstants.MONEYTRANSACTION_TYPE} = '${MoneyTransactionType.initial.value}' or ${DatabaseConstants.MONEYTRANSACTION_TYPE} = '${MoneyTransactionType.toBeBudgeted.value}'
+        ),
+        betweenAccountTransactions as (
+          SELECT
+            ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_ID},
+            ${DatabaseConstants.MONEYTRANSACTION_AMOUNT},
+            ${DatabaseConstants.MONEYTRANSACTION_MEMO},
+            ${DatabaseConstants.MONEYTRANSACTION_DATE},
+            ${DatabaseConstants.MONEYTRANSACTION_TYPE},
+
+            NULL as ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+            NULL as ${DatabaseConstants.SUBCAT_NAME},
+            NULL as ${DatabaseConstants.CAT_ID_OUTSIDE},
+
+            receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
+            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiver_name,
+            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiver_balance,
+
+            giver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
+            giver.${DatabaseConstants.ACCOUNT_NAME} as giver_name,
+            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giver_balance
+
+          FROM ${DatabaseConstants.moneyTransactionTable}
+          JOIN ${DatabaseConstants.accountTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.ACCOUNT_ID}
+          JOIN ${DatabaseConstants.accountTable} AS giver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} = giver.${DatabaseConstants.ACCOUNT_ID}
+          WHERE ${DatabaseConstants.MONEYTRANSACTION_TYPE} = '${MoneyTransactionType.betweenAccount.value}'
+        )
+        SELECT * FROM betweenAccountTransactions UNION ALL SELECT * FROM standard_transactions UNION ALL SELECT * FROM inflowTransactions ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
       final data = await database!.rawQuery(sql);

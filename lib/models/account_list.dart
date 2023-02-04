@@ -40,8 +40,7 @@ class AccountList implements ObjectList<Account> {
   }
 
   Account? _getById(int? id) {
-    return _accounts.singleWhere((account) => account!.id == id,
-        orElse: () => null);
+    return _accounts.singleWhere((account) => account!.id == id, orElse: () => null);
   }
 
   void creditAccount({required int? id, required double amount}) {
