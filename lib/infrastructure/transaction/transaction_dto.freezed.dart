@@ -52,12 +52,14 @@ mixin _$MoneyTransactionDTO {
   @JsonKey(toJson: ignore, includeIfNull: false)
   double? get receiverBalance =>
       throw _privateConstructorUsedError; // optional because payee does not have balance
+  @JsonKey(fromJson: convertToString)
   String get receiverId => throw _privateConstructorUsedError;
   @JsonKey(toJson: ignore, includeIfNull: false)
   String get giverName => throw _privateConstructorUsedError;
   @JsonKey(toJson: ignore, includeIfNull: false)
   double? get giverBalance =>
       throw _privateConstructorUsedError; // optional because payee does not have balance
+  @JsonKey(fromJson: convertToString)
   String get giverId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -92,12 +94,14 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
           String receiverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           double? receiverBalance,
-      String receiverId,
+      @JsonKey(fromJson: convertToString)
+          String receiverId,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String giverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           double? giverBalance,
-      String giverId});
+      @JsonKey(fromJson: convertToString)
+          String giverId});
 }
 
 /// @nodoc
@@ -215,12 +219,14 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
           String receiverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           double? receiverBalance,
-      String receiverId,
+      @JsonKey(fromJson: convertToString)
+          String receiverId,
       @JsonKey(toJson: ignore, includeIfNull: false)
           String giverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           double? giverBalance,
-      String giverId});
+      @JsonKey(fromJson: convertToString)
+          String giverId});
 }
 
 /// @nodoc
@@ -336,12 +342,14 @@ class _$_TransactionDTO extends _TransactionDTO {
           required this.receiverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required this.receiverBalance,
-      required this.receiverId,
+      @JsonKey(fromJson: convertToString)
+          required this.receiverId,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required this.giverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required this.giverBalance,
-      required this.giverId})
+      @JsonKey(fromJson: convertToString)
+          required this.giverId})
       : super._();
 
   factory _$_TransactionDTO.fromJson(Map<String, dynamic> json) =>
@@ -390,6 +398,7 @@ class _$_TransactionDTO extends _TransactionDTO {
   final double? receiverBalance;
 // optional because payee does not have balance
   @override
+  @JsonKey(fromJson: convertToString)
   final String receiverId;
   @override
   @JsonKey(toJson: ignore, includeIfNull: false)
@@ -399,6 +408,7 @@ class _$_TransactionDTO extends _TransactionDTO {
   final double? giverBalance;
 // optional because payee does not have balance
   @override
+  @JsonKey(fromJson: convertToString)
   final String giverId;
 
   @override
@@ -489,12 +499,14 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
           required final String receiverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required final double? receiverBalance,
-      required final String receiverId,
+      @JsonKey(fromJson: convertToString)
+          required final String receiverId,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required final String giverName,
       @JsonKey(toJson: ignore, includeIfNull: false)
           required final double? giverBalance,
-      required final String giverId}) = _$_TransactionDTO;
+      @JsonKey(fromJson: convertToString)
+          required final String giverId}) = _$_TransactionDTO;
   const _TransactionDTO._() : super._();
 
   factory _TransactionDTO.fromJson(Map<String, dynamic> json) =
@@ -539,6 +551,7 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @JsonKey(toJson: ignore, includeIfNull: false)
   double? get receiverBalance;
   @override // optional because payee does not have balance
+  @JsonKey(fromJson: convertToString)
   String get receiverId;
   @override
   @JsonKey(toJson: ignore, includeIfNull: false)
@@ -547,6 +560,7 @@ abstract class _TransactionDTO extends MoneyTransactionDTO {
   @JsonKey(toJson: ignore, includeIfNull: false)
   double? get giverBalance;
   @override // optional because payee does not have balance
+  @JsonKey(fromJson: convertToString)
   String get giverId;
   @override
   @JsonKey(ignore: true)

@@ -82,13 +82,14 @@ class MyBudgetState extends State<MyBudget> {
             subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
             transactionProvider: GetIt.instance<ITransactionProvider>(),
             constantsProvider: GetIt.instance<IConstantsProvider>(),
+            accountProvider: GetIt.instance<IAccountProvider>(),
           ),
         ),
         RepositoryProvider(
           create: (context) => TransactionRepository(
             transactionProvider: GetIt.instance<ITransactionProvider>(),
             budgetValueProvider: GetIt.instance<IBudgetValueProvider>(),
-            constantsProvider: GetIt.instance<IConstantsProvider>(),
+            accountProvider: GetIt.instance<IAccountProvider>(),
           ),
         ),
         RepositoryProvider(

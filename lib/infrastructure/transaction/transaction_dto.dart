@@ -51,12 +51,14 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
         required String receiverName,
     @JsonKey(toJson: ignore, includeIfNull: false)
         required double? receiverBalance, // optional because payee does not have balance
-    required String receiverId,
+    @JsonKey(fromJson: convertToString)
+        required String receiverId,
     @JsonKey(toJson: ignore, includeIfNull: false)
         required String giverName,
     @JsonKey(toJson: ignore, includeIfNull: false)
         required double? giverBalance, // optional because payee does not have balance
-    required String giverId,
+    @JsonKey(fromJson: convertToString)
+        required String giverId,
   }) = _TransactionDTO;
 
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {

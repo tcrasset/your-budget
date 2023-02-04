@@ -120,8 +120,8 @@ class SQFliteAccountProvider implements IAccountProvider {
   @override
   Either<ValueFailure, Account> getToBeBudgeted() {
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
-    final index =
-        accounts.indexWhere((account) => account.name == DatabaseConstants.TO_BE_BUDGETED);
+    final index = accounts
+        .indexWhere((account) => account.name.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED);
     if (index >= 0) {
       return right(accounts[index]);
     } else {

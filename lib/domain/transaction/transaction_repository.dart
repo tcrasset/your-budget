@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
@@ -16,12 +17,10 @@ import 'package:your_budget/models/utils.dart';
 class TransactionRepository {
   final ITransactionProvider transactionProvider;
   final IBudgetValueProvider budgetValueProvider;
-  final IConstantsProvider constantsProvider;
   final IAccountProvider accountProvider;
   TransactionRepository({
     required this.transactionProvider,
     required this.budgetValueProvider,
-    required this.constantsProvider,
     required this.accountProvider,
   });
 
@@ -35,7 +34,7 @@ class TransactionRepository {
 
   Future<Either<ValueFailure, Unit>> createTransaction(MoneyTransaction transaction) async {
     // TODO: Implement SQL transactions and rollback on error
-    Either<ValueFailure, Unit>? failureOrSuccess = await transactionProvider.create(transaction);
+    Either<ValueFailure, Unit> failureOrSuccess = await transactionProvider.create(transaction);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
       // Most transactions do not update the budget values
@@ -58,37 +57,10 @@ class TransactionRepository {
         return right(unit);
       }
 
-      final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
-          await budgetValueProvider.getBudgetValuesBySubcategory(
-        subcategoryId: transaction.subcategory!.id,
-      );
-
-      if (failureOrBudgetvalues.isLeft()) {
-        return left(failureOrBudgetvalues as ValueFailure);
-      }
-
-      List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
-
-      // Remove the transaction amount to each budget value's available field
-      // TODO: return error values if one fails using functional programming
-      final toUpdate = budgetvalues
-          .where(
-            (element) =>
-                isMonthBetweenInclusive(
-                  query: element.date,
-                  lowerBound: transaction.date,
-                  upperBound: getMaxBudgetDate(),
-                ) &&
-                element.subcategoryId == transaction.subcategory!.id,
-          )
-          .map((value) => value.copyWith(available: value.available + transaction.amount))
-          .toList();
-
-      final failureOrUnit = await budgetValueProvider.updateAll(toUpdate);
-
-      return failureOrUnit.fold(
-        (l) => left(failureOrUnit as ValueFailure),
-        (r) => right(unit),
+      return await _updateBudgetvalues(
+        budgetValueProvider,
+        transaction,
+        (Amount a, Amount b) => a + b,
       );
     });
   }
@@ -97,50 +69,75 @@ class TransactionRepository {
     Either<ValueFailure, Unit>? failureOrSuccess = await transactionProvider.delete(transaction.id);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
+      if (transaction.type == MoneyTransactionType.initial) {
+        // Even though the user is not supposed to be able to call this function
+        // directly through the transactions page, he can delete accounts
+        // which will indirectly call this.
+        // Delete the TBB transaction that was added alongside the transaction to the account
+        final tobeBudgetedAccount = accountProvider.getToBeBudgeted();
+        accountProvider
+            .getToBeBudgeted()
+            .flatMap((a) => transactionProvider.getAccountTransactions(a.id))
+            .fold((l) => left(l), (tobeBudgetedTransactions) async {
+          final tbbtransaction =
+              tobeBudgetedTransactions.firstWhere((t) => t.date == transaction.date);
+          return (await transactionProvider.delete(tbbtransaction.id)).fold(
+            (l) => left(l),
+            (r) => right(unit),
+          );
+        });
+      }
       // Most transactions do not update the budget values
-      if (transaction.subcategory == null) {
+      if (transaction.type == MoneyTransactionType.betweenAccount ||
+          transaction.type == MoneyTransactionType.toBeBudgeted) {
         return right(unit);
       }
 
-      final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
-          await budgetValueProvider.getBudgetValuesBySubcategory(
-        subcategoryId: transaction.subcategory!.id,
-      );
-
-      if (failureOrBudgetvalues.isLeft()) {
-        return left(failureOrBudgetvalues as ValueFailure);
-      }
-
-      List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
-
-      // Add transaction amount to each budget value's available field
-      // TODO: return error values if one fails using functional programming
-      final toUpdate = budgetvalues
-          .where(
-            (element) =>
-                isMonthBetweenInclusive(
-                    query: element.date,
-                    lowerBound: transaction.date,
-                    upperBound: getMaxBudgetDate()) &&
-                element.subcategoryId == transaction.subcategory!.id,
-          )
-          .map((value) => value.copyWith(available: value.available - transaction.amount))
-          .toList();
-
-      final failureOrUnit = await budgetValueProvider.updateAll(toUpdate);
-
-      return failureOrUnit.fold((l) => left(l), (_) => right(unit));
+      return await _updateBudgetvalues(
+          budgetValueProvider, transaction, (Amount a, Amount b) => a - b);
     });
   }
+}
 
-  Future<Either<ValueFailure<dynamic>, Amount>> _getToBeBudgeted() async {
-    return (await constantsProvider.getToBeBudgeted()).flatMap((a) => right(Amount.fromDouble(a)));
+Future<FutureOr<Either<ValueFailure<dynamic>, Unit>>> _updateBudgetvalues(
+  IBudgetValueProvider budgetValueProvider,
+  MoneyTransaction transaction,
+  Amount Function(Amount a, Amount b) addOrSubtract,
+) async {
+  final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
+      await budgetValueProvider.getBudgetValuesBySubcategory(
+    subcategoryId: transaction.subcategory!.id,
+  );
+
+  if (failureOrBudgetvalues.isLeft()) {
+    return left(failureOrBudgetvalues as ValueFailure);
   }
 
-  Future<Either<ValueFailure, Unit>> _setToBeBudgeted(Amount toBeBudgeted) async {
-    return toBeBudgeted.value.fold(
-      (l) => left(l),
-      (r) async => (await constantsProvider.setToBeBudgeted(r)).flatMap((a) => right(unit)),
-    );
-  }
+  List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
+
+  // Remove the transaction amount to each budget value's available field
+  // TODO: return error values if one fails using functional programming
+  final toUpdate = budgetvalues
+      .where(
+        (element) =>
+            isMonthBetweenInclusive(
+              query: element.date,
+              lowerBound: transaction.date,
+              upperBound: getMaxBudgetDate(),
+            ) &&
+            element.subcategoryId == transaction.subcategory!.id,
+      )
+      .map(
+        (value) => value.copyWith(
+          available: addOrSubtract(value.available, transaction.amount),
+        ),
+      )
+      .toList();
+
+  final failureOrUnit = await budgetValueProvider.updateAll(toUpdate);
+
+  return failureOrUnit.fold(
+    (l) => left(failureOrUnit as ValueFailure),
+    (r) => right(unit),
+  );
 }

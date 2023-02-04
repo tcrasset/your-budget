@@ -68,7 +68,7 @@ class AccountRepository {
         (l) => left(l),
         (payee) => failureOrPayee.fold(
           (l) => left(l),
-          (payee) {
+          (payee) async {
             final MoneyTransaction transaction = MoneyTransaction(
               id: UniqueId(),
               subcategory: null,
@@ -80,7 +80,27 @@ class AccountRepository {
               type: MoneyTransactionType.initial,
             );
 
-            return transactionProvider.create(transaction);
+            final Either<ValueFailure, Unit> failureOrSuccess =
+                await transactionProvider.create(transaction);
+
+            return failureOrSuccess.fold((l) => left(l), (_) async {
+              final tobeBudgeted = accountProvider.getToBeBudgeted();
+              // Most transactions do not update the budget values
+
+              return await tobeBudgeted.fold(
+                (l) => left(l),
+                (account) async => (await transactionProvider.create(
+                  transaction.copyWith(
+                    receiver: right(account),
+                    type: MoneyTransactionType.toBeBudgeted,
+                  ),
+                ))
+                    .fold(
+                  (l) => left(l),
+                  (r) => right(unit),
+                ),
+              );
+            });
           },
         ),
       ),
@@ -88,7 +108,33 @@ class AccountRepository {
   }
 
   Future<Either<ValueFailure<dynamic>, Unit>> deleteAccount(Account account) async {
-    return (await accountProvider.delete(account.id)).fold((l) => left(l), (r) => right(unit));
+    return (await accountProvider.delete(account.id)).fold((l) => left(l), (_) async {
+      final Either<ValueFailure, MoneyTransaction> failureOrTransaction = transactionProvider
+          .getAccountTransactions(account.id)
+          .flatMap((tbbAccount) => transactionProvider.getAccountTransactions(account.id))
+          .fold((l) => left(l), (accountTransactions) {
+        return right(accountTransactions.firstWhere((element) => element.receiverId == account.id));
+      });
+
+      if (failureOrTransaction.isLeft()) {
+        return left(failureOrTransaction as ValueFailure);
+      }
+
+      return (await transactionProvider.delete((failureOrTransaction as MoneyTransaction).id))
+          .fold((l) => left(l), (_) {
+        return accountProvider
+            .getToBeBudgeted()
+            .flatMap((tbbAccount) => transactionProvider.getAccountTransactions(tbbAccount.id))
+            .fold((l) => left(l), (tobeBudgetedTransactions) async {
+          final tbbtransaction = tobeBudgetedTransactions
+              .firstWhere((t) => t.date == (failureOrTransaction as MoneyTransaction).date);
+          return (await transactionProvider.delete(tbbtransaction.id)).fold(
+            (l) => left(l),
+            (r) => right(unit),
+          );
+        });
+      });
+    });
   }
 
   Future<Account?> getNextAccount(Account? account) async {

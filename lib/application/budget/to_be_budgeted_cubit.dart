@@ -15,9 +15,9 @@ class ToBeBudgetedCubit extends Cubit<Amount> {
     required this.toBeBudgetedRepository,
   }) : super(initialAmount);
 
-  Future<void> update() async {
+  void update() {
     Amount newAmount =
-        (await toBeBudgetedRepository.getToBeBudgeted()).getOrElse(() => Amount.fromDouble(0));
-    emit(newAmount + Amount.fromDouble(Random().nextInt(25).toDouble()));
+        (toBeBudgetedRepository.getToBeBudgeted()).getOrElse(() => Amount.fromDouble(0));
+    emit(newAmount);
   }
 }

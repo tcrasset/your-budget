@@ -18,10 +18,10 @@ _$_TransactionDTO _$$_TransactionDTOFromJson(Map<String, dynamic> json) =>
       subcatCategoryId: json['categoryID'] as String?,
       receiverName: json['receiverName'] as String,
       receiverBalance: (json['receiverBalance'] as num?)?.toDouble(),
-      receiverId: json['receiverId'] as String,
+      receiverId: convertToString(json['receiverId'] as int),
       giverName: json['giverName'] as String,
       giverBalance: (json['giverBalance'] as num?)?.toDouble(),
-      giverId: json['giverId'] as String,
+      giverId: convertToString(json['giverId'] as int),
     );
 
 Map<String, dynamic> _$$_TransactionDTOToJson(_$_TransactionDTO instance) {
