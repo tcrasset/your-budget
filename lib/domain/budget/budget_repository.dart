@@ -4,6 +4,8 @@ import 'dart:core';
 import 'package:dartz/dartz.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:your_budget/domain/account/account.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budget/budget.dart';
 import 'package:your_budget/domain/budget/budget_entry.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
@@ -24,11 +26,13 @@ class BudgetRepository {
   final IBudgetValueProvider budgetvalueProvider;
   final ISubcategoryProvider subcategoryProvider;
   final ICategoryProvider categoryProvider;
+  final IAccountProvider accountProvider;
 
   BudgetRepository({
     required this.subcategoryProvider,
     required this.categoryProvider,
     required this.budgetvalueProvider,
+    required this.accountProvider,
   });
 
   Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> get _subcategories =>
@@ -49,6 +53,11 @@ class BudgetRepository {
     final difference = value.budgeted - failureOrPrevious.budgeted;
     final updated = value.copyWith(available: value.available + difference);
     budgetvalueProvider.update(updated);
+
+    final tobeBudgetedAccount = accountProvider.getToBeBudgeted().getOrElse(() => throw Exception);
+
+    accountProvider
+        .update(tobeBudgetedAccount.copyWith(balance: tobeBudgetedAccount.balance - difference));
 
     final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
         await budgetvalueProvider.getBudgetValuesBySubcategory(subcategoryId: value.subcategoryId);

@@ -6,6 +6,7 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
+import 'package:your_budget/models/constants.dart';
 
 class ToBeBudgetedRepository {
   final ISubcategoryProvider subcategoryProvider;
@@ -20,8 +21,17 @@ class ToBeBudgetedRepository {
     required this.constantsProvider,
   });
 
-  Either<ValueFailure<dynamic>, Amount> getToBeBudgeted() {
-    return (accountProvider.getToBeBudgeted()).flatMap((a) => right(a.balance));
+  Stream<Either<ValueFailure<dynamic>, Amount>> getToBeBudgeted() {
+    return accountProvider.watchAllAccounts().map(
+          (event) => event.flatMap(
+            (account) => right(
+              account
+                  .singleWhere(
+                      (element) => element.name.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED)
+                  .balance,
+            ),
+          ),
+        );
   }
 
   Future<Either<ValueFailure, Unit>> setToBeBudgeted(Amount toBeBudgeted) async {

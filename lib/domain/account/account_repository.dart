@@ -62,6 +62,7 @@ class AccountRepository {
     final Either<ValueFailure, Account> failureOrAccount = accountProvider.get(accountId);
     final Either<ValueFailure, Payee> failureOrPayee =
         await payeeProvider.getStartingBalancePayee();
+
     return failureOrAccount.fold(
       (l) => left(l),
       (account) => failureOrPayee.fold(

@@ -1,10 +1,11 @@
 // Flutter imports:
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:your_budget/application/budget/to_be_budgeted_bloc/to_be_budgeted_bloc.dart';
 
 // Package imports:
-import 'package:your_budget/application/budget/to_be_budgeted_cubit.dart';
-import 'package:your_budget/domain/core/amount.dart';
 
 // Project imports:
 import 'package:your_budget/models/constants.dart';
@@ -31,8 +32,18 @@ class ToBeBudgeted extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: BlocBuilder<ToBeBudgetedCubit, Amount>(
-              builder: (context, state) => Text(state.getOrCrash().toString()),
+            child: BlocBuilder<ToBeBudgetedBloc, ToBeBudgetedState>(
+              builder: (context, state) {
+                switch (state.status) {
+                  case ToBeBudgetedStatus.initial:
+                  case ToBeBudgetedStatus.loading:
+                    return const CircularProgressIndicator();
+                  case ToBeBudgetedStatus.failure:
+                    return const Text("Failure", style: TextStyle(color: Colors.red));
+                  case ToBeBudgetedStatus.success:
+                    return Text(state.amount.getOrCrash().toStringAsFixed(2));
+                }
+              },
             ),
           ),
         ],
