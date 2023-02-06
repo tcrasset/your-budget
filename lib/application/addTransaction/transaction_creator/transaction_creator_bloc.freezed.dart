@@ -20,7 +20,7 @@ mixin _$TransactionCreatorEvent {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -32,7 +32,7 @@ mixin _$TransactionCreatorEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -44,7 +44,7 @@ mixin _$TransactionCreatorEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -57,7 +57,7 @@ mixin _$TransactionCreatorEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -69,7 +69,7 @@ mixin _$TransactionCreatorEvent {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -81,7 +81,7 @@ mixin _$TransactionCreatorEvent {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -152,7 +152,7 @@ class _$_Initialized implements _Initialized {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -167,7 +167,7 @@ class _$_Initialized implements _Initialized {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -182,7 +182,7 @@ class _$_Initialized implements _Initialized {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -201,7 +201,7 @@ class _$_Initialized implements _Initialized {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -216,7 +216,7 @@ class _$_Initialized implements _Initialized {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -231,7 +231,7 @@ class _$_Initialized implements _Initialized {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -317,7 +317,7 @@ class _$_AmountChanged implements _AmountChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -332,7 +332,7 @@ class _$_AmountChanged implements _AmountChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -347,7 +347,7 @@ class _$_AmountChanged implements _AmountChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -366,7 +366,7 @@ class _$_AmountChanged implements _AmountChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -381,7 +381,7 @@ class _$_AmountChanged implements _AmountChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -396,7 +396,7 @@ class _$_AmountChanged implements _AmountChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -421,89 +421,80 @@ abstract class _AmountChanged implements TransactionCreatorEvent {
 }
 
 /// @nodoc
-abstract class _$$_PayeeChangedCopyWith<$Res> {
-  factory _$$_PayeeChangedCopyWith(
-          _$_PayeeChanged value, $Res Function(_$_PayeeChanged) then) =
-      __$$_PayeeChangedCopyWithImpl<$Res>;
-  $Res call({Payee payee});
-
-  $PayeeCopyWith<$Res> get payee;
+abstract class _$$_ReceiverChangedCopyWith<$Res> {
+  factory _$$_ReceiverChangedCopyWith(
+          _$_ReceiverChanged value, $Res Function(_$_ReceiverChanged) then) =
+      __$$_ReceiverChangedCopyWithImpl<$Res>;
+  $Res call({Either<Payee, Account> payable});
 }
 
 /// @nodoc
-class __$$_PayeeChangedCopyWithImpl<$Res>
+class __$$_ReceiverChangedCopyWithImpl<$Res>
     extends _$TransactionCreatorEventCopyWithImpl<$Res>
-    implements _$$_PayeeChangedCopyWith<$Res> {
-  __$$_PayeeChangedCopyWithImpl(
-      _$_PayeeChanged _value, $Res Function(_$_PayeeChanged) _then)
-      : super(_value, (v) => _then(v as _$_PayeeChanged));
+    implements _$$_ReceiverChangedCopyWith<$Res> {
+  __$$_ReceiverChangedCopyWithImpl(
+      _$_ReceiverChanged _value, $Res Function(_$_ReceiverChanged) _then)
+      : super(_value, (v) => _then(v as _$_ReceiverChanged));
 
   @override
-  _$_PayeeChanged get _value => super._value as _$_PayeeChanged;
+  _$_ReceiverChanged get _value => super._value as _$_ReceiverChanged;
 
   @override
   $Res call({
-    Object? payee = freezed,
+    Object? payable = freezed,
   }) {
-    return _then(_$_PayeeChanged(
-      payee == freezed
-          ? _value.payee
-          : payee // ignore: cast_nullable_to_non_nullable
-              as Payee,
+    return _then(_$_ReceiverChanged(
+      payable == freezed
+          ? _value.payable
+          : payable // ignore: cast_nullable_to_non_nullable
+              as Either<Payee, Account>,
     ));
-  }
-
-  @override
-  $PayeeCopyWith<$Res> get payee {
-    return $PayeeCopyWith<$Res>(_value.payee, (value) {
-      return _then(_value.copyWith(payee: value));
-    });
   }
 }
 
 /// @nodoc
 
-class _$_PayeeChanged implements _PayeeChanged {
-  const _$_PayeeChanged(this.payee);
+class _$_ReceiverChanged implements _ReceiverChanged {
+  const _$_ReceiverChanged(this.payable);
 
   @override
-  final Payee payee;
+  final Either<Payee, Account> payable;
 
   @override
   String toString() {
-    return 'TransactionCreatorEvent.payeeChanged(payee: $payee)';
+    return 'TransactionCreatorEvent.receiverChanged(payable: $payable)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PayeeChanged &&
-            const DeepCollectionEquality().equals(other.payee, payee));
+            other is _$_ReceiverChanged &&
+            const DeepCollectionEquality().equals(other.payable, payable));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(payee));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(payable));
 
   @JsonKey(ignore: true)
   @override
-  _$$_PayeeChangedCopyWith<_$_PayeeChanged> get copyWith =>
-      __$$_PayeeChangedCopyWithImpl<_$_PayeeChanged>(this, _$identity);
+  _$$_ReceiverChangedCopyWith<_$_ReceiverChanged> get copyWith =>
+      __$$_ReceiverChangedCopyWithImpl<_$_ReceiverChanged>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
     required TResult Function(String memo) memoChanged,
     required TResult Function() saved,
   }) {
-    return payeeChanged(payee);
+    return receiverChanged(payable);
   }
 
   @override
@@ -511,14 +502,14 @@ class _$_PayeeChanged implements _PayeeChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
     TResult Function(String memo)? memoChanged,
     TResult Function()? saved,
   }) {
-    return payeeChanged?.call(payee);
+    return receiverChanged?.call(payable);
   }
 
   @override
@@ -526,7 +517,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -534,8 +525,8 @@ class _$_PayeeChanged implements _PayeeChanged {
     TResult Function()? saved,
     required TResult orElse(),
   }) {
-    if (payeeChanged != null) {
-      return payeeChanged(payee);
+    if (receiverChanged != null) {
+      return receiverChanged(payable);
     }
     return orElse();
   }
@@ -545,14 +536,14 @@ class _$_PayeeChanged implements _PayeeChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
     required TResult Function(_MemoChanged value) memoChanged,
     required TResult Function(_Saved value) saved,
   }) {
-    return payeeChanged(this);
+    return receiverChanged(this);
   }
 
   @override
@@ -560,14 +551,14 @@ class _$_PayeeChanged implements _PayeeChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
     TResult Function(_MemoChanged value)? memoChanged,
     TResult Function(_Saved value)? saved,
   }) {
-    return payeeChanged?.call(this);
+    return receiverChanged?.call(this);
   }
 
   @override
@@ -575,7 +566,7 @@ class _$_PayeeChanged implements _PayeeChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -583,19 +574,20 @@ class _$_PayeeChanged implements _PayeeChanged {
     TResult Function(_Saved value)? saved,
     required TResult orElse(),
   }) {
-    if (payeeChanged != null) {
-      return payeeChanged(this);
+    if (receiverChanged != null) {
+      return receiverChanged(this);
     }
     return orElse();
   }
 }
 
-abstract class _PayeeChanged implements TransactionCreatorEvent {
-  const factory _PayeeChanged(final Payee payee) = _$_PayeeChanged;
+abstract class _ReceiverChanged implements TransactionCreatorEvent {
+  const factory _ReceiverChanged(final Either<Payee, Account> payable) =
+      _$_ReceiverChanged;
 
-  Payee get payee;
+  Either<Payee, Account> get payable;
   @JsonKey(ignore: true)
-  _$$_PayeeChangedCopyWith<_$_PayeeChanged> get copyWith =>
+  _$$_ReceiverChangedCopyWith<_$_ReceiverChanged> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -675,7 +667,7 @@ class _$_AccountChanged implements _AccountChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -690,7 +682,7 @@ class _$_AccountChanged implements _AccountChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -705,7 +697,7 @@ class _$_AccountChanged implements _AccountChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -724,7 +716,7 @@ class _$_AccountChanged implements _AccountChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -739,7 +731,7 @@ class _$_AccountChanged implements _AccountChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -754,7 +746,7 @@ class _$_AccountChanged implements _AccountChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -856,7 +848,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -871,7 +863,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -886,7 +878,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -905,7 +897,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -920,7 +912,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -935,7 +927,7 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -1027,7 +1019,7 @@ class _$_DateChanged implements _DateChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -1042,7 +1034,7 @@ class _$_DateChanged implements _DateChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -1057,7 +1049,7 @@ class _$_DateChanged implements _DateChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -1076,7 +1068,7 @@ class _$_DateChanged implements _DateChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -1091,7 +1083,7 @@ class _$_DateChanged implements _DateChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -1106,7 +1098,7 @@ class _$_DateChanged implements _DateChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -1197,7 +1189,7 @@ class _$_MemoChanged implements _MemoChanged {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -1212,7 +1204,7 @@ class _$_MemoChanged implements _MemoChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -1227,7 +1219,7 @@ class _$_MemoChanged implements _MemoChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -1246,7 +1238,7 @@ class _$_MemoChanged implements _MemoChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -1261,7 +1253,7 @@ class _$_MemoChanged implements _MemoChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -1276,7 +1268,7 @@ class _$_MemoChanged implements _MemoChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -1341,7 +1333,7 @@ class _$_Saved implements _Saved {
   TResult when<TResult extends Object?>({
     required TResult Function() initialized,
     required TResult Function(String amount) amountChanged,
-    required TResult Function(Payee payee) payeeChanged,
+    required TResult Function(Either<Payee, Account> payable) receiverChanged,
     required TResult Function(Account account) accountChanged,
     required TResult Function(Subcategory subcategory) subcategoryChanged,
     required TResult Function(DateTime date) dateChanged,
@@ -1356,7 +1348,7 @@ class _$_Saved implements _Saved {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -1371,7 +1363,7 @@ class _$_Saved implements _Saved {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialized,
     TResult Function(String amount)? amountChanged,
-    TResult Function(Payee payee)? payeeChanged,
+    TResult Function(Either<Payee, Account> payable)? receiverChanged,
     TResult Function(Account account)? accountChanged,
     TResult Function(Subcategory subcategory)? subcategoryChanged,
     TResult Function(DateTime date)? dateChanged,
@@ -1390,7 +1382,7 @@ class _$_Saved implements _Saved {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initialized value) initialized,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_PayeeChanged value) payeeChanged,
+    required TResult Function(_ReceiverChanged value) receiverChanged,
     required TResult Function(_AccountChanged value) accountChanged,
     required TResult Function(_SubcategoryChanged value) subcategoryChanged,
     required TResult Function(_DateChanged value) dateChanged,
@@ -1405,7 +1397,7 @@ class _$_Saved implements _Saved {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,
@@ -1420,7 +1412,7 @@ class _$_Saved implements _Saved {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initialized value)? initialized,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_PayeeChanged value)? payeeChanged,
+    TResult Function(_ReceiverChanged value)? receiverChanged,
     TResult Function(_AccountChanged value)? accountChanged,
     TResult Function(_SubcategoryChanged value)? subcategoryChanged,
     TResult Function(_DateChanged value)? dateChanged,

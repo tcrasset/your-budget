@@ -7,13 +7,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:your_budget/application/addTransaction/payee_field/payee_field_bloc.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
+import 'package:your_budget/domain/account/account_repository.dart';
+import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/payee/i_payee_provider.dart';
+import 'package:your_budget/domain/payee/payee_repository.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
@@ -43,71 +48,84 @@ class AddTransactionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TransactionCreatorBloc(
-        transactionRepository: context.read<TransactionRepository>(),
-      )..add(const TransactionCreatorEvent.initialized()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("New transaction"),
-          leading: const Icon(Constants.ADD_TRANSACTION_ICON),
-          actions: <Widget>[
-            const Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: Icon(FontAwesomeIcons.bars),
-            ),
-          ],
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider(
+          create: (context) => PayeeRepository(
+            payeeProvider: GetIt.instance<IPayeeProvider>(),
+          ),
         ),
-        body: BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
-          listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
-          listener: (context, state) {
-            TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
-            state.saveFailureOrSuccessOption.fold(
-              () /*None*/ {},
-              (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
-                (failure) => showErrorSnackbar(failure, context),
-                (_) /*Success*/ {
-                  bloc.add(const TransactionCreatorEvent.initialized());
-                },
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => TransactionCreatorBloc(
+              transactionRepository: context.read<TransactionRepository>(),
+            )..add(const TransactionCreatorEvent.initialized()),
+          ),
+        ],
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text("New transaction"),
+            leading: const Icon(Constants.ADD_TRANSACTION_ICON),
+            actions: <Widget>[
+              const Padding(
+                padding: EdgeInsets.only(right: 10.0),
+                child: Icon(FontAwesomeIcons.bars),
               ),
-            );
-          },
-          buildWhen: (p, c) => p.isSaving != c.isSaving,
-          builder: (context, state) {
-            return Form(
-              autovalidateMode:
-                  state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: const AmountInputRow(
-                            onAmountChange: _onAmountChange,
-                            validateAmount: _validateAmount,
-                          ),
-                        ),
-                        const ReceiverName(),
-                        const GiverField(),
-                        const SubcategoryField(),
-                        const DateField(),
-                        const MemoField(),
-                      ],
-                    ),
-                    FloatingActionButton(
-                      onPressed: () => context
-                          .read<TransactionCreatorBloc>()
-                          .add(const TransactionCreatorEvent.saved()),
-                      child: const Text("Enter"),
-                    )
-                  ],
+            ],
+          ),
+          body: BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
+            listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
+            listener: (context, state) {
+              TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
+              state.saveFailureOrSuccessOption.fold(
+                () /*None*/ {},
+                (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
+                  (failure) => showErrorSnackbar(failure, context),
+                  (_) /*Success*/ {
+                    bloc.add(const TransactionCreatorEvent.initialized());
+                  },
                 ),
-              ),
-            );
-          },
+              );
+            },
+            buildWhen: (p, c) => p.isSaving != c.isSaving,
+            builder: (context, state) {
+              return Form(
+                autovalidateMode:
+                    state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.centerRight,
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                            child: const AmountInputRow(
+                              onAmountChange: _onAmountChange,
+                              validateAmount: _validateAmount,
+                            ),
+                          ),
+                          const ReceiverName(),
+                          const GiverField(),
+                          const SubcategoryField(),
+                          const DateField(),
+                          const MemoField(),
+                        ],
+                      ),
+                      FloatingActionButton(
+                        onPressed: () => context
+                            .read<TransactionCreatorBloc>()
+                            .add(const TransactionCreatorEvent.saved()),
+                        child: const Text("Enter"),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

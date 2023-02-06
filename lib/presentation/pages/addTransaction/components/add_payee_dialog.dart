@@ -17,11 +17,7 @@ import 'package:your_budget/domain/payee/i_payee_provider.dart';
 Future<String?> addPayeeDialog({required BuildContext superContext, String? defaultValue}) {
   return showDialog(
     context: superContext,
-    builder: (_) => // Provide the existing BLoC instance to the new route (the dialog)
-        BlocProvider<PayeeWatcherBloc>.value(
-      value: BlocProvider.of<PayeeWatcherBloc>(superContext), //
-      child: PayeeNameForm(defaultValue: defaultValue!),
-    ),
+    builder: (_) => PayeeNameForm(defaultValue: defaultValue!),
   );
 }
 
@@ -48,8 +44,6 @@ class PayeeNameForm extends HookWidget {
             (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
               (failure) => showErrorSnackbar(failure, context),
               (_) /*Success*/ {
-                // Pop context and refetch the payees
-                context.read<PayeeWatcherBloc>().add(const PayeeWatcherEvent.watchPayeesStarted());
                 Navigator.pop(context); //Temporary fix
               },
             ),

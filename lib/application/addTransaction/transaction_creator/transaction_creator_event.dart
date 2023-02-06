@@ -5,7 +5,8 @@ class TransactionCreatorEvent with _$TransactionCreatorEvent {
   const factory TransactionCreatorEvent.initialized() = _Initialized;
 
   const factory TransactionCreatorEvent.amountChanged(String amount) = _AmountChanged;
-  const factory TransactionCreatorEvent.payeeChanged(Payee payee) = _PayeeChanged;
+  const factory TransactionCreatorEvent.receiverChanged(Either<Payee, Account> payable) =
+      _ReceiverChanged;
   const factory TransactionCreatorEvent.accountChanged(Account account) = _AccountChanged;
   const factory TransactionCreatorEvent.subcategoryChanged(Subcategory subcategory) =
       _SubcategoryChanged;

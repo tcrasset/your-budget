@@ -36,7 +36,7 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     on<_Initialized>((event, emit) => emit(TransactionCreatorState.initial()));
     on<_AmountChanged>(_onAmountChanged);
     on<_AccountChanged>(_onAccountChanged);
-    on<_PayeeChanged>(_onPayeeChanged);
+    on<_ReceiverChanged>(_onReceiverChanged);
     on<_DateChanged>(_onDateChanged);
     on<_SubcategoryChanged>(_onSubcategoryChanged);
     on<_MemoChanged>(_onMemoChanged);
@@ -59,9 +59,9 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     emit(newState);
   }
 
-  void _onPayeeChanged(_PayeeChanged event, Emitter<TransactionCreatorState> emit) {
+  void _onReceiverChanged(_ReceiverChanged event, Emitter<TransactionCreatorState> emit) {
     final newState = state.copyWith(
-      moneyTransaction: state.moneyTransaction.copyWith(receiver: left(event.payee)),
+      moneyTransaction: state.moneyTransaction.copyWith(receiver: event.payable),
       saveFailureOrSuccessOption: none(),
     );
     emit(newState);

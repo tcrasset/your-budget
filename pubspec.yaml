@@ -44,6 +44,7 @@ dependencies:
   bloc: ^8.1.0
   bloc_concurrency: ^0.2.0
   rxdart: ^0.26.0
+  json_annotation: ^4.7.0
 
 dev_dependencies:
   flutter_test:
