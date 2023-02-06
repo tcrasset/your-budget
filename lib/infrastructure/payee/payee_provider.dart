@@ -1,68 +1,69 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
-
-// Project imports:
-import 'package:your_budget/domain/payee/payee.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
-import 'package:your_budget/models/constants.dart';
+// Project imports:
+import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/infrastructure/payee/payee_dto.dart';
+import 'package:your_budget/models/constants.dart';
 
 class SQFlitePayeeProvider implements IPayeeProvider {
   final Database? database;
-  SQFlitePayeeProvider({required this.database});
+  SQFlitePayeeProvider({required this.database}) {
+    _init();
+  }
+
+  Future<void> _init() async {
+    _payeeStreamController.add(await getAllPayees());
+  }
+
+  final _payeeStreamController =
+      BehaviorSubject<Either<ValueFailure, List<Payee>>>.seeded(const Right([]));
 
   @override
-  Future<Either<ValueFailure, int?>> count() async {
-    try {
-      const sql = """
-        SELECT COUNT(*) FROM ${DatabaseConstants.payeeTable};
-        """;
-      final data = await database!.rawQuery(sql);
-
-      return right(Sqflite.firstIntValue(data));
-    } on DatabaseException catch (e) {
-      return left(ValueFailure.unexpected(message: e.toString()));
-    }
+  Future<Either<ValueFailure, int>> count() async {
+    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
+    return right(payees.length);
   }
 
   @override
   Future<Either<ValueFailure, Unit>> create(Payee payee) async {
+    late int id;
     try {
-      final PayeeDTO payeeDTO = PayeeDTO.fromDomain(payee);
-      await database!.insert(DatabaseConstants.payeeTable, payeeDTO.toJson());
-      return right(unit);
+      id =
+          await database!.insert(DatabaseConstants.payeeTable, PayeeDTO.fromDomain(payee).toJson());
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
         return left(ValueFailure.uniqueName(failedValue: e.toString()));
       }
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
+    if (id == 0) {
+      return left(
+          ValueFailure.unexpected(message: "Payee with id ${payee.id} could not be created."));
+    }
+
+    payees.add(payee.copyWith(id: UniqueId.fromUniqueInt(id)));
+    _payeeStreamController.add(Right(payees));
+
+    return right(unit);
   }
 
   @override
   Future<Either<ValueFailure, List<Payee>>> getAllPayees() async {
     try {
-      const sql = """
-        SELECT * FROM ${DatabaseConstants.payeeTable}
-        ORDER BY ${DatabaseConstants.PAYEE_NAME} DESC;
-        """;
-
-      final data = await database!.rawQuery(sql);
-      final List<Payee> payees = [];
-      for (final rawPayee in data) {
-        final PayeeDTO payeeDTO = PayeeDTO.fromJson(rawPayee);
-        payees.add(payeeDTO.toDomain());
-      }
-
-      return right(payees);
+      final data = await database!.query(DatabaseConstants.payeeTable);
+      return right(
+        data.map((payee) => PayeeDTO.fromJson(payee)).map((payee) => payee.toDomain()).toList(),
+      );
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
@@ -70,24 +71,18 @@ class SQFlitePayeeProvider implements IPayeeProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Payee>>> watchAllPayees() {
-    return getAllPayees().asStream();
+    return _payeeStreamController.asBroadcastStream();
   }
 
   @override
   Future<Either<ValueFailure, Payee>> getStartingBalancePayee() async {
-    try {
-      const sql = """
-        SELECT * FROM ${DatabaseConstants.payeeTable}
-        WHERE ${DatabaseConstants.PAYEE_NAME}  = '${DatabaseConstants.STARTING_BALANCE_PAYEE_NAME}';
-        """;
-
-      final data = await database!.rawQuery(sql);
-      final PayeeDTO payeeDTO = PayeeDTO.fromJson(data.first);
-      final Payee payee = payeeDTO.toDomain();
-
-      return right(payee);
-    } on DatabaseException catch (e) {
-      return left(ValueFailure.unexpected(message: e.toString()));
+    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
+    final index = payees.indexWhere(
+        (payee) => payee.name.getOrCrash() == DatabaseConstants.STARTING_BALANCE_PAYEE_NAME);
+    if (index >= 0) {
+      return right(payees[index]);
+    } else {
+      return left(const ValueFailure.unexpected(message: "Payee not in current stream."));
     }
   }
 }
