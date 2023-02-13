@@ -11,6 +11,7 @@ import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
+import 'package:your_budget/models/constants.dart';
 
 part 'transaction.freezed.dart';
 
@@ -65,6 +66,22 @@ class MoneyTransaction with _$MoneyTransaction {
       );
 
   Option<ValueFailure<dynamic>> get failureOption {
+    final bool isInflowTransactionIntoToBeBudgeted = !amount.getOrCrash().isNegative &&
+        giverBalance.isNone() /* missing giverBalance means it's a Payee */ &&
+        subcategory!.name.getOrCrash() != DatabaseConstants.TO_BE_BUDGETED;
+
+    if (isInflowTransactionIntoToBeBudgeted) {
+      // Inflow transactions with Payee can only be made towards TO_BE_BUDGETED subcategory
+      return some(const ValueFailure.inflowTransactionNotIntoToBeBudgeted());
+    }
+
+    final bool isOutflowTransactionFromToBeBudgeted = amount.getOrCrash().isNegative &&
+        giverName.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED;
+
+    if (isOutflowTransactionFromToBeBudgeted) {
+      // Outflow transactions cannot be made from TO_BE_BUDGETED.
+      return some(const ValueFailure.outflowTransactionFromToBeBudgeted());
+    }
     return amount.failureOrUnit.andThen(memo.failureOrUnit).fold(
           (f) => some(f),
           (_) => none(),

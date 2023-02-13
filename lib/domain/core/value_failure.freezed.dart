@@ -25,17 +25,21 @@ mixin _$ValueFailure<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,6 +51,8 @@ mixin _$ValueFailure<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -59,17 +65,25 @@ mixin _$ValueFailure<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,6 +95,10 @@ mixin _$ValueFailure<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -90,17 +108,18 @@ mixin _$ValueFailure<T> {
 abstract class $ValueFailureCopyWith<T, $Res> {
   factory $ValueFailureCopyWith(
           ValueFailure<T> value, $Res Function(ValueFailure<T>) then) =
-      _$ValueFailureCopyWithImpl<T, $Res>;
+      _$ValueFailureCopyWithImpl<T, $Res, ValueFailure<T>>;
 }
 
 /// @nodoc
-class _$ValueFailureCopyWithImpl<T, $Res>
+class _$ValueFailureCopyWithImpl<T, $Res, $Val extends ValueFailure<T>>
     implements $ValueFailureCopyWith<T, $Res> {
   _$ValueFailureCopyWithImpl(this._value, this._then);
 
-  final ValueFailure<T> _value;
   // ignore: unused_field
-  final $Res Function(ValueFailure<T>) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -108,26 +127,25 @@ abstract class _$$InvalidTransactionCopyWith<T, $Res> {
   factory _$$InvalidTransactionCopyWith(_$InvalidTransaction<T> value,
           $Res Function(_$InvalidTransaction<T>) then) =
       __$$InvalidTransactionCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$InvalidTransactionCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$InvalidTransaction<T>>
     implements _$$InvalidTransactionCopyWith<T, $Res> {
   __$$InvalidTransactionCopyWithImpl(_$InvalidTransaction<T> _value,
       $Res Function(_$InvalidTransaction<T>) _then)
-      : super(_value, (v) => _then(v as _$InvalidTransaction<T>));
+      : super(_value, _then);
 
-  @override
-  _$InvalidTransaction<T> get _value => super._value as _$InvalidTransaction<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$InvalidTransaction<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -153,16 +171,16 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InvalidTransaction<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$InvalidTransactionCopyWith<T, _$InvalidTransaction<T>> get copyWith =>
       __$$InvalidTransactionCopyWithImpl<T, _$InvalidTransaction<T>>(
           this, _$identity);
@@ -177,6 +195,8 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return invalidTransaction(failedValue);
   }
@@ -184,13 +204,15 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return invalidTransaction?.call(failedValue);
   }
@@ -205,6 +227,8 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (invalidTransaction != null) {
@@ -223,6 +247,10 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return invalidTransaction(this);
   }
@@ -230,13 +258,17 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return invalidTransaction?.call(this);
   }
@@ -251,6 +283,10 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (invalidTransaction != null) {
@@ -275,26 +311,25 @@ abstract class _$$UnexpectedCopyWith<T, $Res> {
   factory _$$UnexpectedCopyWith(
           _$Unexpected<T> value, $Res Function(_$Unexpected<T>) then) =
       __$$UnexpectedCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String message});
 }
 
 /// @nodoc
 class __$$UnexpectedCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$Unexpected<T>>
     implements _$$UnexpectedCopyWith<T, $Res> {
   __$$UnexpectedCopyWithImpl(
       _$Unexpected<T> _value, $Res Function(_$Unexpected<T>) _then)
-      : super(_value, (v) => _then(v as _$Unexpected<T>));
+      : super(_value, _then);
 
-  @override
-  _$Unexpected<T> get _value => super._value as _$Unexpected<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? message = freezed,
+    Object? message = null,
   }) {
     return _then(_$Unexpected<T>(
-      message: message == freezed
+      message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String,
@@ -320,15 +355,15 @@ class _$Unexpected<T> implements Unexpected<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$Unexpected<T> &&
-            const DeepCollectionEquality().equals(other.message, message));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(message));
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$UnexpectedCopyWith<T, _$Unexpected<T>> get copyWith =>
       __$$UnexpectedCopyWithImpl<T, _$Unexpected<T>>(this, _$identity);
 
@@ -342,6 +377,8 @@ class _$Unexpected<T> implements Unexpected<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return unexpected(message);
   }
@@ -349,13 +386,15 @@ class _$Unexpected<T> implements Unexpected<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return unexpected?.call(message);
   }
@@ -370,6 +409,8 @@ class _$Unexpected<T> implements Unexpected<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -388,6 +429,10 @@ class _$Unexpected<T> implements Unexpected<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return unexpected(this);
   }
@@ -395,13 +440,17 @@ class _$Unexpected<T> implements Unexpected<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return unexpected?.call(this);
   }
@@ -416,6 +465,10 @@ class _$Unexpected<T> implements Unexpected<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -439,26 +492,25 @@ abstract class _$$_LongNameCopyWith<T, $Res> {
   factory _$$_LongNameCopyWith(
           _$_LongName<T> value, $Res Function(_$_LongName<T>) then) =
       __$$_LongNameCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_LongNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_LongName<T>>
     implements _$$_LongNameCopyWith<T, $Res> {
   __$$_LongNameCopyWithImpl(
       _$_LongName<T> _value, $Res Function(_$_LongName<T>) _then)
-      : super(_value, (v) => _then(v as _$_LongName<T>));
+      : super(_value, _then);
 
-  @override
-  _$_LongName<T> get _value => super._value as _$_LongName<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_LongName<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -484,16 +536,16 @@ class _$_LongName<T> implements _LongName<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LongName<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LongNameCopyWith<T, _$_LongName<T>> get copyWith =>
       __$$_LongNameCopyWithImpl<T, _$_LongName<T>>(this, _$identity);
 
@@ -507,6 +559,8 @@ class _$_LongName<T> implements _LongName<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return longName(failedValue);
   }
@@ -514,13 +568,15 @@ class _$_LongName<T> implements _LongName<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return longName?.call(failedValue);
   }
@@ -535,6 +591,8 @@ class _$_LongName<T> implements _LongName<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (longName != null) {
@@ -553,6 +611,10 @@ class _$_LongName<T> implements _LongName<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return longName(this);
   }
@@ -560,13 +622,17 @@ class _$_LongName<T> implements _LongName<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return longName?.call(this);
   }
@@ -581,6 +647,10 @@ class _$_LongName<T> implements _LongName<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (longName != null) {
@@ -604,26 +674,25 @@ abstract class _$$_EmptyNameCopyWith<T, $Res> {
   factory _$$_EmptyNameCopyWith(
           _$_EmptyName<T> value, $Res Function(_$_EmptyName<T>) then) =
       __$$_EmptyNameCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_EmptyNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_EmptyName<T>>
     implements _$$_EmptyNameCopyWith<T, $Res> {
   __$$_EmptyNameCopyWithImpl(
       _$_EmptyName<T> _value, $Res Function(_$_EmptyName<T>) _then)
-      : super(_value, (v) => _then(v as _$_EmptyName<T>));
+      : super(_value, _then);
 
-  @override
-  _$_EmptyName<T> get _value => super._value as _$_EmptyName<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_EmptyName<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -649,16 +718,16 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_EmptyName<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_EmptyNameCopyWith<T, _$_EmptyName<T>> get copyWith =>
       __$$_EmptyNameCopyWithImpl<T, _$_EmptyName<T>>(this, _$identity);
 
@@ -672,6 +741,8 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return emptyName(failedValue);
   }
@@ -679,13 +750,15 @@ class _$_EmptyName<T> implements _EmptyName<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return emptyName?.call(failedValue);
   }
@@ -700,6 +773,8 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (emptyName != null) {
@@ -718,6 +793,10 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return emptyName(this);
   }
@@ -725,13 +804,17 @@ class _$_EmptyName<T> implements _EmptyName<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return emptyName?.call(this);
   }
@@ -746,6 +829,10 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (emptyName != null) {
@@ -770,26 +857,25 @@ abstract class _$$_UniqueNameCopyWith<T, $Res> {
   factory _$$_UniqueNameCopyWith(
           _$_UniqueName<T> value, $Res Function(_$_UniqueName<T>) then) =
       __$$_UniqueNameCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_UniqueNameCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_UniqueName<T>>
     implements _$$_UniqueNameCopyWith<T, $Res> {
   __$$_UniqueNameCopyWithImpl(
       _$_UniqueName<T> _value, $Res Function(_$_UniqueName<T>) _then)
-      : super(_value, (v) => _then(v as _$_UniqueName<T>));
+      : super(_value, _then);
 
-  @override
-  _$_UniqueName<T> get _value => super._value as _$_UniqueName<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_UniqueName<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -815,16 +901,16 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UniqueName<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_UniqueNameCopyWith<T, _$_UniqueName<T>> get copyWith =>
       __$$_UniqueNameCopyWithImpl<T, _$_UniqueName<T>>(this, _$identity);
 
@@ -838,6 +924,8 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return uniqueName(failedValue);
   }
@@ -845,13 +933,15 @@ class _$_UniqueName<T> implements _UniqueName<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return uniqueName?.call(failedValue);
   }
@@ -866,6 +956,8 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (uniqueName != null) {
@@ -884,6 +976,10 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return uniqueName(this);
   }
@@ -891,13 +987,17 @@ class _$_UniqueName<T> implements _UniqueName<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return uniqueName?.call(this);
   }
@@ -912,6 +1012,10 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (uniqueName != null) {
@@ -936,26 +1040,25 @@ abstract class _$$_InvalidAmountCopyWith<T, $Res> {
   factory _$$_InvalidAmountCopyWith(
           _$_InvalidAmount<T> value, $Res Function(_$_InvalidAmount<T>) then) =
       __$$_InvalidAmountCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_InvalidAmountCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_InvalidAmount<T>>
     implements _$$_InvalidAmountCopyWith<T, $Res> {
   __$$_InvalidAmountCopyWithImpl(
       _$_InvalidAmount<T> _value, $Res Function(_$_InvalidAmount<T>) _then)
-      : super(_value, (v) => _then(v as _$_InvalidAmount<T>));
+      : super(_value, _then);
 
-  @override
-  _$_InvalidAmount<T> get _value => super._value as _$_InvalidAmount<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_InvalidAmount<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -981,16 +1084,16 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_InvalidAmount<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_InvalidAmountCopyWith<T, _$_InvalidAmount<T>> get copyWith =>
       __$$_InvalidAmountCopyWithImpl<T, _$_InvalidAmount<T>>(this, _$identity);
 
@@ -1004,6 +1107,8 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return invalidAmount(failedValue);
   }
@@ -1011,13 +1116,15 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return invalidAmount?.call(failedValue);
   }
@@ -1032,6 +1139,8 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (invalidAmount != null) {
@@ -1050,6 +1159,10 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return invalidAmount(this);
   }
@@ -1057,13 +1170,17 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return invalidAmount?.call(this);
   }
@@ -1078,6 +1195,10 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (invalidAmount != null) {
@@ -1102,26 +1223,25 @@ abstract class _$$_TooLargeAmountCopyWith<T, $Res> {
   factory _$$_TooLargeAmountCopyWith(_$_TooLargeAmount<T> value,
           $Res Function(_$_TooLargeAmount<T>) then) =
       __$$_TooLargeAmountCopyWithImpl<T, $Res>;
+  @useResult
   $Res call({String failedValue});
 }
 
 /// @nodoc
 class __$$_TooLargeAmountCopyWithImpl<T, $Res>
-    extends _$ValueFailureCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res, _$_TooLargeAmount<T>>
     implements _$$_TooLargeAmountCopyWith<T, $Res> {
   __$$_TooLargeAmountCopyWithImpl(
       _$_TooLargeAmount<T> _value, $Res Function(_$_TooLargeAmount<T>) _then)
-      : super(_value, (v) => _then(v as _$_TooLargeAmount<T>));
+      : super(_value, _then);
 
-  @override
-  _$_TooLargeAmount<T> get _value => super._value as _$_TooLargeAmount<T>;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? failedValue = freezed,
+    Object? failedValue = null,
   }) {
     return _then(_$_TooLargeAmount<T>(
-      failedValue: failedValue == freezed
+      failedValue: null == failedValue
           ? _value.failedValue
           : failedValue // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1147,16 +1267,16 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TooLargeAmount<T> &&
-            const DeepCollectionEquality()
-                .equals(other.failedValue, failedValue));
+            (identical(other.failedValue, failedValue) ||
+                other.failedValue == failedValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(failedValue));
+  int get hashCode => Object.hash(runtimeType, failedValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TooLargeAmountCopyWith<T, _$_TooLargeAmount<T>> get copyWith =>
       __$$_TooLargeAmountCopyWithImpl<T, _$_TooLargeAmount<T>>(
           this, _$identity);
@@ -1171,6 +1291,8 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     required TResult Function(String failedValue) uniqueName,
     required TResult Function(String failedValue) invalidAmount,
     required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
   }) {
     return tooBigAmount(failedValue);
   }
@@ -1178,13 +1300,15 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String failedValue)? invalidTransaction,
-    TResult Function(String message)? unexpected,
-    TResult Function(String failedValue)? longName,
-    TResult Function(String failedValue)? emptyName,
-    TResult Function(String failedValue)? uniqueName,
-    TResult Function(String failedValue)? invalidAmount,
-    TResult Function(String failedValue)? tooBigAmount,
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
   }) {
     return tooBigAmount?.call(failedValue);
   }
@@ -1199,6 +1323,8 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     TResult Function(String failedValue)? uniqueName,
     TResult Function(String failedValue)? invalidAmount,
     TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (tooBigAmount != null) {
@@ -1217,6 +1343,10 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     required TResult Function(_UniqueName<T> value) uniqueName,
     required TResult Function(_InvalidAmount<T> value) invalidAmount,
     required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
   }) {
     return tooBigAmount(this);
   }
@@ -1224,13 +1354,17 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
-    TResult Function(Unexpected<T> value)? unexpected,
-    TResult Function(_LongName<T> value)? longName,
-    TResult Function(_EmptyName<T> value)? emptyName,
-    TResult Function(_UniqueName<T> value)? uniqueName,
-    TResult Function(_InvalidAmount<T> value)? invalidAmount,
-    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
   }) {
     return tooBigAmount?.call(this);
   }
@@ -1245,6 +1379,10 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     TResult Function(_UniqueName<T> value)? uniqueName,
     TResult Function(_InvalidAmount<T> value)? invalidAmount,
     TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
     required TResult orElse(),
   }) {
     if (tooBigAmount != null) {
@@ -1262,4 +1400,318 @@ abstract class _TooLargeAmount<T> implements ValueFailure<T> {
   @JsonKey(ignore: true)
   _$$_TooLargeAmountCopyWith<T, _$_TooLargeAmount<T>> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$_InflowTransactionNotInToBeBudgetedCopyWith<T, $Res> {
+  factory _$$_InflowTransactionNotInToBeBudgetedCopyWith(
+          _$_InflowTransactionNotInToBeBudgeted<T> value,
+          $Res Function(_$_InflowTransactionNotInToBeBudgeted<T>) then) =
+      __$$_InflowTransactionNotInToBeBudgetedCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$_InflowTransactionNotInToBeBudgetedCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res,
+        _$_InflowTransactionNotInToBeBudgeted<T>>
+    implements _$$_InflowTransactionNotInToBeBudgetedCopyWith<T, $Res> {
+  __$$_InflowTransactionNotInToBeBudgetedCopyWithImpl(
+      _$_InflowTransactionNotInToBeBudgeted<T> _value,
+      $Res Function(_$_InflowTransactionNotInToBeBudgeted<T>) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_InflowTransactionNotInToBeBudgeted<T>
+    implements _InflowTransactionNotInToBeBudgeted<T> {
+  const _$_InflowTransactionNotInToBeBudgeted();
+
+  @override
+  String toString() {
+    return 'ValueFailure<$T>.inflowTransactionNotIntoToBeBudgeted()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_InflowTransactionNotInToBeBudgeted<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) invalidTransaction,
+    required TResult Function(String message) unexpected,
+    required TResult Function(String failedValue) longName,
+    required TResult Function(String failedValue) emptyName,
+    required TResult Function(String failedValue) uniqueName,
+    required TResult Function(String failedValue) invalidAmount,
+    required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
+  }) {
+    return inflowTransactionNotIntoToBeBudgeted();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
+  }) {
+    return inflowTransactionNotIntoToBeBudgeted?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? invalidTransaction,
+    TResult Function(String message)? unexpected,
+    TResult Function(String failedValue)? longName,
+    TResult Function(String failedValue)? emptyName,
+    TResult Function(String failedValue)? uniqueName,
+    TResult Function(String failedValue)? invalidAmount,
+    TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
+    required TResult orElse(),
+  }) {
+    if (inflowTransactionNotIntoToBeBudgeted != null) {
+      return inflowTransactionNotIntoToBeBudgeted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTransaction<T> value) invalidTransaction,
+    required TResult Function(Unexpected<T> value) unexpected,
+    required TResult Function(_LongName<T> value) longName,
+    required TResult Function(_EmptyName<T> value) emptyName,
+    required TResult Function(_UniqueName<T> value) uniqueName,
+    required TResult Function(_InvalidAmount<T> value) invalidAmount,
+    required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
+  }) {
+    return inflowTransactionNotIntoToBeBudgeted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
+  }) {
+    return inflowTransactionNotIntoToBeBudgeted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult Function(Unexpected<T> value)? unexpected,
+    TResult Function(_LongName<T> value)? longName,
+    TResult Function(_EmptyName<T> value)? emptyName,
+    TResult Function(_UniqueName<T> value)? uniqueName,
+    TResult Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
+    required TResult orElse(),
+  }) {
+    if (inflowTransactionNotIntoToBeBudgeted != null) {
+      return inflowTransactionNotIntoToBeBudgeted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InflowTransactionNotInToBeBudgeted<T>
+    implements ValueFailure<T> {
+  const factory _InflowTransactionNotInToBeBudgeted() =
+      _$_InflowTransactionNotInToBeBudgeted<T>;
+}
+
+/// @nodoc
+abstract class _$$_OutflowTransactionFromInToBeBudgetedCopyWith<T, $Res> {
+  factory _$$_OutflowTransactionFromInToBeBudgetedCopyWith(
+          _$_OutflowTransactionFromInToBeBudgeted<T> value,
+          $Res Function(_$_OutflowTransactionFromInToBeBudgeted<T>) then) =
+      __$$_OutflowTransactionFromInToBeBudgetedCopyWithImpl<T, $Res>;
+}
+
+/// @nodoc
+class __$$_OutflowTransactionFromInToBeBudgetedCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res,
+        _$_OutflowTransactionFromInToBeBudgeted<T>>
+    implements _$$_OutflowTransactionFromInToBeBudgetedCopyWith<T, $Res> {
+  __$$_OutflowTransactionFromInToBeBudgetedCopyWithImpl(
+      _$_OutflowTransactionFromInToBeBudgeted<T> _value,
+      $Res Function(_$_OutflowTransactionFromInToBeBudgeted<T>) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_OutflowTransactionFromInToBeBudgeted<T>
+    implements _OutflowTransactionFromInToBeBudgeted<T> {
+  const _$_OutflowTransactionFromInToBeBudgeted();
+
+  @override
+  String toString() {
+    return 'ValueFailure<$T>.outflowTransactionFromToBeBudgeted()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_OutflowTransactionFromInToBeBudgeted<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) invalidTransaction,
+    required TResult Function(String message) unexpected,
+    required TResult Function(String failedValue) longName,
+    required TResult Function(String failedValue) emptyName,
+    required TResult Function(String failedValue) uniqueName,
+    required TResult Function(String failedValue) invalidAmount,
+    required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
+  }) {
+    return outflowTransactionFromToBeBudgeted();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
+  }) {
+    return outflowTransactionFromToBeBudgeted?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? invalidTransaction,
+    TResult Function(String message)? unexpected,
+    TResult Function(String failedValue)? longName,
+    TResult Function(String failedValue)? emptyName,
+    TResult Function(String failedValue)? uniqueName,
+    TResult Function(String failedValue)? invalidAmount,
+    TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
+    required TResult orElse(),
+  }) {
+    if (outflowTransactionFromToBeBudgeted != null) {
+      return outflowTransactionFromToBeBudgeted();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTransaction<T> value) invalidTransaction,
+    required TResult Function(Unexpected<T> value) unexpected,
+    required TResult Function(_LongName<T> value) longName,
+    required TResult Function(_EmptyName<T> value) emptyName,
+    required TResult Function(_UniqueName<T> value) uniqueName,
+    required TResult Function(_InvalidAmount<T> value) invalidAmount,
+    required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
+  }) {
+    return outflowTransactionFromToBeBudgeted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
+  }) {
+    return outflowTransactionFromToBeBudgeted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult Function(Unexpected<T> value)? unexpected,
+    TResult Function(_LongName<T> value)? longName,
+    TResult Function(_EmptyName<T> value)? emptyName,
+    TResult Function(_UniqueName<T> value)? uniqueName,
+    TResult Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
+    required TResult orElse(),
+  }) {
+    if (outflowTransactionFromToBeBudgeted != null) {
+      return outflowTransactionFromToBeBudgeted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OutflowTransactionFromInToBeBudgeted<T>
+    implements ValueFailure<T> {
+  const factory _OutflowTransactionFromInToBeBudgeted() =
+      _$_OutflowTransactionFromInToBeBudgeted<T>;
 }

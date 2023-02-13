@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
@@ -37,9 +38,16 @@ class TransactionRepository {
     Either<ValueFailure, Unit> failureOrSuccess = await transactionProvider.create(transaction);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
-      if (transaction.type == MoneyTransactionType.betweenAccount ||
-          transaction.type == MoneyTransactionType.toBeBudgeted) {
+      if (transaction.type == MoneyTransactionType.betweenAccount) {
         return right(unit);
+      }
+
+      if (transaction.type == MoneyTransactionType.toBeBudgeted) {
+        // Need to add the amount in toBeBudgeted too
+        return accountProvider.getToBeBudgeted().fold(
+              (l) => left(l),
+              (account) async => await _updateToBeBudgetedAccount(account, transaction),
+            );
       }
 
       return await _updateBudgetvalues(
@@ -48,6 +56,19 @@ class TransactionRepository {
         (Amount a, Amount b) => a + b,
       );
     });
+  }
+
+  Future<FutureOr<Either<ValueFailure<dynamic>, Unit>>> _updateToBeBudgetedAccount(
+    Account account,
+    MoneyTransaction transaction,
+  ) async {
+    return (await accountProvider.update(
+      account.copyWith(balance: account.balance + transaction.amount),
+    ))
+        .fold(
+      (l) => left(l),
+      (r) => right(unit),
+    );
   }
 
   Future<Either<ValueFailure, Unit>> deleteTransaction(MoneyTransaction transaction) async {

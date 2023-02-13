@@ -28,34 +28,37 @@ mixin _$PayableEntries {
 abstract class $PayableEntriesCopyWith<$Res> {
   factory $PayableEntriesCopyWith(
           PayableEntries value, $Res Function(PayableEntries) then) =
-      _$PayableEntriesCopyWithImpl<$Res>;
+      _$PayableEntriesCopyWithImpl<$Res, PayableEntries>;
+  @useResult
   $Res call({List<Payee> payees, List<Account> accounts});
 }
 
 /// @nodoc
-class _$PayableEntriesCopyWithImpl<$Res>
+class _$PayableEntriesCopyWithImpl<$Res, $Val extends PayableEntries>
     implements $PayableEntriesCopyWith<$Res> {
   _$PayableEntriesCopyWithImpl(this._value, this._then);
 
-  final PayableEntries _value;
   // ignore: unused_field
-  final $Res Function(PayableEntries) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payees = freezed,
-    Object? accounts = freezed,
+    Object? payees = null,
+    Object? accounts = null,
   }) {
     return _then(_value.copyWith(
-      payees: payees == freezed
+      payees: null == payees
           ? _value.payees
           : payees // ignore: cast_nullable_to_non_nullable
               as List<Payee>,
-      accounts: accounts == freezed
+      accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<Account>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -66,31 +69,30 @@ abstract class _$$_PaybaleEntriesCopyWith<$Res>
           _$_PaybaleEntries value, $Res Function(_$_PaybaleEntries) then) =
       __$$_PaybaleEntriesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<Payee> payees, List<Account> accounts});
 }
 
 /// @nodoc
 class __$$_PaybaleEntriesCopyWithImpl<$Res>
-    extends _$PayableEntriesCopyWithImpl<$Res>
+    extends _$PayableEntriesCopyWithImpl<$Res, _$_PaybaleEntries>
     implements _$$_PaybaleEntriesCopyWith<$Res> {
   __$$_PaybaleEntriesCopyWithImpl(
       _$_PaybaleEntries _value, $Res Function(_$_PaybaleEntries) _then)
-      : super(_value, (v) => _then(v as _$_PaybaleEntries));
+      : super(_value, _then);
 
-  @override
-  _$_PaybaleEntries get _value => super._value as _$_PaybaleEntries;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payees = freezed,
-    Object? accounts = freezed,
+    Object? payees = null,
+    Object? accounts = null,
   }) {
     return _then(_$_PaybaleEntries(
-      payees: payees == freezed
+      payees: null == payees
           ? _value._payees
           : payees // ignore: cast_nullable_to_non_nullable
               as List<Payee>,
-      accounts: accounts == freezed
+      accounts: null == accounts
           ? _value._accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<Account>,
@@ -143,6 +145,7 @@ class _$_PaybaleEntries implements _PaybaleEntries {
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_PaybaleEntriesCopyWith<_$_PaybaleEntries> get copyWith =>
       __$$_PaybaleEntriesCopyWithImpl<_$_PaybaleEntries>(this, _$identity);
 }
@@ -172,8 +175,8 @@ mixin _$PayeeFieldEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function()? watchPayableRequested,
+    TResult? Function()? initialized,
+    TResult? Function()? watchPayableRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -192,8 +195,8 @@ mixin _$PayeeFieldEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_WatchPayableRequested value)? watchPayableRequested,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_WatchPayableRequested value)? watchPayableRequested,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -209,17 +212,18 @@ mixin _$PayeeFieldEvent {
 abstract class $PayeeFieldEventCopyWith<$Res> {
   factory $PayeeFieldEventCopyWith(
           PayeeFieldEvent value, $Res Function(PayeeFieldEvent) then) =
-      _$PayeeFieldEventCopyWithImpl<$Res>;
+      _$PayeeFieldEventCopyWithImpl<$Res, PayeeFieldEvent>;
 }
 
 /// @nodoc
-class _$PayeeFieldEventCopyWithImpl<$Res>
+class _$PayeeFieldEventCopyWithImpl<$Res, $Val extends PayeeFieldEvent>
     implements $PayeeFieldEventCopyWith<$Res> {
   _$PayeeFieldEventCopyWithImpl(this._value, this._then);
 
-  final PayeeFieldEvent _value;
   // ignore: unused_field
-  final $Res Function(PayeeFieldEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -231,14 +235,11 @@ abstract class _$$_InitializedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitializedCopyWithImpl<$Res>
-    extends _$PayeeFieldEventCopyWithImpl<$Res>
+    extends _$PayeeFieldEventCopyWithImpl<$Res, _$_Initialized>
     implements _$$_InitializedCopyWith<$Res> {
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
-      : super(_value, (v) => _then(v as _$_Initialized));
-
-  @override
-  _$_Initialized get _value => super._value as _$_Initialized;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -272,8 +273,8 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function()? watchPayableRequested,
+    TResult? Function()? initialized,
+    TResult? Function()? watchPayableRequested,
   }) {
     return initialized?.call();
   }
@@ -304,8 +305,8 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_WatchPayableRequested value)? watchPayableRequested,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_WatchPayableRequested value)? watchPayableRequested,
   }) {
     return initialized?.call(this);
   }
@@ -337,15 +338,11 @@ abstract class _$$_WatchPayableRequestedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_WatchPayableRequestedCopyWithImpl<$Res>
-    extends _$PayeeFieldEventCopyWithImpl<$Res>
+    extends _$PayeeFieldEventCopyWithImpl<$Res, _$_WatchPayableRequested>
     implements _$$_WatchPayableRequestedCopyWith<$Res> {
   __$$_WatchPayableRequestedCopyWithImpl(_$_WatchPayableRequested _value,
       $Res Function(_$_WatchPayableRequested) _then)
-      : super(_value, (v) => _then(v as _$_WatchPayableRequested));
-
-  @override
-  _$_WatchPayableRequested get _value =>
-      super._value as _$_WatchPayableRequested;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -379,8 +376,8 @@ class _$_WatchPayableRequested implements _WatchPayableRequested {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function()? watchPayableRequested,
+    TResult? Function()? initialized,
+    TResult? Function()? watchPayableRequested,
   }) {
     return watchPayableRequested?.call();
   }
@@ -411,8 +408,8 @@ class _$_WatchPayableRequested implements _WatchPayableRequested {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_WatchPayableRequested value)? watchPayableRequested,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_WatchPayableRequested value)? watchPayableRequested,
   }) {
     return watchPayableRequested?.call(this);
   }
@@ -447,10 +444,10 @@ mixin _$PayeeFieldState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(PayableEntries entries)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> error)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(PayableEntries entries)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> error)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -472,10 +469,10 @@ mixin _$PayeeFieldState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadSuccess value)? loadSuccess,
+    TResult? Function(_LoadFailure value)? loadFailure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -493,17 +490,18 @@ mixin _$PayeeFieldState {
 abstract class $PayeeFieldStateCopyWith<$Res> {
   factory $PayeeFieldStateCopyWith(
           PayeeFieldState value, $Res Function(PayeeFieldState) then) =
-      _$PayeeFieldStateCopyWithImpl<$Res>;
+      _$PayeeFieldStateCopyWithImpl<$Res, PayeeFieldState>;
 }
 
 /// @nodoc
-class _$PayeeFieldStateCopyWithImpl<$Res>
+class _$PayeeFieldStateCopyWithImpl<$Res, $Val extends PayeeFieldState>
     implements $PayeeFieldStateCopyWith<$Res> {
   _$PayeeFieldStateCopyWithImpl(this._value, this._then);
 
-  final PayeeFieldState _value;
   // ignore: unused_field
-  final $Res Function(PayeeFieldState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -514,13 +512,11 @@ abstract class _$$_InitialCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res> extends _$PayeeFieldStateCopyWithImpl<$Res>
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$PayeeFieldStateCopyWithImpl<$Res, _$_Initial>
     implements _$$_InitialCopyWith<$Res> {
   __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
-      : super(_value, (v) => _then(v as _$_Initial));
-
-  @override
-  _$_Initial get _value => super._value as _$_Initial;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -556,10 +552,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(PayableEntries entries)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> error)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(PayableEntries entries)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> error)? loadFailure,
   }) {
     return initial?.call();
   }
@@ -593,10 +589,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadSuccess value)? loadSuccess,
+    TResult? Function(_LoadFailure value)? loadFailure,
   }) {
     return initial?.call(this);
   }
@@ -629,13 +625,11 @@ abstract class _$$_LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_LoadingCopyWithImpl<$Res> extends _$PayeeFieldStateCopyWithImpl<$Res>
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$PayeeFieldStateCopyWithImpl<$Res, _$_Loading>
     implements _$$_LoadingCopyWith<$Res> {
   __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
-      : super(_value, (v) => _then(v as _$_Loading));
-
-  @override
-  _$_Loading get _value => super._value as _$_Loading;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -671,10 +665,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(PayableEntries entries)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> error)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(PayableEntries entries)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> error)? loadFailure,
   }) {
     return loading?.call();
   }
@@ -708,10 +702,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadSuccess value)? loadSuccess,
+    TResult? Function(_LoadFailure value)? loadFailure,
   }) {
     return loading?.call(this);
   }
@@ -741,6 +735,7 @@ abstract class _$$_LoadSuccessCopyWith<$Res> {
   factory _$$_LoadSuccessCopyWith(
           _$_LoadSuccess value, $Res Function(_$_LoadSuccess) then) =
       __$$_LoadSuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({PayableEntries entries});
 
   $PayableEntriesCopyWith<$Res> get entries;
@@ -748,21 +743,19 @@ abstract class _$$_LoadSuccessCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadSuccessCopyWithImpl<$Res>
-    extends _$PayeeFieldStateCopyWithImpl<$Res>
+    extends _$PayeeFieldStateCopyWithImpl<$Res, _$_LoadSuccess>
     implements _$$_LoadSuccessCopyWith<$Res> {
   __$$_LoadSuccessCopyWithImpl(
       _$_LoadSuccess _value, $Res Function(_$_LoadSuccess) _then)
-      : super(_value, (v) => _then(v as _$_LoadSuccess));
+      : super(_value, _then);
 
-  @override
-  _$_LoadSuccess get _value => super._value as _$_LoadSuccess;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? entries = freezed,
+    Object? entries = null,
   }) {
     return _then(_$_LoadSuccess(
-      entries == freezed
+      null == entries
           ? _value.entries
           : entries // ignore: cast_nullable_to_non_nullable
               as PayableEntries,
@@ -770,6 +763,7 @@ class __$$_LoadSuccessCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PayableEntriesCopyWith<$Res> get entries {
     return $PayableEntriesCopyWith<$Res>(_value.entries, (value) {
       return _then(_value.copyWith(entries: value));
@@ -795,15 +789,15 @@ class _$_LoadSuccess implements _LoadSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoadSuccess &&
-            const DeepCollectionEquality().equals(other.entries, entries));
+            (identical(other.entries, entries) || other.entries == entries));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(entries));
+  int get hashCode => Object.hash(runtimeType, entries);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadSuccessCopyWith<_$_LoadSuccess> get copyWith =>
       __$$_LoadSuccessCopyWithImpl<_$_LoadSuccess>(this, _$identity);
 
@@ -821,10 +815,10 @@ class _$_LoadSuccess implements _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(PayableEntries entries)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> error)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(PayableEntries entries)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> error)? loadFailure,
   }) {
     return loadSuccess?.call(entries);
   }
@@ -858,10 +852,10 @@ class _$_LoadSuccess implements _LoadSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadSuccess value)? loadSuccess,
+    TResult? Function(_LoadFailure value)? loadFailure,
   }) {
     return loadSuccess?.call(this);
   }
@@ -896,6 +890,7 @@ abstract class _$$_LoadFailureCopyWith<$Res> {
   factory _$$_LoadFailureCopyWith(
           _$_LoadFailure value, $Res Function(_$_LoadFailure) then) =
       __$$_LoadFailureCopyWithImpl<$Res>;
+  @useResult
   $Res call({ValueFailure<dynamic> error});
 
   $ValueFailureCopyWith<dynamic, $Res> get error;
@@ -903,21 +898,19 @@ abstract class _$$_LoadFailureCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadFailureCopyWithImpl<$Res>
-    extends _$PayeeFieldStateCopyWithImpl<$Res>
+    extends _$PayeeFieldStateCopyWithImpl<$Res, _$_LoadFailure>
     implements _$$_LoadFailureCopyWith<$Res> {
   __$$_LoadFailureCopyWithImpl(
       _$_LoadFailure _value, $Res Function(_$_LoadFailure) _then)
-      : super(_value, (v) => _then(v as _$_LoadFailure));
+      : super(_value, _then);
 
-  @override
-  _$_LoadFailure get _value => super._value as _$_LoadFailure;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? error = freezed,
+    Object? error = null,
   }) {
     return _then(_$_LoadFailure(
-      error == freezed
+      null == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>,
@@ -925,6 +918,7 @@ class __$$_LoadFailureCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ValueFailureCopyWith<dynamic, $Res> get error {
     return $ValueFailureCopyWith<dynamic, $Res>(_value.error, (value) {
       return _then(_value.copyWith(error: value));
@@ -950,15 +944,15 @@ class _$_LoadFailure implements _LoadFailure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_LoadFailure &&
-            const DeepCollectionEquality().equals(other.error, error));
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(runtimeType, error);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_LoadFailureCopyWith<_$_LoadFailure> get copyWith =>
       __$$_LoadFailureCopyWithImpl<_$_LoadFailure>(this, _$identity);
 
@@ -976,10 +970,10 @@ class _$_LoadFailure implements _LoadFailure {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(PayableEntries entries)? loadSuccess,
-    TResult Function(ValueFailure<dynamic> error)? loadFailure,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(PayableEntries entries)? loadSuccess,
+    TResult? Function(ValueFailure<dynamic> error)? loadFailure,
   }) {
     return loadFailure?.call(error);
   }
@@ -1013,10 +1007,10 @@ class _$_LoadFailure implements _LoadFailure {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_LoadSuccess value)? loadSuccess,
-    TResult Function(_LoadFailure value)? loadFailure,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_LoadSuccess value)? loadSuccess,
+    TResult? Function(_LoadFailure value)? loadFailure,
   }) {
     return loadFailure?.call(this);
   }

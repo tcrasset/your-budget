@@ -34,7 +34,8 @@ mixin _$MoneyTransaction {
 abstract class $MoneyTransactionCopyWith<$Res> {
   factory $MoneyTransactionCopyWith(
           MoneyTransaction value, $Res Function(MoneyTransaction) then) =
-      _$MoneyTransactionCopyWithImpl<$Res>;
+      _$MoneyTransactionCopyWithImpl<$Res, MoneyTransaction>;
+  @useResult
   $Res call(
       {UniqueId id,
       Subcategory? subcategory,
@@ -49,69 +50,72 @@ abstract class $MoneyTransactionCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyTransactionCopyWithImpl<$Res>
+class _$MoneyTransactionCopyWithImpl<$Res, $Val extends MoneyTransaction>
     implements $MoneyTransactionCopyWith<$Res> {
   _$MoneyTransactionCopyWithImpl(this._value, this._then);
 
-  final MoneyTransaction _value;
   // ignore: unused_field
-  final $Res Function(MoneyTransaction) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? subcategory = freezed,
-    Object? receiver = freezed,
-    Object? giver = freezed,
-    Object? amount = freezed,
-    Object? memo = freezed,
-    Object? date = freezed,
-    Object? type = freezed,
+    Object? receiver = null,
+    Object? giver = null,
+    Object? amount = null,
+    Object? memo = null,
+    Object? date = null,
+    Object? type = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      subcategory: subcategory == freezed
+      subcategory: freezed == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as Subcategory?,
-      receiver: receiver == freezed
+      receiver: null == receiver
           ? _value.receiver
           : receiver // ignore: cast_nullable_to_non_nullable
               as Either<Payee, Account>,
-      giver: giver == freezed
+      giver: null == giver
           ? _value.giver
           : giver // ignore: cast_nullable_to_non_nullable
               as Either<Payee, Account>,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as Amount,
-      memo: memo == freezed
+      memo: null == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as Name,
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MoneyTransactionType,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SubcategoryCopyWith<$Res>? get subcategory {
     if (_value.subcategory == null) {
       return null;
     }
 
     return $SubcategoryCopyWith<$Res>(_value.subcategory!, (value) {
-      return _then(_value.copyWith(subcategory: value));
+      return _then(_value.copyWith(subcategory: value) as $Val);
     });
   }
 }
@@ -123,6 +127,7 @@ abstract class _$$_MoneyTransactionCopyWith<$Res>
           _$_MoneyTransaction value, $Res Function(_$_MoneyTransaction) then) =
       __$$_MoneyTransactionCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {UniqueId id,
       Subcategory? subcategory,
@@ -139,56 +144,54 @@ abstract class _$$_MoneyTransactionCopyWith<$Res>
 
 /// @nodoc
 class __$$_MoneyTransactionCopyWithImpl<$Res>
-    extends _$MoneyTransactionCopyWithImpl<$Res>
+    extends _$MoneyTransactionCopyWithImpl<$Res, _$_MoneyTransaction>
     implements _$$_MoneyTransactionCopyWith<$Res> {
   __$$_MoneyTransactionCopyWithImpl(
       _$_MoneyTransaction _value, $Res Function(_$_MoneyTransaction) _then)
-      : super(_value, (v) => _then(v as _$_MoneyTransaction));
+      : super(_value, _then);
 
-  @override
-  _$_MoneyTransaction get _value => super._value as _$_MoneyTransaction;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
+    Object? id = null,
     Object? subcategory = freezed,
-    Object? receiver = freezed,
-    Object? giver = freezed,
-    Object? amount = freezed,
-    Object? memo = freezed,
-    Object? date = freezed,
-    Object? type = freezed,
+    Object? receiver = null,
+    Object? giver = null,
+    Object? amount = null,
+    Object? memo = null,
+    Object? date = null,
+    Object? type = null,
   }) {
     return _then(_$_MoneyTransaction(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as UniqueId,
-      subcategory: subcategory == freezed
+      subcategory: freezed == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as Subcategory?,
-      receiver: receiver == freezed
+      receiver: null == receiver
           ? _value.receiver
           : receiver // ignore: cast_nullable_to_non_nullable
               as Either<Payee, Account>,
-      giver: giver == freezed
+      giver: null == giver
           ? _value.giver
           : giver // ignore: cast_nullable_to_non_nullable
               as Either<Payee, Account>,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as Amount,
-      memo: memo == freezed
+      memo: null == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as Name,
-      date: date == freezed
+      date: null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as MoneyTransactionType,
@@ -237,31 +240,25 @@ class _$_MoneyTransaction extends _MoneyTransaction {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MoneyTransaction &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.subcategory, subcategory) &&
-            const DeepCollectionEquality().equals(other.receiver, receiver) &&
-            const DeepCollectionEquality().equals(other.giver, giver) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality().equals(other.memo, memo) &&
-            const DeepCollectionEquality().equals(other.date, date) &&
-            const DeepCollectionEquality().equals(other.type, type));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.subcategory, subcategory) ||
+                other.subcategory == subcategory) &&
+            (identical(other.receiver, receiver) ||
+                other.receiver == receiver) &&
+            (identical(other.giver, giver) || other.giver == giver) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.memo, memo) || other.memo == memo) &&
+            (identical(other.date, date) || other.date == date) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(subcategory),
-      const DeepCollectionEquality().hash(receiver),
-      const DeepCollectionEquality().hash(giver),
-      const DeepCollectionEquality().hash(amount),
-      const DeepCollectionEquality().hash(memo),
-      const DeepCollectionEquality().hash(date),
-      const DeepCollectionEquality().hash(type));
+      runtimeType, id, subcategory, receiver, giver, amount, memo, date, type);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MoneyTransactionCopyWith<_$_MoneyTransaction> get copyWith =>
       __$$_MoneyTransactionCopyWithImpl<_$_MoneyTransaction>(this, _$identity);
 }

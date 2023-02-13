@@ -44,7 +44,8 @@ mixin _$BudgetValueDTO {
 abstract class $BudgetValueDTOCopyWith<$Res> {
   factory $BudgetValueDTOCopyWith(
           BudgetValueDTO value, $Res Function(BudgetValueDTO) then) =
-      _$BudgetValueDTOCopyWithImpl<$Res>;
+      _$BudgetValueDTOCopyWithImpl<$Res, BudgetValueDTO>;
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -61,49 +62,51 @@ abstract class $BudgetValueDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BudgetValueDTOCopyWithImpl<$Res>
+class _$BudgetValueDTOCopyWithImpl<$Res, $Val extends BudgetValueDTO>
     implements $BudgetValueDTOCopyWith<$Res> {
   _$BudgetValueDTOCopyWithImpl(this._value, this._then);
 
-  final BudgetValueDTO _value;
   // ignore: unused_field
-  final $Res Function(BudgetValueDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? subcategoryId = freezed,
-    Object? budgeted = freezed,
-    Object? available = freezed,
-    Object? month = freezed,
-    Object? year = freezed,
+    Object? id = null,
+    Object? subcategoryId = null,
+    Object? budgeted = null,
+    Object? available = null,
+    Object? month = null,
+    Object? year = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      subcategoryId: subcategoryId == freezed
+      subcategoryId: null == subcategoryId
           ? _value.subcategoryId
           : subcategoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      budgeted: budgeted == freezed
+      budgeted: null == budgeted
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as double,
-      available: available == freezed
+      available: null == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as double,
-      month: month == freezed
+      month: null == month
           ? _value.month
           : month // ignore: cast_nullable_to_non_nullable
               as int,
-      year: year == freezed
+      year: null == year
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
               as int,
-    ));
+    ) as $Val);
   }
 }
 
@@ -114,6 +117,7 @@ abstract class _$$_BudgetValueDTOCopyWith<$Res>
           _$_BudgetValueDTO value, $Res Function(_$_BudgetValueDTO) then) =
       __$$_BudgetValueDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -131,46 +135,44 @@ abstract class _$$_BudgetValueDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_BudgetValueDTOCopyWithImpl<$Res>
-    extends _$BudgetValueDTOCopyWithImpl<$Res>
+    extends _$BudgetValueDTOCopyWithImpl<$Res, _$_BudgetValueDTO>
     implements _$$_BudgetValueDTOCopyWith<$Res> {
   __$$_BudgetValueDTOCopyWithImpl(
       _$_BudgetValueDTO _value, $Res Function(_$_BudgetValueDTO) _then)
-      : super(_value, (v) => _then(v as _$_BudgetValueDTO));
+      : super(_value, _then);
 
-  @override
-  _$_BudgetValueDTO get _value => super._value as _$_BudgetValueDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? subcategoryId = freezed,
-    Object? budgeted = freezed,
-    Object? available = freezed,
-    Object? month = freezed,
-    Object? year = freezed,
+    Object? id = null,
+    Object? subcategoryId = null,
+    Object? budgeted = null,
+    Object? available = null,
+    Object? month = null,
+    Object? year = null,
   }) {
     return _then(_$_BudgetValueDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      subcategoryId: subcategoryId == freezed
+      subcategoryId: null == subcategoryId
           ? _value.subcategoryId
           : subcategoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      budgeted: budgeted == freezed
+      budgeted: null == budgeted
           ? _value.budgeted
           : budgeted // ignore: cast_nullable_to_non_nullable
               as double,
-      available: available == freezed
+      available: null == available
           ? _value.available
           : available // ignore: cast_nullable_to_non_nullable
               as double,
-      month: month == freezed
+      month: null == month
           ? _value.month
           : month // ignore: cast_nullable_to_non_nullable
               as int,
-      year: year == freezed
+      year: null == year
           ? _value.year
           : year // ignore: cast_nullable_to_non_nullable
               as int,
@@ -229,28 +231,25 @@ class _$_BudgetValueDTO extends _BudgetValueDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BudgetValueDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.subcategoryId, subcategoryId) &&
-            const DeepCollectionEquality().equals(other.budgeted, budgeted) &&
-            const DeepCollectionEquality().equals(other.available, available) &&
-            const DeepCollectionEquality().equals(other.month, month) &&
-            const DeepCollectionEquality().equals(other.year, year));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.subcategoryId, subcategoryId) ||
+                other.subcategoryId == subcategoryId) &&
+            (identical(other.budgeted, budgeted) ||
+                other.budgeted == budgeted) &&
+            (identical(other.available, available) ||
+                other.available == available) &&
+            (identical(other.month, month) || other.month == month) &&
+            (identical(other.year, year) || other.year == year));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(subcategoryId),
-      const DeepCollectionEquality().hash(budgeted),
-      const DeepCollectionEquality().hash(available),
-      const DeepCollectionEquality().hash(month),
-      const DeepCollectionEquality().hash(year));
+      runtimeType, id, subcategoryId, budgeted, available, month, year);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BudgetValueDTOCopyWith<_$_BudgetValueDTO> get copyWith =>
       __$$_BudgetValueDTOCopyWithImpl<_$_BudgetValueDTO>(this, _$identity);
 

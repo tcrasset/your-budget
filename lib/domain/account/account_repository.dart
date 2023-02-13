@@ -14,6 +14,7 @@ import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/models/constants.dart';
 
 class AccountRepository {
   final IAccountProvider accountProvider;
@@ -31,7 +32,19 @@ class AccountRepository {
   Stream<Either<ValueFailure<dynamic>, List<Account>>> _accounts() =>
       accountProvider.watchAllAccounts();
 
-  Stream<Either<ValueFailure<dynamic>, List<Account>>> getAccounts() => _accounts();
+  /// Returns all standard accounts, excluding the 'To Be Budgeted' Account
+  Stream<Either<ValueFailure<dynamic>, List<Account>>> getAccounts() => _accounts().map(
+        (event) => event.fold(
+          (l) => left(l),
+          (accounts) {
+            return right(
+              accounts
+                  .where((account) => account.name.getOrCrash() != DatabaseConstants.TO_BE_BUDGETED)
+                  .toList(),
+            );
+          },
+        ),
+      );
 
   Future<Either<ValueFailure<dynamic>, Unit>> createAccount(Account account) async {
     final Either<ValueFailure<dynamic>, UniqueId> failureOrId =
@@ -138,41 +151,38 @@ class AccountRepository {
     });
   }
 
-  Future<Account?> getNextAccount(Account? account) async {
-    final failureOrAccounts = await _accounts().first;
+  Future<Account?> getNextAccount(Account? account) async =>
+      _getNextOrPreviousAccount(account, shouldIncrement: true);
+
+  Future<Account?> getPreviousAccount(Account? account) async =>
+      _getNextOrPreviousAccount(account, shouldIncrement: false);
+
+  Future<Account?> _getNextOrPreviousAccount(
+    Account? currentAccount, {
+    required bool shouldIncrement,
+  }) async {
+    /// Return the next or previous account, respective to [currentAccount].
+    /// [shouldIncrement] specifies whether we go up or down the list.
+    /// Returns [null] if there is no valid account to select.
+
+    final failureOrAccounts = await getAccounts().first;
     return failureOrAccounts.fold(
       (l) => null,
       (accounts) {
+        final List<Account> candidateAccounts = accounts
+            .where((element) => element.name.getOrCrash() != DatabaseConstants.TO_BE_BUDGETED)
+            .toList();
+
         final int? nextIndex = _getIndex(
-          currentAccount: account,
-          accounts: accounts,
-          shouldIncrement: true,
+          currentAccount: currentAccount,
+          accounts: candidateAccounts,
+          shouldIncrement: shouldIncrement,
         );
 
         if (nextIndex == null) {
           return null;
         } else {
-          return accounts[nextIndex];
-        }
-      },
-    );
-  }
-
-  Future<Account?> getPreviousAccount(Account? account) async {
-    final failureOrAccounts = await _accounts().first;
-    return failureOrAccounts.fold(
-      (l) => null,
-      (accounts) {
-        final int? nextIndex = _getIndex(
-          currentAccount: account,
-          accounts: accounts,
-          shouldIncrement: false,
-        );
-
-        if (nextIndex == null) {
-          return null;
-        } else {
-          return accounts[nextIndex];
+          return candidateAccounts[nextIndex];
         }
       },
     );
@@ -183,22 +193,21 @@ class AccountRepository {
     required List<Account> accounts,
     required bool shouldIncrement,
   }) {
+    /// Return the next or previous account index in the [accounts], respective to [currentAccount].
+    /// [shouldIncrement] specifies whether we go up or down the list.
+    /// Returns [null] is [accounts] is empty.
     if (accounts.isEmpty) {
       return null;
     }
 
-    if (currentAccount == null) {
-      return 0;
+    if (currentAccount == null && accounts.isNotEmpty) {
+      return shouldIncrement ? 0 : accounts.length - 1;
     }
 
+    final int currentIndex = accounts.indexOf(currentAccount!);
     final int numberOfAccounts = accounts.length;
-    final int currentIndex = accounts.indexWhere((element) => element.id == currentAccount.id);
-    if (shouldIncrement) {
-      return (currentIndex + 1) % numberOfAccounts;
-    }
-    return (currentIndex - 1) % numberOfAccounts;
+    return shouldIncrement
+        ? (currentIndex + 1) % numberOfAccounts
+        : (currentIndex - 1) % numberOfAccounts;
   }
-
-  fold(AccountWatcherState Function(dynamic l) param0,
-      AccountWatcherState Function(dynamic accounts) param1) {}
 }

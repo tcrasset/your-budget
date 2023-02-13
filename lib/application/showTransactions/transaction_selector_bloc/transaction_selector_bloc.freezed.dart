@@ -25,9 +25,9 @@ mixin _$TransactionSelectorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MoneyTransaction transaction)? toggleSelected,
-    TResult Function()? deleteSelected,
-    TResult Function()? toggleModifying,
+    TResult? Function(MoneyTransaction transaction)? toggleSelected,
+    TResult? Function()? deleteSelected,
+    TResult? Function()? toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -47,9 +47,9 @@ mixin _$TransactionSelectorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ToggleSelected value)? toggleSelected,
-    TResult Function(_DeleteSelected value)? deleteSelected,
-    TResult Function(_ToggleModifying value)? toggleModifying,
+    TResult? Function(_ToggleSelected value)? toggleSelected,
+    TResult? Function(_DeleteSelected value)? deleteSelected,
+    TResult? Function(_ToggleModifying value)? toggleModifying,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -66,17 +66,19 @@ mixin _$TransactionSelectorEvent {
 abstract class $TransactionSelectorEventCopyWith<$Res> {
   factory $TransactionSelectorEventCopyWith(TransactionSelectorEvent value,
           $Res Function(TransactionSelectorEvent) then) =
-      _$TransactionSelectorEventCopyWithImpl<$Res>;
+      _$TransactionSelectorEventCopyWithImpl<$Res, TransactionSelectorEvent>;
 }
 
 /// @nodoc
-class _$TransactionSelectorEventCopyWithImpl<$Res>
+class _$TransactionSelectorEventCopyWithImpl<$Res,
+        $Val extends TransactionSelectorEvent>
     implements $TransactionSelectorEventCopyWith<$Res> {
   _$TransactionSelectorEventCopyWithImpl(this._value, this._then);
 
-  final TransactionSelectorEvent _value;
   // ignore: unused_field
-  final $Res Function(TransactionSelectorEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -84,6 +86,7 @@ abstract class _$$_ToggleSelectedCopyWith<$Res> {
   factory _$$_ToggleSelectedCopyWith(
           _$_ToggleSelected value, $Res Function(_$_ToggleSelected) then) =
       __$$_ToggleSelectedCopyWithImpl<$Res>;
+  @useResult
   $Res call({MoneyTransaction transaction});
 
   $MoneyTransactionCopyWith<$Res> get transaction;
@@ -91,21 +94,19 @@ abstract class _$$_ToggleSelectedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ToggleSelectedCopyWithImpl<$Res>
-    extends _$TransactionSelectorEventCopyWithImpl<$Res>
+    extends _$TransactionSelectorEventCopyWithImpl<$Res, _$_ToggleSelected>
     implements _$$_ToggleSelectedCopyWith<$Res> {
   __$$_ToggleSelectedCopyWithImpl(
       _$_ToggleSelected _value, $Res Function(_$_ToggleSelected) _then)
-      : super(_value, (v) => _then(v as _$_ToggleSelected));
+      : super(_value, _then);
 
-  @override
-  _$_ToggleSelected get _value => super._value as _$_ToggleSelected;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transaction = freezed,
+    Object? transaction = null,
   }) {
     return _then(_$_ToggleSelected(
-      transaction == freezed
+      null == transaction
           ? _value.transaction
           : transaction // ignore: cast_nullable_to_non_nullable
               as MoneyTransaction,
@@ -113,6 +114,7 @@ class __$$_ToggleSelectedCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MoneyTransactionCopyWith<$Res> get transaction {
     return $MoneyTransactionCopyWith<$Res>(_value.transaction, (value) {
       return _then(_value.copyWith(transaction: value));
@@ -138,16 +140,16 @@ class _$_ToggleSelected implements _ToggleSelected {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ToggleSelected &&
-            const DeepCollectionEquality()
-                .equals(other.transaction, transaction));
+            (identical(other.transaction, transaction) ||
+                other.transaction == transaction));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(transaction));
+  int get hashCode => Object.hash(runtimeType, transaction);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ToggleSelectedCopyWith<_$_ToggleSelected> get copyWith =>
       __$$_ToggleSelectedCopyWithImpl<_$_ToggleSelected>(this, _$identity);
 
@@ -164,9 +166,9 @@ class _$_ToggleSelected implements _ToggleSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MoneyTransaction transaction)? toggleSelected,
-    TResult Function()? deleteSelected,
-    TResult Function()? toggleModifying,
+    TResult? Function(MoneyTransaction transaction)? toggleSelected,
+    TResult? Function()? deleteSelected,
+    TResult? Function()? toggleModifying,
   }) {
     return toggleSelected?.call(transaction);
   }
@@ -198,9 +200,9 @@ class _$_ToggleSelected implements _ToggleSelected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ToggleSelected value)? toggleSelected,
-    TResult Function(_DeleteSelected value)? deleteSelected,
-    TResult Function(_ToggleModifying value)? toggleModifying,
+    TResult? Function(_ToggleSelected value)? toggleSelected,
+    TResult? Function(_DeleteSelected value)? deleteSelected,
+    TResult? Function(_ToggleModifying value)? toggleModifying,
   }) {
     return toggleSelected?.call(this);
   }
@@ -239,14 +241,11 @@ abstract class _$$_DeleteSelectedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_DeleteSelectedCopyWithImpl<$Res>
-    extends _$TransactionSelectorEventCopyWithImpl<$Res>
+    extends _$TransactionSelectorEventCopyWithImpl<$Res, _$_DeleteSelected>
     implements _$$_DeleteSelectedCopyWith<$Res> {
   __$$_DeleteSelectedCopyWithImpl(
       _$_DeleteSelected _value, $Res Function(_$_DeleteSelected) _then)
-      : super(_value, (v) => _then(v as _$_DeleteSelected));
-
-  @override
-  _$_DeleteSelected get _value => super._value as _$_DeleteSelected;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -281,9 +280,9 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MoneyTransaction transaction)? toggleSelected,
-    TResult Function()? deleteSelected,
-    TResult Function()? toggleModifying,
+    TResult? Function(MoneyTransaction transaction)? toggleSelected,
+    TResult? Function()? deleteSelected,
+    TResult? Function()? toggleModifying,
   }) {
     return deleteSelected?.call();
   }
@@ -315,9 +314,9 @@ class _$_DeleteSelected implements _DeleteSelected {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ToggleSelected value)? toggleSelected,
-    TResult Function(_DeleteSelected value)? deleteSelected,
-    TResult Function(_ToggleModifying value)? toggleModifying,
+    TResult? Function(_ToggleSelected value)? toggleSelected,
+    TResult? Function(_DeleteSelected value)? deleteSelected,
+    TResult? Function(_ToggleModifying value)? toggleModifying,
   }) {
     return deleteSelected?.call(this);
   }
@@ -350,14 +349,11 @@ abstract class _$$_ToggleModifyingCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ToggleModifyingCopyWithImpl<$Res>
-    extends _$TransactionSelectorEventCopyWithImpl<$Res>
+    extends _$TransactionSelectorEventCopyWithImpl<$Res, _$_ToggleModifying>
     implements _$$_ToggleModifyingCopyWith<$Res> {
   __$$_ToggleModifyingCopyWithImpl(
       _$_ToggleModifying _value, $Res Function(_$_ToggleModifying) _then)
-      : super(_value, (v) => _then(v as _$_ToggleModifying));
-
-  @override
-  _$_ToggleModifying get _value => super._value as _$_ToggleModifying;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -392,9 +388,9 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(MoneyTransaction transaction)? toggleSelected,
-    TResult Function()? deleteSelected,
-    TResult Function()? toggleModifying,
+    TResult? Function(MoneyTransaction transaction)? toggleSelected,
+    TResult? Function()? deleteSelected,
+    TResult? Function()? toggleModifying,
   }) {
     return toggleModifying?.call();
   }
@@ -426,9 +422,9 @@ class _$_ToggleModifying implements _ToggleModifying {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ToggleSelected value)? toggleSelected,
-    TResult Function(_DeleteSelected value)? deleteSelected,
-    TResult Function(_ToggleModifying value)? toggleModifying,
+    TResult? Function(_ToggleSelected value)? toggleSelected,
+    TResult? Function(_DeleteSelected value)? deleteSelected,
+    TResult? Function(_ToggleModifying value)? toggleModifying,
   }) {
     return toggleModifying?.call(this);
   }
@@ -471,7 +467,8 @@ mixin _$TransactionSelectorState {
 abstract class $TransactionSelectorStateCopyWith<$Res> {
   factory $TransactionSelectorStateCopyWith(TransactionSelectorState value,
           $Res Function(TransactionSelectorState) then) =
-      _$TransactionSelectorStateCopyWithImpl<$Res>;
+      _$TransactionSelectorStateCopyWithImpl<$Res, TransactionSelectorState>;
+  @useResult
   $Res call(
       {UnmodifiableSetView<dynamic> selectedTransactions,
       UnmodifiableSetView<dynamic> deletedTransactions,
@@ -483,54 +480,58 @@ abstract class $TransactionSelectorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransactionSelectorStateCopyWithImpl<$Res>
+class _$TransactionSelectorStateCopyWithImpl<$Res,
+        $Val extends TransactionSelectorState>
     implements $TransactionSelectorStateCopyWith<$Res> {
   _$TransactionSelectorStateCopyWithImpl(this._value, this._then);
 
-  final TransactionSelectorState _value;
   // ignore: unused_field
-  final $Res Function(TransactionSelectorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedTransactions = freezed,
-    Object? deletedTransactions = freezed,
-    Object? isModifying = freezed,
-    Object? status = freezed,
+    Object? selectedTransactions = null,
+    Object? deletedTransactions = null,
+    Object? isModifying = null,
+    Object? status = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      selectedTransactions: selectedTransactions == freezed
+      selectedTransactions: null == selectedTransactions
           ? _value.selectedTransactions
           : selectedTransactions // ignore: cast_nullable_to_non_nullable
               as UnmodifiableSetView<dynamic>,
-      deletedTransactions: deletedTransactions == freezed
+      deletedTransactions: null == deletedTransactions
           ? _value.deletedTransactions
           : deletedTransactions // ignore: cast_nullable_to_non_nullable
               as UnmodifiableSetView<dynamic>,
-      isModifying: isModifying == freezed
+      isModifying: null == isModifying
           ? _value.isModifying
           : isModifying // ignore: cast_nullable_to_non_nullable
               as bool,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as TransactionDeletionStatus,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ValueFailureCopyWith<dynamic, $Res>? get error {
     if (_value.error == null) {
       return null;
     }
 
     return $ValueFailureCopyWith<dynamic, $Res>(_value.error!, (value) {
-      return _then(_value.copyWith(error: value));
+      return _then(_value.copyWith(error: value) as $Val);
     });
   }
 }
@@ -543,6 +544,7 @@ abstract class _$$_TransactionSelectorStateCopyWith<$Res>
           $Res Function(_$_TransactionSelectorState) then) =
       __$$_TransactionSelectorStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {UnmodifiableSetView<dynamic> selectedTransactions,
       UnmodifiableSetView<dynamic> deletedTransactions,
@@ -556,42 +558,40 @@ abstract class _$$_TransactionSelectorStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_TransactionSelectorStateCopyWithImpl<$Res>
-    extends _$TransactionSelectorStateCopyWithImpl<$Res>
+    extends _$TransactionSelectorStateCopyWithImpl<$Res,
+        _$_TransactionSelectorState>
     implements _$$_TransactionSelectorStateCopyWith<$Res> {
   __$$_TransactionSelectorStateCopyWithImpl(_$_TransactionSelectorState _value,
       $Res Function(_$_TransactionSelectorState) _then)
-      : super(_value, (v) => _then(v as _$_TransactionSelectorState));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionSelectorState get _value =>
-      super._value as _$_TransactionSelectorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedTransactions = freezed,
-    Object? deletedTransactions = freezed,
-    Object? isModifying = freezed,
-    Object? status = freezed,
+    Object? selectedTransactions = null,
+    Object? deletedTransactions = null,
+    Object? isModifying = null,
+    Object? status = null,
     Object? error = freezed,
   }) {
     return _then(_$_TransactionSelectorState(
-      selectedTransactions: selectedTransactions == freezed
+      selectedTransactions: null == selectedTransactions
           ? _value.selectedTransactions
           : selectedTransactions // ignore: cast_nullable_to_non_nullable
               as UnmodifiableSetView<dynamic>,
-      deletedTransactions: deletedTransactions == freezed
+      deletedTransactions: null == deletedTransactions
           ? _value.deletedTransactions
           : deletedTransactions // ignore: cast_nullable_to_non_nullable
               as UnmodifiableSetView<dynamic>,
-      isModifying: isModifying == freezed
+      isModifying: null == isModifying
           ? _value.isModifying
           : isModifying // ignore: cast_nullable_to_non_nullable
               as bool,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as TransactionDeletionStatus,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>?,
@@ -634,10 +634,10 @@ class _$_TransactionSelectorState implements _TransactionSelectorState {
                 .equals(other.selectedTransactions, selectedTransactions) &&
             const DeepCollectionEquality()
                 .equals(other.deletedTransactions, deletedTransactions) &&
-            const DeepCollectionEquality()
-                .equals(other.isModifying, isModifying) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.error, error));
+            (identical(other.isModifying, isModifying) ||
+                other.isModifying == isModifying) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
@@ -645,12 +645,13 @@ class _$_TransactionSelectorState implements _TransactionSelectorState {
       runtimeType,
       const DeepCollectionEquality().hash(selectedTransactions),
       const DeepCollectionEquality().hash(deletedTransactions),
-      const DeepCollectionEquality().hash(isModifying),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(error));
+      isModifying,
+      status,
+      error);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionSelectorStateCopyWith<_$_TransactionSelectorState>
       get copyWith => __$$_TransactionSelectorStateCopyWithImpl<
           _$_TransactionSelectorState>(this, _$identity);

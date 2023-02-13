@@ -28,7 +28,8 @@ mixin _$BudgetEntry {
 abstract class $BudgetEntryCopyWith<$Res> {
   factory $BudgetEntryCopyWith(
           BudgetEntry value, $Res Function(BudgetEntry) then) =
-      _$BudgetEntryCopyWithImpl<$Res>;
+      _$BudgetEntryCopyWithImpl<$Res, BudgetEntry>;
+  @useResult
   $Res call({Subcategory subcategory, BudgetValue budgetValue});
 
   $SubcategoryCopyWith<$Res> get subcategory;
@@ -36,41 +37,46 @@ abstract class $BudgetEntryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BudgetEntryCopyWithImpl<$Res> implements $BudgetEntryCopyWith<$Res> {
+class _$BudgetEntryCopyWithImpl<$Res, $Val extends BudgetEntry>
+    implements $BudgetEntryCopyWith<$Res> {
   _$BudgetEntryCopyWithImpl(this._value, this._then);
 
-  final BudgetEntry _value;
   // ignore: unused_field
-  final $Res Function(BudgetEntry) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? subcategory = freezed,
-    Object? budgetValue = freezed,
+    Object? subcategory = null,
+    Object? budgetValue = null,
   }) {
     return _then(_value.copyWith(
-      subcategory: subcategory == freezed
+      subcategory: null == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as Subcategory,
-      budgetValue: budgetValue == freezed
+      budgetValue: null == budgetValue
           ? _value.budgetValue
           : budgetValue // ignore: cast_nullable_to_non_nullable
               as BudgetValue,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SubcategoryCopyWith<$Res> get subcategory {
     return $SubcategoryCopyWith<$Res>(_value.subcategory, (value) {
-      return _then(_value.copyWith(subcategory: value));
+      return _then(_value.copyWith(subcategory: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BudgetValueCopyWith<$Res> get budgetValue {
     return $BudgetValueCopyWith<$Res>(_value.budgetValue, (value) {
-      return _then(_value.copyWith(budgetValue: value));
+      return _then(_value.copyWith(budgetValue: value) as $Val);
     });
   }
 }
@@ -82,6 +88,7 @@ abstract class _$$_BudgetEntryCopyWith<$Res>
           _$_BudgetEntry value, $Res Function(_$_BudgetEntry) then) =
       __$$_BudgetEntryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Subcategory subcategory, BudgetValue budgetValue});
 
   @override
@@ -91,26 +98,25 @@ abstract class _$$_BudgetEntryCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BudgetEntryCopyWithImpl<$Res> extends _$BudgetEntryCopyWithImpl<$Res>
+class __$$_BudgetEntryCopyWithImpl<$Res>
+    extends _$BudgetEntryCopyWithImpl<$Res, _$_BudgetEntry>
     implements _$$_BudgetEntryCopyWith<$Res> {
   __$$_BudgetEntryCopyWithImpl(
       _$_BudgetEntry _value, $Res Function(_$_BudgetEntry) _then)
-      : super(_value, (v) => _then(v as _$_BudgetEntry));
+      : super(_value, _then);
 
-  @override
-  _$_BudgetEntry get _value => super._value as _$_BudgetEntry;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? subcategory = freezed,
-    Object? budgetValue = freezed,
+    Object? subcategory = null,
+    Object? budgetValue = null,
   }) {
     return _then(_$_BudgetEntry(
-      subcategory: subcategory == freezed
+      subcategory: null == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as Subcategory,
-      budgetValue: budgetValue == freezed
+      budgetValue: null == budgetValue
           ? _value.budgetValue
           : budgetValue // ignore: cast_nullable_to_non_nullable
               as BudgetValue,
@@ -139,20 +145,18 @@ class _$_BudgetEntry extends _BudgetEntry {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BudgetEntry &&
-            const DeepCollectionEquality()
-                .equals(other.subcategory, subcategory) &&
-            const DeepCollectionEquality()
-                .equals(other.budgetValue, budgetValue));
+            (identical(other.subcategory, subcategory) ||
+                other.subcategory == subcategory) &&
+            (identical(other.budgetValue, budgetValue) ||
+                other.budgetValue == budgetValue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(subcategory),
-      const DeepCollectionEquality().hash(budgetValue));
+  int get hashCode => Object.hash(runtimeType, subcategory, budgetValue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BudgetEntryCopyWith<_$_BudgetEntry> get copyWith =>
       __$$_BudgetEntryCopyWithImpl<_$_BudgetEntry>(this, _$identity);
 }

@@ -22,6 +22,7 @@ import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
+import 'package:your_budget/models/constants.dart';
 
 part 'transaction_creator_event.dart';
 part 'transaction_creator_state.dart';
@@ -92,20 +93,73 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
   }
 
   Future<void> _onSaved(_Saved event, Emitter<TransactionCreatorState> emit) async {
-    Either<ValueFailure, Unit>? failureOrSuccess;
-    MoneyTransaction transaction = state.moneyTransaction;
     emit(state.copyWith(isSaving: true));
-
-    if (transaction.failureOption.isNone()) {
-      failureOrSuccess = await transactionRepository.createTransaction(transaction);
-    }
 
     final newState = state.copyWith(
       isSaving: false,
       showErrorMessages: true,
-      saveFailureOrSuccessOption: optionOf(failureOrSuccess),
     );
 
-    emit(newState);
+    final finalState = await validateTransaction(state.moneyTransaction).fold(
+      (failure) async => newState.copyWith(
+        saveFailureOrSuccessOption: optionOf(
+          left(failure),
+        ),
+      ),
+      (transaction) async => newState.copyWith(
+        saveFailureOrSuccessOption: optionOf(
+          await transactionRepository.createTransaction(transaction),
+        ),
+      ),
+    );
+
+    emit(finalState);
+    // Re-emit state with no failure so that another press on 'Enter'
+    // will re-show the error.
+    emit(finalState.copyWith(saveFailureOrSuccessOption: none()));
+    return;
   }
+}
+
+Either<ValueFailure, MoneyTransaction> validateTransaction(MoneyTransaction transaction) {
+  if (transaction.failureOption.isSome()) {
+    left(transaction.failureOption as ValueFailure);
+  }
+
+  return transaction.failureOption.fold(
+    () {
+      late MoneyTransaction validatedTransaction = transaction;
+      final receiver = transaction.receiver;
+      final giver = transaction.giver;
+      final type = transaction.type;
+
+      final MoneyTransactionType newType = getType(transaction);
+
+      validatedTransaction = transaction.copyWith(
+        type: newType,
+      );
+
+      if (newType == MoneyTransactionType.toBeBudgeted) {
+        // We swap giver and receiver
+        validatedTransaction = validatedTransaction.copyWith(
+          receiver: giver,
+          giver: receiver,
+        );
+      }
+
+      return right(validatedTransaction);
+    },
+    (a) => left(a),
+  );
+}
+
+MoneyTransactionType getType(MoneyTransaction transaction) {
+  final subcategory = transaction.subcategory;
+  final isToBeBudgeted = subcategory!.name.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED;
+  if (isToBeBudgeted) {
+    return MoneyTransactionType.toBeBudgeted;
+  }
+  final bool isAccount = transaction.receiver.isRight();
+
+  return isAccount ? MoneyTransactionType.betweenAccount : MoneyTransactionType.subcategory;
 }

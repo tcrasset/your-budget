@@ -7,6 +7,7 @@ import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/payee/payee_repository.dart';
+import 'package:your_budget/models/constants.dart';
 
 part 'payee_field_event.dart';
 part 'payee_field_state.dart';
@@ -61,8 +62,14 @@ class PayeeFieldBloc extends Bloc<PayeeFieldEvent, PayeeFieldState> {
           (
             List<Account> accounts,
             List<Payee> payees,
-          ) =>
-              PayableEntries(payees: payees, accounts: accounts),
+          ) {
+            payees.removeWhere(
+              (element) =>
+                  element.name.getOrCrash() == DatabaseConstants.STARTING_BALANCE_PAYEE_NAME,
+            );
+
+            return PayableEntries(payees: payees, accounts: accounts);
+          },
         ),
       );
 }

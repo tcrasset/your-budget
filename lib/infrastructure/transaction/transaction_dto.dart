@@ -64,8 +64,17 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
   factory MoneyTransactionDTO.fromDomain(MoneyTransaction transaction) {
     switch (transaction.type) {
       case MoneyTransactionType.toBeBudgeted:
-      // fall through to initial
+      // Fall through to MoneyTransactionType.initial
+
+      // On a to be budgeted transaction, the money is deposited
+      // into an account as well as To Be Budgeted.
+      // The subcategory is null.
+
       case MoneyTransactionType.initial:
+        // On an initial transaction, the money is deposited
+        // into a receiver (Account) as well as To Be Budgeted.
+        // The giver (Payee) is a special "Starting Balance" payee.
+        // The subcategory is null.
         return MoneyTransactionDTO(
           id: transaction.id.getOrCrash(),
           amount: transaction.amount.getOrCrash(),
@@ -84,6 +93,10 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
           giverBalance: null,
         );
       case MoneyTransactionType.subcategory:
+        // On a subcategory transaction, the receiver is a Payee,
+        // as these transactions are outflowing from a giver (account),
+        // e.g. there is an expense from our account to a specific
+        // service, a grocery store, or an individual.
         return MoneyTransactionDTO(
           id: transaction.id.getOrCrash(),
           amount: transaction.amount.getOrCrash(),
@@ -107,9 +120,9 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
           memo: transaction.memo.getOrCrash(),
           type: transaction.type.value,
           dateInMillisecondsSinceEpoch: transaction.date.millisecondsSinceEpoch,
-          subcatID: transaction.subcategory!.id.getOrCrash(),
-          subcatName: transaction.subcategory!.name.getOrCrash(),
-          subcatCategoryId: transaction.subcategory!.categoryID.getOrCrash(),
+          subcatID: null,
+          subcatName: null,
+          subcatCategoryId: null,
           receiverId: transaction.receiverId.getOrCrash(),
           receiverName: transaction.receiverName.getOrCrash(),
           receiverBalance:
@@ -162,10 +175,12 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
           date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
           type: MoneyTransactionType.fromValue(type),
           subcategory: subcategory,
-          receiver: Left(Payee(
-            id: UniqueId.fromUniqueString(receiverId),
-            name: Name(receiverName),
-          )),
+          receiver: Left(
+            Payee(
+              id: UniqueId.fromUniqueString(receiverId),
+              name: Name(receiverName),
+            ),
+          ),
           giver: Right(
             Account(
               id: UniqueId.fromUniqueString(giverId),

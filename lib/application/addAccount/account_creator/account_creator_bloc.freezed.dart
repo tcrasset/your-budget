@@ -26,10 +26,10 @@ mixin _$AccountCreatorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function(String balance)? balanceChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String balance)? balanceChanged,
+    TResult? Function()? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -51,10 +51,10 @@ mixin _$AccountCreatorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BalanceChanged value)? balanceChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_BalanceChanged value)? balanceChanged,
+    TResult? Function(_Saved value)? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -72,17 +72,18 @@ mixin _$AccountCreatorEvent {
 abstract class $AccountCreatorEventCopyWith<$Res> {
   factory $AccountCreatorEventCopyWith(
           AccountCreatorEvent value, $Res Function(AccountCreatorEvent) then) =
-      _$AccountCreatorEventCopyWithImpl<$Res>;
+      _$AccountCreatorEventCopyWithImpl<$Res, AccountCreatorEvent>;
 }
 
 /// @nodoc
-class _$AccountCreatorEventCopyWithImpl<$Res>
+class _$AccountCreatorEventCopyWithImpl<$Res, $Val extends AccountCreatorEvent>
     implements $AccountCreatorEventCopyWith<$Res> {
   _$AccountCreatorEventCopyWithImpl(this._value, this._then);
 
-  final AccountCreatorEvent _value;
   // ignore: unused_field
-  final $Res Function(AccountCreatorEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -94,14 +95,11 @@ abstract class _$$_InitializedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitializedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res, _$_Initialized>
     implements _$$_InitializedCopyWith<$Res> {
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
-      : super(_value, (v) => _then(v as _$_Initialized));
-
-  @override
-  _$_Initialized get _value => super._value as _$_Initialized;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -137,10 +135,10 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function(String balance)? balanceChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String balance)? balanceChanged,
+    TResult? Function()? saved,
   }) {
     return initialized?.call();
   }
@@ -174,10 +172,10 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BalanceChanged value)? balanceChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_BalanceChanged value)? balanceChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return initialized?.call(this);
   }
@@ -207,26 +205,25 @@ abstract class _$$_NameChangedCopyWith<$Res> {
   factory _$$_NameChangedCopyWith(
           _$_NameChanged value, $Res Function(_$_NameChanged) then) =
       __$$_NameChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String name});
 }
 
 /// @nodoc
 class __$$_NameChangedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res, _$_NameChanged>
     implements _$$_NameChangedCopyWith<$Res> {
   __$$_NameChangedCopyWithImpl(
       _$_NameChanged _value, $Res Function(_$_NameChanged) _then)
-      : super(_value, (v) => _then(v as _$_NameChanged));
+      : super(_value, _then);
 
-  @override
-  _$_NameChanged get _value => super._value as _$_NameChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = freezed,
+    Object? name = null,
   }) {
     return _then(_$_NameChanged(
-      name == freezed
+      null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -252,15 +249,15 @@ class _$_NameChanged implements _NameChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_NameChanged &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.name, name) || other.name == name));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_NameChangedCopyWith<_$_NameChanged> get copyWith =>
       __$$_NameChangedCopyWithImpl<_$_NameChanged>(this, _$identity);
 
@@ -278,10 +275,10 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function(String balance)? balanceChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String balance)? balanceChanged,
+    TResult? Function()? saved,
   }) {
     return nameChanged?.call(name);
   }
@@ -315,10 +312,10 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BalanceChanged value)? balanceChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_BalanceChanged value)? balanceChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return nameChanged?.call(this);
   }
@@ -353,26 +350,25 @@ abstract class _$$_BalanceChangedCopyWith<$Res> {
   factory _$$_BalanceChangedCopyWith(
           _$_BalanceChanged value, $Res Function(_$_BalanceChanged) then) =
       __$$_BalanceChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String balance});
 }
 
 /// @nodoc
 class __$$_BalanceChangedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res, _$_BalanceChanged>
     implements _$$_BalanceChangedCopyWith<$Res> {
   __$$_BalanceChangedCopyWithImpl(
       _$_BalanceChanged _value, $Res Function(_$_BalanceChanged) _then)
-      : super(_value, (v) => _then(v as _$_BalanceChanged));
+      : super(_value, _then);
 
-  @override
-  _$_BalanceChanged get _value => super._value as _$_BalanceChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? balance = freezed,
+    Object? balance = null,
   }) {
     return _then(_$_BalanceChanged(
-      balance == freezed
+      null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
               as String,
@@ -398,15 +394,15 @@ class _$_BalanceChanged implements _BalanceChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BalanceChanged &&
-            const DeepCollectionEquality().equals(other.balance, balance));
+            (identical(other.balance, balance) || other.balance == balance));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(balance));
+  int get hashCode => Object.hash(runtimeType, balance);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BalanceChangedCopyWith<_$_BalanceChanged> get copyWith =>
       __$$_BalanceChangedCopyWithImpl<_$_BalanceChanged>(this, _$identity);
 
@@ -424,10 +420,10 @@ class _$_BalanceChanged implements _BalanceChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function(String balance)? balanceChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String balance)? balanceChanged,
+    TResult? Function()? saved,
   }) {
     return balanceChanged?.call(balance);
   }
@@ -461,10 +457,10 @@ class _$_BalanceChanged implements _BalanceChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BalanceChanged value)? balanceChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_BalanceChanged value)? balanceChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return balanceChanged?.call(this);
   }
@@ -502,13 +498,10 @@ abstract class _$$_SavedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SavedCopyWithImpl<$Res>
-    extends _$AccountCreatorEventCopyWithImpl<$Res>
+    extends _$AccountCreatorEventCopyWithImpl<$Res, _$_Saved>
     implements _$$_SavedCopyWith<$Res> {
   __$$_SavedCopyWithImpl(_$_Saved _value, $Res Function(_$_Saved) _then)
-      : super(_value, (v) => _then(v as _$_Saved));
-
-  @override
-  _$_Saved get _value => super._value as _$_Saved;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -544,10 +537,10 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String name)? nameChanged,
-    TResult Function(String balance)? balanceChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String name)? nameChanged,
+    TResult? Function(String balance)? balanceChanged,
+    TResult? Function()? saved,
   }) {
     return saved?.call();
   }
@@ -581,10 +574,10 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_NameChanged value)? nameChanged,
-    TResult Function(_BalanceChanged value)? balanceChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_NameChanged value)? nameChanged,
+    TResult? Function(_BalanceChanged value)? balanceChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return saved?.call(this);
   }
@@ -628,7 +621,8 @@ mixin _$AccountCreatorState {
 abstract class $AccountCreatorStateCopyWith<$Res> {
   factory $AccountCreatorStateCopyWith(
           AccountCreatorState value, $Res Function(AccountCreatorState) then) =
-      _$AccountCreatorStateCopyWithImpl<$Res>;
+      _$AccountCreatorStateCopyWithImpl<$Res, AccountCreatorState>;
+  @useResult
   $Res call(
       {Account account,
       bool showErrorMessages,
@@ -640,50 +634,53 @@ abstract class $AccountCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AccountCreatorStateCopyWithImpl<$Res>
+class _$AccountCreatorStateCopyWithImpl<$Res, $Val extends AccountCreatorState>
     implements $AccountCreatorStateCopyWith<$Res> {
   _$AccountCreatorStateCopyWithImpl(this._value, this._then);
 
-  final AccountCreatorState _value;
   // ignore: unused_field
-  final $Res Function(AccountCreatorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = freezed,
-    Object? showErrorMessages = freezed,
-    Object? isSaving = freezed,
-    Object? isEditing = freezed,
-    Object? saveFailureOrSuccessOption = freezed,
+    Object? account = null,
+    Object? showErrorMessages = null,
+    Object? isSaving = null,
+    Object? isEditing = null,
+    Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_value.copyWith(
-      account: account == freezed
+      account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
-      showErrorMessages: showErrorMessages == freezed
+      showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSaving: isSaving == freezed
+      isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-      saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
+      saveFailureOrSuccessOption: null == saveFailureOrSuccessOption
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<ValueFailure, Unit>>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AccountCopyWith<$Res> get account {
     return $AccountCopyWith<$Res>(_value.account, (value) {
-      return _then(_value.copyWith(account: value));
+      return _then(_value.copyWith(account: value) as $Val);
     });
   }
 }
@@ -695,6 +692,7 @@ abstract class _$$_AccountCreatorStateCopyWith<$Res>
           $Res Function(_$_AccountCreatorState) then) =
       __$$_AccountCreatorStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Account account,
       bool showErrorMessages,
@@ -708,41 +706,39 @@ abstract class _$$_AccountCreatorStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_AccountCreatorStateCopyWithImpl<$Res>
-    extends _$AccountCreatorStateCopyWithImpl<$Res>
+    extends _$AccountCreatorStateCopyWithImpl<$Res, _$_AccountCreatorState>
     implements _$$_AccountCreatorStateCopyWith<$Res> {
   __$$_AccountCreatorStateCopyWithImpl(_$_AccountCreatorState _value,
       $Res Function(_$_AccountCreatorState) _then)
-      : super(_value, (v) => _then(v as _$_AccountCreatorState));
+      : super(_value, _then);
 
-  @override
-  _$_AccountCreatorState get _value => super._value as _$_AccountCreatorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = freezed,
-    Object? showErrorMessages = freezed,
-    Object? isSaving = freezed,
-    Object? isEditing = freezed,
-    Object? saveFailureOrSuccessOption = freezed,
+    Object? account = null,
+    Object? showErrorMessages = null,
+    Object? isSaving = null,
+    Object? isEditing = null,
+    Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_$_AccountCreatorState(
-      account: account == freezed
+      account: null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
-      showErrorMessages: showErrorMessages == freezed
+      showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSaving: isSaving == freezed
+      isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-      saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
+      saveFailureOrSuccessOption: null == saveFailureOrSuccessOption
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<ValueFailure, Unit>>,
@@ -786,26 +782,26 @@ class _$_AccountCreatorState implements _AccountCreatorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountCreatorState &&
-            const DeepCollectionEquality().equals(other.account, account) &&
-            const DeepCollectionEquality()
-                .equals(other.showErrorMessages, showErrorMessages) &&
-            const DeepCollectionEquality().equals(other.isSaving, isSaving) &&
-            const DeepCollectionEquality().equals(other.isEditing, isEditing) &&
-            const DeepCollectionEquality().equals(
-                other.saveFailureOrSuccessOption, saveFailureOrSuccessOption));
+            (identical(other.account, account) || other.account == account) &&
+            (identical(other.showErrorMessages, showErrorMessages) ||
+                other.showErrorMessages == showErrorMessages) &&
+            (identical(other.isSaving, isSaving) ||
+                other.isSaving == isSaving) &&
+            (identical(other.isEditing, isEditing) ||
+                other.isEditing == isEditing) &&
+            (identical(other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption) ||
+                other.saveFailureOrSuccessOption ==
+                    saveFailureOrSuccessOption));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(account),
-      const DeepCollectionEquality().hash(showErrorMessages),
-      const DeepCollectionEquality().hash(isSaving),
-      const DeepCollectionEquality().hash(isEditing),
-      const DeepCollectionEquality().hash(saveFailureOrSuccessOption));
+  int get hashCode => Object.hash(runtimeType, account, showErrorMessages,
+      isSaving, isEditing, saveFailureOrSuccessOption);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AccountCreatorStateCopyWith<_$_AccountCreatorState> get copyWith =>
       __$$_AccountCreatorStateCopyWithImpl<_$_AccountCreatorState>(
           this, _$identity);

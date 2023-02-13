@@ -30,14 +30,14 @@ mixin _$TransactionCreatorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,14 +67,14 @@ mixin _$TransactionCreatorEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -96,17 +96,19 @@ mixin _$TransactionCreatorEvent {
 abstract class $TransactionCreatorEventCopyWith<$Res> {
   factory $TransactionCreatorEventCopyWith(TransactionCreatorEvent value,
           $Res Function(TransactionCreatorEvent) then) =
-      _$TransactionCreatorEventCopyWithImpl<$Res>;
+      _$TransactionCreatorEventCopyWithImpl<$Res, TransactionCreatorEvent>;
 }
 
 /// @nodoc
-class _$TransactionCreatorEventCopyWithImpl<$Res>
+class _$TransactionCreatorEventCopyWithImpl<$Res,
+        $Val extends TransactionCreatorEvent>
     implements $TransactionCreatorEventCopyWith<$Res> {
   _$TransactionCreatorEventCopyWithImpl(this._value, this._then);
 
-  final TransactionCreatorEvent _value;
   // ignore: unused_field
-  final $Res Function(TransactionCreatorEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -118,14 +120,11 @@ abstract class _$$_InitializedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitializedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_Initialized>
     implements _$$_InitializedCopyWith<$Res> {
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
-      : super(_value, (v) => _then(v as _$_Initialized));
-
-  @override
-  _$_Initialized get _value => super._value as _$_Initialized;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -165,14 +164,14 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return initialized?.call();
   }
@@ -214,14 +213,14 @@ class _$_Initialized implements _Initialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return initialized?.call(this);
   }
@@ -255,26 +254,25 @@ abstract class _$$_AmountChangedCopyWith<$Res> {
   factory _$$_AmountChangedCopyWith(
           _$_AmountChanged value, $Res Function(_$_AmountChanged) then) =
       __$$_AmountChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String amount});
 }
 
 /// @nodoc
 class __$$_AmountChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_AmountChanged>
     implements _$$_AmountChangedCopyWith<$Res> {
   __$$_AmountChangedCopyWithImpl(
       _$_AmountChanged _value, $Res Function(_$_AmountChanged) _then)
-      : super(_value, (v) => _then(v as _$_AmountChanged));
+      : super(_value, _then);
 
-  @override
-  _$_AmountChanged get _value => super._value as _$_AmountChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? amount = freezed,
+    Object? amount = null,
   }) {
     return _then(_$_AmountChanged(
-      amount == freezed
+      null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as String,
@@ -300,15 +298,15 @@ class _$_AmountChanged implements _AmountChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AmountChanged &&
-            const DeepCollectionEquality().equals(other.amount, amount));
+            (identical(other.amount, amount) || other.amount == amount));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(amount));
+  int get hashCode => Object.hash(runtimeType, amount);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AmountChangedCopyWith<_$_AmountChanged> get copyWith =>
       __$$_AmountChangedCopyWithImpl<_$_AmountChanged>(this, _$identity);
 
@@ -330,14 +328,14 @@ class _$_AmountChanged implements _AmountChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return amountChanged?.call(amount);
   }
@@ -379,14 +377,14 @@ class _$_AmountChanged implements _AmountChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return amountChanged?.call(this);
   }
@@ -425,26 +423,25 @@ abstract class _$$_ReceiverChangedCopyWith<$Res> {
   factory _$$_ReceiverChangedCopyWith(
           _$_ReceiverChanged value, $Res Function(_$_ReceiverChanged) then) =
       __$$_ReceiverChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({Either<Payee, Account> payable});
 }
 
 /// @nodoc
 class __$$_ReceiverChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_ReceiverChanged>
     implements _$$_ReceiverChangedCopyWith<$Res> {
   __$$_ReceiverChangedCopyWithImpl(
       _$_ReceiverChanged _value, $Res Function(_$_ReceiverChanged) _then)
-      : super(_value, (v) => _then(v as _$_ReceiverChanged));
+      : super(_value, _then);
 
-  @override
-  _$_ReceiverChanged get _value => super._value as _$_ReceiverChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payable = freezed,
+    Object? payable = null,
   }) {
     return _then(_$_ReceiverChanged(
-      payable == freezed
+      null == payable
           ? _value.payable
           : payable // ignore: cast_nullable_to_non_nullable
               as Either<Payee, Account>,
@@ -470,15 +467,15 @@ class _$_ReceiverChanged implements _ReceiverChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ReceiverChanged &&
-            const DeepCollectionEquality().equals(other.payable, payable));
+            (identical(other.payable, payable) || other.payable == payable));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(payable));
+  int get hashCode => Object.hash(runtimeType, payable);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_ReceiverChangedCopyWith<_$_ReceiverChanged> get copyWith =>
       __$$_ReceiverChangedCopyWithImpl<_$_ReceiverChanged>(this, _$identity);
 
@@ -500,14 +497,14 @@ class _$_ReceiverChanged implements _ReceiverChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return receiverChanged?.call(payable);
   }
@@ -549,14 +546,14 @@ class _$_ReceiverChanged implements _ReceiverChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return receiverChanged?.call(this);
   }
@@ -596,6 +593,7 @@ abstract class _$$_AccountChangedCopyWith<$Res> {
   factory _$$_AccountChangedCopyWith(
           _$_AccountChanged value, $Res Function(_$_AccountChanged) then) =
       __$$_AccountChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({Account account});
 
   $AccountCopyWith<$Res> get account;
@@ -603,21 +601,19 @@ abstract class _$$_AccountChangedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_AccountChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_AccountChanged>
     implements _$$_AccountChangedCopyWith<$Res> {
   __$$_AccountChangedCopyWithImpl(
       _$_AccountChanged _value, $Res Function(_$_AccountChanged) _then)
-      : super(_value, (v) => _then(v as _$_AccountChanged));
+      : super(_value, _then);
 
-  @override
-  _$_AccountChanged get _value => super._value as _$_AccountChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? account = freezed,
+    Object? account = null,
   }) {
     return _then(_$_AccountChanged(
-      account == freezed
+      null == account
           ? _value.account
           : account // ignore: cast_nullable_to_non_nullable
               as Account,
@@ -625,6 +621,7 @@ class __$$_AccountChangedCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $AccountCopyWith<$Res> get account {
     return $AccountCopyWith<$Res>(_value.account, (value) {
       return _then(_value.copyWith(account: value));
@@ -650,15 +647,15 @@ class _$_AccountChanged implements _AccountChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AccountChanged &&
-            const DeepCollectionEquality().equals(other.account, account));
+            (identical(other.account, account) || other.account == account));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(account));
+  int get hashCode => Object.hash(runtimeType, account);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_AccountChangedCopyWith<_$_AccountChanged> get copyWith =>
       __$$_AccountChangedCopyWithImpl<_$_AccountChanged>(this, _$identity);
 
@@ -680,14 +677,14 @@ class _$_AccountChanged implements _AccountChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return accountChanged?.call(account);
   }
@@ -729,14 +726,14 @@ class _$_AccountChanged implements _AccountChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return accountChanged?.call(this);
   }
@@ -775,6 +772,7 @@ abstract class _$$_SubcategoryChangedCopyWith<$Res> {
   factory _$$_SubcategoryChangedCopyWith(_$_SubcategoryChanged value,
           $Res Function(_$_SubcategoryChanged) then) =
       __$$_SubcategoryChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({Subcategory subcategory});
 
   $SubcategoryCopyWith<$Res> get subcategory;
@@ -782,21 +780,19 @@ abstract class _$$_SubcategoryChangedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SubcategoryChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_SubcategoryChanged>
     implements _$$_SubcategoryChangedCopyWith<$Res> {
   __$$_SubcategoryChangedCopyWithImpl(
       _$_SubcategoryChanged _value, $Res Function(_$_SubcategoryChanged) _then)
-      : super(_value, (v) => _then(v as _$_SubcategoryChanged));
+      : super(_value, _then);
 
-  @override
-  _$_SubcategoryChanged get _value => super._value as _$_SubcategoryChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? subcategory = freezed,
+    Object? subcategory = null,
   }) {
     return _then(_$_SubcategoryChanged(
-      subcategory == freezed
+      null == subcategory
           ? _value.subcategory
           : subcategory // ignore: cast_nullable_to_non_nullable
               as Subcategory,
@@ -804,6 +800,7 @@ class __$$_SubcategoryChangedCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $SubcategoryCopyWith<$Res> get subcategory {
     return $SubcategoryCopyWith<$Res>(_value.subcategory, (value) {
       return _then(_value.copyWith(subcategory: value));
@@ -829,16 +826,16 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SubcategoryChanged &&
-            const DeepCollectionEquality()
-                .equals(other.subcategory, subcategory));
+            (identical(other.subcategory, subcategory) ||
+                other.subcategory == subcategory));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(subcategory));
+  int get hashCode => Object.hash(runtimeType, subcategory);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SubcategoryChangedCopyWith<_$_SubcategoryChanged> get copyWith =>
       __$$_SubcategoryChangedCopyWithImpl<_$_SubcategoryChanged>(
           this, _$identity);
@@ -861,14 +858,14 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return subcategoryChanged?.call(subcategory);
   }
@@ -910,14 +907,14 @@ class _$_SubcategoryChanged implements _SubcategoryChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return subcategoryChanged?.call(this);
   }
@@ -957,26 +954,25 @@ abstract class _$$_DateChangedCopyWith<$Res> {
   factory _$$_DateChangedCopyWith(
           _$_DateChanged value, $Res Function(_$_DateChanged) then) =
       __$$_DateChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({DateTime date});
 }
 
 /// @nodoc
 class __$$_DateChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_DateChanged>
     implements _$$_DateChangedCopyWith<$Res> {
   __$$_DateChangedCopyWithImpl(
       _$_DateChanged _value, $Res Function(_$_DateChanged) _then)
-      : super(_value, (v) => _then(v as _$_DateChanged));
+      : super(_value, _then);
 
-  @override
-  _$_DateChanged get _value => super._value as _$_DateChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
+    Object? date = null,
   }) {
     return _then(_$_DateChanged(
-      date == freezed
+      null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -1002,15 +998,15 @@ class _$_DateChanged implements _DateChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_DateChanged &&
-            const DeepCollectionEquality().equals(other.date, date));
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(date));
+  int get hashCode => Object.hash(runtimeType, date);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_DateChangedCopyWith<_$_DateChanged> get copyWith =>
       __$$_DateChangedCopyWithImpl<_$_DateChanged>(this, _$identity);
 
@@ -1032,14 +1028,14 @@ class _$_DateChanged implements _DateChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return dateChanged?.call(date);
   }
@@ -1081,14 +1077,14 @@ class _$_DateChanged implements _DateChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return dateChanged?.call(this);
   }
@@ -1127,26 +1123,25 @@ abstract class _$$_MemoChangedCopyWith<$Res> {
   factory _$$_MemoChangedCopyWith(
           _$_MemoChanged value, $Res Function(_$_MemoChanged) then) =
       __$$_MemoChangedCopyWithImpl<$Res>;
+  @useResult
   $Res call({String memo});
 }
 
 /// @nodoc
 class __$$_MemoChangedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_MemoChanged>
     implements _$$_MemoChangedCopyWith<$Res> {
   __$$_MemoChangedCopyWithImpl(
       _$_MemoChanged _value, $Res Function(_$_MemoChanged) _then)
-      : super(_value, (v) => _then(v as _$_MemoChanged));
+      : super(_value, _then);
 
-  @override
-  _$_MemoChanged get _value => super._value as _$_MemoChanged;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? memo = freezed,
+    Object? memo = null,
   }) {
     return _then(_$_MemoChanged(
-      memo == freezed
+      null == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String,
@@ -1172,15 +1167,15 @@ class _$_MemoChanged implements _MemoChanged {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_MemoChanged &&
-            const DeepCollectionEquality().equals(other.memo, memo));
+            (identical(other.memo, memo) || other.memo == memo));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(memo));
+  int get hashCode => Object.hash(runtimeType, memo);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_MemoChangedCopyWith<_$_MemoChanged> get copyWith =>
       __$$_MemoChangedCopyWithImpl<_$_MemoChanged>(this, _$identity);
 
@@ -1202,14 +1197,14 @@ class _$_MemoChanged implements _MemoChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return memoChanged?.call(memo);
   }
@@ -1251,14 +1246,14 @@ class _$_MemoChanged implements _MemoChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return memoChanged?.call(this);
   }
@@ -1300,13 +1295,10 @@ abstract class _$$_SavedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SavedCopyWithImpl<$Res>
-    extends _$TransactionCreatorEventCopyWithImpl<$Res>
+    extends _$TransactionCreatorEventCopyWithImpl<$Res, _$_Saved>
     implements _$$_SavedCopyWith<$Res> {
   __$$_SavedCopyWithImpl(_$_Saved _value, $Res Function(_$_Saved) _then)
-      : super(_value, (v) => _then(v as _$_Saved));
-
-  @override
-  _$_Saved get _value => super._value as _$_Saved;
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -1346,14 +1338,14 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialized,
-    TResult Function(String amount)? amountChanged,
-    TResult Function(Either<Payee, Account> payable)? receiverChanged,
-    TResult Function(Account account)? accountChanged,
-    TResult Function(Subcategory subcategory)? subcategoryChanged,
-    TResult Function(DateTime date)? dateChanged,
-    TResult Function(String memo)? memoChanged,
-    TResult Function()? saved,
+    TResult? Function()? initialized,
+    TResult? Function(String amount)? amountChanged,
+    TResult? Function(Either<Payee, Account> payable)? receiverChanged,
+    TResult? Function(Account account)? accountChanged,
+    TResult? Function(Subcategory subcategory)? subcategoryChanged,
+    TResult? Function(DateTime date)? dateChanged,
+    TResult? Function(String memo)? memoChanged,
+    TResult? Function()? saved,
   }) {
     return saved?.call();
   }
@@ -1395,14 +1387,14 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initialized value)? initialized,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_ReceiverChanged value)? receiverChanged,
-    TResult Function(_AccountChanged value)? accountChanged,
-    TResult Function(_SubcategoryChanged value)? subcategoryChanged,
-    TResult Function(_DateChanged value)? dateChanged,
-    TResult Function(_MemoChanged value)? memoChanged,
-    TResult Function(_Saved value)? saved,
+    TResult? Function(_Initialized value)? initialized,
+    TResult? Function(_AmountChanged value)? amountChanged,
+    TResult? Function(_ReceiverChanged value)? receiverChanged,
+    TResult? Function(_AccountChanged value)? accountChanged,
+    TResult? Function(_SubcategoryChanged value)? subcategoryChanged,
+    TResult? Function(_DateChanged value)? dateChanged,
+    TResult? Function(_MemoChanged value)? memoChanged,
+    TResult? Function(_Saved value)? saved,
   }) {
     return saved?.call(this);
   }
@@ -1449,7 +1441,8 @@ mixin _$TransactionCreatorState {
 abstract class $TransactionCreatorStateCopyWith<$Res> {
   factory $TransactionCreatorStateCopyWith(TransactionCreatorState value,
           $Res Function(TransactionCreatorState) then) =
-      _$TransactionCreatorStateCopyWithImpl<$Res>;
+      _$TransactionCreatorStateCopyWithImpl<$Res, TransactionCreatorState>;
+  @useResult
   $Res call(
       {MoneyTransaction moneyTransaction,
       bool showErrorMessages,
@@ -1461,50 +1454,54 @@ abstract class $TransactionCreatorStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TransactionCreatorStateCopyWithImpl<$Res>
+class _$TransactionCreatorStateCopyWithImpl<$Res,
+        $Val extends TransactionCreatorState>
     implements $TransactionCreatorStateCopyWith<$Res> {
   _$TransactionCreatorStateCopyWithImpl(this._value, this._then);
 
-  final TransactionCreatorState _value;
   // ignore: unused_field
-  final $Res Function(TransactionCreatorState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? moneyTransaction = freezed,
-    Object? showErrorMessages = freezed,
-    Object? isSaving = freezed,
-    Object? isEditing = freezed,
-    Object? saveFailureOrSuccessOption = freezed,
+    Object? moneyTransaction = null,
+    Object? showErrorMessages = null,
+    Object? isSaving = null,
+    Object? isEditing = null,
+    Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_value.copyWith(
-      moneyTransaction: moneyTransaction == freezed
+      moneyTransaction: null == moneyTransaction
           ? _value.moneyTransaction
           : moneyTransaction // ignore: cast_nullable_to_non_nullable
               as MoneyTransaction,
-      showErrorMessages: showErrorMessages == freezed
+      showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSaving: isSaving == freezed
+      isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-      saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
+      saveFailureOrSuccessOption: null == saveFailureOrSuccessOption
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<ValueFailure, Unit>>,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $MoneyTransactionCopyWith<$Res> get moneyTransaction {
     return $MoneyTransactionCopyWith<$Res>(_value.moneyTransaction, (value) {
-      return _then(_value.copyWith(moneyTransaction: value));
+      return _then(_value.copyWith(moneyTransaction: value) as $Val);
     });
   }
 }
@@ -1516,6 +1513,7 @@ abstract class _$$_TransactionCreatorStateCopyWith<$Res>
           $Res Function(_$_TransactionCreatorState) then) =
       __$$_TransactionCreatorStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {MoneyTransaction moneyTransaction,
       bool showErrorMessages,
@@ -1529,42 +1527,40 @@ abstract class _$$_TransactionCreatorStateCopyWith<$Res>
 
 /// @nodoc
 class __$$_TransactionCreatorStateCopyWithImpl<$Res>
-    extends _$TransactionCreatorStateCopyWithImpl<$Res>
+    extends _$TransactionCreatorStateCopyWithImpl<$Res,
+        _$_TransactionCreatorState>
     implements _$$_TransactionCreatorStateCopyWith<$Res> {
   __$$_TransactionCreatorStateCopyWithImpl(_$_TransactionCreatorState _value,
       $Res Function(_$_TransactionCreatorState) _then)
-      : super(_value, (v) => _then(v as _$_TransactionCreatorState));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionCreatorState get _value =>
-      super._value as _$_TransactionCreatorState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? moneyTransaction = freezed,
-    Object? showErrorMessages = freezed,
-    Object? isSaving = freezed,
-    Object? isEditing = freezed,
-    Object? saveFailureOrSuccessOption = freezed,
+    Object? moneyTransaction = null,
+    Object? showErrorMessages = null,
+    Object? isSaving = null,
+    Object? isEditing = null,
+    Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_$_TransactionCreatorState(
-      moneyTransaction: moneyTransaction == freezed
+      moneyTransaction: null == moneyTransaction
           ? _value.moneyTransaction
           : moneyTransaction // ignore: cast_nullable_to_non_nullable
               as MoneyTransaction,
-      showErrorMessages: showErrorMessages == freezed
+      showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
               as bool,
-      isSaving: isSaving == freezed
+      isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
               as bool,
-      isEditing: isEditing == freezed
+      isEditing: null == isEditing
           ? _value.isEditing
           : isEditing // ignore: cast_nullable_to_non_nullable
               as bool,
-      saveFailureOrSuccessOption: saveFailureOrSuccessOption == freezed
+      saveFailureOrSuccessOption: null == saveFailureOrSuccessOption
           ? _value.saveFailureOrSuccessOption
           : saveFailureOrSuccessOption // ignore: cast_nullable_to_non_nullable
               as Option<Either<ValueFailure, Unit>>,
@@ -1603,27 +1599,27 @@ class _$_TransactionCreatorState implements _TransactionCreatorState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionCreatorState &&
-            const DeepCollectionEquality()
-                .equals(other.moneyTransaction, moneyTransaction) &&
-            const DeepCollectionEquality()
-                .equals(other.showErrorMessages, showErrorMessages) &&
-            const DeepCollectionEquality().equals(other.isSaving, isSaving) &&
-            const DeepCollectionEquality().equals(other.isEditing, isEditing) &&
-            const DeepCollectionEquality().equals(
-                other.saveFailureOrSuccessOption, saveFailureOrSuccessOption));
+            (identical(other.moneyTransaction, moneyTransaction) ||
+                other.moneyTransaction == moneyTransaction) &&
+            (identical(other.showErrorMessages, showErrorMessages) ||
+                other.showErrorMessages == showErrorMessages) &&
+            (identical(other.isSaving, isSaving) ||
+                other.isSaving == isSaving) &&
+            (identical(other.isEditing, isEditing) ||
+                other.isEditing == isEditing) &&
+            (identical(other.saveFailureOrSuccessOption,
+                    saveFailureOrSuccessOption) ||
+                other.saveFailureOrSuccessOption ==
+                    saveFailureOrSuccessOption));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(moneyTransaction),
-      const DeepCollectionEquality().hash(showErrorMessages),
-      const DeepCollectionEquality().hash(isSaving),
-      const DeepCollectionEquality().hash(isEditing),
-      const DeepCollectionEquality().hash(saveFailureOrSuccessOption));
+  int get hashCode => Object.hash(runtimeType, moneyTransaction,
+      showErrorMessages, isSaving, isEditing, saveFailureOrSuccessOption);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionCreatorStateCopyWith<_$_TransactionCreatorState>
       get copyWith =>
           __$$_TransactionCreatorStateCopyWithImpl<_$_TransactionCreatorState>(

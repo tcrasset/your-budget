@@ -38,7 +38,8 @@ mixin _$SubcategoryDTO {
 abstract class $SubcategoryDTOCopyWith<$Res> {
   factory $SubcategoryDTOCopyWith(
           SubcategoryDTO value, $Res Function(SubcategoryDTO) then) =
-      _$SubcategoryDTOCopyWithImpl<$Res>;
+      _$SubcategoryDTOCopyWithImpl<$Res, SubcategoryDTO>;
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -49,34 +50,36 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SubcategoryDTOCopyWithImpl<$Res>
+class _$SubcategoryDTOCopyWithImpl<$Res, $Val extends SubcategoryDTO>
     implements $SubcategoryDTOCopyWith<$Res> {
   _$SubcategoryDTOCopyWithImpl(this._value, this._then);
 
-  final SubcategoryDTO _value;
   // ignore: unused_field
-  final $Res Function(SubcategoryDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? categoryID = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? categoryID = null,
+    Object? name = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryID: categoryID == freezed
+      categoryID: null == categoryID
           ? _value.categoryID
           : categoryID // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -87,6 +90,7 @@ abstract class _$$_SubcategoryDTOCopyWith<$Res>
           _$_SubcategoryDTO value, $Res Function(_$_SubcategoryDTO) then) =
       __$$_SubcategoryDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
           String id,
@@ -98,31 +102,29 @@ abstract class _$$_SubcategoryDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_SubcategoryDTOCopyWithImpl<$Res>
-    extends _$SubcategoryDTOCopyWithImpl<$Res>
+    extends _$SubcategoryDTOCopyWithImpl<$Res, _$_SubcategoryDTO>
     implements _$$_SubcategoryDTOCopyWith<$Res> {
   __$$_SubcategoryDTOCopyWithImpl(
       _$_SubcategoryDTO _value, $Res Function(_$_SubcategoryDTO) _then)
-      : super(_value, (v) => _then(v as _$_SubcategoryDTO));
+      : super(_value, _then);
 
-  @override
-  _$_SubcategoryDTO get _value => super._value as _$_SubcategoryDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? categoryID = freezed,
-    Object? name = freezed,
+    Object? id = null,
+    Object? categoryID = null,
+    Object? name = null,
   }) {
     return _then(_$_SubcategoryDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      categoryID: categoryID == freezed
+      categoryID: null == categoryID
           ? _value.categoryID
           : categoryID // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
@@ -166,22 +168,19 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_SubcategoryDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality()
-                .equals(other.categoryID, categoryID) &&
-            const DeepCollectionEquality().equals(other.name, name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.categoryID, categoryID) ||
+                other.categoryID == categoryID) &&
+            (identical(other.name, name) || other.name == name));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(categoryID),
-      const DeepCollectionEquality().hash(name));
+  int get hashCode => Object.hash(runtimeType, id, categoryID, name);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_SubcategoryDTOCopyWith<_$_SubcategoryDTO> get copyWith =>
       __$$_SubcategoryDTOCopyWithImpl<_$_SubcategoryDTO>(this, _$identity);
 

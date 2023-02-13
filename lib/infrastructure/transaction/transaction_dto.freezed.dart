@@ -72,7 +72,8 @@ mixin _$MoneyTransactionDTO {
 abstract class $MoneyTransactionDTOCopyWith<$Res> {
   factory $MoneyTransactionDTOCopyWith(
           MoneyTransactionDTO value, $Res Function(MoneyTransactionDTO) then) =
-      _$MoneyTransactionDTOCopyWithImpl<$Res>;
+      _$MoneyTransactionDTOCopyWithImpl<$Res, MoneyTransactionDTO>;
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
           String id,
@@ -105,89 +106,91 @@ abstract class $MoneyTransactionDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MoneyTransactionDTOCopyWithImpl<$Res>
+class _$MoneyTransactionDTOCopyWithImpl<$Res, $Val extends MoneyTransactionDTO>
     implements $MoneyTransactionDTOCopyWith<$Res> {
   _$MoneyTransactionDTOCopyWithImpl(this._value, this._then);
 
-  final MoneyTransactionDTO _value;
   // ignore: unused_field
-  final $Res Function(MoneyTransactionDTO) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? amount = freezed,
-    Object? memo = freezed,
-    Object? dateInMillisecondsSinceEpoch = freezed,
-    Object? type = freezed,
+    Object? id = null,
+    Object? amount = null,
+    Object? memo = null,
+    Object? dateInMillisecondsSinceEpoch = null,
+    Object? type = null,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
     Object? subcatCategoryId = freezed,
-    Object? receiverName = freezed,
+    Object? receiverName = null,
     Object? receiverBalance = freezed,
-    Object? receiverId = freezed,
-    Object? giverName = freezed,
+    Object? receiverId = null,
+    Object? giverName = null,
     Object? giverBalance = freezed,
-    Object? giverId = freezed,
+    Object? giverId = null,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      memo: memo == freezed
+      memo: null == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String,
-      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
+      dateInMillisecondsSinceEpoch: null == dateInMillisecondsSinceEpoch
           ? _value.dateInMillisecondsSinceEpoch
           : dateInMillisecondsSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatID: subcatID == freezed
+      subcatID: freezed == subcatID
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
               as String?,
-      subcatName: subcatName == freezed
+      subcatName: freezed == subcatName
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
               as String?,
-      subcatCategoryId: subcatCategoryId == freezed
+      subcatCategoryId: freezed == subcatCategoryId
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      receiverName: receiverName == freezed
+      receiverName: null == receiverName
           ? _value.receiverName
           : receiverName // ignore: cast_nullable_to_non_nullable
               as String,
-      receiverBalance: receiverBalance == freezed
+      receiverBalance: freezed == receiverBalance
           ? _value.receiverBalance
           : receiverBalance // ignore: cast_nullable_to_non_nullable
               as double?,
-      receiverId: receiverId == freezed
+      receiverId: null == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      giverName: giverName == freezed
+      giverName: null == giverName
           ? _value.giverName
           : giverName // ignore: cast_nullable_to_non_nullable
               as String,
-      giverBalance: giverBalance == freezed
+      giverBalance: freezed == giverBalance
           ? _value.giverBalance
           : giverBalance // ignore: cast_nullable_to_non_nullable
               as double?,
-      giverId: giverId == freezed
+      giverId: null == giverId
           ? _value.giverId
           : giverId // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
@@ -198,6 +201,7 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
           _$_TransactionDTO value, $Res Function(_$_TransactionDTO) then) =
       __$$_TransactionDTOCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false, name: DatabaseConstants.MONEYTRANSACTION_ID)
           String id,
@@ -231,86 +235,84 @@ abstract class _$$_TransactionDTOCopyWith<$Res>
 
 /// @nodoc
 class __$$_TransactionDTOCopyWithImpl<$Res>
-    extends _$MoneyTransactionDTOCopyWithImpl<$Res>
+    extends _$MoneyTransactionDTOCopyWithImpl<$Res, _$_TransactionDTO>
     implements _$$_TransactionDTOCopyWith<$Res> {
   __$$_TransactionDTOCopyWithImpl(
       _$_TransactionDTO _value, $Res Function(_$_TransactionDTO) _then)
-      : super(_value, (v) => _then(v as _$_TransactionDTO));
+      : super(_value, _then);
 
-  @override
-  _$_TransactionDTO get _value => super._value as _$_TransactionDTO;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = freezed,
-    Object? amount = freezed,
-    Object? memo = freezed,
-    Object? dateInMillisecondsSinceEpoch = freezed,
-    Object? type = freezed,
+    Object? id = null,
+    Object? amount = null,
+    Object? memo = null,
+    Object? dateInMillisecondsSinceEpoch = null,
+    Object? type = null,
     Object? subcatID = freezed,
     Object? subcatName = freezed,
     Object? subcatCategoryId = freezed,
-    Object? receiverName = freezed,
+    Object? receiverName = null,
     Object? receiverBalance = freezed,
-    Object? receiverId = freezed,
-    Object? giverName = freezed,
+    Object? receiverId = null,
+    Object? giverName = null,
     Object? giverBalance = freezed,
-    Object? giverId = freezed,
+    Object? giverId = null,
   }) {
     return _then(_$_TransactionDTO(
-      id: id == freezed
+      id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      amount: amount == freezed
+      amount: null == amount
           ? _value.amount
           : amount // ignore: cast_nullable_to_non_nullable
               as double,
-      memo: memo == freezed
+      memo: null == memo
           ? _value.memo
           : memo // ignore: cast_nullable_to_non_nullable
               as String,
-      dateInMillisecondsSinceEpoch: dateInMillisecondsSinceEpoch == freezed
+      dateInMillisecondsSinceEpoch: null == dateInMillisecondsSinceEpoch
           ? _value.dateInMillisecondsSinceEpoch
           : dateInMillisecondsSinceEpoch // ignore: cast_nullable_to_non_nullable
               as int,
-      type: type == freezed
+      type: null == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
-      subcatID: subcatID == freezed
+      subcatID: freezed == subcatID
           ? _value.subcatID
           : subcatID // ignore: cast_nullable_to_non_nullable
               as String?,
-      subcatName: subcatName == freezed
+      subcatName: freezed == subcatName
           ? _value.subcatName
           : subcatName // ignore: cast_nullable_to_non_nullable
               as String?,
-      subcatCategoryId: subcatCategoryId == freezed
+      subcatCategoryId: freezed == subcatCategoryId
           ? _value.subcatCategoryId
           : subcatCategoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      receiverName: receiverName == freezed
+      receiverName: null == receiverName
           ? _value.receiverName
           : receiverName // ignore: cast_nullable_to_non_nullable
               as String,
-      receiverBalance: receiverBalance == freezed
+      receiverBalance: freezed == receiverBalance
           ? _value.receiverBalance
           : receiverBalance // ignore: cast_nullable_to_non_nullable
               as double?,
-      receiverId: receiverId == freezed
+      receiverId: null == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
               as String,
-      giverName: giverName == freezed
+      giverName: null == giverName
           ? _value.giverName
           : giverName // ignore: cast_nullable_to_non_nullable
               as String,
-      giverBalance: giverBalance == freezed
+      giverBalance: freezed == giverBalance
           ? _value.giverBalance
           : giverBalance // ignore: cast_nullable_to_non_nullable
               as double?,
-      giverId: giverId == freezed
+      giverId: null == giverId
           ? _value.giverId
           : giverId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -421,51 +423,55 @@ class _$_TransactionDTO extends _TransactionDTO {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TransactionDTO &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.amount, amount) &&
-            const DeepCollectionEquality().equals(other.memo, memo) &&
-            const DeepCollectionEquality().equals(
-                other.dateInMillisecondsSinceEpoch,
-                dateInMillisecondsSinceEpoch) &&
-            const DeepCollectionEquality().equals(other.type, type) &&
-            const DeepCollectionEquality().equals(other.subcatID, subcatID) &&
-            const DeepCollectionEquality()
-                .equals(other.subcatName, subcatName) &&
-            const DeepCollectionEquality()
-                .equals(other.subcatCategoryId, subcatCategoryId) &&
-            const DeepCollectionEquality()
-                .equals(other.receiverName, receiverName) &&
-            const DeepCollectionEquality()
-                .equals(other.receiverBalance, receiverBalance) &&
-            const DeepCollectionEquality()
-                .equals(other.receiverId, receiverId) &&
-            const DeepCollectionEquality().equals(other.giverName, giverName) &&
-            const DeepCollectionEquality()
-                .equals(other.giverBalance, giverBalance) &&
-            const DeepCollectionEquality().equals(other.giverId, giverId));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
+            (identical(other.memo, memo) || other.memo == memo) &&
+            (identical(other.dateInMillisecondsSinceEpoch,
+                    dateInMillisecondsSinceEpoch) ||
+                other.dateInMillisecondsSinceEpoch ==
+                    dateInMillisecondsSinceEpoch) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.subcatID, subcatID) ||
+                other.subcatID == subcatID) &&
+            (identical(other.subcatName, subcatName) ||
+                other.subcatName == subcatName) &&
+            (identical(other.subcatCategoryId, subcatCategoryId) ||
+                other.subcatCategoryId == subcatCategoryId) &&
+            (identical(other.receiverName, receiverName) ||
+                other.receiverName == receiverName) &&
+            (identical(other.receiverBalance, receiverBalance) ||
+                other.receiverBalance == receiverBalance) &&
+            (identical(other.receiverId, receiverId) ||
+                other.receiverId == receiverId) &&
+            (identical(other.giverName, giverName) ||
+                other.giverName == giverName) &&
+            (identical(other.giverBalance, giverBalance) ||
+                other.giverBalance == giverBalance) &&
+            (identical(other.giverId, giverId) || other.giverId == giverId));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(amount),
-      const DeepCollectionEquality().hash(memo),
-      const DeepCollectionEquality().hash(dateInMillisecondsSinceEpoch),
-      const DeepCollectionEquality().hash(type),
-      const DeepCollectionEquality().hash(subcatID),
-      const DeepCollectionEquality().hash(subcatName),
-      const DeepCollectionEquality().hash(subcatCategoryId),
-      const DeepCollectionEquality().hash(receiverName),
-      const DeepCollectionEquality().hash(receiverBalance),
-      const DeepCollectionEquality().hash(receiverId),
-      const DeepCollectionEquality().hash(giverName),
-      const DeepCollectionEquality().hash(giverBalance),
-      const DeepCollectionEquality().hash(giverId));
+      id,
+      amount,
+      memo,
+      dateInMillisecondsSinceEpoch,
+      type,
+      subcatID,
+      subcatName,
+      subcatCategoryId,
+      receiverName,
+      receiverBalance,
+      receiverId,
+      giverName,
+      giverBalance,
+      giverId);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TransactionDTOCopyWith<_$_TransactionDTO> get copyWith =>
       __$$_TransactionDTOCopyWithImpl<_$_TransactionDTO>(this, _$identity);
 

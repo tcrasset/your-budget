@@ -18,8 +18,8 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_payee_dialog.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
-class ReceiverName extends StatelessWidget {
-  const ReceiverName({
+class ReceiverField extends StatelessWidget {
+  const ReceiverField({
     Key? key,
   }) : super(key: key);
 

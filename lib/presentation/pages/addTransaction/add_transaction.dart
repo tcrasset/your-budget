@@ -35,17 +35,32 @@ class AddTransactionStyles {
   static const TextStyle selected = TextStyle(color: Colors.black, fontSize: 16.0);
 }
 
+void showErrorSnackbar(ValueFailure failure, BuildContext context) {
+  final String? message = failure.maybeMap(
+    inflowTransactionNotIntoToBeBudgeted: (_) =>
+        "Inflow transaction can only be made between accounts or into 'To Be Budgeted'",
+    outflowTransactionFromToBeBudgeted: (_) =>
+        "Outflow transactions cannot be made from 'To Be Budgeted'",
+    orElse: () => null,
+  );
+
+  if (message == null) return;
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(message),
+    backgroundColor: Constants.RED_COLOR,
+  ));
+}
+
+void showSuccessSnackbar(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      content: Text('Added transaction!'),
+      backgroundColor: Constants.GREEN_COLOR,
+    ),
+  );
+}
+
 class AddTransactionPage extends StatelessWidget {
-  void showErrorSnackbar(ValueFailure failure, BuildContext context) {
-    final String? message = failure.maybeMap(
-      orElse: () => null,
-    );
-
-    if (message == null) return;
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message), duration: const Duration(seconds: 1)));
-  }
-
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -78,7 +93,7 @@ class AddTransactionPage extends StatelessWidget {
           body: BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
             listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
             listener: (context, state) {
-              TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
+              final TransactionCreatorBloc bloc = context.read<TransactionCreatorBloc>();
               state.saveFailureOrSuccessOption.fold(
                 () /*None*/ {},
                 (failureOrSuccess) /* Some*/ => failureOrSuccess.fold(
@@ -107,7 +122,7 @@ class AddTransactionPage extends StatelessWidget {
                               validateAmount: _validateAmount,
                             ),
                           ),
-                          const ReceiverName(),
+                          const ReceiverField(),
                           const GiverField(),
                           const SubcategoryField(),
                           const DateField(),
@@ -138,8 +153,8 @@ void _onAmountChange(BuildContext context, String value) =>
 String? _validateAmount(BuildContext context) {
   final state = context.read<TransactionCreatorBloc>().state;
 
-  // Don't show error messages after a successful save.
   if (state.showErrorMessages == false) {
+    // Don't show error messages after a successful save.
     return null;
   }
 
@@ -149,12 +164,8 @@ String? _validateAmount(BuildContext context) {
   );
 }
 
-String? _failAmountClosure(ValueFailure f) {
-  final result = f.maybeMap(
-    tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
-    invalidAmount: (_) => "Please specify an amount.",
-    orElse: () => null,
-  );
-
-  return result is String ? result : null;
-}
+String? _failAmountClosure(ValueFailure f) => f.maybeMap(
+      tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
+      invalidAmount: (_) => "Please specify an amount.",
+      orElse: () => null,
+    );

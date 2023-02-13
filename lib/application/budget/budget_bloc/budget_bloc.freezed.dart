@@ -24,8 +24,8 @@ mixin _$BudgetEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(DateTime date)? NewBudgetRequested,
-    TResult Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult? Function(DateTime date)? NewBudgetRequested,
+    TResult? Function(BudgetValue budgetvalue)? BudgetValueModified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -43,8 +43,8 @@ mixin _$BudgetEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult Function(BudgetValueModified value)? BudgetValueModified,
+    TResult? Function(NewBudgetRequested value)? NewBudgetRequested,
+    TResult? Function(BudgetValueModified value)? BudgetValueModified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,16 +60,18 @@ mixin _$BudgetEvent {
 abstract class $BudgetEventCopyWith<$Res> {
   factory $BudgetEventCopyWith(
           BudgetEvent value, $Res Function(BudgetEvent) then) =
-      _$BudgetEventCopyWithImpl<$Res>;
+      _$BudgetEventCopyWithImpl<$Res, BudgetEvent>;
 }
 
 /// @nodoc
-class _$BudgetEventCopyWithImpl<$Res> implements $BudgetEventCopyWith<$Res> {
+class _$BudgetEventCopyWithImpl<$Res, $Val extends BudgetEvent>
+    implements $BudgetEventCopyWith<$Res> {
   _$BudgetEventCopyWithImpl(this._value, this._then);
 
-  final BudgetEvent _value;
   // ignore: unused_field
-  final $Res Function(BudgetEvent) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
@@ -77,26 +79,25 @@ abstract class _$$NewBudgetRequestedCopyWith<$Res> {
   factory _$$NewBudgetRequestedCopyWith(_$NewBudgetRequested value,
           $Res Function(_$NewBudgetRequested) then) =
       __$$NewBudgetRequestedCopyWithImpl<$Res>;
+  @useResult
   $Res call({DateTime date});
 }
 
 /// @nodoc
 class __$$NewBudgetRequestedCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$NewBudgetRequested>
     implements _$$NewBudgetRequestedCopyWith<$Res> {
   __$$NewBudgetRequestedCopyWithImpl(
       _$NewBudgetRequested _value, $Res Function(_$NewBudgetRequested) _then)
-      : super(_value, (v) => _then(v as _$NewBudgetRequested));
+      : super(_value, _then);
 
-  @override
-  _$NewBudgetRequested get _value => super._value as _$NewBudgetRequested;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? date = freezed,
+    Object? date = null,
   }) {
     return _then(_$NewBudgetRequested(
-      date == freezed
+      null == date
           ? _value.date
           : date // ignore: cast_nullable_to_non_nullable
               as DateTime,
@@ -122,15 +123,15 @@ class _$NewBudgetRequested implements NewBudgetRequested {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NewBudgetRequested &&
-            const DeepCollectionEquality().equals(other.date, date));
+            (identical(other.date, date) || other.date == date));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(date));
+  int get hashCode => Object.hash(runtimeType, date);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$NewBudgetRequestedCopyWith<_$NewBudgetRequested> get copyWith =>
       __$$NewBudgetRequestedCopyWithImpl<_$NewBudgetRequested>(
           this, _$identity);
@@ -147,8 +148,8 @@ class _$NewBudgetRequested implements NewBudgetRequested {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(DateTime date)? NewBudgetRequested,
-    TResult Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult? Function(DateTime date)? NewBudgetRequested,
+    TResult? Function(BudgetValue budgetvalue)? BudgetValueModified,
   }) {
     return NewBudgetRequested?.call(date);
   }
@@ -178,8 +179,8 @@ class _$NewBudgetRequested implements NewBudgetRequested {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult Function(BudgetValueModified value)? BudgetValueModified,
+    TResult? Function(NewBudgetRequested value)? NewBudgetRequested,
+    TResult? Function(BudgetValueModified value)? BudgetValueModified,
   }) {
     return NewBudgetRequested?.call(this);
   }
@@ -212,6 +213,7 @@ abstract class _$$BudgetValueModifiedCopyWith<$Res> {
   factory _$$BudgetValueModifiedCopyWith(_$BudgetValueModified value,
           $Res Function(_$BudgetValueModified) then) =
       __$$BudgetValueModifiedCopyWithImpl<$Res>;
+  @useResult
   $Res call({BudgetValue budgetvalue});
 
   $BudgetValueCopyWith<$Res> get budgetvalue;
@@ -219,21 +221,19 @@ abstract class _$$BudgetValueModifiedCopyWith<$Res> {
 
 /// @nodoc
 class __$$BudgetValueModifiedCopyWithImpl<$Res>
-    extends _$BudgetEventCopyWithImpl<$Res>
+    extends _$BudgetEventCopyWithImpl<$Res, _$BudgetValueModified>
     implements _$$BudgetValueModifiedCopyWith<$Res> {
   __$$BudgetValueModifiedCopyWithImpl(
       _$BudgetValueModified _value, $Res Function(_$BudgetValueModified) _then)
-      : super(_value, (v) => _then(v as _$BudgetValueModified));
+      : super(_value, _then);
 
-  @override
-  _$BudgetValueModified get _value => super._value as _$BudgetValueModified;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? budgetvalue = freezed,
+    Object? budgetvalue = null,
   }) {
     return _then(_$BudgetValueModified(
-      budgetvalue == freezed
+      null == budgetvalue
           ? _value.budgetvalue
           : budgetvalue // ignore: cast_nullable_to_non_nullable
               as BudgetValue,
@@ -241,6 +241,7 @@ class __$$BudgetValueModifiedCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BudgetValueCopyWith<$Res> get budgetvalue {
     return $BudgetValueCopyWith<$Res>(_value.budgetvalue, (value) {
       return _then(_value.copyWith(budgetvalue: value));
@@ -266,16 +267,16 @@ class _$BudgetValueModified implements BudgetValueModified {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$BudgetValueModified &&
-            const DeepCollectionEquality()
-                .equals(other.budgetvalue, budgetvalue));
+            (identical(other.budgetvalue, budgetvalue) ||
+                other.budgetvalue == budgetvalue));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(budgetvalue));
+  int get hashCode => Object.hash(runtimeType, budgetvalue);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$BudgetValueModifiedCopyWith<_$BudgetValueModified> get copyWith =>
       __$$BudgetValueModifiedCopyWithImpl<_$BudgetValueModified>(
           this, _$identity);
@@ -292,8 +293,8 @@ class _$BudgetValueModified implements BudgetValueModified {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(DateTime date)? NewBudgetRequested,
-    TResult Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult? Function(DateTime date)? NewBudgetRequested,
+    TResult? Function(BudgetValue budgetvalue)? BudgetValueModified,
   }) {
     return BudgetValueModified?.call(budgetvalue);
   }
@@ -323,8 +324,8 @@ class _$BudgetValueModified implements BudgetValueModified {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult Function(BudgetValueModified value)? BudgetValueModified,
+    TResult? Function(NewBudgetRequested value)? NewBudgetRequested,
+    TResult? Function(BudgetValueModified value)? BudgetValueModified,
   }) {
     return BudgetValueModified?.call(this);
   }
@@ -368,7 +369,8 @@ mixin _$BudgetState {
 abstract class $BudgetStateCopyWith<$Res> {
   factory $BudgetStateCopyWith(
           BudgetState value, $Res Function(BudgetState) then) =
-      _$BudgetStateCopyWithImpl<$Res>;
+      _$BudgetStateCopyWithImpl<$Res, BudgetState>;
+  @useResult
   $Res call(
       {Budget? budget,
       BudgetOverviewStatus status,
@@ -378,43 +380,47 @@ abstract class $BudgetStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BudgetStateCopyWithImpl<$Res> implements $BudgetStateCopyWith<$Res> {
+class _$BudgetStateCopyWithImpl<$Res, $Val extends BudgetState>
+    implements $BudgetStateCopyWith<$Res> {
   _$BudgetStateCopyWithImpl(this._value, this._then);
 
-  final BudgetState _value;
   // ignore: unused_field
-  final $Res Function(BudgetState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? budget = freezed,
-    Object? status = freezed,
+    Object? status = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      budget: budget == freezed
+      budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as Budget?,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as BudgetOverviewStatus,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ValueFailureCopyWith<dynamic, $Res>? get error {
     if (_value.error == null) {
       return null;
     }
 
     return $ValueFailureCopyWith<dynamic, $Res>(_value.error!, (value) {
-      return _then(_value.copyWith(error: value));
+      return _then(_value.copyWith(error: value) as $Val);
     });
   }
 }
@@ -426,6 +432,7 @@ abstract class _$$_BudgetStateCopyWith<$Res>
           _$_BudgetState value, $Res Function(_$_BudgetState) then) =
       __$$_BudgetStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {Budget? budget,
       BudgetOverviewStatus status,
@@ -436,31 +443,30 @@ abstract class _$$_BudgetStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_BudgetStateCopyWithImpl<$Res> extends _$BudgetStateCopyWithImpl<$Res>
+class __$$_BudgetStateCopyWithImpl<$Res>
+    extends _$BudgetStateCopyWithImpl<$Res, _$_BudgetState>
     implements _$$_BudgetStateCopyWith<$Res> {
   __$$_BudgetStateCopyWithImpl(
       _$_BudgetState _value, $Res Function(_$_BudgetState) _then)
-      : super(_value, (v) => _then(v as _$_BudgetState));
+      : super(_value, _then);
 
-  @override
-  _$_BudgetState get _value => super._value as _$_BudgetState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? budget = freezed,
-    Object? status = freezed,
+    Object? status = null,
     Object? error = freezed,
   }) {
     return _then(_$_BudgetState(
-      budget: budget == freezed
+      budget: freezed == budget
           ? _value.budget
           : budget // ignore: cast_nullable_to_non_nullable
               as Budget?,
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as BudgetOverviewStatus,
-      error: error == freezed
+      error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as ValueFailure<dynamic>?,
@@ -492,20 +498,17 @@ class _$_BudgetState implements _BudgetState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_BudgetState &&
-            const DeepCollectionEquality().equals(other.budget, budget) &&
-            const DeepCollectionEquality().equals(other.status, status) &&
-            const DeepCollectionEquality().equals(other.error, error));
+            (identical(other.budget, budget) || other.budget == budget) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(budget),
-      const DeepCollectionEquality().hash(status),
-      const DeepCollectionEquality().hash(error));
+  int get hashCode => Object.hash(runtimeType, budget, status, error);
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_BudgetStateCopyWith<_$_BudgetState> get copyWith =>
       __$$_BudgetStateCopyWithImpl<_$_BudgetState>(this, _$identity);
 }
