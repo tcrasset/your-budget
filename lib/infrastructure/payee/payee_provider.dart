@@ -16,10 +16,10 @@ import 'package:your_budget/models/constants.dart';
 class SQFlitePayeeProvider implements IPayeeProvider {
   final Database? database;
   SQFlitePayeeProvider({required this.database}) {
-    _init();
+    init();
   }
 
-  Future<void> _init() async {
+  Future<void> init() async {
     _payeeStreamController.add(await getAllPayees());
   }
 

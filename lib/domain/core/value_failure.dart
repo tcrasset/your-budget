@@ -22,4 +22,7 @@ class ValueFailure<T> with _$ValueFailure<T> {
 
   const factory ValueFailure.outflowTransactionFromToBeBudgeted() =
       _OutflowTransactionFromInToBeBudgeted<T>;
+
+  const factory ValueFailure.betweenAccountTransactionWithSubcategorySelected() =
+      _BetweenAccountTransactionWithSubcategorySelected<T>;
 }

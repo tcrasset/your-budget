@@ -21,11 +21,9 @@ import 'package:your_budget/models/utils.dart';
 
 class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   final Database? database;
-  SQFliteBudgetValueProvider({required this.database}) {
-    _init();
-  }
+  SQFliteBudgetValueProvider({required this.database});
 
-  Future<void> _init() async {
+  Future<void> init() async {
     _budgetvalueStreamController.add(await getAllBudgetValues());
   }
 

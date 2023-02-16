@@ -17,11 +17,9 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteCategoryProvider implements ICategoryProvider {
   final Database? database;
-  SQFliteCategoryProvider({required this.database}) {
-    _init();
-  }
+  SQFliteCategoryProvider({required this.database});
 
-  void _init() async {
+  Future<void> init() async {
     _categoryStreamController.add(await getAllCategories());
   }
 

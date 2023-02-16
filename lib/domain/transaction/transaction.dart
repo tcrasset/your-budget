@@ -66,17 +66,24 @@ class MoneyTransaction with _$MoneyTransaction {
       );
 
   Option<ValueFailure<dynamic>> get failureOption {
-    final bool isInflowTransactionIntoToBeBudgeted = !amount.getOrCrash().isNegative &&
-        giverBalance.isNone() /* missing giverBalance means it's a Payee */ &&
+    final bool isBetweenAccountTransactionWithSelectedSubcategory =
+        giver.isRight() && receiver.isRight() && subcategory != null;
+
+    if (isBetweenAccountTransactionWithSelectedSubcategory) {
+      // Between account transactions should not have a subcategory selected
+      return some(const ValueFailure.betweenAccountTransactionWithSubcategorySelected());
+    }
+
+    final bool isInflowTransactionNotIntoToBeBudgeted = !amount.getOrCrash().isNegative &&
         subcategory!.name.getOrCrash() != DatabaseConstants.TO_BE_BUDGETED;
 
-    if (isInflowTransactionIntoToBeBudgeted) {
+    if (isInflowTransactionNotIntoToBeBudgeted) {
       // Inflow transactions with Payee can only be made towards TO_BE_BUDGETED subcategory
       return some(const ValueFailure.inflowTransactionNotIntoToBeBudgeted());
     }
 
     final bool isOutflowTransactionFromToBeBudgeted = amount.getOrCrash().isNegative &&
-        giverName.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED;
+        subcategory!.name.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED;
 
     if (isOutflowTransactionFromToBeBudgeted) {
       // Outflow transactions cannot be made from TO_BE_BUDGETED.

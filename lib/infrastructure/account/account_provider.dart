@@ -15,11 +15,9 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteAccountProvider implements IAccountProvider {
   final Database? database;
-  SQFliteAccountProvider({required this.database}) {
-    _init();
-  }
+  SQFliteAccountProvider({required this.database});
 
-  Future<void> _init() async {
+  Future<void> init() async {
     _accountStreamController.add(await getAllAccounts());
   }
 

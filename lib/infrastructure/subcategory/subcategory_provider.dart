@@ -16,11 +16,8 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   final Database? database;
-  SQFliteSubcategoryProvider({required this.database}) {
-    _init();
-  }
-
-  void _init() async {
+  SQFliteSubcategoryProvider({required this.database});
+  Future<void> init() async {
     _subcategoryStreamController.add(await getAllSubcategories());
   }
 

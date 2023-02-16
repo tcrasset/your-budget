@@ -17,11 +17,9 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFliteTransactionProvider implements ITransactionProvider {
   final Database? database;
-  SQFliteTransactionProvider({required this.database}) {
-    _init();
-  }
+  SQFliteTransactionProvider({required this.database});
 
-  void _init() async {
+  Future<void> init() async {
     _transactionStreamController.add(await getAllTransactions());
   }
 

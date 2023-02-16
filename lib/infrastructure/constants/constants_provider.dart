@@ -8,6 +8,11 @@ class SQFliteConstantsProvider implements IConstantsProvider {
   final Database? database;
   SQFliteConstantsProvider({required this.database});
 
+  Future<void> init() async {
+    //TODO: Implement it with a BehaviourSubject
+    return;
+  }
+
   @override
   Future<Either<ValueFailure, DateTime>> getStartingBudgetDate() async {
     try {

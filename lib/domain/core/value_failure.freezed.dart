@@ -27,6 +27,8 @@ mixin _$ValueFailure<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,6 +42,7 @@ mixin _$ValueFailure<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -53,6 +56,7 @@ mixin _$ValueFailure<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,6 +73,9 @@ mixin _$ValueFailure<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -84,6 +91,9 @@ mixin _$ValueFailure<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -99,6 +109,9 @@ mixin _$ValueFailure<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -197,6 +210,8 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidTransaction(failedValue);
   }
@@ -213,6 +228,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidTransaction?.call(failedValue);
   }
@@ -229,6 +245,7 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (invalidTransaction != null) {
@@ -251,6 +268,9 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidTransaction(this);
   }
@@ -269,6 +289,9 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidTransaction?.call(this);
   }
@@ -287,6 +310,9 @@ class _$InvalidTransaction<T> implements InvalidTransaction<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (invalidTransaction != null) {
@@ -379,6 +405,8 @@ class _$Unexpected<T> implements Unexpected<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return unexpected(message);
   }
@@ -395,6 +423,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return unexpected?.call(message);
   }
@@ -411,6 +440,7 @@ class _$Unexpected<T> implements Unexpected<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -433,6 +463,9 @@ class _$Unexpected<T> implements Unexpected<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return unexpected(this);
   }
@@ -451,6 +484,9 @@ class _$Unexpected<T> implements Unexpected<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return unexpected?.call(this);
   }
@@ -469,6 +505,9 @@ class _$Unexpected<T> implements Unexpected<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (unexpected != null) {
@@ -561,6 +600,8 @@ class _$_LongName<T> implements _LongName<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return longName(failedValue);
   }
@@ -577,6 +618,7 @@ class _$_LongName<T> implements _LongName<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return longName?.call(failedValue);
   }
@@ -593,6 +635,7 @@ class _$_LongName<T> implements _LongName<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (longName != null) {
@@ -615,6 +658,9 @@ class _$_LongName<T> implements _LongName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return longName(this);
   }
@@ -633,6 +679,9 @@ class _$_LongName<T> implements _LongName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return longName?.call(this);
   }
@@ -651,6 +700,9 @@ class _$_LongName<T> implements _LongName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (longName != null) {
@@ -743,6 +795,8 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return emptyName(failedValue);
   }
@@ -759,6 +813,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return emptyName?.call(failedValue);
   }
@@ -775,6 +830,7 @@ class _$_EmptyName<T> implements _EmptyName<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (emptyName != null) {
@@ -797,6 +853,9 @@ class _$_EmptyName<T> implements _EmptyName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return emptyName(this);
   }
@@ -815,6 +874,9 @@ class _$_EmptyName<T> implements _EmptyName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return emptyName?.call(this);
   }
@@ -833,6 +895,9 @@ class _$_EmptyName<T> implements _EmptyName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (emptyName != null) {
@@ -926,6 +991,8 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return uniqueName(failedValue);
   }
@@ -942,6 +1009,7 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return uniqueName?.call(failedValue);
   }
@@ -958,6 +1026,7 @@ class _$_UniqueName<T> implements _UniqueName<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (uniqueName != null) {
@@ -980,6 +1049,9 @@ class _$_UniqueName<T> implements _UniqueName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return uniqueName(this);
   }
@@ -998,6 +1070,9 @@ class _$_UniqueName<T> implements _UniqueName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return uniqueName?.call(this);
   }
@@ -1016,6 +1091,9 @@ class _$_UniqueName<T> implements _UniqueName<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (uniqueName != null) {
@@ -1109,6 +1187,8 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidAmount(failedValue);
   }
@@ -1125,6 +1205,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidAmount?.call(failedValue);
   }
@@ -1141,6 +1222,7 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (invalidAmount != null) {
@@ -1163,6 +1245,9 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidAmount(this);
   }
@@ -1181,6 +1266,9 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return invalidAmount?.call(this);
   }
@@ -1199,6 +1287,9 @@ class _$_InvalidAmount<T> implements _InvalidAmount<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (invalidAmount != null) {
@@ -1293,6 +1384,8 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return tooBigAmount(failedValue);
   }
@@ -1309,6 +1402,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return tooBigAmount?.call(failedValue);
   }
@@ -1325,6 +1419,7 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (tooBigAmount != null) {
@@ -1347,6 +1442,9 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return tooBigAmount(this);
   }
@@ -1365,6 +1463,9 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return tooBigAmount?.call(this);
   }
@@ -1383,6 +1484,9 @@ class _$_TooLargeAmount<T> implements _TooLargeAmount<T> {
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (tooBigAmount != null) {
@@ -1454,6 +1558,8 @@ class _$_InflowTransactionNotInToBeBudgeted<T>
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return inflowTransactionNotIntoToBeBudgeted();
   }
@@ -1470,6 +1576,7 @@ class _$_InflowTransactionNotInToBeBudgeted<T>
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return inflowTransactionNotIntoToBeBudgeted?.call();
   }
@@ -1486,6 +1593,7 @@ class _$_InflowTransactionNotInToBeBudgeted<T>
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (inflowTransactionNotIntoToBeBudgeted != null) {
@@ -1508,6 +1616,9 @@ class _$_InflowTransactionNotInToBeBudgeted<T>
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return inflowTransactionNotIntoToBeBudgeted(this);
   }
@@ -1526,6 +1637,9 @@ class _$_InflowTransactionNotInToBeBudgeted<T>
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return inflowTransactionNotIntoToBeBudgeted?.call(this);
   }
@@ -1544,6 +1658,9 @@ class _$_InflowTransactionNotInToBeBudgeted<T>
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (inflowTransactionNotIntoToBeBudgeted != null) {
@@ -1611,6 +1728,8 @@ class _$_OutflowTransactionFromInToBeBudgeted<T>
     required TResult Function(String failedValue) tooBigAmount,
     required TResult Function() inflowTransactionNotIntoToBeBudgeted,
     required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return outflowTransactionFromToBeBudgeted();
   }
@@ -1627,6 +1746,7 @@ class _$_OutflowTransactionFromInToBeBudgeted<T>
     TResult? Function(String failedValue)? tooBigAmount,
     TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
   }) {
     return outflowTransactionFromToBeBudgeted?.call();
   }
@@ -1643,6 +1763,7 @@ class _$_OutflowTransactionFromInToBeBudgeted<T>
     TResult Function(String failedValue)? tooBigAmount,
     TResult Function()? inflowTransactionNotIntoToBeBudgeted,
     TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (outflowTransactionFromToBeBudgeted != null) {
@@ -1665,6 +1786,9 @@ class _$_OutflowTransactionFromInToBeBudgeted<T>
         inflowTransactionNotIntoToBeBudgeted,
     required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
         outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return outflowTransactionFromToBeBudgeted(this);
   }
@@ -1683,6 +1807,9 @@ class _$_OutflowTransactionFromInToBeBudgeted<T>
         inflowTransactionNotIntoToBeBudgeted,
     TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
   }) {
     return outflowTransactionFromToBeBudgeted?.call(this);
   }
@@ -1701,6 +1828,9 @@ class _$_OutflowTransactionFromInToBeBudgeted<T>
         inflowTransactionNotIntoToBeBudgeted,
     TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
         outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
     required TResult orElse(),
   }) {
     if (outflowTransactionFromToBeBudgeted != null) {
@@ -1714,4 +1844,179 @@ abstract class _OutflowTransactionFromInToBeBudgeted<T>
     implements ValueFailure<T> {
   const factory _OutflowTransactionFromInToBeBudgeted() =
       _$_OutflowTransactionFromInToBeBudgeted<T>;
+}
+
+/// @nodoc
+abstract class _$$_BetweenAccountTransactionWithSubcategorySelectedCopyWith<T,
+    $Res> {
+  factory _$$_BetweenAccountTransactionWithSubcategorySelectedCopyWith(
+          _$_BetweenAccountTransactionWithSubcategorySelected<T> value,
+          $Res Function(_$_BetweenAccountTransactionWithSubcategorySelected<T>)
+              then) =
+      __$$_BetweenAccountTransactionWithSubcategorySelectedCopyWithImpl<T,
+          $Res>;
+}
+
+/// @nodoc
+class __$$_BetweenAccountTransactionWithSubcategorySelectedCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res,
+        _$_BetweenAccountTransactionWithSubcategorySelected<T>>
+    implements
+        _$$_BetweenAccountTransactionWithSubcategorySelectedCopyWith<T, $Res> {
+  __$$_BetweenAccountTransactionWithSubcategorySelectedCopyWithImpl(
+      _$_BetweenAccountTransactionWithSubcategorySelected<T> _value,
+      $Res Function(_$_BetweenAccountTransactionWithSubcategorySelected<T>)
+          _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_BetweenAccountTransactionWithSubcategorySelected<T>
+    implements _BetweenAccountTransactionWithSubcategorySelected<T> {
+  const _$_BetweenAccountTransactionWithSubcategorySelected();
+
+  @override
+  String toString() {
+    return 'ValueFailure<$T>.betweenAccountTransactionWithSubcategorySelected()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_BetweenAccountTransactionWithSubcategorySelected<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String failedValue) invalidTransaction,
+    required TResult Function(String message) unexpected,
+    required TResult Function(String failedValue) longName,
+    required TResult Function(String failedValue) emptyName,
+    required TResult Function(String failedValue) uniqueName,
+    required TResult Function(String failedValue) invalidAmount,
+    required TResult Function(String failedValue) tooBigAmount,
+    required TResult Function() inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function() outflowTransactionFromToBeBudgeted,
+    required TResult Function()
+        betweenAccountTransactionWithSubcategorySelected,
+  }) {
+    return betweenAccountTransactionWithSubcategorySelected();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String failedValue)? invalidTransaction,
+    TResult? Function(String message)? unexpected,
+    TResult? Function(String failedValue)? longName,
+    TResult? Function(String failedValue)? emptyName,
+    TResult? Function(String failedValue)? uniqueName,
+    TResult? Function(String failedValue)? invalidAmount,
+    TResult? Function(String failedValue)? tooBigAmount,
+    TResult? Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function()? outflowTransactionFromToBeBudgeted,
+    TResult? Function()? betweenAccountTransactionWithSubcategorySelected,
+  }) {
+    return betweenAccountTransactionWithSubcategorySelected?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String failedValue)? invalidTransaction,
+    TResult Function(String message)? unexpected,
+    TResult Function(String failedValue)? longName,
+    TResult Function(String failedValue)? emptyName,
+    TResult Function(String failedValue)? uniqueName,
+    TResult Function(String failedValue)? invalidAmount,
+    TResult Function(String failedValue)? tooBigAmount,
+    TResult Function()? inflowTransactionNotIntoToBeBudgeted,
+    TResult Function()? outflowTransactionFromToBeBudgeted,
+    TResult Function()? betweenAccountTransactionWithSubcategorySelected,
+    required TResult orElse(),
+  }) {
+    if (betweenAccountTransactionWithSubcategorySelected != null) {
+      return betweenAccountTransactionWithSubcategorySelected();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(InvalidTransaction<T> value) invalidTransaction,
+    required TResult Function(Unexpected<T> value) unexpected,
+    required TResult Function(_LongName<T> value) longName,
+    required TResult Function(_EmptyName<T> value) emptyName,
+    required TResult Function(_UniqueName<T> value) uniqueName,
+    required TResult Function(_InvalidAmount<T> value) invalidAmount,
+    required TResult Function(_TooLargeAmount<T> value) tooBigAmount,
+    required TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)
+        inflowTransactionNotIntoToBeBudgeted,
+    required TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)
+        outflowTransactionFromToBeBudgeted,
+    required TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)
+        betweenAccountTransactionWithSubcategorySelected,
+  }) {
+    return betweenAccountTransactionWithSubcategorySelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult? Function(Unexpected<T> value)? unexpected,
+    TResult? Function(_LongName<T> value)? longName,
+    TResult? Function(_EmptyName<T> value)? emptyName,
+    TResult? Function(_UniqueName<T> value)? uniqueName,
+    TResult? Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult? Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult? Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult? Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
+    TResult? Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
+  }) {
+    return betweenAccountTransactionWithSubcategorySelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(InvalidTransaction<T> value)? invalidTransaction,
+    TResult Function(Unexpected<T> value)? unexpected,
+    TResult Function(_LongName<T> value)? longName,
+    TResult Function(_EmptyName<T> value)? emptyName,
+    TResult Function(_UniqueName<T> value)? uniqueName,
+    TResult Function(_InvalidAmount<T> value)? invalidAmount,
+    TResult Function(_TooLargeAmount<T> value)? tooBigAmount,
+    TResult Function(_InflowTransactionNotInToBeBudgeted<T> value)?
+        inflowTransactionNotIntoToBeBudgeted,
+    TResult Function(_OutflowTransactionFromInToBeBudgeted<T> value)?
+        outflowTransactionFromToBeBudgeted,
+    TResult Function(
+            _BetweenAccountTransactionWithSubcategorySelected<T> value)?
+        betweenAccountTransactionWithSubcategorySelected,
+    required TResult orElse(),
+  }) {
+    if (betweenAccountTransactionWithSubcategorySelected != null) {
+      return betweenAccountTransactionWithSubcategorySelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BetweenAccountTransactionWithSubcategorySelected<T>
+    implements ValueFailure<T> {
+  const factory _BetweenAccountTransactionWithSubcategorySelected() =
+      _$_BetweenAccountTransactionWithSubcategorySelected<T>;
 }

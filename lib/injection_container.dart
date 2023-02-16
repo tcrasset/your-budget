@@ -32,29 +32,44 @@ Future<void> init() async {
   final Database? database = await (dbProvider.open() as Future<Database?>);
 
   if (database == null) {
-    return;
+    throw Exception("Could not open database.");
   }
+
   // debugDatabase(database);
   sl.registerSingleton<Database>(database);
-  sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
-  sl.registerSingleton<ITransactionProvider>(
-    SQFliteTransactionProvider(database: sl<Database>()),
-  );
-  sl.registerSingleton<IAccountProvider>(SQFliteAccountProvider(database: sl<Database>()));
-  sl.registerSingleton<IPayeeProvider>(SQFlitePayeeProvider(database: sl<Database>()));
-  sl.registerSingleton<ISubcategoryProvider>(
-    SQFliteSubcategoryProvider(database: sl<Database>()),
-  );
-  sl.registerSingleton<IBudgetValueProvider>(
-    SQFliteBudgetValueProvider(database: sl<Database>()),
-  );
-  sl.registerSingleton<ICategoryProvider>(
-    SQFliteCategoryProvider(database: sl<Database>()),
-  );
 
-  sl.registerSingleton<IConstantsProvider>(
-    SQFliteConstantsProvider(database: sl<Database>()),
-  );
+  // sl.registerLazySingleton<Queries>(() => SQLQueryClass(database: sl<Database>()));
+
+  final payeeProvider = SQFlitePayeeProvider(database: sl<Database>());
+  await payeeProvider.init();
+
+  final transactionProvider = SQFliteTransactionProvider(database: sl<Database>());
+  await transactionProvider.init();
+
+  final accountProvider = SQFliteAccountProvider(database: sl<Database>());
+  await accountProvider.init();
+
+  final subcategoryProvider = SQFliteSubcategoryProvider(database: sl<Database>());
+  await subcategoryProvider.init();
+
+  final budgetvalueProvider = SQFliteBudgetValueProvider(database: sl<Database>());
+  await budgetvalueProvider.init();
+
+  final categoryProvider = SQFliteCategoryProvider(database: sl<Database>());
+  await categoryProvider.init();
+
+  final constantsProvider = SQFliteConstantsProvider(database: sl<Database>());
+  await constantsProvider.init();
+
+  sl.registerSingleton<ITransactionProvider>(transactionProvider);
+  sl.registerSingleton<IAccountProvider>(accountProvider);
+
+  sl.registerSingleton<IPayeeProvider>(payeeProvider);
+  sl.registerSingleton<ISubcategoryProvider>(subcategoryProvider);
+  sl.registerSingleton<IBudgetValueProvider>(budgetvalueProvider);
+  sl.registerSingleton<ICategoryProvider>(categoryProvider);
+
+  sl.registerSingleton<IConstantsProvider>(constantsProvider);
 
   // final AppState appState = AppState(queryContext: sl());
   // await appState.loadStateFromDatabase();
