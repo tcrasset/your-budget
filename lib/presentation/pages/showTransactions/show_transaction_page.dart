@@ -5,26 +5,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:your_budget/application/core/budget_date_cubit.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
+import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 
-import '../../../domain/account/account.dart';
-
 // import '../modifyTransactions/modify_transactions.dart';
 
 class ShowTransactionPage extends StatelessWidget {
   final String title;
-  const ShowTransactionPage({Key? key, required this.title}) : super(key: key);
+  const ShowTransactionPage({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +52,7 @@ class ShowTransactionPage extends StatelessWidget {
 
 class TransactionScaffold extends StatelessWidget {
   final String title;
-  const TransactionScaffold({Key? key, required this.title}) : super(key: key);
+  const TransactionScaffold({super.key, required this.title});
 
   Future<void> handleDeleteTransactions(BuildContext context) async {
     // Delete selected transactions and get back to non-modifying screen
@@ -135,10 +132,10 @@ class TransactionScaffold extends StatelessWidget {
         ),
         body: Stack(
           children: [
-            OptionalTransactionList(),
+            TransactionList(),
             BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
               builder: (context, state) {
-                bool isLoading = state.maybeMap(
+                final bool isLoading = state.maybeMap(
                   initial: (_) => true,
                   loading: (_) => true,
                   orElse: () => false,
@@ -156,15 +153,14 @@ class TransactionScaffold extends StatelessWidget {
   }
 }
 
-class OptionalTransactionList extends StatelessWidget {
+class TransactionList extends StatelessWidget {
   final Widget emptyAccountList = Column(
     children: [
       const AccountButtons(),
-      const EmptyTransactionList(),
     ],
   );
 
-  OptionalTransactionList();
+  TransactionList();
 
   @override
   Widget build(BuildContext context) {
@@ -181,7 +177,11 @@ class OptionalTransactionList extends StatelessWidget {
                 children: [
                   const AccountButtons(),
                   if (transactions.isEmpty)
-                    const EmptyTransactionList()
+                    const Text(
+                      "Add an account first!",
+                      style:
+                          TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
+                    )
                   else
                     Expanded(
                       child: TransactionListView(
@@ -201,9 +201,9 @@ class OptionalTransactionList extends StatelessWidget {
 
 class TransactionListView extends HookWidget {
   const TransactionListView({
-    Key? key,
+    super.key,
     required this.transactions,
-  }) : super(key: key);
+  });
 
   final List<MoneyTransaction> transactions;
 
@@ -236,9 +236,9 @@ class TransactionListView extends HookWidget {
 
 class TransactionListTileTitle extends StatelessWidget {
   const TransactionListTileTitle({
-    Key? key,
+    super.key,
     required this.transaction,
-  }) : super(key: key);
+  });
 
   final MoneyTransaction transaction;
 
@@ -261,13 +261,11 @@ class TransactionListTileTitle extends StatelessWidget {
 
 class CheckboxTransactionListTile extends StatelessWidget {
   const CheckboxTransactionListTile({
-    Key? key,
+    super.key,
     required this.transaction,
-    // required this.isSelected,
-  }) : super(key: key);
+  });
 
   final MoneyTransaction transaction;
-  // final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -293,9 +291,9 @@ class CheckboxTransactionListTile extends StatelessWidget {
 
 class TransactionListTileSubtitle extends StatelessWidget {
   const TransactionListTileSubtitle({
-    Key? key,
+    super.key,
     required this.transaction,
-  }) : super(key: key);
+  });
 
   final MoneyTransaction transaction;
 
@@ -307,22 +305,6 @@ class TransactionListTileSubtitle extends StatelessWidget {
         Text('${transaction.amount.getOrCrash()} €'),
         Text(transaction.date.toLocal().toString()),
       ],
-    );
-  }
-}
-
-class EmptyTransactionList extends StatelessWidget {
-  const EmptyTransactionList({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "No transactions logged for this account.",
-        style: TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
-      ),
     );
   }
 }
