@@ -114,11 +114,14 @@ class AddAccountForm extends StatelessWidget {
           () /*None*/ {},
           (failureOrSuccess) /* Some*/ =>
               failureOrSuccess.fold((failure) => showErrorSnackbar(failure, context), (_) {
+            // Reset account and state
             context.read<AccountCreatorBloc>().add(const AccountCreatorEvent.initialized());
 
-            context
-                .read<AccountWatcherBloc>()
-                .add(const AccountWatcherEvent.watchAccountsStarted());
+            // If this is the first account (no account has been selected yet),
+            // select it for the TransactionsPage
+            if (context.read<SelectedAccountCubit>().account == null) {
+              context.read<SelectedAccountCubit>().selectNext();
+            }
           }),
         );
       },

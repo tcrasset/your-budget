@@ -120,7 +120,7 @@ class MyBudgetState extends State<MyBudget> {
                 BlocProvider<SelectedAccountCubit>(
                   create: (_) => SelectedAccountCubit(
                     accountRepository: context.read<AccountRepository>(),
-                  ),
+                  )..selectNext(),
                 ),
               ],
               child: Scaffold(

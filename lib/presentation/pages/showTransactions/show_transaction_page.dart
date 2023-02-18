@@ -18,6 +18,8 @@ import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 
+import '../../../domain/account/account.dart';
+
 // import '../modifyTransactions/modify_transactions.dart';
 
 class ShowTransactionPage extends StatelessWidget {
@@ -26,11 +28,6 @@ class ShowTransactionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<SelectedAccountCubit>();
-    // Select an account if None has been selected.
-    if (cubit.account == null) {
-      cubit.selectNext();
-    }
     return MultiBlocProvider(
       providers: [
         BlocProvider<TransactionSelectorBloc>(
@@ -42,7 +39,13 @@ class ShowTransactionPage extends StatelessWidget {
           create: (context) => TransactionWatcherBloc(
             transactionRepository: context.read<TransactionRepository>(),
             accountRepository: GetIt.instance<IAccountProvider>(),
-          ),
+          )
+            // Start the subscription to transactions of the currently selected account.
+            ..add(
+              TransactionWatcherEvent.watchTransactionsStarted(
+                account: context.read<SelectedAccountCubit>().state,
+              ),
+            ),
         )
       ],
       child: TransactionScaffold(title: title),
@@ -65,14 +68,11 @@ class TransactionScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<TransactionWatcherBloc>().add(
-          TransactionWatcherEvent.watchTransactionsStarted(
-              account: context.read<SelectedAccountCubit>().account),
-        );
     return MultiBlocListener(
       listeners: [
         BlocListener<TransactionWatcherBloc, TransactionWatcherState>(
           listener: (context, state) {
+            // Show an error Snackbar if there is an error during Transaction fetching.
             final String? errorMessage = state.maybeMap(
               orElse: () => null,
               loadFailure: (_) => "Failed to load the transactions. Please contact support.",
@@ -84,7 +84,24 @@ class TransactionScaffold extends StatelessWidget {
               );
             }
           },
-        )
+        ),
+        BlocListener<SelectedAccountCubit, Account?>(
+          // This listener will listen to selected accounts and, if the selected account
+          // changes, e.g. when pressing the 'Next Account' button, or when adding
+          // an account when there were None, this will trigger and re-subscribe to
+          // the transactions stream of that selected account.
+          listener: (context, state) {
+            if (state == null) {
+              context.read<SelectedAccountCubit>().selectNext();
+            } else {
+              context.read<TransactionWatcherBloc>().add(
+                    TransactionWatcherEvent.watchTransactionsStarted(
+                      account: state,
+                    ),
+                  );
+            }
+          },
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -94,16 +111,18 @@ class TransactionScaffold extends StatelessWidget {
           actions: <Widget>[
             BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
               builder: (context, state) {
+                // Show or do not show trashcan depending on isModifying flag
                 if (!state.isModifying) {
                   return Container();
                 }
                 return IconButton(
-                    icon: Icon(FontAwesomeIcons.trashCan,
-                        color:
-                            state.selectedTransactions.isEmpty ? Colors.grey : Constants.RED_COLOR),
-                    onPressed: () => state.selectedTransactions.isEmpty
-                        ? null
-                        : handleDeleteTransactions(context));
+                  icon: Icon(
+                    FontAwesomeIcons.trashCan,
+                    color: state.selectedTransactions.isEmpty ? Colors.grey : Constants.RED_COLOR,
+                  ),
+                  onPressed: () =>
+                      state.selectedTransactions.isEmpty ? null : handleDeleteTransactions(context),
+                );
               },
             ),
             IconButton(
@@ -140,7 +159,7 @@ class TransactionScaffold extends StatelessWidget {
 class OptionalTransactionList extends StatelessWidget {
   final Widget emptyAccountList = Column(
     children: [
-      const AccountButtons(accountText: "No accounts."),
+      const AccountButtons(),
       const EmptyTransactionList(),
     ],
   );
@@ -156,18 +175,13 @@ class OptionalTransactionList extends StatelessWidget {
         return state.maybeMap(
           loadSuccess: (newState) {
             final transactions = newState.transactions;
-            // Rebuild and refetch the transactions if the selected account changes
-            final String accountName =
-                context.watch<SelectedAccountCubit>().state?.name.getOrCrash() ?? "No accounts";
             return SizedBox(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  AccountButtons(
-                    accountText: accountName,
-                  ),
+                  const AccountButtons(),
                   if (transactions.isEmpty)
-                    EmptyTransactionList()
+                    const EmptyTransactionList()
                   else
                     Expanded(
                       child: TransactionListView(
@@ -259,7 +273,8 @@ class CheckboxTransactionListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     // Only rebuild the Widget when the transaction is selected
     final isSelected = context.select<TransactionSelectorBloc, bool>(
-        (bloc) => bloc.state.selectedTransactions.contains(transaction));
+      (bloc) => bloc.state.selectedTransactions.contains(transaction),
+    );
 
     return CheckboxListTile(
       onChanged: (_) => context
@@ -313,22 +328,17 @@ class EmptyTransactionList extends StatelessWidget {
 }
 
 class AccountButtons extends StatelessWidget {
-  final String accountText;
-
-  const AccountButtons({Key? key, required this.accountText}) : super(key: key);
+  const AccountButtons({super.key});
 
   Future<void> handleButtonOnPressed({
     required BuildContext context,
     required bool increment,
   }) async {
     final cubit = context.read<SelectedAccountCubit>();
-    final bloc = context.read<TransactionWatcherBloc>();
     if (increment) {
       await cubit.selectNext();
-      bloc.add(TransactionWatcherEvent.watchTransactionsStarted(account: cubit.account));
     } else {
       await cubit.selectPrevious();
-      bloc.add(TransactionWatcherEvent.watchTransactionsStarted(account: cubit.account));
     }
   }
 
@@ -343,9 +353,16 @@ class AccountButtons extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
             onPressed: () => handleButtonOnPressed(context: context, increment: false),
           ),
-          Text(
-            accountText,
-            style: const TextStyle(fontSize: 20),
+          BlocBuilder<SelectedAccountCubit, Account?>(
+            // Rebuild and refetch the transactions if the selected account changes
+            builder: (context, state) {
+              final String accountName = state?.name.getOrCrash() ?? "No accounts";
+
+              return Text(
+                accountName,
+                style: const TextStyle(fontSize: 20),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.arrow_forward),
