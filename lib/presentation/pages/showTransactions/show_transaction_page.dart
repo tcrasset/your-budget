@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
@@ -12,12 +11,11 @@ import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 // Project imports:
-import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/progress_overlay.dart';
 
-// import '../modifyTransactions/modify_transactions.dart';
+import 'package:your_budget/presentation/pages/showTransactions/components/transaction_list.dart';
 
 class ShowTransactionPage extends StatelessWidget {
   final String title;
@@ -148,209 +146,6 @@ class TransactionScaffold extends StatelessWidget {
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class TransactionList extends StatelessWidget {
-  final Widget emptyAccountList = Column(
-    children: [
-      const AccountButtons(),
-    ],
-  );
-
-  TransactionList();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<TransactionWatcherBloc, TransactionWatcherState>(
-      // Build the whole TransactionList once we successfully load the transactions
-      // from the database.
-      builder: (context, state) {
-        return state.maybeMap(
-          loadSuccess: (newState) {
-            final transactions = newState.transactions;
-            return SizedBox(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const AccountButtons(),
-                  if (transactions.isEmpty)
-                    const Text(
-                      "Add an account first!",
-                      style:
-                          TextStyle(color: Colors.grey, fontSize: 15, fontStyle: FontStyle.italic),
-                    )
-                  else
-                    Expanded(
-                      child: TransactionListView(
-                        transactions: transactions,
-                      ),
-                    ),
-                ],
-              ),
-            );
-          },
-          orElse: () => emptyAccountList,
-        );
-      },
-    );
-  }
-}
-
-class TransactionListView extends HookWidget {
-  const TransactionListView({
-    super.key,
-    required this.transactions,
-  });
-
-  final List<MoneyTransaction> transactions;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<TransactionSelectorBloc, TransactionSelectorState>(
-      // Rebuild all the tiles when we toggle the modifying button.
-      buildWhen: (p, c) => p.isModifying != c.isModifying,
-      builder: (context, state) {
-        return ListView.builder(
-          padding: const EdgeInsets.all(8),
-          itemCount: transactions.length,
-          itemBuilder: (BuildContext context, int index) {
-            final transaction = transactions[index];
-            if (state.isModifying) {
-              return CheckboxTransactionListTile(transaction: transaction);
-            } else {
-              return ListTile(
-                key: Key(transaction.id.getOrCrash()),
-                title: TransactionListTileTitle(transaction: transaction),
-                subtitle: TransactionListTileSubtitle(transaction: transaction),
-              );
-            }
-          },
-        );
-      },
-    );
-  }
-}
-
-class TransactionListTileTitle extends StatelessWidget {
-  const TransactionListTileTitle({
-    super.key,
-    required this.transaction,
-  });
-
-  final MoneyTransaction transaction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(child: Text(transaction.memo.getOrCrash())),
-        Expanded(child: Text(transaction.giverName.getOrCrash())),
-        Expanded(
-          child: transaction.subcategory == null
-              ? Text(transaction.receiverName.getOrCrash())
-              : Text(transaction.subcategory!.name.getOrCrash()),
-        )
-      ],
-    );
-  }
-}
-
-class CheckboxTransactionListTile extends StatelessWidget {
-  const CheckboxTransactionListTile({
-    super.key,
-    required this.transaction,
-  });
-
-  final MoneyTransaction transaction;
-
-  @override
-  Widget build(BuildContext context) {
-    // Only rebuild the Widget when the transaction is selected
-    final isSelected = context.select<TransactionSelectorBloc, bool>(
-      (bloc) => bloc.state.selectedTransactions.contains(transaction),
-    );
-
-    return CheckboxListTile(
-      onChanged: (_) => context
-          .read<TransactionSelectorBloc>()
-          .add(TransactionSelectorEvent.toggleSelected(transaction)),
-      value: isSelected,
-      dense: true,
-      selected: isSelected,
-      enabled: transaction.type != MoneyTransactionType.initial,
-      controlAffinity: ListTileControlAffinity.leading,
-      title: TransactionListTileTitle(transaction: transaction),
-      subtitle: TransactionListTileSubtitle(transaction: transaction),
-    );
-  }
-}
-
-class TransactionListTileSubtitle extends StatelessWidget {
-  const TransactionListTileSubtitle({
-    super.key,
-    required this.transaction,
-  });
-
-  final MoneyTransaction transaction;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text('${transaction.amount.getOrCrash()} €'),
-        Text(transaction.date.toLocal().toString()),
-      ],
-    );
-  }
-}
-
-class AccountButtons extends StatelessWidget {
-  const AccountButtons({super.key});
-
-  Future<void> handleButtonOnPressed({
-    required BuildContext context,
-    required bool increment,
-  }) async {
-    final cubit = context.read<SelectedAccountCubit>();
-    if (increment) {
-      await cubit.selectNext();
-    } else {
-      await cubit.selectPrevious();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => handleButtonOnPressed(context: context, increment: false),
-          ),
-          BlocBuilder<SelectedAccountCubit, Account?>(
-            // Rebuild and refetch the transactions if the selected account changes
-            builder: (context, state) {
-              final String accountName = state?.name.getOrCrash() ?? "No accounts";
-
-              return Text(
-                accountName,
-                style: const TextStyle(fontSize: 20),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.arrow_forward),
-            onPressed: () => handleButtonOnPressed(context: context, increment: true),
-          )
-        ],
       ),
     );
   }
