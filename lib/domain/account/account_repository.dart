@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
-import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
@@ -11,7 +8,6 @@ import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
-import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/models/constants.dart';
@@ -130,24 +126,25 @@ class AccountRepository {
         return right(accountTransactions.firstWhere((element) => element.receiverId == account.id));
       });
 
-      if (failureOrTransaction.isLeft()) {
-        return left(failureOrTransaction as ValueFailure);
-      }
-
-      return (await transactionProvider.delete((failureOrTransaction as MoneyTransaction).id))
-          .fold((l) => left(l), (_) {
-        return accountProvider
-            .getToBeBudgeted()
-            .flatMap((tbbAccount) => transactionProvider.getAccountTransactions(tbbAccount.id))
-            .fold((l) => left(l), (tobeBudgetedTransactions) async {
-          final tbbtransaction = tobeBudgetedTransactions
-              .firstWhere((t) => t.date == (failureOrTransaction as MoneyTransaction).date);
-          return (await transactionProvider.delete(tbbtransaction.id)).fold(
-            (l) => left(l),
-            (r) => right(unit),
-          );
-        });
-      });
+      return await failureOrTransaction.fold(
+        (l) => left(l),
+        (transaction) async =>
+            (await transactionProvider.delete(transaction.id)).fold((l) => left(l), (_) {
+          return accountProvider
+              .getToBeBudgeted()
+              .flatMap(
+                (tbbAccount) => transactionProvider.getAccountTransactions(tbbAccount.id),
+              )
+              .fold((l) => left(l), (tobeBudgetedTransactions) async {
+            final tbbtransaction =
+                tobeBudgetedTransactions.firstWhere((t) => t.date == transaction.date);
+            return (await transactionProvider.delete(tbbtransaction.id)).fold(
+              (l) => left(l),
+              (r) => right(unit),
+            );
+          });
+        }),
+      );
     });
   }
 

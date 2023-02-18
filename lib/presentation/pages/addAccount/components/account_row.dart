@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
+import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/components/delete_dialog.dart';
 
 // Project imports:
@@ -18,12 +19,14 @@ class AccountRow extends StatelessWidget {
 
   Future<void> handleOnLongPress(BuildContext context, Account account) async {
     final bloc = context.read<AccountWatcherBloc>();
+    final cubit = context.read<SelectedAccountCubit>();
 
     final String? shouldDelete = await showDeleteDialog(context, 'Delete account?');
 
     if (shouldDelete == null) return;
     //TODO: fix account deletion
     bloc.add(AccountWatcherEvent.deleteAccount(account));
+    await cubit.selectNext();
   }
 
   @override
