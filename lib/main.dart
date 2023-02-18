@@ -46,7 +46,7 @@ class MyBudgetState extends State<MyBudget> {
   int _currentTab = 0;
 
   final List<Widget> _tabs = [
-    const BudgetPage(title: 'Bugdet Page'),
+    const BudgetPage(title: 'Budget Page'),
     const AddAccountPage(title: 'Accounts'),
     AddTransactionPage(),
     const ShowTransactionPage(title: "Transactions")

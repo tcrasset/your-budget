@@ -14,7 +14,7 @@ class Name extends ValueObject<String> {
     return Name._(_validateName(input));
   }
 
-  const Name._(this.value) : assert(value != null);
+  const Name._(this.value);
 }
 
 Either<ValueFailure<String>, String> _validateName(String input) {

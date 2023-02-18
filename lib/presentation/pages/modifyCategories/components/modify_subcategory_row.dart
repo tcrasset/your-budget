@@ -13,7 +13,7 @@ import 'package:your_budget/presentation/pages/modifyCategories/modify_categorie
 
 class ModifySubcategoryRow extends StatelessWidget {
   final SubCategory? subcat;
-  const ModifySubcategoryRow({Key? key, this.subcat}) : super(key: key);
+  const ModifySubcategoryRow({super.key, this.subcat});
 
   Future<void> handleSubCategoryNameChange(BuildContext context) async {
     const String hintText = "Modify subcategory name";
@@ -62,7 +62,6 @@ class ModifySubcategoryRow extends StatelessWidget {
     if (result == "Delete") {
       final AppState appState = Provider.of<AppState>(context, listen: false);
       appState.removeSubcategory(subcat!.id);
-      print("Deleted subcategory");
     }
   }
 

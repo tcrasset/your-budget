@@ -2,24 +2,16 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
-import 'package:your_budget/application/addTransaction/payee_field/payee_field_bloc.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
-import 'package:your_budget/application/core/budget_date_cubit.dart';
-import 'package:your_budget/domain/account/account_repository.dart';
-import 'package:your_budget/domain/account/i_account_provider.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee_repository.dart';
-import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/account_field.dart';
@@ -45,10 +37,12 @@ void showErrorSnackbar(ValueFailure failure, BuildContext context) {
   );
 
   if (message == null) return;
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text(message),
-    backgroundColor: Constants.RED_COLOR,
-  ));
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(message),
+      backgroundColor: Constants.RED_COLOR,
+    ),
+  );
 }
 
 void showSuccessSnackbar(BuildContext context) {

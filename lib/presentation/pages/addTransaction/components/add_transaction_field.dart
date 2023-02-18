@@ -1,14 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Project imports:
 import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-
-import '../../../../application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 
 class AddTransactionField extends StatelessWidget {
   final String name;
@@ -31,20 +27,20 @@ class AddTransactionField extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(context), //Tap whole widget, not just textfield
       child: RowContainer(
-          name: name,
-          childWidget: TextFormField(
-            key: Key(
-                value), // hack to rebuild widget if value changes. Can't use controller
-            decoration: const InputDecoration.collapsed(hintText: ""),
-            style: value == defaultValue
-                ? AddTransactionStyles.unselected
-                : AddTransactionStyles.selected,
-            initialValue: nameGetter(context),
-            validator: (_) => validator(context),
-            onTap: () => onTap(context),
-            enabled: true, // needed to show validation hints
-            readOnly: true,
-          )),
+        name: name,
+        childWidget: TextFormField(
+          key: Key(value), // hack to rebuild widget if value changes. Can't use controller
+          decoration: const InputDecoration.collapsed(hintText: ""),
+          style: value == defaultValue
+              ? AddTransactionStyles.unselected
+              : AddTransactionStyles.selected,
+          initialValue: nameGetter(context),
+          validator: (_) => validator(context),
+          onTap: () => onTap(context),
+          enabled: true, // needed to show validation hints
+          readOnly: true,
+        ),
+      ),
     );
   }
 }
@@ -54,10 +50,10 @@ class RowContainer extends StatelessWidget {
 
   final Widget childWidget;
   const RowContainer({
-    Key? key,
+    super.key,
     required this.name,
     required this.childWidget,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +80,7 @@ class RowContainer extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Expanded(child: childWidget),
-                    if (name == "Date")
-                      const Icon(Icons.date_range)
-                    else
-                      const Icon(Icons.edit),
+                    if (name == "Date") const Icon(Icons.date_range) else const Icon(Icons.edit),
                   ],
                 ),
               ),

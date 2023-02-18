@@ -23,15 +23,15 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<void> debugDatabase() async {
-    (await database!.query('sqlite_master', columns: ['type', 'name'])).forEach((row) {
+    for (final row in await database!.query('sqlite_master', columns: ['type', 'name'])) {
       debugPrint(row.values.toString());
-    });
+    }
   }
 
   /// Returns the list of all [MainCategory] in the database.
   @override
   Future<List<MainCategory>> getCategories() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.categoryTable}''';
+    const sql = '''SELECT * FROM ${DatabaseConstants.categoryTable}''';
     final data = await database!.rawQuery(sql);
 
     final List<MainCategory> categories = [];
@@ -46,7 +46,7 @@ class SQLQueryClass implements Queries {
   /// Returns the list of all [SubCategory] in the database.
   @override
   Future<List<SubCategory>> getSubCategories() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.subcategoryTable};''';
+    const sql = '''SELECT * FROM ${DatabaseConstants.subcategoryTable};''';
     final data = await database!.rawQuery(sql);
 
     final List<SubCategory> subcategories = [];
@@ -61,7 +61,7 @@ class SQLQueryClass implements Queries {
   /// Returns the list of all [Account] in the database.
   @override
   Future<List<Account>> getAccounts() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.accountTable};''';
+    const sql = '''SELECT * FROM ${DatabaseConstants.accountTable};''';
     final data = await database!.rawQuery(sql);
 
     final List<Account> accounts = [];
@@ -76,7 +76,7 @@ class SQLQueryClass implements Queries {
   /// Returns the list of all [Payee] in the database.
   @override
   Future<List<Payee>> getPayees() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.payeeTable};''';
+    const sql = '''SELECT * FROM ${DatabaseConstants.payeeTable};''';
     final data = await database!.rawQuery(sql);
 
     final List<Payee> payees = [];
@@ -91,7 +91,7 @@ class SQLQueryClass implements Queries {
   /// Returns the list of all [MoneyTransaction] in the database.
   @override
   Future<List<MoneyTransaction>> getMoneyTransactions() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
+    const sql = '''SELECT * FROM ${DatabaseConstants.moneyTransactionTable}
     ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;''';
     final data = await database!.rawQuery(sql);
 
@@ -106,7 +106,7 @@ class SQLQueryClass implements Queries {
   /// Returns the list of all [BudgetValueLegacy] in the database.
   @override
   Future<List<BudgetValueLegacy>> getBudgetValues() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.budgetValueTable};''';
+    const sql = '''SELECT * FROM ${DatabaseConstants.budgetValueTable};''';
     final data = await database!.rawQuery(sql);
 
     final List<BudgetValueLegacy> budgetvalues = [];
@@ -120,7 +120,7 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<List<Goal>> getGoals() async {
-    final sql = '''SELECT * FROM ${DatabaseConstants.goalTable};''';
+    const sql = '''SELECT * FROM ${DatabaseConstants.goalTable};''';
     final data = await database!.rawQuery(sql);
 
     final List<Goal> goals = [];
@@ -138,8 +138,8 @@ class SQLQueryClass implements Queries {
     //   print(row.values);
     // });
 
-    final sql =
-        '''SELECT ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID} as id,
+    final sql = '''
+        SELECT ${DatabaseConstants.subcategoryTable}.${DatabaseConstants.SUBCAT_ID} as id,
         ${DatabaseConstants.CAT_ID_OUTSIDE},
         ${DatabaseConstants.SUBCAT_NAME},
         ${DatabaseConstants.budgetValueTable}.${DatabaseConstants.BUDGET_VALUE_BUDGETED},
@@ -156,7 +156,7 @@ class SQLQueryClass implements Queries {
 
     final data = await database!.rawQuery(sql);
 
-    List<SubCategory> subcategories = [];
+    final List<SubCategory> subcategories = [];
     for (final node in data) {
       final subcategory = SubCategory.fromJson(node);
       subcategories.add(subcategory);
@@ -184,7 +184,7 @@ class SQLQueryClass implements Queries {
   /// The [MainCategory] is specified using [category.id] and [category.name]
   @override
   Future<int> addCategory(MainCategoryModel categoryModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.categoryTable}
+    const sql = '''INSERT INTO ${DatabaseConstants.categoryTable}
       (${DatabaseConstants.CATEGORY_NAME})
       VALUES(?);''';
 
@@ -200,12 +200,13 @@ class SQLQueryClass implements Queries {
   /// [subcategory.parent_id], and [subcategory.name]
   @override
   Future<int> addSubcategory(SubCategoryModel subcategoryModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.subcategoryTable}
+    const sql = '''
+      INSERT INTO ${DatabaseConstants.subcategoryTable}
       (${DatabaseConstants.CAT_ID_OUTSIDE},
       ${DatabaseConstants.SUBCAT_NAME})
       VALUES(?, ?);''';
 
-    List<dynamic> params = [
+    final List<dynamic> params = [
       subcategoryModel.parentId,
       subcategoryModel.name,
     ];
@@ -220,7 +221,7 @@ class SQLQueryClass implements Queries {
   /// The [Payee] is specified using [payee.id] and [payee.name]
   @override
   Future<int> addPayee(PayeeModel payeeModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.payeeTable}
+    const sql = '''INSERT INTO ${DatabaseConstants.payeeTable}
       (${DatabaseConstants.PAYEE_NAME})
       VALUES(?);''';
 
@@ -237,7 +238,7 @@ class SQLQueryClass implements Queries {
   /// The [Account] is specified using [account.id] and [account.name]
   @override
   Future<int> addAccount(AccountModel accountModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.accountTable}
+    const sql = '''INSERT INTO ${DatabaseConstants.accountTable}
       (${DatabaseConstants.ACCOUNT_NAME},
       ${DatabaseConstants.ACCOUNT_BALANCE}
       )
@@ -255,7 +256,7 @@ class SQLQueryClass implements Queries {
   /// Adds the [budgetvalue] of type [BudgetValueLegacy] to the database.
   @override
   Future<int> addBudgetValue(BudgetValueModel budgetValueModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.budgetValueTable}
+    const sql = '''INSERT INTO ${DatabaseConstants.budgetValueTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
       ${DatabaseConstants.BUDGET_VALUE_BUDGETED},
       ${DatabaseConstants.BUDGET_VALUE_AVAILABLE},
@@ -302,7 +303,7 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<int> addMoneyTransaction(MoneyTransactionModel moneyTransactionModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.moneyTransactionTable}
+    const sql = '''INSERT INTO ${DatabaseConstants.moneyTransactionTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
         ${DatabaseConstants.PAYEE_ID_OUTSIDE},
         ${DatabaseConstants.ACCOUNT_ID_OUTSIDE},
@@ -330,7 +331,7 @@ class SQLQueryClass implements Queries {
   /// The [GoalType] is specified using it's index in the enumeration
   @override
   Future<int> addGoal(GoalModel goalModel) async {
-    final sql = '''INSERT INTO ${DatabaseConstants.goalTable}
+    const sql = '''INSERT INTO ${DatabaseConstants.goalTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
       ${DatabaseConstants.GOAL_TYPE},
       ${DatabaseConstants.GOAL_AMOUNT},
@@ -354,7 +355,7 @@ class SQLQueryClass implements Queries {
   /// Deletes the [category] of id [categoryId] from the database.
   @override
   Future<void> deleteCategory(int? categoryId) async {
-    final sql = '''DELETE FROM ${DatabaseConstants.categoryTable}
+    const sql = '''DELETE FROM ${DatabaseConstants.categoryTable}
       WHERE ${DatabaseConstants.CATEGORY_ID} == ?;''';
 
     final List<dynamic> params = [categoryId];
@@ -365,7 +366,7 @@ class SQLQueryClass implements Queries {
   /// Deletes the [SubCategory] of id [subcategoryID] from the database.
   @override
   Future<void> deleteSubcategory(int? subcategoryID) async {
-    final sql = '''DELETE FROM ${DatabaseConstants.subcategoryTable}
+    const sql = '''DELETE FROM ${DatabaseConstants.subcategoryTable}
       WHERE ${DatabaseConstants.SUBCAT_ID} == ?;''';
 
     final List<dynamic> params = [subcategoryID];
@@ -376,7 +377,7 @@ class SQLQueryClass implements Queries {
   /// Deletes the [account] of id [account.id] from the database.
   @override
   Future<void> deleteAccount(Account account) async {
-    final sql = '''DELETE FROM ${DatabaseConstants.accountTable}
+    const sql = '''DELETE FROM ${DatabaseConstants.accountTable}
       WHERE ${DatabaseConstants.ACCOUNT_ID} == ?;''';
 
     final List<dynamic> params = [account.id];
@@ -387,7 +388,7 @@ class SQLQueryClass implements Queries {
   /// Deletes the [payee] of id [payee.id] from the database.
   @override
   Future<void> deletePayee(Payee payee) async {
-    final sql = '''DELETE FROM ${DatabaseConstants.payeeTable}
+    const sql = '''DELETE FROM ${DatabaseConstants.payeeTable}
       WHERE ${DatabaseConstants.PAYEE_ID} == ?;''';
 
     final List<dynamic> params = [payee.id];
@@ -398,7 +399,7 @@ class SQLQueryClass implements Queries {
   /// Deletes the [moneytransaction] of id [moneytransaction.id] from the database.
   @override
   Future<void> deleteTransaction(int? moneytransactionId) async {
-    final sql = '''DELETE FROM ${DatabaseConstants.moneyTransactionTable}
+    const sql = '''DELETE FROM ${DatabaseConstants.moneyTransactionTable}
       WHERE ${DatabaseConstants.MONEYTRANSACTION_ID} == ?;''';
 
     final List<dynamic> params = [moneytransactionId];
@@ -409,7 +410,7 @@ class SQLQueryClass implements Queries {
   /// Deletes the [budgetValue] of id [budgetValue.id] from the database.
   @override
   Future<void> deleteBudgetValue(int? budgetValueId) async {
-    final sql = '''DELETE FROM ${DatabaseConstants.budgetValueTable}
+    const sql = '''DELETE FROM ${DatabaseConstants.budgetValueTable}
       WHERE ${DatabaseConstants.BUDGET_VALUE_ID} == ?;''';
 
     final List<dynamic> params = [budgetValueId];
@@ -424,7 +425,7 @@ class SQLQueryClass implements Queries {
   /// Fields that can be changed [DatabaseConstants.CATEGORY_NAME]
   @override
   Future<void> updateCategory(MainCategory category) async {
-    final sql = '''UPDATE ${DatabaseConstants.categoryTable}
+    const sql = '''UPDATE ${DatabaseConstants.categoryTable}
                 SET ${DatabaseConstants.CATEGORY_NAME} = ?
                 WHERE ${DatabaseConstants.CATEGORY_ID} == ?
                 ;''';
@@ -437,7 +438,7 @@ class SQLQueryClass implements Queries {
   /// Update subcategory name of [subcategory.id] in the database.
   @override
   Future<void> updateSubcategoryName(int? id, String newName) async {
-    final sql = '''UPDATE ${DatabaseConstants.subcategoryTable}
+    const sql = '''UPDATE ${DatabaseConstants.subcategoryTable}
                     SET ${DatabaseConstants.SUBCAT_NAME} = ?
                     WHERE ${DatabaseConstants.SUBCAT_ID} == ?
                     ;''';
@@ -452,7 +453,7 @@ class SQLQueryClass implements Queries {
   /// Fields that can be changed are [account.name] and [account.id].
   @override
   Future<void> updateAccount(Account account) async {
-    final sql = '''UPDATE ${DatabaseConstants.accountTable}
+    const sql = '''UPDATE ${DatabaseConstants.accountTable}
                 SET ${DatabaseConstants.ACCOUNT_NAME} = ?,
                 ${DatabaseConstants.ACCOUNT_BALANCE} = ?
                 WHERE ${DatabaseConstants.ACCOUNT_ID} == ?
@@ -468,12 +469,13 @@ class SQLQueryClass implements Queries {
   /// Fields that can be updated are [payee.name].
   @override
   Future<void> updatePayee(Payee payee) async {
-    final sql = '''UPDATE ${DatabaseConstants.payeeTable}
+    const sql = '''
+              UPDATE ${DatabaseConstants.payeeTable}
                 SET ${DatabaseConstants.PAYEE_NAME} = ?
                 WHERE ${DatabaseConstants.PAYEE_ID} == ?
                 ;''';
 
-    List<dynamic> params = [payee.name, payee.id];
+    final List<dynamic> params = [payee.name, payee.id];
     final result = await database!.rawUpdate(sql, params);
     DatabaseProvider.databaseLog('Update payee', sql, null, result, params);
   }
@@ -485,13 +487,14 @@ class SQLQueryClass implements Queries {
   /// and [budgetValue.available]
   @override
   Future<void> updateBudgetValue(BudgetValueLegacy? budgetValue) async {
-    final sql = '''UPDATE ${DatabaseConstants.budgetValueTable}
+    const sql = '''
+                UPDATE ${DatabaseConstants.budgetValueTable}
                 SET ${DatabaseConstants.BUDGET_VALUE_BUDGETED} = ?,
                 ${DatabaseConstants.BUDGET_VALUE_AVAILABLE} = ?
                 WHERE ${DatabaseConstants.BUDGET_VALUE_ID} == ?
                 ;''';
 
-    List<dynamic> params = [
+    final List<dynamic> params = [
       budgetValue!.budgeted, //
       budgetValue.available,
       budgetValue.id
@@ -503,18 +506,18 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<DateTime> getStartingBudgetDateConstant() async {
-    final sql =
-        '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
+    const sql = '''
+      SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.STARTING_BUDGET_DATE}';''';
 
     final data = await database!.rawQuery(sql);
-    int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
+    final int startingBudgetDateMillisecondsSinceEpoch = int.parse(data[0]['value'].toString());
     return DateTime.fromMillisecondsSinceEpoch(startingBudgetDateMillisecondsSinceEpoch);
   }
 
   @override
   Future<DateTime> getMaxBudgetDateConstant() async {
-    final sql =
+    const sql =
         '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MAX_BUDGET_DATE}';''';
 
@@ -525,7 +528,7 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<void> setMaxBudgetDateConstant(DateTime newMaxBudgetDate) async {
-    final sql = '''UPDATE ${DatabaseConstants.constantsTable}
+    const sql = '''UPDATE ${DatabaseConstants.constantsTable}
                 SET ${DatabaseConstants.CONSTANT_VALUE} = ?
                 WHERE ${DatabaseConstants.CONSTANT_NAME} == '${DatabaseConstants.MAX_BUDGET_DATE}'
                 ;''';
@@ -539,7 +542,7 @@ class SQLQueryClass implements Queries {
   Future<void> updateMostRecentAccountUsed(int? accountId) async {
     // TODO: implement setMostRecentAccountUsed
 
-    final sql = '''UPDATE ${DatabaseConstants.constantsTable}
+    const sql = '''UPDATE ${DatabaseConstants.constantsTable}
                 SET ${DatabaseConstants.CONSTANT_VALUE} = ?
                 WHERE ${DatabaseConstants.CONSTANT_NAME} == '${DatabaseConstants.MOST_RECENT_ACCOUNT}'
                 ;''';
@@ -551,7 +554,7 @@ class SQLQueryClass implements Queries {
 
   @override
   Future<int> getMostRecentAccountUsed() async {
-    final sql =
+    const sql =
         '''SELECT ${DatabaseConstants.CONSTANT_VALUE} FROM ${DatabaseConstants.constantsTable}
       WHERE ${DatabaseConstants.CONSTANT_NAME} ==  '${DatabaseConstants.MOST_RECENT_ACCOUNT}';''';
 

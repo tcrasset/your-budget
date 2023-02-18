@@ -12,7 +12,7 @@ import 'package:your_budget/models/utils.dart';
 
 class SubcategoryDetails extends StatelessWidget {
   final SubCategory subcat;
-  const SubcategoryDetails({Key? key, required this.subcat}) : super(key: key);
+  const SubcategoryDetails({super.key, required this.subcat});
 
   List<Widget> createListOfGoals(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
@@ -20,9 +20,9 @@ class SubcategoryDetails extends StatelessWidget {
     final List<Goal> goals =
         appState.goals.where((goal) => goal.correspondingSubcategoryId == subcat.id).toList();
 
-    goals.forEach((goal) {
+    for (final Goal goal in goals) {
       goalWidgets.add(GoalRow(goal));
-    });
+    }
 
     return goalWidgets;
   }
@@ -49,7 +49,7 @@ class SubcategoryDetails extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Container(
+          child: ColoredBox(
             color: Colors.red,
             child: Center(
               child: Column(children: items),
@@ -64,7 +64,7 @@ class SubcategoryDetails extends StatelessWidget {
 class Information extends StatelessWidget {
   final SubCategory subcat;
 
-  const Information(this.subcat, {Key? key}) : super(key: key);
+  const Information(this.subcat, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -96,8 +96,8 @@ class InformationRow extends StatelessWidget {
   const InformationRow(
     this.title,
     this.value, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +126,7 @@ class InformationRow extends StatelessWidget {
 
 class GoalRow extends StatelessWidget {
   final Goal goal;
-  const GoalRow(this.goal, {Key? key}) : super(key: key);
+  const GoalRow(this.goal, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +147,7 @@ class GoalRow extends StatelessWidget {
 }
 
 class GoalRowsTitle extends StatelessWidget {
-  const GoalRowsTitle({Key? key}) : super(key: key);
+  const GoalRowsTitle({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -161,9 +161,9 @@ class GoalRowsTitle extends StatelessWidget {
           textAlign: TextAlign.left,
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(
+        const SizedBox(
           height: 2,
-          child: Container(
+          child: ColoredBox(
             color: Colors.black,
           ),
         ),

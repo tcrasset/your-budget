@@ -11,15 +11,11 @@ import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 
 Future<void> addBudgetsUntilMaxDate() async {
-  print("Adding budgets until max date");
-  DateTime currentDate = getDateFromMonthStart(DateTime.now());
-  print("currentDate: $currentDate");
   final IConstantsProvider constantProvider = GetIt.instance<IConstantsProvider>();
   final IBudgetValueProvider budgetValueRepository = GetIt.instance<IBudgetValueProvider>();
   final ISubcategoryProvider subcategoryRepository = GetIt.instance<ISubcategoryProvider>();
   final storedMaxBudgetDate = (await constantProvider.getMaxBudgetDate())
       .getOrElse(() => throw Exception("Could not get stored max budget date;"));
-  print("storedMaxBudgetDate: $storedMaxBudgetDate");
 
   final List<Subcategory> subcategories = (await subcategoryRepository.getAllSubcategories())
       .getOrElse(() => throw Exception("Could not get subcategories from database."));
@@ -35,12 +31,11 @@ Future<void> addBudgetsUntilMaxDate() async {
   }
 
   do {
-    print("newDate: $newDate");
     newDate = Jiffy(newDate).add(months: 1).dateTime;
 
     // Add all BudgetValue for the new month to the database
     for (final Subcategory subcat in subcategories) {
-      BudgetValue budgetvalue = BudgetValue(
+      final BudgetValue budgetvalue = BudgetValue(
         available:
             Amount.fromDouble(0), // TODO: Add budget value available value from previous month
         budgeted: Amount.fromDouble(0),
@@ -49,7 +44,6 @@ Future<void> addBudgetsUntilMaxDate() async {
         id: UniqueId(),
         subcategoryId: subcat.id,
       );
-      print("created budget value: ${budgetvalue.id}");
 
       budgetValueRepository.create(budgetvalue);
 

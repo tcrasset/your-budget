@@ -1,8 +1,4 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
-// Project imports:
-import 'constants.dart';
+import 'package:your_budget/models/constants.dart';
 
 class AccountModel {
   final String name;
@@ -38,9 +34,7 @@ class Account {
   }
 
   bool hasSameValues(Account account) {
-    return account.id == id &&
-        account.name == name &&
-        account.balance == balance;
+    return account.id == id && account.name == name && account.balance == balance;
   }
 
   @override

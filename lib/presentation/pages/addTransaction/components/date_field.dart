@@ -8,12 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/presentation/pages/addTransaction/add_transaction.dart';
-import 'add_transaction_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
 class DateField extends StatelessWidget {
   const DateField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// When tapping on the Date row, it opens the DataPicker
   /// which allows one to choose the date as a [DateTime].

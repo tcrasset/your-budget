@@ -12,7 +12,7 @@ class Constants {
   static const IconData BUDGET_ICON = FontAwesomeIcons.landmark;
   static const IconData ACCOUNT_ICON = FontAwesomeIcons.piggyBank;
   static const IconData ALLTRANSACTION_ICON = FontAwesomeIcons.receipt;
-  static const IconData ADD_TRANSACTION_ICON = FontAwesomeIcons.plusCircle;
+  static const IconData ADD_TRANSACTION_ICON = FontAwesomeIcons.circlePlus;
 
   /// Colors used throughout the project
   static const Color PRIMARY_COLOR = Color.fromRGBO(38, 70, 83, 1);

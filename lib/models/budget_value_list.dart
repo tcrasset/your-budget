@@ -1,6 +1,3 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
 // Project imports:
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/object_list.dart';
@@ -19,13 +16,12 @@ class BudgetValueList implements ObjectList<BudgetValueLegacy> {
   }
 
   void removeBySubcatId(int? subcatId) {
-    final List<BudgetValueLegacy?> toRemove = _budgetvalues
-        .where((budgetvalue) => budgetvalue!.subcategoryId == subcatId)
-        .toList();
-    toRemove.forEach((budgetvalue) {
+    final List<BudgetValueLegacy?> toRemove =
+        _budgetvalues.where((budgetvalue) => budgetvalue!.subcategoryId == subcatId).toList();
+    for (final budgetvalue in toRemove) {
       queryContext!.deleteBudgetValue(budgetvalue!.id);
       _budgetvalues.remove(budgetvalue);
-    });
+    }
   }
 
   BudgetValueLegacy? getByBudget(DateTime? date, int? subcatId) {
@@ -38,9 +34,7 @@ class BudgetValueList implements ObjectList<BudgetValueLegacy> {
   }
 
   List<BudgetValueLegacy?> getAllBySubcatId(int subcatId) {
-    return _budgetvalues
-        .where((budgetvalue) => budgetvalue!.subcategoryId == subcatId)
-        .toList();
+    return _budgetvalues.where((budgetvalue) => budgetvalue!.subcategoryId == subcatId).toList();
   }
 
   void updateBudgetValue({

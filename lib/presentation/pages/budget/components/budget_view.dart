@@ -6,12 +6,12 @@ import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
 // Package imports:
 // Project imports:
 import 'package:your_budget/presentation/pages/budget/components/budget_entry_row.dart';
-import 'package:your_budget/presentation/pages/budget/components/maincategory_row.dart';
+import 'package:your_budget/presentation/pages/budget/components/main_category_row.dart';
 
 class BudgetEntries extends StatelessWidget {
   const BudgetEntries({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class BudgetEntries extends StatelessWidget {
                 budgeted: group.totalBudgeted.getOrCrash(),
                 available: group.totalAvailable.getOrCrash(),
               ),
-              ...group.entries.map((e) => BudgetEntryRow(key: UniqueKey(), entry: e)).toList(),
+              ...group.entries.map((e) => BudgetEntryRow(key: UniqueKey(), entry: e)),
             ],
           );
 

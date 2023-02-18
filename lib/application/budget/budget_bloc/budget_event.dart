@@ -2,6 +2,6 @@ part of 'budget_bloc.dart';
 
 @freezed
 class BudgetEvent with _$BudgetEvent {
-  const factory BudgetEvent.NewBudgetRequested(DateTime date) = NewBudgetRequested;
-  const factory BudgetEvent.BudgetValueModified(BudgetValue budgetvalue) = BudgetValueModified;
+  const factory BudgetEvent.newBudgetRequested(DateTime date) = NewBudgetRequested;
+  const factory BudgetEvent.budgetValueModified(BudgetValue budgetvalue) = BudgetValueModified;
 }

@@ -16,7 +16,6 @@ import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
-import 'package:your_budget/models/queries.dart';
 import 'account_creator_test.mocks.dart';
 
 @GenerateMocks(

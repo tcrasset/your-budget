@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,18 +7,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
-import '../../../../models/constants.dart';
-import 'currency_input_formatter.dart';
+import 'package:your_budget/models/constants.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
 
 // ignore: avoid_classes_with_only_static_members
 class CurrencyOperations {
   static String addMinusSign(String amount) => "-$amount";
-  static String removeMinusSign(String amount) =>
-      amount.replaceAll("-", "").trim();
+  static String removeMinusSign(String amount) => amount.replaceAll("-", "").trim();
   static String removeSymbol(String amount) =>
       amount.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "").trim();
-  static String formatAmount(double amount) =>
-      Constants.CURRENCY_FORMAT.format(amount).trim();
+  static String formatAmount(double amount) => Constants.CURRENCY_FORMAT.format(amount).trim();
   static final zero = Constants.CURRENCY_FORMAT.format(0);
 }
 
@@ -28,18 +25,18 @@ class AmountInputRow extends HookWidget {
   final String? Function(BuildContext) validateAmount;
   //TODO: Extract Container logic so that it is self-sufficient
   const AmountInputRow({
-    Key? key,
+    super.key,
     required this.onAmountChange,
     required this.validateAmount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller =
+    final TextEditingController controller =
         useTextEditingController(text: CurrencyOperations.zero);
-    final _isPositive = useState(true);
+    final isPositive = useState(true);
 
-    String? _getAmount(TransactionCreatorState state) {
+    String? getAmount(TransactionCreatorState state) {
       final value = state.moneyTransaction.amount.value.fold(
         (f) => null,
         (v) => CurrencyOperations.formatAmount(v),
@@ -48,20 +45,19 @@ class AmountInputRow extends HookWidget {
     }
 
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
-      listenWhen: (p, c) => _getAmount(p) != _getAmount(c),
+      listenWhen: (p, c) => getAmount(p) != getAmount(c),
       listener: (context, state) {
         // Every modification of the amount value (except initialization) gets passed through the bloc
         // Thus, here is the only time where we have to cast from number to String
         // and where we have to change the selection
-        String? amount = _getAmount(state);
+        final String? amount = getAmount(state);
         if (amount == null) {
-          _controller.text = CurrencyOperations.zero;
+          controller.text = CurrencyOperations.zero;
           return;
         }
-        _controller
+        controller
           ..text = amount
-          ..selection =
-              TextSelection.collapsed(offset: _controller.text.length);
+          ..selection = TextSelection.collapsed(offset: controller.text.length);
       },
       builder: (context, state) {
         return Row(
@@ -69,15 +65,15 @@ class AmountInputRow extends HookWidget {
             Expanded(
               child: AmountInput(
                 // key: const Key("AmountInput"),
-                isPositive: _isPositive,
-                controller: _controller,
+                isPositive: isPositive,
+                controller: controller,
                 changeAmount: onAmountChange,
                 validateAmount: validateAmount,
               ),
             ),
             AmountSwitch(
-              controller: _controller,
-              isPositive: _isPositive,
+              controller: controller,
+              isPositive: isPositive,
               // toggleSwitch: toggleSwitch,
               onAmountChange: onAmountChange,
             )
@@ -95,12 +91,12 @@ class AmountSwitch extends StatelessWidget {
 
   // final Function(BuildContext, TextEditingController, ValueNotifier<bool>) toggleSwitch;
   const AmountSwitch({
-    Key? key,
+    super.key,
     required this.controller,
     required this.isPositive,
     required this.onAmountChange,
     // required this.toggleSwitch,
-  }) : super(key: key);
+  });
 
   void toggleSwitch(
     BuildContext context,
@@ -136,19 +132,18 @@ class AmountInput extends StatelessWidget {
   final void Function(BuildContext, String) changeAmount;
 
   const AmountInput({
-    Key? key,
+    super.key,
     required this.controller,
     required this.isPositive,
     required this.validateAmount,
     required this.changeAmount,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle _positiveAmountTextStyle =
+    const TextStyle positiveAmountTextStyle =
         TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-    const TextStyle _negativeAmountTextStyle =
-        TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
+    const TextStyle negativeAmountTextStyle = TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
     return TextFormField(
       decoration: const InputDecoration(
@@ -162,9 +157,7 @@ class AmountInput extends StatelessWidget {
       ],
       textInputAction: TextInputAction.done,
       textAlign: TextAlign.right,
-      style: isPositive.value
-          ? _positiveAmountTextStyle
-          : _negativeAmountTextStyle,
+      style: isPositive.value ? positiveAmountTextStyle : negativeAmountTextStyle,
       validator: (_) => validateAmount(context),
       onChanged: (value) => changeAmount(context, value),
       onTap: () => changeAmount(context, CurrencyOperations.zero),

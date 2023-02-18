@@ -3,15 +3,11 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/addTransaction/payee_field/payee_field_bloc.dart';
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
-import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
-import 'package:your_budget/application/core/payee_watcher/payee_watcher_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/account_repository.dart';
-import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/payee/payee_repository.dart';
 import 'package:your_budget/models/constants.dart';
@@ -20,8 +16,8 @@ import 'package:your_budget/presentation/pages/addTransaction/components/add_tra
 
 class ReceiverField extends StatelessWidget {
   const ReceiverField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static const String _DEFAULT_PAYEE = "Select payee";
 
@@ -139,7 +135,7 @@ class PayeeSearchDelegate extends SearchDelegate<Either<Payee, Account>?> {
 
   Widget _build(BuildContext context) {
     final AddPayeeItem createPayeeWidget = AddPayeeItem(
-      text: "Add ${query == '' ? "a new payee" : "'${query}'"}",
+      text: "Add ${query == '' ? "a new payee" : "'$query'"}",
       onTap: () => addPayeeDialog(superContext: superContext, defaultValue: query),
     );
     return BlocBuilder<PayeeFieldBloc, PayeeFieldState>(
@@ -201,10 +197,11 @@ class PayeeSearchDelegate extends SearchDelegate<Either<Payee, Account>?> {
                     title: Text(
                       item.title,
                       style: const TextStyle(
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Constants.SECONDARY_COLOR),
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: Constants.SECONDARY_COLOR,
+                      ),
                     ),
                   );
                 } else {

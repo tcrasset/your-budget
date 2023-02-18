@@ -8,10 +8,10 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/components/add_dialog.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/components/widget_view_classes.dart';
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories.dart';
-import 'package:your_budget/presentation/pages/modifyCategories/components/modify_maincategory_row.dart';
+import 'package:your_budget/presentation/pages/modifyCategories/components/modify_main_category_row.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/modify_subcategory_row.dart';
 
 class ModifyCategories extends StatefulWidget {
@@ -38,14 +38,15 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
   Widget build(BuildContext context) => _ModifyCategoriesView(this);
 
   void handleDeleteCategory(BuildContext context) {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const DeleteCategories()));
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const DeleteCategories()),
+    );
   }
 }
 
-class _ModifyCategoriesView
-    extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
-  const _ModifyCategoriesView(_ModifyCategoriesController state) : super(state);
+class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
+  const _ModifyCategoriesView(super.state);
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +84,6 @@ class _ModifyCategoriesView
 }
 
 String? validateCategoryName(String name) {
-  if (name == null || name.isEmpty) return "Name can't be empty.";
+  if (name.isEmpty) return "Name can't be empty.";
   return null;
 }

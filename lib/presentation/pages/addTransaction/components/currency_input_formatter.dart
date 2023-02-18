@@ -36,8 +36,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
   }
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     /// [newValue] is empty, return an empty String
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');

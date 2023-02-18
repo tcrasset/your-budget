@@ -2,8 +2,8 @@
 import 'package:dartz/dartz.dart';
 
 // Project imports:
-import 'errors.dart';
-import 'value_failure.dart';
+import 'package:your_budget/domain/core/errors.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 
 abstract class ValueObject<T> {
   const ValueObject();

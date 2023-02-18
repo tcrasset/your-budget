@@ -18,39 +18,39 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BudgetEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(DateTime date) NewBudgetRequested,
-    required TResult Function(BudgetValue budgetvalue) BudgetValueModified,
+    required TResult Function(DateTime date) newBudgetRequested,
+    required TResult Function(BudgetValue budgetvalue) budgetValueModified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DateTime date)? NewBudgetRequested,
-    TResult? Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult? Function(DateTime date)? newBudgetRequested,
+    TResult? Function(BudgetValue budgetvalue)? budgetValueModified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DateTime date)? NewBudgetRequested,
-    TResult Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult Function(DateTime date)? newBudgetRequested,
+    TResult Function(BudgetValue budgetvalue)? budgetValueModified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(NewBudgetRequested value) NewBudgetRequested,
-    required TResult Function(BudgetValueModified value) BudgetValueModified,
+    required TResult Function(NewBudgetRequested value) newBudgetRequested,
+    required TResult Function(BudgetValueModified value) budgetValueModified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult? Function(BudgetValueModified value)? BudgetValueModified,
+    TResult? Function(NewBudgetRequested value)? newBudgetRequested,
+    TResult? Function(BudgetValueModified value)? budgetValueModified,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult Function(BudgetValueModified value)? BudgetValueModified,
+    TResult Function(NewBudgetRequested value)? newBudgetRequested,
+    TResult Function(BudgetValueModified value)? budgetValueModified,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -115,7 +115,7 @@ class _$NewBudgetRequested implements NewBudgetRequested {
 
   @override
   String toString() {
-    return 'BudgetEvent.NewBudgetRequested(date: $date)';
+    return 'BudgetEvent.newBudgetRequested(date: $date)';
   }
 
   @override
@@ -139,30 +139,30 @@ class _$NewBudgetRequested implements NewBudgetRequested {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(DateTime date) NewBudgetRequested,
-    required TResult Function(BudgetValue budgetvalue) BudgetValueModified,
+    required TResult Function(DateTime date) newBudgetRequested,
+    required TResult Function(BudgetValue budgetvalue) budgetValueModified,
   }) {
-    return NewBudgetRequested(date);
+    return newBudgetRequested(date);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DateTime date)? NewBudgetRequested,
-    TResult? Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult? Function(DateTime date)? newBudgetRequested,
+    TResult? Function(BudgetValue budgetvalue)? budgetValueModified,
   }) {
-    return NewBudgetRequested?.call(date);
+    return newBudgetRequested?.call(date);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DateTime date)? NewBudgetRequested,
-    TResult Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult Function(DateTime date)? newBudgetRequested,
+    TResult Function(BudgetValue budgetvalue)? budgetValueModified,
     required TResult orElse(),
   }) {
-    if (NewBudgetRequested != null) {
-      return NewBudgetRequested(date);
+    if (newBudgetRequested != null) {
+      return newBudgetRequested(date);
     }
     return orElse();
   }
@@ -170,30 +170,30 @@ class _$NewBudgetRequested implements NewBudgetRequested {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(NewBudgetRequested value) NewBudgetRequested,
-    required TResult Function(BudgetValueModified value) BudgetValueModified,
+    required TResult Function(NewBudgetRequested value) newBudgetRequested,
+    required TResult Function(BudgetValueModified value) budgetValueModified,
   }) {
-    return NewBudgetRequested(this);
+    return newBudgetRequested(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult? Function(BudgetValueModified value)? BudgetValueModified,
+    TResult? Function(NewBudgetRequested value)? newBudgetRequested,
+    TResult? Function(BudgetValueModified value)? budgetValueModified,
   }) {
-    return NewBudgetRequested?.call(this);
+    return newBudgetRequested?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult Function(BudgetValueModified value)? BudgetValueModified,
+    TResult Function(NewBudgetRequested value)? newBudgetRequested,
+    TResult Function(BudgetValueModified value)? budgetValueModified,
     required TResult orElse(),
   }) {
-    if (NewBudgetRequested != null) {
-      return NewBudgetRequested(this);
+    if (newBudgetRequested != null) {
+      return newBudgetRequested(this);
     }
     return orElse();
   }
@@ -259,7 +259,7 @@ class _$BudgetValueModified implements BudgetValueModified {
 
   @override
   String toString() {
-    return 'BudgetEvent.BudgetValueModified(budgetvalue: $budgetvalue)';
+    return 'BudgetEvent.budgetValueModified(budgetvalue: $budgetvalue)';
   }
 
   @override
@@ -284,30 +284,30 @@ class _$BudgetValueModified implements BudgetValueModified {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(DateTime date) NewBudgetRequested,
-    required TResult Function(BudgetValue budgetvalue) BudgetValueModified,
+    required TResult Function(DateTime date) newBudgetRequested,
+    required TResult Function(BudgetValue budgetvalue) budgetValueModified,
   }) {
-    return BudgetValueModified(budgetvalue);
+    return budgetValueModified(budgetvalue);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DateTime date)? NewBudgetRequested,
-    TResult? Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult? Function(DateTime date)? newBudgetRequested,
+    TResult? Function(BudgetValue budgetvalue)? budgetValueModified,
   }) {
-    return BudgetValueModified?.call(budgetvalue);
+    return budgetValueModified?.call(budgetvalue);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DateTime date)? NewBudgetRequested,
-    TResult Function(BudgetValue budgetvalue)? BudgetValueModified,
+    TResult Function(DateTime date)? newBudgetRequested,
+    TResult Function(BudgetValue budgetvalue)? budgetValueModified,
     required TResult orElse(),
   }) {
-    if (BudgetValueModified != null) {
-      return BudgetValueModified(budgetvalue);
+    if (budgetValueModified != null) {
+      return budgetValueModified(budgetvalue);
     }
     return orElse();
   }
@@ -315,30 +315,30 @@ class _$BudgetValueModified implements BudgetValueModified {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(NewBudgetRequested value) NewBudgetRequested,
-    required TResult Function(BudgetValueModified value) BudgetValueModified,
+    required TResult Function(NewBudgetRequested value) newBudgetRequested,
+    required TResult Function(BudgetValueModified value) budgetValueModified,
   }) {
-    return BudgetValueModified(this);
+    return budgetValueModified(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult? Function(BudgetValueModified value)? BudgetValueModified,
+    TResult? Function(NewBudgetRequested value)? newBudgetRequested,
+    TResult? Function(BudgetValueModified value)? budgetValueModified,
   }) {
-    return BudgetValueModified?.call(this);
+    return budgetValueModified?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(NewBudgetRequested value)? NewBudgetRequested,
-    TResult Function(BudgetValueModified value)? BudgetValueModified,
+    TResult Function(NewBudgetRequested value)? newBudgetRequested,
+    TResult Function(BudgetValueModified value)? budgetValueModified,
     required TResult orElse(),
   }) {
-    if (BudgetValueModified != null) {
-      return BudgetValueModified(this);
+    if (budgetValueModified != null) {
+      return budgetValueModified(this);
     }
     return orElse();
   }

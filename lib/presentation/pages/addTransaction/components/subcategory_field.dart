@@ -4,21 +4,17 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/subcategory_watcher_bloc/subcategory_watcher_bloc.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'add_transaction_field.dart';
-import 'search_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
 class SubcategoryField extends StatelessWidget {
   const SubcategoryField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static const String _DEFAULT_SUBCATEGORY = "Select subcategory";
 

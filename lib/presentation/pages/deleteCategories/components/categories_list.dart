@@ -25,10 +25,9 @@ class _CategoriesListState extends State<CategoriesList> {
 
   @override
   Widget build(BuildContext context) {
-    final List<CategoryLegacy?> categories =
-        Provider.of<AppState>(context).allCategories;
+    final List<CategoryLegacy?> categories = Provider.of<AppState>(context).allCategories;
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
         controller: _scrollController,

@@ -6,14 +6,14 @@ import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
 import 'package:your_budget/domain/budget/budget_entry.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/utils/currency.dart' as currency_utils;
 import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
+import 'package:your_budget/utils/currency.dart' as currency_utils;
 
 // Widget containing and displaying the information a subcategory
 
 class BudgetEntryRow extends HookWidget {
   final BudgetEntry entry;
-  const BudgetEntryRow({Key? key, required this.entry}) : super(key: key);
+  const BudgetEntryRow({super.key, required this.entry});
 
   Color? setColor(double availableAmount) {
     if (availableAmount > 0) {
@@ -29,12 +29,10 @@ class BudgetEntryRow extends HookWidget {
   Widget build(BuildContext context) {
     final double budgeted = entry.budgeted.getOrCrash();
     final double available = entry.available.getOrCrash();
-    final TextEditingController _budgetedController =
+    final TextEditingController budgetedController =
         useTextEditingController(text: Constants.CURRENCY_FORMAT.format(budgeted).trim());
-    _budgetedController.selection =
-        TextSelection.collapsed(offset: _budgetedController.text.length);
+    budgetedController.selection = TextSelection.collapsed(offset: budgetedController.text.length);
 
-    final budgetedText = _budgetedController.text;
     final availableText = Constants.CURRENCY_FORMAT.format(available).trim();
     final FocusNode budgetedFocusNode = useFocusNode();
 
@@ -45,7 +43,7 @@ class BudgetEntryRow extends HookWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 15),
         margin: const EdgeInsets.symmetric(horizontal: 10),
-        color: true ? Colors.grey[200] : Colors.white,
+        color: Colors.grey[200],
         child: Row(
           children: <Widget>[
             Expanded(
@@ -78,10 +76,10 @@ class BudgetEntryRow extends HookWidget {
                     ),
                   ),
                   child: TextField(
-                    onTap: () => _budgetedController.selection =
-                        TextSelection.collapsed(offset: _budgetedController.text.length),
+                    onTap: () => budgetedController.selection =
+                        TextSelection.collapsed(offset: budgetedController.text.length),
                     keyboardType: TextInputType.number,
-                    controller: _budgetedController,
+                    controller: budgetedController,
                     decoration: const InputDecoration.collapsed(hintText: ""),
                     focusNode: budgetedFocusNode,
                     inputFormatters: [
@@ -90,7 +88,7 @@ class BudgetEntryRow extends HookWidget {
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),
                     onSubmitted: (submitted) => context.read<BudgetBloc>().add(
-                          BudgetEvent.BudgetValueModified(
+                          BudgetEvent.budgetValueModified(
                             entry.budgetValue.copyWith(
                               budgeted: Amount(currency_utils.parse(submitted).toString()),
                             ),

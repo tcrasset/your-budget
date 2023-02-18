@@ -1,8 +1,3 @@
-// Flutter imports:
-import 'dart:math';
-
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -29,11 +24,12 @@ abstract class BudgetValue implements _$BudgetValue {
   const BudgetValue._();
 
   factory BudgetValue.empty() => BudgetValue(
-      id: UniqueId(),
-      subcategoryId: UniqueId(),
-      budgeted: Amount(""),
-      available: Amount(""),
-      date: DateTime.now());
+        id: UniqueId(),
+        subcategoryId: UniqueId(),
+        budgeted: Amount(""),
+        available: Amount(""),
+        date: DateTime.now(),
+      );
 
   Option<ValueFailure<dynamic>> get failureOption {
     return budgeted.failureOrUnit.andThen(available.failureOrUnit).fold(

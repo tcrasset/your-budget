@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +13,9 @@ class ToBeBudgeted extends StatelessWidget {
   final TextStyle _textStyle =
       const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 25.0);
 
-  final TextStyle _positiveAmountTextStyle =
+  final TextStyle positiveAmountTextStyle =
       const TextStyle(color: Constants.GREEN_COLOR, fontSize: 32.0);
-  final TextStyle _negativeAmountTextStyle =
+  final TextStyle negativeAmountTextStyle =
       const TextStyle(color: Constants.RED_COLOR, fontSize: 32.0);
 
   @override

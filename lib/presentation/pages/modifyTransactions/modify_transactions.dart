@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/components/widget_view_classes.dart';
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/core/transactions/transaction_list.dart';
@@ -16,11 +16,10 @@ import 'package:your_budget/presentation/pages/modifyTransactions/modify_transac
 class ModifyTransactions extends StatefulWidget {
   final Account account;
 
-  const ModifyTransactions(this.account, {Key? key}) : super(key: key);
+  const ModifyTransactions(this.account, {super.key});
 
   @override
-  _ModifyTransactionsController createState() =>
-      _ModifyTransactionsController();
+  _ModifyTransactionsController createState() => _ModifyTransactionsController();
 }
 
 class _ModifyTransactionsController extends State<ModifyTransactions> {
@@ -28,8 +27,7 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
   Widget build(BuildContext context) => _ModifyTransactionsView(this);
 
   Future<void> handleDeleteTransactions(BuildContext context) async {
-    final String? result =
-        await showDeleteDialog(context, 'Delete selected transactions?');
+    final String? result = await showDeleteDialog(context, 'Delete selected transactions?');
     if (result == "Delete") {
       final ModifyTransactionsState showTransactionsState =
           Provider.of<ModifyTransactionsState>(context, listen: false);
@@ -41,8 +39,7 @@ class _ModifyTransactionsController extends State<ModifyTransactions> {
 
 class _ModifyTransactionsView
     extends WidgetView<ModifyTransactions, _ModifyTransactionsController> {
-  const _ModifyTransactionsView(_ModifyTransactionsController state)
-      : super(state);
+  const _ModifyTransactionsView(super.state);
 
   @override
   Widget build(BuildContext context) {

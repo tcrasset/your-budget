@@ -132,7 +132,7 @@ class SQFliteAccountProvider implements IAccountProvider {
   Future<Either<ValueFailure, Unit>> update(Account account) async {
     {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
-      String id = accountDTO.id;
+      final String id = accountDTO.id;
       final Map<String, dynamic> values = accountDTO.toJson();
       values.remove("id");
 

@@ -1,6 +1,3 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
 // Project imports:
 import 'package:your_budget/models/account.dart';
 import 'package:your_budget/models/object_list.dart';

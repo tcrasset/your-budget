@@ -9,7 +9,7 @@ class SQFliteConstantsProvider implements IConstantsProvider {
   SQFliteConstantsProvider({required this.database});
 
   Future<void> init() async {
-    //TODO: Implement it with a BehaviourSubject
+    //TODO: Implement it with a BehaviorSubject
     return;
   }
 
@@ -65,7 +65,6 @@ class SQFliteConstantsProvider implements IConstantsProvider {
     return failureOrUnit.fold((l) => left(l), (r) => right(unit));
   }
 
-  @override
   Future<Either<ValueFailure, Unit>> _update(String name, String value) async {
     late int updateCount;
     try {
@@ -90,7 +89,6 @@ class SQFliteConstantsProvider implements IConstantsProvider {
     return right(unit);
   }
 
-  @override
   Future<Either<ValueFailure, String>> _get(String name) async {
     late List<Map<String, Object?>> result;
     try {
@@ -110,26 +108,25 @@ class SQFliteConstantsProvider implements IConstantsProvider {
     return right(result.first[DatabaseConstants.CONSTANT_VALUE].toString());
   }
 
-  @override
-  Future<Either<ValueFailure, Unit>> _create(String name, String value) async {
-    const String CREATE_CONSTANT = '''
-    INSERT INTO ${DatabaseConstants.constantsTable}
-      (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
-      VALUES(?, ?);''';
+  // Future<Either<ValueFailure, Unit>> _create(String name, String value) async {
+  //   const String CREATE_CONSTANT = '''
+  //   INSERT INTO ${DatabaseConstants.constantsTable}
+  //     (${DatabaseConstants.CONSTANT_NAME}, ${DatabaseConstants.CONSTANT_VALUE})
+  //     VALUES(?, ?);''';
 
-    late int result;
-    try {
-      result = await database!.rawInsert(CREATE_CONSTANT, [name, value]);
-    } on DatabaseException catch (e) {
-      return left(ValueFailure.unexpected(message: e.toString()));
-    }
+  //   late int result;
+  //   try {
+  //     result = await database!.rawInsert(CREATE_CONSTANT, [name, value]);
+  //   } on DatabaseException catch (e) {
+  //     return left(ValueFailure.unexpected(message: e.toString()));
+  //   }
 
-    if (result == 0) {
-      return left(
-        ValueFailure.unexpected(message: "Could not create constant $name with value $value"),
-      );
-    }
+  //   if (result == 0) {
+  //     return left(
+  //       ValueFailure.unexpected(message: "Could not create constant $name with value $value"),
+  //     );
+  //   }
 
-    return right(unit);
-  }
+  //   return right(unit);
+  // }
 }

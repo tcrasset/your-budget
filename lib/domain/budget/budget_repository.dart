@@ -1,22 +1,18 @@
-import 'dart:async';
 import 'dart:core';
 
 import 'package:dartz/dartz.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budget/budget.dart';
 import 'package:your_budget/domain/budget/budget_entry.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
+import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/category.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
-import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
-
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/utils.dart';
 
@@ -35,18 +31,7 @@ class BudgetRepository {
     required this.accountProvider,
   });
 
-  Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> get _subcategories =>
-      subcategoryProvider.watchAllSubcategories();
-
-  Stream<Either<ValueFailure<dynamic>, List<Category>>> get _categories =>
-      categoryProvider.watchAllCategories();
-
-  Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> _budgetvalues(int year, int month) =>
-      budgetvalueProvider.watchAllBudgetValues(year: year, month: month);
-
   Future<Either<ValueFailure<dynamic>, Unit>> updateBudgetValue(BudgetValue value) async {
-    Amount lastMonthAvailable = value.available;
-
     final failureOrPrevious =
         (await budgetvalueProvider.getById(id: value.id)).getOrElse(() => throw Exception());
 
@@ -54,10 +39,10 @@ class BudgetRepository {
     final updated = value.copyWith(available: value.available + difference);
     budgetvalueProvider.update(updated);
 
-    final tobeBudgetedAccount = accountProvider.getToBeBudgeted().getOrElse(() => throw Exception);
+    final toBeBudgetedAccount = accountProvider.getToBeBudgeted().getOrElse(() => throw Exception);
 
     accountProvider
-        .update(tobeBudgetedAccount.copyWith(balance: tobeBudgetedAccount.balance - difference));
+        .update(toBeBudgetedAccount.copyWith(balance: toBeBudgetedAccount.balance - difference));
 
     final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
         await budgetvalueProvider.getBudgetValuesBySubcategory(subcategoryId: value.subcategoryId);
@@ -66,8 +51,8 @@ class BudgetRepository {
       return left(failureOrBudgetvalues as ValueFailure);
     }
 
-    DateTime nextBudgetDate = Jiffy(value.date).add(months: 1).dateTime;
-    List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
+    final DateTime nextBudgetDate = Jiffy(value.date).add(months: 1).dateTime;
+    final List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
     // TODO: return error values if one fails using functional programming
 
     final toUpdate = budgetvalues
@@ -110,7 +95,7 @@ class BudgetRepository {
             List<Subcategory> subcategories,
             List<Category> categories,
           ) {
-            List<BudgetEntryGroups> groups = [];
+            final List<BudgetEntryGroups> groups = [];
 
             for (final Category category in categories) {
               final List<BudgetEntry> entries = [];

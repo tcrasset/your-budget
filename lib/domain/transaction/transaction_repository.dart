@@ -35,7 +35,8 @@ class TransactionRepository {
     if (transaction.type == MoneyTransactionType.initial) {
       throw Exception("Initial transactions are only created in AccountRepository.");
     }
-    Either<ValueFailure, Unit> failureOrSuccess = await transactionProvider.create(transaction);
+    final Either<ValueFailure, Unit> failureOrSuccess =
+        await transactionProvider.create(transaction);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
       if (transaction.type == MoneyTransactionType.betweenAccount) {
@@ -75,7 +76,8 @@ class TransactionRepository {
     if (transaction.type == MoneyTransactionType.initial) {
       throw Exception("Initial transactions are only deleted in AccountRepository.");
     }
-    Either<ValueFailure, Unit>? failureOrSuccess = await transactionProvider.delete(transaction.id);
+    final Either<ValueFailure, Unit> failureOrSuccess =
+        await transactionProvider.delete(transaction.id);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
       // Most transactions do not update the budget values
@@ -85,7 +87,10 @@ class TransactionRepository {
       }
 
       return await _updateBudgetvalues(
-          budgetValueProvider, transaction, (Amount a, Amount b) => a - b);
+        budgetValueProvider,
+        transaction,
+        (Amount a, Amount b) => a - b,
+      );
     });
   }
 }
@@ -104,7 +109,7 @@ Future<FutureOr<Either<ValueFailure<dynamic>, Unit>>> _updateBudgetvalues(
     return left(failureOrBudgetvalues as ValueFailure);
   }
 
-  List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
+  final List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
 
   // Remove the transaction amount to each budget value's available field
   // TODO: return error values if one fails using functional programming

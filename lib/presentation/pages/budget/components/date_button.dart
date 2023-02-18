@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 // Package imports:
-import 'package:provider/provider.dart';
 import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
 import 'package:your_budget/application/core/budget_date_cubit.dart';
 
@@ -15,7 +14,6 @@ class DateButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         IconButton(
           icon: const Icon(Icons.arrow_back),

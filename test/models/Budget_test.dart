@@ -33,7 +33,7 @@ void main() {
     expect(myBudget.subcategories.length, 1);
 
     // Verify that it is added as subcategory to the respective MainCategory
-    expect(myBudget.maincategories[0]!.subcategories.length, 1);
+    expect(myBudget.mainCategories[0]!.subcategories.length, 1);
   });
 
   test('when addMaincategory is called, add a MainCategory to the budget', () {
@@ -43,10 +43,10 @@ void main() {
     final Budget myBudget = Budget([], [], 6, 1996);
 
     //!Act
-    myBudget.addMaincategory(catTest);
+    myBudget.addMainCategory(catTest);
 
     //!Assert
-    expect(myBudget.maincategories, [catTest]);
+    expect(myBudget.mainCategories, [catTest]);
   });
 
   test('Budget.updateSubCategory() modifies the subcategory in the Budget correctly', () {
@@ -69,7 +69,7 @@ void main() {
     expect(myBudgetSubcat.hasSameValues(subcatTest), true);
 
     //Check that the modifications were made in the MainCategory
-    final MainCategory myBudgetCat = myBudget.maincategories[0]!;
+    final MainCategory myBudgetCat = myBudget.mainCategories[0]!;
     expect(myBudgetCat.available, subcatTest.available);
   });
 
@@ -82,10 +82,10 @@ void main() {
     final Budget myBudget = Budget([catTest], [], 6, 1996);
 
     //Make the modification in [myBudget]
-    myBudget.updateMaincategory(newCat);
+    myBudget.updateMainCategory(newCat);
 
     // Check that the modification were made in the maincategory
-    final MainCategory budgetCat = myBudget.maincategories[0]!;
+    final MainCategory budgetCat = myBudget.mainCategories[0]!;
     expect(budgetCat.hasSameValues(newCat), true);
   });
 
@@ -101,7 +101,7 @@ void main() {
     //Modify the name
     myBudget.makeSubcategoryChangeBySubcatId(subcatTest.id, subcatTest.parentId, "name", "Changed");
     expect(myBudget.subcategories[0]!.name, "Changed");
-    expect(myBudget.maincategories[0]!.subcategories[0]!.name, "Changed");
+    expect(myBudget.mainCategories[0]!.subcategories[0]!.name, "Changed");
 
     // Modify budgeted
     myBudget.makeSubcategoryChangeBySubcatId(
@@ -111,7 +111,7 @@ void main() {
       "9.99",
     );
     expect(myBudget.subcategories[0]!.budgeted, 9.99);
-    expect(myBudget.maincategories[0]!.subcategories[0]!.budgeted, 9.99);
+    expect(myBudget.mainCategories[0]!.subcategories[0]!.budgeted, 9.99);
 
     // Modify available
     myBudget.makeSubcategoryChangeBySubcatId(
@@ -121,11 +121,11 @@ void main() {
       "9.99",
     );
     expect(myBudget.subcategories[0]!.available, 9.99);
-    expect(myBudget.maincategories[0]!.subcategories[0]!.available, 9.99);
+    expect(myBudget.mainCategories[0]!.subcategories[0]!.available, 9.99);
 
     // Check that the maincategory fields were updated
-    expect(myBudget.maincategories[0]!.available, 9.99);
-    expect(myBudget.maincategories[0]!.budgeted, 9.99);
+    expect(myBudget.mainCategories[0]!.available, 9.99);
+    expect(myBudget.mainCategories[0]!.budgeted, 9.99);
   });
 
   test('Budget.allcategories() returns all categories in order', () {
@@ -151,7 +151,7 @@ void main() {
     final List<dynamic> allcategoriesTest = [];
     allcategoriesTest.addAll([catTest1, subcatTest_1_1, subcatTest_1_2, catTest2, subcatTest_2_1]);
 
-    final List<dynamic> allcategories = myBudget.allcategories!;
+    final List<dynamic> allcategories = myBudget.allCategories!;
     for (int i = 0; i < allcategories.length; i++) {
       expect(allcategories[i].hasSameValues(allcategoriesTest[i]), true);
     }
@@ -207,7 +207,7 @@ void main() {
     expect(myBudget.subcategories.contains(subcatTest_1_2), false);
 
     //Check maincategory values got updated
-    expect(myBudget.maincategories[0]!.budgeted, 66.52);
+    expect(myBudget.mainCategories[0]!.budgeted, 66.52);
 
     //Check that totalBudgeted got updated
     expect(myBudget.totalBudgeted, 66.52 + 66.52);

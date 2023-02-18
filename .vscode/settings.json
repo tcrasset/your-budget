@@ -18,6 +18,20 @@
     "dart.previewFlutterUiGuidesCustomTracking": true,
     "terminal.integrated.shell.linux": "/bin/zsh",
     "cSpell.words": [
-        "dartz"
+        "appstate",
+        "AUTOINCREMENT",
+        "autovalidate",
+        "budgetvalue",
+        "budgetvalues",
+        "cupertino",
+        "dartz",
+        "datetime",
+        "MONEYTRANSACTION",
+        "nullsafety",
+        "rxdart",
+        "Schyler",
+        "sqflite",
+        "subcat",
+        "unfocus"
     ],
 }

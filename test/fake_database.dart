@@ -3,7 +3,6 @@ import 'dart:math';
 
 // Package imports:
 import 'package:jiffy/jiffy.dart';
-import 'package:meta/meta.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 

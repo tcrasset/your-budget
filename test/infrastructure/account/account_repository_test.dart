@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:dartz/dartz.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:test/test.dart';

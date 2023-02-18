@@ -1,10 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart' show IterableExtension, UnmodifiableListView;
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 // Project imports:
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/account.dart';

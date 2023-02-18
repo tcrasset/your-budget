@@ -3,23 +3,18 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/account_repository.dart';
-import 'package:your_budget/domain/account/i_account_provider.dart';
-import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
-import 'package:your_budget/presentation/pages/addTransaction/components/search_field.dart';
 
 class GiverField extends StatelessWidget {
   const GiverField({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   static const String _DEFAULT_ACCOUNT = "Select account";
 
@@ -62,8 +57,9 @@ class GiverField extends StatelessWidget {
   Widget build(BuildContext context) => MultiBlocProvider(
         providers: [
           BlocProvider<AccountWatcherBloc>(
-              create: (context) =>
-                  AccountWatcherBloc(accountRepository: context.read<AccountRepository>())),
+            create: (context) =>
+                AccountWatcherBloc(accountRepository: context.read<AccountRepository>()),
+          ),
         ],
         child: AddTransactionField(
           name: "Account",

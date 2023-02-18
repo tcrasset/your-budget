@@ -4,7 +4,6 @@ import 'package:mockito/mockito.dart';
 
 // Project imports:
 import 'package:your_budget/models/budget_value_list.dart';
-import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}

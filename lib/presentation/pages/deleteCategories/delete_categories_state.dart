@@ -2,7 +2,6 @@
 import 'dart:collection';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -74,12 +73,11 @@ class DeleteCategoriesState extends ChangeNotifier {
 
   bool deleteCategories(BuildContext context) {
     /// Deletes categories selected by the user and returns whether the deletion
-    /// was sucessfull (true) or not (false).
+    /// was successful (true) or not (false).
     ///
     /// It verifies that the "Essentials" is not selected for deletion.
     /// If that is the case, the deletion process is aborted.
-    final bool triedToDeleteEssentials =
-        _unallowDeletionOfEssentialMainCategory(context);
+    final bool triedToDeleteEssentials = _disallowDeletionOfEssentialMainCategory(context);
     if (triedToDeleteEssentials) {
       return false;
     } else {
@@ -118,14 +116,14 @@ class DeleteCategoriesState extends ChangeNotifier {
   }
 
   List<int?> _getSelectedSubcategories() {
-    final List<int?> selectedSubcCategoryIds = [];
+    final List<int?> selectedSubCategoryIds = [];
 
     for (final int? id in _isSelectedMapSubCategory.keys) {
       if (_isSelectedMapSubCategory[id] == true) {
-        selectedSubcCategoryIds.add(id);
+        selectedSubCategoryIds.add(id);
       }
     }
-    return selectedSubcCategoryIds;
+    return selectedSubCategoryIds;
   }
 
   void resetAllSelected() {
@@ -150,9 +148,8 @@ class DeleteCategoriesState extends ChangeNotifier {
     for (final int? categoryId in _getSelectedCategories()) {
       // Getting subcategories which are children of the MainCategory that
       // we're going to delete.
-      final List<SubCategory?> toUnselect = appState.subcategories
-          .where((subcat) => subcat!.parentId == categoryId)
-          .toList();
+      final List<SubCategory?> toUnselect =
+          appState.subcategories.where((subcat) => subcat!.parentId == categoryId).toList();
 
       // Unselect categories by setting them to false
       for (final subcat in toUnselect) {
@@ -161,7 +158,7 @@ class DeleteCategoriesState extends ChangeNotifier {
     }
   }
 
-  bool _unallowDeletionOfEssentialMainCategory(BuildContext context) {
+  bool _disallowDeletionOfEssentialMainCategory(BuildContext context) {
     final List<int?> catIds = _getSelectedCategories();
     for (final catId in catIds) {
       if (catId == 1) {

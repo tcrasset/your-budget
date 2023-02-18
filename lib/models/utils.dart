@@ -1,4 +1,4 @@
-/// This file will contain utiliy functions destined to be used throughout the project.
+/// This file will contain utility functions destined to be used throughout the project.
 
 // Package imports:
 import 'package:jiffy/jiffy.dart';
@@ -65,11 +65,11 @@ bool isMonthBetweenInclusive({
   required DateTime lowerBound,
   required DateTime upperBound,
 }) {
-  final _lower = getDateFromMonthStart(lowerBound);
-  final _upper = getDateFromMonthStart(upperBound);
-  final _query = getDateFromMonthStart(query);
-  return (_query.isAtSameMomentAs(_lower) || _query.isAfter(_lower)) &&
-      (_query.isAtSameMomentAs(_upper) || _query.isBefore(_upper));
+  final lower = getDateFromMonthStart(lowerBound);
+  final upper = getDateFromMonthStart(upperBound);
+  final formattedQuery = getDateFromMonthStart(query);
+  return (formattedQuery.isAtSameMomentAs(lower) || formattedQuery.isAfter(lower)) &&
+      (formattedQuery.isAtSameMomentAs(upper) || formattedQuery.isBefore(upper));
 }
 
 DateTime addExactEntryTime(DateTime date) {

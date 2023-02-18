@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:your_budget/models/utils.dart';
-import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/presentation/pages/modifyTransactions/modify_transaction_state.dart';
 
 class CheckedRow extends StatefulWidget {
@@ -33,8 +32,8 @@ class CheckedRow extends StatefulWidget {
     this.payeeName,
     this.subcategoryStyle,
     this.transactionId, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _CheckedRowState createState() => _CheckedRowState();
@@ -72,8 +71,9 @@ class _CheckedRowState extends State<CheckedRow> {
         children: <Widget>[
           if (widget.memo != "Starting balance")
             Checkbox(
-                value: isChecked,
-                onChanged: handleCheckboxOnChanged as void Function(bool?)?),
+              value: isChecked,
+              onChanged: handleCheckboxOnChanged as void Function(bool?)?,
+            ),
           Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

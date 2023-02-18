@@ -47,7 +47,7 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
         whereArgs: [id],
       );
 
-      if (result == null) {
+      if (result.isEmpty) {
         return left(ValueFailure.unexpected(message: "Subcategory with id $id not found"));
       }
 
@@ -96,7 +96,8 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
 
       if (result == 0) {
         return left(
-            ValueFailure.unexpected(message: "Subcategory with id $id not found in database."));
+          ValueFailure.unexpected(message: "Subcategory with id $id not found in database."),
+        );
       }
 
       final subcategories = [..._subcategoryStreamController.value!.getOrElse(() => [])];
@@ -105,7 +106,7 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
         subcategories[index] = subcategory;
         _subcategoryStreamController.add(Right(subcategories));
       } else {
-        return left(ValueFailure.unexpected(message: "Subcategory not in current stream."));
+        return left(const ValueFailure.unexpected(message: "Subcategory not in current stream."));
       }
 
       return right(unit);

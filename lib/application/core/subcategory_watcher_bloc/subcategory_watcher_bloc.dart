@@ -42,7 +42,7 @@ class SubcategoryWatcherBloc extends Bloc<SubcategoryWatcherEvent, SubcategoryWa
     _SubcategoriesReceived event,
     Emitter<SubcategoryWatcherState> emit,
   ) async {
-    var newState = event.failureOrSubcategories.fold(
+    final newState = event.failureOrSubcategories.fold(
       (f) => SubcategoryWatcherState.loadFailure(f),
       (subcategories) => SubcategoryWatcherState.loadSuccess(subcategories),
     );

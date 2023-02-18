@@ -16,7 +16,7 @@ import 'package:your_budget/presentation/pages/modifyCategories/modify_categorie
 class BudgetPage extends StatefulWidget {
   final String? title;
 
-  const BudgetPage({Key? key, this.title}) : super(key: key);
+  const BudgetPage({super.key, this.title});
 
   @override
   _BudgetPageState createState() => _BudgetPageState();
@@ -42,7 +42,7 @@ class _BudgetPageState extends State<BudgetPage> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => BudgetBloc(budgetRepository: context.read<BudgetRepository>())
-        ..add(BudgetEvent.NewBudgetRequested(DateTime.now())),
+        ..add(BudgetEvent.newBudgetRequested(DateTime.now())),
       child: Scaffold(
         appBar: AppBar(
           title: Text(widget.title!),
@@ -55,7 +55,7 @@ class _BudgetPageState extends State<BudgetPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
                   IconButton(
-                    icon: const Icon(FontAwesomeIcons.checkSquare),
+                    icon: const Icon(FontAwesomeIcons.squareCheck),
                     onPressed: handleModifyCategories,
                   ),
                   PopupMenuButton(

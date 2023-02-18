@@ -2,14 +2,13 @@
 import 'dart:collection';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../../../appstate.dart';
+import 'package:your_budget/appstate.dart';
 
 class ModifyTransactionsState extends ChangeNotifier {
   final Map<int, bool> _isSelectedMap = HashMap();
@@ -27,8 +26,6 @@ class ModifyTransactionsState extends ChangeNotifier {
       _isSelectedMap[transactionId] = true;
       nbSelected++;
     }
-
-    print(nbSelected);
   }
 
   void setTransaction(int transactionId) {
@@ -43,11 +40,9 @@ class ModifyTransactionsState extends ChangeNotifier {
         transactionIdsToDelete.add(transactionId);
       }
     });
-    transactionIdsToDelete.forEach((transactionId) {
+    for (final transactionId in transactionIdsToDelete) {
       appState.deleteTransaction(transactionId);
       _isSelectedMap.remove(transactionId);
-    });
-
-    print("Deleted transactions $transactionIdsToDelete");
+    }
   }
 }

@@ -5,7 +5,8 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.gr.dart"
     - "**/*.freezed.dart"
-
+  errors:
+    invalid_annotation_target: ignore
 linter:
   rules:
     prefer_const_literals_to_create_immutables: false

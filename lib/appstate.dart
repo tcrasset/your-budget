@@ -20,7 +20,7 @@ import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/goal.dart';
 import 'package:your_budget/models/goal_model.dart';
-import 'package:your_budget/models/maincategory_creator.dart';
+import 'package:your_budget/models/main_category_creator.dart';
 import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/models/money_transaction_creator.dart';
 import 'package:your_budget/models/money_transaction_list.dart';
@@ -52,7 +52,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// An unmodifiable view of the information in the data base.
   UnmodifiableListView<CategoryLegacy?> get allCategories {
     if (currentBudget != null) {
-      return UnmodifiableListView(currentBudget!.allcategories!);
+      return UnmodifiableListView(currentBudget!.allCategories!);
     }
     return UnmodifiableListView([]);
   }
@@ -98,14 +98,14 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     // notifyListeners();
   }
 
-  /// Adds [category] to the current [_allCategories], to [_maincategories],
+  /// Adds [category] to the current [_allCategories], to [_mainCategories],
   /// and to the data base.
   @override
   Future<void> addCategory({required String categoryName}) async {
     final MainCategory cat =
         await MainCategoryCreator(queryContext: queryContext, name: categoryName).create();
 
-    budgetList.addMaincategory(cat);
+    budgetList.addMainCategory(cat);
     notifyListeners();
   }
 
@@ -125,7 +125,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   @override
   Future<void> addSubcategory({
     required String subcategoryName,
-    required String maincategoryId,
+    required String mainCategoryId,
   }) async {
     DateTime? newDate = startingBudgetDate;
     final DateTime maxBudgetDate = getMaxBudgetDate();
@@ -134,7 +134,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     final SubCategory subcategory = await SubCategoryCreator(
       queryContext: queryContext,
       name: subcategoryName,
-      parentId: maincategoryId,
+      parentId: mainCategoryId,
       budgeted: 0.00,
       available: 0.00,
     ).create();
@@ -283,10 +283,10 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   @override
   Future<void> updateSubcategoryValues(
     SubCategory modifiedSubcategory,
-    DateTime? dateMofidied,
+    DateTime? dateModified,
   ) async {
-    _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateMofidied);
-    _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateMofidied);
+    _updateSubcategoryInCurrentBudget(modifiedSubcategory, dateModified);
+    _updateSubcategoryInSubsequentBudgets(modifiedSubcategory, dateModified);
     await computeToBeBudgeted();
 
     notifyListeners();
@@ -294,11 +294,11 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   void _updateSubcategoryInSubsequentBudgets(
     SubCategory modifiedSubcategory,
-    DateTime? dateMofidied,
+    DateTime? dateModified,
   ) {
     double? lastMonthAvailable = modifiedSubcategory.available;
     final DateTime maxBudgetDate = getMaxBudgetDate();
-    DateTime date = Jiffy(dateMofidied).add(months: 1).dateTime;
+    DateTime date = Jiffy(dateModified).add(months: 1).dateTime;
 
     ///TODO: THink about removing BudgetValue from appState and only storing it in Budgets
 
@@ -324,12 +324,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     }
   }
 
-  void _updateSubcategoryInCurrentBudget(SubCategory modifiedSubcategory, DateTime? dateMofidied) {
+  void _updateSubcategoryInCurrentBudget(SubCategory modifiedSubcategory, DateTime? dateModified) {
     currentBudget!.updateSubCategory(modifiedSubcategory);
 
     budgetValueList.updateBudgetValue(
       subcatId: modifiedSubcategory.id,
-      date: dateMofidied,
+      date: dateModified,
       newBudgeted: modifiedSubcategory.budgeted,
       newAvailable: modifiedSubcategory.available,
     );
@@ -355,7 +355,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   /// by [modifiedCategory.id] to [modifiedCategory.name]
   @override
   void updateCategoryName(MainCategory modifiedCategory) {
-    budgetList.updateMaincategory(modifiedCategory);
+    budgetList.updateMainCategory(modifiedCategory);
     notifyListeners();
     queryContext!.updateCategory(modifiedCategory);
   }
@@ -407,7 +407,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
 
   @override
   double computeAverageBudgeted(int? subcategoryId) {
-    return budgetList.computeAvgBugdetedPerSubcategory(subcategoryId);
+    return budgetList.computeAvgBudgetedPerSubcategory(subcategoryId);
   }
 
   @override
@@ -430,7 +430,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
   Future<List<Budget>> createAllMonthlyBudgets() async {
     List<Budget> budgets = [];
     DateTime currentDate = startingBudgetDate!;
-    final List<MainCategory> maincategories = await queryContext!.getCategories();
+    final List<MainCategory> mainCategories = await queryContext!.getCategories();
     final DateTime storedMaxBudgetDate = await queryContext!.getMaxBudgetDateConstant();
     // Start with 1 month's difference and keep incrementing
     // until we overshoot the endDate
@@ -443,13 +443,13 @@ class AppState extends ChangeNotifier implements AppStateRepository {
       final List<SubCategory> subcategories =
           await queryContext!.getSubCategoriesJoined(currentDate.year, currentDate.month);
       final Budget budget =
-          Budget(maincategories, subcategories, currentDate.month, currentDate.year);
+          Budget(mainCategories, subcategories, currentDate.month, currentDate.year);
 
-      final double positiveAmountTransferedIntoToBeBudgeted = toBeBudgetedTransactions
+      final double positiveAmountTransferredIntoToBeBudgeted = toBeBudgetedTransactions
           .where((transaction) => isSameMonth(transaction!.date!, currentDate))
           .fold(0, (total, transaction) => total + transaction!.amount!);
 
-      budget.toBeBudgetedInputFromMoneyTransactions += positiveAmountTransferedIntoToBeBudgeted;
+      budget.toBeBudgetedInputFromMoneyTransactions += positiveAmountTransferredIntoToBeBudgeted;
       budgets.add(budget);
 
       //Go to next month
@@ -526,10 +526,12 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     final List<SubCategory?> correspondingSubcategories =
         subcategories.where((subcat) => subcat!.parentId == categoryId).toList();
 
-    budgetList.removeMaincategory(categoryId);
+    budgetList.removeMainCategory(categoryId);
     queryContext!.deleteCategory(categoryId);
 
-    correspondingSubcategories.forEach((subcat) => removeSubcategory(subcat!.id));
+    for (final subcat in correspondingSubcategories) {
+      removeSubcategory(subcat!.id);
+    }
 
     computeToBeBudgeted();
     notifyListeners();
@@ -543,10 +545,6 @@ class AppState extends ChangeNotifier implements AppStateRepository {
     Budget currentMaxBudget = budgets.singleWhere(
       (budget) => budget.year == previousDate.year && budget.month == previousDate.month,
     );
-
-    budgets.forEach((element) {
-      print(element);
-    });
 
     do {
       newDate = Jiffy(previousDate).add(months: 1).dateTime;
@@ -576,7 +574,7 @@ class AppState extends ChangeNotifier implements AppStateRepository {
           await queryContext!.getSubCategoriesJoined(newDate.year, newDate.month);
 
       final Budget newBudget = Budget(
-        currentMaxBudget.maincategories,
+        currentMaxBudget.mainCategories,
         updatedSubcategories,
         newDate.month,
         newDate.year,

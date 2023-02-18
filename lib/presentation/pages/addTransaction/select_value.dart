@@ -51,7 +51,7 @@ class SelectValuePageState extends State<SelectValuePage> {
   }
 
   String? newPayeeValidator(String payeeName) {
-    if (payeeName == null || payeeName.trim() == "") {
+    if (payeeName.trim() == "") {
       return "Name must be valid";
     }
     return null;
@@ -78,10 +78,10 @@ class SelectValuePageState extends State<SelectValuePage> {
   }
 
   List<dynamic> _getDuplicateEntries() {
-    final map = Map<String?, int?>(); // Mapping between name and id
+    final map = <String?, int?>{}; // Mapping between name and id
 
-    final Set<int?> duplicateIDs = Set<int?>();
-    widget.listEntries.forEach((element) {
+    final Set<int?> duplicateIDs = <int?>{};
+    for (final element in widget.listEntries) {
       if (element is SubCategory) {
         if (!map.containsKey(element.name)) {
           map[element.name] = element.id;
@@ -90,15 +90,15 @@ class SelectValuePageState extends State<SelectValuePage> {
           duplicateIDs.add(map[element.name]); //Other duplicate that is in map
         }
       }
-    });
+    }
     return appState.subcategories.where((element) => duplicateIDs.contains(element!.id)).toList();
   }
 
   List _addLabelForDuplicateEntries(List<dynamic> duplicateEntries) {
     final List modifiedListEntries = [];
-    final List maincategories = appState.allCategories.whereType<MainCategory>().toList();
+    final List mainCategories = appState.allCategories.whereType<MainCategory>().toList();
 
-    widget.listEntries.forEach((entry) {
+    for (final entry in widget.listEntries) {
       if (entry is SubCategory) {
         final bool isDuplicate = duplicateEntries.singleWhere(
               (duplicate) => duplicate.id == entry.id,
@@ -107,20 +107,20 @@ class SelectValuePageState extends State<SelectValuePage> {
             null;
 
         if (isDuplicate) {
-          final modifiedEntry = _addCategoryName(entry, maincategories);
+          final modifiedEntry = _addCategoryName(entry, mainCategories);
           modifiedListEntries.add(modifiedEntry);
         } else {
           modifiedListEntries.add(entry);
         }
       }
-    });
+    }
     return modifiedListEntries;
   }
 
-  dynamic _addCategoryName(var entry, List maincategories) {
+  dynamic _addCategoryName(var entry, List mainCategories) {
     final modifiedEntry = entry.copy();
-    final MainCategory category = maincategories.singleWhere(
-      (maincat) => maincat.id == entry.parentId,
+    final MainCategory category = mainCategories.singleWhere(
+      (mainCategory) => mainCategory.id == entry.parentId,
       orElse: () => null,
     ) as MainCategory;
     modifiedEntry.name = modifiedEntry.name + ' (' + category.name + ")" ?? "";

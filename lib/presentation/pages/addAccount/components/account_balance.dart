@@ -54,15 +54,15 @@ class AccountBalance extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller =
+    final TextEditingController controller =
         useTextEditingController(text: CurrencyOperations.zero);
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       listenWhen: (p, c) => getBalance(p) != getBalance(c),
       listener: (context, state) {
-        _controller
+        controller
           ..text = getBalance(state)
-          ..selection = TextSelection.collapsed(offset: _controller.text.length);
+          ..selection = TextSelection.collapsed(offset: controller.text.length);
       },
       builder: (context, state) {
         return Column(
@@ -81,7 +81,7 @@ class AccountBalance extends HookWidget {
                   key: const Key('accountBalanceTextField'),
                   decoration: boxDecoration,
                   style: textStyle,
-                  controller: _controller,
+                  controller: controller,
                   textAlign: TextAlign.center,
                   validator: (_) => validateBalance(context),
                   onChanged: (value) => onBalanceChanged(context, value),

@@ -1,6 +1,3 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
 class SubCategoryModel {
   final String parentId;
   final String name;

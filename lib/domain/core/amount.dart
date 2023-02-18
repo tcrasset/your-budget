@@ -1,15 +1,11 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:dartz/dartz.dart';
-
+import 'package:flutter/foundation.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/domain/core/value_object.dart';
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/amount_input_row.dart';
-import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
-import 'value_failure.dart';
-import 'value_object.dart';
 
 class Amount extends ValueObject<double> {
   @override
@@ -63,7 +59,9 @@ double _parseCurrency(String input) {
 
   try {
     tryParsedAmount = Constants.CURRENCY_FORMAT.parse(absoluteInput); //Can't parse negative amounts
-  } on FormatException {}
+  } on FormatException {
+    debugPrint("FormatException");
+  }
 
   // Use tryParsedAmount if it didn't throw an exception, else use absolute input
   final String inputToParse = tryParsedAmount != null ? tryParsedAmount.toString() : absoluteInput;

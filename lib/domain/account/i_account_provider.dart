@@ -4,9 +4,7 @@ import 'package:dartz/dartz.dart';
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
-import '../core/value_failure.dart';
-
-// import 'package:your_budget/models/account.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 
 abstract class IAccountProvider {
   Future<Either<ValueFailure, String>> create(Account account);

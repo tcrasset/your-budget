@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import '../../../../models/utils.dart';
+import 'package:your_budget/models/utils.dart';
 
 class UncheckedRow extends StatelessWidget {
   final String? subcategoryName;
@@ -26,8 +26,8 @@ class UncheckedRow extends StatelessWidget {
     this.dateStyle,
     this.payeeName,
     this.subcategoryStyle, {
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,8 +72,11 @@ class UncheckedRow extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(getDatePhrase(date),
-                  textAlign: TextAlign.right, style: dateStyle),
+              Text(
+                getDatePhrase(date),
+                textAlign: TextAlign.right,
+                style: dateStyle,
+              ),
               Text(payeeName!)
             ],
           ),

@@ -5,7 +5,7 @@ import 'package:test/test.dart';
 // Project imports:
 import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
-import 'package:your_budget/models/maincategory_creator.dart';
+import 'package:your_budget/models/main_category_creator.dart';
 import 'package:your_budget/models/queries.dart';
 
 class MockQueries extends Mock implements Queries {}

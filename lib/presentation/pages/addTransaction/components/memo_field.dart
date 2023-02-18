@@ -8,10 +8,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
-import 'add_transaction_field.dart';
+import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
 class MemoField extends HookWidget {
-  const MemoField({Key? key}) : super(key: key);
+  const MemoField({super.key});
 
   void onMemoChange(BuildContext context, String value) {
     context.read<TransactionCreatorBloc>().add(
@@ -51,7 +51,7 @@ class MemoField extends HookWidget {
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
       listenWhen: (p, c) => getMemo(p) != getMemo(c),
       listener: (context, state) {
-        String? memo = getMemo(state);
+        final String? memo = getMemo(state);
         if (memo == null) {
           // Clear the controller after a successful save.
           controller.clear();
@@ -77,8 +77,7 @@ class MemoField extends HookWidget {
   }
 }
 
-String? getMemo(TransactionCreatorState state) =>
-    state.moneyTransaction.memo.value.fold(
+String? getMemo(TransactionCreatorState state) => state.moneyTransaction.memo.value.fold(
       (_) => null,
       (v) => v,
     );

@@ -1,5 +1,4 @@
 // Package imports:
-import 'package:meta/meta.dart';
 
 // Project imports:
 import 'package:your_budget/models/creator.dart';
@@ -36,8 +35,7 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
       memo: memo,
     );
 
-    final int id =
-        await queryContext!.addMoneyTransaction(moneyTransactionModel);
+    final int id = await queryContext!.addMoneyTransaction(moneyTransactionModel);
 
     return MoneyTransaction(
       id: id,
@@ -45,7 +43,7 @@ class MoneyTransactionCreator implements Creator<MoneyTransaction> {
       payeeID: payeeId,
       subcatID: subcatId,
       amount: amount,
-      date: date!,
+      date: date,
       memo: memo,
     );
   }

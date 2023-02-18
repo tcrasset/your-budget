@@ -3,9 +3,9 @@ import 'dart:async';
 import 'dart:io';
 
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -33,17 +33,18 @@ class DatabaseProvider {
     int? insertAndUpdateQueryResult,
     List<dynamic>? params,
   ]) {
-    print("Method called : $functionName");
-    print("SQL: $sql");
+    debugPrint("Method called : $functionName");
+    debugPrint("SQL: $sql");
     if (params != null) {
-      print("Paramaters : $params");
-    } else
-      print("Parameters: NULL");
+      debugPrint("Parameters : $params");
+    } else {
+      debugPrint("Parameters: NULL");
+    }
 
     if (selectQueryResult != null) {
-      print("SELECT result: $selectQueryResult");
+      debugPrint("SELECT result: $selectQueryResult");
     } else if (insertAndUpdateQueryResult != null) {
-      print("INSERT result: $insertAndUpdateQueryResult");
+      debugPrint("INSERT result: $insertAndUpdateQueryResult");
     }
   }
 

@@ -44,15 +44,14 @@ class AccountName extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = useTextEditingController();
+    final TextEditingController controller = useTextEditingController();
 
     return BlocConsumer<AccountCreatorBloc, AccountCreatorState>(
       // listenWhen: (p, c) => getName(p) != getName(c),
       listener: (context, state) {
-        print("state in account_name ${state}");
-        _controller
+        controller
           ..text = getName(state)
-          ..selection = TextSelection.collapsed(offset: _controller.text.length);
+          ..selection = TextSelection.collapsed(offset: controller.text.length);
       },
       builder: (context, state) {
         return Column(
@@ -75,7 +74,7 @@ class AccountName extends HookWidget {
                   key: const Key('accountNameTextField'),
                   decoration: boxDecoration,
                   style: textStyle,
-                  controller: _controller,
+                  controller: controller,
                   textAlign: TextAlign.center,
                   validator: (_) => validateName(context),
                   onChanged: (value) => onNameChange(context, value),

@@ -9,13 +9,9 @@ import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 // Project imports:
-import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/infrastructure/budgetvalue/bugetvalue_dto.dart';
-import 'package:your_budget/infrastructure/subcategory/subcategory_dto.dart';
+import 'package:your_budget/infrastructure/budgetvalue/budgetvalue_dto.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/utils.dart';
 
 // import 'package:your_budget/domain/subcategory/subcategory.dart';
 
@@ -80,7 +76,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
       }
 
       if (totalUpdated != toUpdate.length) {
-        return left(const ValueFailure.unexpected(message: "Not all budgetdvalues where updated."));
+        return left(const ValueFailure.unexpected(message: "Not all budgetvalues where updated."));
       }
 
       final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
@@ -103,7 +99,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
     try {
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
-      String id = budgetvalueDTO.id;
+      final String id = budgetvalueDTO.id;
       final Map<String, dynamic> values = budgetvalueDTO.toJson();
       values.remove("id");
 

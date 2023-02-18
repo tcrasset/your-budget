@@ -7,8 +7,8 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 
-part 'bugetvalue_dto.freezed.dart';
-part 'bugetvalue_dto.g.dart';
+part 'budgetvalue_dto.freezed.dart';
+part 'budgetvalue_dto.g.dart';
 
 @freezed
 abstract class BudgetValueDTO implements _$BudgetValueDTO {

@@ -6,7 +6,6 @@ import 'package:your_budget/application/showTransactions/transaction_selector_bl
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/presentation/pages/showTransactions/components/account_buttons.dart';
 import 'package:your_budget/presentation/pages/showTransactions/components/tiles.dart';
-import 'package:your_budget/presentation/pages/showTransactions/show_transaction_page.dart';
 
 class TransactionList extends StatelessWidget {
   final Widget emptyAccountList = Column(

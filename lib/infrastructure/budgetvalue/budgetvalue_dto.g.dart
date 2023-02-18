@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'bugetvalue_dto.dart';
+part of 'budgetvalue_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

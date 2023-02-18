@@ -4,7 +4,6 @@ import 'package:test/test.dart';
 
 // Project imports:
 import 'package:your_budget/models/budget_value_creator.dart';
-import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/categories_model.dart';
 import 'package:your_budget/models/queries.dart';
 

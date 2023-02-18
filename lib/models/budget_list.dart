@@ -1,6 +1,3 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
 // Project imports:
 import 'package:your_budget/models/budget.dart';
 import 'package:your_budget/models/categories.dart';
@@ -22,13 +19,15 @@ class BudgetList implements ObjectList<Budget> {
   }
 
   Budget? getByDate(DateTime? date) {
-    return _budgets.singleWhere((budget) => isSameMonth(budget!.date, date!),
-        orElse: () => null);
+    return _budgets.singleWhere(
+      (budget) => isSameMonth(budget!.date, date!),
+      orElse: () => null,
+    );
   }
 
-  void addMaincategory(MainCategory? maincat) {
+  void addMainCategory(MainCategory? cat) {
     for (final Budget? budget in _budgets) {
-      budget!.addMaincategory(maincat);
+      budget!.addMainCategory(cat);
     }
   }
 
@@ -50,9 +49,9 @@ class BudgetList implements ObjectList<Budget> {
     }
   }
 
-  void updateMaincategory(MainCategory maincat) {
+  void updateMainCategory(MainCategory cat) {
     for (final Budget? budget in _budgets) {
-      budget!.updateMaincategory(maincat);
+      budget!.updateMainCategory(cat);
     }
   }
 
@@ -62,24 +61,24 @@ class BudgetList implements ObjectList<Budget> {
     }
   }
 
-  void removeMaincategory(int? catId) {
+  void removeMainCategory(int? catId) {
     for (final Budget? budget in _budgets) {
       budget!.removeCategory(catId);
     }
   }
 
-  double computeAvgBugdetedPerSubcategory(int? subcatId) {
+  double computeAvgBudgetedPerSubcategory(int? subcatId) {
     double totalBudgeted = 0;
     int nbNonZero = 0;
 
-    _budgets.forEach((budget) {
-      final SubCategory subcat = budget!.subcategories
-          .singleWhere((subcat) => subcat!.id == subcatId)!;
+    for (final budget in _budgets) {
+      final SubCategory subcat =
+          budget!.subcategories.singleWhere((subcat) => subcat!.id == subcatId)!;
       if (subcat.budgeted != 0.00) {
         nbNonZero++;
       }
       totalBudgeted += subcat.budgeted!;
-    });
+    }
 
     if (nbNonZero == 0) return 0.00;
 

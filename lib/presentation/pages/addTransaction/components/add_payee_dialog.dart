@@ -1,15 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
-
 // Project imports:
 import 'package:your_budget/application/addTransaction/payee_creator/payee_creator_bloc.dart';
-import 'package:your_budget/application/core/payee_watcher/payee_watcher_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
@@ -24,14 +21,14 @@ Future<String?> addPayeeDialog({required BuildContext superContext, String? defa
 class PayeeNameForm extends HookWidget {
   final String /*!*/ defaultValue;
   const PayeeNameForm({
-    Key? key,
+    super.key,
     required this.defaultValue,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _textController = useTextEditingController();
-    _textController.text = _nameIsValid(defaultValue) ? defaultValue : "";
+    final TextEditingController textController = useTextEditingController();
+    textController.text = _nameIsValid(defaultValue) ? defaultValue : "";
 
     return BlocProvider<PayeeCreatorBloc>(
       create: (context) => PayeeCreatorBloc(payeeProvider: GetIt.instance<IPayeeProvider>())
@@ -63,7 +60,7 @@ class PayeeNameForm extends HookWidget {
                   filled: true,
                   fillColor: Colors.grey[200],
                 ),
-                controller: _textController,
+                controller: textController,
                 validator: (_) => validateName(context),
                 onChanged: (value) => onNameChange(context, value),
               ),
@@ -81,7 +78,7 @@ class PayeeNameForm extends HookWidget {
   }
 }
 
-bool _nameIsValid(String defaultValue) => defaultValue != null && defaultValue.trim() != "";
+bool _nameIsValid(String defaultValue) => defaultValue.trim() != "";
 
 Name? _getDefaultName(String defaultValue) {
   if (_nameIsValid(defaultValue)) {

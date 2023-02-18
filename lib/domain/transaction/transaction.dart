@@ -10,7 +10,6 @@ import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/infrastructure/transaction/transaction_dto.dart';
 import 'package:your_budget/models/constants.dart';
 
 part 'transaction.freezed.dart';
@@ -31,7 +30,7 @@ enum MoneyTransactionType {
 }
 
 /// Class that defines a MoneyTransaction between the user and another entity.
-/// The [amount] is transfered between the user and the entity specified by [payeeID] at the given
+/// The [amount] is transferred between the user and the entity specified by [payeeID] at the given
 /// [date], from the account specified by [accountID] and the subcategory specified
 /// by [subcategoryID].
 /// A [memo] detailing the transaction is added as well.

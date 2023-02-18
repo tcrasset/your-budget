@@ -1,9 +1,8 @@
 // Package imports:
 import 'package:dartz/dartz.dart';
-
+import 'package:your_budget/domain/core/value_failure.dart';
 // Project imports:
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/domain/core/value_failure.dart';
 
 // import 'package:your_budget/models/account.dart';
 

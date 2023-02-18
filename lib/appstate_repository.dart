@@ -1,6 +1,3 @@
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:your_budget/models/budget.dart';
 import 'package:your_budget/models/categories.dart';
@@ -10,7 +7,7 @@ import 'package:your_budget/models/payee.dart';
 abstract class AppStateRepository {
   Future<void> loadStateFromDatabase();
 
-  /// Adds [category] to the current [_allCategories], to [_maincategories],
+  /// Adds [category] to the current [_allCategories], to [_mainCategories],
   /// and to the data base.
   void addCategory({required String categoryName});
 
@@ -20,8 +17,7 @@ abstract class AppStateRepository {
   /// ,to the data base and update the list  [_allCategories] by
   /// extracting the subcategories of each [MainCategory] from
   /// scratch
-  void addSubcategory(
-      {required String subcategoryName, required String maincategoryId});
+  void addSubcategory({required String subcategoryName, required String mainCategoryId});
 
   /// Add the [transaction] to the [_transactions] list, persist it to
   /// the database and add the transaction amount to the corresponding subcategory.
@@ -45,8 +41,7 @@ abstract class AppStateRepository {
 
   /// Update all the fields of [modifiedSubcategory]
   /// in both the state and in the data base.
-  void updateSubcategoryValues(
-      SubCategory modifiedSubcategory, DateTime dateMofidied);
+  void updateSubcategoryValues(SubCategory modifiedSubcategory, DateTime dateMofidied);
 
   void removeSubcategory(int subcategoryId);
 

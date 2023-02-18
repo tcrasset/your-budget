@@ -15,7 +15,7 @@ Future<String?> addDialog({
     textController.text = defaultValue;
   }
 
-  final _formKey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   return showDialog(
     context: context,
@@ -23,7 +23,7 @@ Future<String?> addDialog({
       return AlertDialog(
         title: Text(title),
         content: Form(
-          key: _formKey,
+          key: formKey,
           child: TextFormField(
             decoration: InputDecoration(
               hintText: hintText,
@@ -37,7 +37,7 @@ Future<String?> addDialog({
         actions: <Widget>[
           TextButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
+              if (formKey.currentState!.validate()) {
                 Navigator.of(context).pop(textController.text);
               }
             },

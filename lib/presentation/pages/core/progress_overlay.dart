@@ -6,10 +6,10 @@ class InProgressOverlay extends StatelessWidget {
   final String textDisplayed;
 
   const InProgressOverlay({
-    Key? key,
+    super.key,
     required this.showOverlay,
     required this.textDisplayed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

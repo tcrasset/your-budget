@@ -3,11 +3,10 @@ import 'dart:collection';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-
-// Project imports:
-import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/models/account.dart';
+// Project imports:
+import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/models/money_transaction.dart';
 import 'package:your_budget/presentation/pages/core/transactions/transaction_row.dart';
 
@@ -37,7 +36,7 @@ class _TransactionListState extends State<TransactionList> {
         _getMoneyTransactions(widget.appState.transactions, widget.account.id!);
 
     return Scrollbar(
-      isAlwaysShown: true,
+      thumbVisibility: true,
       controller: _scrollController,
       child: ListView.separated(
         controller: _scrollController,
@@ -49,8 +48,7 @@ class _TransactionListState extends State<TransactionList> {
           return Card(
             child: TransactionRow(
               transactionsOfAccount[index]!,
-              widget.appState.allCategories
-                  as UnmodifiableListView<CategoryLegacy>,
+              widget.appState.allCategories as UnmodifiableListView<CategoryLegacy>,
               widget.isEditable,
             ),
           );
@@ -70,10 +68,8 @@ List<MoneyTransaction?> _getMoneyTransactions(
   for (final transaction in transactions) {
     final bool isAccountPayee = transaction!.payeeID! < 0;
 
-    final bool currentAccountIsPayeeAccount =
-        -transaction.payeeID! == currentAccountId;
-    final bool currentAccountIsStandardAccount =
-        transaction.accountID == currentAccountId;
+    final bool currentAccountIsPayeeAccount = -transaction.payeeID! == currentAccountId;
+    final bool currentAccountIsStandardAccount = transaction.accountID == currentAccountId;
 
     if ((currentAccountIsStandardAccount && !isAccountPayee) ||
         (currentAccountIsPayeeAccount && isAccountPayee)) {

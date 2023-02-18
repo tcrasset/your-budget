@@ -7,7 +7,7 @@ import 'package:your_budget/models/queries.dart';
 class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   final Queries? queryContext;
 
-  List<MoneyTransaction?> _transactions;
+  final List<MoneyTransaction?> _transactions;
 
   List<MoneyTransaction?> get transactions => _transactions;
 
@@ -23,14 +23,11 @@ class MoneyTransactionList implements ObjectList<MoneyTransaction> {
   }
 
   MoneyTransaction? getById(int? id) {
-    return _transactions.singleWhere((transaction) => transaction!.id == id,
-        orElse: () => null);
+    return _transactions.singleWhere((transaction) => transaction!.id == id, orElse: () => null);
   }
 
   List<MoneyTransaction?> getAllBySubcatId(int subcatId) {
-    return _transactions
-        .where((transaction) => transaction!.subcatID == subcatId)
-        .toList();
+    return _transactions.where((transaction) => transaction!.subcatID == subcatId).toList();
   }
 
   List<MoneyTransaction?> getToBeBudgetedTransactions() {

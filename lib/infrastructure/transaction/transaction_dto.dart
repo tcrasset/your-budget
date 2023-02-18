@@ -2,7 +2,6 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -155,10 +154,12 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
           date: DateTime.fromMillisecondsSinceEpoch(dateInMillisecondsSinceEpoch),
           type: MoneyTransactionType.fromValue(type),
           subcategory: subcategory,
-          giver: Left(Payee(
-            id: UniqueId.fromUniqueString(giverId),
-            name: Name(giverName),
-          )),
+          giver: Left(
+            Payee(
+              id: UniqueId.fromUniqueString(giverId),
+              name: Name(giverName),
+            ),
+          ),
           receiver: Right(
             Account(
               id: UniqueId.fromUniqueString(receiverId),
@@ -213,7 +214,7 @@ abstract class MoneyTransactionDTO implements _$MoneyTransactionDTO {
           ),
         );
       default:
-        throw Exception("Invalid MoneyTransactionType ${type}");
+        throw Exception("Invalid MoneyTransactionType $type");
     }
   }
 

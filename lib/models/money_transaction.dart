@@ -1,11 +1,8 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
 // Project imports:
-import 'constants.dart';
+import 'package:your_budget/models/constants.dart';
 
 /// Class that defines a MoneyTransaction between the user and another entity.
-/// The [amount] is transfered between the user and the entity specified by [payeeID] at the given
+/// The [amount] is transferred between the user and the entity specified by [payeeID] at the given
 /// [date], from the account specified by [accountID] and the subcategory specified
 /// by [subcategoryID].
 /// A [memo] detailing the transaction is added as well.
@@ -52,8 +49,8 @@ class MoneyTransaction {
     accountID = int.parse(json[DatabaseConstants.ACCOUNT_ID_OUTSIDE] as String);
     amount = json[DatabaseConstants.MONEYTRANSACTION_AMOUNT] as double?;
     memo = json[DatabaseConstants.MONEYTRANSACTION_MEMO] as String?;
-    date = DateTime.fromMillisecondsSinceEpoch(
-        json[DatabaseConstants.MONEYTRANSACTION_DATE] as int);
+    date =
+        DateTime.fromMillisecondsSinceEpoch(json[DatabaseConstants.MONEYTRANSACTION_DATE] as int);
   }
 
   @override

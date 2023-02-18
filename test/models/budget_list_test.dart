@@ -76,11 +76,11 @@ void main() {
     tOtherBudgetList.add(tOtherBudget2);
 
     //!Act
-    tOtherBudgetList.addMaincategory(tMainCategory);
+    tOtherBudgetList.addMainCategory(tMainCategory);
 
     //!Assert
     for (final Budget? budget in tOtherBudgetList.budgets) {
-      expect(budget!.maincategories, [tMainCategory]);
+      expect(budget!.mainCategories, [tMainCategory]);
     }
   });
 
@@ -146,12 +146,12 @@ void main() {
     //!Arrange
     final MainCategory tOtherMainCategory = tMainCategory!.copyWith(name: "Name change");
     //!Act
-    budgetList.updateMaincategory(tOtherMainCategory);
+    budgetList.updateMainCategory(tOtherMainCategory);
 
     //!Assert
     for (final Budget? budget in budgetList.budgets) {
       final MainCategory maincat =
-          budget!.maincategories.singleWhere((maincat) => maincat!.id == tOtherMainCategory.id)!;
+          budget!.mainCategories.singleWhere((maincat) => maincat!.id == tOtherMainCategory.id)!;
       expect(maincat.name, tOtherMainCategory.name);
       expect(maincat.id, tOtherMainCategory.id);
     }
@@ -170,7 +170,7 @@ void main() {
     const double tAverage = 100.0;
 
     //!Act
-    final double average = budgetList.computeAvgBugdetedPerSubcategory(tSubCategory!.id);
+    final double average = budgetList.computeAvgBudgetedPerSubcategory(tSubCategory!.id);
     //!Assert
     expect(average, tAverage);
   });
@@ -189,7 +189,7 @@ void main() {
 
     const double tAverage = 100.0;
     //!Act
-    final double average = budgetList.computeAvgBugdetedPerSubcategory(tSubCategory!.id);
+    final double average = budgetList.computeAvgBudgetedPerSubcategory(tSubCategory!.id);
     //!Assert
     expect(average, tAverage);
   });
@@ -217,17 +217,17 @@ void main() {
     //!Arrange
     //Check not empty
     for (final Budget? budget in budgetList.budgets) {
-      expect(budget!.maincategories.isNotEmpty, true);
+      expect(budget!.mainCategories.isNotEmpty, true);
     }
 
     //!Act
 
-    budgetList.removeMaincategory(tMainCatId);
+    budgetList.removeMainCategory(tMainCatId);
     //!Assert
     //Check empty
 
     for (final Budget? budget in budgetList.budgets) {
-      expect(budget!.maincategories.isEmpty, true);
+      expect(budget!.mainCategories.isEmpty, true);
     }
   });
 }

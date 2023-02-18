@@ -7,13 +7,13 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:your_budget/appstate.dart';
 import 'package:your_budget/components/delete_dialog.dart';
-import 'package:your_budget/components/widgetViewClasses.dart';
+import 'package:your_budget/components/widget_view_classes.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/components/categories_list.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
 
 class DeleteCategories extends StatefulWidget {
-  const DeleteCategories({Key? key}) : super(key: key);
+  const DeleteCategories({super.key});
 
   @override
   _DeleteCategoriesController createState() => _DeleteCategoriesController();
@@ -25,7 +25,7 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
 
   @override
   void didChangeDependencies() {
-    /// Reset the selected maincategories and subcategories, so
+    /// Reset the selected mainCategories and subcategories, so
     /// that when we switch back and forth between the DeleteCategories
     /// screen and the ModifyCategories screen, the selected
     /// categories do not remain selected.
@@ -36,28 +36,25 @@ class _DeleteCategoriesController extends State<DeleteCategories> {
   }
 
   Future<void> handleDeleteCategories(BuildContext context) async {
-    final String? result =
-        await showDeleteDialog(context, 'Delete selected categories?');
+    final String? result = await showDeleteDialog(context, 'Delete selected categories?');
     if (result == "Delete") {
       final DeleteCategoriesState showTransactionsState =
           Provider.of<DeleteCategoriesState>(context, listen: false);
-      final bool sucessfulDeletion =
-          showTransactionsState.deleteCategories(context);
-      if (sucessfulDeletion) {
+      final bool successfulDeletion = showTransactionsState.deleteCategories(context);
+      if (successfulDeletion) {
         if (!mounted) return;
         Navigator.pop(context);
       } else {
-        const SnackBar snackbar = SnackBar(
-            content: Text("You can't delete the Essentials MainCategory"));
+        const SnackBar snackbar =
+            SnackBar(content: Text("You can't delete the Essentials MainCategory"));
         ScaffoldMessenger.of(context).showSnackBar(snackbar);
       }
     }
   }
 }
 
-class _DeleteCategoriesView
-    extends WidgetView<DeleteCategories, _DeleteCategoriesController> {
-  const _DeleteCategoriesView(_DeleteCategoriesController state) : super(state);
+class _DeleteCategoriesView extends WidgetView<DeleteCategories, _DeleteCategoriesController> {
+  const _DeleteCategoriesView(super.state);
 
   @override
   Widget build(BuildContext context) {

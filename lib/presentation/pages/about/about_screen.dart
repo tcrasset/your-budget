@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
 
 // Project imports:
-import '../../../components/widgetViewClasses.dart';
+import 'package:your_budget/components/widget_view_classes.dart';
 
 class AboutPage extends StatefulWidget {
   @override
@@ -18,7 +18,7 @@ class _AboutPageController extends State<AboutPage> {
 }
 
 class _AboutPageView extends WidgetView<AboutPage, _AboutPageController> {
-  const _AboutPageView(_AboutPageController state) : super(state);
+  const _AboutPageView(super.state);
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +32,7 @@ class _AboutPageView extends WidgetView<AboutPage, _AboutPageController> {
         title: const Text('About'),
       ),
       body: FutureBuilder<PackageInfo>(
-        future: PackageInfo
-            .fromPlatform(), // a previously-obtained Future<String> or null
+        future: PackageInfo.fromPlatform(), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<PackageInfo> snapshot) {
           if (snapshot.hasData) {
             return Column(

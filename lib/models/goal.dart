@@ -1,14 +1,10 @@
 // Project imports:
-import 'constants.dart';
+import 'package:your_budget/models/constants.dart';
 
 //DO NOT CHANGE THE ORDER OF THE ITEMS IN THE ENUMERATION
 enum GoalType { TargetAmount, TargetAmountByDate, MonthlyGoal }
 
-const List<String> goalTypeNames = [
-  "Target amount",
-  "Target amount by date",
-  "Monthly goal"
-];
+const List<String> goalTypeNames = ["Target amount", "Target amount by date", "Monthly goal"];
 
 /// Class defining a budgeting goal, identified by [id], of type [goalType] and an [amount].
 /// The goal applies to a specific subcategory specified by [correspondingSubcategoryId].
@@ -48,8 +44,7 @@ class Goal {
   /// from a database.
   Goal.fromJson(Map<String, dynamic> json) {
     id = json[DatabaseConstants.GOAL_ID] as int?;
-    correspondingSubcategoryId =
-        json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int?;
+    correspondingSubcategoryId = json[DatabaseConstants.SUBCAT_ID_OUTSIDE] as int?;
     goalType = GoalType.values[json[DatabaseConstants.GOAL_TYPE] as int];
     amount = json[DatabaseConstants.GOAL_AMOUNT] as double?;
     year = json[DatabaseConstants.GOAL_YEAR] as int?;

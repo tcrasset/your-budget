@@ -3,20 +3,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
-import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/application/core/account_watcher_bloc/account_watcher_bloc.dart';
-import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/domain/account/account_repository.dart';
-import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/payee/i_payee_provider.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
-import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_balance.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_name.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_row.dart';
@@ -24,7 +17,7 @@ import 'package:your_budget/presentation/pages/addAccount/components/account_row
 class AddAccountPage extends StatelessWidget {
   final String? title;
 
-  const AddAccountPage({Key? key, this.title}) : super(key: key);
+  const AddAccountPage({super.key, this.title});
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -76,12 +69,11 @@ class AddAccountPageScaffold extends StatelessWidget {
 
 class AddAccountForm extends StatelessWidget {
   const AddAccountForm({
-    Key? key,
+    super.key,
     required TextStyle textBoxStyle,
     required InputDecoration textBoxDecoration,
   })  : _textBoxStyle = textBoxStyle,
-        _textBoxDecoration = textBoxDecoration,
-        super(key: key);
+        _textBoxDecoration = textBoxDecoration;
 
   final TextStyle _textBoxStyle;
   final InputDecoration _textBoxDecoration;
@@ -91,7 +83,9 @@ class AddAccountForm extends StatelessWidget {
   }
 
   ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showErrorSnackbar(
-      ValueFailure failure, BuildContext context) {
+    ValueFailure failure,
+    BuildContext context,
+  ) {
     // TODO: Use map with an exhaustive list
     final message = failure.maybeMap(
       unexpected: (_) => 'Unexpected error occurred, please contact support.',

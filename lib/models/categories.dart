@@ -1,8 +1,4 @@
-// Package imports:
-import 'package:meta/meta.dart';
-
-// Project imports:
-import 'constants.dart';
+import 'package:your_budget/models/constants.dart';
 
 /// Class representing a budgeting category.
 /// A category is represented an unique [id], a [name],
@@ -28,13 +24,12 @@ class SubCategory extends CategoryLegacy {
 
   /// Default SubCategory constructor
   SubCategory({
-    required int? id,
-    required String? parentId,
-    required String? name,
-    required double? budgeted,
-    required double? available,
-  })  : parentId = parentId,
-        super(id: id, name: name, budgeted: budgeted, available: available);
+    required super.id,
+    this.parentId,
+    required super.name,
+    required super.budgeted,
+    required super.available,
+  });
 
   /// Constructor building a SubCategory from a [json] representation taken
   /// from a database
@@ -55,12 +50,7 @@ class SubCategory extends CategoryLegacy {
 
   /// Creates a copy of this with zero money budgeted.
   SubCategory blank() {
-    return SubCategory(
-        id: id,
-        parentId: parentId,
-        name: name,
-        budgeted: 0.0,
-        available: available);
+    return SubCategory(id: id, parentId: parentId, name: name, budgeted: 0.0, available: available);
   }
 
   /// Creates an exact copy of this.
@@ -92,7 +82,7 @@ class SubCategory extends CategoryLegacy {
 
   /// Updates values of this with those of [subcat].
   void update(SubCategory subcat) {
-    assert(subcat.id == this.id);
+    assert(subcat.id == id);
 
     available = subcat.available;
     budgeted = subcat.budgeted;
@@ -114,8 +104,7 @@ class MainCategory extends CategoryLegacy {
   List<SubCategory?> _subcategories = [];
 
   /// Default [MainCategory] constructor, which sets the budgeted and available values to 0.00
-  MainCategory({required int? id, required String? name})
-      : super(id: id, name: name, budgeted: 0.00, available: 0.00);
+  MainCategory({required super.id, required super.name}) : super(budgeted: 0.00, available: 0.00);
 
   /// Constructor building a MainCategory from a [json] representation taken
   /// from a database
@@ -142,12 +131,12 @@ class MainCategory extends CategoryLegacy {
   void updateFields() {
     double budgeted = 0;
     double available = 0;
-    _subcategories.forEach((SubCategory? cat) {
+    for (final cat in _subcategories) {
       budgeted += cat!.budgeted!;
-    });
-    _subcategories.forEach((SubCategory? cat) {
+    }
+    for (final cat in _subcategories) {
       available += cat!.available!;
-    });
+    }
 
     this.budgeted = budgeted;
     this.available = available;
@@ -169,14 +158,14 @@ class MainCategory extends CategoryLegacy {
   bool hasSameValues(MainCategory mainCategory) {
     bool subcategoriesAreEqual = true;
 
-    //TODO: Just changed this.subcategories to _subcategorie. Check if that introduced some bugs
-    for (final SubCategory? thissubcat in _subcategories) {
+    //TODO: Just changed this.subcategories to _subcategories. Check if that introduced some bugs
+    for (final SubCategory? thisSubcat in _subcategories) {
       // If the subcategory lists don't have the same order, we would
       // still like the equality to hold.
       // Therefore, we find the corresponding subcategory in [mainCategory].
       int correspondingIndex = 0;
-      for (final SubCategory? argsubcat in mainCategory.subcategories) {
-        if (thissubcat!.hasSameValues(argsubcat!)) {
+      for (final SubCategory? argSubcat in mainCategory.subcategories) {
+        if (thisSubcat!.hasSameValues(argSubcat!)) {
           break;
         }
         correspondingIndex++;
@@ -205,9 +194,9 @@ class MainCategory extends CategoryLegacy {
 
   /// Adds multiple [subcategories] as a new subcategories to the list [_subcategories].
   void addMultipleSubcategories(List<SubCategory?> subcategories) {
-    subcategories.forEach((sub) {
+    for (final sub in subcategories) {
       _subcategories.add(sub);
-    });
+    }
     updateFields();
   }
 

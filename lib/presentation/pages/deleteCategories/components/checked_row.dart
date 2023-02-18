@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
-import '../delete_categories_state.dart';
+import 'package:your_budget/presentation/pages/deleteCategories/delete_categories_state.dart';
 
 class CheckedRow extends StatefulWidget {
   final String? categoryName;
@@ -14,9 +14,12 @@ class CheckedRow extends StatefulWidget {
   final TextStyle textStyle;
 
   const CheckedRow(
-      this.categoryName, this.categoryId, this.type, this.textStyle,
-      {Key? key})
-      : super(key: key);
+    this.categoryName,
+    this.categoryId,
+    this.type,
+    this.textStyle, {
+    super.key,
+  });
 
   @override
   _CheckedRowState createState() => _CheckedRowState();
@@ -26,7 +29,7 @@ class _CheckedRowState extends State<CheckedRow> {
   bool? isChecked = false;
 
   void handleCheckboxOnChanged(bool? value) {
-    DeleteCategoriesState showCategoriesState =
+    final DeleteCategoriesState showCategoriesState =
         Provider.of<DeleteCategoriesState>(context, listen: false);
     showCategoriesState.updateIsSelected(widget.categoryId, widget.type);
     setState(() {
@@ -36,7 +39,7 @@ class _CheckedRowState extends State<CheckedRow> {
 
   @override
   void initState() {
-    DeleteCategoriesState showCategoriesState =
+    final DeleteCategoriesState showCategoriesState =
         Provider.of<DeleteCategoriesState>(context, listen: false);
 
     showCategoriesState.setCategoriesToFalse(widget.categoryId, widget.type);

@@ -3,11 +3,7 @@ import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:your_budget/application/core/budget_date_cubit.dart';
-import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 
@@ -83,7 +79,7 @@ class TransactionSelectorBloc extends Bloc<TransactionSelectorEvent, Transaction
         selectedTransactions: UnmodifiableSetView({}),
         status: TransactionDeletionStatus.failure,
         error: failureDuringLoop.toNullable(),
-        isModifying: false, // remove selectionability as something went wrong
+        isModifying: false, // remove selection as something went wrong
       );
       emit(newState);
     } else {

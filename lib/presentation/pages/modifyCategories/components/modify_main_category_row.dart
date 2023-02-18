@@ -15,7 +15,7 @@ import 'package:your_budget/presentation/pages/modifyCategories/modify_categorie
 class ModifyMainCategoryRow extends StatelessWidget {
   final MainCategory? cat;
 
-  const ModifyMainCategoryRow({Key? key, this.cat}) : super(key: key);
+  const ModifyMainCategoryRow({super.key, this.cat});
 
   Future<void> handleAddSubcategory(BuildContext context) async {
     const String hintText = "Add new subcategory";
@@ -28,8 +28,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
     );
     if (subcategoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.addSubcategory(
-          subcategoryName: subcategoryName, maincategoryId: cat!.id.toString());
+      appState.addSubcategory(subcategoryName: subcategoryName, mainCategoryId: cat!.id.toString());
     }
   }
 
@@ -44,8 +43,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
     );
     if (categoryName != null) {
       final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState
-          .updateCategoryName(MainCategory(id: cat!.id, name: categoryName));
+      appState.updateCategoryName(MainCategory(id: cat!.id, name: categoryName));
     }
   }
 
@@ -77,7 +75,7 @@ class ModifyMainCategoryRow extends StatelessWidget {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: const Icon(FontAwesomeIcons.plusCircle),
+                    icon: const Icon(FontAwesomeIcons.circlePlus),
                     color: Constants.SECONDARY_COLOR,
                     onPressed: () => handleAddSubcategory(context),
                   ),
@@ -86,9 +84,9 @@ class ModifyMainCategoryRow extends StatelessWidget {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 2.0,
-            child: Container(
+            child: ColoredBox(
               color: Constants.SECONDARY_COLOR,
             ),
           ),
