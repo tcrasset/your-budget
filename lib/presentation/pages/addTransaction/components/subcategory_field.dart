@@ -43,12 +43,13 @@ class SubcategoryField extends StatelessWidget {
         ),
       );
 
-  String getSubcategoryName(BuildContext context) => optionOf(context
-              .watch<TransactionCreatorBloc>() // watch is necessary here
-              .state
-              .moneyTransaction
-              .subcategory)
-          .fold(
+  String getSubcategoryName(BuildContext context) => optionOf(
+        context
+            .watch<TransactionCreatorBloc>() // watch is necessary here
+            .state
+            .moneyTransaction
+            .subcategory,
+      ).fold(
         () => throw Exception("Expected Subcategory, got none() instead."),
         (subcategory) => subcategory.name.value.fold((_) => _DEFAULT_SUBCATEGORY, (v) => v),
       );

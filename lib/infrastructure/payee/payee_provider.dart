@@ -48,7 +48,8 @@ class SQFlitePayeeProvider implements IPayeeProvider {
     final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
     if (id == 0) {
       return left(
-          ValueFailure.unexpected(message: "Payee with id ${payee.id} could not be created."));
+        ValueFailure.unexpected(message: "Payee with id ${payee.id} could not be created."),
+      );
     }
 
     payees.add(payee.copyWith(id: UniqueId.fromUniqueInt(id)));
@@ -78,7 +79,8 @@ class SQFlitePayeeProvider implements IPayeeProvider {
   Future<Either<ValueFailure, Payee>> getStartingBalancePayee() async {
     final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
     final index = payees.indexWhere(
-        (payee) => payee.name.getOrCrash() == DatabaseConstants.STARTING_BALANCE_PAYEE_NAME);
+      (payee) => payee.name.getOrCrash() == DatabaseConstants.STARTING_BALANCE_PAYEE_NAME,
+    );
     if (index >= 0) {
       return right(payees[index]);
     } else {

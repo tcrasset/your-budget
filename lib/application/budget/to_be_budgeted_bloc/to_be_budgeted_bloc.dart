@@ -17,7 +17,9 @@ class ToBeBudgetedBloc extends Bloc<ToBeBudgetedEvent, ToBeBudgetedState> {
   }
 
   Future<void> _onWatchToBeBudgetedRequested(
-      WatchToBeBudgetedRequested event, Emitter<ToBeBudgetedState> emit) async {
+    WatchToBeBudgetedRequested event,
+    Emitter<ToBeBudgetedState> emit,
+  ) async {
     emit(state.copyWith(status: ToBeBudgetedStatus.loading));
     await emit.forEach<Either<ValueFailure, Amount>>(
       toBeBudgetedRepository.getToBeBudgeted(),

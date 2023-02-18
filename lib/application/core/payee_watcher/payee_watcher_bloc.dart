@@ -39,7 +39,7 @@ class PayeeWatcherBloc extends Bloc<PayeeWatcherEvent, PayeeWatcherState> {
   }
 
   void _onPayeesReceived(_PayeesReceived event, Emitter<PayeeWatcherState> emit) {
-    var newState = event.failureOrPayees.fold(
+    final newState = event.failureOrPayees.fold(
       (f) => PayeeWatcherState.loadFailure(f),
       (payees) {
         payees.sort((a, b) => a.name.getOrCrash().compareTo(b.name.getOrCrash()));

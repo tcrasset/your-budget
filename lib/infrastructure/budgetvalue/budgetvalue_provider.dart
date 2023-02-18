@@ -46,8 +46,11 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
           await database!.insert(DatabaseConstants.budgetValueTable, budgetvalueDTO.toJson());
 
       if (id == 0) {
-        return left(ValueFailure.unexpected(
-            message: "BudgetValue with id ${budgetvalue.id} could not be created."));
+        return left(
+          ValueFailure.unexpected(
+            message: "BudgetValue with id ${budgetvalue.id} could not be created.",
+          ),
+        );
       }
 
       budgetvalues.add(budgetvalue.copyWith(id: UniqueId.fromUniqueInt(id)));
@@ -112,8 +115,11 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
       );
 
       if (result == 0) {
-        return left(ValueFailure.unexpected(
-            message: "BudgetValue with id $id not found. Could not update."));
+        return left(
+          ValueFailure.unexpected(
+            message: "BudgetValue with id $id not found. Could not update.",
+          ),
+        );
       }
 
       final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];

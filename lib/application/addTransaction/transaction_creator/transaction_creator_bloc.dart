@@ -1,25 +1,18 @@
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:your_budget/application/core/budget_date_cubit.dart';
 
 // Project imports:
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
-import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/payee.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
-import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';
@@ -131,7 +124,6 @@ Either<ValueFailure, MoneyTransaction> validateTransaction(MoneyTransaction tran
       late MoneyTransaction validatedTransaction = transaction;
       final receiver = transaction.receiver;
       final giver = transaction.giver;
-      final type = transaction.type;
 
       final MoneyTransactionType newType = getType(transaction);
 

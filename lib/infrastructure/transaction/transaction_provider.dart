@@ -39,8 +39,11 @@ class SQFliteTransactionProvider implements ITransactionProvider {
     }
 
     if (id == 0) {
-      return left(ValueFailure.unexpected(
-          message: "MoneyTransaction with id ${transaction.id} could not be created."));
+      return left(
+        ValueFailure.unexpected(
+          message: "MoneyTransaction with id ${transaction.id} could not be created.",
+        ),
+      );
     }
 
     final transactions = [..._transactionStreamController.value!.getOrElse(() => [])];
@@ -102,7 +105,8 @@ class SQFliteTransactionProvider implements ITransactionProvider {
       _transactionStreamController.add(Right(transactions));
     } else {
       return left(
-          const ValueFailure.unexpected(message: "MoneyTransaction not in current stream."));
+        const ValueFailure.unexpected(message: "MoneyTransaction not in current stream."),
+      );
     }
     return right(unit);
   }

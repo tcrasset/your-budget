@@ -26,7 +26,10 @@ Future<String?> addDialog({
           key: _formKey,
           child: TextFormField(
             decoration: InputDecoration(
-                hintText: hintText, filled: true, fillColor: Colors.grey[200]),
+              hintText: hintText,
+              filled: true,
+              fillColor: Colors.grey[200],
+            ),
             controller: textController,
             validator: (_) => nameValidator(textController.text) as String?,
           ),

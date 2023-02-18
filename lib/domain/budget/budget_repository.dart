@@ -105,8 +105,11 @@ class BudgetRepository {
           budgetvalues,
           subcategories,
           categories,
-          (List<BudgetValue> budgetvalues, List<Subcategory> subcategories,
-              List<Category> categories) {
+          (
+            List<BudgetValue> budgetvalues,
+            List<Subcategory> subcategories,
+            List<Category> categories,
+          ) {
             List<BudgetEntryGroups> groups = [];
 
             for (final Category category in categories) {
@@ -120,10 +123,12 @@ class BudgetRepository {
                 entries.add(BudgetEntry(subcategory: subcat, budgetValue: budgetvalue));
               }
 
-              groups.add(BudgetEntryGroups(
-                category: category,
-                entries: entries,
-              ));
+              groups.add(
+                BudgetEntryGroups(
+                  category: category,
+                  entries: entries,
+                ),
+              );
             }
 
             return Budget(date: DateTime(year, month), toBeBudgeted: Amount("0"), groups: groups);

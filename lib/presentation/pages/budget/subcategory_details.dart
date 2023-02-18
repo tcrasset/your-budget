@@ -17,9 +17,8 @@ class SubcategoryDetails extends StatelessWidget {
   List<Widget> createListOfGoals(BuildContext context) {
     final AppState appState = Provider.of<AppState>(context);
     final List<GoalRow> goalWidgets = [];
-    final List<Goal> goals = appState.goals
-        .where((goal) => goal.correspondingSubcategoryId == subcat.id)
-        .toList();
+    final List<Goal> goals =
+        appState.goals.where((goal) => goal.correspondingSubcategoryId == subcat.id).toList();
 
     goals.forEach((goal) {
       goalWidgets.add(GoalRow(goal));
@@ -78,9 +77,13 @@ class Information extends StatelessWidget {
           InformationRow("Budgeted", subcat.budgeted!),
           InformationRow("Available", subcat.available!),
           InformationRow(
-              "Average budgeted", appState.computeAverageBudgeted(subcat.id)),
-          InformationRow("Last month budgeted",
-              appState.computeLastMonthBudgeted(subcat.id)!),
+            "Average budgeted",
+            appState.computeAverageBudgeted(subcat.id),
+          ),
+          InformationRow(
+            "Last month budgeted",
+            appState.computeLastMonthBudgeted(subcat.id)!,
+          ),
         ],
       ),
     );
@@ -98,8 +101,7 @@ class InformationRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const TextStyle titleStyle =
-        TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
+    const TextStyle titleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 
     return Row(
       children: [
@@ -136,7 +138,8 @@ class GoalRow extends StatelessWidget {
           Text(goalTypeNames[goal.goalType!.index]),
           Text("${goal.amount} €"),
           Text(
-              "${monthStringFromDate(DateTime(goal.year!, goal.month!))} ${goal.year}")
+            "${monthStringFromDate(DateTime(goal.year!, goal.month!))} ${goal.year}",
+          )
         ],
       ),
     );
@@ -169,12 +172,21 @@ class GoalRowsTitle extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              const Text("Goal Type",
-                  textAlign: TextAlign.left, style: subtitlesStyle),
-              const Text("Amount",
-                  textAlign: TextAlign.left, style: subtitlesStyle),
-              const Text("Date",
-                  textAlign: TextAlign.left, style: subtitlesStyle)
+              const Text(
+                "Goal Type",
+                textAlign: TextAlign.left,
+                style: subtitlesStyle,
+              ),
+              const Text(
+                "Amount",
+                textAlign: TextAlign.left,
+                style: subtitlesStyle,
+              ),
+              const Text(
+                "Date",
+                textAlign: TextAlign.left,
+                style: subtitlesStyle,
+              )
             ],
           ),
         ),

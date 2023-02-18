@@ -46,7 +46,8 @@ class SQFliteAccountProvider implements IAccountProvider {
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
     if (id == 0) {
       return left(
-          ValueFailure.unexpected(message: "Account with id ${account.id} could not be created."));
+        ValueFailure.unexpected(message: "Account with id ${account.id} could not be created."),
+      );
     }
 
     accounts.add(account.copyWith(id: UniqueId.fromUniqueInt(id)));
@@ -149,7 +150,8 @@ class SQFliteAccountProvider implements IAccountProvider {
 
       if (result == 0) {
         return left(
-            ValueFailure.unexpected(message: "Account with id $id not found. Could not update."));
+          ValueFailure.unexpected(message: "Account with id $id not found. Could not update."),
+        );
       }
 
       final accounts = [..._accountStreamController.value!.getOrElse(() => [])];

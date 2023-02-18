@@ -57,8 +57,10 @@ class SelectValuePageState extends State<SelectValuePage> {
     return null;
   }
 
-  Future<void> createNewPayee(
-      {required BuildContext context, String? defaultName}) async {
+  Future<void> createNewPayee({
+    required BuildContext context,
+    String? defaultName,
+  }) async {
     const String hint = "Add new payee";
     final String? payeeName = await addDialog(
       context: context,
@@ -89,21 +91,19 @@ class SelectValuePageState extends State<SelectValuePage> {
         }
       }
     });
-    return appState.subcategories
-        .where((element) => duplicateIDs.contains(element!.id))
-        .toList();
+    return appState.subcategories.where((element) => duplicateIDs.contains(element!.id)).toList();
   }
 
   List _addLabelForDuplicateEntries(List<dynamic> duplicateEntries) {
     final List modifiedListEntries = [];
-    final List maincategories =
-        appState.allCategories.whereType<MainCategory>().toList();
+    final List maincategories = appState.allCategories.whereType<MainCategory>().toList();
 
     widget.listEntries.forEach((entry) {
       if (entry is SubCategory) {
         final bool isDuplicate = duplicateEntries.singleWhere(
-                (duplicate) => duplicate.id == entry.id,
-                orElse: () => null) !=
+              (duplicate) => duplicate.id == entry.id,
+              orElse: () => null,
+            ) !=
             null;
 
         if (isDuplicate) {
@@ -120,8 +120,9 @@ class SelectValuePageState extends State<SelectValuePage> {
   dynamic _addCategoryName(var entry, List maincategories) {
     final modifiedEntry = entry.copy();
     final MainCategory category = maincategories.singleWhere(
-        (maincat) => maincat.id == entry.parentId,
-        orElse: () => null) as MainCategory;
+      (maincat) => maincat.id == entry.parentId,
+      orElse: () => null,
+    ) as MainCategory;
     modifiedEntry.name = modifiedEntry.name + ' (' + category.name + ")" ?? "";
     return modifiedEntry;
   }
@@ -159,10 +160,14 @@ class SelectValuePageState extends State<SelectValuePage> {
               title: const Text(
                 "Create new payee",
                 style: TextStyle(
-                    fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               onTap: () => createNewPayee(
-                  context: context, defaultName: searchController.text),
+                context: context,
+                defaultName: searchController.text,
+              ),
             ),
 
           Expanded(
@@ -173,23 +178,22 @@ class SelectValuePageState extends State<SelectValuePage> {
                   const Divider(height: 1, color: Colors.black12),
               itemBuilder: (BuildContext context, int index) {
                 final item = listEntries[index];
-                final itemToShow =
-                    item is Text ? item : Text(item.name as String);
+                final itemToShow = item is Text ? item : Text(item.name as String);
                 final itemToFilter = item is Text ? item.data : item.name;
                 final bool noFilter = filter == null || filter == "";
 
                 if (noFilter == true) {
                   return ListTile(
-                      title: itemToShow, onTap: () => handlePopContext(item));
+                    title: itemToShow,
+                    onTap: () => handlePopContext(item),
+                  );
                 } else if (noFilter == false) {
                   // The filter is not empty, we filter by name
-                  if (itemToFilter
-                          .toLowerCase()
-                          .contains(filter!.toLowerCase()) ==
-                      true) {
+                  if (itemToFilter.toLowerCase().contains(filter!.toLowerCase()) == true) {
                     return ListTile(
-                        title: item as Text,
-                        onTap: () => handlePopContext(item));
+                      title: item as Text,
+                      onTap: () => handlePopContext(item),
+                    );
                   }
                 }
                 // There is an error

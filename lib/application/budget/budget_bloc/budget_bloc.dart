@@ -30,12 +30,16 @@ class BudgetBloc extends Bloc<BudgetEvent, BudgetState> {
   }
 
   FutureOr<void> _onBudgetValueModified(
-      BudgetValueModified event, Emitter<BudgetState> emit) async {
+    BudgetValueModified event,
+    Emitter<BudgetState> emit,
+  ) async {
     emit(state.copyWith(budget: null, status: BudgetOverviewStatus.loading));
     final failureOrUnit = await budgetRepository.updateBudgetValue(event.budgetvalue);
 
     failureOrUnit.fold(
-        (l) => emit(state.copyWith(status: BudgetOverviewStatus.failure, error: l)), (_) => null);
+      (l) => emit(state.copyWith(status: BudgetOverviewStatus.failure, error: l)),
+      (_) => null,
+    );
   }
 
   Future<void> _onNewBudgetRequested(NewBudgetRequested event, Emitter<BudgetState> emit) async {
