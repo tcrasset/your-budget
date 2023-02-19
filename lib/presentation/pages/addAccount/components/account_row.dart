@@ -9,8 +9,6 @@ import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/models/constants.dart';
 
-// import 'package:your_budget/models/account.dart';
-
 class AccountRow extends StatelessWidget {
   const AccountRow({
     required this.account,
@@ -54,7 +52,7 @@ class AccountRow extends StatelessWidget {
             width: 10,
           ),
           Text(
-            account.balance.getOrCrash().toStringAsFixed(2) + " €",
+            "${account.balance.getOrCrash().toStringAsFixed(2)} €",
             style: account.balance.getOrCrash().isNegative
                 ? negativeAmountTextStyle
                 : positiveAmountTextStyle,

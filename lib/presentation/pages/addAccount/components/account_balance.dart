@@ -9,6 +9,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // Project imports:
 import 'package:your_budget/application/addAccount/account_creator/account_creator_bloc.dart';
 import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/amount_input_row.dart';
@@ -26,7 +27,7 @@ class AccountBalance extends HookWidget {
     context.read<AccountCreatorBloc>().add(AccountCreatorEvent.balanceChanged(value));
   }
 
-  String? _failNameClosure(dynamic f) {
+  String? _failNameClosure(ValueFailure<String> f) {
     final result = f.maybeMap(
       invalidAmount: (_) => "Must be a valid amount",
       tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
