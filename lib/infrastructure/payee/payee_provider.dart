@@ -24,12 +24,6 @@ class SQFlitePayeeProvider implements IPayeeProvider {
   final _payeeStreamController =
       BehaviorSubject<Either<ValueFailure, List<Payee>>>.seeded(const Right([]));
 
-  @override
-  Future<Either<ValueFailure, int>> count() async {
-    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
-    return right(payees.length);
-  }
-
   List<Payee> get _payees {
     final lastEmitted = _payeeStreamController.value;
 
@@ -39,6 +33,11 @@ class SQFlitePayeeProvider implements IPayeeProvider {
     }
 
     return lastEmitted.fold((l) => throw Exception(l), (r) => r);
+  }
+
+  @override
+  Future<Either<ValueFailure, int>> count() async {
+    return right(_payees.length);
   }
 
   @override
@@ -60,7 +59,7 @@ class SQFlitePayeeProvider implements IPayeeProvider {
       );
     }
 
-    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
+    final payees = [..._payees];
     payees.add(payee.copyWith(id: UniqueId.fromUniqueInt(id)));
     _payeeStreamController.add(Right(payees));
 
@@ -81,7 +80,11 @@ class SQFlitePayeeProvider implements IPayeeProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Payee>>> watchAllPayees() {
-    return _payeeStreamController.asBroadcastStream();
+    return _payeeStreamController.asBroadcastStream().map(
+          (event) => event.flatMap(
+            (a) => right(List.unmodifiable(a)),
+          ),
+        );
   }
 
   @override

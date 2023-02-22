@@ -113,7 +113,11 @@ class SQFliteAccountProvider implements IAccountProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Account>>> watchAllAccounts() {
-    return _accountStreamController.asBroadcastStream();
+    return _accountStreamController.asBroadcastStream().map(
+          (event) => event.flatMap(
+            (a) => right(List.unmodifiable(a)),
+          ),
+        );
   }
 
   @override

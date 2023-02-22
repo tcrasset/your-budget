@@ -77,6 +77,10 @@ class SQFliteCategoryProvider implements ICategoryProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Category>>> watchAllCategories() {
-    return _categoryStreamController.asBroadcastStream();
+    return _categoryStreamController.asBroadcastStream().map(
+          (event) => event.flatMap(
+            (a) => right(List.unmodifiable(a)),
+          ),
+        );
   }
 }

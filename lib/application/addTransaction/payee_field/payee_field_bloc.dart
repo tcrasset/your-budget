@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
@@ -63,12 +64,16 @@ class PayeeFieldBloc extends Bloc<PayeeFieldEvent, PayeeFieldState> {
             List<Account> accounts,
             List<Payee> payees,
           ) {
-            payees.removeWhere(
+            final List<Payee> modifiablePayees = List.from(payees);
+            modifiablePayees.removeWhere(
               (element) =>
                   element.name.getOrCrash() == DatabaseConstants.STARTING_BALANCE_PAYEE_NAME,
             );
 
-            return PayableEntries(payees: payees, accounts: accounts);
+            return PayableEntries(
+              payees: List.unmodifiable(modifiablePayees),
+              accounts: List.unmodifiable(accounts),
+            );
           },
         ),
       );

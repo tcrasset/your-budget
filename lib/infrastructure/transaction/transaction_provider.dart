@@ -221,7 +221,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
     return _transactionStreamController.asBroadcastStream().map(
           (event) => event.fold(
             (l) => left(l),
-            (r) => right(r.where((element) => _isAccountId(element, accountID)).toList()),
+            (r) => right(List.unmodifiable(r.where((element) => _isAccountId(element, accountID)))),
           ),
         );
   }

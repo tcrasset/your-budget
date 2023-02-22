@@ -139,7 +139,11 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
 
   @override
   Stream<Either<ValueFailure<dynamic>, List<Subcategory>>> watchAllSubcategories() {
-    return _subcategoryStreamController.asBroadcastStream();
+    return _subcategoryStreamController.asBroadcastStream().map(
+          (event) => event.flatMap(
+            (a) => right(List.unmodifiable(a)),
+          ),
+        );
   }
 
   @override

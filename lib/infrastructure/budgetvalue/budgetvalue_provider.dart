@@ -218,9 +218,9 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
           (event) => event.fold(
             (l) => left(l),
             (r) => right(
-              r
-                  .where((element) => element.date.year == year && element.date.month == month)
-                  .toList(),
+              List.unmodifiable(
+                r.where((element) => element.date.year == year && element.date.month == month),
+              ),
             ),
           ),
         );

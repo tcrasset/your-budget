@@ -93,9 +93,27 @@ class TransactionRepository {
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
       // Most transactions do not update the budget values
-      if (transaction.type == MoneyTransactionType.betweenAccount ||
-          transaction.type == MoneyTransactionType.toBeBudgeted) {
-        return right(unit);
+
+      if (transaction.type == MoneyTransactionType.toBeBudgeted) {
+        //TODO
+        throw Exception("Deleting to be budgeted not implemented yet.");
+      }
+
+      if (transaction.type == MoneyTransactionType.betweenAccount) {
+        // We are doing the inverse operation that we did during creation.
+        Account updatedReceiver = (transaction.receiver as Right).value as Account;
+        Account updatedGiver = (transaction.giver as Right).value as Account;
+        final Amount amount = transaction.amount;
+
+        /// If the transaction amount was negative, the transaction will add back money to
+        /// [giverAccount] and remove it from [receiverAccount].
+        /// Otherwise, it is reversed.
+        updatedGiver = updatedGiver.copyWith(balance: updatedGiver.balance - amount);
+        updatedReceiver = updatedReceiver.copyWith(balance: updatedReceiver.balance + amount);
+
+        return accountProvider
+            .update(updatedReceiver)
+            .flatMap((a) => accountProvider.update(updatedGiver));
       }
 
       return await _updateBudgetvalues(
