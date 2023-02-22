@@ -57,8 +57,15 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
     MoneyTransaction newTransaction = state.moneyTransaction.copyWith(receiver: event.payable);
 
     final bool isAccount = event.payable.isRight();
+    final bool wasAccount = state.moneyTransaction.receiver.isRight();
     if (isAccount) {
+      // When the receiver is an account, we want to to a transaction between accounts,
+      // and not subcategory is needed for this.
       newTransaction = newTransaction.copyWith(subcategory: Subcategory.unselectable());
+    } else if (wasAccount) {
+      // We unselect the transaction if we go from having an Account selected to having
+      // a Payee selected.
+      newTransaction = newTransaction.copyWith(subcategory: Subcategory.empty());
     }
 
     final newState = state.copyWith(

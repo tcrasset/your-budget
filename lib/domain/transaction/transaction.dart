@@ -65,6 +65,13 @@ class MoneyTransaction with _$MoneyTransaction {
       );
 
   Option<ValueFailure<dynamic>> get failureOption {
+    return amount.failureOrUnit.andThen(memo.failureOrUnit).fold(
+          (f) => some(f),
+          (_) => complexFailureOrOption(),
+        );
+  }
+
+  Option<ValueFailure<dynamic>> complexFailureOrOption() {
     final isPayableAccount = receiver.isRight();
     final bool isBetweenAccountTransactionWithSelectedSubcategory =
         giver.isRight() && isPayableAccount && subcategory != null && subcategory!.isSelectable();
@@ -94,10 +101,8 @@ class MoneyTransaction with _$MoneyTransaction {
       // Outflow transactions cannot be made from TO_BE_BUDGETED.
       return some(const ValueFailure.outflowTransactionFromToBeBudgeted());
     }
-    return amount.failureOrUnit.andThen(memo.failureOrUnit).fold(
-          (f) => some(f),
-          (_) => none(),
-        );
+
+    return none();
   }
 
   Name get receiverName => receiver.fold((payee) => payee.name, (account) => account.name);
