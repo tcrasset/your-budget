@@ -33,7 +33,10 @@ void showErrorSnackbar(ValueFailure failure, BuildContext context) {
         "Inflow transaction can only be made between accounts or into 'To Be Budgeted'",
     outflowTransactionFromToBeBudgeted: (_) =>
         "Outflow transactions cannot be made from 'To Be Budgeted'",
-    orElse: () => "Unexpected exception. Contact support.",
+    betweenAccountTransactionWithSubcategorySelected: (_) =>
+        "Transactions between accounts cannot have a Subcategory selected.",
+    unexpected: (_) => "Unexpected exception. Contact support.",
+    orElse: () => null,
   );
 
   if (message == null) return;
@@ -100,6 +103,7 @@ class AddTransactionPage extends StatelessWidget {
             },
             buildWhen: (p, c) => p.isSaving != c.isSaving,
             builder: (context, state) {
+              print("building form");
               return Form(
                 autovalidateMode:
                     state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,

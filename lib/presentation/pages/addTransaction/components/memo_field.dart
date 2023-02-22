@@ -8,6 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/add_transaction_field.dart';
 
 class MemoField extends HookWidget {
@@ -21,7 +22,7 @@ class MemoField extends HookWidget {
         );
   }
 
-  String? _failNameClosure(dynamic f) {
+  String? _failNameClosure(ValueFailure f) {
     final result = f.maybeMap(
       longName: (_) => "Must be smaller than ${Name.maxLength}",
       emptyName: (_) => "Must not be empty",

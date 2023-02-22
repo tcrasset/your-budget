@@ -30,14 +30,20 @@ class SubcategoryField extends StatelessWidget {
     }
   }
 
-  String? validateSubcategory(BuildContext context) =>
-      optionOf(context.read<TransactionCreatorBloc>().state.moneyTransaction.subcategory).fold(
-        () => null,
-        (subcategory) => subcategory.name.value.fold(
-          (f) => f.maybeMap(emptyName: (_) => "Please select a Subcategory", orElse: () => null),
-          (_) => null,
-        ),
-      );
+  String? validateSubcategory(BuildContext context) {
+    final state = context.read<TransactionCreatorBloc>().state;
+    if (state.showErrorMessages == false) {
+      // Don't show error messages after a successful save.
+      return null;
+    }
+    return optionOf(state.moneyTransaction.subcategory).fold(
+      () => null,
+      (subcategory) => subcategory.name.value.fold(
+        (f) => f.maybeMap(emptyName: (_) => "Please select a Subcategory", orElse: () => null),
+        (_) => null,
+      ),
+    );
+  }
 
   String getSubcategoryName(BuildContext context) => optionOf(
         context

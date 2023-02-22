@@ -51,17 +51,25 @@ class ReceiverField extends StatelessWidget {
             ),
           );
 
-  String? validateReceiver(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.receiver.fold(
-            (l) /* Payee */ => l.name.value.fold(
-              (f) => f.maybeMap(
-                emptyName: (_) => "Please select a Payee",
-                orElse: () => null,
-              ),
-              (_) => null,
-            ),
-            (r) /* Account */ => null,
-          );
+  String? validateReceiver(BuildContext context) {
+    final state = context.read<TransactionCreatorBloc>().state;
+
+    if (state.showErrorMessages == false) {
+      // Don't show error messages after a successful save.
+      return null;
+    }
+
+    return state.moneyTransaction.receiver.fold(
+      (l) /* Payee */ => l.name.value.fold(
+        (f) => f.maybeMap(
+          emptyName: (_) => "Please select a Payee",
+          orElse: () => null,
+        ),
+        (_) => null,
+      ),
+      (r) /* Account */ => null,
+    );
+  }
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(

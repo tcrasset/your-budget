@@ -98,7 +98,7 @@ void onNameChange(BuildContext context, String value) {
       );
 }
 
-String? _failNameClosure(dynamic f) {
+String? _failNameClosure(ValueFailure f) {
   final result = f.maybeMap(
     longName: (_) => "Must be smaller than ${Name.maxLength}",
     emptyName: (_) => "Must not be empty",

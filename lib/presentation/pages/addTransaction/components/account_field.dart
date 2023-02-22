@@ -30,17 +30,23 @@ class GiverField extends StatelessWidget {
     }
   }
 
-  String? validateGiver(BuildContext context) =>
-      context.read<TransactionCreatorBloc>().state.moneyTransaction.giver.fold(
-            (l) /* Payee */ => "Transaction should have an Account as a Giver, not a Payee.",
-            (r) /* Account */ => r.name.value.fold(
-              (f) => f.maybeMap(
-                emptyName: (_) => "Please select an Account",
-                orElse: () => null,
-              ),
-              (_) => null,
-            ),
-          );
+  String? validateGiver(BuildContext context) {
+    final state = context.read<TransactionCreatorBloc>().state;
+    if (state.showErrorMessages == false) {
+      // Don't show error messages after a successful save.
+      return null;
+    }
+    return state.moneyTransaction.giver.fold(
+      (l) /* Payee */ => "Transaction should have an Account as a Giver, not a Payee.",
+      (r) /* Account */ => r.name.value.fold(
+        (f) => f.maybeMap(
+          emptyName: (_) => "Please select an Account",
+          orElse: () => null,
+        ),
+        (_) => null,
+      ),
+    );
+  }
 
   String getGiverName(BuildContext context) =>
       //TODO: Handle errors

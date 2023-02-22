@@ -6,7 +6,6 @@ import 'package:your_budget/domain/core/name.dart';
 import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 import 'package:your_budget/models/constants.dart';
-import 'package:your_budget/models/utils.dart';
 
 part 'subcategory_dto.freezed.dart';
 part 'subcategory_dto.g.dart';

@@ -2,17 +2,14 @@
 import 'dart:async';
 import 'dart:io';
 
-// Flutter imports:
-
 // Package imports:
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:uuid/uuid.dart';
-import 'package:your_budget/domain/subcategory/subcategory.dart' as subcategory;
 import 'package:your_budget/domain/category/category.dart' as category;
-
+import 'package:your_budget/domain/subcategory/subcategory.dart' as subcategory;
 // Project imports:
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/models/utils.dart';
