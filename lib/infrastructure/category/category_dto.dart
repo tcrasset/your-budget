@@ -16,14 +16,13 @@ abstract class CategoryDTO implements _$CategoryDTO {
   const CategoryDTO._();
 
   const factory CategoryDTO({
-    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-        required String id, //Do not use id in database
+    @JsonKey(name: DatabaseConstants.CATEGORY_ID) required String id,
     @JsonKey(name: DatabaseConstants.CATEGORY_NAME) required String name,
   }) = _CategoryDTO;
 
   factory CategoryDTO.fromDomain(Category category) {
     return CategoryDTO(
-      id: category.id.getOrCrash(), //Not used in database
+      id: category.id.getOrCrash(),
       name: category.name.getOrCrash(),
     );
   }
@@ -35,6 +34,5 @@ abstract class CategoryDTO implements _$CategoryDTO {
     );
   }
 
-  factory CategoryDTO.fromJson(Map<String, dynamic> json) =>
-      _$CategoryDTOFromJson(json);
+  factory CategoryDTO.fromJson(Map<String, dynamic> json) => _$CategoryDTOFromJson(json);
 }

@@ -20,9 +20,8 @@ SubcategoryDTO _$SubcategoryDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$SubcategoryDTO {
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-  String get id =>
-      throw _privateConstructorUsedError; //Do not use id in database
+  @JsonKey(name: DatabaseConstants.SUBCAT_ID)
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
   String get categoryID => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
@@ -41,12 +40,9 @@ abstract class $SubcategoryDTOCopyWith<$Res> {
       _$SubcategoryDTOCopyWithImpl<$Res, SubcategoryDTO>;
   @useResult
   $Res call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          String id,
-      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
-          String categoryID,
-      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          String name});
+      {@JsonKey(name: DatabaseConstants.SUBCAT_ID) String id,
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE) String categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME) String name});
 }
 
 /// @nodoc
@@ -92,12 +88,9 @@ abstract class _$$_SubcategoryDTOCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          String id,
-      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
-          String categoryID,
-      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          String name});
+      {@JsonKey(name: DatabaseConstants.SUBCAT_ID) String id,
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE) String categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME) String name});
 }
 
 /// @nodoc
@@ -136,21 +129,17 @@ class __$$_SubcategoryDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SubcategoryDTO extends _SubcategoryDTO {
   const _$_SubcategoryDTO(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          required this.id,
-      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
-          required this.categoryID,
-      @JsonKey(name: DatabaseConstants.SUBCAT_NAME)
-          required this.name})
+      {@JsonKey(name: DatabaseConstants.SUBCAT_ID) required this.id,
+      @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE) required this.categoryID,
+      @JsonKey(name: DatabaseConstants.SUBCAT_NAME) required this.name})
       : super._();
 
   factory _$_SubcategoryDTO.fromJson(Map<String, dynamic> json) =>
       _$$_SubcategoryDTOFromJson(json);
 
   @override
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+  @JsonKey(name: DatabaseConstants.SUBCAT_ID)
   final String id;
-//Do not use id in database
   @override
   @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
   final String categoryID;
@@ -194,7 +183,7 @@ class _$_SubcategoryDTO extends _SubcategoryDTO {
 
 abstract class _SubcategoryDTO extends SubcategoryDTO {
   const factory _SubcategoryDTO(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+      {@JsonKey(name: DatabaseConstants.SUBCAT_ID)
           required final String id,
       @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
           required final String categoryID,
@@ -206,9 +195,9 @@ abstract class _SubcategoryDTO extends SubcategoryDTO {
       _$_SubcategoryDTO.fromJson;
 
   @override
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+  @JsonKey(name: DatabaseConstants.SUBCAT_ID)
   String get id;
-  @override //Do not use id in database
+  @override
   @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE)
   String get categoryID;
   @override

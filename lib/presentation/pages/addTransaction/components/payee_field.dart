@@ -60,7 +60,7 @@ class ReceiverField extends StatelessWidget {
               ),
               (_) => null,
             ),
-            (r) /* Account */ => "Transaction should have a Payee as a Receiver, not an Account.",
+            (r) /* Account */ => null,
           );
 
   @override

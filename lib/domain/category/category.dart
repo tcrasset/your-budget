@@ -9,6 +9,9 @@ import 'package:your_budget/domain/core/value_failure.dart';
 
 part 'category.freezed.dart';
 
+const String UNSELECTABLE_ID = "00000000-deadbeef-00000000-deadbeef";
+const String UNSELECTABLE_NAME = "Unselectable";
+
 /// Class that defines an entity/person that either received money or gave money to the budget
 /// holder.
 /// It is defined using an unique [id] and a [name].

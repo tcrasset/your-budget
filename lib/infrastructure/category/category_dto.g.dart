@@ -8,20 +8,12 @@ part of 'category_dto.dart';
 
 _$_CategoryDTO _$$_CategoryDTOFromJson(Map<String, dynamic> json) =>
     _$_CategoryDTO(
-      id: convertToString(json['id'] as int),
+      id: json['id'] as String,
       name: json['categoryName'] as String,
     );
 
-Map<String, dynamic> _$$_CategoryDTOToJson(_$_CategoryDTO instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', ignore(instance.id));
-  val['categoryName'] = instance.name;
-  return val;
-}
+Map<String, dynamic> _$$_CategoryDTOToJson(_$_CategoryDTO instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'categoryName': instance.name,
+    };

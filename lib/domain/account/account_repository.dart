@@ -65,7 +65,9 @@ class AccountRepository {
     UniqueId accountId,
     Amount balance,
   ) async {
-    //Create starting money transaction
+    ///Create starting money transaction for an account.
+    ///
+    /// We add a transaction to 'To Be budgeted' as well as the relevant account.
     //TODO: Use real names
 
     final Either<ValueFailure, Account> failureOrAccount = accountProvider.get(accountId);
@@ -88,33 +90,38 @@ class AccountRepository {
             type: MoneyTransactionType.initial,
           );
 
-          final Either<ValueFailure, Unit> failureOrSuccess =
-              await transactionProvider.create(transaction);
+          return await (await transactionProvider.create(transaction)).fold((l) => left(l),
+              (_) async {
+            final toBeBudgeted = accountProvider.getToBeBudgeted();
 
-          return failureOrSuccess.fold((l) => left(l), (_) async {
-            final tobeBudgeted = accountProvider.getToBeBudgeted();
-            // Most transactions do not update the budget values
-
-            return await tobeBudgeted.fold(
+            return await toBeBudgeted.fold(
               (l) => left(l),
-              (account) async => (await transactionProvider.create(
-                transaction.copyWith(
-                  receiver: right(account),
-                  type: MoneyTransactionType.toBeBudgeted,
-                ),
-              ))
-                  .fold(
+              (account) async => (await _updateToBeBudgeted(transaction, account)).fold(
                 (l) => left(l),
-                (r) {
-                  accountProvider.update(account.copyWith(balance: account.balance + balance));
-                  return right(unit);
-                },
+                (_) async => _updateAccount(account, balance),
               ),
             );
           });
         },
       ),
     );
+  }
+
+  Future<Either<ValueFailure<dynamic>, Unit>> _updateToBeBudgeted(
+    MoneyTransaction transaction,
+    Account account,
+  ) {
+    return transactionProvider.create(
+      transaction.copyWith(
+        receiver: right(account),
+        type: MoneyTransactionType.toBeBudgeted,
+      ),
+    );
+  }
+
+  Future<Either<ValueFailure, Unit>> _updateAccount(Account account, Amount balance) async {
+    return (await accountProvider.update(account.copyWith(balance: account.balance + balance)))
+        .flatMap((a) => right(unit));
   }
 
   Future<Either<ValueFailure<dynamic>, Unit>> deleteAccount(Account account) async {
@@ -208,3 +215,40 @@ class AccountRepository {
         : (currentIndex - 1) % numberOfAccounts;
   }
 }
+
+
+// Either.map2(failureOrAccount, failureOrPayee, (Account account, Payee payee) async {
+//       final MoneyTransaction transaction = MoneyTransaction(
+//         id: UniqueId(),
+//         subcategory: null,
+//         giver: left(payee),
+//         receiver: right(account),
+//         amount: balance,
+//         memo: Name("Starting balance"),
+//         date: DateTime.now(),
+//         type: MoneyTransactionType.initial,
+//       );
+
+//       final Either<ValueFailure, Unit> failureOrSuccess =
+//           await transactionProvider.create(transaction);
+
+//       return failureOrSuccess.fold((l) => left(l), (_) async {
+//         final toBeBudgeted = accountProvider.getToBeBudgeted();
+
+//         return toBeBudgeted.fold(
+//           (l) => left(l),
+//           (account) async => (await transactionProvider.create(
+//             transaction.copyWith(
+//               receiver: right(account),
+//               type: MoneyTransactionType.toBeBudgeted,
+//             ),
+//           ))
+//               .fold(
+//             (l) => left(l),
+//             (_) async =>
+//                 (await accountProvider.update(account.copyWith(balance: account.balance + balance)))
+//                     .flatMap((a) => right(unit)),
+//           ),
+//         );
+//       });
+//     });

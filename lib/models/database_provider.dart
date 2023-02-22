@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart' as subcategory;
+import 'package:your_budget/domain/category/category.dart' as category;
 
 // Project imports:
 import 'package:your_budget/models/constants.dart';
@@ -89,13 +92,13 @@ class DatabaseProvider {
   Future<void> _createTables(Database db) async {
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.categoryTable} (
-                        ${DatabaseConstants.CATEGORY_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.CATEGORY_ID} TEXT PRIMARY KEY,
                         ${DatabaseConstants.CATEGORY_NAME} TEXT NOT NULL UNIQUE
                       );''');
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.subcategoryTable} (
-                        ${DatabaseConstants.SUBCAT_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.SUBCAT_ID} TEXT PRIMARY KEY,
                         ${DatabaseConstants.CAT_ID_OUTSIDE} TEXT NOT NULL,
                         ${DatabaseConstants.SUBCAT_NAME} TEXT NOT NULL
                     );''');
@@ -158,12 +161,12 @@ class DatabaseProvider {
   /// Populates the tables of database [db] with the default categories, subcategories and
   /// their budgetValues.
   Future<void> _createBasicCategories(Database db) async {
-    final int categoryId = await _populateCategories(db);
-    final List<int> subcategoryIds = await _populateSubcategories(db, categoryId);
+    final String categoryId = await _populateCategories(db);
+    final List<String> subcategoryIds = await _populateSubcategories(db, categoryId);
     await _populateBudgetValues(subcategoryIds, db);
   }
 
-  Future<void> _populateBudgetValues(List<int> subcategoryIds, Database db) async {
+  Future<void> _populateBudgetValues(List<String> subcategoryIds, Database db) async {
     const String CREATE_BUDGETVALUE = '''
     INSERT INTO ${DatabaseConstants.budgetValueTable}
       (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
@@ -181,7 +184,7 @@ class DatabaseProvider {
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
         monthDifference++) {
       final DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
-      for (final int subcatId in subcategoryIds) {
+      for (final String subcatId in subcategoryIds) {
         await db.rawInsert(CREATE_BUDGETVALUE, [
           subcatId,
           0.00,
@@ -193,12 +196,18 @@ class DatabaseProvider {
     }
   }
 
-  Future<int> _populateCategories(Database db) async {
+  Future<String> _populateCategories(Database db) async {
     const String CREATE_CATEGORY = '''
     INSERT INTO ${DatabaseConstants.categoryTable}
-      (${DatabaseConstants.CATEGORY_NAME})
-      VALUES(?);''';
-    return db.rawInsert(CREATE_CATEGORY, ["Essentials"]);
+      (${DatabaseConstants.CATEGORY_ID},
+      ${DatabaseConstants.CATEGORY_NAME})
+      VALUES(?, ?);''';
+    final id = const Uuid().v4();
+    db.rawInsert(CREATE_CATEGORY, [id, "Essentials"]);
+    db.rawInsert(CREATE_CATEGORY, [category.UNSELECTABLE_ID, category.UNSELECTABLE_NAME]);
+
+    // We do not include category.UNSELECTABLE_ID as we do not want subcategories for this category
+    return id;
   }
 
   Future<int> _populatePayees(Database db) async {
@@ -209,30 +218,36 @@ class DatabaseProvider {
     return db.rawInsert(CREATE_PAYEE, [DatabaseConstants.STARTING_BALANCE_PAYEE_NAME]);
   }
 
-  Future<List<int>> _populateSubcategories(Database db, int categoryId) async {
+  Future<List<String>> _populateSubcategories(Database db, String categoryId) async {
     const String CREATE_SUBCATEGORY = '''
     INSERT INTO ${DatabaseConstants.subcategoryTable}
-      (${DatabaseConstants.CAT_ID_OUTSIDE},
+      (${DatabaseConstants.SUBCAT_ID},
+        ${DatabaseConstants.CAT_ID_OUTSIDE},
       ${DatabaseConstants.SUBCAT_NAME})
-      VALUES(?, ?);''';
+      VALUES(?, ?, ?);''';
 
-    final List<String> subcategoryNames = [
-      DatabaseConstants.TO_BE_BUDGETED,
-      "Rent",
-      "Electricity",
-      "Water",
-      "Food",
-      "Internet",
-      "Phone"
-    ];
+    final Map<String, String> idToNameMap = {
+      const Uuid().v4(): DatabaseConstants.TO_BE_BUDGETED,
+      const Uuid().v4(): "Rent",
+      const Uuid().v4(): "Electricity",
+      const Uuid().v4(): "Water",
+      const Uuid().v4(): "Food",
+      const Uuid().v4(): "Internet",
+      const Uuid().v4(): "Phone"
+    };
 
-    final List<int> subcategoryIds = [];
-    for (int i = 0; i < subcategoryNames.length; i++) {
-      final int subcategoryId =
-          await db.rawInsert(CREATE_SUBCATEGORY, [categoryId.toString(), subcategoryNames[i]]);
-      subcategoryIds.add(subcategoryId);
-    }
-    return subcategoryIds;
+    idToNameMap.forEach((id, name) async {
+      await db.rawInsert(CREATE_SUBCATEGORY, [id, categoryId, name]);
+    });
+
+    await db.rawInsert(CREATE_SUBCATEGORY, [
+      subcategory.UNSELECTABLE_ID,
+      category.UNSELECTABLE_ID,
+      subcategory.UNSELECTABLE_NAME,
+    ]);
+
+    // We do not include subcategory.UNSELECTABLE_ID as we do not want budgetvalues for this subcat
+    return idToNameMap.keys.toList();
   }
 
   Future<void> _createConstants(Database db) async {

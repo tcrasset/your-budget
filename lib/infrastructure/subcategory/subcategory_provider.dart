@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 // Project imports:
@@ -39,12 +40,12 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Subcategory>> get(int id) async {
+  Future<Either<ValueFailure, Subcategory>> get(UniqueId id) async {
     try {
       final result = await database!.query(
         DatabaseConstants.subcategoryTable,
         where: '${DatabaseConstants.SUBCAT_ID} = ?',
-        whereArgs: [id],
+        whereArgs: [id.getOrCrash()],
       );
 
       if (result.isEmpty) {

@@ -16,15 +16,14 @@ abstract class SubcategoryDTO implements _$SubcategoryDTO {
   const SubcategoryDTO._();
 
   const factory SubcategoryDTO({
-    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-        required String id, //Do not use id in database
+    @JsonKey(name: DatabaseConstants.SUBCAT_ID) required String id,
     @JsonKey(name: DatabaseConstants.CAT_ID_OUTSIDE) required String categoryID,
     @JsonKey(name: DatabaseConstants.SUBCAT_NAME) required String name,
   }) = _SubcategoryDTO;
 
   factory SubcategoryDTO.fromDomain(Subcategory subcategory) {
     return SubcategoryDTO(
-      id: subcategory.id.getOrCrash(), //Not used in database
+      id: subcategory.id.getOrCrash(),
       categoryID: subcategory.categoryID.getOrCrash(),
       name: subcategory.name.getOrCrash(),
     );

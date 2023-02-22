@@ -33,7 +33,7 @@ void showErrorSnackbar(ValueFailure failure, BuildContext context) {
         "Inflow transaction can only be made between accounts or into 'To Be Budgeted'",
     outflowTransactionFromToBeBudgeted: (_) =>
         "Outflow transactions cannot be made from 'To Be Budgeted'",
-    orElse: () => null,
+    orElse: () => "Unexpected exception. Contact support.",
   );
 
   if (message == null) return;

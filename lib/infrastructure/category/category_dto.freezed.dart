@@ -20,9 +20,8 @@ CategoryDTO _$CategoryDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryDTO {
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-  String get id =>
-      throw _privateConstructorUsedError; //Do not use id in database
+  @JsonKey(name: DatabaseConstants.CATEGORY_ID)
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
   String get name => throw _privateConstructorUsedError;
 
@@ -39,10 +38,8 @@ abstract class $CategoryDTOCopyWith<$Res> {
       _$CategoryDTOCopyWithImpl<$Res, CategoryDTO>;
   @useResult
   $Res call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          String id,
-      @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
-          String name});
+      {@JsonKey(name: DatabaseConstants.CATEGORY_ID) String id,
+      @JsonKey(name: DatabaseConstants.CATEGORY_NAME) String name});
 }
 
 /// @nodoc
@@ -83,10 +80,8 @@ abstract class _$$_CategoryDTOCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          String id,
-      @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
-          String name});
+      {@JsonKey(name: DatabaseConstants.CATEGORY_ID) String id,
+      @JsonKey(name: DatabaseConstants.CATEGORY_NAME) String name});
 }
 
 /// @nodoc
@@ -120,19 +115,16 @@ class __$$_CategoryDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_CategoryDTO extends _CategoryDTO {
   const _$_CategoryDTO(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          required this.id,
-      @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
-          required this.name})
+      {@JsonKey(name: DatabaseConstants.CATEGORY_ID) required this.id,
+      @JsonKey(name: DatabaseConstants.CATEGORY_NAME) required this.name})
       : super._();
 
   factory _$_CategoryDTO.fromJson(Map<String, dynamic> json) =>
       _$$_CategoryDTOFromJson(json);
 
   @override
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+  @JsonKey(name: DatabaseConstants.CATEGORY_ID)
   final String id;
-//Do not use id in database
   @override
   @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
   final String name;
@@ -171,7 +163,7 @@ class _$_CategoryDTO extends _CategoryDTO {
 
 abstract class _CategoryDTO extends CategoryDTO {
   const factory _CategoryDTO(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+      {@JsonKey(name: DatabaseConstants.CATEGORY_ID)
           required final String id,
       @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
           required final String name}) = _$_CategoryDTO;
@@ -181,9 +173,9 @@ abstract class _CategoryDTO extends CategoryDTO {
       _$_CategoryDTO.fromJson;
 
   @override
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+  @JsonKey(name: DatabaseConstants.CATEGORY_ID)
   String get id;
-  @override //Do not use id in database
+  @override
   @JsonKey(name: DatabaseConstants.CATEGORY_NAME)
   String get name;
   @override

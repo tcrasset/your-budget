@@ -161,7 +161,7 @@ class Budget {
 
   @override
   String toString() {
-    return """${super} {month: $month, year: $year, mainCategories: $mainCategories, subcategories: $subcategories}\n""";
+    return """${super.toString()} {month: $month, year: $year, mainCategories: $mainCategories, subcategories: $subcategories}\n""";
   }
 
   /// Deletes the [deletedSubcategory] from the current Budget.

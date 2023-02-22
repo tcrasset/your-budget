@@ -66,7 +66,7 @@ class MoneyTransaction with _$MoneyTransaction {
 
   Option<ValueFailure<dynamic>> get failureOption {
     final bool isBetweenAccountTransactionWithSelectedSubcategory =
-        giver.isRight() && receiver.isRight() && subcategory != null;
+        giver.isRight() && receiver.isRight() && subcategory != null && subcategory!.isSelectable();
 
     if (isBetweenAccountTransactionWithSelectedSubcategory) {
       // Between account transactions should not have a subcategory selected

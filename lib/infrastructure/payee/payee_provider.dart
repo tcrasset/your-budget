@@ -15,9 +15,7 @@ import 'package:your_budget/models/constants.dart';
 
 class SQFlitePayeeProvider implements IPayeeProvider {
   final Database? database;
-  SQFlitePayeeProvider({required this.database}) {
-    init();
-  }
+  SQFlitePayeeProvider({required this.database});
 
   Future<void> init() async {
     _payeeStreamController.add(await getAllPayees());
@@ -30,6 +28,17 @@ class SQFlitePayeeProvider implements IPayeeProvider {
   Future<Either<ValueFailure, int>> count() async {
     final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
     return right(payees.length);
+  }
+
+  List<Payee> get _payees {
+    final lastEmitted = _payeeStreamController.value;
+
+    if (lastEmitted == null) {
+      // Should not happen as it's seed with Right([])
+      throw Exception();
+    }
+
+    return lastEmitted.fold((l) => throw Exception(l), (r) => r);
   }
 
   @override
@@ -45,13 +54,13 @@ class SQFlitePayeeProvider implements IPayeeProvider {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
 
-    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
     if (id == 0) {
       return left(
         ValueFailure.unexpected(message: "Payee with id ${payee.id} could not be created."),
       );
     }
 
+    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
     payees.add(payee.copyWith(id: UniqueId.fromUniqueInt(id)));
     _payeeStreamController.add(Right(payees));
 
@@ -77,12 +86,11 @@ class SQFlitePayeeProvider implements IPayeeProvider {
 
   @override
   Future<Either<ValueFailure, Payee>> getStartingBalancePayee() async {
-    final payees = [..._payeeStreamController.value!.getOrElse(() => [])];
-    final index = payees.indexWhere(
+    final index = _payees.indexWhere(
       (payee) => payee.name.getOrCrash() == DatabaseConstants.STARTING_BALANCE_PAYEE_NAME,
     );
     if (index >= 0) {
-      return right(payees[index]);
+      return right(_payees[index]);
     } else {
       return left(const ValueFailure.unexpected(message: "Payee not in current stream."));
     }

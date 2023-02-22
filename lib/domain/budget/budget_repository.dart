@@ -8,12 +8,12 @@ import 'package:your_budget/domain/budget/budget.dart';
 import 'package:your_budget/domain/budget/budget_entry.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
-import 'package:your_budget/domain/category/category.dart';
+import 'package:your_budget/domain/category/category.dart' as c;
 import 'package:your_budget/domain/category/i_category_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
-import 'package:your_budget/domain/subcategory/subcategory.dart';
+import 'package:your_budget/domain/subcategory/subcategory.dart' as s;
 import 'package:your_budget/models/utils.dart';
 
 class BudgetRepository {
@@ -82,8 +82,8 @@ class BudgetRepository {
         categoryProvider.watchAllCategories(),
         budgetvalueProvider.watchAllBudgetValues(year: year, month: month),
         (
-          Either<ValueFailure<dynamic>, List<Subcategory>> subcategories,
-          Either<ValueFailure<dynamic>, List<Category>> categories,
+          Either<ValueFailure<dynamic>, List<s.Subcategory>> subcategories,
+          Either<ValueFailure<dynamic>, List<c.Category>> categories,
           Either<ValueFailure<dynamic>, List<BudgetValue>> budgetvalues,
         ) =>
             Either.map3(
@@ -92,17 +92,22 @@ class BudgetRepository {
           categories,
           (
             List<BudgetValue> budgetvalues,
-            List<Subcategory> subcategories,
-            List<Category> categories,
+            List<s.Subcategory> subcategories,
+            List<c.Category> categories,
           ) {
             final List<BudgetEntryGroups> groups = [];
+            final selectableCategories =
+                categories.where((element) => element.id.getOrCrash() != c.UNSELECTABLE_ID);
 
-            for (final Category category in categories) {
+            final selectableSubcategories =
+                subcategories.where((element) => element.id.getOrCrash() != s.UNSELECTABLE_ID);
+
+            for (final c.Category category in selectableCategories) {
               final List<BudgetEntry> entries = [];
-              final matchingSubcats =
-                  subcategories.where((subcat) => subcat.categoryID == category.id);
+              final matchingSubcategories =
+                  selectableSubcategories.where((subcat) => subcat.categoryID == category.id);
 
-              for (final subcat in matchingSubcats) {
+              for (final subcat in matchingSubcategories) {
                 final budgetvalue =
                     budgetvalues.singleWhere((value) => subcat.id == value.subcategoryId);
                 entries.add(BudgetEntry(subcategory: subcat, budgetValue: budgetvalue));

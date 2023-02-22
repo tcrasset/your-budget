@@ -54,10 +54,18 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
   }
 
   void _onReceiverChanged(_ReceiverChanged event, Emitter<TransactionCreatorState> emit) {
+    MoneyTransaction newTransaction = state.moneyTransaction.copyWith(receiver: event.payable);
+
+    final bool isAccount = event.payable.isRight();
+    if (isAccount) {
+      newTransaction = newTransaction.copyWith(subcategory: Subcategory.unselectable());
+    }
+
     final newState = state.copyWith(
-      moneyTransaction: state.moneyTransaction.copyWith(receiver: event.payable),
+      moneyTransaction: newTransaction,
       saveFailureOrSuccessOption: none(),
     );
+
     emit(newState);
   }
 
@@ -115,34 +123,38 @@ class TransactionCreatorBloc extends Bloc<TransactionCreatorEvent, TransactionCr
 }
 
 Either<ValueFailure, MoneyTransaction> validateTransaction(MoneyTransaction transaction) {
-  if (transaction.failureOption.isSome()) {
-    left(transaction.failureOption as ValueFailure);
+  return transaction.failureOption.fold(
+    () /* ifNone */ => right(rearrangeTransaction(transaction)),
+    (a) /* ifSome */ => left(a),
+  );
+}
+
+MoneyTransaction rearrangeTransaction(MoneyTransaction transaction) {
+  late MoneyTransaction validatedTransaction = transaction;
+  final Either<Payee, Account> receiver = transaction.receiver;
+  final Either<Payee, Account> giver = transaction.giver;
+
+  final MoneyTransactionType newType = getType(transaction);
+
+  validatedTransaction = transaction.copyWith(
+    type: newType,
+  );
+
+  if (newType == MoneyTransactionType.toBeBudgeted) {
+    // We swap giver and receiver
+    validatedTransaction = validatedTransaction.copyWith(
+      receiver: giver,
+      giver: receiver,
+    );
   }
 
-  return transaction.failureOption.fold(
-    () {
-      late MoneyTransaction validatedTransaction = transaction;
-      final receiver = transaction.receiver;
-      final giver = transaction.giver;
+  final bool isGiverAccount = giver.isRight();
+  if (isGiverAccount && !transaction.subcategory!.isSelectable()) {
+    // Set the subcategory to null because of
+    validatedTransaction = validatedTransaction.copyWith(subcategory: null);
+  }
 
-      final MoneyTransactionType newType = getType(transaction);
-
-      validatedTransaction = transaction.copyWith(
-        type: newType,
-      );
-
-      if (newType == MoneyTransactionType.toBeBudgeted) {
-        // We swap giver and receiver
-        validatedTransaction = validatedTransaction.copyWith(
-          receiver: giver,
-          giver: receiver,
-        );
-      }
-
-      return right(validatedTransaction);
-    },
-    (a) => left(a),
-  );
+  return validatedTransaction;
 }
 
 MoneyTransactionType getType(MoneyTransaction transaction) {
