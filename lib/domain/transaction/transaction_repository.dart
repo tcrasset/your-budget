@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
+import 'package:your_budget/dartz_x.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budgetvalue/budgetvalue.dart';
@@ -35,19 +36,32 @@ class TransactionRepository {
     if (transaction.type == MoneyTransactionType.initial) {
       throw Exception("Initial transactions are only created in AccountRepository.");
     }
+
     final Either<ValueFailure, Unit> failureOrSuccess =
         await transactionProvider.create(transaction);
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
       if (transaction.type == MoneyTransactionType.betweenAccount) {
-        return right(unit);
+        Account updatedReceiver = (transaction.receiver as Right).value as Account;
+        Account updatedGiver = (transaction.giver as Right).value as Account;
+        final Amount amount = transaction.amount;
+
+        /// If the transaction amount is negative, the transaction will remove money from
+        /// [giverAccount] and input it into [receiverAccount].
+        /// Otherwise, it is reversed.
+        updatedGiver = updatedGiver.copyWith(balance: updatedGiver.balance + amount);
+        updatedReceiver = updatedReceiver.copyWith(balance: updatedReceiver.balance - amount);
+
+        return accountProvider
+            .update(updatedReceiver)
+            .flatMap((a) => accountProvider.update(updatedGiver));
       }
 
       if (transaction.type == MoneyTransactionType.toBeBudgeted) {
         // Need to add the amount in toBeBudgeted too
         return accountProvider.getToBeBudgeted().fold(
               (l) => left(l),
-              (account) async => await _updateToBeBudgetedAccount(account, transaction),
+              (account) => _updateToBeBudgetedAccount(account, transaction),
             );
       }
 
@@ -59,17 +73,15 @@ class TransactionRepository {
     });
   }
 
-  Future<FutureOr<Either<ValueFailure<dynamic>, Unit>>> _updateToBeBudgetedAccount(
+  Future<Either<ValueFailure<dynamic>, Unit>> _updateToBeBudgetedAccount(
     Account account,
     MoneyTransaction transaction,
   ) async {
-    return (await accountProvider.update(
-      account.copyWith(balance: account.balance + transaction.amount),
-    ))
-        .fold(
-      (l) => left(l),
-      (r) => right(unit),
-    );
+    return accountProvider
+        .update(
+          account.copyWith(balance: account.balance + transaction.amount),
+        )
+        .flatMap((_) async => right(unit));
   }
 
   Future<Either<ValueFailure, Unit>> deleteTransaction(MoneyTransaction transaction) async {
