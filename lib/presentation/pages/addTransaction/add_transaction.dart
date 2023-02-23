@@ -97,13 +97,13 @@ class AddTransactionPage extends StatelessWidget {
                   (failure) => showErrorSnackbar(failure, context),
                   (_) /*Success*/ {
                     bloc.add(const TransactionCreatorEvent.initialized());
+                    showSuccessSnackbar(context);
                   },
                 ),
               );
             },
             buildWhen: (p, c) => p.isSaving != c.isSaving,
             builder: (context, state) {
-              print("building form");
               return Form(
                 autovalidateMode:
                     state.showErrorMessages ? AutovalidateMode.always : AutovalidateMode.disabled,
