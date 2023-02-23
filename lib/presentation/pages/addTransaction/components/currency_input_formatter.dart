@@ -12,9 +12,9 @@ class CurrencyInputFormatter extends TextInputFormatter {
   final NumberFormat currencyFormatter;
   final bool isPositive;
 
-  CurrencyInputFormatter(this.currencyFormatter, this.isPositive);
+  CurrencyInputFormatter(this.currencyFormatter, {required this.isPositive});
 
-  static double formatCurrencyToDouble(String currencyText, bool isPositive) {
+  static double formatCurrencyToDouble(String currencyText, {required bool isPositive}) {
     String integers = "0";
     String decimals = "0";
     final String onlyNumbers = currencyText.replaceAll(RegExp('[^0-9]'), '');
@@ -44,7 +44,7 @@ class CurrencyInputFormatter extends TextInputFormatter {
       /// [newValue] is different from [oldValue].
       /// Extract only the numbers of the text field, separate decimals and integers
       /// and format the resulting number using the [NumberFormat.currency()] formatter
-      final double number = formatCurrencyToDouble(newValue.text, isPositive);
+      final double number = formatCurrencyToDouble(newValue.text, isPositive: isPositive);
       final String newString = currencyFormatter.format(number).trim();
 
       return TextEditingValue(

@@ -16,7 +16,6 @@ import 'package:your_budget/domain/budget/budget_repository.dart';
 import 'package:your_budget/domain/budget/to_be_budgeted_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
-import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';

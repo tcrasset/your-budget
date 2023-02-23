@@ -157,7 +157,6 @@ MoneyTransaction rearrangeTransaction(MoneyTransaction transaction) {
 
   final bool isGiverAccount = giver.isRight();
   if (isGiverAccount && !transaction.subcategory!.isSelectable()) {
-    // Set the subcategory to null because of
     validatedTransaction = validatedTransaction.copyWith(subcategory: null);
   }
 

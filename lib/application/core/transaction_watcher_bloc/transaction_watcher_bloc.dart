@@ -6,7 +6,6 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction.dart';

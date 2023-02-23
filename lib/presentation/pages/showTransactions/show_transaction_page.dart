@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/core/transaction_watcher_bloc/transaction_watcher_bloc.dart';
 import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/components/delete_dialog.dart';
 import 'package:your_budget/domain/account/account.dart';
-import 'package:your_budget/domain/account/i_account_provider.dart';
 // Project imports:
 import 'package:your_budget/domain/transaction/transaction_repository.dart';
 import 'package:your_budget/models/constants.dart';

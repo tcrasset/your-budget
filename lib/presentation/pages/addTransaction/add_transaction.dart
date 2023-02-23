@@ -8,7 +8,6 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
-import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/payee/payee_repository.dart';

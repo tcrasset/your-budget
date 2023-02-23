@@ -162,7 +162,6 @@ class DeleteCategoriesState extends ChangeNotifier {
     final List<int?> catIds = _getSelectedCategories();
     for (final catId in catIds) {
       if (catId == 1) {
-        print("You can't delete the Essentials MainCategory");
         return true;
       }
     }

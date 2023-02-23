@@ -7,9 +7,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
 import 'package:your_budget/domain/core/amount.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/utils/currency.dart' as currencyUtils;
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
+import 'package:your_budget/utils/currency.dart' as currency_utils;
 
 // ignore: avoid_classes_with_only_static_members
 class CurrencyOperations {
@@ -18,8 +18,8 @@ class CurrencyOperations {
   static String removeSymbol(String amount) =>
       amount.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "").trim();
   static String removeAllButNumbers(String amount) => removeMinusSign(removeSymbol(amount));
-  static String formatAmount(double amount) => currencyUtils.format(amount).trim();
-  static final String zero = currencyUtils.format(0);
+  static String formatAmount(double amount) => currency_utils.format(amount).trim();
+  static final String zero = currency_utils.format(0);
 }
 
 class AmountField extends StatelessWidget {
@@ -77,13 +77,14 @@ class AmountInputRow extends HookWidget {
   }
 
   void updateAmountInController(
-      BuildContext context, TransactionCreatorState state, TextEditingController controller) {
+    BuildContext context,
+    TransactionCreatorState state,
+    TextEditingController controller,
+  ) {
     // Every modification of the amount value (except initialization) gets passed through the bloc
     // Thus, here is the only time where we have to cast from number to String
     // and where we have to change the selection
-    double? amount = getAmount(state);
-    print("getAmount amount: $amount");
-    print("getAmount zero: ${CurrencyOperations.zero}");
+    final double? amount = getAmount(state);
     if (amount == null) {
       controller.text = CurrencyOperations.zero;
       return;
@@ -94,7 +95,7 @@ class AmountInputRow extends HookWidget {
     final bool isZeroAmount =
         cleanAmount == CurrencyOperations.removeAllButNumbers(CurrencyOperations.zero);
     final String finalAmount = isZeroAmount
-        ? CurrencyOperations.formatAmount(currencyUtils.parse(cleanAmount).toDouble())
+        ? CurrencyOperations.formatAmount(currency_utils.parse(cleanAmount).toDouble())
         : CurrencyOperations.formatAmount(amount);
 
     controller
@@ -202,7 +203,7 @@ class AmountInput extends StatelessWidget {
       keyboardType: TextInputType.number,
       controller: controller,
       inputFormatters: [
-        CurrencyInputFormatter(Constants.CURRENCY_FORMAT, isPositive.value),
+        CurrencyInputFormatter(Constants.CURRENCY_FORMAT, isPositive: isPositive.value),
       ],
       textInputAction: TextInputAction.done,
       textAlign: TextAlign.right,

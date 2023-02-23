@@ -83,7 +83,7 @@ class BudgetEntryRow extends HookWidget {
                     decoration: const InputDecoration.collapsed(hintText: ""),
                     focusNode: budgetedFocusNode,
                     inputFormatters: [
-                      CurrencyInputFormatter(Constants.CURRENCY_FORMAT, true),
+                      CurrencyInputFormatter(Constants.CURRENCY_FORMAT, isPositive: true),
                     ],
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 18, color: Colors.white),

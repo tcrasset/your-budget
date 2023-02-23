@@ -66,7 +66,7 @@ class DatabaseProvider {
   /// and the version number.
   Future<Database?> open() async {
     final path = await getDatabasePath('budgetDB');
-    return await openDatabase(
+    return openDatabase(
       path,
       version: 1,
       onCreate: _onCreate,

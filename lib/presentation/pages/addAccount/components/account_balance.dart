@@ -90,7 +90,7 @@ class AccountBalance extends HookWidget {
                   keyboardType: TextInputType.number,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp("[0-9]")),
-                    CurrencyInputFormatter(Constants.CURRENCY_FORMAT, true)
+                    CurrencyInputFormatter(Constants.CURRENCY_FORMAT, isPositive: true)
                   ],
                   textInputAction: TextInputAction.done,
                 ),
