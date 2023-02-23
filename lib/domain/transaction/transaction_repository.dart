@@ -85,17 +85,15 @@ class TransactionRepository {
         .update(
           account.copyWith(balance: account.balance + transaction.amount),
         )
-        .flatMap((_) async => right(unit));
+        .andThen(Future.value(right(unit)));
   }
 
   Future<Either<ValueFailure, Unit>> deleteTransaction(MoneyTransaction transaction) async {
     if (transaction.type == MoneyTransactionType.initial) {
       throw Exception("Initial transactions are only deleted in AccountRepository.");
     }
-    final Either<ValueFailure, Unit> failureOrSuccess =
-        await transactionProvider.delete(transaction.id);
 
-    return await failureOrSuccess.fold((l) => left(l), (_) async {
+    return transactionProvider.delete(transaction.id).flatMap((_) async {
       // Most transactions do not update the budget values
 
       if (transaction.type == MoneyTransactionType.toBeBudgeted) {

@@ -72,14 +72,12 @@ class AccountRepository {
     //TODO: Use real names
 
     final Either<ValueFailure, Account> failureOrAccount = accountProvider.get(accountId);
-    final Either<ValueFailure, Payee> failureOrPayee =
-        await payeeProvider.getStartingBalancePayee();
+    final Future<Either<ValueFailure, Payee>> failureOrPayee =
+        payeeProvider.getStartingBalancePayee();
 
-    return failureOrAccount.fold(
-      (l) => left(l),
-      (account) => failureOrPayee.fold(
-        (l) => left(l),
-        (payee) async {
+    return Future.value(failureOrAccount).flatMap(
+      (account) => failureOrPayee.flatMap(
+        (payee) {
           final MoneyTransaction transaction = MoneyTransaction(
             id: UniqueId(),
             subcategory: null,
@@ -91,8 +89,8 @@ class AccountRepository {
             type: MoneyTransactionType.initial,
           );
 
-          return transactionProvider.create(transaction).flatMap(
-                (_) => Future.value(accountProvider.getToBeBudgeted()).flatMap(
+          return transactionProvider.create(transaction).andThen(
+                Future.value(accountProvider.getToBeBudgeted()).flatMap(
                   (account) => _createToBeBudgetedTransaction(transaction, account)
                       .andThen(_updateAccount(account, balance)),
                 ),
@@ -226,7 +224,6 @@ class AccountRepository {
         : (currentIndex - 1) % numberOfAccounts;
   }
 }
-
 
 // Either.map2(failureOrAccount, failureOrPayee, (Account account, Payee payee) async {
 //       final MoneyTransaction transaction = MoneyTransaction(
