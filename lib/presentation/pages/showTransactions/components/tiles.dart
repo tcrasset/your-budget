@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:your_budget/application/showTransactions/transaction_selector_bloc/transaction_selector_bloc.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
+import 'package:your_budget/models/utils.dart';
 
 class TransactionListTile extends StatelessWidget {
   const TransactionListTile({
@@ -90,7 +91,7 @@ class Subtitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('${transaction.amount.getOrCrash()} €'),
-        Text(transaction.date.toLocal().toString()),
+        Text(getDateTimePhrase(transaction.date.toLocal()))
       ],
     );
   }

@@ -18,13 +18,10 @@ part 'transaction_watcher_state.dart';
 
 class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWatcherState> {
   final TransactionRepository transactionRepository;
-  final IAccountProvider accountRepository;
-  int currentIndex = 0;
 
   Set<String> selectedTransactions = {};
   TransactionWatcherBloc({
     required this.transactionRepository,
-    required this.accountRepository,
   }) : super(const TransactionWatcherState.initial()) {
     on<_TransactionWatchStarted>(_onTransactionWatchStarted);
   }
@@ -40,7 +37,6 @@ class TransactionWatcherBloc extends Bloc<TransactionWatcherEvent, TransactionWa
     }
 
     final Account account = event.account!;
-    transactionRepository.getTransactionsByAccount(account.id);
 
     await emit.forEach<Either<ValueFailure<dynamic>, List<MoneyTransaction>>>(
       transactionRepository.getTransactionsByAccount(account.id),

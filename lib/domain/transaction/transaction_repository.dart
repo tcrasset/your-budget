@@ -65,11 +65,15 @@ class TransactionRepository {
             );
       }
 
-      return await _updateBudgetvalues(
-        budgetValueProvider,
-        transaction,
-        (Amount a, Amount b) => a + b,
-      );
+      if (transaction.type == MoneyTransactionType.subcategory) {
+        return await _updateBudgetvalues(
+          budgetValueProvider,
+          transaction,
+          (Amount a, Amount b) => a + b,
+        );
+      }
+
+      throw Exception("No other money transaction types");
     });
   }
 
@@ -95,7 +99,6 @@ class TransactionRepository {
       // Most transactions do not update the budget values
 
       if (transaction.type == MoneyTransactionType.toBeBudgeted) {
-        //TODO
         throw Exception("Deleting to be budgeted not implemented yet.");
       }
 

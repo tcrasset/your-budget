@@ -1,6 +1,7 @@
 /// This file will contain utility functions destined to be used throughout the project.
 
 // Package imports:
+import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
 // Project imports:
@@ -33,6 +34,13 @@ String getDatePhrase(DateTime datetime) {
   return "${datetime.day} ${monthStringFromDate(datetime)} ${datetime.year}";
 }
 
+/// Gets the string representation of [datetime] in format DD month YYYY hh:mm.
+/// Example: January 3rd, 2020 14:33
+String getDateTimePhrase(DateTime datetime) {
+  return DateFormat.yMMMMd('en_US').add_Hm().format(datetime);
+  // return "${datetime.day} ${monthStringFromDate(datetime)} ${datetime.year} ${datetime.hour}:${datetime.minute}";
+}
+
 /// Creates a datetime object using only the year, month, and date from [datetime].
 DateTime getDateYMD(DateTime datetime) {
   return DateTime(datetime.year, datetime.month, datetime.day);
@@ -60,6 +68,8 @@ bool isSameMonth(DateTime date1, DateTime date2) {
   return date1.month == date2.month && date1.year == date2.year;
 }
 
+/// Returns whether the month of the [query] datetime is between
+/// the month of [lowerBound] and [upperBound], inclusive.
 bool isMonthBetweenInclusive({
   required DateTime query,
   required DateTime lowerBound,

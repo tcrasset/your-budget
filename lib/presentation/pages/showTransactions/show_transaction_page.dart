@@ -33,7 +33,6 @@ class ShowTransactionPage extends StatelessWidget {
         BlocProvider<TransactionWatcherBloc>(
           create: (context) => TransactionWatcherBloc(
             transactionRepository: context.read<TransactionRepository>(),
-            accountRepository: GetIt.instance<IAccountProvider>(),
           )
             // Start the subscription to transactions of the currently selected account.
             ..add(

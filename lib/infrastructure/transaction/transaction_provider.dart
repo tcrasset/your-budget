@@ -191,11 +191,10 @@ class SQFliteTransactionProvider implements ITransactionProvider {
           JOIN ${DatabaseConstants.accountTable} AS giver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} = giver.${DatabaseConstants.ACCOUNT_ID}
           WHERE ${DatabaseConstants.MONEYTRANSACTION_TYPE} = '${MoneyTransactionType.betweenAccount.value}'
         )
-        SELECT * FROM betweenAccountTransactions UNION ALL SELECT * FROM standard_transactions UNION ALL SELECT * FROM inflowTransactions ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
+        SELECT * FROM betweenAccountTransactions UNION ALL SELECT * FROM standard_transactions UNION ALL SELECT * FROM inflowTransactions ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} ASC;
         """;
 
       final data = await database!.rawQuery(sql);
-
       return right(
         data
             .map((transaction) => MoneyTransactionDTO.fromJson(transaction))
@@ -226,10 +225,12 @@ class SQFliteTransactionProvider implements ITransactionProvider {
         );
   }
 
+  UniqueId _getId(Either<Payee, Account> item) => item.fold((l) => l.id, (r) => r.id);
+
   bool _isAccountId(
     MoneyTransaction t,
     UniqueId id,
   ) =>
-      _getId(t.receiver) == id || _getId(t.giver) == id;
-  UniqueId _getId(Either<Payee, Account> item) => item.fold((l) => l.id, (r) => r.id);
+      (t.receiver.isRight() && _getId(t.receiver) == id) ||
+      (t.giver.isRight() && _getId(t.giver) == id);
 }
