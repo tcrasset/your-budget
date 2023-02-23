@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:your_budget/dartz_x.dart';
 import 'package:your_budget/domain/account/account.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/core/amount.dart';
@@ -90,24 +91,18 @@ class AccountRepository {
             type: MoneyTransactionType.initial,
           );
 
-          return await (await transactionProvider.create(transaction)).fold((l) => left(l),
-              (_) async {
-            final toBeBudgeted = accountProvider.getToBeBudgeted();
-
-            return await toBeBudgeted.fold(
-              (l) => left(l),
-              (account) async => (await _updateToBeBudgeted(transaction, account)).fold(
-                (l) => left(l),
-                (_) async => _updateAccount(account, balance),
-              ),
-            );
-          });
+          return transactionProvider.create(transaction).flatMap(
+                (_) => Future.value(accountProvider.getToBeBudgeted()).flatMap(
+                  (account) => _createToBeBudgetedTransaction(transaction, account)
+                      .andThen(_updateAccount(account, balance)),
+                ),
+              );
         },
       ),
     );
   }
 
-  Future<Either<ValueFailure<dynamic>, Unit>> _updateToBeBudgeted(
+  Future<Either<ValueFailure<dynamic>, Unit>> _createToBeBudgetedTransaction(
     MoneyTransaction transaction,
     Account account,
   ) {
@@ -121,38 +116,54 @@ class AccountRepository {
 
   Future<Either<ValueFailure, Unit>> _updateAccount(Account account, Amount balance) async {
     return (await accountProvider.update(account.copyWith(balance: account.balance + balance)))
-        .flatMap((a) => right(unit));
+        .andThen(right(unit));
   }
 
   Future<Either<ValueFailure<dynamic>, Unit>> deleteAccount(Account account) async {
-    return (await accountProvider.delete(account.id)).fold((l) => left(l), (_) async {
-      final Either<ValueFailure, MoneyTransaction> failureOrTransaction = transactionProvider
-          .getAccountTransactions(account.id)
-          .flatMap((tbbAccount) => transactionProvider.getAccountTransactions(account.id))
-          .fold((l) => left(l), (accountTransactions) {
-        return right(accountTransactions.firstWhere((element) => element.receiverId == account.id));
-      });
+    return accountProvider.delete(account.id).andThen(
+          _deleteTransactionOfAccount(account).flatMap(
+            (transaction) => _deleteToBeBudgetedTransaction(transaction.date),
+          ),
+        );
+  }
 
-      return await failureOrTransaction.fold(
-        (l) => left(l),
-        (transaction) async =>
-            (await transactionProvider.delete(transaction.id)).fold((l) => left(l), (_) {
-          return accountProvider
-              .getToBeBudgeted()
-              .flatMap(
-                (tbbAccount) => transactionProvider.getAccountTransactions(tbbAccount.id),
-              )
-              .fold((l) => left(l), (tobeBudgetedTransactions) async {
-            final tbbtransaction =
-                tobeBudgetedTransactions.firstWhere((t) => t.date == transaction.date);
-            return (await transactionProvider.delete(tbbtransaction.id)).fold(
-              (l) => left(l),
-              (r) => right(unit),
-            );
-          });
-        }),
-      );
-    });
+  Future<Either<ValueFailure<dynamic>, MoneyTransaction>> _deleteTransactionOfAccount(
+    Account account,
+  ) async {
+    return Future.value(transactionProvider.getAccountTransactions(account.id))
+        .flatMap(
+          (accountTransactions) async => right(
+            accountTransactions.firstWhere((element) => element.receiverId == account.id),
+          ),
+        )
+        .flatMap(
+          (transaction) async => transactionProvider.delete(transaction.id).andThen(
+                Future.value(right(transaction)),
+              ),
+        );
+  }
+
+  Future<Either<ValueFailure<dynamic>, Unit>> _deleteToBeBudgetedTransaction(
+    DateTime date,
+  ) async {
+    return Future.value(_getToBeBudgetedTransaction(date)).flatMap(
+      (toBeBudgetedTransaction) => transactionProvider.delete(toBeBudgetedTransaction.id).andThen(
+            Future.value(right(unit)),
+          ),
+    );
+  }
+
+  Either<ValueFailure<dynamic>, MoneyTransaction> _getToBeBudgetedTransaction(DateTime date) {
+    return accountProvider
+        .getToBeBudgeted()
+        .flatMap(
+          (tbbAccount) => transactionProvider.getAccountTransactions(tbbAccount.id),
+        )
+        .flatMap(
+          (toBeBudgetedTransactions) => right(
+            toBeBudgetedTransactions.firstWhere((t) => t.date == date),
+          ),
+        );
   }
 
   Future<Account?> getNextAccount(Account? account) async =>

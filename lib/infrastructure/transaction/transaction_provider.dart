@@ -228,6 +228,7 @@ class SQFliteTransactionProvider implements ITransactionProvider {
 
   UniqueId _getId(Either<Payee, Account> item) => item.fold((l) => l.id, (r) => r.id);
 
+  /// Returns True if the [id] from the transaction [t] belongs to an Account in the transaction.
   bool _isAccountId(
     MoneyTransaction t,
     UniqueId id,

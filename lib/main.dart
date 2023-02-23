@@ -73,9 +73,6 @@ class MyBudgetState extends State<MyBudget> {
         ),
         RepositoryProvider(
           create: (context) => ToBeBudgetedRepository(
-            subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
-            transactionProvider: GetIt.instance<ITransactionProvider>(),
-            constantsProvider: GetIt.instance<IConstantsProvider>(),
             accountProvider: GetIt.instance<IAccountProvider>(),
           ),
         ),
