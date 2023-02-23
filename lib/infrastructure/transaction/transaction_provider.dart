@@ -153,13 +153,14 @@ class SQFliteTransactionProvider implements ITransactionProvider {
             NULL as ${DatabaseConstants.SUBCAT_NAME},
             NULL as ${DatabaseConstants.CAT_ID_OUTSIDE},
 
-            receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
-            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiverName,
-            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiverBalance,
-
             giver.${DatabaseConstants.PAYEE_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
             giver.${DatabaseConstants.PAYEE_NAME} as giverName,
-            NULL as giverBalance
+            NULL as giverBalance,
+
+            receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
+            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiverName,
+            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiverBalance
+
 
           FROM ${DatabaseConstants.moneyTransactionTable}
           JOIN ${DatabaseConstants.accountTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.ACCOUNT_ID}
@@ -178,20 +179,20 @@ class SQFliteTransactionProvider implements ITransactionProvider {
             NULL as ${DatabaseConstants.SUBCAT_NAME},
             NULL as ${DatabaseConstants.CAT_ID_OUTSIDE},
 
-            receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
-            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiverName,
-            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiverBalance,
-
             giver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_GIVER_ID},
             giver.${DatabaseConstants.ACCOUNT_NAME} as giverName,
-            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giverBalance
+            giver.${DatabaseConstants.ACCOUNT_BALANCE} as giverBalance,
+
+            receiver.${DatabaseConstants.ACCOUNT_ID} as ${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID},
+            receiver.${DatabaseConstants.ACCOUNT_NAME} as receiverName,
+            receiver.${DatabaseConstants.ACCOUNT_BALANCE} as receiverBalance
 
           FROM ${DatabaseConstants.moneyTransactionTable}
           JOIN ${DatabaseConstants.accountTable} AS receiver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_RECEIVER_ID} = receiver.${DatabaseConstants.ACCOUNT_ID}
           JOIN ${DatabaseConstants.accountTable} AS giver ON ${DatabaseConstants.moneyTransactionTable}.${DatabaseConstants.MONEYTRANSACTION_GIVER_ID} = giver.${DatabaseConstants.ACCOUNT_ID}
           WHERE ${DatabaseConstants.MONEYTRANSACTION_TYPE} = '${MoneyTransactionType.betweenAccount.value}'
         )
-        SELECT * FROM betweenAccountTransactions UNION ALL SELECT * FROM standard_transactions UNION ALL SELECT * FROM inflowTransactions ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} ASC;
+        SELECT * FROM betweenAccountTransactions UNION ALL SELECT * FROM standard_transactions UNION ALL SELECT * FROM inflowTransactions ORDER BY ${DatabaseConstants.MONEYTRANSACTION_DATE} DESC;
         """;
 
       final data = await database!.rawQuery(sql);
