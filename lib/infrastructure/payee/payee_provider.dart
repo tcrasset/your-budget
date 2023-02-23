@@ -28,7 +28,7 @@ class SQFlitePayeeProvider implements IPayeeProvider {
     final lastEmitted = _payeeStreamController.value;
 
     if (lastEmitted == null) {
-      // Should not happen as it's seed with Right([])
+      // Should not happen as it's seeded with Right([])
       throw Exception();
     }
 

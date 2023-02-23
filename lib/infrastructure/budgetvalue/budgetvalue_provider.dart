@@ -58,13 +58,38 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     }
   }
 
-  //TODO: Add updateAll so that there are less re-renders on the page
+  @override
+  Future<Either<ValueFailure, Unit>> createAll(List<BudgetValue> newBudgetvalues) async {
+    final toCreate = newBudgetvalues.map((item) => BudgetValueDTO.fromDomain(item).toJson());
+
+    int totalCreated = 0;
+    try {
+      for (final entry in toCreate) {
+        final int result = await database!.insert(
+          DatabaseConstants.budgetValueTable,
+          entry,
+        );
+        totalCreated = totalCreated + result;
+      }
+    } on DatabaseException catch (e) {
+      return left(ValueFailure.unexpected(message: e.toString()));
+    }
+
+    if (totalCreated != toCreate.length) {
+      return left(const ValueFailure.unexpected(message: "Not all budgetvalues were created."));
+    }
+    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    budgetvalues.addAll(newBudgetvalues);
+    _budgetvalueStreamController.add(Right(budgetvalues));
+    return right(unit);
+  }
+
   @override
   Future<Either<ValueFailure, Unit>> updateAll(List<BudgetValue> toUpdate) async {
-    try {
-      final bvMap = {for (var item in toUpdate) item.id: BudgetValueDTO.fromDomain(item).toJson()};
+    final bvMap = {for (var item in toUpdate) item.id: BudgetValueDTO.fromDomain(item).toJson()};
 
-      int totalUpdated = 0;
+    int totalUpdated = 0;
+    try {
       for (final entry in bvMap.entries) {
         final int result = await database!.update(
           DatabaseConstants.budgetValueTable,
@@ -74,25 +99,25 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
         );
         totalUpdated = totalUpdated + result;
       }
-
-      if (totalUpdated != toUpdate.length) {
-        return left(const ValueFailure.unexpected(message: "Not all budgetvalues where updated."));
-      }
-
-      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
-      final indices = toUpdate
-          .map((value) => budgetvalues.indexWhere((stored) => stored.id == value.id))
-          .toList();
-
-      indices.asMap().forEach((currentIndex, savingIndex) {
-        budgetvalues[savingIndex] = toUpdate[currentIndex];
-      });
-
-      _budgetvalueStreamController.add(Right(budgetvalues));
-      return right(unit);
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    if (totalUpdated != toUpdate.length) {
+      return left(const ValueFailure.unexpected(message: "Not all budgetvalues were updated."));
+    }
+
+    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final indices = toUpdate
+        .map((value) => budgetvalues.indexWhere((stored) => stored.id == value.id))
+        .toList();
+
+    indices.asMap().forEach((currentIndex, savingIndex) {
+      budgetvalues[savingIndex] = toUpdate[currentIndex];
+    });
+
+    _budgetvalueStreamController.add(Right(budgetvalues));
+    return right(unit);
   }
 
   @override

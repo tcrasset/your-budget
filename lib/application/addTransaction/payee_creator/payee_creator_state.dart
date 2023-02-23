@@ -6,7 +6,6 @@ class PayeeCreatorState with _$PayeeCreatorState {
     required Payee payee,
     required bool showErrorMessages,
     required bool isSaving,
-    required bool isEditing,
     required Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption,
   }) = _PayeeCreatorState;
 
@@ -14,7 +13,6 @@ class PayeeCreatorState with _$PayeeCreatorState {
         payee: Payee.empty(),
         showErrorMessages: false,
         isSaving: false,
-        isEditing: false,
         saveFailureOrSuccessOption: none(),
       );
 }

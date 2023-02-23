@@ -55,7 +55,6 @@ class PayeeCreatorBloc extends Bloc<PayeeCreatorEvent, PayeeCreatorState> {
 
     final newState = state.copyWith(
       isSaving: false,
-      showErrorMessages: true,
       saveFailureOrSuccessOption: optionOf(failureOrSuccess),
     );
 

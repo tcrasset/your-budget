@@ -1,41 +1,35 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 // Package imports:
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
+import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
+import 'package:your_budget/application/budget/category_creator_bloc/category_creator_bloc.dart';
 
 // Project imports:
-import 'package:your_budget/appstate.dart';
 import 'package:your_budget/components/add_dialog.dart';
-import 'package:your_budget/components/widget_view_classes.dart';
-import 'package:your_budget/models/categories.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories.dart';
+import 'package:your_budget/presentation/pages/modifyCategories/components/add_category_dialog.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/modify_main_category_row.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/modify_subcategory_row.dart';
 
-class ModifyCategories extends StatefulWidget {
-  @override
-  _ModifyCategoriesController createState() => _ModifyCategoriesController();
-}
+class ModifyCategories extends StatelessWidget {
+  const ModifyCategories();
 
-class _ModifyCategoriesController extends State<ModifyCategories> {
   Future<void> handleAddCategory(BuildContext context) async {
-    final AppState appState = Provider.of<AppState>(context, listen: false);
     const String hintText = "Add new category";
+    final bloc = context.read<CategoryCreatorBloc>();
 
-    final String? categoryName = await addDialog(
-      context: context,
-      title: hintText,
-      hintText: hintText,
-      nameValidator: validateCategoryName,
-      successButtonName: "Submit",
+    final String? categoryName = await addCategoryDialog(
+      superContext: context,
     );
-    if (categoryName != null) appState.addCategory(categoryName: categoryName);
-  }
 
-  @override
-  Widget build(BuildContext context) => _ModifyCategoriesView(this);
+    if (categoryName != null) {
+      bloc.add(CategoryCreatorEvent.nameChanged(categoryName));
+      bloc.add(const CategoryCreatorEvent.saved());
+    }
+  }
 
   void handleDeleteCategory(BuildContext context) {
     Navigator.push(
@@ -43,43 +37,60 @@ class _ModifyCategoriesController extends State<ModifyCategories> {
       MaterialPageRoute(builder: (context) => const DeleteCategories()),
     );
   }
-}
-
-class _ModifyCategoriesView extends WidgetView<ModifyCategories, _ModifyCategoriesController> {
-  const _ModifyCategoriesView(super.state);
 
   @override
   Widget build(BuildContext context) {
-    final AppState appState = Provider.of<AppState>(context);
-
-    final List<CategoryLegacy?> categories = appState.allCategories;
-    if (categories.isNotEmpty) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("Modify categories"),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(FontAwesomeIcons.trash),
-              onPressed: () => state.handleDeleteCategory(context),
-            ),
-            IconButton(
-              icon: const Icon(FontAwesomeIcons.plus),
-              onPressed: () => state.handleAddCategory(context),
-            ),
-          ],
-        ),
-        body: ListView.builder(
-          itemCount: categories.length,
-          itemBuilder: (context, index) {
-            final item = categories[index];
-            return (item is MainCategory)
-                ? ModifyMainCategoryRow(cat: item)
-                : ModifySubcategoryRow(subcat: item as SubCategory?);
-          },
-        ),
-      );
-    }
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Modify categories"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(FontAwesomeIcons.trash),
+            onPressed: () => handleDeleteCategory(context),
+          ),
+          IconButton(
+            icon: const Icon(FontAwesomeIcons.plus),
+            onPressed: () => handleAddCategory(context),
+          ),
+        ],
+      ),
+      body: BlocBuilder<BudgetBloc, BudgetState>(
+        builder: (context, state) {
+          if (state.status == BudgetOverviewStatus.loading ||
+              state.status == BudgetOverviewStatus.initial) {
+            return const CircularProgressIndicator();
+          } else if (state.status == BudgetOverviewStatus.failure) {
+            return const CircularProgressIndicator();
+          } else if (state.status == BudgetOverviewStatus.success) {
+            final List<Widget> items = state.budget!.groups.fold(
+              [],
+              (items, group) => [
+                ...items,
+                ModifyMainCategoryRow(
+                  name: group.category.name,
+                  id: group.category.id,
+                ),
+                ...group.entries.map(
+                  (e) => ModifySubcategoryRow(name: e.name, id: e.subcategoryId),
+                ),
+              ],
+            );
+            return Center(
+              child: Scrollbar(
+                child: ListView.separated(
+                  itemBuilder: (BuildContext context, int index) => items[index],
+                  itemCount: items.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      const Divider(height: 1, color: Colors.purple),
+                ),
+              ),
+            );
+          } else {
+            return Container();
+          }
+        },
+      ),
+    );
   }
 }
 

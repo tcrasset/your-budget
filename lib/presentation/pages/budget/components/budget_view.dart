@@ -19,9 +19,9 @@ class BudgetEntries extends StatelessWidget {
       builder: (context, state) {
         if (state.status == BudgetOverviewStatus.loading ||
             state.status == BudgetOverviewStatus.initial) {
-          return const CircularProgressIndicator.adaptive();
+          return const CircularProgressIndicator();
         } else if (state.status == BudgetOverviewStatus.failure) {
-          return const CircularProgressIndicator.adaptive();
+          return const CircularProgressIndicator();
         } else if (state.status == BudgetOverviewStatus.success) {
           final List<Widget> items = state.budget!.groups.fold(
             [],

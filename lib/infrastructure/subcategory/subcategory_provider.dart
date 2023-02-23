@@ -25,6 +25,17 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
   final _subcategoryStreamController =
       BehaviorSubject<Either<ValueFailure, List<Subcategory>>>.seeded(const Right([]));
 
+  List<Subcategory> get _subcategories {
+    final lastEmitted = _subcategoryStreamController.value;
+
+    if (lastEmitted == null) {
+      // Should not happen as it's seeded with Right([])
+      throw Exception();
+    }
+
+    return lastEmitted.fold((l) => throw Exception(l), (r) => r);
+  }
+
   @override
   Future<Either<ValueFailure, int?>> count() async {
     try {
@@ -63,22 +74,29 @@ class SQFliteSubcategoryProvider implements ISubcategoryProvider {
 
   @override
   Future<Either<ValueFailure, Unit>> create(Subcategory subcategory) async {
+    late int id;
     try {
-      final subcategories = [..._subcategoryStreamController.value!.getOrElse(() => [])];
-
-      final SubcategoryDTO subcategoryDTO = SubcategoryDTO.fromDomain(subcategory);
-      await database!.insert(DatabaseConstants.subcategoryTable, subcategoryDTO.toJson());
-
-      subcategories.add(subcategory);
-      _subcategoryStreamController.add(Right(subcategories));
-
-      return right(unit);
+      id = await database!.insert(
+          DatabaseConstants.subcategoryTable, SubcategoryDTO.fromDomain(subcategory).toJson());
     } on DatabaseException catch (e) {
       if (e.isUniqueConstraintError()) {
         return left(ValueFailure.uniqueName(failedValue: e.toString()));
       }
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    if (id == 0) {
+      return left(
+        ValueFailure.unexpected(
+            message: "Subcategory with id ${subcategory.id} could not be created."),
+      );
+    }
+    final subcategories = [..._subcategories];
+
+    subcategories.add(subcategory);
+    _subcategoryStreamController.add(Right(subcategories));
+
+    return right(unit);
   }
 
   @override

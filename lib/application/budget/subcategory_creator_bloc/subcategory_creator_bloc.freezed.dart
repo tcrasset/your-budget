@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'payee_creator_bloc.dart';
+part of 'subcategory_creator_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,24 +15,24 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$PayeeCreatorEvent {
+mixin _$SubcategoryCreatorEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function() initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function()? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function()? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
@@ -63,16 +63,17 @@ mixin _$PayeeCreatorEvent {
 }
 
 /// @nodoc
-abstract class $PayeeCreatorEventCopyWith<$Res> {
-  factory $PayeeCreatorEventCopyWith(
-          PayeeCreatorEvent value, $Res Function(PayeeCreatorEvent) then) =
-      _$PayeeCreatorEventCopyWithImpl<$Res, PayeeCreatorEvent>;
+abstract class $SubcategoryCreatorEventCopyWith<$Res> {
+  factory $SubcategoryCreatorEventCopyWith(SubcategoryCreatorEvent value,
+          $Res Function(SubcategoryCreatorEvent) then) =
+      _$SubcategoryCreatorEventCopyWithImpl<$Res, SubcategoryCreatorEvent>;
 }
 
 /// @nodoc
-class _$PayeeCreatorEventCopyWithImpl<$Res, $Val extends PayeeCreatorEvent>
-    implements $PayeeCreatorEventCopyWith<$Res> {
-  _$PayeeCreatorEventCopyWithImpl(this._value, this._then);
+class _$SubcategoryCreatorEventCopyWithImpl<$Res,
+        $Val extends SubcategoryCreatorEvent>
+    implements $SubcategoryCreatorEventCopyWith<$Res> {
+  _$SubcategoryCreatorEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -85,93 +86,66 @@ abstract class _$$_InitializedCopyWith<$Res> {
   factory _$$_InitializedCopyWith(
           _$_Initialized value, $Res Function(_$_Initialized) then) =
       __$$_InitializedCopyWithImpl<$Res>;
-  @useResult
-  $Res call({Option<Name> initialNameOption});
 }
 
 /// @nodoc
 class __$$_InitializedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res, _$_Initialized>
+    extends _$SubcategoryCreatorEventCopyWithImpl<$Res, _$_Initialized>
     implements _$$_InitializedCopyWith<$Res> {
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? initialNameOption = null,
-  }) {
-    return _then(_$_Initialized(
-      null == initialNameOption
-          ? _value.initialNameOption
-          : initialNameOption // ignore: cast_nullable_to_non_nullable
-              as Option<Name>,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$_Initialized implements _Initialized {
-  const _$_Initialized(this.initialNameOption);
-
-  @override
-  final Option<Name> initialNameOption;
+  const _$_Initialized();
 
   @override
   String toString() {
-    return 'PayeeCreatorEvent.initialized(initialNameOption: $initialNameOption)';
+    return 'SubcategoryCreatorEvent.initialized()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Initialized &&
-            (identical(other.initialNameOption, initialNameOption) ||
-                other.initialNameOption == initialNameOption));
+        (other.runtimeType == runtimeType && other is _$_Initialized);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, initialNameOption);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_InitializedCopyWith<_$_Initialized> get copyWith =>
-      __$$_InitializedCopyWithImpl<_$_Initialized>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function() initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) {
-    return initialized(initialNameOption);
+    return initialized();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function()? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) {
-    return initialized?.call(initialNameOption);
+    return initialized?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function()? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
   }) {
     if (initialized != null) {
-      return initialized(initialNameOption);
+      return initialized();
     }
     return orElse();
   }
@@ -211,14 +185,8 @@ class _$_Initialized implements _Initialized {
   }
 }
 
-abstract class _Initialized implements PayeeCreatorEvent {
-  const factory _Initialized(final Option<Name> initialNameOption) =
-      _$_Initialized;
-
-  Option<Name> get initialNameOption;
-  @JsonKey(ignore: true)
-  _$$_InitializedCopyWith<_$_Initialized> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _Initialized implements SubcategoryCreatorEvent {
+  const factory _Initialized() = _$_Initialized;
 }
 
 /// @nodoc
@@ -232,7 +200,7 @@ abstract class _$$_NameChangedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_NameChangedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res, _$_NameChanged>
+    extends _$SubcategoryCreatorEventCopyWithImpl<$Res, _$_NameChanged>
     implements _$$_NameChangedCopyWith<$Res> {
   __$$_NameChangedCopyWithImpl(
       _$_NameChanged _value, $Res Function(_$_NameChanged) _then)
@@ -262,7 +230,7 @@ class _$_NameChanged implements _NameChanged {
 
   @override
   String toString() {
-    return 'PayeeCreatorEvent.nameChanged(name: $name)';
+    return 'SubcategoryCreatorEvent.nameChanged(name: $name)';
   }
 
   @override
@@ -285,7 +253,7 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function() initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) {
@@ -295,7 +263,7 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function()? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) {
@@ -305,7 +273,7 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function()? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
@@ -351,7 +319,7 @@ class _$_NameChanged implements _NameChanged {
   }
 }
 
-abstract class _NameChanged implements PayeeCreatorEvent {
+abstract class _NameChanged implements SubcategoryCreatorEvent {
   const factory _NameChanged(final String name) = _$_NameChanged;
 
   String get name;
@@ -368,7 +336,7 @@ abstract class _$$_SavedCopyWith<$Res> {
 
 /// @nodoc
 class __$$_SavedCopyWithImpl<$Res>
-    extends _$PayeeCreatorEventCopyWithImpl<$Res, _$_Saved>
+    extends _$SubcategoryCreatorEventCopyWithImpl<$Res, _$_Saved>
     implements _$$_SavedCopyWith<$Res> {
   __$$_SavedCopyWithImpl(_$_Saved _value, $Res Function(_$_Saved) _then)
       : super(_value, _then);
@@ -381,7 +349,7 @@ class _$_Saved implements _Saved {
 
   @override
   String toString() {
-    return 'PayeeCreatorEvent.saved()';
+    return 'SubcategoryCreatorEvent.saved()';
   }
 
   @override
@@ -396,7 +364,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Option<Name> initialNameOption) initialized,
+    required TResult Function() initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) {
@@ -406,7 +374,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Option<Name> initialNameOption)? initialized,
+    TResult? Function()? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) {
@@ -416,7 +384,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Option<Name> initialNameOption)? initialized,
+    TResult Function()? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
@@ -462,42 +430,43 @@ class _$_Saved implements _Saved {
   }
 }
 
-abstract class _Saved implements PayeeCreatorEvent {
+abstract class _Saved implements SubcategoryCreatorEvent {
   const factory _Saved() = _$_Saved;
 }
 
 /// @nodoc
-mixin _$PayeeCreatorState {
-  Payee get payee => throw _privateConstructorUsedError;
+mixin _$SubcategoryCreatorState {
+  Subcategory get subcategory => throw _privateConstructorUsedError;
   bool get showErrorMessages => throw _privateConstructorUsedError;
   bool get isSaving => throw _privateConstructorUsedError;
   Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $PayeeCreatorStateCopyWith<PayeeCreatorState> get copyWith =>
+  $SubcategoryCreatorStateCopyWith<SubcategoryCreatorState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $PayeeCreatorStateCopyWith<$Res> {
-  factory $PayeeCreatorStateCopyWith(
-          PayeeCreatorState value, $Res Function(PayeeCreatorState) then) =
-      _$PayeeCreatorStateCopyWithImpl<$Res, PayeeCreatorState>;
+abstract class $SubcategoryCreatorStateCopyWith<$Res> {
+  factory $SubcategoryCreatorStateCopyWith(SubcategoryCreatorState value,
+          $Res Function(SubcategoryCreatorState) then) =
+      _$SubcategoryCreatorStateCopyWithImpl<$Res, SubcategoryCreatorState>;
   @useResult
   $Res call(
-      {Payee payee,
+      {Subcategory subcategory,
       bool showErrorMessages,
       bool isSaving,
       Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption});
 
-  $PayeeCopyWith<$Res> get payee;
+  $SubcategoryCopyWith<$Res> get subcategory;
 }
 
 /// @nodoc
-class _$PayeeCreatorStateCopyWithImpl<$Res, $Val extends PayeeCreatorState>
-    implements $PayeeCreatorStateCopyWith<$Res> {
-  _$PayeeCreatorStateCopyWithImpl(this._value, this._then);
+class _$SubcategoryCreatorStateCopyWithImpl<$Res,
+        $Val extends SubcategoryCreatorState>
+    implements $SubcategoryCreatorStateCopyWith<$Res> {
+  _$SubcategoryCreatorStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -507,16 +476,16 @@ class _$PayeeCreatorStateCopyWithImpl<$Res, $Val extends PayeeCreatorState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payee = null,
+    Object? subcategory = null,
     Object? showErrorMessages = null,
     Object? isSaving = null,
     Object? saveFailureOrSuccessOption = null,
   }) {
     return _then(_value.copyWith(
-      payee: null == payee
-          ? _value.payee
-          : payee // ignore: cast_nullable_to_non_nullable
-              as Payee,
+      subcategory: null == subcategory
+          ? _value.subcategory
+          : subcategory // ignore: cast_nullable_to_non_nullable
+              as Subcategory,
       showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
@@ -534,52 +503,53 @@ class _$PayeeCreatorStateCopyWithImpl<$Res, $Val extends PayeeCreatorState>
 
   @override
   @pragma('vm:prefer-inline')
-  $PayeeCopyWith<$Res> get payee {
-    return $PayeeCopyWith<$Res>(_value.payee, (value) {
-      return _then(_value.copyWith(payee: value) as $Val);
+  $SubcategoryCopyWith<$Res> get subcategory {
+    return $SubcategoryCopyWith<$Res>(_value.subcategory, (value) {
+      return _then(_value.copyWith(subcategory: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$$_PayeeCreatorStateCopyWith<$Res>
-    implements $PayeeCreatorStateCopyWith<$Res> {
-  factory _$$_PayeeCreatorStateCopyWith(_$_PayeeCreatorState value,
-          $Res Function(_$_PayeeCreatorState) then) =
-      __$$_PayeeCreatorStateCopyWithImpl<$Res>;
+abstract class _$$_SubcategoryCreatorStateCopyWith<$Res>
+    implements $SubcategoryCreatorStateCopyWith<$Res> {
+  factory _$$_SubcategoryCreatorStateCopyWith(_$_SubcategoryCreatorState value,
+          $Res Function(_$_SubcategoryCreatorState) then) =
+      __$$_SubcategoryCreatorStateCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {Payee payee,
+      {Subcategory subcategory,
       bool showErrorMessages,
       bool isSaving,
       Option<Either<ValueFailure, Unit>> saveFailureOrSuccessOption});
 
   @override
-  $PayeeCopyWith<$Res> get payee;
+  $SubcategoryCopyWith<$Res> get subcategory;
 }
 
 /// @nodoc
-class __$$_PayeeCreatorStateCopyWithImpl<$Res>
-    extends _$PayeeCreatorStateCopyWithImpl<$Res, _$_PayeeCreatorState>
-    implements _$$_PayeeCreatorStateCopyWith<$Res> {
-  __$$_PayeeCreatorStateCopyWithImpl(
-      _$_PayeeCreatorState _value, $Res Function(_$_PayeeCreatorState) _then)
+class __$$_SubcategoryCreatorStateCopyWithImpl<$Res>
+    extends _$SubcategoryCreatorStateCopyWithImpl<$Res,
+        _$_SubcategoryCreatorState>
+    implements _$$_SubcategoryCreatorStateCopyWith<$Res> {
+  __$$_SubcategoryCreatorStateCopyWithImpl(_$_SubcategoryCreatorState _value,
+      $Res Function(_$_SubcategoryCreatorState) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? payee = null,
+    Object? subcategory = null,
     Object? showErrorMessages = null,
     Object? isSaving = null,
     Object? saveFailureOrSuccessOption = null,
   }) {
-    return _then(_$_PayeeCreatorState(
-      payee: null == payee
-          ? _value.payee
-          : payee // ignore: cast_nullable_to_non_nullable
-              as Payee,
+    return _then(_$_SubcategoryCreatorState(
+      subcategory: null == subcategory
+          ? _value.subcategory
+          : subcategory // ignore: cast_nullable_to_non_nullable
+              as Subcategory,
       showErrorMessages: null == showErrorMessages
           ? _value.showErrorMessages
           : showErrorMessages // ignore: cast_nullable_to_non_nullable
@@ -598,15 +568,15 @@ class __$$_PayeeCreatorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_PayeeCreatorState implements _PayeeCreatorState {
-  const _$_PayeeCreatorState(
-      {required this.payee,
+class _$_SubcategoryCreatorState implements _SubcategoryCreatorState {
+  const _$_SubcategoryCreatorState(
+      {required this.subcategory,
       required this.showErrorMessages,
       required this.isSaving,
       required this.saveFailureOrSuccessOption});
 
   @override
-  final Payee payee;
+  final Subcategory subcategory;
   @override
   final bool showErrorMessages;
   @override
@@ -616,15 +586,16 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
 
   @override
   String toString() {
-    return 'PayeeCreatorState(payee: $payee, showErrorMessages: $showErrorMessages, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption)';
+    return 'SubcategoryCreatorState(subcategory: $subcategory, showErrorMessages: $showErrorMessages, isSaving: $isSaving, saveFailureOrSuccessOption: $saveFailureOrSuccessOption)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PayeeCreatorState &&
-            (identical(other.payee, payee) || other.payee == payee) &&
+            other is _$_SubcategoryCreatorState &&
+            (identical(other.subcategory, subcategory) ||
+                other.subcategory == subcategory) &&
             (identical(other.showErrorMessages, showErrorMessages) ||
                 other.showErrorMessages == showErrorMessages) &&
             (identical(other.isSaving, isSaving) ||
@@ -636,27 +607,28 @@ class _$_PayeeCreatorState implements _PayeeCreatorState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, payee, showErrorMessages,
+  int get hashCode => Object.hash(runtimeType, subcategory, showErrorMessages,
       isSaving, saveFailureOrSuccessOption);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PayeeCreatorStateCopyWith<_$_PayeeCreatorState> get copyWith =>
-      __$$_PayeeCreatorStateCopyWithImpl<_$_PayeeCreatorState>(
-          this, _$identity);
+  _$$_SubcategoryCreatorStateCopyWith<_$_SubcategoryCreatorState>
+      get copyWith =>
+          __$$_SubcategoryCreatorStateCopyWithImpl<_$_SubcategoryCreatorState>(
+              this, _$identity);
 }
 
-abstract class _PayeeCreatorState implements PayeeCreatorState {
-  const factory _PayeeCreatorState(
-      {required final Payee payee,
+abstract class _SubcategoryCreatorState implements SubcategoryCreatorState {
+  const factory _SubcategoryCreatorState(
+      {required final Subcategory subcategory,
       required final bool showErrorMessages,
       required final bool isSaving,
       required final Option<Either<ValueFailure, Unit>>
-          saveFailureOrSuccessOption}) = _$_PayeeCreatorState;
+          saveFailureOrSuccessOption}) = _$_SubcategoryCreatorState;
 
   @override
-  Payee get payee;
+  Subcategory get subcategory;
   @override
   bool get showErrorMessages;
   @override
@@ -665,6 +637,6 @@ abstract class _PayeeCreatorState implements PayeeCreatorState {
   Option<Either<ValueFailure, Unit>> get saveFailureOrSuccessOption;
   @override
   @JsonKey(ignore: true)
-  _$$_PayeeCreatorStateCopyWith<_$_PayeeCreatorState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_SubcategoryCreatorStateCopyWith<_$_SubcategoryCreatorState>
+      get copyWith => throw _privateConstructorUsedError;
 }

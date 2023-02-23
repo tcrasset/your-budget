@@ -8,6 +8,7 @@ import 'package:your_budget/domain/core/value_failure.dart';
 
 abstract class IBudgetValueProvider {
   Future<Either<ValueFailure, Unit>> create(BudgetValue budgetvalue);
+  Future<Either<ValueFailure, Unit>> createAll(List<BudgetValue> newBudgetvalues);
   Future<Either<ValueFailure, BudgetValue>> get({
     required int year,
     required int month,

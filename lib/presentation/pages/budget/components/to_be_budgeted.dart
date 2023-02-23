@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
 import 'package:your_budget/application/budget/to_be_budgeted_bloc/to_be_budgeted_bloc.dart';
 
 // Package imports:
@@ -20,6 +21,7 @@ class ToBeBudgeted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BlocProvider.of<BudgetBloc>(context);
     return SizedBox(
       height: 50,
       child: Row(

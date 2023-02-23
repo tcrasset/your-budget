@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get_it/get_it.dart';
+import 'package:your_budget/application/budget/budget_bloc/budget_bloc.dart';
+import 'package:your_budget/application/budget/category_creator_bloc/category_creator_bloc.dart';
+import 'package:your_budget/application/budget/subcategory_creator_bloc/subcategory_creator_bloc.dart';
 import 'package:your_budget/application/budget/to_be_budgeted_bloc/to_be_budgeted_bloc.dart';
 // Project imports:
 import 'package:your_budget/application/core/bloc_observer.dart';
@@ -13,9 +16,11 @@ import 'package:your_budget/application/showTransactions/selected_account_cubit/
 import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/account/i_account_provider.dart';
 import 'package:your_budget/domain/budget/budget_repository.dart';
+import 'package:your_budget/domain/budget/subcategory_repository.dart';
 import 'package:your_budget/domain/budget/to_be_budgeted_repository.dart';
 import 'package:your_budget/domain/budgetvalue/i_budgetvalue_provider.dart';
 import 'package:your_budget/domain/category/i_category_provider.dart';
+import 'package:your_budget/domain/constants/i_constants_provider.dart';
 import 'package:your_budget/domain/payee/i_payee_provider.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 import 'package:your_budget/domain/transaction/i_transaction_provider.dart';
@@ -59,7 +64,6 @@ class MyBudgetState extends State<MyBudget> {
 
   @override
   Widget build(BuildContext context) {
-    // final AppState appState = Provider.of<AppState>(context);
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider(
@@ -73,6 +77,13 @@ class MyBudgetState extends State<MyBudget> {
         RepositoryProvider(
           create: (context) => ToBeBudgetedRepository(
             accountProvider: GetIt.instance<IAccountProvider>(),
+          ),
+        ),
+        RepositoryProvider(
+          create: (context) => SubcategoryRepository(
+            subcategoryProvider: GetIt.instance<ISubcategoryProvider>(),
+            budgetvalueProvider: GetIt.instance<IBudgetValueProvider>(),
+            constantsProvider: GetIt.instance<IConstantsProvider>(),
           ),
         ),
         RepositoryProvider(
@@ -102,10 +113,20 @@ class MyBudgetState extends State<MyBudget> {
             ),
             home: MultiBlocProvider(
               providers: [
+                BlocProvider<BudgetBloc>(
+                  create: (context) =>
+                      BudgetBloc(budgetRepository: context.read<BudgetRepository>())
+                        ..add(BudgetEvent.newBudgetRequested(DateTime.now())),
+                ),
                 BlocProvider<SubcategoryWatcherBloc>(
                   create: (context) => SubcategoryWatcherBloc(
                     subcategoryRepository: GetIt.instance<ISubcategoryProvider>(),
                   )..add(const SubcategoryWatcherEvent.watchSubcategoriesStarted()),
+                ),
+                BlocProvider<CategoryCreatorBloc>(
+                  create: (context) => CategoryCreatorBloc(
+                    categoryProvider: GetIt.instance<ICategoryProvider>(),
+                  ),
                 ),
                 BlocProvider<BudgetDateCubit>(create: (_) => BudgetDateCubit()),
                 BlocProvider<ToBeBudgetedBloc>(

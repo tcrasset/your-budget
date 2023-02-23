@@ -1,22 +1,21 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:provider/provider.dart';
-
 // Project imports:
-import 'package:your_budget/appstate.dart';
 import 'package:your_budget/components/add_dialog.dart';
-import 'package:your_budget/models/categories.dart';
+import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/modify_categories.dart';
 
 class ModifySubcategoryRow extends StatelessWidget {
-  final SubCategory? subcat;
-  const ModifySubcategoryRow({super.key, this.subcat});
+  final UniqueId id;
+  final Name name;
+  const ModifySubcategoryRow({super.key, required this.name, required this.id});
 
   Future<void> handleSubCategoryNameChange(BuildContext context) async {
     const String hintText = "Modify subcategory name";
+    // final bloc = context.read<SubcategoryCreatorBloc>();
+
     final String? subcategoryName = await addDialog(
       context: context,
       title: hintText,
@@ -25,8 +24,8 @@ class ModifySubcategoryRow extends StatelessWidget {
       nameValidator: validateCategoryName,
     );
     if (subcategoryName != null) {
-      final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.updateSubcategoryName(subcat!.id, subcategoryName);
+      // bloc.add(CategoryCreatorEvent.nameChanged(categoryName));
+      // bloc.add(const CategoryCreatorEvent.saved());
     }
   }
 
@@ -36,7 +35,7 @@ class ModifySubcategoryRow extends StatelessWidget {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Subcategory ${subcat!.name} ?'),
+          title: Text('Delete Subcategory ${name.getOrCrash()} ?'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -58,10 +57,11 @@ class ModifySubcategoryRow extends StatelessWidget {
   }
 
   Future<void> deleteSubcategory(BuildContext context) async {
+    // final bloc = context.read<SubcategoryCreatorBloc>();
     final String? result = await _showDeleteDialog(context);
+
     if (result == "Delete") {
-      final AppState appState = Provider.of<AppState>(context, listen: false);
-      appState.removeSubcategory(subcat!.id);
+      // bloc.add(SubcategoryCreatorEvent.delete(id));
     }
   }
 
@@ -78,7 +78,7 @@ class ModifySubcategoryRow extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
-                subcat!.name!,
+                name.getOrCrash(),
                 style: TextStyle(
                   fontSize: Constants.SUBCATEGORY_TEXT_STYLE.fontSize,
                   fontWeight: Constants.SUBCATEGORY_TEXT_STYLE.fontWeight,
