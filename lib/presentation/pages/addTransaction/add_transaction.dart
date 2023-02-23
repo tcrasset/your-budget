@@ -112,14 +112,7 @@ class AddTransactionPage extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Container(
-                            alignment: Alignment.centerRight,
-                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: const AmountInputRow(
-                              onAmountChange: _onAmountChange,
-                              validateAmount: _validateAmount,
-                            ),
-                          ),
+                          const AmountField(),
                           const ReceiverField(),
                           const GiverField(),
                           const SubcategoryField(),
@@ -144,26 +137,3 @@ class AddTransactionPage extends StatelessWidget {
     );
   }
 }
-
-void _onAmountChange(BuildContext context, String value) =>
-    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(value));
-
-String? _validateAmount(BuildContext context) {
-  final state = context.read<TransactionCreatorBloc>().state;
-
-  if (state.showErrorMessages == false) {
-    // Don't show error messages after a successful save.
-    return null;
-  }
-
-  return state.moneyTransaction.amount.value.fold(
-    (f) => _failAmountClosure(f),
-    (_) => null,
-  );
-}
-
-String? _failAmountClosure(ValueFailure f) => f.maybeMap(
-      tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
-      invalidAmount: (_) => "Please specify an amount.",
-      orElse: () => null,
-    );

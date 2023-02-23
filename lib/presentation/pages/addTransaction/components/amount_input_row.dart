@@ -1,12 +1,13 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
 // Project imports:
 import 'package:your_budget/application/addTransaction/transaction_creator/transaction_creator_bloc.dart';
+import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/utils/currency.dart' as currencyUtils;
 import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addTransaction/components/currency_input_formatter.dart';
 
@@ -16,9 +17,49 @@ class CurrencyOperations {
   static String removeMinusSign(String amount) => amount.replaceAll("-", "").trim();
   static String removeSymbol(String amount) =>
       amount.replaceAll(Constants.CURRENCY_FORMAT.currencySymbol, "").trim();
-  static String formatAmount(double amount) => Constants.CURRENCY_FORMAT.format(amount).trim();
-  static final zero = Constants.CURRENCY_FORMAT.format(0);
+  static String removeAllButNumbers(String amount) => removeMinusSign(removeSymbol(amount));
+  static String formatAmount(double amount) => currencyUtils.format(amount).trim();
+  static final String zero = currencyUtils.format(0);
 }
+
+class AmountField extends StatelessWidget {
+  const AmountField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.centerRight,
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: const AmountInputRow(
+        onAmountChange: _onAmountChange,
+        validateAmount: _validateAmount,
+      ),
+    );
+  }
+}
+
+void _onAmountChange(BuildContext context, String value) =>
+    context.read<TransactionCreatorBloc>().add(TransactionCreatorEvent.amountChanged(value));
+
+String? _validateAmount(BuildContext context) {
+  final state = context.read<TransactionCreatorBloc>().state;
+
+  if (state.showErrorMessages == false) {
+    // Don't show error messages after a successful save.
+    return null;
+  }
+
+  return state.moneyTransaction.amount.value.fold(
+    (f) => _failAmountClosure(f),
+    (_) => null,
+  );
+}
+
+String? _failAmountClosure(ValueFailure f) => f.maybeMap(
+      tooBigAmount: (_) => "Must be smaller than ${Amount.MAX_VALUE}",
+      invalidAmount: (_) => "Please specify an amount.",
+      orElse: () => null,
+    );
 
 class AmountInputRow extends HookWidget {
   final void Function(BuildContext, String) onAmountChange;
@@ -30,35 +71,46 @@ class AmountInputRow extends HookWidget {
     required this.validateAmount,
   });
 
+  double? getAmount(TransactionCreatorState state) {
+    final value = state.moneyTransaction.amount.value.fold((f) => null, (v) => v);
+    return value;
+  }
+
+  void updateAmountInController(
+      BuildContext context, TransactionCreatorState state, TextEditingController controller) {
+    // Every modification of the amount value (except initialization) gets passed through the bloc
+    // Thus, here is the only time where we have to cast from number to String
+    // and where we have to change the selection
+    double? amount = getAmount(state);
+    print("getAmount amount: $amount");
+    print("getAmount zero: ${CurrencyOperations.zero}");
+    if (amount == null) {
+      controller.text = CurrencyOperations.zero;
+      return;
+    }
+
+    final String cleanAmount =
+        CurrencyOperations.removeAllButNumbers(CurrencyOperations.formatAmount(amount));
+    final bool isZeroAmount =
+        cleanAmount == CurrencyOperations.removeAllButNumbers(CurrencyOperations.zero);
+    final String finalAmount = isZeroAmount
+        ? CurrencyOperations.formatAmount(currencyUtils.parse(cleanAmount).toDouble())
+        : CurrencyOperations.formatAmount(amount);
+
+    controller
+      ..text = finalAmount
+      ..selection = TextSelection.collapsed(offset: controller.text.length);
+  }
+
   @override
   Widget build(BuildContext context) {
     final TextEditingController controller =
         useTextEditingController(text: CurrencyOperations.zero);
     final isPositive = useState(true);
 
-    String? getAmount(TransactionCreatorState state) {
-      final value = state.moneyTransaction.amount.value.fold(
-        (f) => null,
-        (v) => CurrencyOperations.formatAmount(v),
-      );
-      return value;
-    }
-
     return BlocConsumer<TransactionCreatorBloc, TransactionCreatorState>(
       listenWhen: (p, c) => getAmount(p) != getAmount(c),
-      listener: (context, state) {
-        // Every modification of the amount value (except initialization) gets passed through the bloc
-        // Thus, here is the only time where we have to cast from number to String
-        // and where we have to change the selection
-        final String? amount = getAmount(state);
-        if (amount == null) {
-          controller.text = CurrencyOperations.zero;
-          return;
-        }
-        controller
-          ..text = amount
-          ..selection = TextSelection.collapsed(offset: controller.text.length);
-      },
+      listener: (context, state) => updateAmountInController(context, state, controller),
       builder: (context, state) {
         return Row(
           children: [
@@ -74,7 +126,6 @@ class AmountInputRow extends HookWidget {
             AmountSwitch(
               controller: controller,
               isPositive: isPositive,
-              // toggleSwitch: toggleSwitch,
               onAmountChange: onAmountChange,
             )
           ],
@@ -89,13 +140,11 @@ class AmountSwitch extends StatelessWidget {
   final TextEditingController controller;
   final void Function(BuildContext, String) onAmountChange;
 
-  // final Function(BuildContext, TextEditingController, ValueNotifier<bool>) toggleSwitch;
   const AmountSwitch({
     super.key,
     required this.controller,
     required this.isPositive,
     required this.onAmountChange,
-    // required this.toggleSwitch,
   });
 
   void toggleSwitch(
