@@ -18,21 +18,21 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SubcategoryCreatorEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
+    required TResult Function(UniqueId categoryId) initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
+    TResult? Function(UniqueId categoryId)? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
+    TResult Function(UniqueId categoryId)? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
@@ -86,6 +86,8 @@ abstract class _$$_InitializedCopyWith<$Res> {
   factory _$$_InitializedCopyWith(
           _$_Initialized value, $Res Function(_$_Initialized) then) =
       __$$_InitializedCopyWithImpl<$Res>;
+  @useResult
+  $Res call({UniqueId categoryId});
 }
 
 /// @nodoc
@@ -95,57 +97,82 @@ class __$$_InitializedCopyWithImpl<$Res>
   __$$_InitializedCopyWithImpl(
       _$_Initialized _value, $Res Function(_$_Initialized) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? categoryId = null,
+  }) {
+    return _then(_$_Initialized(
+      categoryId: null == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as UniqueId,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_Initialized implements _Initialized {
-  const _$_Initialized();
+  const _$_Initialized({required this.categoryId});
+
+  @override
+  final UniqueId categoryId;
 
   @override
   String toString() {
-    return 'SubcategoryCreatorEvent.initialized()';
+    return 'SubcategoryCreatorEvent.initialized(categoryId: $categoryId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initialized);
+        (other.runtimeType == runtimeType &&
+            other is _$_Initialized &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, categoryId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_InitializedCopyWith<_$_Initialized> get copyWith =>
+      __$$_InitializedCopyWithImpl<_$_Initialized>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
+    required TResult Function(UniqueId categoryId) initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) {
-    return initialized();
+    return initialized(categoryId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
+    TResult? Function(UniqueId categoryId)? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) {
-    return initialized?.call();
+    return initialized?.call(categoryId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
+    TResult Function(UniqueId categoryId)? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
   }) {
     if (initialized != null) {
-      return initialized();
+      return initialized(categoryId);
     }
     return orElse();
   }
@@ -186,7 +213,13 @@ class _$_Initialized implements _Initialized {
 }
 
 abstract class _Initialized implements SubcategoryCreatorEvent {
-  const factory _Initialized() = _$_Initialized;
+  const factory _Initialized({required final UniqueId categoryId}) =
+      _$_Initialized;
+
+  UniqueId get categoryId;
+  @JsonKey(ignore: true)
+  _$$_InitializedCopyWith<_$_Initialized> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -253,7 +286,7 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
+    required TResult Function(UniqueId categoryId) initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) {
@@ -263,7 +296,7 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
+    TResult? Function(UniqueId categoryId)? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) {
@@ -273,7 +306,7 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
+    TResult Function(UniqueId categoryId)? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),
@@ -364,7 +397,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() initialized,
+    required TResult Function(UniqueId categoryId) initialized,
     required TResult Function(String name) nameChanged,
     required TResult Function() saved,
   }) {
@@ -374,7 +407,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialized,
+    TResult? Function(UniqueId categoryId)? initialized,
     TResult? Function(String name)? nameChanged,
     TResult? Function()? saved,
   }) {
@@ -384,7 +417,7 @@ class _$_Saved implements _Saved {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialized,
+    TResult Function(UniqueId categoryId)? initialized,
     TResult Function(String name)? nameChanged,
     TResult Function()? saved,
     required TResult orElse(),

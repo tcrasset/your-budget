@@ -104,7 +104,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showErrorSnackbar(
 ) {
   final message = failure.maybeMap(
     unexpected: (_) => 'Unexpected error occurred, please contact support.',
-    uniqueName: (_) => 'You must chose an unique account name.',
+    uniqueName: (_) => 'You must chose an unique category name.',
     orElse: () => null,
   );
 

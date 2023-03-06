@@ -8,7 +8,7 @@ part of 'budgetvalue_dto.dart';
 
 _$_BudgetValueDTO _$$_BudgetValueDTOFromJson(Map<String, dynamic> json) =>
     _$_BudgetValueDTO(
-      id: convertToString(json['id'] as int),
+      id: json['id'] as String,
       subcategoryId: json['subcatID'] as String,
       budgeted: (json['budgeted'] as num).toDouble(),
       available: (json['available'] as num).toDouble(),
@@ -16,20 +16,12 @@ _$_BudgetValueDTO _$$_BudgetValueDTOFromJson(Map<String, dynamic> json) =>
       year: json['year'] as int,
     );
 
-Map<String, dynamic> _$$_BudgetValueDTOToJson(_$_BudgetValueDTO instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', ignore(instance.id));
-  val['subcatID'] = instance.subcategoryId;
-  val['budgeted'] = instance.budgeted;
-  val['available'] = instance.available;
-  val['month'] = instance.month;
-  val['year'] = instance.year;
-  return val;
-}
+Map<String, dynamic> _$$_BudgetValueDTOToJson(_$_BudgetValueDTO instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'subcatID': instance.subcategoryId,
+      'budgeted': instance.budgeted,
+      'available': instance.available,
+      'month': instance.month,
+      'year': instance.year,
+    };

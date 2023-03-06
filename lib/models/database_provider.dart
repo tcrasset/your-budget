@@ -127,13 +127,12 @@ class DatabaseProvider {
 
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.budgetValueTable} (
-                        ${DatabaseConstants.BUDGET_VALUE_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
+                        ${DatabaseConstants.BUDGET_VALUE_ID} TEXT PRIMARY KEY,
                         ${DatabaseConstants.SUBCAT_ID_OUTSIDE} TEXT NOT NULL,
                         ${DatabaseConstants.BUDGET_VALUE_BUDGETED} FLOAT DEFAULT 0.00,
                         ${DatabaseConstants.BUDGET_VALUE_AVAILABLE} FLOAT DEFAULT 0.00,
                         ${DatabaseConstants.BUDGET_VALUE_YEAR} INTEGER NOT NULL,
-                        ${DatabaseConstants.BUDGET_VALUE_MONTH} INTEGER NOT NULL,
-                        FOREIGN KEY (${DatabaseConstants.SUBCAT_ID_OUTSIDE}) REFERENCES ${DatabaseConstants.categoryTable}(${DatabaseConstants.SUBCAT_ID})
+                        ${DatabaseConstants.BUDGET_VALUE_MONTH} INTEGER NOT NULL
                     );''');
     await db.execute('''
                       CREATE TABLE IF NOT EXISTS ${DatabaseConstants.goalTable} (
@@ -166,16 +165,17 @@ class DatabaseProvider {
   Future<void> _populateBudgetValues(List<String> subcategoryIds, Database db) async {
     const String CREATE_BUDGETVALUE = '''
     INSERT INTO ${DatabaseConstants.budgetValueTable}
-      (${DatabaseConstants.SUBCAT_ID_OUTSIDE},
+      (${DatabaseConstants.BUDGET_VALUE_ID},
+      ${DatabaseConstants.SUBCAT_ID_OUTSIDE},
       ${DatabaseConstants.BUDGET_VALUE_BUDGETED},
       ${DatabaseConstants.BUDGET_VALUE_AVAILABLE},
       ${DatabaseConstants.BUDGET_VALUE_YEAR},
       ${DatabaseConstants.BUDGET_VALUE_MONTH})
-      VALUES(?, ?, ?, ?, ?);''';
+      VALUES(?, ?, ?, ?, ?, ?);''';
 
     /// Insert [BudgetValues] corresponding to the subcategories into the data base
     /// for every month of the budget, from the current Date to [MAX_NB_MONTHS_AHEAD]
-    /// months in the future.
+    /// months in the future, inclusive.
     final DateTime startingDate = getDateFromMonthStart(DateTime.now());
     for (int monthDifference = 0;
         monthDifference <= Constants.MAX_NB_MONTHS_AHEAD;
@@ -183,6 +183,7 @@ class DatabaseProvider {
       final DateTime newDate = Jiffy(startingDate).add(months: monthDifference).dateTime;
       for (final String subcatId in subcategoryIds) {
         await db.rawInsert(CREATE_BUDGETVALUE, [
+          Uuid().v4(),
           subcatId,
           0.00,
           0.00,
@@ -224,7 +225,6 @@ class DatabaseProvider {
       VALUES(?, ?, ?);''';
 
     final Map<String, String> idToNameMap = {
-      const Uuid().v4(): DatabaseConstants.TO_BE_BUDGETED,
       const Uuid().v4(): "Rent",
       const Uuid().v4(): "Electricity",
       const Uuid().v4(): "Water",
@@ -237,13 +237,21 @@ class DatabaseProvider {
       await db.rawInsert(CREATE_SUBCATEGORY, [id, categoryId, name]);
     });
 
+    // Create ToBeBudgeted subcategory. Only used in Create Transaction for inflow transactions
+    await db.rawInsert(CREATE_SUBCATEGORY, [
+      DatabaseConstants.TO_BE_BUDGETED_ID,
+      category.UNSELECTABLE_ID,
+      DatabaseConstants.TO_BE_BUDGETED,
+    ]);
+
     await db.rawInsert(CREATE_SUBCATEGORY, [
       subcategory.UNSELECTABLE_ID,
       category.UNSELECTABLE_ID,
       subcategory.UNSELECTABLE_NAME,
     ]);
 
-    // We do not include subcategory.UNSELECTABLE_ID as we do not want budgetvalues for this subcat
+    // We do not include subcategory.UNSELECTABLE_ID, or DatabaseConstants.TO_BE_BUDGETED,
+    // as we do not want budgetvalues for this subcat
     return idToNameMap.keys.toList();
   }
 

@@ -26,36 +26,48 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   final _budgetvalueStreamController =
       BehaviorSubject<Either<ValueFailure, List<BudgetValue>>>.seeded(const Right([]));
 
+  List<BudgetValue> get _budgetvalues {
+    final lastEmitted = _budgetvalueStreamController.value;
+
+    if (lastEmitted == null) {
+      // Should not happen as it's seeded with Right([])
+      throw Exception();
+    }
+
+    return lastEmitted.fold((l) => throw Exception(l), (r) => r);
+  }
+
   @override
   Future<Either<ValueFailure, int>> count() async {
-    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final budgetvalues = [..._budgetvalues];
     return right(budgetvalues.length);
   }
 
   @override
   Future<Either<ValueFailure, Unit>> create(BudgetValue budgetvalue) async {
+    late int id;
     try {
-      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
-
-      final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
-      final id =
-          await database!.insert(DatabaseConstants.budgetValueTable, budgetvalueDTO.toJson());
-
-      if (id == 0) {
-        return left(
-          ValueFailure.unexpected(
-            message: "BudgetValue with id ${budgetvalue.id} could not be created.",
-          ),
-        );
-      }
-
-      budgetvalues.add(budgetvalue.copyWith(id: UniqueId.fromUniqueInt(id)));
-      _budgetvalueStreamController.add(Right(budgetvalues));
-
-      return right(unit);
+      id = await database!.insert(
+        DatabaseConstants.budgetValueTable,
+        BudgetValueDTO.fromDomain(budgetvalue).toJson(),
+      );
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
     }
+
+    if (id == 0) {
+      return left(
+        ValueFailure.unexpected(
+          message: "BudgetValue with id ${budgetvalue.id} could not be created.",
+        ),
+      );
+    }
+
+    final budgetvalues = [..._budgetvalues];
+    budgetvalues.add(budgetvalue);
+    _budgetvalueStreamController.add(Right(budgetvalues));
+
+    return right(unit);
   }
 
   @override
@@ -69,7 +81,10 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
           DatabaseConstants.budgetValueTable,
           entry,
         );
-        totalCreated = totalCreated + result;
+
+        if (result != 0) {
+          totalCreated = totalCreated + 1;
+        }
       }
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -78,7 +93,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     if (totalCreated != toCreate.length) {
       return left(const ValueFailure.unexpected(message: "Not all budgetvalues were created."));
     }
-    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final budgetvalues = [..._budgetvalues];
     budgetvalues.addAll(newBudgetvalues);
     _budgetvalueStreamController.add(Right(budgetvalues));
     return right(unit);
@@ -91,13 +106,13 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     int totalUpdated = 0;
     try {
       for (final entry in bvMap.entries) {
-        final int result = await database!.update(
+        final int count = await database!.update(
           DatabaseConstants.budgetValueTable,
           entry.value,
           where: '${DatabaseConstants.BUDGET_VALUE_ID} = ?',
           whereArgs: [entry.key.getOrCrash()],
         );
-        totalUpdated = totalUpdated + result;
+        totalUpdated = totalUpdated + count;
       }
     } on DatabaseException catch (e) {
       return left(ValueFailure.unexpected(message: e.toString()));
@@ -107,7 +122,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
       return left(const ValueFailure.unexpected(message: "Not all budgetvalues were updated."));
     }
 
-    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final budgetvalues = [..._budgetvalues];
     final indices = toUpdate
         .map((value) => budgetvalues.indexWhere((stored) => stored.id == value.id))
         .toList();
@@ -143,7 +158,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
         );
       }
 
-      final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+      final budgetvalues = [..._budgetvalues];
       final index = budgetvalues.indexWhere((t) => t.id == budgetvalue.id);
       if (index >= 0) {
         budgetvalues[index] = budgetvalue;
@@ -163,7 +178,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
     required int month,
     required UniqueId subcategoryId,
   }) async {
-    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final budgetvalues = [..._budgetvalues];
     final index = budgetvalues.indexWhere(
       (t) => t.subcategoryId == subcategoryId && t.date.year == year && t.date.month == month,
     );
@@ -178,7 +193,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   Future<Either<ValueFailure, BudgetValue>> getById({
     required UniqueId id,
   }) async {
-    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final budgetvalues = [..._budgetvalues];
     final index = budgetvalues.indexWhere((t) => t.id == id);
     if (index >= 0) {
       return right(budgetvalues[index]);
@@ -217,7 +232,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   Future<Either<ValueFailure, List<BudgetValue>>> getBudgetValuesBySubcategory({
     required UniqueId subcategoryId,
   }) async {
-    final budgetvalues = [..._budgetvalueStreamController.value!.getOrElse(() => [])];
+    final budgetvalues = [..._budgetvalues];
     return right(budgetvalues.where((t) => t.subcategoryId == subcategoryId).toList());
   }
 

@@ -23,7 +23,8 @@ class ModifyMainCategoryRow extends StatelessWidget {
   Future<void> handleAddSubcategory(BuildContext context) async {
     const String hintText = "Add new subcategory";
 
-    final String? subcategoryName = await addSubcategoryDialog(superContext: context);
+    final String? subcategoryName =
+        await addSubcategoryDialog(superContext: context, categoryId: id);
 
     if (subcategoryName != null) {
       // final AppState appState = Provider.of<AppState>(context, listen: false);

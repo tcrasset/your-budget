@@ -58,7 +58,6 @@ class BudgetPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<BudgetBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(title),

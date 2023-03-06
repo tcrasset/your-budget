@@ -31,23 +31,26 @@ class SubcategoryRepository {
   });
 
   Future<Either<ValueFailure<dynamic>, Unit>> _createBudgetValues(UniqueId subcategoryId) async {
-    return constantsProvider.getStartingBudgetDate().flatMap((startingBudgetDate) {
-      final DateTime date = startingBudgetDate;
-      final budgetvalues = <BudgetValue>[];
+    return constantsProvider
+        .getStartingBudgetDate()
+        .flatMap((d) => _createBudgetValuesThunk(d, subcategoryId));
+  }
 
-      while (date.isBefore(getMaxBudgetDate())) {
-        budgetvalues.add(
-          BudgetValue(
-            available: Amount.fromDouble(0),
-            budgeted: Amount.fromDouble(0),
-            date: getDateFromMonthStart(date),
-            id: UniqueId(),
-            subcategoryId: subcategoryId,
-          ),
-        );
-      }
-      return budgetvalueProvider.createAll(budgetvalues);
-    });
+  Future<Either<ValueFailure, Unit>> _createBudgetValuesThunk(
+    DateTime startingBudgetDate,
+    UniqueId subcategoryId,
+  ) async {
+    final budgetvalues = getBudgetDatesUpToMaxBudgetDate(startingFrom: startingBudgetDate).map(
+      (date) => BudgetValue(
+        available: Amount.fromDouble(0),
+        budgeted: Amount.fromDouble(0),
+        date: date,
+        id: UniqueId(),
+        subcategoryId: subcategoryId,
+      ),
+    );
+
+    return budgetvalueProvider.createAll(budgetvalues.toList());
   }
 
   Future<Either<ValueFailure, Unit>> create(Subcategory subcategory) async {

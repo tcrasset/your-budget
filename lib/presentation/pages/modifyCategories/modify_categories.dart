@@ -9,6 +9,7 @@ import 'package:your_budget/application/budget/category_creator_bloc/category_cr
 
 // Project imports:
 import 'package:your_budget/components/add_dialog.dart';
+import 'package:your_budget/domain/budget/budget.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/add_category_dialog.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/modify_main_category_row.dart';
@@ -62,19 +63,7 @@ class ModifyCategories extends StatelessWidget {
           } else if (state.status == BudgetOverviewStatus.failure) {
             return const CircularProgressIndicator();
           } else if (state.status == BudgetOverviewStatus.success) {
-            final List<Widget> items = state.budget!.groups.fold(
-              [],
-              (items, group) => [
-                ...items,
-                ModifyMainCategoryRow(
-                  name: group.category.name,
-                  id: group.category.id,
-                ),
-                ...group.entries.map(
-                  (e) => ModifySubcategoryRow(name: e.name, id: e.subcategoryId),
-                ),
-              ],
-            );
+            final List<Widget> items = createListFromBudgetGroups(state.budget!.groups);
             return Center(
               child: Scrollbar(
                 child: ListView.separated(
@@ -90,6 +79,22 @@ class ModifyCategories extends StatelessWidget {
           }
         },
       ),
+    );
+  }
+
+  List<Widget> createListFromBudgetGroups(List<BudgetEntryGroups> groups) {
+    return groups.fold(
+      [],
+      (items, group) => [
+        ...items,
+        ModifyMainCategoryRow(
+          name: group.category.name,
+          id: group.category.id,
+        ),
+        ...group.entries.map(
+          (e) => ModifySubcategoryRow(name: e.name, id: e.subcategoryId),
+        ),
+      ],
     );
   }
 }

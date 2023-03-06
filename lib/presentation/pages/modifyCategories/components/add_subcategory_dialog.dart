@@ -8,18 +8,24 @@ import 'package:get_it/get_it.dart';
 import 'package:your_budget/application/budget/subcategory_creator_bloc/subcategory_creator_bloc.dart';
 import 'package:your_budget/domain/budget/subcategory_repository.dart';
 import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
 
-Future<String?> addSubcategoryDialog({required BuildContext superContext, String? defaultValue}) {
+Future<String?> addSubcategoryDialog({
+  required BuildContext superContext,
+  required UniqueId categoryId,
+  String? defaultValue,
+}) {
   return showDialog(
     context: superContext,
-    builder: (_) => const SubcategoryNameForm(),
+    builder: (_) => SubcategoryNameForm(categoryId: categoryId),
   );
 }
 
 class SubcategoryNameForm extends HookWidget {
-  const SubcategoryNameForm({super.key});
+  final UniqueId categoryId;
+  const SubcategoryNameForm({required this.categoryId, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +34,7 @@ class SubcategoryNameForm extends HookWidget {
     return BlocProvider<SubcategoryCreatorBloc>(
       create: (context) =>
           SubcategoryCreatorBloc(subcategoryRepository: context.read<SubcategoryRepository>())
-            ..add(const SubcategoryCreatorEvent.initialized()),
+            ..add(SubcategoryCreatorEvent.initialized(categoryId: categoryId)),
       child: BlocConsumer<SubcategoryCreatorBloc, SubcategoryCreatorState>(
         listenWhen: (p, c) => p.saveFailureOrSuccessOption != c.saveFailureOrSuccessOption,
         listener: (context, state) {
@@ -106,7 +112,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason>? showErrorSnackbar(
 ) {
   final message = failure.maybeMap(
     unexpected: (_) => 'Unexpected error occurred, please contact support.',
-    uniqueName: (_) => 'You must chose an subcategory account name.',
+    uniqueName: (_) => 'You must chose an unique subcategory name.',
     orElse: () => null,
   );
 

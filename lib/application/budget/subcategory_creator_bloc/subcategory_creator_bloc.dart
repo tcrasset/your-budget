@@ -3,8 +3,9 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:your_budget/domain/budget/subcategory_repository.dart';
 import 'package:your_budget/domain/core/name.dart';
+import 'package:your_budget/domain/core/unique_id.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
-import 'package:your_budget/domain/subcategory/i_subcategory_provider.dart';
+
 import 'package:your_budget/domain/subcategory/subcategory.dart';
 
 part 'subcategory_creator_bloc.freezed.dart';
@@ -21,7 +22,13 @@ class SubcategoryCreatorBloc extends Bloc<SubcategoryCreatorEvent, SubcategoryCr
     on<_Saved>(_onSaved);
   }
 
-  void _onInitialized(_Initialized event, Emitter<SubcategoryCreatorState> emit) => emit(state);
+  void _onInitialized(_Initialized event, Emitter<SubcategoryCreatorState> emit) {
+    final newState = state.copyWith(
+      subcategory: state.subcategory.copyWith(categoryID: event.categoryId),
+      saveFailureOrSuccessOption: none(),
+    );
+    emit(newState);
+  }
 
   void _onNameChanged(_NameChanged event, Emitter<SubcategoryCreatorState> emit) {
     final newState = state.copyWith(

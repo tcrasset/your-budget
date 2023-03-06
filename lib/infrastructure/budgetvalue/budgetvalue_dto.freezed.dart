@@ -20,9 +20,8 @@ BudgetValueDTO _$BudgetValueDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BudgetValueDTO {
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-  String get id =>
-      throw _privateConstructorUsedError; //Do not use id in database
+  @JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID)
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   String get subcategoryId => throw _privateConstructorUsedError;
   @JsonKey(name: DatabaseConstants.BUDGET_VALUE_BUDGETED)
@@ -47,18 +46,12 @@ abstract class $BudgetValueDTOCopyWith<$Res> {
       _$BudgetValueDTOCopyWithImpl<$Res, BudgetValueDTO>;
   @useResult
   $Res call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          String id,
-      @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          String subcategoryId,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_BUDGETED)
-          double budgeted,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_AVAILABLE)
-          double available,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_MONTH)
-          int month,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_YEAR)
-          int year});
+      {@JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID) String id,
+      @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE) String subcategoryId,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_BUDGETED) double budgeted,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_AVAILABLE) double available,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_MONTH) int month,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_YEAR) int year});
 }
 
 /// @nodoc
@@ -119,18 +112,12 @@ abstract class _$$_BudgetValueDTOCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-          String id,
-      @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
-          String subcategoryId,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_BUDGETED)
-          double budgeted,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_AVAILABLE)
-          double available,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_MONTH)
-          int month,
-      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_YEAR)
-          int year});
+      {@JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID) String id,
+      @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE) String subcategoryId,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_BUDGETED) double budgeted,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_AVAILABLE) double available,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_MONTH) int month,
+      @JsonKey(name: DatabaseConstants.BUDGET_VALUE_YEAR) int year});
 }
 
 /// @nodoc
@@ -184,7 +171,7 @@ class __$$_BudgetValueDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_BudgetValueDTO extends _BudgetValueDTO {
   const _$_BudgetValueDTO(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+      {@JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID)
           required this.id,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           required this.subcategoryId,
@@ -202,9 +189,8 @@ class _$_BudgetValueDTO extends _BudgetValueDTO {
       _$$_BudgetValueDTOFromJson(json);
 
   @override
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+  @JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID)
   final String id;
-//Do not use id in database
   @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   final String subcategoryId;
@@ -263,7 +249,7 @@ class _$_BudgetValueDTO extends _BudgetValueDTO {
 
 abstract class _BudgetValueDTO extends BudgetValueDTO {
   const factory _BudgetValueDTO(
-      {@JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+      {@JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID)
           required final String id,
       @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
           required final String subcategoryId,
@@ -281,9 +267,9 @@ abstract class _BudgetValueDTO extends BudgetValueDTO {
       _$_BudgetValueDTO.fromJson;
 
   @override
-  @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
+  @JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID)
   String get id;
-  @override //Do not use id in database
+  @override
   @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE)
   String get subcategoryId;
   @override

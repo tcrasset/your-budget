@@ -15,8 +15,7 @@ abstract class BudgetValueDTO implements _$BudgetValueDTO {
   const BudgetValueDTO._();
 
   const factory BudgetValueDTO({
-    @JsonKey(toJson: ignore, fromJson: convertToString, includeIfNull: false)
-        required String id, //Do not use id in database
+    @JsonKey(name: DatabaseConstants.BUDGET_VALUE_ID) required String id,
     @JsonKey(name: DatabaseConstants.SUBCAT_ID_OUTSIDE) required String subcategoryId,
     @JsonKey(name: DatabaseConstants.BUDGET_VALUE_BUDGETED) required double budgeted,
     @JsonKey(name: DatabaseConstants.BUDGET_VALUE_AVAILABLE) required double available,
@@ -26,7 +25,7 @@ abstract class BudgetValueDTO implements _$BudgetValueDTO {
 
   factory BudgetValueDTO.fromDomain(BudgetValue budgetvalue) {
     return BudgetValueDTO(
-      id: budgetvalue.id.getOrCrash(), //Not used in database
+      id: budgetvalue.id.getOrCrash(),
       subcategoryId: budgetvalue.subcategoryId.getOrCrash(),
       budgeted: budgetvalue.budgeted.getOrCrash(),
       available: budgetvalue.available.getOrCrash(),

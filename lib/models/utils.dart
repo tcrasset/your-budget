@@ -10,12 +10,29 @@ import 'package:your_budget/models/constants.dart';
 T? ignore<T>(dynamic _) => null;
 String convertToString(int id) => id.toString();
 
-///Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
-///and the current date
+/// Returns the current maximum  budget date based on [Constants.MAX_NB_MONTHS_AHEAD]
+/// and the current date.
+/// The max budget date is INCLUSIVE!
 DateTime getMaxBudgetDate() {
   return Jiffy(getDateFromMonthStart(DateTime.now()))
       .add(months: Constants.MAX_NB_MONTHS_AHEAD)
       .dateTime;
+}
+
+List<DateTime> getBudgetDatesUpToMaxBudgetDate({DateTime? startingFrom}) {
+  DateTime currentDate = startingFrom == null
+      ? getDateFromMonthStart(DateTime.now())
+      : getDateFromMonthStart(startingFrom);
+
+  final DateTime maxBudgetDate = getMaxBudgetDate(); // date is already from month start
+
+  final List<DateTime> dates = [];
+  while (currentDate.isBefore(maxBudgetDate) || currentDate.isAtSameMomentAs(maxBudgetDate)) {
+    dates.add(currentDate);
+    currentDate = Jiffy(currentDate).add(months: 1).dateTime;
+  }
+
+  return dates;
 }
 
 DateTime getLastDayOfMonth(DateTime datetime) {
