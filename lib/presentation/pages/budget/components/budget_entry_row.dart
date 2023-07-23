@@ -59,7 +59,6 @@ class BudgetEntryRow extends HookWidget {
                 decoration: InputDecoration.collapsed(
                   hintText: "",
                 ),
-                // controller: state._budgetedController,
                 textAlign: TextAlign.right,
                 style: Constants.SUBCATEGORY_TEXT_STYLE,
               ),

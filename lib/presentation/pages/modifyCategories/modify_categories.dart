@@ -10,6 +10,7 @@ import 'package:your_budget/application/budget/category_creator_bloc/category_cr
 // Project imports:
 import 'package:your_budget/components/add_dialog.dart';
 import 'package:your_budget/domain/budget/budget.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/deleteCategories/delete_categories.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/add_category_dialog.dart';
 import 'package:your_budget/presentation/pages/modifyCategories/components/modify_main_category_row.dart';
@@ -44,6 +45,7 @@ class ModifyCategories extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Modify categories"),
+        backgroundColor: Constants.PRIMARY_COLOR,
         actions: <Widget>[
           IconButton(
             icon: const Icon(FontAwesomeIcons.trash),

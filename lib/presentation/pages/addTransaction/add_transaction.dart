@@ -78,6 +78,7 @@ class AddTransactionPage extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             title: const Text("New transaction"),
+            backgroundColor: Constants.PRIMARY_COLOR,
             leading: const Icon(Constants.ADD_TRANSACTION_ICON),
             actions: <Widget>[
               const Padding(

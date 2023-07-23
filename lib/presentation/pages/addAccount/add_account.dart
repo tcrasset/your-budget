@@ -10,6 +10,7 @@ import 'package:your_budget/application/core/account_watcher_bloc/account_watche
 import 'package:your_budget/application/showTransactions/selected_account_cubit/selected_account_cubit.dart';
 import 'package:your_budget/domain/account/account_repository.dart';
 import 'package:your_budget/domain/core/value_failure.dart';
+import 'package:your_budget/models/constants.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_balance.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_name.dart';
 import 'package:your_budget/presentation/pages/addAccount/components/account_row.dart';
@@ -53,6 +54,7 @@ class AddAccountPageScaffold extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add a new account"),
+        backgroundColor: Constants.PRIMARY_COLOR,
       ),
       body: SingleChildScrollView(
         child: Column(
