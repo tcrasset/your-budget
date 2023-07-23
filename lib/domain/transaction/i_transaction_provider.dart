@@ -6,10 +6,10 @@ import 'package:your_budget/domain/core/value_failure.dart';
 import 'package:your_budget/domain/transaction/transaction.dart';
 
 abstract class ITransactionProvider {
-  Future<Either<ValueFailure, Unit>> create(MoneyTransaction transaction);
+  Future<Either<ValueFailure<String>, Unit>> create(MoneyTransaction transaction);
   Future<Either<ValueFailure, Unit>> update(MoneyTransaction transaction);
-  Future<Either<ValueFailure, Unit>> delete(UniqueId id);
-  Either<ValueFailure, List<MoneyTransaction>> getAccountTransactions(UniqueId id);
+  Future<Either<ValueFailure<String>, Unit>> delete(UniqueId id);
+  Either<ValueFailure<String>, List<MoneyTransaction>> getAccountTransactions(UniqueId id);
   Stream<Either<ValueFailure<dynamic>, List<MoneyTransaction>>> watchAccountTransactions(
     UniqueId id,
   );

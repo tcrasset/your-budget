@@ -121,7 +121,7 @@ class SQFliteAccountProvider implements IAccountProvider {
   }
 
   @override
-  Either<ValueFailure, Account> getToBeBudgeted() {
+  Either<ValueFailure<String>, Account> getToBeBudgeted() {
     final accounts = [..._accountStreamController.value!.getOrElse(() => [])];
     final index = accounts
         .indexWhere((account) => account.name.getOrCrash() == DatabaseConstants.TO_BE_BUDGETED);
@@ -133,7 +133,7 @@ class SQFliteAccountProvider implements IAccountProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> update(Account account) async {
+  Future<Either<ValueFailure<String>, Unit>> update(Account account) async {
     {
       final AccountDTO accountDTO = AccountDTO.fromDomain(account);
       final String id = accountDTO.id;

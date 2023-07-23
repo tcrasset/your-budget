@@ -16,15 +16,15 @@ abstract class IBudgetValueProvider {
   });
   Future<Either<ValueFailure, BudgetValue>> getById({required UniqueId id});
 
-  Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue);
-  Future<Either<ValueFailure, Unit>> updateAll(List<BudgetValue> allBudgetvalues);
+  Future<Either<ValueFailure<String>, Unit>> update(BudgetValue budgetvalue);
+  Future<Either<ValueFailure<String>, Unit>> updateAll(List<BudgetValue> allBudgetvalues);
   Stream<Either<ValueFailure<dynamic>, List<BudgetValue>>> watchAllBudgetValues({
     required int year,
     required int month,
   });
   Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getAllBudgetValues();
 
-  Future<Either<ValueFailure<dynamic>, List<BudgetValue>>> getBudgetValuesBySubcategory({
+  Future<Either<ValueFailure<String>, List<BudgetValue>>> getBudgetValuesBySubcategory({
     required UniqueId subcategoryId,
   });
 

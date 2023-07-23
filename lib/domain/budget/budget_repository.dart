@@ -36,6 +36,8 @@ class BudgetRepository {
 
   Future<Either<ValueFailure<dynamic>, Unit>> updateBudgetValue(BudgetValue value) async {
     return budgetvalueProvider.getById(id: value.id).flatMap((stored) async {
+      // If the user adds more budgeted than there was previously stored,
+      // the difference is positive.
       final difference = value.budgeted - stored.budgeted;
       return updateBudgetValueOfCurrentMonth(value, difference)
           .andThen(updateToBeBudgeted(difference))
@@ -43,7 +45,7 @@ class BudgetRepository {
     });
   }
 
-  Future<Either<ValueFailure<dynamic>, Unit>> updateBudgetValuesOfOtherMonths(
+  Future<Either<ValueFailure<String>, Unit>> updateBudgetValuesOfOtherMonths(
     BudgetValue value,
     Amount difference,
   ) async =>
@@ -62,6 +64,11 @@ class BudgetRepository {
                   ) &&
                   element.subcategoryId == value.subcategoryId,
             )
+            // The 'budgeted' amount is the one that has been modified by the user.
+            // We need to modify the 'available' amount accordingly.
+
+            // If the difference is positive, the user added more amount in 'budgeted'
+            // than was there previously, so we have to increase the 'available' amount.
             .map((value) => value.copyWith(available: value.available + difference))
             .toList();
 
@@ -69,23 +76,31 @@ class BudgetRepository {
           // If we update the last month of the budget, there is nothing to update.
           return Future.value(right(unit));
         }
+
         return budgetvalueProvider.updateAll(toUpdate);
       });
 
-  Future<Either<ValueFailure, Unit>> updateToBeBudgeted(Amount difference) async {
-    return Future.value(accountProvider.getToBeBudgeted()).flatMap<Unit>(
-      (account) => accountProvider.update(
-        account.copyWith(balance: account.balance - difference),
-      ),
-    );
+  Future<Either<ValueFailure<String>, Unit>> updateToBeBudgeted(Amount difference) async {
+    // If the difference is positive, the user added more amount in 'budgeted'
+    // than was there previously, so we have to decrease the 'to be budgeted' amount.
+    return Future.value(accountProvider.getToBeBudgeted()).flatMap((account) {
+      final newBalance = account.balance - difference;
+      return accountProvider.update(account.copyWith(balance: newBalance));
+    });
   }
 
-  Future<Either<ValueFailure<dynamic>, Unit>> updateBudgetValueOfCurrentMonth(
+  Future<Either<ValueFailure<String>, Unit>> updateBudgetValueOfCurrentMonth(
     BudgetValue value,
     Amount difference,
   ) async {
-    final updated = value.copyWith(available: value.available + difference);
-    return budgetvalueProvider.update(updated);
+    // The 'budgeted' amount is the one that has been modified by the user.
+    // We need to modify the 'available' amount accordingly.
+
+    // If the difference is positive, the user added more amount in 'budgeted'
+    // than was there previously, so we have to increase the 'available' amount.
+    final newAvailableAmount = value.available + difference;
+    final bv = value.copyWith(available: newAvailableAmount);
+    return budgetvalueProvider.update(bv);
   }
 
   Stream<Either<ValueFailure<dynamic>, Budget>> getBudgetByDate(int year, int month) =>
@@ -125,7 +140,7 @@ class BudgetRepository {
               for (final subcat in correspondingSubcategories) {
                 final budgetvalue = budgetvalues.where((value) => subcat.id == value.subcategoryId);
                 if (budgetvalue.isEmpty) {
-                  // Because we use BehaviorSubjets to trigger an update of the budgets when adding
+                  // Because we use BehaviorSubjects to trigger an update of the budgets when adding
                   // a subcategory, there exists a moment when adding a new subcategory triggers
                   // getBudgetByDate(), but at that time, there are no BudgetValues that have been
                   // created yet. We thus have to skip the addition of this BudgetEntry to the Budget.

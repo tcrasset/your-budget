@@ -42,19 +42,19 @@ class TransactionRepository {
 
     return await failureOrSuccess.fold((l) => left(l), (_) async {
       if (transaction.type == MoneyTransactionType.betweenAccount) {
-        Account updatedReceiver = (transaction.receiver as Right).value as Account;
-        Account updatedGiver = (transaction.giver as Right).value as Account;
+        final Account updatedReceiver = (transaction.receiver as Right).value as Account;
+        final Account updatedGiver = (transaction.giver as Right).value as Account;
         final Amount amount = transaction.amount;
 
         /// If the transaction amount is negative, the transaction will remove money from
         /// [giverAccount] and input it into [receiverAccount].
         /// Otherwise, it is reversed.
-        updatedGiver = updatedGiver.copyWith(balance: updatedGiver.balance + amount);
-        updatedReceiver = updatedReceiver.copyWith(balance: updatedReceiver.balance - amount);
-
-        return accountProvider
-            .update(updatedReceiver)
-            .flatMap((a) => accountProvider.update(updatedGiver));
+        return _updateAccounts(
+          updatedGiver,
+          updatedReceiver,
+          amount,
+          (Amount a, Amount b) => a + b,
+        );
       }
 
       if (transaction.type == MoneyTransactionType.toBeBudgeted) {
@@ -77,15 +77,12 @@ class TransactionRepository {
     });
   }
 
-  Future<Either<ValueFailure<dynamic>, Unit>> _updateToBeBudgetedAccount(
+  Future<Either<ValueFailure<String>, Unit>> _updateToBeBudgetedAccount(
     Account account,
     MoneyTransaction transaction,
   ) async {
-    return accountProvider
-        .update(
-          account.copyWith(balance: account.balance + transaction.amount),
-        )
-        .andThen(Future.value(right(unit)));
+    final newBalance = account.balance + transaction.amount;
+    return accountProvider.update(account.copyWith(balance: newBalance));
   }
 
   Future<Either<ValueFailure, Unit>> deleteTransaction(MoneyTransaction transaction) async {
@@ -109,12 +106,13 @@ class TransactionRepository {
         /// If the transaction amount was negative, the transaction will add back money to
         /// [giverAccount] and remove it from [receiverAccount].
         /// Otherwise, it is reversed.
-        updatedGiver = updatedGiver.copyWith(balance: updatedGiver.balance - amount);
-        updatedReceiver = updatedReceiver.copyWith(balance: updatedReceiver.balance + amount);
 
-        return accountProvider
-            .update(updatedReceiver)
-            .flatMap((a) => accountProvider.update(updatedGiver));
+        return _updateAccounts(
+          updatedGiver,
+          updatedReceiver,
+          amount,
+          (Amount a, Amount b) => a - b,
+        );
       }
 
       return await _updateBudgetvalues(
@@ -124,47 +122,61 @@ class TransactionRepository {
       );
     });
   }
-}
 
-Future<FutureOr<Either<ValueFailure<dynamic>, Unit>>> _updateBudgetvalues(
-  IBudgetValueProvider budgetValueProvider,
-  MoneyTransaction transaction,
-  Amount Function(Amount a, Amount b) addOrSubtract,
-) async {
-  final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
-      await budgetValueProvider.getBudgetValuesBySubcategory(
-    subcategoryId: transaction.subcategory!.id,
-  );
-
-  if (failureOrBudgetvalues.isLeft()) {
-    return left(failureOrBudgetvalues as ValueFailure);
+  Future<Either<ValueFailure<String>, Unit>> _updateAccounts(
+    Account giverAccount,
+    Account receiverAccount,
+    Amount amount,
+    Amount Function(Amount a, Amount b) addOrSubtract,
+  ) async {
+    return accountProvider
+        .update(receiverAccount.copyWith(balance: addOrSubtract(receiverAccount.balance, amount)))
+        .andThen(accountProvider
+            .update(giverAccount.copyWith(balance: addOrSubtract(giverAccount.balance, amount))));
   }
 
-  final List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
+  Future<FutureOr<Either<ValueFailure<String>, Unit>>> _updateBudgetvalues(
+    IBudgetValueProvider budgetValueProvider,
+    MoneyTransaction transaction,
+    Amount Function(Amount a, Amount b) addOrSubtract,
+  ) async {
+    final Either<ValueFailure, List<BudgetValue>> failureOrBudgetvalues =
+        await budgetValueProvider.getBudgetValuesBySubcategory(
+      subcategoryId: transaction.subcategory!.id,
+    );
 
-  // Remove the transaction amount to each budget value's available field
-  // TODO: return error values if one fails using functional programming
-  final toUpdate = budgetvalues
-      .where(
-        (element) =>
-            isMonthBetweenInclusive(
-              query: element.date,
-              lowerBound: transaction.date,
-              upperBound: getMaxBudgetDate(),
-            ) &&
-            element.subcategoryId == transaction.subcategory!.id,
-      )
-      .map(
-        (value) => value.copyWith(
-          available: addOrSubtract(value.available, transaction.amount),
-        ),
-      )
-      .toList();
+    if (failureOrBudgetvalues.isLeft()) {
+      return left(failureOrBudgetvalues as ValueFailure<String>);
+    }
 
-  final failureOrUnit = await budgetValueProvider.updateAll(toUpdate);
+    final List<BudgetValue> budgetvalues = failureOrBudgetvalues.getOrElse(() => []);
 
-  return failureOrUnit.fold(
-    (l) => left(failureOrUnit as ValueFailure),
-    (r) => right(unit),
-  );
+    // Remove the transaction amount to each budget value's available field
+    // TODO: return error values if one fails using functional programming
+    final List<BudgetValue> toUpdate = budgetvalues
+        .where(
+          (element) =>
+              isMonthBetweenInclusive(
+                query: element.date,
+                lowerBound: transaction.date,
+                upperBound: getMaxBudgetDate(),
+              ) &&
+              element.subcategoryId == transaction.subcategory!.id,
+        )
+        .map(
+          (budgetValue) =>
+              _applyAndUpdateBudgetValue(budgetValue, transaction.amount, addOrSubtract),
+        )
+        .toList();
+
+    return (await budgetValueProvider.updateAll(toUpdate)).andThen(right(unit));
+  }
+
+  BudgetValue _applyAndUpdateBudgetValue(
+    BudgetValue budgetValue,
+    Amount amountLeft,
+    Amount Function(Amount a, Amount b) addOrSubtract,
+  ) {
+    return budgetValue.copyWith(available: addOrSubtract(budgetValue.available, amountLeft));
+  }
 }

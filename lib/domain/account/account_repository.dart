@@ -100,7 +100,7 @@ class AccountRepository {
     );
   }
 
-  Future<Either<ValueFailure<dynamic>, Unit>> _createToBeBudgetedTransaction(
+  Future<Either<ValueFailure<String>, Unit>> _createToBeBudgetedTransaction(
     MoneyTransaction transaction,
     Account account,
   ) {
@@ -112,9 +112,9 @@ class AccountRepository {
     );
   }
 
-  Future<Either<ValueFailure, Unit>> _updateAccount(Account account, Amount balance) async {
-    return (await accountProvider.update(account.copyWith(balance: account.balance + balance)))
-        .andThen(right(unit));
+  Future<Either<ValueFailure<String>, Unit>> _updateAccount(Account account, Amount balance) async {
+    final failureOrBalance = account.balance + balance;
+    return accountProvider.update(account.copyWith(balance: account.balance + balance));
   }
 
   Future<Either<ValueFailure<dynamic>, Unit>> deleteAccount(Account account) async {

@@ -10,9 +10,9 @@ abstract class IAccountProvider {
   Future<Either<ValueFailure, String>> create(Account account);
   // Future<Either<ValueFailure, Unit>> update(NewAccount account);
   Future<Either<ValueFailure, Unit>> delete(UniqueId id);
-  Future<Either<ValueFailure, Unit>> update(Account account);
+  Future<Either<ValueFailure<String>, Unit>> update(Account account);
   Either<ValueFailure, Account> get(UniqueId id);
-  Either<ValueFailure, Account> getToBeBudgeted();
+  Either<ValueFailure<String>, Account> getToBeBudgeted();
   Future<Either<ValueFailure, List<Account>>> getAllAccounts();
   Stream<Either<ValueFailure<dynamic>, List<Account>>> watchAllAccounts();
   Future<Either<ValueFailure, int?>> count();

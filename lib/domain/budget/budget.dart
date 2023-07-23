@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:your_budget/domain/budget/budget_entry.dart';
 import 'package:your_budget/domain/category/category.dart';
 import 'package:your_budget/domain/core/amount.dart';
+import 'package:your_budget/domain/core/value_failure.dart';
 
 class BudgetEntryGroups {
   Category category;

@@ -73,8 +73,8 @@ class BudgetEntries extends StatelessWidget {
         ...items,
         MainCategoryRow(
           name: group.category.name.getOrCrash(),
-          budgeted: group.totalBudgeted.getOrCrash(),
-          available: group.totalAvailable.getOrCrash(),
+          budgeted: group.totalBudgeted.value.getOrElse(() => double.infinity),
+          available: group.totalAvailable.value.getOrElse(() => double.infinity),
         ),
         ...group.entries.map((e) => BudgetEntryRow(key: UniqueKey(), entry: e)),
       ],

@@ -100,7 +100,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> updateAll(List<BudgetValue> toUpdate) async {
+  Future<Either<ValueFailure<String>, Unit>> updateAll(List<BudgetValue> toUpdate) async {
     final bvMap = {for (var item in toUpdate) item.id: BudgetValueDTO.fromDomain(item).toJson()};
 
     int totalUpdated = 0;
@@ -136,7 +136,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   }
 
   @override
-  Future<Either<ValueFailure, Unit>> update(BudgetValue budgetvalue) async {
+  Future<Either<ValueFailure<String>, Unit>> update(BudgetValue budgetvalue) async {
     try {
       final BudgetValueDTO budgetvalueDTO = BudgetValueDTO.fromDomain(budgetvalue);
       final String id = budgetvalueDTO.id;
@@ -229,7 +229,7 @@ class SQFliteBudgetValueProvider implements IBudgetValueProvider {
   }
 
   @override
-  Future<Either<ValueFailure, List<BudgetValue>>> getBudgetValuesBySubcategory({
+  Future<Either<ValueFailure<String>, List<BudgetValue>>> getBudgetValuesBySubcategory({
     required UniqueId subcategoryId,
   }) async {
     final budgetvalues = [..._budgetvalues];

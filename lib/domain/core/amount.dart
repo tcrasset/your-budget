@@ -29,8 +29,25 @@ class Amount extends ValueObject<double> {
 
   const Amount._(this.value);
 
-  Amount operator +(Amount other) => Amount.fromDouble(getOrCrash() + other.getOrCrash());
-  Amount operator -(Amount other) => Amount.fromDouble(getOrCrash() - other.getOrCrash());
+  Amount operator +(Amount other) {
+    return other.value.fold(
+      (l) => Amount._(left(l)),
+      (otherValue) => value.fold(
+        (l) => Amount._(left(l)),
+        (currentValue) => Amount.fromDouble(currentValue + otherValue),
+      ),
+    );
+  }
+
+  Amount operator -(Amount other) {
+    return other.value.fold(
+      (l) => Amount._(left(l)),
+      (otherValue) => value.fold(
+        (l) => Amount._(left(l)),
+        (currentValue) => Amount.fromDouble(currentValue - otherValue),
+      ),
+    );
+  }
 }
 
 Either<ValueFailure<String>, double> _validateAmount(String input) {
