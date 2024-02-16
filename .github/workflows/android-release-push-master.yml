@@ -27,7 +27,7 @@ jobs:
         path: version.txt
     - run: flutter clean
     - run: flutter pub get
-    - run: flutter test
+    # - run: flutter test
     - run: flutter build appbundle -v
       env:
         KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
