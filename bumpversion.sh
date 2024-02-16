@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PUBDIR="/home/tomc/Documents/Personal Projects/your-budget-app/"
+PUBDIR="/home/tom/Documents/dev/your_budget"
 
 # Find and increment the version and build number.
 if [ $# -eq 0 ]
